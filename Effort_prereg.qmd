@@ -1,0 +1,134 @@
+---
+title: "Regulating bodily effort"
+format: 
+    html:
+        code-fold: true
+jupyter: python3
+---
+
+## Introduction
+
+### Efficiency vs. Cooperativeness
+- language is efficient
+- we minimize cost-to-benefits ratio (e.g., principle of least effort)
+- but language/language-users are also cooperative
+- interesting paradox, as cooperativeness allow for being lazy in terms of effort
+- sometimes we experience too big gradient of xxx, leading to disruption in conversation
+- these disruptions can be caused by noise, misunderstanding, lack of knowledge, etc.
+- however, we tend to resolve them without bigger issues 
+
+### Repair
+
+- well studied in CA (Schegloff, Jefferson & Sacks, 1977)
+- found across cultures/languages (Dingemanse & Enfield, 2024)
+- we accomodate to the needs
+    - multimodal effort, Rasenberg et al. 2022
+    - more precise gestures, Holler & Wilkin, 2011
+    - accomodation of articulation, Lindblom et al., 1990
+    - in sign language too, Manrique, 2016
+
+## The problem
+
+- in communication, we often pay attention to the representational work (words we say, iconic gestures), because it allows us to work in static categories
+- but communication is dynamic, it consists of signals that vary in their states over time
+- we see as meaningful the representational unit (a word, gesture), 
+- but there is a lot of nonrepresentational work that makes these units, that we cannot really categorize
+
+<
+1. beat-like movements
+2. gesture-speech coordination
+3. balance
+4. speed of our movement
+5. saliency
+6. rhythm
+7. forces>
+
+We do not consider them representational, but they are informative
+
+Moreover, taking these continuous aspects into consideration comes with need to understand them relative to the muscoskeletal system of the body.
+- speed limits
+- motor profiles of a movement (bell-shaped speed curves)
+- biomechanical nudges that promote gesture-speech coordination
+
+Thus, whatever counts as informative (e.g., by deviating from stabilities), or whatever behavior is preferred for communication, may be arbitrary on some linguistic level of description, but it is often not arbitrary relative to the physical properties of the system.
+
+And we know that these continuous aspects do meaningful work in communication
+- to indicate pragmatic intent - Raghavan et al., Nota et al.
+- to sustain understanding - Lombard in speech or gesture (Drijvers & Trujillo)
+
+
+### Solution
+
+
+
+## Question
+
+Overal: How do continuous bodily actions that on their own would not be considered representational do representational work together?
+
+Q1: Do misunderstandings recruit more bodily effort?
+Q2: Does bodily effort predict regaining or reaching understanding?
+Q3: Is effort modulated depending on degree of misunderstanding?
+
+## Hypotheses
+
+### 1
+
+To accomodate for the partner, people do recruit more effort. This project aims to operationalize effort as a complex package of continuous signals.
+
+In our experiment, incorrect answer signals to the performer that the common ground has not been established sufficiently and they need to try again. They are the only of the two who is aware of the gradient between the interlocutors, and are therefore responsible for pushing the game forward. Following that they are both cooperative partners, it can be expected that performer will not solely repeat their expression, but will enhance it - in terms of amplitude/size or length, or by making it more precise.
+
+<i>The first repair will be more effortful. Performer will enhance the articulators (size, intensity, volume, force, etc.). This will also lead to bigger postural sway.</i>
+
+- people might also time the articulators differently, or different amount of articulators in general might be in a move
+
+In multimodal condition, we can either expect that there is a trade-off between the vocal and gesture signal, and only one can get enhance. Or they will be synchronously enhanced together. Furthermore, their coordination might be also informative about the effort put into the performance. If there are biomechanical nudges promoting gesture-speech coordination, the alignment might be the least effortful way to do things. Effort would then be manifested as desynchronization, and the temporal dimension of multimodal signaling could be then considered to contribute to representational work.
+
+### 2
+
+If effort is evolutionary beneficial, we should benefit from it in communication too. If hypothesis 1 is true and we modulate our bodies to (re)gain understanding, we can expect the effort to be appreciated by a guesser - leading to correct answer. By operationalizing effort as a complex of continuous signals, we can tap onto the meaningfullness of the (nonrepresentational) work the articulators do to constitute a 'succesful representation'.
+
+<i>Bigger effort leads to better establishment of common ground.</i>
+
+- Note that it could also not be the repair/modulated effort that causes regaining understanding, but simply the fact that the guesser has a new chance to guess (thus excluding previous option from guessing). Whether it's a matter of correction or repetion will be disentagled in new perception experiment.
+
+### 3
+
+If common ground is crucial in minimization of effort (Levshina), then we should make a proper use of it. The relationship between misunderstanding (repair) and effort might not be linear. Since the violation in CG can be of different nature - guesser can guess a close synonymum to the original meaning, confuse object with action, or be even very far away - the misundertanding should not be understand in binary terms of correct-incorrect. Since performer is weighting the energy that they put to the performance with the knowledge of how well they are doing, we can expect they are making use of it and modulate the effort accordingly.
+
+<i>People modulate their behaviour depending on degree of misunderstanding with their interlocutor, to gain common understanding.</i>
+
+Since the guesser can interact only through typing, it serves for the performer as the only indicator of the common ground between them
+
+We can therefore use the answer and its relatedness and/or similarity to the original meaning as a proxy of mutual understanding.
+
+## TODO
+
+- operationalize all of them to slightest detail
+- process the data from dyad 0 
+- get all operationalizations
+- build models
+- test them
+
+
+
+
+
+
+
+
+## Code Cell
+
+Here is a Python code cell:
+
+```{python}
+import os
+os.cpu_count()
+```
+
+## Equation
+
+Use LaTeX to write equations:
+
+$$
+\chi' = \sum_{i=1}^n k_i s_i^2
+$$
