@@ -17,10 +17,10 @@
         <String>movement_in_trial</String>
     </pref>
     <pref key="LayoutManager.MediaAreaHeight">
-        <Int>1013</Int>
+        <Int>588</Int>
     </pref>
     <pref key="SelectionEndTime">
-        <Long>1722</Long>
+        <Long>2833</Long>
     </pref>
     <pref key="LayoutManager.CurrentMode">
         <Int>1</Int>
@@ -76,10 +76,10 @@
         <Object class="java.awt.Point">-8,-8</Object>
     </pref>
     <pref key="TimeLineViewer.ZoomLevel">
-        <Float>370.0002</Float>
+        <Float>1000.00055</Float>
     </pref>
     <pref key="SelectionBeginTime">
-        <Long>1719</Long>
+        <Long>0</Long>
     </pref>
     <prefGroup key="BAS - WebMAUS Basic">
         <pref key="LANGUAGE">
@@ -103,7 +103,7 @@
         <Long>0</Long>
     </pref>
     <pref key="MediaTime">
-        <Long>2881</Long>
+        <Long>1846</Long>
     </pref>
     <prefGroup key="TierColors">
         <pref key="upper_body">
