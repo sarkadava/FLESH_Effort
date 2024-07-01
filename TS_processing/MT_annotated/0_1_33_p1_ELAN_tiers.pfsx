@@ -2,7 +2,7 @@
 <preferences version="1.1"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.mpi.nl/tools/elan/Prefs_v1.1.xsd">
     <pref key="FrameSize">
-        <Object class="java.awt.Dimension">1936,1048</Object>
+        <Object class="java.awt.Dimension">3456,1416</Object>
     </pref>
     <pref key="LayoutManager.SelectedTabIndex">
         <Int>7</Int>
@@ -17,7 +17,7 @@
         <Int>685</Int>
     </pref>
     <pref key="SelectionEndTime">
-        <Long>3520</Long>
+        <Long>5270</Long>
     </pref>
     <pref key="LayoutManager.CurrentMode">
         <Int>1</Int>
@@ -26,28 +26,28 @@
         <pref key="Sender">
             <Int>0</Int>
         </pref>
-        <pref key="Comment">
+        <pref key="Kommentar">
             <Int>75</Int>
         </pref>
-        <pref key="Creation Date">
+        <pref key="Zeile">
             <Int>75</Int>
         </pref>
-        <pref key="Tier">
+        <pref key="Empfänger">
             <Int>75</Int>
         </pref>
-        <pref key="Modification Date">
+        <pref key="Initialen">
             <Int>75</Int>
         </pref>
-        <pref key="Recipient">
-            <Int>0</Int>
-        </pref>
-        <pref key="Start Time">
+        <pref key="Änderungsdatum">
             <Int>75</Int>
         </pref>
-        <pref key="Initials">
+        <pref key="Erstellungsdatum">
             <Int>75</Int>
         </pref>
-        <pref key="End Time">
+        <pref key="Anfangszeit">
+            <Int>75</Int>
+        </pref>
+        <pref key="Endzeit">
             <Int>75</Int>
         </pref>
         <pref key="Thread">
@@ -55,39 +55,57 @@
         </pref>
     </prefGroup>
     <prefList key="CommentViewer.Columns.Order">
-        <String>Start Time</String>
-        <String>End Time</String>
-        <String>Tier</String>
-        <String>Initials</String>
-        <String>Comment</String>
         <String>Thread</String>
         <String>Sender</String>
-        <String>Recipient</String>
-        <String>Creation Date</String>
-        <String>Modification Date</String>
+        <String>Anfangszeit</String>
+        <String>Endzeit</String>
+        <String>Zeile</String>
+        <String>Initialen</String>
+        <String>Kommentar</String>
+        <String>Empfänger</String>
+        <String>Erstellungsdatum</String>
+        <String>Änderungsdatum</String>
     </prefList>
     <pref key="ActiveRecognizerName">
-        <String>AAM-LR Phone level audio segmentation</String>
+        <String>BAS - WebMAUS Basic</String>
     </pref>
     <pref key="FrameLocation">
-        <Object class="java.awt.Point">1352,-7</Object>
+        <Object class="java.awt.Point">-8,-8</Object>
     </pref>
     <pref key="SelectionBeginTime">
-        <Long>1770</Long>
+        <Long>550</Long>
     </pref>
     <prefGroup key="AAM-LR Phone level audio segmentation">
+        <pref key="source_audio">
+            <String>/path_to_your_file.wav</String>
+        </pref>
         <pref key="base_url">
             <String>http://lux17.mpi.nl/aamlr/</String>
         </pref>
-        <pref key="source_audio">
+    </prefGroup>
+    <prefGroup key="BAS - WebMAUS Basic">
+        <pref key="LANGUAGE">
+            <String>deu-DE</String>
+        </pref>
+        <prefGroup key="TierUrl"/>
+        <pref key="SignalParamName">
+            <String>SIGNAL</String>
+        </pref>
+        <pref key="ServiceName">
+            <String>runMAUSBasic</String>
+        </pref>
+        <pref key="SignalUrl">
             <String>/path_to_your_file.wav</String>
+        </pref>
+        <pref key="TextParamName">
+            <String>TEXT</String>
         </pref>
     </prefGroup>
     <pref key="TimeScaleBeginTime">
         <Long>0</Long>
     </pref>
     <pref key="MediaTime">
-        <Long>3520</Long>
+        <Long>5270</Long>
     </pref>
     <prefGroup key="TierColors">
         <pref key="upper_body">
@@ -99,11 +117,11 @@
         <pref key="movement_in_trial">
             <Object class="java.awt.Color">0,90,160</Object>
         </pref>
-        <pref key="lower_body">
-            <Object class="java.awt.Color">90,90,160</Object>
-        </pref>
         <pref key="arms">
             <Object class="java.awt.Color">90,160,0</Object>
+        </pref>
+        <pref key="lower_body">
+            <Object class="java.awt.Color">90,90,160</Object>
         </pref>
     </prefGroup>
     <prefList key="MultiTierViewer.TierOrder">
@@ -118,6 +136,5 @@
     </pref>
     <prefList key="CommentViewer.Columns.Hidden">
         <String>Sender</String>
-        <String>Recipient</String>
     </prefList>
 </preferences>

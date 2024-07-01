@@ -1,4 +1,4 @@
-Time,TrialID,upper_body,arms,head_mov,lower_body,movement_in_trial
+Time,TrialID,upper_body,arms,lower_body,head_mov,movement_in_trial
 0.0,0_2_14_p0,nomovement,nomovement,nomovement,nomovement,nomovement
 16.6666666666666,0_2_14_p0,nomovement,nomovement,nomovement,nomovement,nomovement
 33.3333333333333,0_2_14_p0,nomovement,nomovement,nomovement,nomovement,nomovement
@@ -66,8 +66,8 @@ Time,TrialID,upper_body,arms,head_mov,lower_body,movement_in_trial
 1066.6666666666677,0_2_14_p0,nomovement,nomovement,nomovement,nomovement,nomovement
 1083.3333333333344,0_2_14_p0,nomovement,nomovement,nomovement,nomovement,nomovement
 1100.000000000001,0_2_14_p0,nomovement,nomovement,nomovement,nomovement,nomovement
-1116.6666666666677,0_2_14_p0,nomovement,nomovement,nomovement,nomovement,nomovement
-1133.3333333333342,0_2_14_p0,nomovement,nomovement,nomovement,nomovement,nomovement
+1116.6666666666677,0_2_14_p0,nomovement,movement,nomovement,nomovement,movement
+1133.3333333333342,0_2_14_p0,nomovement,movement,nomovement,nomovement,movement
 1150.000000000001,0_2_14_p0,nomovement,movement,nomovement,nomovement,movement
 1166.6666666666674,0_2_14_p0,nomovement,movement,nomovement,nomovement,movement
 1183.333333333334,0_2_14_p0,nomovement,movement,nomovement,nomovement,movement

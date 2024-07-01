@@ -2,7 +2,7 @@
 <preferences version="1.1"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.mpi.nl/tools/elan/Prefs_v1.1.xsd">
     <pref key="FrameSize">
-        <Object class="java.awt.Dimension">1806,1407</Object>
+        <Object class="java.awt.Dimension">1806,1400</Object>
     </pref>
     <pref key="LayoutManager.SelectedTabIndex">
         <Int>7</Int>
@@ -14,7 +14,7 @@
         <String>vocalization</String>
     </pref>
     <pref key="SelectionEndTime">
-        <Long>3450</Long>
+        <Long>3274</Long>
     </pref>
     <pref key="LayoutManager.CurrentMode">
         <Int>1</Int>
@@ -73,7 +73,7 @@
         <Float>340.0</Float>
     </pref>
     <pref key="SelectionBeginTime">
-        <Long>610</Long>
+        <Long>865</Long>
     </pref>
     <prefGroup key="BAS - WebMAUS Basic">
         <pref key="LANGUAGE">
@@ -97,7 +97,7 @@
         <Long>0</Long>
     </pref>
     <pref key="MediaTime">
-        <Long>3644</Long>
+        <Long>3274</Long>
     </pref>
     <prefGroup key="TierColors">
         <pref key="vocalization">

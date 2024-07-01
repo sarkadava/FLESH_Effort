@@ -14,13 +14,13 @@
         <String>Änderungsdatum</String>
     </prefList>
     <pref key="FrameSize">
-        <Object class="java.awt.Dimension">1456,928</Object>
+        <Object class="java.awt.Dimension">3440,1400</Object>
     </pref>
     <pref key="ActiveRecognizerName">
         <String>BAS - WebMAUS Basic</String>
     </pref>
     <pref key="FrameLocation">
-        <Object class="java.awt.Point">1320,400</Object>
+        <Object class="java.awt.Point">0,0</Object>
     </pref>
     <pref key="LayoutManager.SelectedTabIndex">
         <Int>7</Int>
@@ -29,7 +29,7 @@
         <String>mpi.eudico.client.annotator.viewer.TimeLineViewer</String>
     </pref>
     <pref key="SelectionBeginTime">
-        <Long>910</Long>
+        <Long>920</Long>
     </pref>
     <pref key="MultiTierViewer.ActiveTierName">
         <String>vocalization</String>
@@ -56,10 +56,10 @@
         <Long>0</Long>
     </pref>
     <pref key="MediaTime">
-        <Long>2602</Long>
+        <Long>3040</Long>
     </pref>
     <pref key="SelectionEndTime">
-        <Long>3430</Long>
+        <Long>3040</Long>
     </pref>
     <prefGroup key="TierColors">
         <pref key="vocalization">

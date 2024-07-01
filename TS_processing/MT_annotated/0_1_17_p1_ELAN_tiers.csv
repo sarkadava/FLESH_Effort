@@ -1,4 +1,4 @@
-Time,TrialID,upper_body,arms,head_mov,lower_body,movement_in_trial
+Time,TrialID,upper_body,arms,lower_body,head_mov,movement_in_trial
 0.0,0_1_17_p1,nomovement,nomovement,nomovement,nomovement,nomovement
 16.6666666666666,0_1_17_p1,nomovement,nomovement,nomovement,nomovement,nomovement
 33.3333333333333,0_1_17_p1,nomovement,nomovement,nomovement,nomovement,nomovement
