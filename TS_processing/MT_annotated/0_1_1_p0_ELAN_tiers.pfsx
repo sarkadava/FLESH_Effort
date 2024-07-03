@@ -2,25 +2,25 @@
 <preferences version="1.1"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.mpi.nl/tools/elan/Prefs_v1.1.xsd">
     <prefList key="CommentViewer.Columns.Order">
-        <String>Anfangszeit</String>
-        <String>Endzeit</String>
-        <String>Zeile</String>
-        <String>Initialen</String>
-        <String>Kommentar</String>
         <String>Thread</String>
         <String>Sender</String>
-        <String>Empfänger</String>
-        <String>Erstellungsdatum</String>
-        <String>Änderungsdatum</String>
+        <String>Start Time</String>
+        <String>End Time</String>
+        <String>Tier</String>
+        <String>Initials</String>
+        <String>Comment</String>
+        <String>Recipient</String>
+        <String>Creation Date</String>
+        <String>Modification Date</String>
     </prefList>
     <pref key="ActiveRecognizerName">
         <String>BAS - WebMAUS Basic</String>
     </pref>
     <pref key="FrameSize">
-        <Object class="java.awt.Dimension">800,600</Object>
+        <Object class="java.awt.Dimension">1295,687</Object>
     </pref>
     <pref key="FrameLocation">
-        <Object class="java.awt.Point">1320,400</Object>
+        <Object class="java.awt.Point">-7,-7</Object>
     </pref>
     <pref key="LayoutManager.SelectedTabIndex">
         <Int>7</Int>
@@ -59,7 +59,7 @@
         <Long>0</Long>
     </pref>
     <pref key="SelectionEndTime">
-        <Long>0</Long>
+        <Long>2316</Long>
     </pref>
     <prefGroup key="TierColors">
         <pref key="upper_body">
@@ -71,11 +71,11 @@
         <pref key="movement_in_trial">
             <Object class="java.awt.Color">0,160,90</Object>
         </pref>
-        <pref key="lower_body">
-            <Object class="java.awt.Color">160,0,0</Object>
-        </pref>
         <pref key="arms">
             <Object class="java.awt.Color">90,0,90</Object>
+        </pref>
+        <pref key="lower_body">
+            <Object class="java.awt.Color">160,0,0</Object>
         </pref>
     </prefGroup>
     <prefList key="MultiTierViewer.TierOrder">
@@ -95,36 +95,35 @@
         <pref key="Sender">
             <Int>0</Int>
         </pref>
-        <pref key="Kommentar">
+        <pref key="Comment">
             <Int>75</Int>
         </pref>
-        <pref key="Zeile">
+        <pref key="Creation Date">
             <Int>75</Int>
         </pref>
-        <pref key="Empfänger">
-            <Int>0</Int>
-        </pref>
-        <pref key="Initialen">
+        <pref key="Tier">
             <Int>75</Int>
         </pref>
-        <pref key="Änderungsdatum">
+        <pref key="Modification Date">
             <Int>75</Int>
         </pref>
-        <pref key="Erstellungsdatum">
+        <pref key="Recipient">
             <Int>75</Int>
         </pref>
-        <pref key="Anfangszeit">
+        <pref key="Start Time">
             <Int>75</Int>
         </pref>
-        <pref key="Endzeit">
+        <pref key="Initials">
             <Int>75</Int>
         </pref>
         <pref key="Thread">
             <Int>75</Int>
         </pref>
+        <pref key="End Time">
+            <Int>75</Int>
+        </pref>
     </prefGroup>
     <prefList key="CommentViewer.Columns.Hidden">
         <String>Sender</String>
-        <String>Empfänger</String>
     </prefList>
 </preferences>
