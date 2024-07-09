@@ -264,9 +264,6 @@ Anno_R1	4230	4970	nomovement	0_1_32_p1_ELAN_tiers.eaf
 Anno_R1	1383	2663	movement	0_1_33_p1_ELAN_tiers.eaf
 Anno_R1	0	1383	nomovement	0_1_33_p1_ELAN_tiers.eaf
 Anno_R1	2663	5547	nomovement	0_1_33_p1_ELAN_tiers.eaf
-Anno_R1	666	3186	movement	0_1_34_p1_ELAN_tiers.eaf
-Anno_R1	0	666	nomovement	0_1_34_p1_ELAN_tiers.eaf
-Anno_R1	3186	4012	nomovement	0_1_34_p1_ELAN_tiers.eaf
 Anno_R1	850	4650	movement	0_1_35_p1_ELAN_tiers.eaf
 Anno_R1	0	850	nomovement	0_1_35_p1_ELAN_tiers.eaf
 Anno_R1	4650	5167	nomovement	0_1_35_p1_ELAN_tiers.eaf
@@ -446,9 +443,6 @@ Anno_R1	6504	6521	nomovement	0_2_37_p1_ELAN_tiers.eaf
 Anno_R1	1352	4152	movement	0_2_41_p0_ELAN_tiers.eaf
 Anno_R1	0	1352	nomovement	0_2_41_p0_ELAN_tiers.eaf
 Anno_R1	4152	4864	nomovement	0_2_41_p0_ELAN_tiers.eaf
-Anno_R1	692	6332	movement	0_2_42_p0_ELAN_tiers.eaf
-Anno_R1	0	692	nomovement	0_2_42_p0_ELAN_tiers.eaf
-Anno_R1	6332	6550	nomovement	0_2_42_p0_ELAN_tiers.eaf
 Anno_R1	2007	5487	movement	0_2_43_p0_ELAN_tiers.eaf
 Anno_R1	0	2007	nomovement	0_2_43_p0_ELAN_tiers.eaf
 Anno_R1	5487	5882	nomovement	0_2_43_p0_ELAN_tiers.eaf
@@ -493,8 +487,5 @@ Anno_R1	2087	5127	movement	0_2_64_p1_ELAN_tiers.eaf
 Anno_R1	0	2087	nomovement	0_2_64_p1_ELAN_tiers.eaf
 Anno_R1	5127	7697	nomovement	0_2_64_p1_ELAN_tiers.eaf
 Anno_R1	0	4313	nomovement	0_2_65_p1_ELAN_tiers.eaf
-Anno_R1	1594	6320	movement	0_2_66_p1_ELAN_tiers.eaf
-Anno_R1	0	1594	nomovement	0_2_66_p1_ELAN_tiers.eaf
-Anno_R1	6320	6381	nomovement	0_2_66_p1_ELAN_tiers.eaf
 Anno_R1	0	5329	nomovement	0_2_73_p0_ELAN_tiers.eaf
 Anno_R1	0	5033	nomovement	0_2_74_p0_ELAN_tiers.eaf
