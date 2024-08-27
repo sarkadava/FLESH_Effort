@@ -39,7 +39,8 @@ First we set up our folders
 
 curfolder   <- dirname(getwd())
 project_folder <- paste0(curfolder, "/TS_processing/")
-audio_orig <- "E:/charade_experiment_WORKSPACE/xdf_procedure/data/Data_processed/Data_trials/Audio_48/"
+#audio_orig <- "E:/charade_experiment_WORKSPACE/xdf_procedure/data/Data_processed/Data_trials/Audio_48/"
+audio_orig <- paste0(project_folder, "/Audio/")
 processed_folder <- paste0(project_folder, "/TS_acoustics/")
 
 # sanity check
@@ -120,7 +121,7 @@ for (file in wav_files) {
   tryCatch({
     # Read and analyze the audio file
     # audio <- readWave(file)
-    features <- analyze(file, samplingRate = 48000, windowLength = 100, pitchCeiling=max_f0)
+    features <- analyze(file, windowLength = 20, step=10, pitchCeiling=1000)
     
     # Extract features
     features_df <- extract_features(file, features)
@@ -157,7 +158,7 @@ for (file in wav_files) {
   print(paste("Analyzing file:", file))
   tryCatch({
     # Read and analyze the audio file
-    features <- analyze(file, samplingRate = 48000, windowLength = 100, pitchCeiling = max_f0)
+    features <- analyze(file, windowLength = 20, step=10, pitchCeiling = 1000)
     
     # Extract features
     features_df <- extract_features(file, features)
