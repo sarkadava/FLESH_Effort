@@ -1,8 +1,8 @@
 import base64
 import io
 import dash
-import dash_core_components as dcc
-import dash_html_components as html
+from dash import dcc
+from dash import html
 from dash.dependencies import Input, Output
 import plotly.express as px
 import pandas as pd
@@ -109,7 +109,7 @@ def update_correlation_plot(feature1, feature2):
     df_filtered_feature2 = remove_outliers(df, feature2)
     # get rid of feature 1 from df_filtered_feature2
     df_filtered_feature2 = df_filtered_feature2.drop(feature1, axis=1)
-    
+
     # concatenate the two dataframes
     df_filtered = pd.concat([df_filtered_feature1, df_filtered_feature2], axis=1)
 
@@ -155,8 +155,14 @@ def update_boxplot1(feature):
     
     # Remove outliers
     df_filtered = remove_outliers(df, feature)
+
+    # order the df by column correction_info, in order c0_only, c0, c1, c2
+    order = ['c0_only', 'c0', 'c1', 'c2']
+    #df_filtered['correction_info'] = pd.Categorical(df_filtered['correction_info'], categories=order, ordered=True)
     
     fig = px.violin(df_filtered, x='modality', y=feature, color='correction_info', box=True, points="all")
+    # order the boxes by the order list
+    fig.update_xaxes(categoryorder='array', categoryarray=order)
     fig.update_layout(title=f'Boxplot of {feature} by Modality and Correction Info')
     return fig
 
@@ -171,8 +177,14 @@ def update_boxplot2(feature):
     
     # Remove outliers
     df_filtered = remove_outliers(df, feature)
+
+    # order the df by column correction_info, in order c0_only, c0, c1, c2
+    order = ['c0_only', 'c0', 'c1', 'c2']
+    #df_filtered['correction_info'] = pd.Categorical(df_filtered['correction_info'], categories=order, ordered=True)
     
     fig = px.violin(df_filtered, x='modality', y=feature, color='correction_info', box=True, points="all")
+    # order the boxes by the order list
+    fig.update_xaxes(categoryorder='array', categoryarray=order)
     fig.update_layout(title=f'Boxplot of {feature} by Modality and Correction Info')
     return fig
 
