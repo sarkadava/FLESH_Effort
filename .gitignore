@@ -7,3 +7,11 @@
 *.jpg
 *.pfsx
 /TS_processing/Audio
+*.wav
+03_ConceptSimilarity/numberbatch-en.txt
+03_ConceptSimilarity/numberbatch.txt
+/01_TS_processing/TS_formants/Carignan_formants
+/02_TS_movementAnnotation/MT_annotated
+/01_TS_processing/TS_motiontracking
+/02_TS_movementAnnotation/ManualAnno
+/01_TS_processing/TS_acoustics
