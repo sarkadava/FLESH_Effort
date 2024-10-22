@@ -1,0 +1,1087 @@
+---
+title: "Modeling-effort"
+subtitle: "Consultation notes with Daniela"
+author: "Sarka Kadava"
+date: "2024-10-17"
+output: html_document
+---
+
+# Introduction
+
+The experimental design is described in the preregistration here: https://osf.io/m9xep (@Daniela, you can skip the section Lab Equipment)
+
+In this markdown, we will be modelling the causal relation between effort and correction to confirm/reject our hypothesis.
+
+These are:
+
+H1: In corrections, people will enhance some effort-related kinematic and/or acoustic features of their behaviour
+
+H2: The enhancement will depend on similarity of the guesser's answer and the original meaning. More similar answer will require/result in smaller enhancement (but still enhancement) than less similar answer.
+
+# Setting up the environment
+
+```{r warning=FALSE}
+
+library(here)
+library(dagitty) # for dag
+library(dplyr) # for data-wrangling
+library(lme4)  # for linear mixed-effects models
+library(tidyr)  # for reshaping data (if needed)
+
+```
+
+# DAG
+
+To make sure we know what variables should be in the model and why, we draw a DAG that illustrates our assumptions
+
+Our relationship of interest is the causal effect of communicative attempt on effort.
+
+Other assumptions include:
+
+Personality traits (measured with Big5) will influence effort (e.g., people are more willing to put more effort if they are open-minded) and also communicative attempt (e.g., more extroverted people are better in this game, therefore they need less attempts)
+
+Familiarity with guessing partner influences effort (ditto) as well as communicative attempt (e.g., friends are better in this game than strangers)
+
+Similarly, participant will also directly infleunce effort and commAtt, because personality traits might not be capturing all variation
+
+Expressibility of concepts is going to influence effort (e.g., more expressible concepts allow more enhancement - but could be also other direction) as well as CommAtt (e.g., more expressible concepts are more readily guessed and don't need more attempts)
+
+Similarly, concept will also directly influence effort and commAtt, because expressibility might not be capturing all variation
+
+Modality (uni vs. multi) will influence the value of effort. We assume that in unimodal condition, the feature does not need to account for synergic relations with the other modality, and may carry the whole signal. In multimodal condition, however, there may be synergic relations that moderate the full expressiveness of this feature
+
+Lastly, trial number (characterising how for one is in the experiment) could be hinting on learning processes through out the experiment, or - the other direction - on increasing fatigue
+
+
+```{r warning=FALSE}
+
+dag <- dagitty('dag {
+Big5 [adjusted,pos="-0.823,0.657"]
+CommAtt [exposure,pos="-1.033,0.028"]
+Conc [adjusted,pos="-1.136,-0.848"]
+Eff [outcome,pos="-0.102,0.025"]
+Expr [adjusted,pos="-0.758,-0.850"]
+Fam [adjusted,pos="-0.379,0.663"]
+Mod_cat [adjusted,pos="-0.374,-0.850"]
+Pcn [adjusted,pos="-0.589,1.214"]
+TrNum [adjusted,pos="-1.686,-0.859"]
+Big5 -> CommAtt     
+Big5 -> Eff
+CommAtt -> Eff
+Conc -> Expr
+Expr -> CommAtt
+Expr -> Eff
+Fam -> CommAtt
+Fam -> Eff
+Mod_bin -> Eff
+Mod_cat -> Expr
+Pcn -> Big5
+Pcn -> CommAtt 
+Pcn -> Eff
+Pcn -> Fam
+TrNum -> CommAtt
+TrNum -> Eff
+Conc -> CommAtt
+Conc -> Eff
+}')
+
+plot(dag)
+
+```
+
+
+# Synthetic data
+
+We will now create synth data that will copy the relations we assume in our DAG. Assigning concrete coefficients will also help us to test our model - we should find exactly those causalities that we had in mind when creating these data
+
+```{r}
+
+# Set seed for reproducibility
+set.seed(0209)
+
+# Define participants, total unique concepts, and modalities
+n_participants <- 120
+n_total_concepts <- 21  # Total unique concepts
+n_concepts_per_participant <- 21  # Each participant works with 21 concepts
+n_modalities <- 3  # gesture, vocal, combined
+
+# Generate participant IDs
+participants <- 1:n_participants
+
+# Simulate Big5 personality traits (standardized between 0 and 1) and Familiarity (between 0 and 1) for participants
+Big5 <- runif(n_participants, min = 0, max = 1)  # Continuous values between 0 and 1
+Familiarity <- runif(n_participants, min = 0, max = 1)  # Continuous values between 0 and 1
+
+# Create a matrix to hold expressibility values for each concept in each modality
+expressibility_matrix <- matrix(runif(n_total_concepts * n_modalities, min = 0, max = 1), nrow = n_total_concepts, ncol = n_modalities)
+
+# Randomly sample 21 unique concepts for each participant
+final_data <- data.frame()
+
+# Define a function to assign CommAtt and Eff for a single participant
+simulate_participant <- function(participant_id) {
+  # Randomly sample 21 unique concepts from the total pool of 84
+  selected_concepts <- sample(1:n_total_concepts, n_concepts_per_participant)
+  
+  participant_data <- data.frame()
+  trial_number <- 1  # Initialize trial number
+  
+  for (concept_id in selected_concepts) {
+    # Randomly determine the modality for the concept
+    modality <- sample(c("gesture", "vocal", "combined"), 1)
+    
+    # Calculate expressibility based on modality
+    expressibility_score <- ifelse(modality == "vocal", expressibility_matrix[concept_id, 1] * 0.6, 
+                                    ifelse(modality == "gesture", expressibility_matrix[concept_id, 2], 
+                                           expressibility_matrix[concept_id, 3] * 1.2))
+    
+    # Determine Communicative Attempts based solely on expressibility, familiarity, and Big5
+    base_prob <- c(0.33, 0.33, 0.33)  # Equal chance for 1, 2, or 3 attempts
+    
+    # Modify probabilities based on familiarity, Big5, and expressibility
+    adjusted_prob <- base_prob * c(1 - Familiarity[participant_id], # 3 times for each
+                                    1 - Familiarity[participant_id],
+                                    1 - Familiarity[participant_id]) * 
+                     c(1 - Big5[participant_id],
+                       1 - Big5[participant_id],
+                       1 - Big5[participant_id]) * 
+                     c(1 - expressibility_score,
+                       1 - expressibility_score,
+                       1 - expressibility_score)
+    
+    # Normalize the adjusted probabilities
+    adjusted_prob <- adjusted_prob / sum(adjusted_prob)
+    
+    # Sample the number of communicative attempts based on adjusted probabilities
+    n_attempts <- sample(1:3, 1, prob = adjusted_prob)
+    
+    # Loop through the number of attempts and increment CommAtt correctly
+    for (attempt in 1:n_attempts) {
+      # Calculate Eff for the first attempt
+      if (attempt == 1) {
+        Eff <- 1.15 * Big5[participant_id] + 
+               1.10 * Familiarity[participant_id] + 
+               1.20 * expressibility_score + 
+               rnorm(1, mean = 1, sd = 0.5)
+        
+        # Adjust Eff based on modality
+        if (modality == "combined") {
+          
+          Eff <- Eff * 0.7  # Slight moderation for combined modality
+        }
+      }
+      
+      # Adjust Eff for subsequent attempts
+      if (attempt == 2) {
+        Eff <- 1.15 * Big5[participant_id] + 
+               1.10 * Familiarity[participant_id] + 
+               1.20 * expressibility_score + 
+               rnorm(1, mean = 1, sd = 0.5)
+        Eff <- Eff * 1.50  # Multiply effort by 1.50 for the second attempt
+      } else if (attempt == 3) {
+        Eff <- 1.15 * Big5[participant_id] + 
+               1.10 * Familiarity[participant_id] + 
+               1.20 * expressibility_score + 
+               rnorm(1, mean = 1, sd = 0.5)
+        Eff <- Eff * 0.70  # Multiply effort by 0.70 for the third attempt
+      }
+      
+      # Create row for each attempt
+      participant_data <- rbind(participant_data, data.frame(
+        Participant = participant_id,
+        Concept = concept_id,
+        Modality = modality,
+        Big5 = Big5[participant_id],
+        Familiarity = Familiarity[participant_id],
+        Expressibility = expressibility_score,
+        CommAtt = attempt,  # Correctly set the attempt number
+        Eff = Eff,
+        TrialNumber = trial_number  # Set trial number for this attempt
+      ))
+      
+      # Increment the trial number after each attempt
+      trial_number <- trial_number + 1
+    }
+  }
+  
+  return(participant_data)
+}
+
+# Simulate data for all participants
+for (i in participants) {
+  final_data <- rbind(final_data, simulate_participant(i))
+}
+
+# Preview the first few rows of the final data
+head(final_data)
+
+```
+
+So now we have synthetic data where we exactly defined (using coefficients) what is the relationship between certain variables
+
+1) CommAtt -> Eff
+
+The effort for second attempt is multiplied by 1.25 (Beta = 1.25)
+The effort for third attempts by 0.9 (ie decreases, Beta = 0.9)
+
+2) Fam -> Eff & CommAtt
+
+Beta = 1.10 for Eff
+Negative effect on CommAtt
+
+
+3) Big5 -> Eff & CommAtt
+
+Beta = 1.15 for Eff
+Negative effect on CommAtt
+
+4) Expr -> Eff & CommAtt
+
+Beta = 1.20 for Eff
+Negative effect on CommAtt
+
+5) TrNum -> Eff & CommAtt 
+
+Beta = could be both neg (fatigue) or positive (learning)
+
+## DP exploring
+
+```{r}
+nrow(final_data)
+```
+
+```{r}
+final_data |> 
+  janitor::tabyl(Participant, Concept)
+```
+
+
+# Check visual
+
+```{r}
+
+# Load ggplot2
+library(ggplot2)
+
+# Sample data (replace this with your actual data)
+# df <- data.frame(CommAtt = ..., Eff = ...)
+
+# Create a boxplot comparing Effort across different Communicative Attempts
+ggplot(final_data, aes(x = as.factor(CommAtt), y = Eff)) +
+  geom_boxplot(aes(fill = as.factor(CommAtt))) +  # Boxplot with fill based on CommAtt
+  labs(title = "Comparison of Effort Across Communicative Attempts",
+       x = "Communicative Attempts",
+       y = "Effort",
+       fill = "CommAtt") + 
+  theme_minimal() +
+  theme(legend.position = "none")  # Optional: remove the legend
+
+```
+
+
+::: {.callout-note}
+## Question: number of trials = number of concepts?
+
+**Q: Is it by design that each participant had multiples of each concept?**
+
+:::
+
+
+# Simple linear mixed model
+
+Before we do full Bayesian, we do quick LMM to see whether we are on good track
+
+::: {.callout-note}
+## Question: contrast coding?
+
+**Q: Do we want to use contrast coding?**
+
+:::
+
+```{r}
+# Convert necessary columns to factors
+final_data$CommAtt <- as.factor(final_data$CommAtt)
+final_data$Modality <- as.factor(final_data$Modality)
+final_data$Participant <- as.factor(final_data$Participant)
+final_data$Concept <- as.factor(final_data$Concept)
+final_data$TrialNumber <- as.numeric(final_data$TrialNumber)  # Ensure TrialNumber is numeric
+```
+
+DP: Check contrasts of factors
+
+```{r}
+contrasts(final_data$CommAtt) <- MASS::contr.sdif(3)
+contrasts(final_data$Modality) <- contr.sum(3)/2
+```
+
+
+Centre trial number
+
+```{r}
+final_data$TrialNumber_c <- final_data$TrialNumber - median(range(final_data$TrialNumber))
+range(final_data$TrialNumber_c)
+range(final_data$TrialNumber)
+```
+
+Standardize (z-score) all *continuous* predictors.
+
+But if the measures of familiarity, expressibility, and big5 (but is expressibility continuous?) are on a rating scale we can just subtract the median again from these to centre them (and we don't need to standardize).
+
+```{r}
+final_data$Familiarity <- final_data$Familiarity - median(range(final_data$Familiarity))
+
+final_data$Big5 <- final_data$Big5 - median(range(final_data$Big5))
+```
+
+
+Z-score expressibility
+
+```{r}
+final_data <-
+  final_data |> 
+  mutate(Expressibility_z = (Expressibility - mean(Expressibility))/ sd(final_data$Expressibility, na.rm = T))
+```
+
+```{r}
+#| eval: false
+# Fit the linear mixed-effects model
+model <- lmer(Eff ~ CommAtt + Familiarity + Big5 + Expressibility + TrialNumber_c + Modality + (1 | Participant) + (1 | Concept), data = final_data)
+
+# Summary of the model
+summary(model)
+
+# Check model diagnostics
+# Plot residuals vs fitted values
+plot(model)
+
+# Extract coefficients
+coefficients <- summary(model)$coefficients
+print(coefficients)
+
+# If you want to save the model output
+saveRDS(model, here("06_Modeling", "models", "linear_mixed_effects_model.rds"))
+```
+
+
+```{r}
+model <- readRDS(here("06_Modeling", "models", "linear_mixed_effects_model.rds"))
+summary(model)
+
+```
+
+The Betas seem quite close to how we create the synthetic data, probably there are some other moderations since the causal relations between the variables are quite complex
+
+::: {.callout-note}
+
+## Open question: dyad + participant
+
+**How/whether to include participant in addition to dyad in the random effects**
+
+Our thoughts: participant could maybe be nested within dyad, or do we not need participant? Must be something suggested in the literature.
+
+Participant probably must be included because the Big 5 personality trait measure corresponds to each participant within the dyad.
+
+Check: https://github.com/FredericBlum/exploring-individual-variation-in-turkish-heritage-speakers-complex-linguistic-productions
+
+Onur and Frede on nesting:
+
+First, we do not use mono- versus bilingualism or even the group variable as a main independent variable in our model. Instead, it is incorporated in a nested random effect. This indicates that we do not view the speaker group status as a main driver of DM production. Second, the group variable that we utilize does not take one of the three speaker groups as a baseline. We sum-coded the variable which incorporates the idea that monolinguals cannot be an adequate baseline for bilinguals. 
+
+:::
+
+
+## Check model diagnostics
+
+```{r}
+performance::check_model(model)
+```
+
+```{r}
+
+library(sjPlot)
+
+sjPlot::plot_model(model)
+```
+
+```{r}
+library(ggplot2)
+ggeffects::ggpredict(model,
+                     terms = c("CommAtt"),
+                     type = "random",
+                     interval = "confidence") |> 
+  as_tibble() |> 
+  ggplot2::ggplot() +
+  aes(x = x, y = predicted) +
+  geom_point() +
+  geom_errorbar(aes(ymin = conf.low, ymax = conf.high), width = .2) +
+  geom_line(group = 1) +
+  theme_bw()
+```
+
+
+# Bayesian model
+
+Potential ways:
+
+- LMMs - but we assume there might be some non-linearity (e.g., effort will increase in 2nd attempt, but not third)
+- b-splines - but our 'timeline' consists of only three points (attempts). We could try but maybe b-splines are unncessarilly complex
+- ordinal regression
+    - see https://solomonkurz.netlify.app/blog/2023-05-21-causal-inference-with-ordinal-regression/
+    and Chapters 12-13 in McElreath
+
+
+
+Eff ~ Normal(μ,σ^2)
+μ= β0 + β1*CommAtt
+
+```{r}
+
+library(ggplot2)
+library(patchwork)
+library(bayesplot)
+library(brms)
+library(beepr)
+
+# use all available cores for parallel computing
+options(mc.cores = parallel::detectCores())
+
+```
+
+Let's start slowly, first with simple model accounting only for outcome + main predictor
+
+```{r model1 - simple, eval=FALSE}
+fit_eff1 <- brm(Eff ~ 1 + CommAtt, data=final_data)
+saveRDS(fit_eff1, here("06_Modeling", "models", "fit_eff1.rds"))
+
+beep(5)
+
+```
+
+
+```{r model1 - simple summary}
+
+fit_eff1 <- readRDS(here("06_Modeling", "models", "fit_eff1.rds"))
+
+summary(fit_eff1)
+# even so simple model can quite well capture the relationship in the simulated data
+
+plot(conditional_effects(fit_eff1), points = TRUE)
+# but there is quite a lot of variation, causing overlap
+
+pp_check(fit_eff1, type = "dens_overlay")
+# we see that the simulated data are not that loyal to the data
+
+pp_check(fit_eff1, type = "error_scatter_avg")
+# instead of cloud of points, we see almost perfectly linear relationship between outcome and residuals, indicating strong problems with the independence assumption of the errors.
+
+```
+
+Now we know we will probably need partial pooling for participants, because they share lot of commonalities
+(Later we might adapt this, because it might be participant within dyads. Dyads might also share lot of commonalities)
+
+```{r eval=FALSE}
+
+fit_eff2 <- brm(Eff ~ 1 + CommAtt + (1 | Participant), data=final_data)
+saveRDS(fit_eff2, here("06_Modeling", "models", "fit_eff2.rds"))
+
+beep(5)
+```
+
+
+```{r}
+
+fit_eff2 <- readRDS(here("06_Modeling", "models", "fit_eff2.rds"))
+
+summary(fit_eff2)
+
+plot(conditional_effects(fit_eff2), points = TRUE)
+# stays the same
+
+pp_check(fit_eff2, type = "dens_overlay")
+# not really improvement
+
+pp_check(fit_eff2, type = "error_scatter_avg")
+# ok, here we see some improvement here!
+
+# checking to coeff of the parameters
+coef(fit_eff2)
+
+```
+
+Some more diagnostics
+```{r}
+
+vars <- c("b_Intercept", "r_Participant[1,Intercept]", "r_Participant[2,Intercept]")
+pairs(fit_eff2, variable = vars)
+
+```
+ We see negative correlation between b0 and b0j (and b0j have weak positive correlation with one another)
+ 
+```{r}
+
+draws_eff2 <- as.matrix(fit_eff2, variable = vars)
+colnames(draws_eff2) <- c("b0", "b0_1", "b0_2")
+cors_eff2 <- cor(draws_eff2)
+print(cors_eff2, digits = 2)
+
+```
+
+Correlation between the parameters
+
+```{r}
+
+coef_eff2 <- coef(fit_eff2, summary = FALSE)
+
+print(cor(coef_eff2$Participant[, 1:5, "Intercept"]), digits = 2)
+
+```
+
+Per-subject predicitons into the plot
+```{r}
+
+conditions <- make_conditions(final_data, "Participant")
+ce <- conditional_effects(
+fit_eff2, conditions = conditions,
+re_formula = NULL
+)
+plot(ce, ncol = 6, points = TRUE)
+
+# ok this is too many pcns to see anything:)
+
+```
+
+Compare the first two models
+```{r}
+
+loo_eff1 <- loo(fit_eff1)
+loo_eff2 <- loo(fit_eff2)
+
+loo_compare(loo_eff1, loo_eff2)
+
+```
+
+
+Let's also add varying slope, because ComAtt will too vary across subjects
+
+```{r eval=FALSE}
+fit_eff3 <- brm(Eff ~ 1 + CommAtt + (1 + CommAtt | Participant), # note that there was a mistake before
+                data=final_data,
+                # Number of cores to use
+                cores = 4,)
+saveRDS(fit_eff3, here("06_Modeling", "models", "fit_eff3.rds"))
+
+beep(5)
+```
+
+
+```{r}
+
+fit_eff3 <- readRDS(here("06_Modeling", "models", "fit_eff3.rds"))
+
+summary(fit_eff3)
+
+plot(conditional_effects(fit_eff3), points = TRUE)
+# now the condidence intervals are much wider
+
+pp_check(fit_eff3, type = "dens_overlay")
+# not really improvement
+
+pp_check(fit_eff3, type = "error_scatter_avg")
+# blobby, but still very correlated
+
+```
+
+Now let's finally replicate our DAG
+```{r eval=FALSE}
+
+fit_eff4 <- brm(Eff ~ 1 + CommAtt + Familiarity + Big5 + Expressibility_z + TrialNumber_c + Modality + (1 | Participant) + (1 | Concept),
+                data = final_data,
+                cores = 4)
+
+saveRDS(fit_eff4, here("06_Modeling", "models", "fit_eff4.rds"))
+
+
+beep(5)
+
+```
+
+
+```{r}
+
+fit_eff4 <- readRDS(here("06_Modeling", "models", "fit_eff4.rds"))
+
+# summary
+summary(fit_eff4)
+# the coefficients again look similar to what we set in the data (except perhaps expressibility?)
+
+plot(fit_eff4)
+plot(conditional_effects(fit_eff4), points = TRUE)
+# the CrI are now again in sensible width
+
+pp_check(fit_eff4, type = "dens_overlay")
+# not really improvement
+
+pp_check(fit_eff4, type = "error_scatter_avg")
+# blobby, but still correlated
+
+# note that we are still missing proper non-def priors
+
+```
+
+## Model with vayring intercepts
+
+```{r eval=FALSE}
+
+fit_eff5 <- brm(Eff ~ 1 + CommAtt + Modality + (1 | Participant) + (1 | Concept) + (1 | Familiarity) + (1 | Big5) + (1 | Expressibility_z) + (1 | TrialNumber_c), 
+                data = final_data,
+                cores = 4)
+
+# NOTE: I accidentally rewrote fit5 with model fit6 so this will need to be re-run and re-saved
+
+saveRDS(fit_eff5, here("06_Modeling", "models", "fit_eff5.rds"))
+
+beep(5)
+
+```
+
+
+```{r}
+
+fit_eff5 <- readRDS(here("06_Modeling", "models", "fit_eff5.rds"))
+
+# summary
+summary(fit_eff5)
+# the coefficients again look similar to what we set in the data (except perhaps expressibility?)
+
+plot(fit_eff5)
+plot(conditional_effects(fit_eff5), points = TRUE)
+# the CrI are now again in sensible width
+
+pp_check(fit_eff5, type = "dens_overlay")
+# not really improvement
+
+pp_check(fit_eff5, type = "error_scatter_avg")
+# blobby, but still correlated
+
+```
+
+## Model with varying slopes and intercepts
+
+So we not only assume that different participants have different base level for effort. But also that they differently 'response' to the communicative attempt
+
+Same for familiarity, Big5, expressibility
+```{r eval=FALSE}
+
+fit_eff6 <- brm(Eff ~ 1 + CommAtt + Modality + (1 + CommAtt | Participant) + (1 | Concept) + (1 + CommAtt | Familiarity) + (1 + CommAtt | Big5) + (1 + CommAtt | Expressibility_z) + (1 | TrialNumber_c), 
+                data = final_data,
+                cores = 4)
+
+saveRDS(fit_eff6, here("06_Modeling", "models", "fit_eff6.rds"))
+beep(5)
+```
+
+
+```{r}
+
+fit_eff6 <- readRDS(here("06_Modeling", "models", "fit_eff6.rds"))
+
+# summary
+summary(fit_eff6)
+# not that there are troubles with convergence! (default priors)
+
+plot(fit_eff6)
+plot(conditional_effects(fit_eff6), points = TRUE)
+# looks ok
+
+pp_check(fit_eff6, type = "dens_overlay")
+# nice!!! this is definitely improvement
+
+pp_check(fit_eff6, type = "error_scatter_avg")
+# even this looks quite nice
+
+```
+
+# Priors
+
+Let's get some intuition going and plot our prior expectations
+
+
+Let's avoid flat priors so that we can help regularize the model. We can use some scientifically realistic ranges
+
+## Eff
+
+If CommAtt=1, Effort can be any positive number (depending on what is the feature)
+
+```{r}
+
+p1 <-
+  tibble(x = seq(from = 0, to = 5, by = .1)) %>% 
+  
+  ggplot(aes(x = x, y = dnorm(x, mean = 2.5, sd = 1))) +
+  geom_line() +
+  scale_x_continuous(breaks = seq(from = 0, to = 5, by = .5)) +
+  labs(title = "mu ~ dnorm(2.5, 1)",
+       y = "density")
+
+p1
+
+```
+
+## Beta (CommAtt)
+
+Beta can be go to either directions, but let's not expect they will go too crazy
+
+```{r}
+
+p2 <-
+  tibble(x = seq(from = -5, to = 5, by = .1)) %>% 
+  
+  geom_line() +
+  ggplot(aes(x = x, y = dnorm(x, mean = 0, sd = 1.5))) +
+  scale_x_continuous(breaks = seq(from = -4, to = 4, by = .5)) +
+  labs(title = "Beta ~ dnorm(0, 2)",
+       y = "density")
+
+p2
+
+```
+
+## sigma
+
+sd are positives
+
+sd of 10 is 100
+
+```{r}
+
+p3 <-
+  tibble(x = seq(from = -1, to = 6, by = .1)) %>% 
+  
+  ggplot(aes(x = x, y = dunif(x, min = 0, max = 5))) +
+  geom_line() +
+  scale_x_continuous(breaks = seq(from = 0, to = 5, by = .5)) +
+  labs(title = "Beta ~ dunif(0, 5)",
+       y = "density")
+
+p3
+
+
+```
+
+## Familiarity
+
+
+
+## Big5
+
+## Expressibility
+
+## TrialNum
+
+## Modality
+
+
+
+
+```{r}
+
+#(p1 + xlab("mu") | p2 + xlab("sigma")) / (p3 | p4)
+
+```
+Now we will try to fit the same model but with our priors
+```{r}
+
+# check what priors need to be specified
+get_prior(Eff ~ 1 + CommAtt + Modality + (1 + CommAtt | Participant) + (1 | Concept) + (1 + CommAtt | Familiarity) + (1 + CommAtt | Big5) + (1 + CommAtt | Expressibility_z) + (1 | TrialNumber_c),
+                prior = priors_eff7,
+                data = final_data)
+
+# Define the priors
+priors_eff7 <- c(
+  prior(normal(2.5, 1), class = "Intercept"),                    # Prior for the intercept (baseline Effort)
+  prior(normal(0, 1.5), class = "b", coef = "CommAtt2M1"),           # Prior for CommAtt level 2
+  prior(normal(0, 1.5), class = "b", coef = "CommAtt3M2"),           # Prior for CommAtt level 3
+  prior(normal(0, 0.5), class = "b", coef = "Modality1"),                # Prior for Modality level 1
+  prior(normal(0, 0.5), class = "b", coef = "Modality2"),                # Prior for Modality level 2
+  prior(normal(0, 0.5), class = "sd", group = "Participant"),      # Random effect for Participant (Intercept)
+  prior(normal(0, 0.5), class = "sd", group = "Concept"),          # Random effect for Concept (Intercept)
+  prior(normal(0, 0.5), class = "sd", group = "Familiarity"),     # Random effect for Familiarity (Intercept)
+  prior(normal(0, 0.5), class = "sd", group = "Big5"),            # Random effect for Big5 (Intercept)
+  prior(normal(0, 0.5), class = "sd", group = "Expressibility_z"), # Random effect for Expressibility (Intercept)
+  prior(normal(0, 0.5), class = "sd", group = "TrialNumber_c"),   # Random effect for Trial Number (Intercept)
+  prior(exponential(1), class = "sigma"),                           # Prior for residuals
+  prior(lkj(4), class = "cor")
+)
+
+```
+
+
+```{r}
+
+# fit model
+fit_ef7 <- brm(Eff ~ 1 + CommAtt + Modality + (1 + CommAtt | Participant) + (1 | Concept) + (1 + CommAtt | Familiarity) + (1 + CommAtt | Big5) + (1 + CommAtt | Expressibility_z) + (1 | TrialNumber_c), 
+                data = final_data,
+                prior = priors_eff7,
+                cores = 4)
+
+# summary
+summary(fit_ef7)
+# not that there are troubles with convergence! (default priors)
+
+plot(fit_ef7)
+# looks scheisse, divergent chains
+plot(conditional_effects(fit_ef7), points = TRUE)
+# nicht so gut
+
+pp_check(fit_ef7, type = "dens_overlay")
+# stays the same
+
+pp_check(fit_ef7, type = "error_scatter_avg")
+# 
+```
+
+Note that adding varying slope is maybe not necessary for all the current variables, namely Big5, Expressibility, TrialNumber and Familiarity.
+
+We need to have them in the model to avoid confounds (see DAG), but let's take them one by one
+
+1) Familiarity
+
+As it's influencing CommAtt and Effort, it should be there as fixed effect to block the causal path.
+
+We also expect different baselines of effort depending on how familiar two people are, so varying intercept is accurate for this
+
+Do we expect that familiarity affects people differently? Perhaps not necessarily. However, for some people it might be that familiarity leads to bigger willingness to be more effortful, for some it means that they know each other so well that they don't need to put so much effort into things (they are more conventional in a sense)
+
+There should also potentially be an interaction between Familiarity and CommAtt - high familiarity might produce high effort in first attempt, but in the following attempts there will be less needed
+
+so
+
++ Familiarity
++ (1 + CommAtt | Familiarity)
+
+2) Big5
+
+As it's influencing CommAtt and Effort, it should be there as fixed effect to block the causal path.
+
+We also expect different baselines of effort depending on how, for example, open people are, so that's why we go for varying intercept.
+
+Do we expect that personality traits affect people differently? Probably not
+
+so
+
++ Big5
++ (1 | Big5)
+
+3) Expressibility
+
+As it's influencing CommAtt and Effort, it should be there as fixed effect to block the causal path.
+
+Do we expect different baselines of effort depending on how the concept is expressible? Yes, probably
+
+Do we expect that expressibility could influence effort differently? Not sure
+
+```{r}
+
+
+priors_eff8 <- c(
+  prior(normal(2.5, 1), class = "Intercept"),                    # Prior for the intercept (baseline Effort)
+  prior(normal(0, 1.5), class = "b", coef = "CommAtt2M1"),           # Prior for CommAtt level 2
+  prior(normal(0, 1.5), class = "b", coef = "CommAtt3M2"),           # Prior for CommAtt level 3
+  prior(normal(0, 0.5), class = "b", coef = "Modality1"),                # Prior for Modality level 1
+  prior(normal(0, 0.5), class = "b", coef = "Modality2"),                # Prior for Modality level 2
+  prior(normal(0, 0.5), class = "b", coef = "Familiarity"),
+  prior(normal(0, 0.5), class = "b", coef = "Expressibility_z"),
+  prior(normal(0, 0.5), class = "b", coef = "Big5"),
+  prior(normal(0, 0.5), class = "sd", group = "Participant"),      # Random effect for Participant (Intercept)
+  prior(normal(0, 0.5), class = "sd", group = "Concept"),          # Random effect for Concept (Intercept)
+  prior(normal(0, 0.5), class = "sd", group = "Familiarity"),     # Random effect for Familiarity (Intercept)
+  prior(normal(0, 0.5), class = "sd", group = "Expressibility_z"), # Random effect for Expressibility (Intercept)
+  prior(normal(0, 0.5), class = "sd", group = "TrialNumber_c"),   # Random effect for Trial Number (Intercept)
+  prior(exponential(1), class = "sigma"),                           # Prior for residuals
+  prior(lkj(4), class = "cor")
+)
+
+fit_ef8 <- brm(Eff ~ 1 + CommAtt + Modality + Big5 + Familiarity + Expressibility_z +  (1 + CommAtt | Participant) + (1 | Concept) + (1 + CommAtt | Familiarity) + (1 | Big5) + (1 | Expressibility_z) + (1 | TrialNumber_c), 
+                data = final_data,
+                prior = priors_eff8,
+                cores = 4)
+
+
+# summary
+summary(fit_ef8)
+# not that there are troubles with convergence! (default priors)
+
+plot(fit_ef8)
+# looks scheisse, divergent chains
+plot(conditional_effects(fit_ef8), points = TRUE)
+# nicht so gut
+
+pp_check(fit_ef8, type = "dens_overlay")
+# stays the same
+
+pp_check(fit_ef8, type = "error_scatter_avg")
+# 
+```
+
+
+## Prior predictive check
+```{r}
+
+fit_ef8_prior <- brm(Eff ~ 1 + CommAtt + Modality + Big5 + Familiarity + Expressibility_z +  (1 + CommAtt | Participant) + (1 | Concept) + (1 + CommAtt | Familiarity) + (1 | Big5) + (1 | Expressibility_z) + (1 | TrialNumber_c), 
+                data = final_data,
+                prior = priors_eff8,
+                sample_prior = "only",
+                cores = 4)
+
+
+summary(fit_ef8_prior)
+pp_check(fit_ef8_prior)
+
+plot(conditional_effects(fit_ef8_prior), points = TRUE)
+
+
+```
+
+## Compare priors with posterior
+
+```{r}
+
+# Load the bayesplot package
+library(bayesplot)
+
+# Plot the posterior distributions from the fitted model
+posterior <- as_draws_array(fit_ef8)
+mcmc_areas(posterior, 
+           pars = c("b_Intercept", "b_CommAtt2M1", "b_CommAtt3M2", "b_Modality1", 
+                    "b_Modality2", "b_Big5", "b_Familiarity", "b_Expressibility_z"))
+
+# Plot the prior distributions
+prior <- as_draws_array(fit_ef8_prior)
+mcmc_areas(prior, 
+           pars = c("b_Intercept", "b_CommAtt2M1", "b_CommAtt3M2", "b_Modality1", 
+                    "b_Modality2", "b_Big5", "b_Familiarity", "b_Expressibility_z"))
+
+```
+
+Plot them together
+```{r}
+
+# Load the necessary libraries
+library(bayesplot)
+library(brms)
+
+# Extract posterior draws (from the fitted model)
+posterior <- as_draws_df(fit_ef8)
+
+# Extract prior draws (from the prior-only model)
+prior <- as_draws_df(fit_ef8_prior)
+
+# Choose parameters to plot, e.g., intercept and fixed effects
+params <- c("b_Intercept", "b_CommAtt2M1", "b_CommAtt3M2", 
+            "b_Modality1", "b_Modality2", "b_Big5", "b_Familiarity", "b_Expressibility_z")
+
+# Plot priors vs posteriors
+color_scheme_set("mix-blue-red")
+mcmc_areas(posterior, pars = params, prob = 0.8, point_est = "mean") +
+  mcmc_areas(prior, pars = params, prob = 0.8, point_est = "mean", color = "red") +
+  ggtitle("Prior vs Posterior Distributions") +
+  theme_minimal()
+
+
+```
+
+Let's do the same model, but familiarity will not have varying slope
+```{r}
+
+fit_eff9 <- brm(Eff ~ 1 + CommAtt + Modality + Big5 + Familiarity + Expressibility_z +  (1 + CommAtt | Participant) + (1 | Concept)  + (1 | Expressibility_z) + (1 | TrialNumber_c), 
+                data = final_data,
+                prior = priors_eff8,
+                cores = 4)
+
+```
+
+
+
+Ok now I am making a bit better sense of it
+
+so we definitely have our main predictor CommAtt
+
+We have other predictors that we believe moderate the effect - that is modality, familiarity, expressibility, big5
+
+we want to have also varying intercept and slope for some
+
+- participants - because we believe that their baseline effort varies, and that the effect of commatt on eff might vary across them
+
+- same for concepts
+
+we want to have varying intercept for TrialNumber because there might be variation between earlier and later performances (either learning, or fatigue)
+
+```{r}
+
+# Define the priors using Student's t-distribution for fixed effects
+priors_eff9 <- c(
+  # Prior for the intercept
+  set_prior("student_t(3, 2.5, 1)", class = "Intercept"),
+  
+  # Priors for the main effects using Student's t-distribution
+  set_prior("student_t(3, 0, 2.5)", class = "b", coef = "CommAtt2M1"),
+  set_prior("student_t(3, 0, 2.5)", class = "b", coef = "CommAtt3M2"),
+  set_prior("student_t(3, 0, 1.5)", class = "b", coef = "Modality1"),
+  set_prior("student_t(3, 0, 1.5)", class = "b", coef = "Modality2"),
+  set_prior("student_t(3, 0, 1)", class = "b", coef = "Big5"),
+  set_prior("student_t(3, 0, 1)", class = "b", coef = "Familiarity"),
+  set_prior("student_t(3, 0, 2.5)", class = "b", coef = "Expressibility_z"),
+  set_prior("normal(0, 0.5)", class = "sd", group = "TrialNumber_c"),   # Random effect for Trial Number (Intercept)
+
+  # Varying effects for Participant (keeping as Cauchy)
+  set_prior("cauchy(0, 1)", class = "sd", group = "Participant"),
+  
+  # Varying effects for Concept (keeping as Cauchy)
+  set_prior("cauchy(0, 1)", class = "sd", group = "Concept"),
+  
+  # Priors for random effects standard deviations (Cauchy)
+  set_prior("cauchy(0, 1)", class = "sd"),
+  
+  # Prior for residual standard deviation (sigma)
+  set_prior("exponential(1)", class = "sigma"),
+  prior("lkj(1)", class = "cor")
+)
+
+
+fit_eff9 <- brm(Eff ~ 1 + CommAtt + Modality + Big5 + Familiarity + Expressibility_z +  (1 + CommAtt | Participant) + (1 + CommAtt | Concept) + (1 | TrialNumber_c), 
+                data = final_data,
+                prior=priors_eff9,
+                cores = 4)
+
+summary(fit_eff9)
+
+plot(fit_eff9)
+# this looks okay but our correlation still looks somewhat weird, causing low Bulk ESS - we will need to boost te lkj prior
+plot(conditional_effects(fit_eff9), points = TRUE)
+
+
+pp_check(fit_eff9, type = "dens_overlay")
+# stays the same
+
+pp_check(fit_eff9, type = "error_scatter_avg")
+
+prior_summary(fit_eff9)
+
+```
+
+## Where to next
+
+What are potential interactions?
+
+- Modality*Expressibility (only highly expressive concepts might give modality the power to affect effort)
+- Big5*Modality (only in vocal modality traits could matter)
+- Big5 and/or Familiarity * CommAtt
+
+Nesting
+
+Dyad:Participant
+Modality:Concept
+Modality:Expressibility
+- 
+
+possibly change family to student ,  family = student,
