@@ -1,0 +1,171 @@
+word,answer,exp,English
+bloem,feest,1,flower
+dansen,juichen,1,to dance
+bitter,lekker,1,bitter
+vechten,schieten,1,to fight
+ademen,ademen,1,to breathe
+bijten,zombie,1,to bite
+zoemen,bij,1,buzz
+fluisteren,zee,1,to whisper
+walgen,vies,1,disgusted
+langzaam,lekker,1,slow
+auto,auto,1,car
+eten,eten,1,to eat
+ei,eten,1,egg
+zwemmen,waaien,1,to swim
+snel,waterslang,1,fast
+regen,waterslang,1,rain
+boos,ergeren,1,angry
+luidruchtig,lawaai maken,1,noisy
+luidruchtig,lawaai maken,1,loud
+snel,wegrennen,1,fast
+olifant,olifant,1,elephant
+verdrietig,huilen,1,sad
+koud,koud,1,cold
+staan,outfit,1,to stand
+stil,stilte,1,silent
+lopen,skiën,1,to walk
+bang,fout,1,scared
+gooien,basketballen,1,to throw
+haasten,zoeken,1,to hurry
+gek,gestoord,1,crazy
+rennen,rennen,1,to run
+likken,likken,1,to lick
+klein,liften,1,small
+onweer,bliksemen,1,thunder
+man,nadenken,1,male
+springen,springen,1,to jump
+langzaam,vallen,1,slow
+snijden,schrijven,1,to cut
+comfortabel,dansen,1,comfortable
+kind,schouderhoogte,1,child
+hoorn,hoorn,1,horn
+kotsen,vies,1,to vomit
+dood,saai,1,dead
+drinken,drinken,1,to drink
+sterk,sterk,1,strong
+oud,bejaard,1,old
+koken,mixen,1,to cook
+slang,vis,1,snake
+slang,vis,1,snake
+zuur,vies,1,sour
+niet,fout,1,not
+weten,slim,1,to know
+slaan,boksen,1,to hit
+slaan,boksen,1,to beat
+hond,hond,1,dog
+vangen,vangen,1,to catch
+juichen,juichen,2,to cheer
+zingen,zingen,2,to sing
+vrouw,zwanger,2,female
+vrouw,haar,2,female
+vrouw,douchen,2,female
+verbranden,pijn,2,to burn
+verbranden,verbrand,2,to burn
+verbranden,heet,2,to burn
+ik,ik,2,I
+kauwen,kauwen,2,to chew
+vliegen,vogel,2,to fly
+vliegen,vliegtuig,2,to fly
+vliegen,vliegen,2,to fly
+misschien,denken,2,maybe
+misschien,kiezen,2,maybe
+misschien,twijfelen,2,maybe
+bliksem,graffiti,2,lightning
+bliksem,vuurwerk,2,lightning
+bliksem,bom,2,lightning
+glimlach,glimlachen,2,smile
+glimlach,lachen,2,smile
+glimlach,glimlach,2,smile
+klok,klok,2,clock
+groot,verwonderen,2,big
+groot,hoogte,2,big
+groot,groot,2,big
+hoog,hoogte,2,high
+hoog,ruimte,2,high
+hoog,verkijken,2,high
+blij,wachten,2,happy
+blij,tevreden,2,happy
+blij,gelukkig,2,happy
+vis,vis,2,fish
+ruiken,ruiken,2,to smell
+wind,wind,2,wind
+heet,pijn,2,hot
+heet,verbranden,2,hot
+heet,heet,2,hot
+fiets,fietsen,2,bicycle
+vliegtuig,vliegen,2,airplane
+vliegtuig,vliegtuig,2,airplane
+vogel,vogel,2,bird
+kruipen,kruipen,2,to crawl
+water,drinken,2,water
+water,waterval,2,water
+water,water,2,water
+vuur,vuur,2,fire
+goed,top,2,good
+goed,goed,2,good
+horen,horen,2,to hear
+ver,wijzen,2,far
+ver,afstand,2,far
+ver,daar,2,far
+geheim,fluisteren,2,secret
+geheim,stil,2,secret
+geheim,zwijgen,2,secret
+telefoon,telefoon,2,telephone
+blazen,blazen,2,to blow
+geven,uitdelen,2,to give
+geven,geven,2,to give
+kat,kat,2,cat
+lachen,lachen,2,to laugh
+zoet,lekker,2,sweet
+zoet,eten,2,sweet
+zoet,jammie,2,sweet
+slapen,slapen,2,to sleep
+berg,berg,2,mountain
+ziek,vies,2,sick
+ziek,kotsen,2,sick
+ziek,walgen,2,sick
+zwaaien,groet,2,to wave
+zwaaien,hallo,2,to wave
+zwaaien,gedag,2,to wave
+geur,ruiken,2,odor
+geur,neus,2,odor
+geur,geur,2,odor
+vlieg,vliegen,2,fly
+vlieg,vuurwerk,2,fly
+vlieg,blazen,2,fly
+scherp,snijden,2,sharp
+scherp,pijn,2,sharp
+scherp,heet,2,sharp
+staart,slurpen,2,tail
+staart,gooien,2,tail
+staart,vallen,2,tail
+vallen,vallen,2,to fall
+piepen,fluit,2,squeak
+piepen,hartslag,2,squeak
+piepen,muis,2,squeak
+jagen,slaan,2,to hunt
+jagen,vangen,2,to hunt
+jagen,pakken,2,to hunt
+bal,gooien,2,ball
+bal,vallen,2,ball
+bal,afschieten,2,ball
+sneeuw,circus,2,snow
+sneeuw,slurf,2,snow
+sneeuw,vallen,2,snow
+zwaar,vechten,2,heavy
+zwaar,pijn,2,heavy
+zwaar,openduwen,2,heavy
+grommen,grommen,2,to growl
+zout,snijden,2,salt
+zout,eten,2,salt
+zout,mes,2,salt
+zuigen,slurpen,2,to suck
+zuigen,drinken,2,to suck
+zuigen,drink,2,to suck
+dik,eten,2,thick
+dik,heerlijk,2,thick
+dik,lekker,2,thick
+ziek,hoesten,2,sick
+ziek,ziek,2,sick
+huilen,huilen,2,to cry

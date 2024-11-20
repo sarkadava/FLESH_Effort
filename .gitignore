@@ -1,28 +1,19 @@
 
 *.json
 *.avi
-/TS_processing/P0
 *.mp4
-/TS_processing/TS_merged
 *.jpg
 *.pfsx
-/TS_processing/Audio
 *.wav
-03_ConceptSimilarity/numberbatch-en.txt
-03_ConceptSimilarity/numberbatch.txt
+*.xdf
+06_ConceptSimilarity/numberbatch
 
 
 /.quarto/
 /04_TS_movementAnnotation
 /09_Modeling
-/08_XGBoost
 /07_TS_featureExtraction
 /05_finalMerge
 /06_Modeling/models
 /02_1_TS_movementClassification
 /01_XDF_processing/data/Data_processed
-06_ConceptSimilarity/numberbatch-en.txt
-06_ConceptSimilarity/numberbatch.txt
-06_ConceptSimilarity/numberbatch-en-19.08.txt.gz
-*.xdf
-/03_TS_processing/TS_acoustics

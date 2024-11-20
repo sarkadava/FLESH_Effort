@@ -1,0 +1,1722 @@
+---
+title: "Bridging the Gap 2.0: Exploring a Middle-Way Approach for Prosodic Annotation"
+author: "Aleksandra Ćwiek, Alina Gregori, Paula G. Sánchez-Ramón, Frank Kügler, Pilar Prieto"
+date: "2024-06-20"
+output:
+  html_document:
+    number_sections: yes
+    toc: yes
+    toc_depth: 4
+    toc_float: yes
+    df_print: paged
+  pdf_document:
+    number_sections: yes
+    toc: yes
+    toc_depth: '3'
+  html_notebook:
+    number_sections: yes
+    toc: yes
+    toc_depth: 3
+    toc_float: yes
+editor_options: 
+  chunk_output_type: console
+  markdown: 
+    wrap: 72
+bibliography: references.bib
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Introduction
+
+This is the analysis using random forests and XGBoost algorithms.
+
+# Data preparation
+
+## Source setup
+
+```{r source setup, echo = TRUE, message=FALSE, warning = FALSE}
+
+########## folders ##########
+# current folder (first go to session -> set working directory -> to source file location)
+parentfolder <- dirname(getwd())
+
+data          <- paste0(parentfolder, '/MultIS_data/')
+audiodata     <- paste0(parentfolder, '/audio_processed/')
+syllables     <- paste0(audiodata,    'syllables/')
+dataworkspace <- paste0(parentfolder, '/data_processed/')
+datamerged    <- paste0(parentfolder, '/data_merged/')
+datasets      <- paste0(parentfolder, '/datasets/')
+models        <- paste0(parentfolder, '/models/')
+plots         <- paste0(parentfolder, '/plots/')
+scripts       <- paste0(parentfolder, '/scripts/')
+
+########## source file ##########
+
+#source(paste0(scripts, "adjectives-preparation.R"))
+
+#################### packages ####################
+# Data Manipulation
+library(tibble)
+library(stringr)
+library(tidyverse) # includes readr, tidyr, dplyr, ggplot2
+library(data.table)
+
+# Plotting
+library(ggforce)
+library(ggpubr)
+library(gridExtra)
+
+# Random Forests and XGBoost
+library(rpart)
+library(rpart.plot)
+library(ranger)
+library(tuneRanger)
+library(caret)
+library(xgboost)
+library(parallel)
+library(mice)
+library(doParallel)
+# use all available cores for parallel computing
+options(mc.cores = parallel::detectCores())
+
+colorBlindBlack8  <- c("#000000", "#E69F00", "#56B4E9", "#009E73", 
+                       "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+
+```
+
+## Load in data frames
+
+```{r read metadata, echo=TRUE, message=FALSE, warning=FALSE}
+participant_info <- read_delim(paste0(data,"ParticipantInfo_GERCAT.csv"), delim = ";")
+
+# Load the information about duration of each segment (if needed)
+data_df <- read.table(paste0(syllables, "fileDurationsDF.csv"), header = TRUE, sep = ',')
+
+# Load cleaned syllable data
+data <- read_csv(paste0(datasets, "data_cleaned.csv"))
+
+# Load cleaned targets data
+targets <- read_csv(paste0(datasets, "targets.csv"))
+
+# Load cleaned targets with pre-post data
+data_prepost <- read_csv(paste0(datasets, "data_prepost.csv"))
+```
+
+## You can add participant info
+
+```{r metadata merge, echo=TRUE, message=FALSE, warning=FALSE}
+# Process participant_info so that participant number column is only number
+participant_info$Participant <- parse_number(participant_info$Participant)
+
+# Merge the dataframes by "Participant" and "Language"
+# Exchange META to the dataframe of your liking
+# META <- merge(META, participant_info, by = c("Participant", "Language"), all.x = TRUE)
+
+```
+
+# Data preparation
+
+Inspect the data and convert to factors, if needed. Then split in two
+languages. We are interested in tonic and pre- and posttonic syllables,
+so we take the prepost data.
+
+```{r inspect data, echo=TRUE, message=FALSE, warning=FALSE}
+str(data_prepost)
+
+# Turn percProm to factor
+data_prepost$percProm <- as.factor(data_prepost$percProm)
+
+# First, remove the specified columns
+data_prepost <- data_prepost %>%
+  select(-f1_freq_median, -f1_freq_median_norm, -f2_freq_median, -f2_freq_median_norm, 
+         -f1_freq_medianPre, -f1_freq_median_normPre, -f2_freq_medianPre, -f2_freq_median_normPre, 
+         -f1_freq_medianPost, -f1_freq_median_normPost, -f2_freq_medianPost, -f2_freq_median_normPost,
+         -pitch_sd, -pitch_median, -f0_slope, -pitch_sdPre, -pitch_medianPre, -f0_slopePre, 
+         -pitch_sdPost, -pitch_medianPost, -f0_slopePost)
+
+# Then, rearrange the remaining columns
+data_prepost <- data_prepost %>%
+  select(fileName, language, participant, itemType, itemNum, focus, annotationNum, 
+         annotationNumTarget, word, syllText, syllTextPre, syllTextPost, percProm, 
+         duration, duration_noSilence, ampl_median, ampl_noSilence_median, env_slope, pitch_median_norm, 
+         pitch_sd_norm, f0_slope_norm, specCentroid_median, entropy_median, HNR_median, amEnvDep_median, fmDep_median, 
+         durationPre, duration_noSilencePre, ampl_medianPre, ampl_noSilence_medianPre, env_slopePre, 
+         pitch_median_normPre, pitch_sd_normPre, f0_slope_normPre, specCentroid_medianPre, entropy_medianPre, 
+         HNR_medianPre, amEnvDep_medianPre, fmDep_medianPre, durationPost, duration_noSilencePost, ampl_medianPost, ampl_noSilence_medianPost, 
+         env_slopePost, pitch_median_normPost, pitch_sd_normPost, f0_slope_normPost, 
+         specCentroid_medianPost, entropy_medianPost, HNR_medianPost, amEnvDep_medianPost, fmDep_medianPost)
+
+
+# Create data_prepost_german for rows where language is German
+data_prepost_ger <- data_prepost %>% 
+  filter(language == "German")
+
+# Create data_prepost_catalan for rows where language is Catalan
+data_prepost_cat <- data_prepost %>% 
+  filter(language == "Catalan")
+```
+
+## German
+
+### Decision tree
+
+Build a decision tree model using the 'rpart' function.
+
+```{r decision tree ger, echo=TRUE, message=FALSE, warning=FALSE}
+gerTree <- rpart(
+  formula = percProm ~ duration + ampl_median  + env_slope + 
+                      pitch_median_norm + pitch_sd_norm + f0_slope_norm + specCentroid_median + entropy_median + 
+                      HNR_median + amEnvDep_median + fmDep_median + durationPre +  
+                      ampl_medianPre + env_slopePre + pitch_median_normPre + 
+                      pitch_sd_normPre + f0_slope_normPre + specCentroid_medianPre + entropy_medianPre + 
+                      HNR_medianPre + amEnvDep_medianPre + fmDep_medianPre + durationPost + 
+                      ampl_medianPost + env_slopePost + pitch_median_normPost + 
+                      pitch_sd_normPost + f0_slope_normPost + specCentroid_medianPost + entropy_medianPost + 
+                      HNR_medianPost + amEnvDep_medianPost + fmDep_medianPost,  # Formula for the model
+  data = data_prepost_ger,  # Dataset containing the variables
+  method = "class",   # Specify that it's a classification tree
+  control = rpart.control(maxdepth = 5)  # Control parameters for the 'rpart' function
+)
+
+prp(
+  gerTree,         # The decision tree object to be visualized
+  extra = 1,      # Show extra information (like node statistics) in the plot
+  varlen = 0,     # Length of variable names (0 means auto-determined)
+  faclen = 0     # Length of factor levels displayed on the plot (increase as needed)
+)
+
+# See what happens if we add clearly correlated variables (noSilences)
+gerTree1 <- rpart(
+  formula = percProm ~ duration + duration_noSilence + ampl_median + ampl_noSilence_median + env_slope + 
+                      pitch_median_norm + pitch_sd_norm + f0_slope_norm + specCentroid_median + entropy_median + 
+                      HNR_median + amEnvDep_median + fmDep_median + durationPre + duration_noSilencePre + 
+                      ampl_medianPre + ampl_noSilence_medianPre + env_slopePre + pitch_median_normPre + 
+                      pitch_sd_normPre + f0_slope_normPre + specCentroid_medianPre + entropy_medianPre + 
+                      HNR_medianPre + amEnvDep_medianPre + fmDep_medianPre + durationPost + duration_noSilencePost + 
+                      ampl_medianPost + ampl_noSilence_medianPost + env_slopePost + pitch_median_normPost + 
+                      pitch_sd_normPost + f0_slope_normPost + specCentroid_medianPost + entropy_medianPost + 
+                      HNR_medianPost + amEnvDep_medianPost + fmDep_medianPost,
+  data = data_prepost_ger,
+  method = "class",
+  control = rpart.control(maxdepth = 5)
+)
+
+prp(
+  gerTree1,
+  extra = 1,
+  varlen = 0,
+  faclen = 0
+)
+
+```
+
+### Random forest
+
+We will build a random forest first.
+
+```{r set seed, echo=TRUE, message=FALSE, warning=FALSE}
+set.seed(998) # Set a seed for reproducibility
+```
+
+#### Omit NA
+
+Try NA omission first. Then, we will try
+
+Split the data.
+
+```{r split data ger, echo=TRUE, message=FALSE, warning=FALSE}
+# First, exclude rows with NAs across columns 13 to 61 in data_prepost_ger because RF cannot deal with that
+data_prepost_ger_clean <- data_prepost_ger[complete.cases(data_prepost_ger[, 13:52]), ]
+
+# Split the data into training and testing subsets
+sample_indices <- sample(1:nrow(data_prepost_ger_clean), 0.7*nrow(data_prepost_ger_clean)) # 70% training, 30% testing
+train_data <- data_prepost_ger_clean[sample_indices, ]
+test_data <- data_prepost_ger_clean[-sample_indices, ]
+```
+
+Building the untuned model.
+
+```{r untuned ger, echo=TRUE, message=FALSE, warning=FALSE}
+# Untuned Model with importance (permutation) option set
+gerUntuned <- ranger(
+  y = train_data$percProm,
+  x = train_data[,14:52],
+  num.trees = 500,
+  importance = "permutation"
+)
+
+predictions <- predict(gerUntuned, data = test_data)$predictions
+
+# Create a confusion matrix
+confusion_matrix <- confusionMatrix(predictions, test_data$percProm)
+
+# Print the confusion matrix
+print(confusion_matrix)
+
+# Calculate feature importance
+feature_importance <- importance(gerUntuned, num.threads = 1, type = 1) 
+
+# Convert to data frame
+feature_importance <- as.data.frame(feature_importance, stringsAsFactors = FALSE)
+feature_importance$Feature <- rownames(feature_importance)
+colnames(feature_importance) <- c("Importance", "Feature")
+
+# Sort by importance
+sorted_feature_importance <- feature_importance[order(-feature_importance$Importance), ]
+
+# Print sorted feature importance
+print(sorted_feature_importance)
+```
+
+Set the parameters for the random forest.
+
+```{r settings for RF ger, echo=TRUE, message=FALSE, warning=FALSE}
+# Define the number of CPU cores to use
+num_cores <- detectCores()
+
+# Create a cluster with specified number of cores
+cl <- makeCluster(num_cores)
+```
+
+Tuning the random forest.
+
+```{r tuning RF ger, message=FALSE, warning=FALSE}
+tuneGer <- makeClassifTask(data = data_prepost_ger_clean[,13:52],
+                           target = "percProm")
+
+tuneGer <- tuneRanger(tuneGer,
+                      measure = list(multiclass.brier),
+                      num.trees = 500)
+
+#Return hyperparameter values
+tuneGer
+## Ola: ALWAYS REPORT THOSE BECAUSE THEY ARE DIFFERENT EVERY TIME BC OF RANDOMIZATION
+# Recommended parameter settings: 
+#   mtry min.node.size sample.fraction
+# 1   12             2       0.6944034
+# Results: 
+#   multiclass.brier exec.time
+# 1        0.4360762     0.638
+
+gerTuned <- ranger(
+  y = train_data$percProm,
+  x = train_data[,14:52], 
+  num.trees = 5000, 
+  mtry = 12, # Set the recommended mtry value (number of features).
+  min.node.size = 2, # Set the recommended min.node.size value (number of samples before a node terminates).
+  sample.fraction = 0.6944034, # Set the recommended sample fraction value.(% of data for bagging).
+  importance = "permutation" # Permutation is a computationally intensive test.
+)
+
+predictions <- predict(gerTuned, data = test_data)$predictions
+
+# Create a confusion matrix
+confusion_matrix <- confusionMatrix(predictions, test_data$percProm)
+
+# Print the confusion matrix
+print(confusion_matrix)
+
+# Calculate feature importance
+feature_importance <- importance(gerTuned, num.threads = 1, type = 1) 
+
+# Convert to data frame
+feature_importance <- as.data.frame(feature_importance, stringsAsFactors = FALSE)
+feature_importance$Feature <- rownames(feature_importance)
+colnames(feature_importance) <- c("Importance", "Feature")
+
+# Sort by importance
+sorted_feature_importance <- feature_importance[order(-feature_importance$Importance), ]
+
+# Print sorted feature importance
+print(sorted_feature_importance)
+
+
+# Close the cluster when you're done with your parallel tasks
+#stopCluster(cl)
+```
+
+#### Imputation
+
+```{r imputation ger, echo=TRUE, message=FALSE, warning=FALSE}
+# First, impute missing values for columns 13 to 52 in data_prepost_ger
+data_prepost_ger_clean <- data_prepost_ger
+
+# Define the modes function
+modes <- function(x) {
+  uniq_x <- unique(x)
+  uniq_x[which.max(tabulate(match(x, uniq_x)))]
+}
+
+# Imputation by mean grouped by language, participant, and focus
+data_prepost_ger_clean <- data_prepost_ger_clean %>%
+  group_by(language, participant, focus) %>%
+  mutate(across(where(is.numeric), ~ ifelse(is.na(.), mean(., na.rm = TRUE), .))) %>%
+  mutate(across(where(is.character), ~ ifelse(is.na(.), as.character(modes(.)), .))) %>%
+  ungroup()
+
+# Split the data into training and testing subsets
+sample_indices <- sample(1:nrow(data_prepost_ger_clean), 0.7 * nrow(data_prepost_ger_clean)) # 70% training, 30% testing
+train_data <- data_prepost_ger_clean[sample_indices, ]
+test_data <- data_prepost_ger_clean[-sample_indices, ]
+```
+
+Create a tuned model only.
+
+```{r tuned model imputed ger, echo=TRUE, message=FALSE, warning=FALSE}
+# Create a classification task for tuning
+tuneGer <- makeClassifTask(data = train_data[, 13:52], target = "percProm")
+
+# Tune the model
+tuneGer <- tuneRanger(tuneGer, measure = list(multiclass.brier), num.trees = 500)
+
+# Return hyperparameter values
+tuneGer
+# Recommended parameter settings: 
+#   mtry min.node.size sample.fraction
+# 1    5             2       0.4882922
+# Results: 
+#   multiclass.brier exec.time
+# 1        0.4719156     0.564
+
+# Fit the tuned model on the training data
+gerTuned <- ranger(
+  y = train_data$percProm,
+  x = train_data[, 14:52],
+  num.trees = 5000,
+  mtry = 5,
+  min.node.size = 2,
+  sample.fraction = 0.4882922,
+  importance = "permutation"
+)
+
+# Predict on the test data
+predictions <- predict(gerTuned, data = test_data)$predictions
+
+# Create a confusion matrix
+confusion_matrix <- confusionMatrix(predictions, test_data$percProm)
+
+# Print the confusion matrix
+print(confusion_matrix)
+
+# Calculate feature importance
+feature_importance <- importance(gerTuned, num.threads = 1, type = 1)
+
+# Convert to data frame
+feature_importance_df <- as.data.frame(feature_importance, stringsAsFactors = FALSE)
+feature_importance_df$Feature <- rownames(feature_importance_df)
+colnames(feature_importance_df) <- c("Importance", "Feature")
+
+# Sort by importance
+sorted_feature_importance <- feature_importance_df[order(-feature_importance_df$Importance), ]
+
+# Print sorted feature importance
+print(sorted_feature_importance)
+
+# Close the cluster when you're done with your parallel tasks
+#stopCluster(cl)
+```
+
+#### Model performance
+
+**NA Omission Model:**
+
+-   Accuracy: 0.6844
+-   Kappa: 0.2091
+-   Balanced Accuracy:
+  -   Class 1: 0.6343
+  -   Class 2: 0.5740
+  -   Class 3: 0.5315
+
+**Imputed Values Model:**
+
+-   Accuracy: 0.6165
+-   Kappa: 0.2102
+-   Balanced Accuracy:
+  -   Class 1: 0.6234
+  -   Class 2: 0.5974
+  -   Class 3: 0.5173
+
+**Analysis:**
+
+The NA omission model has a slightly higher overall accuracy (0.6844 vs. 0.6165) and comparable Kappa (0.2091 vs. 0.2102). However, the balanced accuracy for Class 2 is higher in the imputed values model, indicating better performance for that specific class.
+
+**Recommendation:** Given the balanced performance and handling of missing data, the Imputed Values Model is recommended. Despite its slightly lower overall accuracy, it performs better for specific classes and maintains data integrity. Imputation allows us to retain more data, which can enhance the model's robustness and generalizability, particularly important in datasets with significant missing values. This approach avoids the bias introduced by complete case analysis and leverages the available data more effectively.
+
+#### Imputation with MICE
+
+MICE (Multiple Imputation by Chained Equations) is a robust method used to handle missing data by generating multiple imputed datasets and then combining the results. It works by iteratively imputing missing values for each variable, using a predictive model based on the other variables in the dataset. This method allows for the uncertainty of missing data by creating several different plausible imputed datasets and combining their results.
+
+To adapt MICE imputation for grouping by language, participant, and focus, we perform the imputation within each group separately. This can be done by splitting the data into groups, applying MICE to each group, and then combining the imputed datasets. This takes a good while.
+
+```{r MICE ger, echo=TRUE, message=FALSE, warning=FALSE, eval = FALSE}
+# Function to apply MICE within each group with detailed logging
+impute_group <- function(df) {
+  if (nrow(df) > 1) {
+    tryCatch({
+      imputed <- mice(df, m = 5, method = 'pmm', seed = 998, printFlag = FALSE)
+      complete_data <- complete(imputed)
+      return(complete_data)
+    }, error = function(e) {
+      message("Error in MICE imputation: ", e)
+      return(df)  # Return original data if imputation fails
+    })
+  } else {
+    # If not enough rows, return the original data frame
+    return(df)
+  }
+}
+
+# Split data by language and participant
+data_prepost_ger_clean <- data_prepost_ger %>%
+  group_by(language, participant) %>%
+  group_split()
+
+# Apply imputation to each group and combine the results
+imputed_data_list <- lapply(data_prepost_ger_clean, impute_group)
+imputed_data <- bind_rows(imputed_data_list)
+
+# Check for any remaining NAs in the dataset
+na_columns_after_imputation <- sapply(imputed_data, function(x) sum(is.na(x)))
+na_columns_after_imputation <- na_columns_after_imputation[na_columns_after_imputation > 0]
+
+# Print the columns with remaining NA values (if any) and the number of NA values in each
+print(na_columns_after_imputation)
+
+# If there are still NAs, apply mice again on the combined dataset
+if (length(na_columns_after_imputation) > 0) {
+  # Apply MICE imputation again on the combined dataset
+  imputed <- mice(imputed_data, m = 5, method = 'pmm', seed = 998, printFlag = FALSE)
+  imputed_data <- complete(imputed)
+  # Remove intermediate MICE object
+  rm(imputed)
+}
+
+# Check again for any remaining NAs in the dataset
+na_columns_final_check <- sapply(imputed_data, function(x) sum(is.na(x)))
+na_columns_final_check <- na_columns_final_check[na_columns_final_check > 0]
+
+# Print the columns with remaining NA values (if any) and the number of NA values in each
+print(na_columns_final_check)
+
+# Complete the dataset
+data_prepost_ger_clean <- imputed_data
+
+# Remove the final imputed data frame to clean up environment
+rm(imputed_data, na_columns_final_check, imputed_data_list, na_columns_after_imputation)
+
+```
+
+
+```{r tune RF MICE ger, echo=TRUE, message=FALSE, warning=FALSE}
+set.seed(998)
+
+# Split the data into training and testing subsets
+sample_indices <- sample(1:nrow(data_prepost_ger_clean), 0.7 * nrow(data_prepost_ger_clean)) # 70% training, 30% testing
+train_data <- data_prepost_ger_clean[sample_indices, ]
+test_data <- data_prepost_ger_clean[-sample_indices, ]
+
+# Create a classification task for tuning
+tuneGer <- makeClassifTask(data = train_data[, 13:52], target = "percProm")
+
+# Tune the model
+tuneGer <- tuneRanger(tuneGer, measure = list(multiclass.brier), num.trees = 500)
+
+# Return hyperparameter values
+tuneGer
+# Recommended parameter settings: 
+#   mtry min.node.size sample.fraction
+# 1    8             2       0.4986011
+# Results: 
+#   multiclass.brier exec.time
+# 1        0.4779504     1.034
+
+# Fit the tuned model on the training data
+gerTuned <- ranger(
+  y = train_data$percProm,
+  x = train_data[, 14:52],
+  num.trees = 5000,
+  mtry = 8,
+  min.node.size = 2,
+  sample.fraction = 0.4986011,
+  importance = "permutation"
+)
+
+# Predict on the test data
+predictions <- predict(gerTuned, data = test_data)$predictions
+
+# Create a confusion matrix
+confusion_matrix <- confusionMatrix(predictions, test_data$percProm)
+
+# Print the confusion matrix
+print(confusion_matrix)
+
+# Calculate feature importance
+feature_importance <- importance(gerTuned, num.threads = 1, type = 1)
+
+# Convert to data frame
+feature_importance_df <- as.data.frame(feature_importance, stringsAsFactors = FALSE)
+feature_importance_df$Feature <- rownames(feature_importance_df)
+colnames(feature_importance_df) <- c("Importance", "Feature")
+
+# Sort by importance
+sorted_feature_importance <- feature_importance_df[order(-feature_importance_df$Importance), ]
+
+# Print sorted feature importance
+print(sorted_feature_importance)
+```
+
+**MICE Imputation Model**
+-   Accuracy: 0.6236
+-   Kappa: 0.2335
+-   Balanced Accuracy: Generally higher across all classes.
+-   Overall Statistics:
+  -   Sensitivity: Highest for Class 2.
+  -   Specificity: Highest for Class 0.
+  -   Pos Pred Value: Highest for Class 2, very low for others.
+
+**NA Omission Model:**
+Higher accuracy but lower balanced accuracy and Kappa suggest it performs well on the majority class but poorly on minority classes.
+
+**Original Imputation Model:**
+Slightly lower accuracy but better balanced accuracy indicates a more reliable performance across all classes.
+
+**MICE Imputation Model:**
+Best Kappa and improved balanced accuracy suggest this model handles class imbalances better and provides more consistent performance.
+
+**Recommendation:**
+**Use the MICE Imputation Model.**
+
+Despite slightly lower accuracy, it demonstrates more balanced performance across all classes, as reflected by higher Kappa and balanced accuracy metrics. This indicates it handles the data distribution more effectively and is less biased due to missing data, making it a more robust and generalizable model.
+
+Save imputed data frame.
+
+```{r save imputed data, echo=TRUE, message=FALSE, warning=FALSE, eval = FALSE}
+write.csv(data_prepost_ger_clean, file = paste0(datasets, "gerDataXGB.csv"), row.names = FALSE)
+```
+
+
+### XGBoost
+
+Ensure parallel processing.
+
+```{r parallel, echo=TRUE, message=FALSE, warning=FALSE}
+# Detect the number of available cores
+cores <- detectCores() #- 1  # Leave one core free
+
+# Create a cluster with the detected number of cores
+cl <- makeCluster(cores)
+
+# Register the parallel backend
+registerDoParallel(cl)
+```
+
+Define the grid and estimate runtime.
+
+```{r grid, echo=TRUE, message=FALSE, warning=FALSE}
+grid_tune <- expand.grid(
+  nrounds = c(5000, 10000), 
+  max_depth = c(3, 6), 
+  eta = c(0.05, 0.1), 
+  gamma = c(0.1), 
+  colsample_bytree = c(0.6, 0.8), 
+  min_child_weight = c(1), 
+  subsample = c(0.75, 1.0)
+)
+
+# Calculate total combinations
+total_combinations <- nrow(grid_tune)
+
+# Estimate single model run time (assume 1 minute per run)
+single_model_time <- 10 # minute
+
+# Total runs for cross-validation
+folds <- 5
+total_runs <- total_combinations * folds
+
+# Total time estimation without parallel processing
+total_time <- total_runs * single_model_time # in minutes
+
+# Convert to hours
+total_time_hours <- total_time / 60
+
+# Output estimated time without parallel processing
+print(paste("Estimated time for grid search without parallel processing:", total_time_hours, "hours"))
+
+# Parallel processing with 4 cores
+cores <- 24
+total_time_parallel <- total_time / cores # in minutes
+
+# Convert to hours
+total_time_parallel_hours <- total_time_parallel / 60
+
+# Output estimated time with parallel processing
+print(paste("Estimated time for grid search with", cores, "cores:", total_time_parallel_hours, "hours"))
+
+rm(total_combinations,single_model_time,folds,total_runs,total_time,total_time_hours,total_time_parallel,total_time_parallel_hours,cores)
+```
+
+#### K-fold cross-validation
+
+Create subsets to train and test data (80/20).
+
+```{r k-fold subset, echo=TRUE, message=FALSE, warning=FALSE}
+# Set seed for reproducibility
+set.seed(998)
+
+# Set up train control
+train_control <- trainControl(
+  method = "cv",        # Cross-validation
+  number = 5,           # 5-fold cross-validation
+  allowParallel = TRUE  # Enable parallel processing
+)
+
+# Define the number of subsets
+numSubsets <- 5
+
+# Create an empty list to store subsets
+gerSubsets <- vector("list", length = numSubsets)
+
+# load MICE imputed data
+gerDataXGB <- read_csv(paste0(datasets, "gerDataXGB.csv"))
+# ensure percProm is factor
+catDataXGB$percProm <- as.factor(catDataXGB$percProm)
+levels(catDataXGB$percProm)
+# only keep the columns of output and predictor variables
+gerDataXGB <- gerDataXGB[,13:52] 
+
+# Calculate the number of samples in each subset
+subsetSize <- nrow(gerDataXGB) %/% numSubsets
+
+# Randomly assign samples to subsets
+for (i in 1:numSubsets) {
+  if (i < numSubsets) {
+    gerSubsets[[i]] <- gerDataXGB[sample((1:nrow(gerDataXGB)), size = subsetSize), ]
+  } else {
+    gerSubsets[[i]] <- gerDataXGB[sample((1:nrow(gerDataXGB)), size = subsetSize + (nrow(gerDataXGB) %% numSubsets)), ]
+  }
+}
+
+# Naming the subsets
+names(gerSubsets) <- paste0("gerData", 1:numSubsets)
+
+# Access the subsets (e.g., gerData1, gerData2, etc.)
+gerData1 <- gerSubsets$gerData1
+gerData2 <- gerSubsets$gerData2
+gerData3 <- gerSubsets$gerData3
+gerData4 <- gerSubsets$gerData4
+gerData5 <- gerSubsets$gerData5
+
+# Combine subsets into 80% groups.
+gerData1234 <- rbind(gerData1, gerData2, gerData3, gerData4)
+gerData1235 <- rbind(gerData1, gerData2, gerData3, gerData5)
+gerData1245 <- rbind(gerData1, gerData2, gerData4, gerData5)
+gerData1345 <- rbind(gerData1, gerData3, gerData4, gerData5)
+gerData2345 <- rbind(gerData2, gerData3, gerData4, gerData5)
+
+```
+
+#### Models
+
+Only run the models one time and then readRDS.
+
+##### Model 1
+
+```{r ger model1, echo=TRUE, message=FALSE, warning=FALSE, eval = FALSE}
+gerModel1 <- caret::train(
+  percProm ~ .,              
+  data = gerData1234,
+  method = "xgbTree",     
+  trControl = train_control,
+  tuneGrid = grid_tune    
+)
+
+saveRDS(gerModel1, file = paste0(models, "gerModel1.rds"), compress = TRUE)
+```
+
+##### Model 2
+
+```{r ger model2, echo=TRUE, message=FALSE, warning=FALSE, eval = FALSE}
+gerModel2 <- caret::train(
+  percProm ~ .,              
+  data = gerData1235,
+  method = "xgbTree",     
+  trControl = train_control,
+  tuneGrid = grid_tune    
+)
+
+saveRDS(gerModel2, file = paste0(models, "gerModel2.rds"), compress = TRUE)
+```
+
+##### Model 3
+
+```{r ger model3, echo=TRUE, message=FALSE, warning=FALSE, eval = FALSE}
+gerModel3 <- caret::train(
+  percProm ~ .,              
+  data = gerData1245,
+  method = "xgbTree",     
+  trControl = train_control,
+  tuneGrid = grid_tune    
+)
+
+saveRDS(gerModel3, file = paste0(models, "gerModel3.rds"), compress = TRUE)
+```
+
+##### Model 4
+
+```{r ger model4, echo=TRUE, message=FALSE, warning=FALSE, eval = FALSE}
+gerModel4 <- caret::train(
+  percProm ~ .,              
+  data = gerData1345,
+  method = "xgbTree",     
+  trControl = train_control,
+  tuneGrid = grid_tune    
+)
+saveRDS(gerModel4, file = paste0(models, "gerModel4.rds"), compress = TRUE)
+```
+
+##### Model 5
+
+```{r ger model5, echo=TRUE, message=FALSE, warning=FALSE, eval = FALSE}
+gerModel5 <- caret::train(
+  percProm ~ .,              
+  data = gerData2345,
+  method = "xgbTree",     
+  trControl = train_control,
+  tuneGrid = grid_tune    
+)
+
+saveRDS(gerModel5, file = paste0(models, "gerModel5.rds"), compress = TRUE)
+```
+
+##### Load models
+
+Load all models after running, if necessary.
+
+```{r loas models ger, echo=TRUE, message=FALSE, warning=FALSE}
+gerModel1 <- readRDS(paste0(models, "gerModel1.rds"))
+gerModel2 <- readRDS(paste0(models, "gerModel2.rds"))
+gerModel3 <- readRDS(paste0(models, "gerModel3.rds"))
+gerModel4 <- readRDS(paste0(models, "gerModel4.rds"))
+gerModel5 <- readRDS(paste0(models, "gerModel5.rds"))
+```
+
+#### Test models
+
+Generate predictions and confusion matrices
+
+```{r test models ger, echo=TRUE, message=FALSE, warning=FALSE}
+# Generate predictions
+gerPredictions1 <- predict(gerModel1, newdata = gerData5)
+gerPredictions2 <- predict(gerModel2, newdata = gerData4)
+gerPredictions3 <- predict(gerModel3, newdata = gerData3)
+gerPredictions4 <- predict(gerModel4, newdata = gerData2)
+gerPredictions5 <- predict(gerModel5, newdata = gerData1)
+
+# Compute confusion matrices
+gerCm1 <- confusionMatrix(gerPredictions1, gerData5$percProm)
+gerCm2 <- confusionMatrix(gerPredictions2, gerData4$percProm)
+gerCm3 <- confusionMatrix(gerPredictions3, gerData3$percProm)
+gerCm4 <- confusionMatrix(gerPredictions4, gerData2$percProm)
+gerCm5 <- confusionMatrix(gerPredictions5, gerData1$percProm)
+
+# Extract p-values (you need to define how to extract these based on your metric, here assumed to be some metric from confusion matrix)
+gerPValues <- c(gerCm1$overall['AccuracyPValue'], 
+              gerCm2$overall['AccuracyPValue'], 
+              gerCm3$overall['AccuracyPValue'], 
+              gerCm4$overall['AccuracyPValue'], 
+              gerCm5$overall['AccuracyPValue'])
+```
+
+Combine p-values using Fisher's method
+
+```{r combine p-vals ger, echo=TRUE, message=FALSE, warning=FALSE}
+# Fisher's method
+gerFisher_combined <- -2 * sum(log(gerPValues))
+df <- 2 * length(gerPValues)
+gerPCcombined_fisher <- 1 - pchisq(gerFisher_combined, df)
+print(gerPCcombined_fisher)
+
+# Stouffer's method
+gerZ_scores <- qnorm(1 - gerPValues/2)
+gerCombined_z <- sum(gerZ_scores) / sqrt(length(gerPValues))
+gerP_combined_stouffer <- 2 * (1 - pnorm(abs(gerCombined_z)))
+print(gerP_combined_stouffer)
+```
+
+The p-values sum up to 0, since they are all so small.
+
+#### Feature importance
+
+##### Model 1
+
+```{r ger feature importance 1, echo=TRUE, message=FALSE, warning=FALSE}
+XGBgerModel1 <- gerModel1$finalModel
+importanceXGBgerModel1 <- xgb.importance(model = XGBgerModel1)
+print(importanceXGBgerModel1)
+xgb.plot.importance(importanceXGBgerModel1)
+```
+
+##### Model 2
+
+```{r ger feature importance 2, echo=TRUE, message=FALSE, warning=FALSE}
+XGBgerModel2 <- gerModel2$finalModel
+importanceXGBgerModel2 <- xgb.importance(model = XGBgerModel2)
+print(importanceXGBgerModel2)
+xgb.plot.importance(importanceXGBgerModel2)
+```
+
+##### Model 3
+
+```{r ger feature importance 3, echo=TRUE, message=FALSE, warning=FALSE}
+XGBgerModel3 <- gerModel3$finalModel
+importanceXGBgerModel3 <- xgb.importance(model = XGBgerModel3)
+print(importanceXGBgerModel3)
+xgb.plot.importance(importanceXGBgerModel3)
+```
+
+##### Model 4
+
+```{r ger feature importance 4, echo=TRUE, message=FALSE, warning=FALSE}
+XGBgerModel4 <- gerModel4$finalModel
+importanceXGBgerModel4 <- xgb.importance(model = XGBgerModel4)
+print(importanceXGBgerModel4)
+xgb.plot.importance(importanceXGBgerModel4)
+```
+
+##### Model 5
+
+```{r ger feature importance 5, echo=TRUE, message=FALSE, warning=FALSE}
+XGBgerModel5 <- gerModel5$finalModel
+importanceXGBgerModel5 <- xgb.importance(model = XGBgerModel5)
+print(importanceXGBgerModel5)
+xgb.plot.importance(importanceXGBgerModel5)
+```
+
+##### Cumulative feature importance
+
+```{r ger cumulative importance, echo=TRUE, message=FALSE, warning=FALSE}
+# Function to extract and normalize importance
+get_normalized_importance <- function(model) {
+  importance <- xgb.importance(model = model)
+  importance$Gain <- importance$Gain / sum(importance$Gain)
+  return(importance)
+}
+
+# Extract normalized importance for each model
+gerImportance1 <- get_normalized_importance(gerModel1$finalModel)
+gerImportance2 <- get_normalized_importance(gerModel2$finalModel)
+gerImportance3 <- get_normalized_importance(gerModel3$finalModel)
+gerImportance4 <- get_normalized_importance(gerModel4$finalModel)
+gerImportance5 <- get_normalized_importance(gerModel5$finalModel)
+
+# Combine importances
+gerAllImportances <- list(gerImportance1, gerImportance2, gerImportance3, gerImportance4, gerImportance5)
+
+# Function to merge importances
+merge_importances <- function(importances) {
+  for (i in 2:length(importances)) {
+    names(importances[[i]])[2:4] <- paste0(names(importances[[i]])[2:4], "_", i)
+  }
+  merged <- Reduce(function(x, y) merge(x, y, by = "Feature", all = TRUE), importances)
+  merged[is.na(merged)] <- 0  # Replace NAs with 0
+  gain_cols <- grep("Gain", colnames(merged), value = TRUE)
+  merged$Cumulative <- rowSums(merged[, ..gain_cols])
+  return(merged[, .(Feature, Cumulative)])
+}
+
+# Merge and sort importances
+gerCumulativeImportance <- merge_importances(gerAllImportances)
+gerCumulativeImportance <- gerCumulativeImportance[order(-gerCumulativeImportance$Cumulative), ]
+
+# Print cumulative feature importance
+print(gerCumulativeImportance)
+```
+
+## Catalan
+
+### Decision tree
+
+Build a decision tree model using the 'rpart' function.
+
+```{r decision tree cat, echo=TRUE, message=FALSE, warning=FALSE}
+catTree <- rpart(
+  formula = percProm ~ duration + ampl_median  + env_slope + 
+                      pitch_median_norm + pitch_sd_norm + f0_slope_norm + specCentroid_median + entropy_median + 
+                      HNR_median + amEnvDep_median + fmDep_median + durationPre +  
+                      ampl_medianPre + env_slopePre + pitch_median_normPre + 
+                      pitch_sd_normPre + f0_slope_normPre + specCentroid_medianPre + entropy_medianPre + 
+                      HNR_medianPre + amEnvDep_medianPre + fmDep_medianPre + durationPost + 
+                      ampl_medianPost + env_slopePost + pitch_median_normPost + 
+                      pitch_sd_normPost + f0_slope_normPost + specCentroid_medianPost + entropy_medianPost + 
+                      HNR_medianPost + amEnvDep_medianPost + fmDep_medianPost,  # Formula for the model
+  data = data_prepost_cat,  # Dataset containing the variables
+  method = "class",   # Specify that it's a classification tree
+  control = rpart.control(maxdepth = 7)  # Control parameters for the 'rpart' function
+)
+
+prp(
+  catTree,         # The decision tree object to be visualized
+  extra = 1,      # Show extra information (like node statistics) in the plot
+  varlen = 0,     # Length of variable names (0 means auto-determined)
+  faclen = 0     # Length of factor levels displayed on the plot (increase as needed)
+)
+
+# See what happens if we add clearly correlated variables (noSilences)
+catTree1 <- rpart(
+  formula = percProm ~ duration + duration_noSilence + ampl_median + ampl_noSilence_median + env_slope + 
+                      pitch_median_norm + pitch_sd_norm + f0_slope_norm + specCentroid_median + entropy_median + 
+                      HNR_median + amEnvDep_median + fmDep_median + durationPre + duration_noSilencePre + 
+                      ampl_medianPre + ampl_noSilence_medianPre + env_slopePre + pitch_median_normPre + 
+                      pitch_sd_normPre + f0_slope_normPre + specCentroid_medianPre + entropy_medianPre + 
+                      HNR_medianPre + amEnvDep_medianPre + fmDep_medianPre + durationPost + duration_noSilencePost + 
+                      ampl_medianPost + ampl_noSilence_medianPost + env_slopePost + pitch_median_normPost + 
+                      pitch_sd_normPost + f0_slope_normPost + specCentroid_medianPost + entropy_medianPost + 
+                      HNR_medianPost + amEnvDep_medianPost + fmDep_medianPost,
+  data = data_prepost_cat,
+  method = "class",
+  control = rpart.control(maxdepth = 5)
+)
+
+prp(
+  catTree1,
+  extra = 1,
+  varlen = 0,
+  faclen = 0
+)
+
+```
+
+### Random forest
+
+We will build a random forest first.
+
+```{r set seed, echo=TRUE, message=FALSE, warning=FALSE}
+set.seed(998) # Set a seed for reproducibility
+```
+
+#### Omit NA
+
+Try NA omission first. Then, we will try to impute.
+
+Split the data.
+
+```{r split data cat, echo=TRUE, message=FALSE, warning=FALSE}
+# First, exclude rows with NAs across columns 13 to 61 in data_prepost_cat because RF cannot deal with that
+data_prepost_cat_clean <- data_prepost_cat[complete.cases(data_prepost_cat[, 13:52]), ]
+# 936 obs.
+
+# Split the data into training and testing subsets
+sample_indices <- sample(1:nrow(data_prepost_cat_clean), 0.7*nrow(data_prepost_cat_clean)) # 70% training, 30% testing
+train_data <- data_prepost_cat_clean[sample_indices, ]
+test_data <- data_prepost_cat_clean[-sample_indices, ]
+```
+
+Building the untuned model.
+
+```{r untuned cat, echo=TRUE, message=FALSE, warning=FALSE}
+# Untuned Model with importance (permutation) option set
+catUntuned <- ranger(
+  y = train_data$percProm,
+  x = train_data[,14:52],
+  num.trees = 500,
+  importance = "permutation"
+)
+
+predictions <- predict(catUntuned, data = test_data)$predictions
+
+# Create a confusion matrix
+confusion_matrix <- confusionMatrix(predictions, test_data$percProm)
+
+# Print the confusion matrix
+print(confusion_matrix)
+
+# Calculate feature importance
+feature_importance <- importance(catUntuned, num.threads = 1, type = 1) 
+
+# Convert to data frame
+feature_importance <- as.data.frame(feature_importance, stringsAsFactors = FALSE)
+feature_importance$Feature <- rownames(feature_importance)
+colnames(feature_importance) <- c("Importance", "Feature")
+
+# Sort by importance
+sorted_feature_importance <- feature_importance[order(-feature_importance$Importance), ]
+
+# Print sorted feature importance
+print(sorted_feature_importance)
+```
+
+Set the parameters for the random forest.
+
+```{r settings for RF cat, echo=TRUE, message=FALSE, warning=FALSE}
+# Define the number of CPU cores to use
+num_cores <- detectCores()
+
+# Create a cluster with specified number of cores
+cl <- makeCluster(num_cores)
+```
+
+Tuning the random forest.
+
+```{r tuning RF cat, message=FALSE, warning=FALSE}
+tunecat <- makeClassifTask(data = data_prepost_cat_clean[,13:52],
+                           target = "percProm")
+
+tunecat <- tuneRanger(tunecat,
+                      measure = list(multiclass.brier),
+                      num.trees = 500)
+
+#Return hyperparameter values
+tunecat
+## Ola: ALWAYS REPORT THOSE BECAUSE THEY ARE DIFFERENT EVERY TIME BC OF RANDOMIZATION
+# Recommended parameter settings: 
+#   mtry min.node.size sample.fraction
+# 1    3             2       0.5980374
+# Results: 
+#   multiclass.brier exec.time
+# 1        0.3396941     0.918
+
+catTuned <- ranger(
+  y = train_data$percProm,
+  x = train_data[,14:52], 
+  num.trees = 5000, 
+  mtry = 3, # Set the recommended mtry value (number of features).
+  min.node.size = 2, # Set the recommended min.node.size value (number of samples before a node terminates).
+  sample.fraction = 0.5980374, # Set the recommended sample fraction value.(% of data for bagging).
+  importance = "permutation" # Permutation is a computationally intensive test.
+)
+
+predictions <- predict(catTuned, data = test_data)$predictions
+
+# Create a confusion matrix
+confusion_matrix <- confusionMatrix(predictions, test_data$percProm)
+
+# Print the confusion matrix
+print(confusion_matrix)
+
+# Calculate feature importance
+feature_importance <- importance(catTuned, num.threads = 1, type = 1) 
+
+# Convert to data frame
+feature_importance <- as.data.frame(feature_importance, stringsAsFactors = FALSE)
+feature_importance$Feature <- rownames(feature_importance)
+colnames(feature_importance) <- c("Importance", "Feature")
+
+# Sort by importance
+sorted_feature_importance <- feature_importance[order(-feature_importance$Importance), ]
+
+# Print sorted feature importance
+print(sorted_feature_importance)
+
+
+# Close the cluster when you're done with your parallel tasks
+#stopCluster(cl)
+```
+
+#### Imputation
+
+```{r imputation cat, echo=TRUE, message=FALSE, warning=FALSE}
+# First, impute missing values for columns 13 to 52 in data_prepost_cat
+data_prepost_cat_clean <- data_prepost_cat
+
+# Define the modes function
+modes <- function(x) {
+  uniq_x <- unique(x)
+  uniq_x[which.max(tabulate(match(x, uniq_x)))]
+}
+
+# Imputation by mean grouped by language, participant
+data_prepost_cat_clean <- data_prepost_cat_clean %>%
+  group_by(language, participant) %>%
+  mutate(across(where(is.numeric), ~ ifelse(is.na(.), mean(., na.rm = TRUE), .))) %>%
+  mutate(across(where(is.character), ~ ifelse(is.na(.), as.character(modes(.)), .))) %>%
+  ungroup()
+
+# Split the data into training and testing subsets
+sample_indices <- sample(1:nrow(data_prepost_cat_clean), 0.7 * nrow(data_prepost_cat_clean)) # 70% training, 30% testing
+train_data <- data_prepost_cat_clean[sample_indices, ]
+test_data <- data_prepost_cat_clean[-sample_indices, ]
+```
+
+Create a tuned model only.
+
+```{r tuned model imputed cat, echo=TRUE, message=FALSE, warning=FALSE}
+# Create a classification task for tuning
+tunecat <- makeClassifTask(data = train_data[, 13:52], target = "percProm")
+
+# Tune the model
+tunecat <- tuneRanger(tunecat, measure = list(multiclass.brier), num.trees = 500)
+
+# Return hyperparameter values
+tunecat
+# Recommended parameter settings: 
+#   mtry min.node.size sample.fraction
+# 1    7             2       0.6591202
+# Results: 
+#   multiclass.brier exec.time
+# 1        0.3946521      1.99
+
+# Fit the tuned model on the training data
+catTuned <- ranger(
+  y = train_data$percProm,
+  x = train_data[, 14:52],
+  num.trees = 5000,
+  mtry = 7,
+  min.node.size = 2,
+  sample.fraction = 0.6591202,
+  importance = "permutation"
+)
+
+# Predict on the test data
+predictions <- predict(catTuned, data = test_data)$predictions
+
+# Create a confusion matrix
+confusion_matrix <- confusionMatrix(predictions, test_data$percProm)
+
+# Print the confusion matrix
+print(confusion_matrix)
+
+# Calculate feature importance
+feature_importance <- importance(catTuned, num.threads = 1, type = 1)
+
+# Convert to data frame
+feature_importance_df <- as.data.frame(feature_importance, stringsAsFactors = FALSE)
+feature_importance_df$Feature <- rownames(feature_importance_df)
+colnames(feature_importance_df) <- c("Importance", "Feature")
+
+# Sort by importance
+sorted_feature_importance <- feature_importance_df[order(-feature_importance_df$Importance), ]
+
+# Print sorted feature importance
+print(sorted_feature_importance)
+
+# Close the cluster when you're done with your parallel tasks
+#stopCluster(cl)
+```
+
+#### Model performance
+
+**NA Omission Model**
+-   Accuracy: 0.7936
+-   Kappa: 0.0448
+-   Balanced Accuracy: Higher accuracy but very low Kappa indicates that the model is biased towards the majority class.
+-   Overall Statistics:
+  -   Sensitivity: High for Class 2, very low for others.
+  -   Specificity: Very high for Classes 0 and 1.
+  -   Pos Pred Value: High for Class 2, very low for others.
+
+**Imputed Model**
+-   Accuracy: 0.7344
+-   Kappa: 0.136
+-   Balanced Accuracy: Better balanced accuracy compared to NA omission.
+-   Overall Statistics:
+  -   Sensitivity: High for Class 2, low for others.
+  -   Specificity: Very high for Classes 0 and 1.
+  -   Pos Pred Value: Highest for Class 2.
+
+**Recommendation:** Use the Imputed Model.
+
+The NA Omission Model has higher accuracy but suffers from a very low Kappa score, indicating poor agreement and potential bias towards the majority class. The Imputed Model, although slightly lower in accuracy, has a higher Kappa score and better-balanced accuracy. This suggests it provides a more consistent performance across all classes and handles class imbalances more effectively.
+
+**Motuivation**
+**NA Omission Model:** Higher accuracy but significantly lower Kappa and balanced accuracy indicate that it may not be reliable for minority classes.
+**Imputed Model:** Provides a more balanced performance, which is crucial for handling data with class imbalances. Higher Kappa and balanced accuracy suggest better overall model reliability.
+By using the Imputed Model, we can achieve a more robust and generalizable performance, especially important in real-world applications where class distributions are often imbalanced.
+
+#### Imputation with MICE
+
+MICE (Multiple Imputation by Chained Equations) is a robust method used to handle missing data by generating multiple imputed datasets and then combining the results. It works by iteratively imputing missing values for each variable, using a predictive model based on the other variables in the dataset. This method allows for the uncertainty of missing data by creating several different plausible imputed datasets and combining their results.
+
+To adapt MICE imputation for grouping by language and participant, we perform the imputation within each group separately. This can be done by splitting the data into groups, applying MICE to each group, and then combining the imputed datasets. This takes a good while.
+
+```{r MICE cat, echo=TRUE, message=FALSE, warning=FALSE, eval = FALSE}
+# Function to apply MICE within each group with detailed logging
+impute_group <- function(df) {
+  if (nrow(df) > 1) {
+    tryCatch({
+      imputed <- mice(df, m = 5, method = 'pmm', seed = 998, printFlag = FALSE)
+      complete_data <- complete(imputed)
+      return(complete_data)
+    }, error = function(e) {
+      message("Error in MICE imputation: ", e)
+      return(df)  # Return original data if imputation fails
+    })
+  } else {
+    # If not enough rows, return the original data frame
+    return(df)
+  }
+}
+
+# Split data by language and participant
+data_prepost_cat_clean <- data_prepost_cat %>%
+  group_by(language, participant) %>%
+  group_split()
+
+# Apply imputation to each group and combine the results
+imputed_data_list <- lapply(data_prepost_cat_clean, impute_group)
+imputed_data <- bind_rows(imputed_data_list)
+
+# Check for any remaining NAs in the dataset
+na_columns_after_imputation <- sapply(imputed_data, function(x) sum(is.na(x)))
+na_columns_after_imputation <- na_columns_after_imputation[na_columns_after_imputation > 0]
+
+# Print the columns with remaining NA values (if any) and the number of NA values in each
+print(na_columns_after_imputation)
+
+# If there are still NAs, apply mice again on the combined dataset
+if (length(na_columns_after_imputation) > 0) {
+  # Apply MICE imputation again on the combined dataset
+  imputed <- mice(imputed_data, m = 5, method = 'pmm', seed = 998, printFlag = FALSE)
+  imputed_data <- complete(imputed)
+  # Remove intermediate MICE object
+  rm(imputed)
+}
+
+# Check again for any remaining NAs in the dataset
+na_columns_final_check <- sapply(imputed_data, function(x) sum(is.na(x)))
+na_columns_final_check <- na_columns_final_check[na_columns_final_check > 0]
+
+# Print the columns with remaining NA values (if any) and the number of NA values in each
+print(na_columns_final_check)
+
+# Complete the dataset
+data_prepost_cat_clean <- imputed_data
+
+# Remove the final imputed data frame to clean up environment
+rm(imputed_data, na_columns_final_check, imputed_data_list, na_columns_after_imputation)
+
+```
+
+
+```{r tune RF MICE cat, echo=TRUE, message=FALSE, warning=FALSE}
+set.seed(998)
+
+# Split the data into training and testing subsets
+sample_indices <- sample(1:nrow(data_prepost_cat_clean), 0.7 * nrow(data_prepost_cat_clean)) # 70% training, 30% testing
+train_data <- data_prepost_cat_clean[sample_indices, ]
+test_data <- data_prepost_cat_clean[-sample_indices, ]
+
+# Create a classification task for tuning
+tunecat <- makeClassifTask(data = train_data[, 13:52], target = "percProm")
+
+# Tune the model
+tunecat <- tuneRanger(tunecat, measure = list(multiclass.brier), num.trees = 500)
+
+# Return hyperparameter values
+tunecat
+# Recommended parameter settings: 
+#   mtry min.node.size sample.fraction
+# 1    8             2       0.5820302
+# Results: 
+#   multiclass.brier exec.time
+# 1        0.3998218     1.916
+
+# Fit the tuned model on the training data
+catTuned <- ranger(
+  y = train_data$percProm,
+  x = train_data[, 14:52],
+  num.trees = 5000,
+  mtry = 8,
+  min.node.size = 2,
+  sample.fraction = 0.5820302,
+  importance = "permutation"
+)
+
+# Predict on the test data
+predictions <- predict(catTuned, data = test_data)$predictions
+
+# Create a confusion matrix
+confusion_matrix <- confusionMatrix(predictions, test_data$percProm)
+
+# Print the confusion matrix
+print(confusion_matrix)
+
+# Calculate feature importance
+feature_importance <- importance(catTuned, num.threads = 1, type = 1)
+
+# Convert to data frame
+feature_importance_df <- as.data.frame(feature_importance, stringsAsFactors = FALSE)
+feature_importance_df$Feature <- rownames(feature_importance_df)
+colnames(feature_importance_df) <- c("Importance", "Feature")
+
+# Sort by importance
+sorted_feature_importance <- feature_importance_df[order(-feature_importance_df$Importance), ]
+
+# Print sorted feature importance
+print(sorted_feature_importance)
+```
+
+**MICE Imputation Model**
+-   AAccuracy: 0.7047
+-   Kappa: 0.0949
+-   Balanced Accuracy: Similar to Imputed Model but slightly lower in overall accuracy.
+-   Overall Statistics:
+  -   Sensitivity: High for Class 2, very low for Class 1 and 3.
+  -   Specificity: Very high for Class 0 and 1.
+  -   Pos Pred Value: Moderate for Class 2, low for others.
+
+**NA Omission Model:**
+This model shows high accuracy but has lower balanced accuracy and Kappa, indicating it performs well for the majority class but poorly for minority classes.
+
+**Original Imputation Model:**
+While accuracy is slightly lower, this model has better balanced accuracy, suggesting it performs more reliably across all classes.
+
+**MICE Imputation Model:**
+This model has the best Kappa and balanced accuracy, indicating it handles class imbalances effectively and provides more consistent performance.
+
+**Recommendation:**
+**Use the MICE Imputation Model.**
+
+Although the MICE model has slightly lower accuracy, it provides more balanced performance across all classes, shown by higher Kappa and balanced accuracy metrics. It effectively manages the data distribution and is less biased due to missing data. Using MICE imputation ensures consistency with the German data, enhancing the robustness and comparability of your analyses across languages.
+
+Save imputed data frame.
+
+```{r save imputed data cat, echo=TRUE, message=FALSE, warning=FALSE, eval = FALSE}
+write.csv(data_prepost_cat_clean, file = paste0(datasets, "catDataXGB.csv"), row.names = FALSE)
+```
+
+
+### XGBoost
+
+Ensure parallel processing.
+
+```{r parallel, echo=TRUE, message=FALSE, warning=FALSE}
+# Detect the number of available cores
+cores <- detectCores() #- 1  # Leave one core free
+
+# Create a cluster with the detected number of cores
+cl <- makeCluster(cores)
+
+# Register the parallel backend
+registerDoParallel(cl)
+```
+
+Define the grid and estimate runtime.
+
+```{r grid, echo=TRUE, message=FALSE, warning=FALSE}
+grid_tune <- expand.grid(
+  nrounds = c(5000, 10000), 
+  max_depth = c(3, 6), 
+  eta = c(0.05, 0.1), 
+  gamma = c(0.1), 
+  colsample_bytree = c(0.6, 0.8), 
+  min_child_weight = c(1), 
+  subsample = c(0.75, 1.0)
+)
+
+# Calculate total combinations
+total_combinations <- nrow(grid_tune)
+
+# Estimate single model run time (assume 1 minute per run)
+single_model_time <- 10 # minute
+
+# Total runs for cross-validation
+folds <- 5
+total_runs <- total_combinations * folds
+
+# Total time estimation without parallel processing
+total_time <- total_runs * single_model_time # in minutes
+
+# Convert to hours
+total_time_hours <- total_time / 60
+
+# Output estimated time without parallel processing
+print(paste("Estimated time for grid search without parallel processing:", total_time_hours, "hours"))
+
+# Parallel processing with 4 cores
+cores <- 24
+total_time_parallel <- total_time / cores # in minutes
+
+# Convert to hours
+total_time_parallel_hours <- total_time_parallel / 60
+
+# Output estimated time with parallel processing
+print(paste("Estimated time for grid search with", cores, "cores:", total_time_parallel_hours, "hours"))
+
+rm(total_combinations,single_model_time,folds,total_runs,total_time,total_time_hours,total_time_parallel,total_time_parallel_hours,cores)
+```
+
+#### K-fold cross-validation
+
+Create subsets to train and test data (80/20).
+
+```{r k-fold subset, echo=TRUE, message=FALSE, warning=FALSE}
+# Set seed for reproducibility
+set.seed(998)
+
+# Set up train control
+train_control <- trainControl(
+  method = "cv",        # Cross-validation
+  number = 5,           # 5-fold cross-validation
+  allowParallel = TRUE  # Enable parallel processing
+)
+
+# Define the number of subsets
+numSubsets <- 5
+
+# Create an empty list to store subsets
+catSubsets <- vector("list", length = numSubsets)
+
+# load MICE imputed data
+catDataXGB <- read_csv(paste0(datasets, "catDataXGB.csv"))
+# ensure percProm is factor
+catDataXGB$percProm <- as.factor(catDataXGB$percProm)
+levels(catDataXGB$percProm)
+# only keep the columns of output and predictor variables
+catDataXGB <- catDataXGB[,13:52] 
+
+# Calculate the number of samples in each subset
+subsetSize <- nrow(catDataXGB) %/% numSubsets
+
+# Randomly assign samples to subsets
+for (i in 1:numSubsets) {
+  if (i < numSubsets) {
+    catSubsets[[i]] <- catDataXGB[sample((1:nrow(catDataXGB)), size = subsetSize), ]
+  } else {
+    catSubsets[[i]] <- catDataXGB[sample((1:nrow(catDataXGB)), size = subsetSize + (nrow(catDataXGB) %% numSubsets)), ]
+  }
+}
+
+# Naming the subsets
+names(catSubsets) <- paste0("catData", 1:numSubsets)
+
+# Access the subsets (e.g., catData1, catData2, etc.)
+catData1 <- catSubsets$catData1
+catData2 <- catSubsets$catData2
+catData3 <- catSubsets$catData3
+catData4 <- catSubsets$catData4
+catData5 <- catSubsets$catData5
+
+# Combine subsets into 80% groups.
+catData1234 <- rbind(catData1, catData2, catData3, catData4)
+catData1235 <- rbind(catData1, catData2, catData3, catData5)
+catData1245 <- rbind(catData1, catData2, catData4, catData5)
+catData1345 <- rbind(catData1, catData3, catData4, catData5)
+catData2345 <- rbind(catData2, catData3, catData4, catData5)
+
+```
+
+#### Models
+
+Only run the models one time and then readRDS.
+
+##### Model 1
+
+```{r cat model1, echo=TRUE, message=FALSE, warning=FALSE, eval = FALSE}
+catModel1 <- caret::train(
+  percProm ~ .,              
+  data = catData1234,
+  method = "xgbTree",     
+  trControl = train_control,
+  tuneGrid = grid_tune    
+)
+
+saveRDS(catModel1, file = paste0(models, "catModel1.rds"), compress = TRUE)
+```
+
+##### Model 2
+
+```{r cat model2, echo=TRUE, message=FALSE, warning=FALSE, eval = FALSE}
+catModel2 <- caret::train(
+  percProm ~ .,              
+  data = catData1235,
+  method = "xgbTree",     
+  trControl = train_control,
+  tuneGrid = grid_tune    
+)
+
+saveRDS(catModel2, file = paste0(models, "catModel2.rds"), compress = TRUE)
+```
+
+##### Model 3
+
+```{r cat model3, echo=TRUE, message=FALSE, warning=FALSE, eval = FALSE}
+catModel3 <- caret::train(
+  percProm ~ .,              
+  data = catData1245,
+  method = "xgbTree",     
+  trControl = train_control,
+  tuneGrid = grid_tune    
+)
+
+saveRDS(catModel3, file = paste0(models, "catModel3.rds"), compress = TRUE)
+```
+
+##### Model 4
+
+```{r cat model4, echo=TRUE, message=FALSE, warning=FALSE, eval = FALSE}
+catModel4 <- caret::train(
+  percProm ~ .,              
+  data = catData1345,
+  method = "xgbTree",     
+  trControl = train_control,
+  tuneGrid = grid_tune    
+)
+saveRDS(catModel4, file = paste0(models, "catModel4.rds"), compress = TRUE)
+```
+
+##### Model 5
+
+```{r cat model5, echo=TRUE, message=FALSE, warning=FALSE, eval = FALSE}
+catModel5 <- caret::train(
+  percProm ~ .,              
+  data = catData2345,
+  method = "xgbTree",     
+  trControl = train_control,
+  tuneGrid = grid_tune    
+)
+
+saveRDS(catModel5, file = paste0(models, "catModel5.rds"), compress = TRUE)
+```
+
+##### Load models
+
+Load all models after running, if necessary.
+
+```{r load models cat, echo=TRUE, message=FALSE, warning=FALSE}
+catModel1 <- readRDS(paste0(models, "catModel1.rds"))
+catModel2 <- readRDS(paste0(models, "catModel2.rds"))
+catModel3 <- readRDS(paste0(models, "catModel3.rds"))
+catModel4 <- readRDS(paste0(models, "catModel4.rds"))
+catModel5 <- readRDS(paste0(models, "catModel5.rds"))
+```
+
+#### Test models
+
+Generate predictions and confusion matrices
+
+```{r test models cat, echo=TRUE, message=FALSE, warning=FALSE}
+# Generate predictions
+catPredictions1 <- predict(catModel1, newdata = catData5)
+catPredictions2 <- predict(catModel2, newdata = catData4)
+catPredictions3 <- predict(catModel3, newdata = catData3)
+catPredictions4 <- predict(catModel4, newdata = catData2)
+catPredictions5 <- predict(catModel5, newdata = catData1)
+
+# Compute confusion matrices
+catCm1 <- confusionMatrix(catPredictions1, catData5$percProm)
+catCm2 <- confusionMatrix(catPredictions2, catData4$percProm)
+catCm3 <- confusionMatrix(catPredictions3, catData3$percProm)
+catCm4 <- confusionMatrix(catPredictions4, catData2$percProm)
+catCm5 <- confusionMatrix(catPredictions5, catData1$percProm)
+
+# Extract p-values (you need to define how to extract these based on your metric, here assumed to be some metric from confusion matrix)
+catPValues <- c(catCm1$overall['AccuracyPValue'], 
+              catCm2$overall['AccuracyPValue'], 
+              catCm3$overall['AccuracyPValue'], 
+              catCm4$overall['AccuracyPValue'], 
+              catCm5$overall['AccuracyPValue'])
+```
+
+Combine p-values using Fisher's method
+
+```{r combine p-vals cat, echo=TRUE, message=FALSE, warning=FALSE}
+# Fisher's method
+catFisher_combined <- -2 * sum(log(catPValues))
+df <- 2 * length(catPValues)
+catPCcombined_fisher <- 1 - pchisq(catFisher_combined, df)
+print(catPCcombined_fisher)
+
+# Stouffer's method
+catZ_scores <- qnorm(1 - catPValues/2)
+catCombined_z <- sum(catZ_scores) / sqrt(length(catPValues))
+catP_combined_stouffer <- 2 * (1 - pnorm(abs(catCombined_z)))
+print(catP_combined_stouffer)
+```
+
+The p-values sum up to 0, since they are all so small.
+
+#### Feature importance
+
+##### Model 1
+
+```{r cat feature importance 1, echo=TRUE, message=FALSE, warning=FALSE}
+XGBcatModel1 <- catModel1$finalModel
+importanceXGBcatModel1 <- xgb.importance(model = XGBcatModel1)
+print(importanceXGBcatModel1)
+xgb.plot.importance(importanceXGBcatModel1)
+```
+
+##### Model 2
+
+```{r cat feature importance 2, echo=TRUE, message=FALSE, warning=FALSE}
+XGBcatModel2 <- catModel2$finalModel
+importanceXGBcatModel2 <- xgb.importance(model = XGBcatModel2)
+print(importanceXGBcatModel2)
+xgb.plot.importance(importanceXGBcatModel2)
+```
+
+##### Model 3
+
+```{r cat feature importance 3, echo=TRUE, message=FALSE, warning=FALSE}
+XGBcatModel3 <- catModel3$finalModel
+importanceXGBcatModel3 <- xgb.importance(model = XGBcatModel3)
+print(importanceXGBcatModel3)
+xgb.plot.importance(importanceXGBcatModel3)
+```
+
+##### Model 4
+
+```{r cat feature importance 4, echo=TRUE, message=FALSE, warning=FALSE}
+XGBcatModel4 <- catModel4$finalModel
+importanceXGBcatModel4 <- xgb.importance(model = XGBcatModel4)
+print(importanceXGBcatModel4)
+xgb.plot.importance(importanceXGBcatModel4)
+```
+
+##### Model 5
+
+```{r cat feature importance 5, echo=TRUE, message=FALSE, warning=FALSE}
+XGBcatModel5 <- catModel5$finalModel
+importanceXGBcatModel5 <- xgb.importance(model = XGBcatModel5)
+print(importanceXGBcatModel5)
+xgb.plot.importance(importanceXGBcatModel5)
+```
+
+##### Cumulative feature importance
+
+```{r cat cumulative importance, echo=TRUE, message=FALSE, warning=FALSE}
+# Function to extract and normalize importance
+get_normalized_importance <- function(model) {
+  importance <- xgb.importance(model = model)
+  importance$Gain <- importance$Gain / sum(importance$Gain)
+  return(importance)
+}
+
+# Extract normalized importance for each model
+catImportance1 <- get_normalized_importance(catModel1$finalModel)
+catImportance2 <- get_normalized_importance(catModel2$finalModel)
+catImportance3 <- get_normalized_importance(catModel3$finalModel)
+catImportance4 <- get_normalized_importance(catModel4$finalModel)
+catImportance5 <- get_normalized_importance(catModel5$finalModel)
+
+# Combine importances
+catAllImportances <- list(catImportance1, catImportance2, catImportance3, catImportance4, catImportance5)
+
+# Function to merge importances
+merge_importances <- function(importances) {
+  for (i in 2:length(importances)) {
+    names(importances[[i]])[2:4] <- paste0(names(importances[[i]])[2:4], "_", i)
+  }
+  merged <- Reduce(function(x, y) merge(x, y, by = "Feature", all = TRUE), importances)
+  merged[is.na(merged)] <- 0  # Replace NAs with 0
+  gain_cols <- grep("Gain", colnames(merged), value = TRUE)
+  merged$Cumulative <- rowSums(merged[, ..gain_cols])
+  return(merged[, .(Feature, Cumulative)])
+}
+
+# Merge and sort importances
+catCumulativeImportance <- merge_importances(catAllImportances)
+catCumulativeImportance <- catCumulativeImportance[order(-catCumulativeImportance$Cumulative), ]
+
+# Print cumulative feature importance
+print(catCumulativeImportance)
+```
+
+
+
+
+
+
