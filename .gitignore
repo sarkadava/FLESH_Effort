@@ -13,10 +13,6 @@
 
 
 /.quarto/
-/01_TS_processing
-/01_TS_processing
-/01_TS_processing
-/03_TS_processing
 /04_TS_movementAnnotation
 /09_Modeling
 /08_XGBoost
@@ -29,3 +25,4 @@
 06_ConceptSimilarity/numberbatch.txt
 06_ConceptSimilarity/numberbatch-en-19.08.txt.gz
 *.xdf
+/03_TS_processing/TS_acoustics

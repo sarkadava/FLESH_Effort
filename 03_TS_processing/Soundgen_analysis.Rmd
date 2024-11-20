@@ -1,0 +1,655 @@
+---
+title: "Soundgen analysis of vocalizations"
+author: "r"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    number_sections: yes
+    toc: yes
+    toc_depth: 4
+    toc_float: yes
+    df_print: paged
+  pdf_document:
+    number_sections: yes
+    toc: yes
+    toc_depth: '3'
+  html_notebook:
+    number_sections: yes
+    toc: yes
+    toc_depth: 3
+    toc_float: yes
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Introduction
+
+This is an RMarkdown accompanying paper 'Exploring the sound structure of novel vocalizations' submitted for Evolang 2024. Here we provide the script for similarity analysis of sound signal.
+
+Cite: Fuchs, S., Kadavá, Š., Pouw, W., Walker, B., Fay, N., Winter, B. & Cwiek, A.(2024) Exploring the sound structure of novel vocalizations. Proceedings of the 15th International Conference on the Evolution of Language (EvoLang XV)
+
+First we set up our folders
+```{r folders, message=FALSE, warning=FALSE}
+
+# get current working directory
+
+curfolder   <- dirname(getwd())
+project_folder <- paste0(curfolder, "/TS_processing/")
+#audio_orig <- "E:/charade_experiment_WORKSPACE/xdf_procedure/data/Data_processed/Data_trials/Audio_48/"
+audio_orig <- paste0(project_folder, "/Audio/")
+processed_folder <- paste0(project_folder, "/TS_acoustics/")
+
+# sanity check
+#print(curfolder)
+
+
+# packages
+
+library(soundgen) # sound analysis
+library(readr)    # data wrangling
+library(tidyr)
+library(dplyr)
+library(umap) # umap 
+library(ggplot2) # plotting
+library(viridis) # plotting
+library(ggforce) # 
+library(plotly) # interactive plots
+
+
+```
+
+Then we gather all wav files
+```{r wav files and other, message=FALSE, warning=FALSE}
+
+# List all .wav files in the folder and its subdirectories
+wav_files <- list.files(audio_orig, 
+                        pattern = "\\.wav$", 
+                        full.names = TRUE, 
+                        recursive = TRUE)
+
+
+register_path <- file.path(project_folder, 'SpeakerRegister.txt')
+register_df <- read.table(register_path, header = TRUE, sep = "\t", stringsAsFactors = FALSE)
+```
+
+# Getting min and max f0
+```{r}
+
+register_df
+
+# Remove rows where 'key' is '--undefined--'
+register_df <- register_df[register_df$key != '--undefined--', ]
+
+# Convert the 'key' column to numeric 
+register_df$key <- as.numeric(register_df$key)
+
+mean_key <- mean(register_df$key, na.rm=TRUE)
+sd_key <- sd(register_df$key, na.rm=TRUE)
+
+# get min and max f0
+
+max_f0 <- mean_key + 2*sd_key #650
+
+```
+
+# Extracting features from wav files
+
+We use package 'soundgen' to extract a package of features for sound signal
+More info here: https://www.rdocumentation.org/packages/soundgen/versions/2.6.0 or here: https://cogsci.se/soundgen/acoustic_analysis.html
+
+
+Now we extract summary of features in segments
+```{r soundgen, segments, warning=FALSE, message=FALSE}
+# this is an empty data frame where we store the features
+all_features_df <- data.frame()
+
+# this function extracts summary features from the analyze output
+extract_features <- function(file, analyze_result) {
+  #summary_features <- analyze_result$summary
+  features <- analyze_result$detailed
+  # add the filename as the first column
+  df_features <- cbind(File = file, features)
+  return(df_features)
+}
+# Loop over the .wav files in the directory and extract summary features
+for (file in wav_files) {
+  print(paste("Analyzing file:", file))
+  tryCatch({
+    # Read and analyze the audio file
+    # audio <- readWave(file)
+    features <- analyze(file, windowLength = 20, step=10, pitchCeiling=1000)
+    
+    # Extract features
+    features_df <- extract_features(file, features)
+    
+    # Append the summary features for this file to the main data frame
+    all_features_df <- rbind(all_features_df, features_df)
+    
+  }, warning = function(w) {
+    print(paste("Warning while processing file:", file))
+    print(w)
+  }, error = function(e) {
+    print(paste("Error while processing file:", file))
+    print(e)
+  })
+}
+
+# Print the final features data frame
+print(all_features_df)
+```
+
+Extract the features and save each TS as csv
+```{r}
+
+# This function extracts summary features from the analyze output
+extract_features <- function(file, analyze_result) {
+  features <- analyze_result$detailed
+  # Add the filename as the first column
+  df_features <- cbind(File = file, features)
+  return(df_features)
+}
+
+# Loop over the .wav files in the directory and extract summary features
+for (file in wav_files) {
+  print(paste("Analyzing file:", file))
+  tryCatch({
+    # Read and analyze the audio file
+    features <- analyze(file, windowLength = 20, step=10, pitchCeiling = 1000)
+    
+    # Extract features
+    features_df <- extract_features(file, features)
+    
+    # Extract the base filename without the extension and path
+    base_filename <- tools::file_path_sans_ext(basename(file))
+    
+    # Remove the specific substring from the base filename
+    cleaned_filename <- gsub("Mic_nominal_srate48000_|pr_|trial_", "", base_filename)
+    
+    # Create the full path for the output CSV file, with 'soundgen_' prefix
+    csv_filename <- paste0(processed_folder, "/soundgen_", cleaned_filename, ".csv")
+    
+    # Write the features to a CSV file
+    write.csv(features_df, csv_filename, row.names = FALSE)
+    
+    print(paste("Saved features to:", csv_filename))
+    
+  }, warning = function(w) {
+    print(paste("Warning while processing file:", file))
+    print(w)
+  }, error = function(e) {
+    print(paste("Error while processing file:", file))
+    print(e)
+  })
+}
+
+```
+
+
+
+```{r soundgen, segments, warning=FALSE, message=FALSE}
+
+# and save it
+
+output_file <- paste0(project_folder, "/vocalizations_soundgen_features.csv")
+write.csv(all_features_df, file = output_file, row.names = FALSE)
+
+```
+
+Load in the dataset if you do not have it in the environment. Skip this step if you have it in your enviroment
+```{r loading df, warning=FALSE}
+
+dataset_path <- file.path(dataset_folder, "/segments_soundgen_summary.csv")
+data <- read_csv(dataset_path)
+
+```
+
+# Plot to check
+```{r}
+
+# Define the file path
+file_path <- "E:/charade_experiment_WORKSPACE/xdf_procedure/data/Data_processed/Data_trials/Audio_48/0_1_trial_2_Mic_nominal_srate48000_p0_bitter_geluiden_corrected.wav"
+
+# Filter the data frame for the specific file
+file_data <- all_features_df[all_features_df$File == file_path, ]
+
+# Check if "flux" column exists and extract it
+if ("flux" %in% colnames(file_data)) {
+  flux_data <- file_data$flux
+  f1_data <- file_data$f1_freq
+  f2_data <- file_data$f2_freq
+  f3_data <- file_data$f3_freq
+  f0 <- file_data$pitch
+  time <- file_data$time
+} else {
+  stop("The 'flux' column is not available in the features data frame.")
+}
+
+# Plotting the flux data using base R
+plot(flux_data, type = "l", main = "Flux over Time", xlab = "Time", ylab = "Flux")
+
+# Alternatively, using ggplot2 for plotting
+library(ggplot2)
+plot_df <- data.frame(Time = time, Flux = f3_data)
+ggplot(plot_df, aes(x = Time, y = f3_data)) +
+  geom_line() +
+  theme_minimal()
+
+```
+
+
+# Data wrangling
+
+Before we start to compute the distances, we need to prepare the dataframe to more manageable form.
+
+```{r data wrangling, warning=FALSE, message=FALSE}
+
+# get the info about each trial
+data <- data %>%
+  separate(file, into = c("participant", "trial", "condition", "wordCount", "word", "segmentCount"), sep = "_")
+
+# remove '.wav' from the 'segmentnumber' column
+data$segmentCount <- gsub("\\ .wav", "", data$segmentCount)
+
+# some of the output of the soundgen function results in NAs, we can get rid of them 
+na_only_unique_cols <- sapply(data, function(x) length(unique(x, na.rm = TRUE)) == 1 && all(is.na(unique(x, na.rm = TRUE))))
+
+# delete those columns
+cols_to_delete <- names(na_only_unique_cols[na_only_unique_cols])
+data <- data %>%
+  select(-all_of(cols_to_delete))
+
+# we also remove some other features because they are irrelevant for our case
+additional_cols_to_remove <- c('flux_mean', 'flux_median', 'flux_sd', 'fmDep_mean', 'fmDep_median', 'fmDep_sd', 'fmFreq_mean', 'fmFreq_median', 'fmFreq_sd', 'harmEnergy_mean', 'harmEnergy_median', 'harmEnergy_sd', 'harmHeight_mean', 'harmHeight_median', 'harmHeight_sd')
+
+data <- data %>%
+  select(-all_of(additional_cols_to_remove))
+
+```
+
+
+Now we also need to get some information about the concepts that the segments belong to
+```{r category info, warning=FALSE, message=FALSE}
+
+# mapping between concepts and categories
+concept_category_mapping <- data.frame(
+  concept = c("no", "happy", "sad", "bad", "good", "angry", "disgusted", "dog", "cat", "bird", "fish", "fly", "old", "spoon", "egg", "ash", "stone-rock", "smoke", "maybe", "not", "scared"),
+  category = c("other", "emotion/valence", "emotion/valence", "emotion/valence", "emotion/valence", "emotion/valence", "emotion/valence", "animal", "animal", "animal", "animal", "animal", "time", "thing/object", "thing/object", "thing/object", "thing/object", "thing/object", "abstract/logical", "abstract/logical", "emotion/valence"),
+  stringsAsFactors = FALSE
+)
+
+# add this mapping to our df
+data <- merge(data, concept_category_mapping, by.x = "word", by.y = "concept", all.x = TRUE)
+
+# now we can remove the file name from df
+data <- data %>%
+  select(-File)
+
+
+```
+
+Additionaly, we decided to take into account only mean and sd, as the mean might be more representative of the variability within the segment then a median (since it's not always linear)
+```{r median out, warning=FALSE, message=FALSE}
+
+# get the column names and keep only those that do not contain 'median'
+column_names <- names(data)
+columns_to_keep <- !grepl("_median", column_names)
+data <- data[, columns_to_keep]
+
+```
+
+Let's also remove columns where the values are mostly NAs, they are not really informative
+```{r NAs out, warning=FALSE, message=FALSE}
+
+# function to remove columns with NA values
+remove_columns_with_na <- function(dataset) {
+  # column indices with NAs
+  na_columns <- apply(is.na(dataset), 2, any)
+  
+  # remove columns with NAs
+  cleaned_dataset <- dataset[, !na_columns]
+  
+  return(cleaned_dataset)
+}
+
+# remove columns with NAs
+data <- remove_columns_with_na(data)
+
+# we also got some warning for roughness, so let's just delete them
+column_names <- names(data)
+columns_to_keep <- !grepl("roughness", column_names)
+data <- data[, columns_to_keep]
+
+
+```
+
+# UMAP 
+
+Now we can finally run UMAP to reduce the multidimensional space defined by all the features. For more information about UMAP see: 
+
+```{r umap, warning=FALSE}
+
+# what are the features
+feats <- data[,7:ncol(data)]
+
+# delete the category
+feats <- feats %>%
+  select(-category)
+
+feats_scaled <- scale(feats) # normalize the features
+feats_scaled[is.na(feats_scaled)] <- 0 # if value is NA, replace it by 0
+
+# perform umap
+umap_result <- umap(feats_scaled, n_components = 2) 
+
+# add umap coordinates to the feature data
+umap_df <- data.frame(umap1 = umap_result$layout[, 1], umap2 = umap_result$layout[, 2], concept = data$word, participant = data$participant, category = data$category, segment = data$segmentCount, trial = data$trial)
+
+
+# save this df
+output_file <- paste0(dataset_folder, "/umap_df.csv")
+write.csv(umap_df, file = output_file, row.names = FALSE)
+
+
+################################
+
+# plot umap, displaying categories
+umap1 <- ggplot(umap_df, aes(x = umap1, y = umap2, color = category, text = participant)) +
+  geom_point(alpha = 0.7, size = 3) +  
+  labs(title = "UMAP Plot of Vocal Segments", x = "UMAP Dimension 1", y = "UMAP Dimension 2") +
+  scale_color_viridis(discrete = TRUE) +
+  theme_minimal() + 
+  theme(plot.title = element_text(hjust = 0.5)) 
+ggplotly(umap1)
+
+# save this plot
+plot_filename <- file.path(plots_folder, "Umap_cat.png") 
+ggsave(plot_filename, umap1, width = 8, height = 6, dpi = 300) 
+
+
+# plot umap, displaying words
+umap2 <- ggplot(umap_df, aes(x = umap1, y = umap2, color = concept, text = participant)) +
+  geom_point(alpha = 0.7, size = 3) + 
+  labs(title = "UMAP Plot of Vocal Segments", x = "UMAP Dimension 1", y = "UMAP Dimension 2") +
+  scale_color_viridis(discrete = TRUE) +
+  theme_minimal() +  
+  theme(plot.title = element_text(hjust = 0.5)) 
+ggplotly(umap2)
+
+# save the plot
+plot_filename <- file.path(plots_folder, "Umap_concept.png")
+ggsave(plot_filename, umap2, width = 8, height = 6, dpi = 300) 
+
+```
+
+# Euclidian distance between segments
+
+Let's take a look on the inter-segment distance. Some of the concepts' segments might travel through space more than others
+
+Let's take distance of segments based on the features
+Better don't run it, takes an hour or so. Load the interseg df
+```{r intersegment distance, warning=FALSE, message=FALSE}
+
+# Euclidean distance between segments and feature set
+# distance segement1(s1) with segment2 (s2) is the distance between a feature set if s1 (f1) and s2 (f2), where distance(s1,s2) = sqrt(f1_feature1-f2_feature1)^2+...+  (f1_featurei-f2_featurej)^2)
+
+#x = vector of features 1
+#y = vector of features 2
+#distance = sqrt(sum((x-y)^2))
+
+# delete the category for now
+data_dist <- data %>%
+  select(-category)
+
+# distances
+calculate_distance <- function(features_s1, features_s2) {
+  # Calculate the squared differences for each feature
+  squared_differences <- (features_s1 - features_s2)^2
+  # Calculate the sum of squared differences
+  sum_squared_differences <- sum(squared_differences)
+  # Calculate the distance by taking the square root
+  eucl_distance <- sqrt(sum_squared_differences)
+  
+  return(eucl_distance)
+}
+
+#calculate_distance(data_dist[1,7:ncol(data_dist)], data_dist[2,7:ncol(data_dist)])
+
+calculate_distances_to_all <- function(target_segment_index, dataset, start_col) {
+  target_segment <- dataset[target_segment_index, start_col:ncol(dataset)]
+  distances <- numeric(nrow(dataset))
+  print
+  for (i in 1:nrow(dataset)) {
+    distances[i] <- calculate_distance(target_segment, dataset[i, start_col:ncol(dataset)])
+  }
+  
+  return(distances)
+}
+
+
+interSeg_distance <- data.frame(matrix(0, nrow = nrow(data_dist), ncol = nrow(data_dist)))
+
+# make individual ID for each segment
+data_dist <- data_dist %>%
+  mutate(ID = paste(participant, trial, segmentCount, sep = "_")) %>%
+  select(ID, everything())
+
+# calculate distance between each segment
+for (s in 1:nrow(data_dist)) {
+  id <- data_dist$ID[s]  # collect ID for that specific row/column
+  interSeg_distance_vector <- calculate_distances_to_all(s, data_dist, 8) 
+  rownames(interSeg_distance)[s] <- id  # set row name
+  colnames(interSeg_distance)[s] <- id  # set column name
+  interSeg_distance[s,] <- interSeg_distance_vector
+  
+}
+
+# save the file
+output_file <- paste0(dataset_folder, "/distance_matrix.csv")
+write.csv(interSeg_distance, file = output_file, row.names = FALSE)
+
+
+```
+
+Let's now get for each event list of IDs, so we can index those in distance matrix to get mean distances
+```{r mean distance per trial, warning=FALSE}
+
+IDs_list <- data_dist %>%
+  group_by(trial, participant) %>%
+  summarise(Unique_IDs = list(unique(ID))) %>%
+  ungroup()
+
+# vector to store mean distances
+mean_distances <- numeric()
+
+# loop through each combination in the df
+for (i in 1:nrow(IDs_list)) {
+  # list of unique IDs for the current combination
+  id_list <- IDs_list$Unique_IDs[[i]]
+  
+  # get the relevant rows and columns in the distance matrix
+  subset_matrix <- interSeg_distance[id_list, id_list]
+
+  # mean distance for the current combination
+  mean_segments <- sapply(subset_matrix, mean, na.rm = TRUE) # mean(df) does not work
+  mean_distance <- mean(mean_segments)
+  
+  # append the mean distance to the vector
+  mean_distances <- c(mean_distances, mean_distance)
+}
+
+
+# append the mean distance within trial to the ID list
+IDs_list$Dist_mean <- NA
+IDs_list$Dist_mean <- mean_distances
+
+# merge the original df with avg distance
+data_dist_avg <- merge(data_dist, IDs_list, by.x = c("trial", "participant"), by.y = c("trial", "participant"))
+
+# what is the distribution
+hist(IDs_list$Dist_mean)
+
+```
+
+# Visualization
+
+Prepare some more info into our df
+```{r plot preparation, warning=FALSE}
+
+# plot the avg distance between segments per category
+
+# first we need to put back category
+data_dist_avg <- merge(data_dist_avg, concept_category_mapping, by.x = "word", by.y = "concept", all.x = TRUE)
+
+# delete the unique list so we can save it
+data_dist_avg <- data_dist_avg %>%
+  select(-Unique_IDs)
+
+# save the df
+output_file <- paste0(dataset_folder, "/meanDist_pertrial.csv")
+write.csv(data_dist_avg, file = output_file, row.names = FALSE)
+
+# load the distance df if you don't have it
+# data_dist_avg_path <- file.path(dataset_folder, "/meanDist_pertrial.csv")
+# data_dist_avg <- read_csv(data_dist_avg_path)
+
+```
+
+Plot of distance between segments per category
+```{r distance between segments per category, warning=FALSE}
+
+# plot of distances between segments across categories
+plot1 <- ggplot(data_dist_avg, aes(x = reorder(category, -Dist_mean), y = Dist_mean)) +
+  geom_point(size = 2, color = viridis(1, option = "A"), position = position_dodge(width = 0.5)) +
+  geom_boxplot(width = 0.2, fill = viridis(1), alpha = 0.5, position = position_dodge(width = 0.5)) +
+  labs(title = "Average Distance Between Segments Across Categories",
+       x = "Category", y = "Average Distance per Trial") +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5), legend.position = "none")
+
+plot1
+
+# save it
+plot_filename <- file.path(plots_folder, "MeanDist_categ.png")
+ggsave(plot_filename, plot1, width = 8, height = 6, dpi = 300)
+```
+
+Plot of distance between segments per concept
+```{r distance between segments per concept, warning=FALSE}
+
+# plot the same but for each concept
+plot2 <- ggplot(data_dist_avg, aes(x = reorder(word, -Dist_mean), y = Dist_mean)) +
+  geom_point(size = 2, color = viridis(1, option = "B"), position = position_dodge(width = 0.5)) +
+  geom_boxplot(width = 0.2, fill = viridis(1), alpha = 0.5, position = position_dodge(width = 0.5)) +
+  labs(title = "Average Distance Between Segments Across Concepts",
+       x = "Concept", y = "Average Distance per Trial") +
+  theme_minimal() +
+theme(
+    plot.title = element_text(hjust = 0.5),
+    legend.position = "none",
+    axis.text.x = element_text(angle = 45, hjust = 1, size = 12),
+    legend.text = element_text(size = 20)  
+  ) 
+
+plot2
+
+# save it
+plot_filename <- file.path(plots_folder, "MeanDist_concept.png")
+ggsave(plot_filename, plot2, width = 8, height = 6, dpi = 300) 
+
+
+```
+
+# Additional analysis
+
+## Distance within participants
+
+Let's now take a look not what is the variability within trial, but within a participant
+```{r distance within participants, warning=FALSE}
+
+IDs_list_pcn <- data_dist %>%
+  group_by(participant) %>%
+  summarise(Unique_IDs = list(unique(ID))) %>%
+  ungroup()
+
+# vector to store mean distances
+mean_distances_pcn <- numeric()
+
+# loop over IDs
+for (i in 1:nrow(IDs_list_pcn)) {
+  # list of IDs
+  id_list <- IDs_list_pcn$Unique_IDs[[i]]
+  
+  # select relevant rows/columns from the matrix
+  subset_matrix <- interSeg_distance[id_list, id_list]
+
+  # calculate the mean distance for the current combination
+  mean_segments <- sapply(subset_matrix, mean, na.rm = TRUE) 
+  mean_distance <- mean(mean_segments)
+  
+  # Append the mean distance to the vector
+  mean_distances_pcn <- c(mean_distances_pcn, mean_distance)
+}
+
+
+# append the mean distance within trial to the ID list
+IDs_list_pcn$Dist_mean <- NA
+IDs_list_pcn$Dist_mean <- mean_distances_pcn
+
+
+# merge the original df with avg distance
+data_dist_avg_pcn <- merge(data_dist, IDs_list_pcn, by.x = "participant", by.y = "participant")
+data_dist_avg_pcn
+
+
+# merge with original df
+data_dist_avg_pcn <- merge(data_dist_avg_pcn, concept_category_mapping, by.x = "word", by.y = "concept", all.x = TRUE)
+
+# delete the unique list so we can save it
+data_dist_avg_pcn <- data_dist_avg_pcn %>%
+  select(-Unique_IDs)
+
+# save it
+output_file <- paste0(dataset_folder, "/meanDist_perpcn.csv")
+write.csv(data_dist_avg_pcn, file = output_file, row.names = FALSE)
+```
+
+Plot it
+```{r distance within participants, plots, warning=FALSE}
+
+# distance per categories
+plot3 <- ggplot(data_dist_avg_pcn, aes(x = reorder(category, -Dist_mean), y = Dist_mean)) +
+  geom_point(size = 2, color = viridis(1, option = "A"), position = position_dodge(width = 0.5)) +
+  geom_boxplot(width = 0.2, fill = viridis(1), alpha = 0.5, position = position_dodge(width = 0.5)) +
+  labs(title = "Average Distance Between Segments Across Categories",
+       x = "Category", y = "Average Distance per Participant") +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5), legend.position = "none")
+
+plot3 
+
+# save it
+plot_filename <- file.path(plots_folder, "MeanDist_categ_pcn.png")
+ggsave(plot_filename, plot3, width = 8, height = 6, dpi = 300) 
+
+# plot the same but for each concept
+plot4 <- ggplot(data_dist_avg_pcn, aes(x = reorder(word, -Dist_mean), y = Dist_mean)) +
+  geom_point(size = 2, color = viridis(1, option = "B"), position = position_dodge(width = 0.5)) +
+  geom_boxplot(width = 0.2, fill = viridis(1), alpha = 0.5, position = position_dodge(width = 0.5)) +
+  labs(title = "Average Distance Between Segments Across Concepts",
+       x = "Concept", y = "Average Distance per Participant") +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5), legend.position = "none", 
+        axis.text.x = element_text(angle = 45, hjust = 1)) 
+
+plot4
+
+# save
+plot_filename <- file.path(plots_folder, "MeanDist_concept_pcn.png")
+ggsave(plot_filename, plot4, width = 8, height = 6, dpi = 300) 
+
+
+```
