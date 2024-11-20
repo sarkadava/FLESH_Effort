@@ -1,0 +1,24 @@
+project:
+  type: book
+
+book:
+  title: "EffortPreregistration"
+  author: "Norah Jones"
+  date: "19/11/2024"
+  chapters:
+    - index.qmd
+    - /01_XDF_processing/xdf_workflow.qmd
+    - intro.qmd
+    - summary.qmd
+    - references.qmd
+
+bibliography: references.bib
+
+format:
+  html:
+    theme: cosmo
+  pdf:
+    documentclass: scrreprt
+
+
+
