@@ -11,6 +11,7 @@
 
 /.quarto/
 /06_Modeling/models
+/Miscellaneous
+/Plots
 /01_XDF_processing/data/Data_processed/CsvDataTS_raw
-/RAWDATA
 RAWDATA.rar
