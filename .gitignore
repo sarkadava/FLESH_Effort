@@ -12,6 +12,5 @@
 /.quarto/
 /06_Modeling/models
 /01_XDF_processing/data/Data_processed/CsvDataTS_raw
-/04_TS_movementAnnotation/TS_forClassifying
 /RAWDATA
 RAWDATA.rar
