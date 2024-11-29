@@ -12,6 +12,7 @@
 /.quarto/
 /06_Modeling/models
 /Miscellaneous
+/02_MotionTracking
 /Plots
 /01_XDF_processing/data/Data_processed/CsvDataTS_raw
 RAWDATA.rar
