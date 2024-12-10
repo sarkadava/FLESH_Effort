@@ -10,10 +10,10 @@ RAWDATA.rar
 06_ConceptSimilarity/numberbatch
 /.quarto/
 06_Modeling/models
-Miscellaneous
-Plots
 01_XDF_processing/data/Data_processed/CsvDataTS_raw
 02_MotionTracking/openpose
 02_MotionTracking/projectdata
 02_MotionTracking/misc
 /_book
+/Miscellaneous
+/02_MotionTracking_processing/openpose
