@@ -1,31 +1,60 @@
 SETUP
 
+If you continue from 01_XDF_processing, you can skip steps 1) and 2)
+
+1) create virtual environment FLESH_TSPROCESS (we will use this environment for most of the processing steps)
+
+conda create --name FLESH_TSPROCESS
+
+conda activate FLESH_TSPROCESS
+
+2) install necessary packages
+
+cd '\xxx\02_MotionTracking_processing'
+
+pip install requirements_general.txt
+
+3) in folder \openpose follow the STEP1 and STEP2 urls to download necessary files
+
+* STEP1: place bin folder which would be in the openpose folder
+* STEP2: place the 'pose_iter_XXXXXX.caffemodel' in the models/pose/body_135/ folder.
+
+(Now you are ready to run scripts 01_Video_preparation and 02_Track_OpenPose)
+
+4) create virtual environment FLESH_pose2sim
+
+conda create --name FLESH_pose2sim
+
+conda activate FLESH_pose2sim
+
+5) install necessary packages
+
+cd '\xxx\02_MotionTracking_processing'
+
+pip install requirements_pose2sim.txt
+
+(Now you are ready to run script 03_Track_pose2sim.ipynb)
+
+4) create virtual environment FLESH_opensim
+
+conda create --name FLESH_opensim
+
+conda activate FLESH_opensim
+
+5) install necessary packages
+
+cd '\xxx\02_MotionTracking_processing'
+
+pip install requirements_opensim.txt
+
+(Now you are ready to run script 04_Track_InverseKinDyn.ipynb)
 
 
 
-In this pipeline, we perform motion tracking in three steps
+TROUBLESHOOTING
 
-1) 2d coordinates with openpose
+For motion tracking related trouble-shooting that is not addressed here, see respective documentations:
 
-for that we need to have cutted videos into 3 individual cameras, placed into 2d-raw folders (Session-Participant-Trial)
-
-2) 3d coordinates with pose2sim, filtered and augmented
-
-for that we need 2d coodinates (in pose folder)
-and Config.toml file (in Pose2Sim folder) that is distributed to each session/participant/trial
-
-3) inverse kinematics and dynamics with opensim
-
-for that we use the 3d (augmented) markers
-
-3.1 first we scale the pose2sim 25b model according to our participant's mass and height, based on a tpose
-
-all settings are in Scaling_Setup file
-
-3.2 then we used the scaled model and perform inverse kinematics to each trial
-
-all settings are in IK_Setup fike
-
-3.3 last, we perform ID on each trial's IK file
-
-all settings are in ID_Setup file
+- OpenPose: https://github.com/CMU-Perceptual-Computing-Lab/openpose
+- pose2sim: https://github.com/perfanalytics/pose2sim
+- OpenSim: https://opensimconfluence.atlassian.net/wiki/spaces/OpenSim/overview
