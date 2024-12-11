@@ -2,6 +2,7 @@ SETUP
 
 
 
+
 In this pipeline, we perform motion tracking in three steps
 
 1) 2d coordinates with openpose

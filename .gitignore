@@ -18,6 +18,6 @@ RAWDATA.rar
 /Miscellaneous
 
 /02_MotionTracking_processing/openpose/bin
+/02_MotionTracking_processing/projectdata
 *.caffemodel
-02_MotionTracking/
-02_MotionTrackinging_processing
+/02_MotionTracking
