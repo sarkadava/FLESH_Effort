@@ -21,7 +21,7 @@ pip install -r requirements_general.txt
 
 4) create virtual environment FLESH_pose2sim
 
-conda create --name FLESH_pose2sim
+conda create --name FLESH_pose2sim python=3.8.19
 
 conda activate FLESH_pose2sim
 
@@ -35,7 +35,7 @@ pip install -r requirements_pose2sim.txt
 
 4) create virtual environment FLESH_opensim
 
-conda create --name FLESH_opensim
+conda create --name FLESH_opensim python=3.8.19
 
 conda activate FLESH_opensim
 
