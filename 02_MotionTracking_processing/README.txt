@@ -4,15 +4,13 @@ If you continue from 01_XDF_processing, you can skip steps 1) and 2)
 
 1) create virtual environment FLESH_TSPROCESS (we will use this environment for most of the processing steps)
 
-conda create --name FLESH_TSPROCESS
+conda create --name FLESH_TSPROCESS python=3.12.2
 
 conda activate FLESH_TSPROCESS
 
 2) install necessary packages
 
-cd '\xxx\02_MotionTracking_processing'
-
-pip install requirements_general.txt
+pip install -r requirements_general.txt
 
 3) in folder \openpose follow the STEP1 and STEP2 urls to download necessary files
 
@@ -31,7 +29,7 @@ conda activate FLESH_pose2sim
 
 cd '\xxx\02_MotionTracking_processing'
 
-pip install requirements_pose2sim.txt
+pip install -r requirements_pose2sim.txt
 
 (Now you are ready to run script 03_Track_pose2sim.ipynb)
 
@@ -45,11 +43,9 @@ conda activate FLESH_opensim
 
 cd '\xxx\02_MotionTracking_processing'
 
-pip install requirements_opensim.txt
+pip install -r requirements_opensim.txt
 
 (Now you are ready to run script 04_Track_InverseKinDyn.ipynb)
-
-
 
 TROUBLESHOOTING
 
