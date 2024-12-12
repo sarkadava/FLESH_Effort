@@ -6,6 +6,5 @@ opencv-python==4.10.0.82
 pandas==2.2.3
 pyxdf==1.16.8
 scipy==1.14.1
-shign==1.0
 soundfile==0.12.1
 opencv_python==4.10.0.82
