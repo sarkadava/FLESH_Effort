@@ -2,7 +2,7 @@ SETUP
 
 1) create virtual environment FLESH_TSPROCESS (we will use this environment for most of the processing steps)
 
-conda create --name FLESH_TSPROCESS
+conda create --name FLESH_TSPROCESS python=3.12.2
 
 conda activate FLESH_TSPROCESS
 
@@ -10,14 +10,17 @@ conda activate FLESH_TSPROCESS
 
 cd '\xxx\01_XDF_PROCESSING'
 
-pip install requirements.txt
+pip install -r requirements_general.txt
+
+3) We need to also install package `shign`, but directly from the source
+
+git clone https://github.com/KnurpsBram/shign
+cd shign
+pip install .
 
 3) open xdf_workflow.ipynb
 
 
-*TROUBLESHOOTING*
-
-If package shign is not installed via requirements, follow the instructions here: https://github.com/KnurpsBram/shign
 
 
 
