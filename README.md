@@ -5,7 +5,6 @@ TODO:
 - have one META.txt with pcnID, sex, weight and height in RAWDATA
 - req + installation for movement annnotation
 - req + installation for final merge
-- req + installation for ConceptSimilarit
 - req + installation for feature extraction
 - req + installation for xgboost
 - req + installation for modelling
