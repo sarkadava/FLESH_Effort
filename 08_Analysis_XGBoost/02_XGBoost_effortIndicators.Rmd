@@ -19,12 +19,9 @@ knitr::opts_chunk$set(echo = TRUE)
 # current folder (first go to session -> set working directory -> to source file location)
 parentfolder <- dirname(getwd())
 
-processfolder <- paste0(parentfolder, '/07_TS_featureExtraction/')
-data          <- paste0(processfolder, '/Datasets/')
-
-datasets      <- paste0(parentfolder, '/08_XGBoost/datasets/')
-models        <- paste0(parentfolder, '/08_XGBoost/models/')
-plots         <- paste0(parentfolder, '/08_XGBoost/plots/')
+datasets      <- paste0(parentfolder, '/08_Analysis_XGBoost/datasets/')
+models        <- paste0(parentfolder, '/08_Analysis_XGBoost/models/')
+plots         <- paste0(parentfolder, '/08_Analysis_XGBoost/plots/')
 
 ########## source file ##########
 
@@ -60,49 +57,7 @@ colorBlindBlack8  <- c("#000000", "#E69F00", "#56B4E9", "#009E73",
 
 ```
 
-explanation
-
-
-## Load in data frame
-
-```{r read metadata, echo=TRUE, message=FALSE, warning=FALSE}
-
-# Load cleaned effort data
-data <- read_csv(paste0(processfolder, "\\datasets\\features_df_final.csv"))
-
-```
-
-# Data preparation
-
-Inspect the data and convert to factors, if needed. Then split in modalities.
-
-```{r inspect data, echo=TRUE, message=FALSE, warning=FALSE}
-str(data)
-
-# Turn percProm to factor
-data$correction_info <- as.factor(data$correction_info)
-data$TrialID <- as.factor(data$TrialID)
-data$modality <- as.factor(data$modality)
-
-
-# First, remove the specified columns
-data <- data %>%
-  select(-concept, -answer_fol, -answer_fol_dist, 
-         -answer_prev, -answer_prev_dist, -concept_id, -expressibility, -response_time_sec,
-         -correction)
-
-# Create three dfs separately for each modality
-data_ges <- data %>% 
-  filter(modality == "gebaren")
-
-data_voc <- data %>% 
-  filter(modality == "geluiden")
-
-data_mult <- data %>% 
-  filter(modality == "combinatie")
-
-
-```
+In the previous script, we have already separated trials into modalities and clean the resulting dataframes of superfluous columns so now we can directly load them and continue modelling.
 
 
 #######################
@@ -113,23 +68,7 @@ First, for gesture modality, we need to remove columns with features that are no
 
 ```{r}
 
-# get rid of all gesture-superfluous cols
-colstoremove <- c('envelope', 'loudness', 'roughness', 'flux', 'novelty', 
-                     'harmEnergy', 'audio', 'envelope_change', 'f0', 
-                     'f1', 'f2', 'f3', 'env_', 'duration_voc')
-
-data_ges <- data_ges %>%
-  select(-contains(colstoremove))
-
-# get rid of NA columns
-data_ges <- data_ges[, colSums(is.na(data_ges)) == 0]
-
-data_ges <- data_ges %>%
-  select(-TrialID, -modality)
-
-# get rid of all char columns
-data_ges <- data_ges[, sapply(data_ges, class) != "character"]
-
+data_ges <- read_csv(paste0(datasets, "ges_clean_df.csv"))
 
 ```
 
