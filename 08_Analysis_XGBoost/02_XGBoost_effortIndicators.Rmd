@@ -70,6 +70,9 @@ First, for gesture modality, we need to remove columns with features that are no
 
 data_ges <- read_csv(paste0(datasets, "ges_clean_df.csv"))
 
+# Make predictor a factor variable
+data_ges$correction_info <- as.factor(data_ges$correction_info)
+
 ```
 
 ## Random forests
@@ -105,23 +108,34 @@ set.seed(998) # Set a seed for reproducibility
 ```
 
 Split the data
-```{r}
+```{r split the data, echo=TRUE, message=FALSE, warning=FALSE}
 
 
 # Split the data into training and testing subsets
-sample_indices <- sample(1:nrow(data_ges), 0.8*nrow(data_ges)) # 80% training, 20% testing
-train_data <- data_ges[sample_indices, ]
-test_data <- data_ges[-sample_indices, ]
+# sample_indices <- sample(1:nrow(data_ges), 0.8*nrow(data_ges)) # 80% training, 20% testing
+# train_data <- data_ges[sample_indices, ]
+# test_data <- data_ges[-sample_indices, ]
+
+# This method should ensure that all levels of our dependent variable are present in both sets
+# Ensure each level is present in both sets
+train_data <- data_ges %>%
+  group_by(correction_info) %>%
+  sample_frac(0.8, replace = FALSE) %>%
+  ungroup()
+
+# Assign the remaining samples to the test set
+test_data <- anti_join(data_ges, train_data)
 
 ```
 
 Building the untuned model.
 
 ```{r untuned ges, echo=TRUE, message=FALSE, warning=FALSE}
+
 # Untuned Model with importance (permutation) option set
 gesUntuned <- ranger(
   y = train_data$correction_info,
-  x = train_data[,0:163],
+  x = train_data[,0:401],
   num.trees = 500,
   importance = "permutation"
 )
@@ -152,6 +166,7 @@ print(sorted_feature_importance)
 Set the parameters for the random forest.
 
 ```{r settings for RF ges, echo=TRUE, message=FALSE, warning=FALSE}
+
 # Define the number of CPU cores to use
 num_cores <- detectCores()
 
@@ -162,7 +177,8 @@ cl <- makeCluster(num_cores)
 Tuning the random forest.
 
 ```{r tuning RF ges, message=FALSE, warning=FALSE}
-tuneGes <- makeClassifTask(data = data_ges[,0:164],
+
+tuneGes <- makeClassifTask(data = data_ges[,0:402],
                            target = "correction_info")
 
 tuneGes <- tuneRanger(tuneGes,
@@ -173,25 +189,19 @@ tuneGes <- tuneRanger(tuneGes,
 tuneGes
 
 # Recommended parameter settings: 
-# > tuneGes[["recommended.pars"]][["mtry"]]
-# [1] 67
-# > 
-# > tuneGes[["recommended.pars"]][["min.node.size"]]
-# [1] 2
-# > tuneGes[["recommended.pars"]][["sample.fraction"]]
-# [1] 0.8896767
-# > tuneGes[["recommended.pars"]][["multiclass.brier"]]
-# [1] 0.6112816
-# > tuneGes[["recommended.pars"]][["exec.time"]]
-# [1] 0.194
+#   mtry min.node.size sample.fraction
+# 1   94             2       0.7665596
+# Results: 
+#   multiclass.brier exec.time
+# 1        0.7246027     0.188
 
 gesTuned <- ranger(
   y = train_data$correction_info,
-  x = train_data[,0:163], 
+  x = train_data[,0:401], 
   num.trees = 5000, 
-  mtry = 67, # Set the recommended mtry value (number of features).
+  mtry = 94, # Set the recommended mtry value (number of features).
   min.node.size = 2, # Set the recommended min.node.size value (number of samples before a node terminates).
-  sample.fraction = 0.8896767, # Set the recommended sample fraction value.(% of data for bagging).
+  sample.fraction = 0.7665596, # Set the recommended sample fraction value.(% of data for bagging).
   importance = "permutation" # Permutation is a computationally intensive test.
 )
 
@@ -226,8 +236,9 @@ print(sorted_feature_importance)
 Create a tuned model only.
 
 ```{r tuned model imputed ges, echo=TRUE, message=FALSE, warning=FALSE}
+
 # Create a classification task for tuning
-tuneGes <- makeClassifTask(data = train_data[, 0:164], target = "correction_info")
+tuneGes <- makeClassifTask(data = train_data[, 0:402], target = "correction_info")
 
 # Tune the model
 tuneGes <- tuneRanger(tuneGes, measure = list(multiclass.brier), num.trees = 500)
@@ -236,17 +247,20 @@ tuneGes <- tuneRanger(tuneGes, measure = list(multiclass.brier), num.trees = 500
 tuneGes
 
 # Recommended parameter settings: 
-#   mtry min.node.size sample.fraction multiclass.brier exec.time
-# 1    3             3       0.7533427        0.7109598     0.168
+#   mtry min.node.size sample.fraction
+# 1  354             3       0.6975628
+# Results: 
+#   multiclass.brier exec.time
+# 1        0.7621535     0.192
 
 # Fit the tuned model on the training data
 gesTuned <- ranger(
   y = train_data$correction_info,
-  x = train_data[, 0:163],
+  x = train_data[, 0:401],
   num.trees = 5000,
-  mtry = 3,
+  mtry = 354,
   min.node.size = 3,
-  sample.fraction = 0.7533427,
+  sample.fraction = 0.6975628,
   importance = "permutation"
 )
 
@@ -350,11 +364,17 @@ rm(total_combinations,single_model_time,folds,total_runs,total_time,total_time_h
 
 Create subsets to train and test data (80/20).
 
-
 ```{r}
 
 # Set seed for reproducibility
 set.seed(998)
+
+# Set up train control
+train_control <- trainControl(
+  method = "cv",        # Cross-validation
+  number = 5,           # 5-fold cross-validation
+  allowParallel = TRUE  # Enable parallel processing
+)
 
 # Define the number of subsets
 numSubsets <- 5
@@ -438,71 +458,8 @@ for (set_name in names(combined_sets)) {
 
 ```
 
-```{r}
-
-# Set seed for reproducibility
-set.seed(998)
-
-# Set up train control
-train_control <- trainControl(
-  method = "cv",        # Cross-validation
-  number = 5,           # 5-fold cross-validation
-  allowParallel = TRUE  # Enable parallel processing
-)
-
-# Define the number of subsets
-numSubsets <- 5
-
-# Create an empty list to store subsets
-gesSubsets <- vector("list", length = numSubsets)
-
-# load MICE imputed data
-#gerDataXGB <- read_csv(paste0(datasets, "gerDataXGB.csv"))
-gesDataXGB <- data_ges
-# ensure percProm is factor
-gesDataXGB$correction_info <- as.factor(gesDataXGB$correction_info)
-levels(gesDataXGB$correction_info)
-# only keep the columns of output and predictor variables
-#gerDataXGB <- gerDataXGB[,13:52] 
-
-# Calculate the number of samples in each subset
-subsetSize <- nrow(gesDataXGB) %/% numSubsets
-
-# Randomly assign samples to subsets
-for (i in 1:numSubsets) {
-  if (i < numSubsets) {
-    gesSubsets[[i]] <- gesDataXGB[sample((1:nrow(gesDataXGB)), size = subsetSize), ]
-  } else {
-    gesSubsets[[i]] <- gesDataXGB[sample((1:nrow(gesDataXGB)), size = subsetSize + (nrow(gesDataXGB) %% numSubsets)), ]
-  }
-}
-
-# Naming the subsets
-names(gesSubsets) <- paste0("gesData", 1:numSubsets)
-
-# Verify that all subsets contain all levels
-for (i in 1:numSubsets) {
-  cat("Subset", i, "contains levels:", levels(gesSubsets[[i]]$correction_info), "\n")
-}
-
-
-# Access the subsets (e.g., gerData1, gerData2, etc.)
-gesData1 <- gesSubsets$gesData1
-gesData2 <- gesSubsets$gesData2
-gesData3 <- gesSubsets$gesData3
-gesData4 <- gesSubsets$gesData4
-gesData5 <- gesSubsets$gesData5
-
-# Combine subsets into 80% groups.
-gesData1234 <- rbind(gesData1, gesData2, gesData3, gesData4)
-gesData1235 <- rbind(gesData1, gesData2, gesData3, gesData5)
-gesData1245 <- rbind(gesData1, gesData2, gesData4, gesData5)
-gesData1345 <- rbind(gesData1, gesData3, gesData4, gesData5)
-gesData2345 <- rbind(gesData2, gesData3, gesData4, gesData5)
-```
-
-
-```{r k-fold subset, echo=TRUE, message=FALSE, warning=FALSE}
+This code does not ensure that sets contain all levels
+```{r k-fold subset, echo=TRUE, message=FALSE, warning=FALSE, eval = FALSE}
 # Set seed for reproducibility
 set.seed(998)
 
@@ -818,104 +775,76 @@ print(gesCumulativeImportance)
 ```
 
 
-## Here goes PCA
+## PCA
 
-SOMETHING LIKE THIS BUT NEEDS TO BE ADAPTED
-
+This is a function to extract features per components
 
 ```{r}
 
-# Load necessary libraries
-library(tidyverse)
-library(factoextra)
-library(ggplot2)
-
-# Example: Replace 'df' with your actual dataset
-# Assuming `correction` is the column with labels
-# Assume numeric columns are used for PCA
-
-# Data Preparation
-# Only select numerical columns
-Gdata <- data_ges %>% select(where(is.numeric))
-
-
-# Replace NA with 0
-Gdata[is.na(Gdata)] <- 0
-
-# get rid of all gesture-superfluous cols
-colstoremove <- c('numofArt') # it has 0 variance so PCA gives error
-Gdata <- Gdata %>%
-  select(-contains(colstoremove))
-
-
-# Separate labels
-labels <- data_ges$correction_info
-
-# Standardize the features
-data_scaled <- scale(Gdata)
-
-# Perform PCA
-pca <- prcomp(data_scaled, center = TRUE, scale. = TRUE)
-
-biplot(pca, scale = 0, cex = 0.6)
-screeplot(pca)
-
-# Explained Variance
-explained_variance <- summary(pca)$importance[2, ] # Proportion of Variance
-cumulative_variance <- cumsum(explained_variance)
-
-# Plot explained variance
-fviz_eig(pca, addlabels = TRUE, ylim = c(0, 1)) +
-  ggtitle("Explained Variance by PCA")
-
-# Number of components explaining 95% variance
-threshold <- 0.80
-num_components <- which(cumulative_variance >= threshold)[1]
-cat("Number of components explaining 95% variance:", num_components, "\n")
-
-# Feature Contributions to Components
-feature_contributions <- as.data.frame(pca$rotation)
-feature_contributions$Feature <- rownames(feature_contributions)
-rownames(feature_contributions) <- NULL
-
-# Print feature contributions to PCs
-cat("\nFeature Contributions to Principal Components:\n")
-print(feature_contributions)
-
-# Top contributing features for each principal component
-top_contributors <- feature_contributions %>%
-  pivot_longer(-Feature, names_to = "PrincipalComponent", values_to = "Contribution") %>%
-  group_by(PrincipalComponent) %>%
-  slice_max(order_by = abs(Contribution), n = 10) %>%
-  arrange(PrincipalComponent, desc(abs(Contribution)))
-
-cat("\nTop Contributing Features per Component:\n")
-print(top_contributors)
-
-# Visualize contributions to first few principal components
-top_pc <- colnames(feature_contributions)[1:min(5, ncol(feature_contributions) - 1)] # Top 5 PCs
-for (pc in top_pc) {
-  ggplot(filter(top_contributors, PrincipalComponent == pc), aes(x = reorder(Feature, Contribution), y = Contribution)) +
-    geom_bar(stat = "identity") +
-    coord_flip() +
-    ggtitle(paste("Feature Contributions to", pc)) +
-    ylab("Contribution") +
-    xlab("Features") +
-    theme_minimal() +
-    print()
+# Combined function to extract top n features, rank by importance, and save as CSV
+extract_and_save_top_features <- function(df_pca, CumulativeImportance, n = 3, file_name = "top_features_per_pc.csv") {
+  
+  # Initialize an empty list to store the results
+  top_features_per_pc <- list()
+  
+  # Loop through each row in ges_pca (corresponding to each principal component)
+  for (pc_index in 1:nrow(df_pca)) {
+    
+    # Get the feature list for the current principal component (the row)
+    pc_features_str <- df_pca[pc_index, ]
+    
+    # Remove the square brackets, single quotes, and extra spaces
+    pc_features <- gsub("\\[|\\]", "", pc_features_str)  # Remove square brackets
+    pc_features <- gsub("'", "", pc_features)           # Remove single quotes
+    pc_features <- gsub("\\s+", " ", pc_features)       # Replace multiple spaces with a single space
+    
+    # Split the string by commas to get individual feature names
+    pc_features <- unlist(strsplit(pc_features, ","))
+    
+    # Clean up any leading/trailing spaces from each feature name
+    pc_features <- trimws(pc_features)
+    
+    # Filter XGBoost importance data for features present in the current PC
+    important_features <- CumulativeImportance[CumulativeImportance$Feature %in% pc_features, ]
+    
+    # Sort features by importance in descending order
+    important_features <- important_features[order(-important_features$Cumulative), ]
+    
+    # Get the top n features for the current PC
+    top_features <- head(important_features, n)
+    
+    # Add a column for the PC number
+    top_features$PC <- paste("PC", pc_index)
+    
+    # Store the sorted features in the results list
+    top_features_per_pc[[paste("PC", pc_index)]] <- top_features
+  }
+  
+  # Combine all results into a single dataframe
+  result_df <- do.call(rbind, top_features_per_pc)
+  
+  # Save the dataframe to a CSV file
+  write.csv(result_df, file_name, row.names = FALSE)
+  
+  # Return the dataframe
+  return(result_df)
 }
 
-# Visualize PCA result (e.g., PC1 vs PC2)
-pca_df <- as.data.frame(pca$x)
-pca_df$Correction <- labels
+```
 
-ggplot(pca_df, aes(x = PC1, y = PC2, color = Correction)) +
-  geom_point() +
-  ggtitle("PCA: Correction Clusters") +
-  xlab("PC1") +
-  ylab("PC2") +
-  theme_minimal()
 
+Now let's collect 3 features per component and bind all to single df
+
+```{r}
+
+# Load in the df
+ges_pca <- read_csv(paste0(datasets, "PCA_top_contributors_ges.csv"))
+
+# Call the function to extract top features, rank by importance, and save as CSV
+top_features_ges <- extract_and_save_top_features(ges_pca, gesCumulativeImportance, n = 3, file_name = "top_features_ges_final.csv")
+
+# Print the resulting dataframe
+print(top_features_ges)
 
 ```
 
@@ -928,27 +857,10 @@ First, for vocal modality, we need to remove columns with features that are not 
 
 ```{r}
 
-# get rid of all gesture-superfluous cols
-colstokeep <- c('envelope', 'loudness', 'roughness', 'flux', 'novelty', 
-                     'harmEnergy', 'audio', 'envelope_change', 'f0', 
-                     'f1', 'f2', 'f3', 'env_', 'duration_voc', 'COP', 'correction', 'TrialID', 'modality')
+data_voc <- read_csv(paste0(datasets, "voc_clean_df.csv"))
 
-data_voc <- data_voc %>%
-  select(matches(paste(colstokeep, collapse = "|")))
-
-colstoremove <- c('sync', 'time')
-
-data_voc <- data_voc %>%
-  select(-contains(colstoremove))
-
-# get rid of NA columns
-data_voc[is.na(data_voc)] <- 0 # CAREFUL - here we loose lot of cols (MICE maybe needed)
-
-data_voc <- data_voc %>%
-  select(-TrialID, -modality)
-
-# get rid of all char columns
-data_voc <- data_voc[, sapply(data_voc, class) != "character"]
+# Make predictor a factor variable
+data_voc$correction_info <- as.factor(data_voc$correction_info)
 
 ```
 
@@ -965,7 +877,7 @@ formula_str <- paste("correction_info ~", paste(predictors, collapse = " + "))
 vocTree_formula <- as.formula(formula_str)
 
 # Now use the formula in rpart
-vocTree <- rpart(formula = vocTree_formula, data = data_ges, 
+vocTree <- rpart(formula = vocTree_formula, data = data_voc, 
                 method='class', # Specify that it's a classification tree
                 control = rpart.control(maxdepth = 5)  # Control parameters for the 'rpart' function
 )
@@ -988,10 +900,20 @@ Split the data
 ```{r}
 
 
-# Split the data into training and testing subsets
-sample_indices <- sample(1:nrow(data_voc), 0.8*nrow(data_voc)) # 80% training, 20% testing
-train_data <- data_voc[sample_indices, ]
-test_data <- data_voc[-sample_indices, ]
+# # Split the data into training and testing subsets
+# sample_indices <- sample(1:nrow(data_voc), 0.8*nrow(data_voc)) # 80% training, 20% testing
+# train_data <- data_voc[sample_indices, ]
+# test_data <- data_voc[-sample_indices, ]
+
+# This method should ensure that all levels of our dependent variable are present in both sets
+# Ensure each level is present in both sets
+train_data <- data_voc %>%
+  group_by(correction_info) %>%
+  sample_frac(0.8, replace = FALSE) %>%
+  ungroup()
+
+# Assign the remaining samples to the test set
+test_data <- anti_join(data_voc, train_data)
 
 ```
 
@@ -1001,7 +923,7 @@ Building the untuned model.
 # Untuned Model with importance (permutation) option set
 vocUntuned <- ranger(
   y = train_data$correction_info,
-  x = train_data[,0:118], # FLAGGED: adapt
+  x = train_data[,0:109], # FLAGGED: adapt
   num.trees = 500,
   importance = "permutation"
 )
@@ -1042,7 +964,7 @@ cl <- makeCluster(num_cores)
 Tuning the random forest.
 
 ```{r tuning RF ger, message=FALSE, warning=FALSE}
-tuneVoc <- makeClassifTask(data = data_voc[,0:119], # FLAGGED: adapt
+tuneVoc <- makeClassifTask(data = data_voc[,0:110], # FLAGGED: adapt
                            target = "correction_info")
 
 tuneVoc <- tuneRanger(tuneVoc,
@@ -1051,21 +973,21 @@ tuneVoc <- tuneRanger(tuneVoc,
 
 #Return hyperparameter values
 tuneVoc
-## Ola: ALWAYS REPORT THOSE BECAUSE THEY ARE DIFFERENT EVERY TIME BC OF RANDOMIZATION
+
 # Recommended parameter settings: 
 #   mtry min.node.size sample.fraction
-# 1   20             4       0.2387222
+# 1   56             5       0.2063411
 # Results: 
 #   multiclass.brier exec.time
-# 1        0.8037542     0.17
+# 1        0.7598987     0.176
 
 vocTuned <- ranger(
   y = train_data$correction_info,
-  x = train_data[,0:161],  #FLAGGED: adapt
+  x = train_data[,0:109],  #FLAGGED: adapt
   num.trees = 5000, 
-  mtry = 61, # Set the recommended mtry value (number of features).
-  min.node.size = 4, # Set the recommended min.node.size value (number of samples before a node terminates).
-  sample.fraction = 0.3161722, # Set the recommended sample fraction value.(% of data for bagging).
+  mtry = 56, # Set the recommended mtry value (number of features).
+  min.node.size = 5, # Set the recommended min.node.size value (number of samples before a node terminates).
+  sample.fraction = 0.2063411, # Set the recommended sample fraction value.(% of data for bagging).
   importance = "permutation" # Permutation is a computationally intensive test.
 )
 
@@ -1101,7 +1023,7 @@ Create a tuned model only.
 
 ```{r tuned model imputed ger, echo=TRUE, message=FALSE, warning=FALSE}
 # Create a classification task for tuning
-tuneVoc <- makeClassifTask(data = train_data[, 0:162], target = "correction_info") # FLAGGED: adapt
+tuneVoc <- makeClassifTask(data = train_data[, 0:110], target = "correction_info") # FLAGGED: adapt
 
 # Tune the model
 tuneVoc <- tuneRanger(tuneVoc, measure = list(multiclass.brier), num.trees = 500)
@@ -1110,19 +1032,19 @@ tuneVoc <- tuneRanger(tuneVoc, measure = list(multiclass.brier), num.trees = 500
 tuneVoc
 # Recommended parameter settings: 
 #   mtry min.node.size sample.fraction
-# 1    66             3       0.2254135
+# 1   85             3       0.2015707
 # Results: 
 #   multiclass.brier exec.time
-# 1        0.7845583     0.168
+# 1        0.7756091     0.184
 
 # Fit the tuned model on the training data
 vocTuned <- ranger(
   y = train_data$correction_info,
-  x = train_data[, 0:165], # FLAGGED: adapt
+  x = train_data[, 0:109], # FLAGGED: adapt
   num.trees = 5000,
-  mtry = 66,
+  mtry = 85,
   min.node.size = 3,
-  sample.fraction = 0.2254135,
+  sample.fraction = 0.2015707,
   importance = "permutation"
 )
 
@@ -1236,49 +1158,86 @@ train_control <- trainControl(
   allowParallel = TRUE  # Enable parallel processing
 )
 
+
 # Define the number of subsets
 numSubsets <- 5
 
-# Create an empty list to store subsets
+# Load MICE-imputed data (using placeholder 'data_ges' as the input dataset)
+vocDataXGB <- data_voc
+
+# Ensure 'correction_info' is a factor
+vocDataXGB$correction_info <- as.factor(vocDataXGB$correction_info)
+
+# Remove rows with only NA values
+vocDataXGB <- vocDataXGB[rowSums(is.na(vocDataXGB)) < ncol(vocDataXGB), ]
+
+# Split data by levels of 'correction_info'
+correction_levels <- levels(vocDataXGB$correction_info)
+split_data <- split(vocDataXGB, vocDataXGB$correction_info)
+
+# Initialize a list to store subsets
 vocSubsets <- vector("list", length = numSubsets)
 
-# load MICE imputed data
-#gerDataXGB <- read_csv(paste0(datasets, "gerDataXGB.csv"))
-vocDataXGB <- data_voc
-# ensure percProm is factor
-vocDataXGB$correction_info <- as.factor(vocDataXGB$correction_info)
-levels(vocDataXGB$correction_info)
-# only keep the columns of output and predictor variables
-#gerDataXGB <- gerDataXGB[,13:52] 
-
-# Calculate the number of samples in each subset
-subsetSize <- nrow(vocDataXGB) %/% numSubsets
-
-# Randomly assign samples to subsets
-for (i in 1:numSubsets) {
-  if (i < numSubsets) {
-    vocSubsets[[i]] <- vocDataXGB[sample((1:nrow(vocDataXGB)), size = subsetSize), ]
-  } else {
-    vocSubsets[[i]] <- vocDataXGB[sample((1:nrow(vocDataXGB)), size = subsetSize + (nrow(vocDataXGB) %% numSubsets)), ]
+# Distribute rows for each level equally across subsets
+for (level in correction_levels) {
+  level_data <- split_data[[level]]
+  subset_sizes <- rep(floor(nrow(level_data) / numSubsets), numSubsets)
+  remainder <- nrow(level_data) %% numSubsets
+  
+  # Distribute remainder rows randomly
+  if (remainder > 0) {
+    subset_sizes[seq_len(remainder)] <- subset_sizes[seq_len(remainder)] + 1
+  }
+  
+  # Shuffle rows of the level and assign to subsets
+  shuffled_data <- level_data[sample(nrow(level_data)), ]
+  indices <- cumsum(c(0, subset_sizes))
+  
+  for (i in 1:numSubsets) {
+    if (is.null(gesSubsets[[i]])) {
+      vocSubsets[[i]] <- shuffled_data[(indices[i] + 1):indices[i + 1], ]
+    } else {
+      vocSubsets[[i]] <- rbind(vocSubsets[[i]], shuffled_data[(indices[i] + 1):indices[i + 1], ])
+    }
   }
 }
 
 # Naming the subsets
 names(vocSubsets) <- paste0("vocData", 1:numSubsets)
 
-# Access the subsets (e.g., gerData1, gerData2, etc.)
+# Verify balance in subsets
+for (i in 1:numSubsets) {
+  cat("Subset", i, "contains rows:", nrow(vocSubsets[[i]]), "and levels:\n")
+  print(table(vocSubsets[[i]]$correction_info))
+}
+
+# Remove any rows with only NAs from subsets just to ensure cleanliness
+vocSubsets <- lapply(vocSubsets, function(subset) {
+  subset[rowSums(is.na(subset)) < ncol(subset), ]
+})
+
+# Access the subsets
 vocData1 <- vocSubsets$vocData1
 vocData2 <- vocSubsets$vocData2
 vocData3 <- vocSubsets$vocData3
 vocData4 <- vocSubsets$vocData4
 vocData5 <- vocSubsets$vocData5
 
-# Combine subsets into 80% groups.
+# Combine subsets into 80% groups
 vocData1234 <- rbind(vocData1, vocData2, vocData3, vocData4)
 vocData1235 <- rbind(vocData1, vocData2, vocData3, vocData5)
 vocData1245 <- rbind(vocData1, vocData2, vocData4, vocData5)
 vocData1345 <- rbind(vocData1, vocData3, vocData4, vocData5)
 vocData2345 <- rbind(vocData2, vocData3, vocData4, vocData5)
+
+# Final verification of all levels in the combined datasets
+combined_sets <- list(vocData1234, vocData1235, vocData1245, vocData1345, vocData2345)
+names(combined_sets) <- c("vocData1234", "vocData1235", "vocData1245", "vocData1345", "vocData2345")
+
+for (set_name in names(combined_sets)) {
+  cat("Dataset", set_name, "contains rows:", nrow(combined_sets[[set_name]]), "and levels:\n")
+  print(table(combined_sets[[set_name]]$correction_info))
+}
 
 ```
 
@@ -1500,6 +1459,24 @@ print(vocCumulativeImportance)
 ```
 
 
+
+## PCA
+
+Now let's collect 3 features per component and bind all to single df
+
+```{r}
+
+# Load in the df
+voc_pca <- read_csv(paste0(datasets, "PCA_top_contributors_voc.csv"))
+
+# Call the function to extract top features, rank by importance, and save as CSV
+top_features_voc <- extract_and_save_top_features(voc_pca, vocCumulativeImportance, n = 3, file_name = "top_features_voc_final.csv")
+
+# Print the resulting dataframe
+print(top_features_voc)
+
+```
+
 ######################
 # Multimodal #########
 ######################
@@ -1508,15 +1485,10 @@ In multimodal/combined condition, all features stay as both gesture and vocaliza
 
 ```{r}
 
-# get rid of NA columns
-data_mult <- data_mult[, colSums(is.na(data_mult)) == 0] # FLAGGED: maybe use MICE instead
+data_mult <- read_csv(paste0(datasets, "multi_clean_df.csv"))
 
-data_mult <- data_mult %>%
-  select(-TrialID, -modality)
-
-# get rid of all char columns
-data_mult <- data_mult[, sapply(data_mult, class) != "character"]
-
+# Make predictor a factor variable
+data_mult$correction_info <- as.factor(data_mult$correction_info)
 
 ```
 
@@ -1556,10 +1528,20 @@ Split the data
 ```{r}
 
 
-# Split the data into training and testing subsets
-sample_indices <- sample(1:nrow(data_mult), 0.8*nrow(data_mult)) # 80% training, 20% testing
-train_data <- data_mult[sample_indices, ]
-test_data <- data_mult[-sample_indices, ]
+# # Split the data into training and testing subsets
+# sample_indices <- sample(1:nrow(data_voc), 0.8*nrow(data_voc)) # 80% training, 20% testing
+# train_data <- data_voc[sample_indices, ]
+# test_data <- data_voc[-sample_indices, ]
+
+# This method should ensure that all levels of our dependent variable are present in both sets
+# Ensure each level is present in both sets
+train_data <- data_mult %>%
+  group_by(correction_info) %>%
+  sample_frac(0.8, replace = FALSE) %>%
+  ungroup()
+
+# Assign the remaining samples to the test set
+test_data <- anti_join(data_mult, train_data)
 
 ```
 
@@ -1569,7 +1551,7 @@ Building the untuned model.
 # Untuned Model with importance (permutation) option set
 multUntuned <- ranger(
   y = train_data$correction_info,
-  x = train_data[,0:87], # FLAGGED: adapt
+  x = train_data[,0:510], # FLAGGED: adapt
   num.trees = 500,
   importance = "permutation"
 )
@@ -1610,7 +1592,8 @@ cl <- makeCluster(num_cores)
 Tuning the random forest.
 
 ```{r tuning RF ger, message=FALSE, warning=FALSE}
-tuneMult <- makeClassifTask(data = data_mult[,0:88], # FLAGGED: adapt
+
+tuneMult <- makeClassifTask(data = data_mult[,0:511], # FLAGGED: adapt
                            target = "correction_info")
 
 tuneMult <- tuneRanger(tuneMult,
@@ -1619,21 +1602,20 @@ tuneMult <- tuneRanger(tuneMult,
 
 #Return hyperparameter values
 tuneMult
-## Ola: ALWAYS REPORT THOSE BECAUSE THEY ARE DIFFERENT EVERY TIME BC OF RANDOMIZATION
 # Recommended parameter settings: 
 #   mtry min.node.size sample.fraction
-# 1   71             3       0.8423578
+# 1  142             3       0.3627617
 # Results: 
 #   multiclass.brier exec.time
-# 1        0.7499833     0.17
+# 1        0.7947098     0.188
 
 multTuned <- ranger(
   y = train_data$correction_info,
-  x = train_data[,0:87],  # FLAGGED: adapt
+  x = train_data[,0:510],  # FLAGGED: adapt
   num.trees = 5000, 
-  mtry = 71, # Set the recommended mtry value (number of features).
+  mtry = 142, # Set the recommended mtry value (number of features).
   min.node.size = 3, # Set the recommended min.node.size value (number of samples before a node terminates).
-  sample.fraction = 0.8423578, # Set the recommended sample fraction value.(% of data for bagging).
+  sample.fraction = 0.3627617, # Set the recommended sample fraction value.(% of data for bagging).
   importance = "permutation" # Permutation is a computationally intensive test.
 )
 
@@ -1669,7 +1651,7 @@ Create a tuned model only.
 
 ```{r tuned model imputed ger, echo=TRUE, message=FALSE, warning=FALSE}
 # Create a classification task for tuning
-tuneMult <- makeClassifTask(data = train_data[, 0:88], target = "correction_info") # FLAGGED: adapt
+tuneMult <- makeClassifTask(data = train_data[, 0:511], target = "correction_info") # FLAGGED: adapt
 
 # Tune the model
 tuneMult <- tuneRanger(tuneMult, measure = list(multiclass.brier), num.trees = 500)
@@ -1678,19 +1660,19 @@ tuneMult <- tuneRanger(tuneMult, measure = list(multiclass.brier), num.trees = 5
 tuneMult
 # Recommended parameter settings: 
 #   mtry min.node.size sample.fraction
-# 1    66             3       0.2254135
+# 1   32             2       0.2087997
 # Results: 
 #   multiclass.brier exec.time
-# 1        0.7845583     0.168
+# 1         0.820066     0.188
 
 # Fit the tuned model on the training data
 multTuned <- ranger(
   y = train_data$correction_info,
-  x = train_data[, 0:87],  # FLAGGED: adapt
+  x = train_data[, 0:511],  # FLAGGED: adapt
   num.trees = 5000,
-  mtry = 66,
-  min.node.size = 3,
-  sample.fraction = 0.2254135,
+  mtry = 32,
+  min.node.size = 2,
+  sample.fraction = 0.2087997,
   importance = "permutation"
 )
 
@@ -1794,6 +1776,7 @@ rm(total_combinations,single_model_time,folds,total_runs,total_time,total_time_h
 Create subsets to train and test data (80/20).
 
 ```{r k-fold subset, echo=TRUE, message=FALSE, warning=FALSE}
+
 # Set seed for reproducibility
 set.seed(998)
 
@@ -1807,46 +1790,83 @@ train_control <- trainControl(
 # Define the number of subsets
 numSubsets <- 5
 
-# Create an empty list to store subsets
+# Load MICE-imputed data (using placeholder 'data_ges' as the input dataset)
+multDataXGB <- data_mult
+
+# Ensure 'correction_info' is a factor
+multDataXGB$correction_info <- as.factor(multDataXGB$correction_info)
+
+# Remove rows with only NA values
+multDataXGB <- multDataXGB[rowSums(is.na(multDataXGB)) < ncol(multDataXGB), ]
+
+# Split data by levels of 'correction_info'
+correction_levels <- levels(multDataXGB$correction_info)
+split_data <- split(multDataXGB, multDataXGB$correction_info)
+
+# Initialize a list to store subsets
 multSubsets <- vector("list", length = numSubsets)
 
-# load MICE imputed data
-#gerDataXGB <- read_csv(paste0(datasets, "gerDataXGB.csv"))
-multDataXGB <- data_mult
-# ensure percProm is factor
-multDataXGB$correction_info <- as.factor(multDataXGB$correction_info)
-levels(multDataXGB$correction_info)
-# only keep the columns of output and predictor variables
-#gerDataXGB <- gerDataXGB[,13:52] 
-
-# Calculate the number of samples in each subset
-subsetSize <- nrow(multDataXGB) %/% numSubsets
-
-# Randomly assign samples to subsets
-for (i in 1:numSubsets) {
-  if (i < numSubsets) {
-    multSubsets[[i]] <- multDataXGB[sample((1:nrow(multDataXGB)), size = subsetSize), ]
-  } else {
-    multSubsets[[i]] <- multDataXGB[sample((1:nrow(multDataXGB)), size = subsetSize + (nrow(multDataXGB) %% numSubsets)), ]
+# Distribute rows for each level equally across subsets
+for (level in correction_levels) {
+  level_data <- split_data[[level]]
+  subset_sizes <- rep(floor(nrow(level_data) / numSubsets), numSubsets)
+  remainder <- nrow(level_data) %% numSubsets
+  
+  # Distribute remainder rows randomly
+  if (remainder > 0) {
+    subset_sizes[seq_len(remainder)] <- subset_sizes[seq_len(remainder)] + 1
+  }
+  
+  # Shuffle rows of the level and assign to subsets
+  shuffled_data <- level_data[sample(nrow(level_data)), ]
+  indices <- cumsum(c(0, subset_sizes))
+  
+  for (i in 1:numSubsets) {
+    if (is.null(gesSubsets[[i]])) {
+      multSubsets[[i]] <- shuffled_data[(indices[i] + 1):indices[i + 1], ]
+    } else {
+      multSubsets[[i]] <- rbind(multSubsets[[i]], shuffled_data[(indices[i] + 1):indices[i + 1], ])
+    }
   }
 }
 
 # Naming the subsets
 names(multSubsets) <- paste0("multData", 1:numSubsets)
 
-# Access the subsets (e.g., gerData1, gerData2, etc.)
+# Verify balance in subsets
+for (i in 1:numSubsets) {
+  cat("Subset", i, "contains rows:", nrow(multSubsets[[i]]), "and levels:\n")
+  print(table(multSubsets[[i]]$correction_info))
+}
+
+# Remove any rows with only NAs from subsets just to ensure cleanliness
+multSubsets <- lapply(multSubsets, function(subset) {
+  subset[rowSums(is.na(subset)) < ncol(subset), ]
+})
+
+# Access the subsets
 multData1 <- multSubsets$multData1
 multData2 <- multSubsets$multData2
 multData3 <- multSubsets$multData3
 multData4 <- multSubsets$multData4
 multData5 <- multSubsets$multData5
 
-# Combine subsets into 80% groups.
+# Combine subsets into 80% groups
 multData1234 <- rbind(multData1, multData2, multData3, multData4)
 multData1235 <- rbind(multData1, multData2, multData3, multData5)
 multData1245 <- rbind(multData1, multData2, multData4, multData5)
 multData1345 <- rbind(multData1, multData3, multData4, multData5)
 multData2345 <- rbind(multData2, multData3, multData4, multData5)
+
+# Final verification of all levels in the combined datasets
+combined_sets <- list(multData1234, multData1235, multData1245, multData1345, multData2345)
+names(combined_sets) <- c("multData1234", "multData1235", "multData1245", "multData1345", "multData2345")
+
+for (set_name in names(combined_sets)) {
+  cat("Dataset", set_name, "contains rows:", nrow(combined_sets[[set_name]]), "and levels:\n")
+  print(table(combined_sets[[set_name]]$correction_info))
+}
+
 
 ```
 
@@ -2067,5 +2087,20 @@ multCumulativeImportance <- multCumulativeImportance[order(-multCumulativeImport
 print(multCumulativeImportance)
 ```
 
+## PCA
 
+Now let's collect 3 features per component and bind all to single df
+
+```{r}
+
+# Load in the df
+mult_pca <- read_csv(paste0(datasets, "PCA_top_contributors_multi.csv"))
+
+# Call the function to extract top features, rank by importance, and save as CSV
+top_features_mult <- extract_and_save_top_features(mult_pca, multCumulativeImportance, n = 3, file_name = "top_features_mult_final.csv")
+
+# Print the resulting dataframe
+print(top_features_mult)
+
+```
 
