@@ -45,118 +45,77 @@ plots         <- paste0(parentfolder, '/09_Analysis_Modeling/plots/')
 
 ```
 
-# DAG - Question 1
+# Loading in our data
 
-To make sure we know what variables should be in the model and why, we draw a DAG that illustrates our assumptions.
-
-Our relationship of interest is the causal effect of communicative attempt on effort. Our assumptions include:
-
-* Personality traits (measured with Big5) will influence effort (e.g., people are more willing to put more effort if they are open-minded) and also communicative attempt (e.g., more extroverted people are better in this game, therefore they need less attempts)
-
-* Familiarity with guessing partner influences effort (ditto) as well as communicative attempt (e.g., friends are better in this game than strangers)
-
-* Similarly, participant will also directly influence effort and commAtt, because personality traits might not be capturing all variation
-
-* Expressibility of concepts is going to influence effort (e.g., more expressible concepts allow more enhancement - but could be also other direction) as well as CommAtt (e.g., more expressible concepts are more readily guessed and don't need more attempts)
-
-* Similarly, concept will also directly influence effort and commAtt, because expressibility might not be capturing all variation
-
-* Modality (uni vs. multi) will influence the value of effort. We assume that in unimodal condition, the feature does not need to account for synergic relations with the other modality, and may carry the whole signal. In multimodal condition, however, there may be synergic relations that moderate the full expressiveness of this feature
-
-* Lastly, trial number (characterising how far one is in the experiment) could be hinting on learning processes through out the experiment, or - the other direction - on increasing fatigue
-
-
-```{r warning=FALSE}
-
-dag <- dagitty('dag {
-Big5 [adjusted,pos="-0.823,0.657"]
-CommAtt [exposure,pos="-1.033,0.028"]
-Conc [adjusted,pos="-1.136,-0.848"]
-Eff [outcome,pos="-0.102,0.025"]
-Expr [adjusted,pos="-0.758,-0.850"]
-Fam [adjusted,pos="-0.379,0.663"]
-Pcn [adjusted,pos="-0.589,1.214"]
-TrNum [adjusted,pos="-1.686,-0.859"]
-Big5 -> CommAtt     
-Big5 -> Eff
-CommAtt -> Eff
-Conc -> Expr
-Expr -> CommAtt
-Expr -> Eff
-Fam -> CommAtt
-Fam -> Eff
-Mod_bin -> Eff
-Pcn -> Big5
-Pcn -> CommAtt 
-Pcn -> Eff
-Pcn -> Fam
-TrNum -> CommAtt
-TrNum -> Eff
-Conc -> CommAtt
-Conc -> Eff
-}')
-
-plot(dag)
+```{r}
 
 ```
 
-# Loading in our data
+Because current pilot data are quite likely unsifficient in terms of power, and would hinder testing the design of the statistical models, we will create synthetic data with assumed coefficients for all predictors we plan to add to the model.
 
-xxxxxxx
-
-
-# Synthetic data
-
-We will now create synthetic data that will copy the relations we assume in our DAG. Assigning concrete coefficients will also help us to test our model - we should find exactly those causalities that we had in mind when creating these data
-
+# Creating synthetic data
 ```{r}
 
 # Set seed for reproducibility
 set.seed(0209)
 
-# Define participants, total unique concepts, and modalities
+# Set coefficients
+b_exp_vocal <- 0.6  # Vocal has lower expressibility
+b_exp_multi <- 1.5  # Multimodal has higher expressibility
+b_bif <- 1.15  # More extroverted → more effort
+b_fam <- 1.10  # More familiarity → more effort
+b_exp <- 1.20  # More expressibility → more effort
+b_multi <- 0.70  # Multimodal → slightly reduced effort
+b_comatt2 <- 1.50  # Effort increases for second attempt
+b_comatt3 <- 0.50  # Effort decreases for third attempt
+b_prevan <- 0.50  # Higher previous answer similarity → less effort
+
+# Define participants and concepts
 n_participants <- 120
-n_total_concepts <- 21  # Total unique concepts
-n_concepts_per_participant <- 21  # Each participant works with 21 concepts
-n_modalities <- 3  # gesture, vocal, combined
+n_total_concepts <- 21  # Each participant works with all 21 concepts
+n_modalities <- 3  # Gesture, vocal, combined
 
-# Generate participant IDs
+# Generate participant-level data
 participants <- 1:n_participants
+Big5 <- runif(n_participants, min = 0, max = 2)
+Familiarity <- runif(n_participants, min = 0, max = 2)
 
-# Simulate Big5 personality traits (standardized between 0 and 1) and Familiarity (between 0 and 1) for participants
-Big5 <- runif(n_participants, min = 0, max = 1)  # Continuous values between 0 and 1
-Familiarity <- runif(n_participants, min = 0, max = 1)  # Continuous values between 0 and 1
+# Generate expressibility scores for each concept across modalities
+expressibility_matrix <- matrix(runif(n_total_concepts * n_modalities, min = 0, max = 1),
+                                nrow = n_total_concepts, ncol = n_modalities)
 
-# Create a matrix to hold expressibility values for each concept in each modality
-expressibility_matrix <- matrix(runif(n_total_concepts * n_modalities, min = 0, max = 1), nrow = n_total_concepts, ncol = n_modalities)
+# Initialize data storage
+final_data_synt <- data.frame()
 
-# Randomly sample 21 unique concepts for each participant
-final_data <- data.frame()
-
-# Define a function to assign CommAtt and Eff for a single participant
+# Define function to simulate participant data
 simulate_participant <- function(participant_id) {
-  # Randomly sample 21 unique concepts from the total pool of 84
-  selected_concepts <- sample(1:n_total_concepts, n_concepts_per_participant)
-  
   participant_data <- data.frame()
-  trial_number <- 1  # Initialize trial number
+  trial_number <- 1
   
-  for (concept_id in selected_concepts) {
-    # Randomly determine the modality for the concept
+  for (concept_id in 1:n_total_concepts) {
+    # Assign a random modality
     modality <- sample(c("gesture", "vocal", "combined"), 1)
     
-    # Calculate expressibility based on modality
-    expressibility_score <- ifelse(modality == "vocal", expressibility_matrix[concept_id, 1] * 0.6, 
-                                    ifelse(modality == "gesture", expressibility_matrix[concept_id, 2], 
-                                           expressibility_matrix[concept_id, 3] * 1.5))
+    # Get expressibility score based on modality
+    expressibility_score <- ifelse(modality == "vocal", expressibility_matrix[concept_id, 1] * b_exp_vocal, 
+                                   ifelse(modality == "gesture", expressibility_matrix[concept_id, 2], 
+                                          expressibility_matrix[concept_id, 3] * b_exp_multi))
     
-    # Determine Communicative Attempts based solely on expressibility, familiarity, and Big5
-    base_prob <- c(0.33, 0.33, 0.33)  # Equal chance for 1, 2, or 3 attempts
+    # Base effort before adjustments
+    base_effort <- b_bif * Big5[participant_id] + 
+                   b_fam * Familiarity[participant_id] + 
+                   b_exp * expressibility_score + 
+                   rnorm(1, mean = 1, sd = 0.5)
     
-    # Modify probabilities based on familiarity, Big5, and expressibility
-    adjusted_prob <- base_prob * c(1 - Familiarity[participant_id], # 3 times for each
-                                    1 - Familiarity[participant_id],
-                                    1 - Familiarity[participant_id]) * 
+    # Adjust effort for multimodal condition
+    if (modality == "combined") {
+      base_effort <- base_effort * b_multi
+    }
+    
+    # Sample the number of communicative attempts (CommAtt)
+    adjusted_prob <- c(1 - Familiarity[participant_id],
+                       1 - Familiarity[participant_id],
+                       1 - Familiarity[participant_id]) * 
                      c(1 - Big5[participant_id],
                        1 - Big5[participant_id],
                        1 - Big5[participant_id]) * 
@@ -164,44 +123,28 @@ simulate_participant <- function(participant_id) {
                        1 - expressibility_score,
                        1 - expressibility_score)
     
-    # Normalize the adjusted probabilities
     adjusted_prob <- adjusted_prob / sum(adjusted_prob)
-    
-    # Sample the number of communicative attempts based on adjusted probabilities
     n_attempts <- sample(1:3, 1, prob = adjusted_prob)
     
-    # Loop through the number of attempts and increment CommAtt correctly
+    prev_answer_similarity <- NA  # First attempt has no previous similarity
+    
+    # Generate rows for each communicative attempt
     for (attempt in 1:n_attempts) {
-      # Calculate Eff for the first attempt
-      if (attempt == 1) {
-        Eff <- 1.15 * Big5[participant_id] + 
-               1.10 * Familiarity[participant_id] + 
-               1.20 * expressibility_score + 
-               rnorm(1, mean = 1, sd = 0.5)
-        
-        # Adjust Eff based on modality
-        if (modality == "combined") {
-          
-          Eff <- Eff * 0.7  # Slight moderation for combined modality
-        }
-      }
+      Eff <- base_effort  # Start with base effort
       
-      # Adjust Eff for subsequent attempts
+      # Modify effort for second and third attempts
       if (attempt == 2) {
-        Eff <- 1.15 * Big5[participant_id] + 
-               1.10 * Familiarity[participant_id] + 
-               1.20 * expressibility_score + 
-               rnorm(1, mean = 1, sd = 0.5)
-        Eff <- Eff * 1.50  # Multiply effort by 1.50 for the second attempt
+        Eff <- Eff * b_comatt2
       } else if (attempt == 3) {
-        Eff <- 1.15 * Big5[participant_id] + 
-               1.10 * Familiarity[participant_id] + 
-               1.20 * expressibility_score + 
-               rnorm(1, mean = 1, sd = 0.5)
-        Eff <- Eff * 0.70  # Multiply effort by 0.70 for the third attempt
+        Eff <- Eff * b_comatt3
       }
       
-      # Create row for each attempt
+      # Adjust effort based on previous answer similarity
+      if (!is.na(prev_answer_similarity)) {
+        Eff <- Eff * (1 + (1 - prev_answer_similarity) * b_prevan)
+      }
+      
+      # Store row
       participant_data <- rbind(participant_data, data.frame(
         Participant = participant_id,
         Concept = concept_id,
@@ -209,13 +152,15 @@ simulate_participant <- function(participant_id) {
         Big5 = Big5[participant_id],
         Familiarity = Familiarity[participant_id],
         Expressibility = expressibility_score,
-        CommAtt = attempt,  # Correctly set the attempt number
+        CommAtt = attempt,
         Eff = Eff,
-        TrialNumber = trial_number  # Set trial number for this attempt
+        TrialNumber = trial_number,
+        PrevAn = prev_answer_similarity
       ))
       
-      # Increment the trial number after each attempt
+      # Update for next attempt
       trial_number <- trial_number + 1
+      prev_answer_similarity <- runif(1, min = 0, max = 1)  # Simulate next similarity
     }
   }
   
@@ -223,21 +168,20 @@ simulate_participant <- function(participant_id) {
 }
 
 # Simulate data for all participants
-for (i in participants) {
-  final_data <- rbind(final_data, simulate_participant(i))
-}
+final_data_synt <- do.call(rbind, lapply(participants, simulate_participant))
 
-# Preview the first few rows of the final data
-head(final_data)
+# Preview results
+head(final_data_synt)
+
 
 ```
 
-So now we have synthetic data where we exactly defined (using coefficients) what is the relationship between certain variables
+So now we have synthetic data where we exactly defined what is the relationship between certain variables
 
 1) CommAtt -> Eff
 
 The effort for second attempt is multiplied by 1.50 (Beta = 1.50)
-The effort for third attempts by 0.7 (ie decreases, Beta = 0.7)
+The effort for third attempts by 0.7 (ie decreases, Beta = 0.5)
 
 2) Fam -> Eff & CommAtt
 
@@ -259,27 +203,27 @@ Negative effect on CommAtt
 
 Note that the synthetic data do not copy the structure of the data and the experimental design perfectly, but it does provide a reliable ground to build the models and test their performance.
 
-## Exploring structure (DP)
+
+# Exploring structure 
 
 ```{r}
-nrow(final_data) # this is the number of datapoints
-```
-
-
-```{r}
-hist(final_data$Eff)
+nrow(final_data_synt) # this is the number of datapoints
 ```
 
 ```{r}
-final_data |> 
+hist(final_data_synt$Eff)
+```
+
+```{r}
+final_data_synt |> 
   janitor::tabyl(Participant, Concept) # the number of repetition per concept by participant
 ```
-## Check visual
+## Plot: H1
 
 ```{r}
 
 # Create a boxplot comparing Effort across different Communicative Attempts
-ggplot(final_data, aes(x = as.factor(CommAtt), y = Eff)) +
+ggplot(final_data_synt, aes(x = as.factor(CommAtt), y = Eff)) +
   geom_boxplot(aes(fill = as.factor(CommAtt))) +  
   labs(title = "Comparison of Effort Across Communicative Attempts",
        x = "Communicative Attempts",
@@ -291,15 +235,120 @@ ggplot(final_data, aes(x = as.factor(CommAtt), y = Eff)) +
 ```
 The visual already hints on the effects we expect to exist in the data.
 
+## Plot: H2
+
+```{r}
+
+# Filter out CommAtt == 1
+filtered_data <- final_data_synt[final_data_synt$CommAtt != 1, ]
+
+# Scatter plot with regression line
+library(ggplot2)
+
+ggplot(filtered_data, aes(x = PrevAn, y = Eff)) +
+  geom_point(alpha = 0.6, color = "blue") +  # Scatter points
+  geom_smooth(method = "lm", color = "red", se = FALSE) +  # Regression line
+  labs(x = "Previous Answer Similarity (PrevAn)", 
+       y = "Effort (Eff)", 
+       title = "Relationship between Effort and Previous Answer Similarity") +
+  theme_minimal()
+
+
+```
 
 Save it
 ```{r}
 
-write.csv(final_data, file = here("09_Analysis_Modeling", "datasets", "final_data_synth.csv"), row.names = FALSE)
+write.csv(final_data_synt, file = here("09_Analysis_Modeling", "datasets", "synthetic_data.csv"), row.names = FALSE)
+
 ```
 
 
-# Modeling - Question 1
+# H1: Stating causal model
+
+Before doing that, we create a causal diagram, so-called directed acyclic graphs (DAG). This will help us clarify the causal model and introduce the predictors we aim to model.
+
+Our two hypothesis go as follows:
+
+*H1: Correction recruits more physical effort than the baseline performance.*
+
+*H2: A higher degree of misunderstanding will require a performer to engage in more effortful correction.*
+
+
+The relationship of interest is the causal effect of communicative attempt on effort. Our assumptions include:
+
+* Personality traits (measured with Big5) will influence effort (e.g., people are more willing to put more effort if they are open-minded) and also communicative attempt (e.g., more extroverted people are better in this game, therefore they need less attempts)
+
+* Familiarity with guessing partner influences effort (ditto) as well as communicative attempt (e.g., friends are better in this game than strangers)
+
+* Similarly, participant will also directly influence effort and commAtt, because personality traits might not be capturing all variation
+
+* Expressibility of concepts is going to influence effort (e.g., more expressible concepts allow more enhancement - but could be also other direction) as well as CommAtt (e.g., more expressible concepts are more readily guessed and don't need more attempts)
+
+* Similarly, concept will also directly influence effort and commAtt, because expressibility might not be capturing all variation
+
+* Modality (uni vs. multi) will influence the value of effort. We assume that in unimodal condition, the feature does not need to account for synergic relations with the other modality, and may carry the whole signal. In multimodal condition, however, there may be synergic relations that moderate the full expressiveness of this feature
+
+* Trial number (characterising how far one is in the experiment) could be hinting on learning processes through out the experiment, or - the other direction - on increasing fatigue
+
+* Previous answer (PrevAn) will affect the effort (more similar answer will require less effortful correction) as well as communicative attempt (correct answers do not require further corrections)
+
+* Expressibility of concepts will influence the answer (more expressible are easier to guess)
+
+* Trial number will also affect previous answer if there is learning involved, or conversely, increasing fatigue
+
+
+```{r}
+
+daggy_h1 <- dagitty('dag {
+Big5 [adjusted,pos="-0.823,0.657"]
+CommAtt [exposure,pos="-1.033,0.028"]
+Conc [adjusted,pos="-1.136,-0.848"]
+Eff [outcome,pos="-0.102,0.025"]
+Expr [adjusted,pos="-0.758,-0.850"]
+Fam [adjusted,pos="-0.379,0.663"]
+Pcn [adjusted,pos="-0.589,1.214"]
+TrNum [adjusted,pos="-1.686,-0.859"]
+Big5 -> CommAtt     
+Big5 -> Eff
+CommAtt -> Eff
+Conc -> Expr
+Expr -> CommAtt
+Expr -> Eff
+Fam -> CommAtt
+Fam -> Eff
+Mod -> Eff
+Mod -> CommAtt
+Pcn -> Big5
+Pcn -> CommAtt 
+Pcn -> Eff
+Pcn -> Fam
+TrNum -> CommAtt
+TrNum -> Eff
+Conc -> CommAtt
+Conc -> Eff
+}')
+
+plot(daggy_h1)
+
+```
+
+```{r}
+
+impliedConditionalIndependencies(daggy_h1)
+
+```
+This is the adjustment set that needs to be included in the model to make sure we are not confounding
+```{r}
+
+dagitty::adjustmentSets(daggy_h1, exposure = "CommAtt", outcome = "Eff")
+
+```
+
+
+# H1: Modelling
+
+*H1: Correction recruits more physical effort than the baseline performance.*
 
 ```{r}
 
@@ -313,18 +362,19 @@ library(tidyverse)
 
 # use all available cores for parallel computing
 options(mc.cores = parallel::detectCores())
-
-# Load in the data
-final_data <- read_csv(paste0(datasets, "final_data_synth.csv"))
-
-
 ```
 
-First, we do some preparation of the data, so that it's easier to interpret the results of the modeling.
 
 ## Contrast coding
 
-Convert collumns to factors
+Load in the data
+```{r}
+
+final_data <- final_data_synt
+```
+
+
+Convert columns to factors
 ```{r}
 
 final_data$CommAtt <- as.factor(final_data$CommAtt)
@@ -341,6 +391,19 @@ contrasts(final_data$CommAtt) <- MASS::contr.sdif(3)
 contrasts(final_data$Modality) <- contr.sum(3)/2
 ```
 
+This is how CommAtt is contrast-coded now
+
+         2-1        3-2
+1 -0.6666667 -0.3333333
+2  0.3333333 -0.3333333
+3  0.3333333  0.6666667
+
+This is how modality is cc-ed
+
+         [,1] [,2]
+combined  0.5  0.0
+gesture   0.0  0.5
+vocal    -0.5 -0.5
 
 Center trial number
 ```{r}
@@ -348,14 +411,12 @@ final_data$TrialNumber_c <- final_data$TrialNumber - median(range(final_data$Tri
 range(final_data$TrialNumber_c)
 range(final_data$TrialNumber)
 ```
-Standardize (z-score) all *continuous* predictors. 
-
-The measures of familiarity, expressibility, and big5 are on a non-continuous rating scale, hence we can just subtract the median from these to centre them (instead of standardizing).
-
+For now, we will just center Familiarity and Big5 because we created them synthetically. But the real data have these two variables already z-scored
 ```{r}
 
 final_data$Familiarity <- final_data$Familiarity - median(range(final_data$Familiarity))
 final_data$Big5 <- final_data$Big5 - median(range(final_data$Big5))
+
 ```
 
 
@@ -369,11 +430,9 @@ final_data <-
   ungroup()
 ```
 
+## Model 1 - Simple reproduction of DAG
 
-## Bayes models
-
-We now want to simply reproduce our DAG. 
-
+First we want to do a simple model that, however, reproduce our DAG. 
 
 Our main predictor is communicative attempt (CommAtt). To account for confounders - variables affecting both the predictor and the dependent variable - we need to adjust for them in the model by including them as covariates to isolate the effect of the predictor. Based on our DAG, confounders include:
 
@@ -387,7 +446,7 @@ Our main predictor is communicative attempt (CommAtt). To account for confounder
 
 We include 1.-5. as fixed factors. For 6.-7., we include varying intercepts as we expect that each participant and concept may have they own baseline level of effort and thus allow for individual variation. Partial pooling is also beneficial in that extreme values (or categories will fewer datapoints) will be shrunk toward the overal average.
 
-### Model 1 - DAG
+We will now not include PrevAn (previous answer) variable because we will need to do some further data-wrangling when building model for H2. That is mainly because PrevAn has some NA values, concretely for first attempts. Models would automatically exclude NA data, and we would therefore loose all effort data for attempt 1. For H1, however, we want to keep it there.
 
 The model looks as follows:
 
@@ -407,12 +466,20 @@ where:
 This is the model without setting any priors, leaving them to default values
 ```{r eval=FALSE}
 
-fit_eff_dag <- brm(Eff ~ 1 + CommAtt + Familiarity + Big5 + Expressibility_z + TrialNumber_c + Modality + (1 | Participant) + (1 | Concept),
+h1.m1 <- brm(Eff ~ 1 + CommAtt + Familiarity + Big5 + Expressibility_z + TrialNumber_c + Modality + (1 | Participant) + (1 | Concept),
                 data = final_data,
                 iter = 4000,
                 cores = 4)
 
-saveRDS(fit_eff_dag, here("09_Analysis_Modeling", "models", "fit_eff_dag.rds"))
+# Add criterions for later diagnostics
+h1.m1 <- add_criterion(h1.m1, criterion = c("loo", "waic"))
+
+# Calculate also variance explained (R^2)
+h1.m1_R2 <- bayes_R2(h1.m1)
+
+# Save both as objects
+saveRDS(h1.m1, here("09_Analysis_Modeling", "models", "h1.m1.rds"))
+saveRDS(h1.m1_R2, here("09_Analysis_Modeling", "models", "h1.m1_R2.rds"))
 
 beep(5)
 
@@ -420,23 +487,89 @@ beep(5)
 
 
 ```{r}
+h1.m1 <- readRDS(here("09_Analysis_Modeling", "models", "h1.m1.rds"))
+h1.m1_R2 <- readRDS(here("09_Analysis_Modeling", "models", "h1.m1_R2.rds"))
 
-fit_eff_dag <- readRDS(here("09_Analysis_Modeling", "models", "fit_eff_dag.rds"))
 
-# summary
-summary(fit_eff_dag)
-# the coefficients again look similar to what we set in the data (except perhaps expressibility?)
+# Summary
+summary(h1.m1)
 
-plot(fit_eff_dag)
-plot(conditional_effects(fit_eff_dag), points = TRUE)
-# the CrI seem in sensible width
+# Regression Coefficients:
+#                  Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+# Intercept            4.02      0.02     3.98     4.06 1.00     8044     5943
+# CommAtt2M1           3.08      0.03     3.03     3.14 1.00    12657     6394
+# CommAtt3M2          -4.39      0.04    -4.47    -4.32 1.00    12764     6298
+# Familiarity          1.26      0.02     1.21     1.30 1.00    11423     5561
+# Big5                 1.29      0.02     1.25     1.34 1.00    12279     5608
+# Expressibility_z     0.46      0.02     0.43     0.49 1.00    13924     5962
+# TrialNumber_c       -0.00      0.00    -0.00     0.00 1.00     9813     6937
+# Modality1           -1.30      0.04    -1.38    -1.23 1.00    11060     6036
+# Modality2            0.64      0.04     0.57     0.71 1.00    12543     6349
 
-pp_check(fit_eff_dag, type = "dens_overlay")
+# Note on modality: Modality1 represents the baseline difference between combined and the other modalities, and Modality2 represents the difference between gesture and vocal compared to combined.
+
+```
+
+### Transforming coefficients
+
+To be able to link these estimates back to the simulation coefficients, let's create a function
+
+```{r}
+
+transform_attempt <- function(intercept, CommAtt2M1, CommAtt3M2) {
+  # Effort for the first attempt (base effort)
+  Eff_attempt_1 <- intercept
+  
+  # Effort for the second attempt
+  Eff_attempt_2 <- Eff_attempt_1 + CommAtt2M1
+  
+  # Effort for the third attempt
+  Eff_attempt_3 <- Eff_attempt_1 + CommAtt2M1 + CommAtt3M2
+  
+  # Calculate ratios
+  b_attempt2 <- Eff_attempt_2 / Eff_attempt_1
+  b_attempt3 <- Eff_attempt_3 / Eff_attempt_2
+  
+  return(data.frame(b_attempt2, b_attempt3))
+}
+
+
+h1m1_coeff <- transform_attempt(4.02, 3.08, -4.39)
+print(h1m1_coeff)
+
+# For centered familiarity
+fam = (4.02 + 1.26) / 4.02
+print(fam)
+
+# For centered BIF
+bif = (4.02 + 1.29) / 4.02
+print(bif)
+
+# Expressibility is z-scored so we will not get to the coefficient in the same way but we can check the conditinal effects for checking whether it looks good
+
+```
+Let's also check the visuals
+
+```{r}
+
+plot(h1.m1)
+# all caterpillars look nice
+
+plot(conditional_effects(h1.m1), points = TRUE)
+# the effects all go in good direction
+
+pp_check(h1.m1, type = "dens_overlay")
 # Looks good but not amazing - mostly because the posteriors seem to not know effort cannot be negative
 
-pp_check(fit_eff_dag, type = "error_scatter_avg")
-# blobby, but still correlated
+pp_check(h1.m1, type = "error_scatter_avg")
+# half blobby, half correlated, so still some room for improvement
+# positive correlation means that errors increase with predicted values. So the model does perform well for some range, but becomes less reliable with increase in the predicted values
+# also the blob is centered around 0 which is good
 
+# it could be we are ignoring some interaction terms or non-linearity (which we know we kind of do). Transformation could also help (e.g., log). Of course, we are also still not specifying any priors so let's not yet make it a disaster
+
+h1.m1_R2
+# explained variance around 83%
 
 ```
 Overall, we see good directions of all predictors, mostly also in accordance with the expected coefficients. Of course, the synthetic data is quite complex so there might be other dependencies that moderate the causal relationships and that is why we do not see exactly the numbers we use to create the data.
@@ -445,57 +578,81 @@ Let's have another model for comparison.
 
 The fixed predictors make sense like this, as it will allow us to assess the effect of each on the effort, despite it not being our main research question. But we can assume that participants and concept have not only different baselines of effort (varying intercept). The effect of CommAtt on effort might vary across them too, hence we can try to add varying slopes for them and see whether the diagnostics improves. We will also add TrialNumber as a varying intercept, because we expect variation between earlier and later performances (because of learning, or opposite, fatigue) and we do not really need a single coefficient for this predictor anyway.
 
-### Model 2 - varying slopes and intercepts
+## Model 2 - Varying slopes and intercepts
 
 ```{r}
 
-# same like model 1 but pcn and concept have varying slopes and trnumber has var intercept, priors are default
-
-fit_eff_2 <- brm(Eff ~ 1 + CommAtt + Modality + Big5 + Familiarity + Expressibility_z +  (1 + CommAtt | Participant) + (1 + CommAtt | Concept) + (1 | TrialNumber_c), 
+h1.m2 <- brm(Eff ~ 1 + CommAtt + Modality + Big5 + Familiarity + Expressibility_z +  (1 + CommAtt | Participant) + (1 + CommAtt | Concept) + (1 | TrialNumber_c), 
                 data = final_data,
                 iter = 4000,
                 cores = 4)
 
-saveRDS(fit_eff_2, here("09_Analysis_Modeling", "models", "fit_eff_2.rds"))
+# Add criterions for later diagnostics
+h1.m2 <- add_criterion(h1.m2, criterion = c("loo", "waic"))
+
+# Calculate also variance explained (R^2)
+h1.m2_R2 <- bayes_R2(h1.m2)
+
+# Save both as objects
+saveRDS(h1.m2, here("09_Analysis_Modeling", "models", "h1.m2.rds"))
+saveRDS(h1.m2_R2, here("09_Analysis_Modeling", "models", "h1.m2_R2.rds"))
 
 beep(5)
+
 
 ```
 
 ```{r}
 
-fit_eff_2 <- readRDS(here("09_Analysis_Modeling", "models", "fit_eff_2.rds"))
+h1.m2 <- readRDS(here("09_Analysis_Modeling", "models", "h1.m2.rds"))
+h1.m2_R2 <- readRDS(here("09_Analysis_Modeling", "models", "h1.m2_R2.rds"))
 
-# summary
-summary(fit_eff_2)
-# the coefficients again look similar
 
-plot(fit_eff_2)
-plot(conditional_effects(fit_eff_2), points = TRUE)
-# the CrI seem in sensible width
-
-pp_check(fit_eff_2, type = "dens_overlay")
-# no change really
-
-pp_check(fit_eff_2, type = "error_scatter_avg")
-# blobby, but still correlated
-
+# Summary
+summary(h1.m2)
+# Coefficients remain mostly unchanged but there were some divergent transitions
 
 ```
 
-### Model 3 - no correlation coefficient
+```{r}
 
-According to the ppcheck, we are getting some troubles from the correlation coefficients between slopes and intercept for participant. Let's get rid of it and add it later to our diagnostics. Priors are still default.
+plot(h1.m2)
+# some some of the caterpillars are not that pretty anymore
+
+plot(conditional_effects(h1.m2), points = TRUE)
+# the effects all go in good direction
+
+pp_check(h1.m2, type = "dens_overlay")
+# Looks good but not amazing - mostly because the posteriors seem to not know effort cannot be negative
+
+pp_check(h1.m2, type = "error_scatter_avg")
+# This looks a bit more blobby than before but still lots of errors for higher values
+
+h1.m2_R2
+# explained variance around 87%
+
+```
+One of the reasons why we might be getting the divergent transition is because of the correlation between slopes and intercepts in the previous model. Let's now get rid of it
+
+
+## Model 3 - No correlation coefficient
 
 ```{r eval=FALSE}
 
-fit_eff3 <- brm(Eff ~ 1 + CommAtt + Modality + Big5 + Familiarity + Expressibility_z +  (1 + CommAtt || Participant) + (1 + CommAtt || Concept) + (1 || TrialNumber_c), 
+h1.m3 <- brm(Eff ~ 1 + CommAtt + Modality + Big5 + Familiarity + Expressibility_z +  (1 + CommAtt || Participant) + (1 + CommAtt || Concept) + (1 || TrialNumber_c), 
                 data = final_data,
                 iter = 4000,
                 cores = 4)
                 
+# Add criterions for later diagnostics
+h1.m3 <- add_criterion(h1.m3, criterion = c("loo", "waic"))
 
-saveRDS(fit_eff3, here("09_Analysis_Modeling", "models", "fit_eff3.rds"))
+# Calculate also variance explained (R^2)
+h1.m3_R2 <- bayes_R2(h1.m3)
+
+# Save both as objects
+saveRDS(h1.m3, here("09_Analysis_Modeling", "models", "h1.m3.rds"))
+saveRDS(h1.m3_R2, here("09_Analysis_Modeling", "models", "h1.m3_R2.rds"))
 
 beep(5)
 
@@ -503,35 +660,41 @@ beep(5)
 
 ```{r}
 
-fit_eff3 <- readRDS(here("09_Analysis_Modeling", "models", "fit_eff3.rds"))
 
-# summary
-summary(fit_eff3)
-# the coefficients again look similar for most, but for the fixed factors it looks better than in the previous model (meaning closer to the coefficients we had in mind when creating the synthetic data). Rhat also looks good
+h1.m3 <- readRDS(here("09_Analysis_Modeling", "models", "h1.m3.rds"))
+h1.m3_R2 <- readRDS(here("09_Analysis_Modeling", "models", "h1.m3_R2.rds"))
 
-plot(fit_eff3)
 
-plot(conditional_effects(fit_eff3), points = TRUE)
-# the CrI seem in sensible width, here we finally see the modality effect we coded in the data
+# Summary
+summary(h1.m3)
+# Coefficients remain mostly unchanged 
 
-pp_check(fit_eff3, type = "dens_overlay")
-# no change really
-
-pp_check(fit_eff3, type = "error_scatter_avg")
-# blobby, but still correlated
-# positive correlation means that errors increase with predicted values. So the model does perform well for some range, but becomes less reliable with increase in the predicted values
-# however blob suggests there is no clear pattern so the model does capture some variability
-# also the blob is centered around 0 which is good
-
-# it could be we are ignoring some interaction terms or non-linearity (which we know we kind of do). Transformation could also help (e.g., log). Of course, we are also still not specifying any priors so let's not yet make it a disaster
 
 ```
 
-### Model 3.1 - adding priors
+```{r}
+
+plot(h1.m3)
+# no correlation fixed the performance
+
+plot(conditional_effects(h1.m3), points = TRUE)
+# the effects all go in good direction
+
+pp_check(h1.m3, type = "dens_overlay")
+# the problem with predicting negative values remains
+
+pp_check(h1.m3, type = "error_scatter_avg")
+# unchanged
+
+h1.m3_R2
+# explained variance remains around 87%
+
+```
+## Model 3.1 - adding priors
 
 ```{r}
 
-priors_eff <- c(
+priors_h1m3p <- c(
   set_prior("normal(2.5, 0.5)", class = "Intercept", lb=0),
   set_prior("normal(0,0.50)", class = "b", coef = "CommAtt2M1"),
   set_prior("normal(0,0.50)", class = "b", coef = "CommAtt3M2"),
@@ -547,112 +710,169 @@ priors_eff <- c(
   set_prior("normal(1,0.1)", class = "sd"),
   
   set_prior("normal(0.5,0.25)", class = "sigma")
+  
 )
 
-```
-
-Now we add the priors to the last used model
-```{r}
-
-fit_eff3p <- brm(Eff ~ 1 + CommAtt + Modality + Big5 + Familiarity + Expressibility_z +  (1 + CommAtt || Participant) + (1 + CommAtt || Concept) + (1 || TrialNumber_c), 
+h1.m3p <- brm(Eff ~ 1 + CommAtt + Modality + Big5 + Familiarity + Expressibility_z +  (1 + CommAtt || Participant) + (1 + CommAtt || Concept) + (1 || TrialNumber_c), 
                 data = final_data,
-                prior=priors_eff,
+                prior=priors_h1m3p,
                 family = gaussian,
                 iter = 4000,
                 cores = 4)
 
-saveRDS(fit_eff3p, here("09_Analysis_Modeling", "models", "fit_eff3p.rds"))
+
+# Add criterions for later diagnostics
+h1.m3p <- add_criterion(h1.m3p, criterion = c("loo", "waic"))
+
+# Calculate also variance explained (R^2)
+h1.m3p_R2 <- bayes_R2(h1.m3p)
+
+# Save both as objects
+saveRDS(h1.m3p, here("09_Analysis_Modeling", "models", "h1.m3p.rds"))
+saveRDS(h1.m3p_R2, here("09_Analysis_Modeling", "models", "h1.m3p_R2.rds"))
+
+beep(5)
+
+```
+```{r}
+
+
+h1.m3p <- readRDS(here("09_Analysis_Modeling", "models", "h1.m3p.rds"))
+h1.m3p_R2 <- readRDS(here("09_Analysis_Modeling", "models", "h1.m3p_R2.rds"))
+
+
+# Summary
+summary(h1.m3p)
+# Coefficients remain mostly unchanged 
 
 
 ```
 
 ```{r}
 
-fit_eff3p <- readRDS(here("09_Analysis_Modeling", "models", "fit_eff3p.rds"))
+plot(h1.m3p)
+# all good
 
-# summary
-summary(fit_eff3p)
-# the coefficients - esp for fixed factors (big5) improved even slightly
+plot(conditional_effects(h1.m3p), points = TRUE)
+# the effects all go in good direction
 
-plot(fit_eff3p)
+pp_check(h1.m3p, type = "dens_overlay")
+# the problem with predicting negative values remains
 
-plot(conditional_effects(fit_eff3p), points = TRUE)
+pp_check(h1.m3p, type = "error_scatter_avg")
+# unchanged
 
-pp_check(fit_eff3p, type = "dens_overlay")
-# no change really
+h1.m3p_R2
+# explained variance remains around 87%
 
-pp_check(fit_eff3p, type = "error_scatter_avg")
 ```
 
-### Model 4 - tightening priors
+## Model 4 - Restricting priors with exponential distribution
 
-So there are still things to improve, one of them is the fact that it seems that effort intercept can be of negative values. No matter what feature will be modelled, this is never the case, so we should inform our priors in such a way that these cases are extremely unlikely
+Let's do one more test with the priors, restricting sd them with exponential distribution, i.e., negative values are not possible
 
-Thus, we now make the sd priors even more tigther
 ```{r}
 
-priors_eff_t <- c(
-  set_prior("normal(2.5, 0.5)", class = "Intercept", lb=0),
-  set_prior("normal(0,0.50)", class = "b", coef = "CommAtt2M1"),
-  set_prior("normal(0,0.50)", class = "b", coef = "CommAtt3M2"),
-  set_prior("normal(0,0.25)", class = "b", coef = "Modality1"),
-  set_prior("normal(0,0.25)", class = "b", coef = "Modality2"),
-  set_prior("normal(0,0.25)", class = "b", coef = "Big5"),
-  set_prior("normal(0,0.25)", class = "b", coef = "Familiarity"),
-  set_prior("normal(0,0.25)", class = "b", coef = "Expressibility_z"),
-  
-  set_prior("normal(0.5,0.05)", class = "sd", group = "TrialNumber_c"),
-  set_prior("normal(0.5,0.05)", class = "sd", group = "Participant"),
-  set_prior("normal(0.5,0.05)", class = "sd", group = "Concept"),
-  set_prior("normal(1,0.05)", class = "sd"),
-  
-  set_prior("normal(0.5,0.1)", class = "sigma")
+priors_h1m4 <- c(
+  set_prior("normal(3, 0.3)", class = "Intercept", lb = 0),
+  set_prior("normal(0, 0.25)", class = "b", coef = "CommAtt2M1"),
+  set_prior("normal(0, 0.25)", class = "b", coef = "CommAtt3M2"),
+  set_prior("normal(0, 0.15)", class = "b", coef = "Modality1"),
+  set_prior("normal(0, 0.15)", class = "b", coef = "Modality2"),
+  set_prior("normal(0, 0.15)", class = "b", coef = "Big5"),
+  set_prior("normal(0, 0.15)", class = "b", coef = "Familiarity"),
+  set_prior("normal(0, 0.15)", class = "b", coef = "Expressibility_z"),
+
+  # Exponential priors for standard deviations
+  set_prior("exponential(3)", class = "sd", group = "TrialNumber_c"), # exp(3) has a mean of 1/3 and concentrates most density around small values
+  set_prior("exponential(3)", class = "sd", group = "Participant"),
+  set_prior("exponential(3)", class = "sd", group = "Concept"),
+  set_prior("exponential(1)", class = "sd"),  # Generic sd prior
+
+  # Residual standard deviation - keep it narrow
+  set_prior("normal(0.5, 0.1)", class = "sigma")
 )
 
-```
-
-```{r}
-
-fit_eff4 <- brm(Eff ~ 1 + CommAtt + Modality + Big5 + Familiarity + Expressibility_z +  (1 + CommAtt || Participant) + (1 + CommAtt || Concept) + (1 || TrialNumber_c), 
+h1.m4 <- brm(Eff ~ 1 + CommAtt + Modality + Big5 + Familiarity + Expressibility_z +  (1 + CommAtt || Participant) + (1 + CommAtt || Concept) + (1 || TrialNumber_c), 
                 data = final_data,
-                prior=priors_eff_t,
+                prior=priors_h1m4,
                 family = gaussian,
                 iter = 4000,
                 cores = 4)
 
-saveRDS(fit_eff4, here("09_Analysis_Modeling", "models", "fit_eff4.rds"))
 
+# Add criterions for later diagnostics
+h1.m4 <- add_criterion(h1.m4, criterion = c("loo", "waic"))
+
+# Calculate also variance explained (R^2)
+h1.m4_R2 <- bayes_R2(h1.m4)
+
+# Save both as objects
+saveRDS(h1.m4, here("09_Analysis_Modeling", "models", "h1.m4.rds"))
+saveRDS(h1.m4_R2, here("09_Analysis_Modeling", "models", "h1.m4_R2.rds"))
+
+beep(5)
 
 ```
 
 ```{r}
 
-fit_eff4 <- readRDS(here("09_Analysis_Modeling", "models", "fit_eff4.rds"))
 
-# summary
-summary(fit_eff4)
-# the coefficients - esp for fixed factors (big5) improved even slightly
+h1.m4 <- readRDS(here("09_Analysis_Modeling", "models", "h1.m4.rds"))
+h1.m4_R2 <- readRDS(here("09_Analysis_Modeling", "models", "h1.m4_R2.rds"))
 
-plot(fit_eff4)
 
-plot(conditional_effects(fit_eff4), points = TRUE)
+# Summary
+summary(h1.m4)
+# the coefficients for commatt now seem much lower
 
-pp_check(fit_eff4, type = "dens_overlay")
-# still negative values
 
-pp_check(fit_eff4, type = "error_scatter_avg")
+```
+```{r}
+
+
+h1m1_coeff <- transform_attempt(4.02, 0.88, -0.36)
+print(h1m1_coeff)
+
+# For centered familiarity
+fam = (4.02 + 1.17) / 4.02
+print(fam)
+
+# For centered BIF
+bif = (4.02 + 1.21) / 4.02
+print(bif)
+
+```
+So it seems that we are misleading with the priors and this will not be the way
+
+
+```{r}
+
+plot(h1.m4)
+# all good
+
+plot(conditional_effects(h1.m4), points = TRUE)
+# the effect of main predictor is now very moderated 
+
+pp_check(h1.m4, type = "dens_overlay")
+# the problem with predicting negative values remains
+
+pp_check(h1.m4, type = "error_scatter_avg")
+# unchanged
+
+h1.m4_R2
+# explained variance remains around 87%
 
 ```
 
-### Model 5 - student family
+## Model 5 - student family
 
 So we still see negative values in the posterior simulations, so let's try Student's t-distribution which is more robut to outliers and can potentially reduce the likelihood of negative values (if we reduce degrees of freedom)
 
-(Note that log family could also help but for now we don't want to transform anything)
 
 ```{r}
 
-priors_eff_5 <- c(
+priors_h1m5 <- c(
   set_prior("normal(2.5, 0.5)", class = "Intercept", lb=0),
   set_prior("normal(0,0.50)", class = "b", coef = "CommAtt2M1"),
   set_prior("normal(0,0.50)", class = "b", coef = "CommAtt3M2"),
@@ -672,240 +892,146 @@ priors_eff_5 <- c(
   
 )
 
-```
-
-```{r}
-
-fit_eff5 <- brm(Eff ~ 1 + CommAtt + Modality + Big5 + Familiarity + Expressibility_z +  (1 + CommAtt || Participant) + (1 + CommAtt || Concept) + (1 || TrialNumber_c), 
+h1.m5 <- brm(Eff ~ 1 + CommAtt + Modality + Big5 + Familiarity + Expressibility_z +  (1 + CommAtt || Participant) + (1 + CommAtt || Concept) + (1 || TrialNumber_c), 
                 data = final_data,
-                prior=priors_eff_5,
+                prior=priors_h1m5,
                 family = student,
                 iter = 4000,
                 cores = 4)
 
-saveRDS(fit_eff5, here("09_Analysis_Modeling", "models", "fit_eff5.rds"))
+
+# Add criterions for later diagnostics
+h1.m5 <- add_criterion(h1.m5, criterion = c("loo", "waic"))
+
+# Calculate also variance explained (R^2)
+h1.m5_R2 <- bayes_R2(h1.m5)
+
+# Save both as objects
+saveRDS(h1.m5, here("09_Analysis_Modeling", "models", "h1.m5.rds"))
+saveRDS(h1.m5_R2, here("09_Analysis_Modeling", "models", "h1.m5_R2.rds"))
+
+beep(5)
 
 
 ```
 
 ```{r}
 
-fit_eff5 <- readRDS(here("09_Analysis_Modeling", "models", "fit_eff5.rds"))
+h1.m5 <- readRDS(here("09_Analysis_Modeling", "models", "h1.m5.rds"))
+h1.m5_R2 <- readRDS(here("09_Analysis_Modeling", "models", "h1.m5_R2.rds"))
 
-# summary
-summary(fit_eff5)
-# maybe the coeffs are already too tight here?
-# careful, as with the last one, the Rhat for Intercept is slightly >1.01
 
-plot(fit_eff5)
-
-plot(conditional_effects(fit_eff5), points = TRUE)
-
-pp_check(fit_eff5, type = "dens_overlay")
-# still negative values
-
-pp_check(fit_eff5, type = "error_scatter_avg")
-
-```
-
-### Model 6 - adapting priors
-
-The negative values in the posterior are really persistent so let's try to play with the priors once more, for the gaussian family
-
-```{r}
-
-priors_eff6 <- c(
-  set_prior("normal(3, 0.3)", class = "Intercept", lb=0),
-  set_prior("normal(0,0.25)", class = "b", coef = "CommAtt2M1"),
-  set_prior("normal(0,0.25)", class = "b", coef = "CommAtt3M2"),
-  set_prior("normal(0,0.15)", class = "b", coef = "Modality1"),
-  set_prior("normal(0,0.15)", class = "b", coef = "Modality2"),
-  set_prior("normal(0,0.15)", class = "b", coef = "Big5"),
-  set_prior("normal(0,0.15)", class = "b", coef = "Familiarity"),
-  set_prior("normal(0,0.15)", class = "b", coef = "Expressibility_z"),
-  
-  set_prior("normal(0.5,0.05)", class = "sd", group = "TrialNumber_c"),
-  set_prior("normal(0.5,0.05)", class = "sd", group = "Participant"),
-  set_prior("normal(0.5,0.05)", class = "sd", group = "Concept"),
-  set_prior("normal(1,0.05)", class = "sd"),
-  
-  set_prior("normal(0.5,0.1)", class = "sigma")
-)
-
-```
-
-```{r}
-
-fit_eff6 <- brm(Eff ~ 1 + CommAtt + Modality + Big5 + Familiarity + Expressibility_z +  (1 + CommAtt || Participant) + (1 + CommAtt || Concept) + (1 || TrialNumber_c), 
-                data = final_data,
-                prior=priors_eff6,
-                family = gaussian,
-                iter = 4000,
-                cores = 4)
-
-saveRDS(fit_eff6, here("09_Analysis_Modeling", "models", "fit_eff6.rds"))
+# Summary
+summary(h1.m5)
+# the coefficients look ok again. Familiarity and Big5 even got closer to our simulated betas
 
 
 ```
 
+
 ```{r}
 
-fit_eff6 <- readRDS(here("09_Analysis_Modeling", "models", "fit_eff6.rds"))
+plot(h1.m5)
+# all good
 
-# summary
-summary(fit_eff6)
-# all CrI seems ok and in expected range
-# Rhat is ok
+plot(conditional_effects(h1.m5), points = TRUE)
+# the effects all go in good direction
 
-plot(fit_eff6)
+pp_check(h1.m5, type = "dens_overlay")
+# the fit seems somewhat better than with gaussian, but still negative values are there
 
-plot(conditional_effects(fit_eff6), points = TRUE)
+pp_check(h1.m5, type = "error_scatter_avg")
+# unchanged
 
-pp_check(fit_eff6, type = "dens_overlay")
-# still negative values
-
-pp_check(fit_eff6, type = "error_scatter_avg")
+h1.m5_R2
+# explained variance remains around 85%
 
 ```
 
-### Model 7 - restricting priors with exponential distribution
+## Model 6 - log-normal distribution
 
-Let's do one more test with the priors, tightening them with exponential distribution
-
-```{r}
-
-priors_eff7 <- c(
-  set_prior("normal(3, 0.3)", class = "Intercept", lb = 0),
-  set_prior("normal(0, 0.25)", class = "b", coef = "CommAtt2M1"),
-  set_prior("normal(0, 0.25)", class = "b", coef = "CommAtt3M2"),
-  set_prior("normal(0, 0.15)", class = "b", coef = "Modality1"),
-  set_prior("normal(0, 0.15)", class = "b", coef = "Modality2"),
-  set_prior("normal(0, 0.15)", class = "b", coef = "Big5"),
-  set_prior("normal(0, 0.15)", class = "b", coef = "Familiarity"),
-  set_prior("normal(0, 0.15)", class = "b", coef = "Expressibility_z"),
-
-  # Exponential priors for standard deviations
-  set_prior("exponential(3)", class = "sd", group = "TrialNumber_c"), # exp(3) has a mean of 1/3 and concentrates most density around small values
-  set_prior("exponential(3)", class = "sd", group = "Participant"),
-  set_prior("exponential(3)", class = "sd", group = "Concept"),
-  set_prior("exponential(1)", class = "sd"),  # Generic sd prior
-
-  # Residual standard deviation - keep it narrow
-  set_prior("normal(0.5, 0.1)", class = "sigma")
-)
-```
+We have already seen - when plotting - that effort probably tends towards lognormal distribution. We can also use XXX test to confirm whether effort is normally distributed.
 
 ```{r}
 
-fit_eff7 <- brm(Eff ~ 1 + CommAtt + Modality + Big5 + Familiarity + Expressibility_z +  (1 + CommAtt || Participant) + (1 + CommAtt || Concept) + (1 || TrialNumber_c), 
-                data = final_data,
-                prior=priors_eff7,
-                family = gaussian,
-                iter = 4000,
-                cores = 4)
-
-saveRDS(fit_eff7, here("09_Analysis_Modeling", "models", "fit_eff7.rds"))
-
+## Daniela will hopefully remind me
 
 ```
 
+We will keep the model constant, just exchange the distribution. Priors are kept default
 ```{r}
 
-fit_eff7 <- readRDS(here("09_Analysis_Modeling", "models", "fit_eff7.rds"))
-
-# summary
-summary(fit_eff7)
-# all CrI seems ok and in expected range
-# Rhat is ok
-
-plot(fit_eff7)
-
-plot(conditional_effects(fit_eff7), points = TRUE)
-
-pp_check(fit_eff7, type = "dens_overlay", ndraws = 300)
-# still negative values
-
-pp_check(fit_eff7, type = "error_scatter_avg")
-
-```
-
-### Model 8 - log-normal distribution
-
-ADD TEST FOR LOGNORMAL DISTRIBUTION
-
-```{r}
-
-# same like model 1 but pcn and concept have varying slopes and trnumber has var intercept, priors are default
-
-fit_eff8 <- brm(Eff ~ 1 + CommAtt + Modality + Big5 + Familiarity + Expressibility_z +  (1 + CommAtt || Participant) + (1 + CommAtt || Concept) + (1 || TrialNumber_c), 
+h1.m6 <- brm(Eff ~ 1 + CommAtt + Modality + Big5 + Familiarity + Expressibility_z +  (1 + CommAtt || Participant) + (1 + CommAtt || Concept) + (1 || TrialNumber_c), 
                 data = final_data,
                 family = lognormal(),
                 iter = 4000,
                 cores = 4)
 
-saveRDS(fit_eff8, here("09_Analysis_Modeling", "models", "fit_eff8.rds"))
+
+# Add criterions for later diagnostics
+h1.m6 <- add_criterion(h1.m6, criterion = c("loo", "waic"))
+
+# Calculate also variance explained (R^2)
+h1.m6_R2 <- bayes_R2(h1.m6)
+
+# Save both as objects
+saveRDS(h1.m6, here("09_Analysis_Modeling", "models", "h1.m6.rds"))
+saveRDS(h1.m6_R2, here("09_Analysis_Modeling", "models", "h1.m6_R2.rds"))
 
 beep(5)
 
-##TODO: we tried both | (with correlation) and || and with correlation seems much better in terms of ESS, even though this model stays anyway at the top as the most predictive. But we need to show it
 
 ```
-
 
 ```{r}
 
-fit_eff8 <- readRDS(here("09_Analysis_Modeling", "models", "fit_eff8.rds"))
+h1.m6 <- readRDS(here("09_Analysis_Modeling", "models", "h1.m6.rds"))
+h1.m6_R2 <- readRDS(here("09_Analysis_Modeling", "models", "h1.m6_R2.rds"))
 
-# summary
-summary(fit_eff8)
-# this is for now uninterpretable, since it's on log-scale
 
-posterior_summary(fit_eff8)
-# likewise
-
-plot(fit_eff8)
-plot(conditional_effects(fit_eff8), points = TRUE)
-# but the effects seem to have a good direction
-
-pp_check(fit_eff8, type = "dens_overlay")
-# this looks so much better
-pp_check(fit_eff8, type = "error_scatter_avg")
-# blobby, and the points are bit more dispersed, but correlation is still there
+# Summary
+summary(h1.m6)
+# Coefficients remain mostly unchanged 
 
 
 ```
 
-#### Converting to original scale
+### Converting to original scale
 
+Of course now we have all on lognormal scale so it is not so straightforwadly interpretable. 
 This is how we can get to the values of an effort under certain value of a predictor
 ```{r}
 
 library(emmeans)
 
 # Compute estimated marginal means on log-scale
-em_mdl_fit_eff8 <- emmeans(fit_eff8, ~ CommAtt) #~ CommAtt
+em_h1.m6 <- emmeans(h1.m6, ~ CommAtt) #~ CommAtt
 
 #Backtransform the post.beta values
-em_mdl_fit_eff8@post.beta <- exp(em_mdl_fit_eff8@post.beta)
-print(em_mdl_fit_eff8)
+em_h1.m6@post.beta <- exp(em_h1.m6@post.beta)
+print(em_h1.m6)
+
 ```
-So we indeed see that effort in CommAtt2 increase but then decreases again for CommAtt3. Taking the results back to our coefficients when creating synthetic data
+So we indeed see that effort in CommAtt2 increase but then decreases again for CommAtt3. We can also try to get our simulated betas
 ```{r}
 
-coeff1 <- 2.31*1.5 
-coeff2 <- 2.31*0.7
+coeff1 <- 3.33*1.5 
+coeff2 <- 3.33*0.5
 
 print(coeff1)
 print(coeff2) # which is very close to the mean values we see from the model
 ```
+We see that the effect estimated by the model is now stronger than in our simulated data - also maybe because the values are averaged over predictor modality
+
+
 Now let's try a different method to get the coefficients (code adapted from https://bruno.nicenboim.me/bayescogsci/ch-reg.html#sec-trial)
 
 ```{r}
 
 # Extract posterior samples
-alpha_samples <- as_draws_df(fit_eff8)$b_Intercept
-beta_2_vs_1 <- as_draws_df(fit_eff8)$b_CommAtt2M1
-beta_3_vs_2 <- as_draws_df(fit_eff8)$b_CommAtt3M2
+alpha_samples <- as_draws_df(h1.m6)$b_Intercept
+beta_2_vs_1 <- as_draws_df(h1.m6)$b_CommAtt2M1
+beta_3_vs_2 <- as_draws_df(h1.m6)$b_CommAtt3M2
 
 # Compute expected values on the log scale
 mu_1 <- alpha_samples  # CommAtt 1
@@ -924,18 +1050,27 @@ effect_diff_3_vs_1 <- effect_3 - effect_1
 
 # Summarize the effects
 list(
+  mean_intercept = mean(effect_1),
   mean_diff_2_vs_1 = c(mean = mean(effect_diff_2_vs_1), quantile(effect_diff_2_vs_1, c(0.025, 0.975))),
   mean_diff_3_vs_2 = c(mean = mean(effect_diff_3_vs_2), quantile(effect_diff_3_vs_2, c(0.025, 0.975))),
   mean_diff_3_vs_1 = c(mean = mean(effect_diff_3_vs_1), quantile(effect_diff_3_vs_1, c(0.025, 0.975)))
 )
 
 ```
-This is for all predictors (except concept and participant)
+Now we can use these coefficients to transform to our simulated betas
+```{r}
 
+h1m6_coeff <- transform_attempt(3.419549, 2.950688, -4.240333)
+print(h1m6_coeff)
+
+```
+Now this looks closer again to our betas.
+
+This is for all predictors (except concept and participant)
 ```{r}
 
 # Extract posterior samples
-posterior_samples <- as_draws_df(fit_eff8)
+posterior_samples <- as_draws_df(h1.m6)
 alpha_samples <- posterior_samples$b_Intercept
 
 # Create a list to store effects for each fixed factor
@@ -964,9 +1099,9 @@ if ("b_CommAtt2M1" %in% colnames(posterior_samples) & "b_CommAtt3M2" %in% colnam
   mu_3 <- alpha_samples + beta_2_vs_1 + beta_3_vs_2
   
   effect_list$CommAtt <- rbind(
-    "2 vs 1" = get_effect_summary(exp(mu_2) - exp(mu_1)),
-    "3 vs 2" = get_effect_summary(exp(mu_3) - exp(mu_2)),
-    "3 vs 1" = get_effect_summary(exp(mu_3) - exp(mu_1))
+    "commat 2 vs 1" = get_effect_summary(exp(mu_2) - exp(mu_1)),
+    "commat 3 vs 2" = get_effect_summary(exp(mu_3) - exp(mu_2)),
+    "commat 3 vs 1" = get_effect_summary(exp(mu_3) - exp(mu_1))
   )
 }
 
@@ -980,9 +1115,9 @@ if ("b_Modality1" %in% colnames(posterior_samples) & "b_Modality2" %in% colnames
   mu_mod_3 <- alpha_samples - beta_mod_1 - beta_mod_2
   
   effect_list$Modality <- rbind(
-    "1 vs 2" = get_effect_summary(exp(mu_mod_1) - exp(mu_mod_2)),
-    "1 vs 3" = get_effect_summary(exp(mu_mod_1) - exp(mu_mod_3)),
-    "2 vs 3" = get_effect_summary(exp(mu_mod_2) - exp(mu_mod_3))
+    "mod 1 vs 2" = get_effect_summary(exp(mu_mod_1) - exp(mu_mod_2)),
+    "mod 1 vs 3" = get_effect_summary(exp(mu_mod_1) - exp(mu_mod_3)),
+    "mod 2 vs 3" = get_effect_summary(exp(mu_mod_2) - exp(mu_mod_3))
   )
 }
 
@@ -1016,68 +1151,103 @@ effect_df <- do.call(rbind, effect_list)
 # View effects
 effect_df
 
+```
+So here we also see the negative effect of combined modality (mod1)
 
+
+```{r}
+
+plot(h1.m6)
+# all good
+
+plot(conditional_effects(h1.m6), points = TRUE)
+# the effects all go in good direction
+
+pp_check(h1.m6, type = "dens_overlay")
+# we got rid of negative predictions, and it looks very good
+
+pp_check(h1.m6, type = "error_scatter_avg")
+# very nice blob
+
+h1.m6_R2
+# explained variance increases to 88%
 
 ```
-### Model 8.1 - with correlation
+
+## Model 6.1 - with correlation
+
+Since we now significantly improved the model performance, let's try once again the correlation between slope and intercept
 ```{r}
 
 
-fit_eff8c <- brm(Eff ~ 1 + CommAtt + Modality + Big5 + Familiarity + Expressibility_z +  (1 + CommAtt | Participant) + (1 + CommAtt | Concept) + (1 | TrialNumber_c), 
+h1.m6c <- brm(Eff ~ 1 + CommAtt + Modality + Big5 + Familiarity + Expressibility_z +  (1 + CommAtt | Participant) + (1 + CommAtt | Concept) + (1 | TrialNumber_c), 
                 data = final_data,
                 family = lognormal(),
                 iter = 4000,
                 cores = 4)
 
-saveRDS(fit_eff8c, here("09_Analysis_Modeling", "models", "fit_eff8c.rds"))
+
+# Add criterions for later diagnostics
+h1.m6c <- add_criterion(h1.m6c, criterion = c("loo", "waic"))
+
+# Calculate also variance explained (R^2)
+h1.m6c_R2 <- bayes_R2(h1.m6c)
+
+# Save both as objects
+saveRDS(h1.m6c, here("09_Analysis_Modeling", "models", "h1.m6c.rds"))
+saveRDS(h1.m6c_R2, here("09_Analysis_Modeling", "models", "h1.m6c_R2.rds"))
 
 beep(5)
 
-##TODO: we tried both | (with correlation) and || and with correlation seems much better in terms of ESS, even though this model stays anyway at the top as the most predictive. But we need to show it
 
 ```
 
 ```{r}
 
-fit_eff8c <- readRDS(here("09_Analysis_Modeling", "models", "fit_eff8c.rds"))
+h1.m6c <- readRDS(here("09_Analysis_Modeling", "models", "h1.m6c.rds"))
+h1.m6c_R2 <- readRDS(here("09_Analysis_Modeling", "models", "h1.m6c_R2.rds"))
 
-# summary
-summary(fit_eff8c)
-# this is for now uninterpretable, since it's on log-scale
 
-posterior_summary(fit_eff8c)
-# likewise
-
-plot(fit_eff8c)
-plot(conditional_effects(fit_eff8c), points = TRUE)
-# but the effects seem to have a good direction
-
-pp_check(fit_eff8c, type = "dens_overlay")
-# this looks so much better
-pp_check(fit_eff8c, type = "error_scatter_avg")
-# blobby, and the points are bit more dispersed, but correlation is still there
+# Summary
+summary(h1.m6c)
+# Coefficients remain mostly unchanged 
 
 
 ```
+
+
+```{r}
+
+plot(h1.m6c)
+# now correlation does not seem to generate problems
+
+plot(conditional_effects(h1.m6c), points = TRUE)
+# the effects all go in good direction
+
+pp_check(h1.m6c, type = "dens_overlay")
+# ppcheck good
+
+pp_check(h1.m6c, type = "error_scatter_avg")
+# nice blob
+
+h1.m6c_R2
+# explained variance remains around 88%
+
+```
+
+## Diagnostics I
 
 Let's now check which model has the best diagnostics
 
-### Diagnostics I
-
 ```{r}
 
-model_list <- list(fit_eff_dag, fit_eff_2, fit_eff3, fit_eff3p, fit_eff4, fit_eff5, fit_eff6, fit_eff7, fit_eff8)
+model_list <- list(h1.m1, h1.m2, h1.m3, h1.m3p, h1.m4, h1.m5, h1.m6, h1.m6c)
+
+r2_list <- list(h1.m1_R2, h1.m2_R2, h1.m3_R2, h1.m3p_R2, h1.m4_R2, h1.m5_R2, h1.m6_R2, h1.m6c_R2)
 
 ```
 
-#### R^2
-
-todo: add r squared
-
-
-
-
-#### Rhat
+### Rhat
 
 ```{r}
 
@@ -1091,10 +1261,11 @@ rhat_list <- lapply(model_list, function(model) {
 
 # Combine and inspect
 do.call(rbind, rhat_list)
-```
-So model fit_eff_2 and fit_eff6 look the worst. All the rest is comparably OK.
 
-#### ESS
+```
+All models seems actually ok in terms of Rhat values except model 2 (h1.m2)
+
+### ESS
 
 Effective sample size tells how many independent samples the model has effectively drawn from the PD. Low ESS suggests autocorrelation (i.e., sample explores one part of posterior), while high ESS means good mix
 
@@ -1115,46 +1286,40 @@ do.call(rbind, neff_ratio_list)
 
 ```
 
-So the highest ratio have model fit_eff8 but in fact they are all quite comparable. Let's loot at 5 highest
+So the highest ratio have model h1.m6c (lognormal with correlation) but in fact they are all quite comparable. Let's loot at 3 highest
 
 ```{r}
 
-effective_sample(fit_eff8) # this one indeed seems the best as it has all ESS around 10k
-effective_sample(fit_eff3)
-effective_sample(fit_eff7) 
-effective_sample(fit_eff3p) 
-effective_sample(fit_eff_dag)
+effective_sample(h1.m6c) # this one indeed seems the best as it has all ESS around 10k
+effective_sample(h1.m6)
+effective_sample(h1.m3p) 
 
 ```
 
-#### LOO & WAIC
+So there are some considerable differences for different coefficients
+
+### LOO & WAIC
+
+Add criteria to each model (this takes a while) - CAN BE DELETED AFTER WE RESAVE IT WITH THE MODELS WITHIN THEIR CHUNKS
 
 ```{r}
 
-# First we need to add the loo and waic to the model objects (recommended workflow)
-fit_eff_dag <- add_criterion(fit_eff_dag, criterion = c("loo", "waic"))
-fit_eff_2 <- add_criterion(fit_eff_2, criterion = c("loo", "waic")) #Warnung: 65 (1.3%) p_waic estimates greater than 0.4. We recommend trying loo instead.
-fit_eff3 <- add_criterion(fit_eff3, criterion = c("loo", "waic")) #Warnung: 7 (0.1%) p_waic estimates greater than 0.4. We recommend trying loo instead.
-fit_eff3p <- add_criterion(fit_eff3p, criterion = c("loo", "waic")) #Warnung: 20 (0.4%) p_waic estimates greater than 0.4. We recommend trying loo instead.
-fit_eff4 <- add_criterion(fit_eff4, criterion = c("loo", "waic")) #Warnung: 53 (1.0%) p_waic estimates greater than 0.4. We recommend trying loo instead.
-fit_eff5 <- add_criterion(fit_eff5, criterion = c("loo", "waic"))
-fit_eff6 <- add_criterion(fit_eff6, criterion = c("loo", "waic")) #Warnung: 54 (1.1%) p_waic estimates greater than 0.4. We recommend trying loo instead.
-fit_eff7 <- add_criterion(fit_eff7, criterion = c("loo", "waic")) #Warnung: 7 (0.1%) p_waic estimates greater than 0.4. We recommend trying loo instead
-fit_eff8 <- add_criterion(fit_eff8, criterion = c("loo", "waic")) #Warnung: 11 (0.2%) p_waic estimates greater than 0.4. We recommend trying loo instead.
-fit_eff8c <- add_criterion(fit_eff8c, criterion = c("loo", "waic")) #Warnung: 13 (0.3%) p_waic estimates greater than 0.4. We recommend trying loo instead.
-```
-```{r}
-
-# This is how to access the criteria
-fit_eff8$criteria$waic
-fit_eff8$criteria$loo
+h1.m1 <- add_criterion(h1.m1, criterion = c("loo", "waic"))
+h1.m2 <- add_criterion(h1.m2, criterion = c("loo", "waic"))
+h1.m3 <- add_criterion(h1.m3, criterion = c("loo", "waic"))
+h1.m3p <- add_criterion(h1.m3p, criterion = c("loo", "waic"))
+h1.m4 <- add_criterion(h1.m4, criterion = c("loo", "waic"))
+h1.m5 <- add_criterion(h1.m5, criterion = c("loo", "waic"))
+h1.m6 <- add_criterion(h1.m6, criterion = c("loo", "waic"))
+h1.m6c <- add_criterion(h1.m6c, criterion = c("loo", "waic"))
 
 ```
+
 
 Leave-one-out (loo) validation
 ```{r}
 
-l <- loo_compare(fit_eff_dag, fit_eff_2, fit_eff3, fit_eff3p, fit_eff4, fit_eff5, fit_eff6, fit_eff7, fit_eff8, criterion = "loo")
+l <- loo_compare(h1.m1, h1.m2, h1.m3, h1.m3p, h1.m4, h1.m5, h1.m6, h1.m6c, criterion = "loo")
 
 print(l, simplify = F)
 
@@ -1169,13 +1334,13 @@ p_loo: The effective number of parameters according to LOO, indicating the model
 
 se_p_loo: The standard error of p_loo, representing uncertainty around the effective number of parameters.
 
-So lognormal seems the best (and gaussian without priors and student-t with tighter priors follow shortly). 
+So lognormal seems the best. 
 
 
 Information criterion (WAIC)
 ```{r}
 
-w <- loo_compare(fit_eff_dag, fit_eff_2, fit_eff3, fit_eff3p, fit_eff4, fit_eff5, fit_eff6, fit_eff7, fit_eff8, criterion = "waic")
+w <- loo_compare(h1.m1, h1.m2, h1.m3, h1.m3p, h1.m4, h1.m5, h1.m6, h1.m6c, criterion = "waic")
 
 print(w, simplify = F)
 
@@ -1220,33 +1385,34 @@ w[, 7:8] %>%
   theme(axis.ticks.y = element_blank())
 
 ```
+
 ```{r}
 
-model_weights(fit_eff_dag, fit_eff_2, fit_eff3, fit_eff3p, fit_eff4, fit_eff5, fit_eff6, fit_eff7, fit_eff8, weights = "waic") %>% 
+model_weights(h1.m1, h1.m2, h1.m3, h1.m3p, h1.m4, h1.m5, h1.m6, h1.m6c, weights = "waic") %>% 
   round(digits = 2)
 
 ```
 
-So as ppcheck already suggested, lognormal model indeed seem to have the most predictive power. For this particular (synthetic) data, we will now proceed with model fit_eff8.
+So as ppcheck already suggested, lognormal model indeed seem to have the most predictive power. For this particular (synthetic) data, we will now proceed with model h1.m6c
 
 We will first add some mildly informative priors, and then we also try to add some interaction terms and do a comparison once again.
 
-### Model 9 - lognormal with priors
+## Model 7 - lognormal with priors
 
-Let's first check what priors have been selected as default for fit_eff8
+Let's first check what priors have been selected as default for h1.m6c
 ```{r}
 
 # Print priors
-prior_summary(fit_eff8)
+prior_summary(h1.m6c)
 
 ```
 Ok, we can keep all defaulted ones, but we do not need to leave flat priors for the beta coefficients as we do have some assumptions/expectations
 
-Since fit_eff3p and fit_eff5 are models with non-default priors that have the best diagnostics after fit_eff8 - and the priors have, in fact, the same values, we will just re-use them again
+Let's reuse priors we have already used for h1.m3p
 
 ```{r}
 
-priors_eff_9 <- c(
+priors_h1m7 <- c(
   set_prior("normal(2.5, 0.5)", class = "Intercept", lb=0),
   set_prior("normal(0,0.50)", class = "b", coef = "CommAtt2M1"),
   set_prior("normal(0,0.50)", class = "b", coef = "CommAtt3M2"),
@@ -1258,37 +1424,69 @@ priors_eff_9 <- c(
 )
 
 # The rest we will leave default (and check afterwards)
-```
 
-```{r}
-
-fit_eff9 <- brm(Eff ~ 1 + CommAtt + Modality + Big5 + Familiarity + Expressibility_z +  (1 + CommAtt | Participant) + (1 + CommAtt | Concept) + (1 | TrialNumber_c), 
+h1.m7 <- brm(Eff ~ 1 + CommAtt + Modality + Big5 + Familiarity + Expressibility_z +  (1 + CommAtt | Participant) + (1 + CommAtt | Concept) + (1 | TrialNumber_c), 
                 data = final_data,
                 family = lognormal(),
-                prior = priors_eff_9,
+                prior = priors_h1m7,
                 iter = 4000,
                 cores = 4)
 
-# we will immediatelly add the diagnostic criteria
-fit_eff9 <- add_criterion(fit_eff9, criterion = c("loo", "waic"))  #Warnung: 12 (0.2%) p_waic estimates greater than 0.4. We recommend trying loo instead.
 
-# and save it
-saveRDS(fit_eff9, here("09_Analysis_Modeling", "models", "fit_eff9.rds"))
+# Add criterions for later diagnostics
+h1.m7 <- add_criterion(h1.m7, criterion = c("loo", "waic"))
+
+# Calculate also variance explained (R^2)
+h1.m7_R2 <- bayes_R2(h1.m7)
+
+# Save both as objects
+saveRDS(h1.m7, here("09_Analysis_Modeling", "models", "h1.m7.rds"))
+saveRDS(h1.m7_R2, here("09_Analysis_Modeling", "models", "h1.m7_R2.rds"))
 
 beep(5)
 
-```
-Check the priors
 
-```
-Check out: https://paulbuerkner.com/brms/reference/set_prior.html
 ```
 
 ```{r}
 
-prior_summary(fit_eff9)
+h1.m7 <- readRDS(here("09_Analysis_Modeling", "models", "h1.m7.rds"))
+h1.m7_R2 <- readRDS(here("09_Analysis_Modeling", "models", "h1.m7_R2.rds"))
 
-pp_check(fit_eff9,
+
+# Summary
+summary(h1.m7)
+# Coefficients remain mostly unchanged 
+
+
+```
+
+
+```{r}
+
+plot(h1.m7)
+# all good
+
+plot(conditional_effects(h1.m7), points = TRUE)
+# the effects all go in good direction
+
+pp_check(h1.m7, type = "dens_overlay")
+# nice
+
+pp_check(h1.m7, type = "error_scatter_avg")
+# unchanged
+
+h1.m7_R2
+# explained variance remains around 88%
+
+```
+
+Let's now also check whether the priors make sense 
+```{r}
+
+prior_summary(h1.m7)
+
+pp_check(h1.m7,
          type = "stat",
          stat = "mean",
          bins = 50,
@@ -1297,51 +1495,28 @@ pp_check(fit_eff9,
   ggtitle("Prior predictive distribution of means")
 # this look okay
 
-pp_check(fit_eff9,
+pp_check(h1.m7,
          type = "stat",
          stat = "min",
          prefix = "ppd") +
   coord_cartesian(xlim = c(-15, 10)) +
   ggtitle("Prior predictive distribution of minimal values")
-# this is better but we still see some 0s
+# this looks good
 
-pp_check(fit_eff9,
+pp_check(h1.m7,
          type = "stat",
          stat = "max",
          prefix = "ppd") +
   coord_cartesian(xlim = c(-10, 15)) +
   ggtitle("Prior predictive distribution of maximal values")
-# this looks reasonable
+# this too looks reasonable
 
 
 
 ```
 
 
-```{r}
-
-fit_eff9 <- readRDS(here("09_Analysis_Modeling", "models", "fit_eff9.rds"))
-
-# summary
-summary(fit_eff9)
-# this is for now uninterpretable, since it's on log-scale
-# buth Rhat looks ok
-
-posterior_summary(fit_eff9)
-# likewise
-
-plot(fit_eff9)
-plot(conditional_effects(fit_eff9), points = TRUE)
-# but the effects seem to have a good direction
-
-pp_check(fit_eff9, type = "dens_overlay")
-# this looks so much better
-pp_check(fit_eff9, type = "error_scatter_avg")
-# blobby, and the points are bit more dispersed, but correlation is still there
-
-
-```
-### Model 10 - adding interactions
+## Model 8 - adding interactions
 
 Possible interactions include:
 
@@ -1369,69 +1544,98 @@ Let's try CommAtt x Modality and Big5 x CommAtt
 
 ```{r}
 
-fit_eff10 <- brm(Eff ~ 1 + CommAtt * Modality + Big5 * CommAtt + Familiarity + Expressibility_z +  (1 + CommAtt | Participant) + (1 + CommAtt | Concept) + (1 | TrialNumber_c), 
+h1.m8 <- brm(Eff ~ 1 + CommAtt * Modality + Big5 * CommAtt + Familiarity + Expressibility_z +  (1 + CommAtt | Participant) + (1 + CommAtt | Concept) + (1 | TrialNumber_c), 
                 data = final_data,
                 family = lognormal(),
-                prior = priors_eff_9,
+                prior = priors_h1m7, # we keep the priors from previous model
                 iter = 4000,
                 cores = 4)
 
-# we will immediatelly add the diagnostic criteria
-fit_eff10 <- add_criterion(fit_eff10, criterion = c("loo", "waic"))  #Warnung: 19 (0.4%) p_waic estimates greater than 0.4. We recommend trying loo instead.
 
-# and save it
-saveRDS(fit_eff10, here("09_Analysis_Modeling", "models", "fit_eff10.rds"))
+# Add criterions for later diagnostics
+h1.m8 <- add_criterion(h1.m8, criterion = c("loo", "waic"))
+
+# Calculate also variance explained (R^2)
+h1.m8_R2 <- bayes_R2(h1.m8)
+
+# Save both as objects
+saveRDS(h1.m8, here("09_Analysis_Modeling", "models", "h1.m8.rds"))
+saveRDS(h1.m8_R2, here("09_Analysis_Modeling", "models", "h1.m8_R2.rds"))
 
 beep(5)
 
-#Warnung: Found 1 observations with a pareto_k > 0.7 in model 'fit_eff10'. 
+
 ```
 
 ```{r}
 
-fit_eff10 <- readRDS(here("09_Analysis_Modeling", "models", "fit_eff10.rds"))
+h1.m8 <- readRDS(here("09_Analysis_Modeling", "models", "h1.m8.rds"))
+h1.m8_R2 <- readRDS(here("09_Analysis_Modeling", "models", "h1.m8_R2.rds"))
 
-# summary
-summary(fit_eff10)
-# Rhat ok
 
-posterior_summary(fit_eff10)
-# likewise
-
-plot(fit_eff10) # all catterpillars seem ok
-plot(conditional_effects(fit_eff10), points = TRUE)
-# but the effects seem to have a good direction
-
-pp_check(fit_eff10, type = "dens_overlay")
-# this looks so much better
-pp_check(fit_eff10, type = "error_scatter_avg")
-# blobby, and the points are bit more dispersed, but correlation is still there
+# Summary
+summary(h1.m8)
+# Coefficients remain mostly unchanged 
+# Since we did not really focused on the interactions during the simulation, we also don't have strong expectations here. But for the real data, there is a good reason to expect some meaningful values
 
 
 ```
-### Diagnostics II
+
 
 ```{r}
 
-effective_sample(fit_eff8) 
-effective_sample(fit_eff8c)
-effective_sample(fit_eff9) 
-effective_sample(fit_eff10) 
+plot(h1.m8)
+# all good
 
+plot(conditional_effects(h1.m8), points = TRUE)
+# the effects all go in good direction
+# we can see here that combined modality remains moderated across all commatts
+# and also big5 seems to matter the most in the second attempt
 
-# They all look comparably good, fit_eff8 have lots of ESS, but our last model with interactions is also good
+pp_check(h1.m8, type = "dens_overlay")
+# the problem with predicting negative values remains
+
+pp_check(h1.m8, type = "error_scatter_avg")
+# unchanged
+
+h1.m8_R2
+# explained variance remains around 87%
+
 ```
 
+
+## Diagnostics II
+
+### ESS
+
 ```{r}
 
-l <- loo_compare(fit_eff8, fit_eff8c, fit_eff9, fit_eff10, criterion = "loo")
+effective_sample(h1.m6) 
+effective_sample(h1.m6c)
+effective_sample(h1.m7) 
+effective_sample(h1.m8) 
+
+
+# Now h1m6 looks as the weakest, while h1m8 looks much better - but ESS for Intercept is for some reason still quite low
+
+```
+
+### LOO & WAIC
+
+Add the criteria to each model
+
+
+```{r}
+
+l <- loo_compare(h1.m6, h1.m6c, h1.m7, h1.m8, criterion = "loo")
 
 print(l, simplify = F)
 
 ```
+
 ```{r}
 
-w <- loo_compare(fit_eff8, fit_eff8c, fit_eff9, fit_eff10, criterion = "waic")
+w <- loo_compare(h1.m6, h1.m6c, h1.m7, h1.m8, criterion = "waic")
 
 print(w, simplify = F)
 
@@ -1440,213 +1644,31 @@ cbind(waic_diff = w[,1] * -2,
       se = w[,2] * 2)
 
 ```
-So the interaction terms really help for the predictive power and we will stick to it for now
 
-# DAG - Question 2
+So in terms of WAIC&LOO, interactions do not really add predictive power. This might be specific for the synthetic data, as we did not explicitly focused on the interaction coefficients there. At the same time, the difference of h1.m8 from h1.m6c is not so significant. For now, we stop here and with the real data, we will proceed with the same evaluation to pick up the best model
+
+
+# H2: Data wrangling
 
 Now we can need to account also for our second hypothesis, namely
 
-*H2: The enhancement depends on similarity of the guesser's answer and the original meaning. More similar answer will require/result in smaller enhancement (but still enhancement) than less similar answer.*
+*H2: A higher degree of misunderstanding will require a performer to engage in more effortful correction.*
+
+The difficulty with our data structure is that PrevAn is a variable that has values only for second and third correction (i.e., there is no previous answer for the first performance). If we left it unchange, the model will eventually get rid of all NA values, which means we will loose the relationship between effort in second and first communicative attempt. To avoid this, we will create a new variable which we call *Effort Change Ratio*. We will simply calculate the ratio of change from effort in communicative attempt x to communicative attempt x+1. Like that, we will still get rid of communicative attempt 1, but the ratio that will be associated with CommAtt==2 already encapsulates the relationship towards this attempt.
+
 
 ```{r}
 
-dag2 <- dagitty('dag {
-Big5 [adjusted,pos="-0.823,0.657"]
-CommAtt [exposure,pos="-1.033,0.028"]
-Conc [adjusted,pos="-1.136,-0.848"]
-Eff [outcome,pos="-0.102,0.025"]
-Expr [adjusted,pos="-0.758,-0.850"]
-Fam [adjusted,pos="-0.379,0.663"]
-Pcn [adjusted,pos="-0.589,1.214"]
-TrNum [adjusted,pos="-1.686,-0.859"]
-PrevAn [adjusted,pos="-0.500,-0.200"]
-Big5 -> CommAtt     
-Big5 -> Eff
-CommAtt -> Eff
-Conc -> Expr
-Expr -> CommAtt
-Expr -> Eff
-Fam -> CommAtt
-Fam -> Eff
-Mod_bin -> Eff
-Pcn -> Big5
-Pcn -> CommAtt 
-Pcn -> Eff
-Pcn -> Fam
-TrNum -> CommAtt
-TrNum -> Eff
-Conc -> CommAtt
-Conc -> Eff
-PrevAn -> Eff
-PrevAn -> CommAtt
-Expr -> PrevAn
-TrNum -> PrevAn
-}')
-
-plot(dag2)
+# load our data back if we lost them
+final_data <- final_data_synt
 
 ```
-```{r}
-
-impliedConditionalIndependencies(dag2)
-
-```
-
-```{r}
-
-dagitty::adjustmentSets(dag2, exposure = "CommAtt", outcome = "Eff")
-
-```
-
-# Adding similarity to synthetic data
-
-```{r}
-
-# Set seed for reproducibility
-set.seed(0209)
-
-# Define participants, total unique concepts, and modalities
-n_participants <- 120
-n_total_concepts <- 21  # Total unique concepts
-n_concepts_per_participant <- 21  # Each participant works with 21 concepts
-n_modalities <- 3  # gesture, vocal, combined
-
-# Generate participant IDs
-participants <- 1:n_participants
-
-# Simulate Big5 personality traits (standardized between 0 and 1) and Familiarity (between 0 and 1) for participants
-Big5 <- runif(n_participants, min = 0, max = 1)  # Continuous values between 0 and 1
-Familiarity <- runif(n_participants, min = 0, max = 1)  # Continuous values between 0 and 1
-
-# Create a matrix to hold expressibility values for each concept in each modality
-expressibility_matrix <- matrix(runif(n_total_concepts * n_modalities, min = 0, max = 1), nrow = n_total_concepts, ncol = n_modalities)
-
-# Randomly sample 21 unique concepts for each participant
-final_data_2 <- data.frame()
-
-# Define a function to assign CommAtt and Eff for a single participant
-simulate_participant <- function(participant_id) {
-  # Randomly sample 21 unique concepts from the total pool of 84
-  selected_concepts <- sample(1:n_total_concepts, n_concepts_per_participant)
-  
-  participant_data <- data.frame()
-  trial_number <- 1  # Initialize trial number
-  prev_answer_similarity <- NA  # Initialize PrevAn for the first trial
-  
-  for (concept_id in selected_concepts) {
-    # Randomly determine the modality for the concept
-    modality <- sample(c("gesture", "vocal", "combined"), 1)
-    
-    # Calculate expressibility based on modality
-    expressibility_score <- ifelse(modality == "vocal", expressibility_matrix[concept_id, 1] * 0.6, 
-                                    ifelse(modality == "gesture", expressibility_matrix[concept_id, 2], 
-                                           expressibility_matrix[concept_id, 3] * 1.5))
-    
-    # Determine Communicative Attempts based solely on expressibility, familiarity, and Big5
-    base_prob <- c(0.33, 0.33, 0.33)  # Equal chance for 1, 2, or 3 attempts
-    
-    # Modify probabilities based on familiarity, Big5, and expressibility
-    adjusted_prob <- base_prob * c(1 - Familiarity[participant_id], 
-                                    1 - Familiarity[participant_id],
-                                    1 - Familiarity[participant_id]) * 
-                     c(1 - Big5[participant_id],
-                       1 - Big5[participant_id],
-                       1 - Big5[participant_id]) * 
-                     c(1 - expressibility_score,
-                       1 - expressibility_score,
-                       1 - expressibility_score)
-    
-    # Normalize the adjusted probabilities
-    adjusted_prob <- adjusted_prob / sum(adjusted_prob)
-    
-    # Sample the number of communicative attempts based on adjusted probabilities
-    n_attempts <- sample(1:3, 1, prob = adjusted_prob)
-    
-    # Loop through the number of attempts and increment CommAtt correctly
-    for (attempt in 1:n_attempts) {
-      # Calculate Eff for the first attempt
-      if (attempt == 1) {
-        Eff <- 1.15 * Big5[participant_id] + 
-               1.10 * Familiarity[participant_id] + 
-               1.20 * expressibility_score + 
-               rnorm(1, mean = 1, sd = 0.5)
-        
-        # Adjust Eff based on modality
-        if (modality == "combined") {
-          Eff <- Eff * 0.7  # Slight moderation for combined modality
-        }
-        
-        # Set PrevAn to NA for the first attempt
-        prev_answer_similarity <- NA
-      }
-      
-      # Adjust Eff for subsequent attempts
-      if (attempt == 2) {
-        Eff <- 1.15 * Big5[participant_id] + 
-               1.10 * Familiarity[participant_id] + 
-               1.20 * expressibility_score + 
-               rnorm(1, mean = 1, sd = 0.5)
-        Eff <- Eff * 1.50  # Multiply effort by 1.50 for the second attempt
-      } else if (attempt == 3) {
-        Eff <- 1.15 * Big5[participant_id] + 
-               1.10 * Familiarity[participant_id] + 
-               1.20 * expressibility_score + 
-               rnorm(1, mean = 1, sd = 0.5)
-        Eff <- Eff * 0.70  # Multiply effort by 0.70 for the third attempt
-      }
-      
-      # Adjust Eff based on PrevAn (previous answer similarity)
-      if (!is.na(prev_answer_similarity)) {
-        Eff <- Eff * (1 + (1 - prev_answer_similarity) * 0.5)  # 0.5 is the coefficient for the modulation effect
-      }
-      
-      # Create row for each attempt
-      participant_data <- rbind(participant_data, data.frame(
-        Participant = participant_id,
-        Concept = concept_id,
-        Modality = modality,
-        Big5 = Big5[participant_id],
-        Familiarity = Familiarity[participant_id],
-        Expressibility = expressibility_score,
-        CommAtt = attempt,  # Correctly set the attempt number
-        Eff = Eff,
-        TrialNumber = trial_number,  # Set trial number for this attempt
-        PrevAn = prev_answer_similarity  # Add PrevAn value for the current attempt
-      ))
-      
-      # Increment the trial number after each attempt
-      trial_number <- trial_number + 1
-      
-      # Update PrevAn similarity for the next attempt
-      prev_answer_similarity <- runif(1, min = 0, max = 1)  # Simulate similarity for the next attempt
-    }
-  }
-  
-  return(participant_data)
-}
-
-# Simulate data for all participants
-for (i in participants) {
-  final_data_2 <- rbind(final_data_2, simulate_participant(i))
-}
-
-# Preview the first few rows of the final data
-head(final_data_2)
-
-
-```
-
-```{r}
-
-hist(final_data_2$Eff)
-```
-
 
 Because we are dealing xxx
 
 ```{r}
 
-final_data_2 <- final_data_2 %>%
+final_data_2 <- final_data %>%
   group_by(Participant, Concept) %>%
   mutate(
     Effort_1 = Eff[CommAtt == 1][1],  # Effort for attempt 1
@@ -1661,7 +1683,6 @@ final_data_2 <- final_data_2 %>%
       TRUE ~ NA_real_
     )
   ) %>%
-  select(-Effort_1, -Effort_2, -Effort_3) %>%  # Clean up intermediate columns
   ungroup()
 
 # View the result
@@ -1675,25 +1696,24 @@ head(final_data_2)
 final_data_2 <- final_data_2 %>%
   mutate(
     Effort_Change_Ratio = coalesce(Effort_Change_Ratio_1_to_2, Effort_Change_Ratio_2_to_3)
-  ) %>%
-  select(-Effort_Change_Ratio_1_to_2, -Effort_Change_Ratio_2_to_3)
+  ) 
+
+# Remove unnecessary columns
+final_data_2 <- subset(final_data_2, select = -c(Effort_1, Effort_2, Effort_3, Effort_Change_Ratio_1_to_2, Effort_Change_Ratio_2_to_3)) 
 
 # View the result
 head(final_data_2)
 
 ```
-
-
-
+## Exploring structure
 
 Let's check in plots
 ```{r}
 
+library(ggplot2)
+
 # Filter out CommAtt == 1
 filtered_data <- final_data_2[final_data_2$CommAtt != 1, ]
-
-# Scatter plot with regression line
-library(ggplot2)
 
 ggplot(filtered_data, aes(x = PrevAn, y = Eff)) +
   geom_point(alpha = 0.6, color = "blue") +  # Scatter points
@@ -1705,14 +1725,8 @@ ggplot(filtered_data, aes(x = PrevAn, y = Eff)) +
 
 
 ```
+
 ```{r}
-
-
-# Filter out CommAtt == 1
-filtered_data <- final_data_2[final_data_2$CommAtt != 1, ]
-
-# Scatter plot with regression line
-library(ggplot2)
 
 ggplot(filtered_data, aes(x = PrevAn, y = Effort_Change_Ratio)) +
   geom_point(alpha = 0.6, color = "blue") +  # Scatter points
@@ -1722,8 +1736,6 @@ ggplot(filtered_data, aes(x = PrevAn, y = Effort_Change_Ratio)) +
        title = "Relationship between Effort and Previous Answer Similarity") +
   theme_minimal()
 
-
-
 ```
 
 
@@ -1732,8 +1744,63 @@ ggplot(filtered_data, aes(x = PrevAn, y = Effort_Change_Ratio)) +
 hist(filtered_data$Effort_Change_Ratio)
 
 ```
+So we will have to work with bimodal distribution, as we either have a decrease in effort (Ratio < 1) or increase (Ratio > 1)
 
-# Modeling - Question 2
+#H2: Stating causal model
+
+We now also need a new DAG. Essentially, what we said will influence CommAtt in H1, will now also influence PrevAn because they are tightly related. For instance, more extroverted people can be expected to be better guessers, therefore the similarity of the previous answer will be higher.
+
+```{r}
+
+daggy_h2 <- dagitty('dag {
+EffChange [outcome,pos="-0.102,0.025"]
+PrevAn [exposure,pos="-1.033,0.028"]
+Big5 [pos="-0.823,0.657"]
+CommAtt [pos="-0.136,-0.848"]
+Conc [pos="-1.136,-0.848"]
+Expr [pos="-0.758,-0.850"]
+Fam [pos="-0.379,0.663"]
+Pcn [pos="-0.589,1.214"]
+TrNum [pos="-1.686,-0.859"]
+Mod[pos="-1.286,-0.859"]
+
+Big5 -> PrevAn     
+Big5 -> EffChange
+CommAtt -> EffChange
+Conc -> Expr
+Expr -> PrevAn
+Expr -> EffChange
+Fam -> PrevAn
+Fam -> EffChange
+Mod -> EffChange
+Mod -> PrevAn
+Pcn -> Big5
+Pcn -> PrevAn 
+Pcn -> EffChange
+Pcn -> Fam
+TrNum -> PrevAn
+TrNum -> EffChange
+Conc -> PrevAn
+Conc -> EffChange
+PrevAn -> EffChange
+PrevAn -> CommAtt
+}')
+
+plot(daggy_h2)
+
+```
+We will now see, that the adjustment set now also include PrevAn
+
+```{r}
+
+dagitty::adjustmentSets(daggy_h2, exposure = "PrevAn", outcome = "EffChange")
+
+```
+The adjustment set is identical to the one of H1. Note that we are here omitting arrows going from all these variables to ComAtt. However, since PrevAn affects CommAtt, and not the other way, we anyway do not need to block this path to avoid confounds. However, if we want to asses direct effect of PrevAn on EffChange, we might need to add it to the model 
+
+# Modeling: H2
+
+*H2: A higher degree of misunderstanding will require a performer to engage in more effortful correction.*
 
 ## Contrast coding
 
@@ -1750,7 +1817,7 @@ filtered_data$TrialNumber <- as.numeric(filtered_data$TrialNumber)  # Ensure Tri
 
 Check contrasts of factors
 ```{r}
-contrasts(filtered_data$CommAtt) <- MASS::contr.sdif(2)
+contrasts(filtered_data$CommAtt) <- MASS::contr.sdif(2) # but we don't need this one
 contrasts(filtered_data$Modality) <- contr.sum(3)/2
 ```
 
@@ -1761,18 +1828,17 @@ filtered_data$TrialNumber_c <- filtered_data$TrialNumber - median(range(filtered
 range(filtered_data$TrialNumber_c)
 range(filtered_data$TrialNumber)
 ```
-Standardize (z-score) all *continuous* predictors. 
-
 The measures of familiarity, expressibility, and big5 are on a non-continuous rating scale, hence we can just subtract the median from these to centre them (instead of standardizing).
 
 ```{r}
 
 filtered_data$Familiarity <- filtered_data$Familiarity - median(range(filtered_data$Familiarity))
 filtered_data$Big5 <- filtered_data$Big5 - median(range(filtered_data$Big5))
+
 ```
 
 
-Z-score expressibility (because it's continuous) within a modality
+Z-score expressibility (because it's continuous) within a modality #TODO- consider centering instead
 ```{r}
 
 filtered_data <-
@@ -1788,17 +1854,38 @@ filtered_data <-
   ungroup()
 ```
 
-## Model - DAG
+To test, we will also center both expressibility and prevan to see what offers better interpretation
+```{r}
+
+filtered_data$PrevAn_c <- filtered_data$PrevAn - median(range(filtered_data$PrevAn))
+
+filtered_data <- 
+  filtered_data |>
+  group_by(Modality) |>
+  mutate(Expressibility_c = Expressibility - median(range(Expressibility))) |>
+  ungroup()
+
+```
+
+## Model 1 - DAG 
 
 ```{r}
 
 
-fit_eff_prevan_dag <- brm(Effort_Change_Ratio ~ 1 + PrevAn_z + CommAtt + Familiarity + Big5 + Expressibility_z + TrialNumber_c + Modality + (1 | Participant) + (1 | Concept),
+h2.m1 <- brm(Effort_Change_Ratio ~ 1 + PrevAn_z + CommAtt + Familiarity + Big5 + Expressibility_z + TrialNumber_c + Modality + (1 | Participant) + (1 | Concept),
                 data = filtered_data,
                 iter = 4000,
                 cores = 4)
 
-saveRDS(fit_eff_prevan_dag, here("09_Analysis_Modeling", "models", "fit_eff_prevan_dag.rds"))
+# Add criterions for later diagnostics
+h2.m1 <- add_criterion(h2.m1, criterion = c("loo", "waic"))
+
+# Calculate also variance explained (R^2)
+h2.m1_R2 <- bayes_R2(h2.m1)
+
+# Save both as objects
+saveRDS(h2.m1, here("09_Analysis_Modeling", "models", "h2.m1.rds"))
+saveRDS(h2.m1_R2, here("09_Analysis_Modeling", "models", "h2.m1_R2.rds"))
 
 beep(5)
 
@@ -1807,54 +1894,55 @@ beep(5)
 
 ```{r}
 
-fit_eff_prevan_dag <- readRDS(here("09_Analysis_Modeling", "models", "fit_eff_prevan_dag.rds"))
-
-# summary
-summary(fit_eff_prevan_dag)
-
-plot(fit_eff_prevan_dag)
-
-plot(conditional_effects(fit_eff_prevan_dag), points = TRUE)
-
-pp_check(fit_eff_prevan_dag, type = "dens_overlay", ndraws = 300)
+h2.m1 <- readRDS(here("09_Analysis_Modeling", "models", "h2.m1.rds"))
+h2.m1_R2 <- readRDS(here("09_Analysis_Modeling", "models", "h2.m1_R2.rds"))
 
 
-pp_check(fit_eff_prevan_dag, type = "error_scatter_avg")
-```
-## Model X - log-normal
+# Summary
+summary(h2.m1)
+# coefficients seem quite conservative, even for PrevAn (but remember, it's z-scored)
 
-```{r}
-
-priors_eff_prevan_2 <- c(
-  set_prior("normal(2.5, 0.5)", class = "Intercept", lb=0),
-  set_prior("normal(0,0.25)", class = "b", coef = "Modality1"),
-  set_prior("normal(0,0.25)", class = "b", coef = "Modality2"),
-  set_prior("normal(0,0.25)", class = "b", coef = "Big5"),
-  set_prior("normal(0,0.25)", class = "b", coef = "Familiarity"),
-  set_prior("normal(0,0.25)", class = "b", coef = "Expressibility_z")
-
-)
-
-## ad prior for PrevAn_z
-## re-do contrast coding (commAtt is probably not the best now)
-
-# The rest we will leave default (and check afterwards)
 ```
 
 ```{r}
 
-fit_eff_prevan_2 <- brm(Effort_Change_Ratio ~ 1 + PrevAn_z + CommAtt + Modality + Big5 + Familiarity + Expressibility_z +  (1 + CommAtt | Participant) + (1 + CommAtt | Concept) + (1 | TrialNumber_c), 
+plot(h2.m1)
+# all looks ok
+
+plot(conditional_effects(h2.m1), points = TRUE)
+# the main effect seems ok, the rest of the predictors does not show nothing (maybe because of the transformation we lost the relations between them and the effort)
+
+pp_check(h2.m1, type = "dens_overlay")
+# this looks not great but not terrible
+
+pp_check(h2.m1, type = "error_scatter_avg")
+# so there seems to be quite high residual error for some extreme values (esp for the second mode)
+
+h2.m1_R2
+# explained variance around 98%
+
+```
+
+## Model 2 - log-normal
+
+We will once again try lognormal distribution, for now leaving priors to default
+```{r}
+
+h2.m2 <- brm(Effort_Change_Ratio ~ 1 + PrevAn_z + CommAtt + Modality + Big5 + Familiarity + Expressibility_z +  (1 + PrevAn || Participant) + (1 + PrevAn || Concept) + (1 | TrialNumber_c), 
                 data = filtered_data,
                 family = lognormal(),
-                prior = priors_eff_prevan_2,
                 iter = 4000,
                 cores = 4)
 
-# we will immediatelly add the diagnostic criteria
-fit_eff_prevan_2 <- add_criterion(fit_eff_prevan_2, criterion = c("loo", "waic"))  
+# Add criterions for later diagnostics
+h2.m2 <- add_criterion(h2.m2, criterion = c("loo", "waic"))
 
-# and save it
-saveRDS(fit_eff_prevan_2, here("09_Analysis_Modeling", "models", "fit_eff_prevan_2.rds"))
+# Calculate also variance explained (R^2)
+h2.m2_R2 <- bayes_R2(h2.m2)
+
+# Save both as objects
+saveRDS(h2.m2, here("09_Analysis_Modeling", "models", "h2.m2.rds"))
+saveRDS(h2.m2_R2, here("09_Analysis_Modeling", "models", "h2.m2_R2.rds"))
 
 beep(5)
 
@@ -1862,48 +1950,109 @@ beep(5)
 
 ```{r}
 
-fit_eff_prevan_2 <- readRDS(here("09_Analysis_Modeling", "models", "fit_eff_prevan_2.rds"))
-
-# summary
-summary(fit_eff_prevan_2)
-
-plot(fit_eff_prevan_2)
-
-plot(conditional_effects(fit_eff_prevan_2), points = TRUE)
-
-pp_check(fit_eff_prevan_2, type = "dens_overlay", ndraws = 300)
+h2.m2 <- readRDS(here("09_Analysis_Modeling", "models", "h2.m2.rds"))
+h2.m2_R2 <- readRDS(here("09_Analysis_Modeling", "models", "h2.m2_R2.rds"))
 
 
-pp_check(fit_eff_prevan_2, type = "error_scatter_avg")
-
-prior_summary(fit_eff_prevan_2)
+# Summary
+summary(h2.m2)
+# 
 
 ```
+### Converting to original scale
 
-## Model X - lognormal with interactions
+```{r}
+
+# Extract posterior samples
+posterior_samples <- as_draws_df(h2.m2)
+alpha_samples <- posterior_samples$b_Intercept
+
+# Create a list to store effects for each fixed factor
+effect_list <- list()
+
+# Helper function to calculate summary statistics
+get_effect_summary <- function(effect_samples) {
+  mean_effect <- mean(effect_samples)
+  se_effect <- sd(effect_samples)
+  ci_effect <- quantile(effect_samples, c(0.025, 0.975))
+  post_prob <- mean(effect_samples > 0)
+  c(mean = mean_effect, 
+    se = se_effect, 
+    lower_ci = ci_effect[1], 
+    upper_ci = ci_effect[2], 
+    post_prob = post_prob)
+}
+
+# Compute expected values on the log scale
+mu_1 <- alpha_samples  # CommAtt 1
+
+# Transform to original scale
+effect_1 <- exp(mu_1)
 
 
+# PrevAn (continuous)
+if ("b_PrevAn_z" %in% colnames(posterior_samples)) {
+  beta_prevAn <- posterior_samples$b_PrevAn_z
+  effect_list$PrevAn_z <- get_effect_summary(exp(alpha_samples + beta_prevAn) - exp(alpha_samples))
+}
 
-## Model X - fitting b-splines
+effect_list$Intercept_mean <- mean(effect_1)
 
-We will use Richard McElreath's pipeline, or Solomon Kurz's adapted worksflow for brms
+# Convert to a nicely formatted data frame
+effect_df <- do.call(rbind, effect_list)
+
+# View effects
+effect_df
+
+```
+Still difficult to interpret as PrevAn is z-scored
+
+```{r}
+
+plot(h2.m2)
+# looks good
+
+plot(conditional_effects(h2.m2), points = TRUE)
+# main predictor looks ok, but the rest still moderated 
+
+pp_check(h2.m2, type = "dens_overlay")
+# this looks very nice
+
+pp_check(h2.m2, type = "error_scatter_avg")
+# so higher values are kind blobby with no particular trend, but the lower values are still quite errorneous
+
+h2.m2_R2
+# explained variance 99%
+
+```
+## Splines 1 - fitting b-splines
+
+We will use Richard McElreath's pipeline, and Solomon Kurz's adapted worksflow for brms
 
 See more: https://bookdown.org/content/4857/geocentric-models.html#
 
 ```{r}
 
-test <- filtered_data
+library(tidyverse)
+
+d <-
+  final_data_2 %>% 
+  drop_na(PrevAn)
+
+d$CommAtt <- as.factor(d$CommAtt)
+d$Modality <- as.factor(d$Modality)
+d$Participant <- as.factor(d$Participant)
+d$Concept <- as.factor(d$Concept)
+
+d$TrialNumber <- as.numeric(d$TrialNumber) 
 
 ```
 
-```{r}
-test
-```
 
 ```{r}
 
-test %>% 
-  select(where(is.numeric)) %>%  # Select only numeric columns
+d %>% 
+  select_if(is.numeric) %>%  # Select only numeric columns
   pivot_longer(cols = everything(), names_to = "key", values_to = "value") %>%
   group_by(key) %>%
   summarise(
@@ -1914,12 +2063,14 @@ test %>%
   ) %>%
   mutate(across(where(is.double), round, digits = 2))
 
-print(test)
+print(d)
 
 ```
+
+
 ```{r}
 
-test %>% 
+d %>% 
   ggplot(aes(x = PrevAn, y = Effort_Change_Ratio)) +
   # color from here: https://www.colorhexa.com/ffb7c5
   geom_point(color = "#ffb7c5", alpha = 1/2) +
@@ -1928,25 +2079,24 @@ test %>%
         # color from here: https://www.colordic.org/w/, inspired by https://chichacha.netlify.com/2018/11/29/plotting-traditional-colours-of-japan/
         panel.background = element_rect(fill = "#4f455c"))
 ```
-```{r}
-
-num_knots <- 15
-knot_list <- quantile(test$PrevAn, probs = seq(from = 0, to = 1, length.out = num_knots))
-
-```
-
 
 ```{r}
+
+num_knots <- 7
+knot_list <- quantile(d$PrevAn, probs = seq(from = 0, to = 1, length.out = num_knots))
 knot_list
+
 ```
 
 ```{r}
+
 str(filtered_data)
 
 ```
+
 ```{r}
 
-test %>% 
+d %>% 
   ggplot(aes(x = PrevAn, y = Effort_Change_Ratio)) +
   geom_vline(xintercept = knot_list, color = "white", alpha = 1/2) +
   geom_point(color = "#ffb7c5", alpha = 1/2) +
@@ -1961,7 +2111,7 @@ test %>%
 
 library(splines)
 
-B <- bs(test$PrevAn,
+B <- bs(d$PrevAn,
         knots = knot_list[-c(1, num_knots)], 
         degree = 3, 
         intercept = TRUE)
@@ -1985,12 +2135,13 @@ knot_list[c(1, num_knots)]
 
 ```{r}
 
+
 # wrangle a bit
 b <-
   B %>% 
   data.frame() %>% 
-  set_names(str_c(0, 1:9), 10:17) %>%  
-  bind_cols(select(test, PrevAn)) %>% 
+  set_names(str_c(0, 1:4), 5:9) %>%  
+  bind_cols(select(d, PrevAn)) %>% 
   pivot_longer(-PrevAn,
                names_to = "bias_function",
                values_to = "bias")
@@ -2010,19 +2161,19 @@ b %>%
 
 ```{r}
 
-test2 <-
-  test %>% 
+d2 <-
+  d %>% 
   mutate(B = B) 
 
 # take a look at the structure of `d3
-test2 %>% glimpse()
+d2 %>% glimpse()
 
 ```
 
 ```{r}
 
-spline1 <- 
-  brm(data = test2,
+h2.s1 <- 
+  brm(data = d2,
       family = gaussian,
       Effort_Change_Ratio ~ 1 + B,
       prior = c(prior(normal(100, 10), class = Intercept),
@@ -2031,25 +2182,42 @@ spline1 <-
       iter = 4000, warmup = 2000, chains = 4, cores = 4,
       seed = 4)
 
+
+# Add criterions for later diagnostics
+h2.s1 <- add_criterion(h2.s1, criterion = c("loo", "waic"))
+
+# Calculate also variance explained (R^2)
+h2.s1_R2 <- bayes_R2(h2.s1)
+
+# Save both as objects
+saveRDS(h2.s1, here("09_Analysis_Modeling", "models", "h2.s1.rds"))
+saveRDS(h2.s1_R2, here("09_Analysis_Modeling", "models", "h2.s1_R2.rds"))
+
+
 ```
+
 Model summary
 ```{r}
 
-print(spline1)
+print(h2.s1)
 
 ```
+
+
 ```{r}
 
-post <- as_draws_df(spline1)
+post <- as_draws_df(h2.s1)
 
 glimpse(post)
 
 ```
+
+
 ```{r}
 
 post %>% 
-  select(b_B1:b_B17) %>% 
-  set_names(c(str_c(0, 1:9), 10:17)) %>% 
+  select(b_B1:b_B9) %>% 
+  set_names(c(str_c(0, 1:4), 5:9)) %>% 
   pivot_longer(everything(), names_to = "bias_function") %>% 
   group_by(bias_function) %>% 
   summarise(weight = mean(value)) %>% 
@@ -2067,15 +2235,15 @@ post %>%
 
 ```{r}
 
-f <- fitted(spline1)
+f <- fitted(h2.s1)
 
 f %>% 
   data.frame() %>% 
-  bind_cols(test2) %>% 
+  bind_cols(d2) %>% 
   
   ggplot(aes(x = PrevAn, y = Effort_Change_Ratio, ymin = Q2.5, ymax = Q97.5)) + 
   geom_vline(xintercept = knot_list, color = "white", alpha = 1/2) +
-  geom_hline(yintercept = fixef(spline1)[1, 1], color = "white", linetype = 2) +
+  geom_hline(yintercept = fixef(h2.s1)[1, 1], color = "white", linetype = 2) +
   geom_point(color = "#ffb7c5", alpha = 1/2) +
   geom_ribbon(fill = "white", alpha = 2/3) +
   labs(x = "Previous Answer",
@@ -2085,59 +2253,34 @@ f %>%
         panel.grid = element_blank())
 
 ```
-## Model XX - Bayesian GAMs
+
+```{r}
+
+plot(h2.s1)
+# looks good
+
+pp_check(h2.s1, type = "dens_overlay")
+# same as before, ignoring bimodality
+
+pp_check(h2.s1, type = "error_scatter_avg")
+# still weird
+
+h2.s1_R2
+# explained variance 4%
+
+```
+
+## Splines 2 - Bayesian GAMs
 
 We will use Richard McElreath's pipeline, or Solomon Kurz's adapted worksflow for brms
 
 See more: https://bookdown.org/content/4857/geocentric-models.html#
 
+Now GAM with specifying we want b-splines
 ```{r}
 
-gam <-
-  brm(data = test2,
-      family = gaussian,
-      Effort_Change_Ratio ~ 1 + s(PrevAn_z),
-      prior = c(prior(normal(100, 10), class = Intercept),
-                prior(normal(0, 10), class = b),
-                prior(student_t(3, 0, 5.9), class = sds),
-                prior(exponential(1), class = sigma)),
-      iter = 4000, warmup = 2000, chains = 4, cores = 4,
-      seed = 4,
-      control = list(adapt_delta = .99)
-  )
-
-```
-
-```{r}
-
-print(gam)
-
-```
-
-
-```{r}
-
-fitted(gam) %>% 
-  data.frame() %>% 
-  bind_cols(select(test2, PrevAn, Effort_Change_Ratio)) %>% 
-  
-  ggplot(aes(x = PrevAn, y = Effort_Change_Ratio, ymin = Q2.5, ymax = Q97.5)) +
-  geom_hline(yintercept = fixef(gam)[1, 1], color = "white", linetype = 2) +
-  geom_point(color = "#ffb7c5", alpha = 1/2) +
-  geom_ribbon(fill = "white", alpha = 2/3) +
-  labs(subtitle = "gam using s(PrevAn)",
-       y = "Effort Change Ratio") +
-  theme_bw() +
-  theme(panel.background = element_rect(fill = "#4f455c"), 
-        panel.grid = element_blank())
-
-```
- Now GAM with specifying we want b-splines
-```{r}
-
-
-gam_s <-
-  brm(data = test2,
+h2.s2 <-
+  brm(data = d2,
       family = gaussian,
       Effort_Change_Ratio ~ 1 + s(PrevAn, bs = "bs", k = 19),
       prior = c(prior(normal(100, 10), class = Intercept),
@@ -2149,53 +2292,58 @@ gam_s <-
       control = list(adapt_delta = .99)
       )
 
-```
-```{r}
+# Add criterions for later diagnostics
+h2.s2 <- add_criterion(h2.s2, criterion = c("loo", "waic"))
 
-print(gam_s)
+# Calculate also variance explained (R^2)
+h2.s2_R2 <- bayes_R2(h2.s2)
 
-```
-
-```{r}
-
-
-plot(conditional_effects(gam_s), points = TRUE)
-# but the effects seem to have a good direction
-
-pp_check(gam_s, type = "dens_overlay")
-# this looks so much better
-pp_check(gam_s, type = "error_scatter_avg")
+# Save both as objects
+saveRDS(h2.s2, here("09_Analysis_Modeling", "models", "h2.s2.rds"))
+saveRDS(h2.s2_R2, here("09_Analysis_Modeling", "models", "h2.s2_R2.rds"))
 
 ```
 
 ```{r}
 
-fitted(gam_s) %>% 
-  data.frame() %>% 
-  bind_cols(select(test2, PrevAn, Effort_Change_Ratio)) %>% 
-  
-  ggplot(aes(x = PrevAn, y = Effort_Change_Ratio, ymin = Q2.5, ymax = Q97.5)) +
-  geom_hline(yintercept = fixef(gam_s)[1, 1], color = "white", linetype = 2) +
-  geom_point(color = "#ffb7c5", alpha = 1/2) +
-  geom_ribbon(fill = "white", alpha = 2/3) +
-  labs(subtitle = 'gam_s using s(PrevAn, bs = "bs")',
-       y = "Effort Chnage Ratio") +
-  theme_bw() +
-  theme(panel.background = element_rect(fill = "#4f455c"), 
-        panel.grid = element_blank())
+h2.s2 <- readRDS(here("09_Analysis_Modeling", "models", "h2.s2.rds"))
+h2.s2_R2 <- readRDS(here("09_Analysis_Modeling", "models", "h2.s2_R2.rds"))
+
+
+# Summary
+summary(h2.s2)
+
 ```
 
 
-## Model - GAMs with f+r effects
 ```{r}
 
-gam_s2 <- 
+plot(h2.s2)
+# looks good
+
+plot(conditional_effects(h2.s2), points = TRUE)
+
+pp_check(h2.s2, type = "dens_overlay")
+# same as before, ignoring bimodality
+
+pp_check(h2.s2, type = "error_scatter_avg")
+# still weird
+
+h2.s2_R2
+# explained variance 4%
+
+```
+
+## Splines 3 - GAMs with f+r effects
+```{r}
+
+h2.s3 <- 
   brm(
-    data = test2,
+    data = filtered_data,
     family = gaussian,
     Effort_Change_Ratio ~ 1 +
       s(PrevAn_z, bs = "bs", k = 19) +  # Smooth for Previous Answer similarity
-      CommAtt + Modality + Big5 + Familiarity + Expressibility_z +  # Fixed effects
+      + CommAtt + Modality + Big5 + Familiarity + Expressibility_z +  # Fixed effects
       (1 | Participant) + (1 | Concept),  # Random effects
     prior = c(
       prior(normal(100, 10), class = Intercept),
@@ -2209,141 +2357,263 @@ gam_s2 <-
   )
 
 
-```
+# Add criterions for later diagnostics
+h2.s3 <- add_criterion(h2.s3, criterion = c("loo", "waic"))
 
-```{r}
+# Calculate also variance explained (R^2)
+h2.s3_R2 <- bayes_R2(h2.s3)
 
-print(gam_s2)
+# Save both as objects
+saveRDS(h2.s3, here("09_Analysis_Modeling", "models", "h2.s3.rds"))
+saveRDS(h2.s3_R2, here("09_Analysis_Modeling", "models", "h2.s3_R2.rds"))
 
-```
-
-```{r}
-
-
-plot(conditional_effects(gam_s2), points = TRUE)
-# but the effects seem to have a good direction
-
-pp_check(gam_s2, type = "dens_overlay")
-# this looks so much better
-pp_check(gam_s2, type = "error_scatter_avg")
 
 ```
 
 ```{r}
 
-fitted(gam_s2) %>% 
-  data.frame() %>% 
-  bind_cols(select(test2, PrevAn_z, Effort_Change_Ratio)) %>% 
-  
-  ggplot(aes(x = PrevAn_z, y = Effort_Change_Ratio, ymin = Q2.5, ymax = Q97.5)) +
-  geom_hline(yintercept = fixef(gam_s2)[1, 1], color = "white", linetype = 2) +
-  geom_point(color = "#ffb7c5", alpha = 1/2) +
-  geom_ribbon(fill = "white", alpha = 2/3) +
-  labs(subtitle = 'gam_s using s(PrevAn, bs = "bs")',
-       y = "Effort Chnage Ratio") +
-  theme_bw() +
-  theme(panel.background = element_rect(fill = "#4f455c"), 
-        panel.grid = element_blank())
+
+h2.s3 <- readRDS(here("09_Analysis_Modeling", "models", "h2.s3.rds"))
+h2.s3_R2 <- readRDS(here("09_Analysis_Modeling", "models", "h2.s3_R2.rds"))
+
+
+# Summary
+summary(h2.s3)
+
+
 ```
 
-## Model X - GAMs with lognormal distribution
+
 
 ```{r}
 
-priors_gam_s3 <- c(
-  set_prior("normal(2.5, 0.5)", class = "Intercept", lb = 0),
-  set_prior("normal(0, 0.25)", class = "b", coef = "Modality1"),
-  set_prior("normal(0, 0.25)", class = "b", coef = "Modality2"),
-  set_prior("normal(0, 0.25)", class = "b", coef = "Big5"),
-  set_prior("normal(0, 0.25)", class = "b", coef = "Familiarity"),
-  set_prior("normal(0, 0.25)", class = "b", coef = "Expressibility_z")
-)
 
-gam_s3 <- 
+plot(h2.s3)
+# looks ok
+
+plot(conditional_effects(h2.s3), points = TRUE)
+
+pp_check(h2.s3, type = "dens_overlay")
+# still shit
+
+pp_check(h2.s3, type = "error_scatter_avg")
+# also
+
+h2.s3_R2
+# 98% variance is super over-confident, given the bad performance
+
+
+```
+
+
+## Splines 4 - GAMs with lognormal distribution
+
+```{r}
+
+
+h2.s4 <- 
   brm(
     Effort_Change_Ratio ~ 1 + 
       s(PrevAn_z, bs = "bs", k = 19) +  # Nonlinear effect for Previous Answer similarity
-      CommAtt + Modality + Big5 + Familiarity + Expressibility_z +  
-      (1 + CommAtt | Participant) +  # Random slopes and intercepts for Participant
-      (1 + CommAtt | Concept) +      # Random slopes and intercepts for Concept
+      + CommAtt + Modality + Big5 + Familiarity + Expressibility_z +  
+      (1 + PrevAn_z || Participant) +  # Random slopes and intercepts for Participant
+      (1 + PrevAn_z || Concept) +      # Random slopes and intercepts for Concept
       (1 | TrialNumber_c),           # Random intercept for Trial Number
-    data = test2,
+    data = filtered_data,
     family = lognormal(),
-    prior = priors_gam_s3,
     iter = 4000,
     warmup = 2000,
     chains = 4,
     cores = 4,
     seed = 4,
-    control = list(adapt_delta = .99)
+    control = list(adapt_delta = .999, 
+                   max_treedepth = 12)
   )
 
-# Add model diagnostic criteria
-gam_s3 <- add_criterion(gam_s3, criterion = c("loo", "waic"))
+# Add criterions for later diagnostics
+h2.s4 <- add_criterion(h2.s4, criterion = c("loo", "waic"))
 
-# Save the model
-saveRDS(gam_s3, here("09_Analysis_Modeling", "models", "gam_s3.rds"))
+# Calculate also variance explained (R^2)
+h2.s4_R2 <- bayes_R2(h2.s4)
 
-beep(5)
-
-
-```
-
-```{r}
-
-print(gam_s3)
+# Save both as objects
+saveRDS(h2.s4, here("09_Analysis_Modeling", "models", "h2.s4.rds"))
+saveRDS(h2.s4_R2, here("09_Analysis_Modeling", "models", "h2.s4_R2.rds"))
 
 ```
 
 ```{r}
 
 
-plot(conditional_effects(gam_s3), points = TRUE)
+h2.s4 <- readRDS(here("09_Analysis_Modeling", "models", "h2.s4.rds"))
+h2.s4_R2 <- readRDS(here("09_Analysis_Modeling", "models", "h2.s4_R2.rds"))
 
-pp_check(gam_s3, type = "dens_overlay")
 
-pp_check(gam_s3, type = "error_scatter_avg")
+# Summary
+summary(h2.s4)
+#
 
 ```
 
+
 ```{r}
 
-fitted(gam_s3) %>% 
+
+plot(h2.s4)
+# looks ok
+
+plot(conditional_effects(h2.s4), points = TRUE)
+# for main predictor ok, other are strongly moderated
+
+pp_check(h2.s4, type = "dens_overlay")
+# but this looks very good
+
+pp_check(h2.s4, type = "error_scatter_avg")
+# so for the higher-values mode it looks ok (blob around 0), but the low values are still quite error-prone
+
+h2.s4_R2
+# 99% explained variance - might be we are overfitting here
+
+
+```
+
+
+## Diagnostics I
+
+Before we proceed further with adding priors and/or interactions, let's do first round of diagnostics
+
+```{r}
+
+model_list <- list(h2.m1, h2.m2, h2.s1, h2.s2, h2.s3, h2.s4)
+
+```
+
+### Rhat
+
+```{r}
+
+# Extract R-hat values for each model
+rhat_list <- lapply(model_list, function(model) {
+  rhat_values <- rhat(model)
+  data.frame(model = deparse(substitute(model)), 
+             max_rhat = max(rhat_values), 
+             min_rhat = min(rhat_values))
+})
+
+# Combine and inspect
+do.call(rbind, rhat_list)
+
+```
+They all look good but the last one (lognormal GAMs) is reaching 1.01
+
+RESULTS
+
+### ESS
+
+Effective sample size tells how many independent samples the model has effectively drawn from the PD. Low ESS suggests autocorrelation (i.e., sample explores one part of posterior), while high ESS means good mix
+
+```{r}
+
+# Extract n_eff values for each model
+neff_ratio_list <- lapply(model_list, function(model) {
+  neff_values <- neff_ratio(model)              # Here we calculate ratio (not the raw number of effective samples)
+  data.frame(model = deparse(substitute(model)), 
+             min_neff = min(neff_values), 
+             max_neff = max(neff_values),
+             mean_neff = mean(neff_values))
+               
+})
+
+# Combine and inspect
+do.call(rbind, neff_ratio_list)
+
+```
+
+RESULTS
+
+```{r}
+
+effective_sample(h2.s3) # this one looks actually very nice
+effective_sample(h2.m1)
+effective_sample(h2.m2) 
+
+
+```
+
+
+### LOO & WAIC
+
+Leave-one-out (loo) validation
+```{r}
+
+l <- loo_compare(h2.m1, h2.m2, h2.s1, h2.s2, h2.s3, h2.s4, criterion = "loo")
+
+print(l, simplify = F)
+
+```
+
+RESULTS
+
+
+Information criterion (WAIC)
+```{r}
+
+w <- loo_compare(h2.m1, h2.m2, h2.s1, h2.s2, h2.s3, h2.s4, criterion = "waic")
+
+print(w, simplify = F)
+
+# see Solomon Kurz
+cbind(waic_diff = w[,1] * -2,
+      se = w[,2] * 2)
+
+```
+
+RESULTS
+
+Plot the comparison
+```{r}
+
+library(tibble)
+library(tidyverse)
+library(rcartocolor)
+
+w[, 7:8] %>% 
   data.frame() %>% 
-  bind_cols(select(test2, PrevAn, Effort_Change_Ratio)) %>% 
+  rownames_to_column("model_name") %>% 
+  mutate(model_name = fct_reorder(model_name, waic, .desc = T)) %>% 
   
-  ggplot(aes(x = PrevAn, y = Effort_Change_Ratio, ymin = Q2.5, ymax = Q97.5)) +
-  geom_hline(yintercept = fixef(gam_s3)[1, 1], color = "white", linetype = 2) +
-  geom_point(color = "#ffb7c5", alpha = 1/2) +
-  geom_ribbon(fill = "white", alpha = 2/3) +
-  labs(subtitle = 'gam_s using s(PrevAn, bs = "bs")',
-       y = "Effort Chnage Ratio") +
-  theme_bw() +
-  theme(panel.background = element_rect(fill = "#4f455c"), 
-        panel.grid = element_blank())
+  ggplot(aes(x = waic, y = model_name, 
+             xmin = waic - se_waic, 
+             xmax = waic + se_waic)) +
+  geom_pointrange(color = carto_pal(7, "BurgYl")[7], 
+                  fill = carto_pal(7, "BurgYl")[5], shape = 21) +
+  labs(title = "WAIC plot",
+       x = NULL, y = NULL) +
+  theme(axis.ticks.y = element_blank())
+
 ```
-## Model X - GAMs with interaction
 
-todo
+```{r}
 
+model_weights(h2.m1, h2.m2, h2.s1, h2.s2, h2.s3, h2.s4, weights = "waic") %>% 
+  round(digits = 2)
 
-## Diagnostics
+```
 
-# QUESTIONS/DISCUSSION
+RESULTS
 
-**How/whether to include participant in addition to dyad in the random effects**
+## ADDING PRIORS
+## ADDING INTERACTIONS
 
-Our thoughts: participant could maybe be nested within dyad, or do we not need participant? Must be something suggested in the literature.
+Possible interactions include:
 
-Participant probably must be included because the Big 5 personality trait measure corresponds to each participant within the dyad.
+- PrevAn x Modality - similarity affects the change in effort differently (e.g., vocal might still require more effort)
 
-Check: https://github.com/FredericBlum/exploring-individual-variation-in-turkish-heritage-speakers-complex-linguistic-productions
+- PrevAn x Expressibility - similarity in relation to effort might matter only for highly expressible concepts, and low expressible concepts are difficult to express, so also difficult to exaggerate
 
-Onur and Frede on nesting:
+- Familiarity x PrevAn - if the guess is really bad, only very familiar people might be motivated enough to put more effort
 
-First, we do not use mono- versus bilingualism or even the group variable as a main independent variable in our model. Instead, it is incorporated in a nested random effect. This indicates that we do not view the speaker group status as a main driver of DM production. Second, the group variable that we utilize does not take one of the three speaker groups as a baseline. We sum-coded the variable which incorporates the idea that monolinguals cannot be an adequate baseline for bilinguals. 
-
-
+- Big x PrevAn - same like with familiarity
 
 
 
