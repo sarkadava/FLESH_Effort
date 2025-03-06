@@ -1,0 +1,458 @@
+---
+title: 'Motion tracking III: Triangulation via Pose2sim'
+jupyter: 3dtracking
+format:
+  html:
+    code-overflow: wrap
+    code-width: 1200  # Adjust the width in pixels
+---
+
+
+In the previous script (@ADD), we have extracted 2D keypoints for each trial (per each video, 3 in total). In this script, we will use Pose2sim to calibrate the 3 cameras present in the lab setup, and triangulate the 3D position of the keypoints.
+
+Demo of this pipeline has been published on [EnvisionBOX](https://www.envisionbox.org/embedded_openpose_to_pose2sim_tracking.html)
+
+For more information on Pose2sim, please refer to the [Pose2sim documentation](https://github.com/perfanalytics/pose2sim)
+
+```{python}
+#| code-fold: true
+#| code-summary: Code to prepare the environment
+
+from Pose2Sim import Pose2Sim
+import os
+import glob
+import pandas as pd
+from trc import TRCData
+import pandas as pd
+import shutil
+import cv2
+import numpy as np
+import toml
+import tempfile
+import subprocess
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+from matplotlib.animation import FuncAnimation
+from IPython.display import Video
+
+curfolder = os.getcwd()
+
+# Here is our config.file
+pose2simprjfolder = curfolder + '\Pose2Sim\Empty_project_FLESH_settings\\'
+
+# Here we store the data
+inputfolder = curfolder + '\projectdata\\'
+folderstotrack = glob.glob(curfolder+'\\projectdata\*')
+#print(folderstotrack)
+
+# Initiate empty list
+pcnfolders = []
+
+# Get all the folders per session, per participant
+for i in folderstotrack:
+    pcn1folders = glob.glob(i + '/P0/*')
+    pcn2folders = glob.glob(i + '/P1/*')
+    pcnfolders_in_session = pcn1folders + pcn2folders
+
+    pcnfolders = pcnfolders + pcnfolders_in_session
+
+
+# Get rid of all pontetially confusing files/folders
+pcnfolders = [x for x in pcnfolders if 'Config' not in x]
+pcnfolders = [x for x in pcnfolders if 'opensim' not in x]
+pcnfolders = [x for x in pcnfolders if 'xml' not in x]
+pcnfolders = [x for x in pcnfolders if 'ResultsInverseDynamics' not in x]
+pcnfolders = [x for x in pcnfolders if 'ResultsInverseKinematics' not in x]
+pcnfolders = [x for x in pcnfolders if 'sto' not in x]
+pcnfolders = [x for x in pcnfolders if 'txt' not in x]
+```
+
+```{python}
+#| code-fold: true
+#| code-summary: Custom functions
+
+def load_toml(file_path):
+    with open(file_path, 'r') as file:
+        return toml.load(file)
+
+def save_toml(data, file_path):
+    with open(file_path, 'w') as file:
+        toml.dump(data, file)
+
+def update_participant_info(toml_data, height, mass):
+    if 'markerAugmentation' in toml_data:
+        toml_data['markerAugmentation']['participant_height'] = height
+        toml_data['markerAugmentation']['participant_mass'] = mass
+    else:
+        raise KeyError("The key 'markerAugmentation' is not present in the TOML data.")
+    return toml_data
+
+def saveFrame_fromVideo(framepick, output_dir, input_video):    
+
+    cap = cv2.VideoCapture(input_video)
+            
+    # check if the video file was opened successfully
+    if not cap.isOpened():
+        print("Error: Couldn't open the video file.")
+        exit()
+    
+               
+    frame_count = 0
+    while True:
+    # read the next frame
+        ret, frame = cap.read()
+        if not ret:
+            break  # break the loop if we reach the end of the video
+            
+        frame_count += 1
+
+        # save every n-th frame
+        if frame_count % framepick == 0:
+            frame_filename = f"{output_dir}frame_{frame_count}.png"
+            cv2.imwrite(frame_filename, frame, [cv2.IMWRITE_PNG_COMPRESSION, 0])
+
+    # release the video capture object and close the video file
+    cap.release()
+    cv2.destroyAllWindows()
+```
+
+The Pose2sim pipeline comes in three steps:
+- calibration
+- triangulation
+- filtering
+
+In calibration, we will use the calibration videos with checkerboard to calibrate the intrinsic and extrinsic parameters of the cameras. Note that we calibrate intrinsic parameters only once, and copy the file to the rest of the sessions. Extrinsic parameters are calibrated for each session (in part 1, and copied into part 2)
+
+As noted in the Pose2sim [documentation](https://github.com/perfanalytics/pose2sim?tab=readme-ov-file#camera-calibration), intrinsic error should be below 0.5 pixels, and extrinsic error should be below 1 cm (but acceptable until 2.5 cm)
+
+Note that extrinsic are sometimes not automatically detected so the corners need to be annotated manually.
+
+In triangulation, we will use the keypoints extracted in the previous script to triangulate the 3D position of the keypoints. The output will be a 3D position for each keypoint in each frame.
+
+In filtering, we will filter the 3D position of the keypoints to remove noise and outliers with the in-build Butterworth filter (order 4, cut-off frequency 10 Hz).
+
+Refer to the Config.toml file in '\Pose2Sim\Empty_project_FLESH_settings\\' for the configuration of the pipeline.
+
+There are additional three steps available in Pose2sim that we will not utilize in this script - synchronization, person association, and marker augmentation.
+
+```{python}
+#| eval: false
+
+# Set framerate
+framerate = 60
+
+# How many x-th frame do we extract from the calibration video? 
+framepick = 3
+
+# Copy a folder in pose2simprjfolder and its contents to folders
+source1 = pose2simprjfolder+'/Config.toml'
+source2 = pose2simprjfolder+'/opensim/'
+
+# Load in the txt file META from curfolder
+META = pd.read_csv(curfolder + '\META.txt', sep='\t') # Note that we actually need the weight only if we do the marker augmentation
+
+for i in folderstotrack:
+    os.chdir(i)
+
+    sessionID = i.split('\\')[-1].split('_')[1]
+
+    # First we need to prepare Config.file to all levels of folders (plus opensim to P0 and P1)
+
+    # Copy to session folder
+    shutil.copy(source1, i + '/')
+
+    input_toml = load_toml(i+'/Config.toml')
+
+    # Update the p0 info
+    mass_p0 = META.loc[(META['session'] == int(sessionID)) & (META['pcn'] == 'p0'), 'weight'].values[0]
+    height_p0 = META.loc[(META['session'] == int(sessionID)) & (META['pcn'] == 'p0'), 'height'].values[0]
+    updated_toml_p0 = update_participant_info(input_toml, height_p0, mass_p0)
+
+    # Update p1 info
+    mass_p1 = META.loc[(META['session'] == int(sessionID)) & (META['pcn'] == 'p1'), 'weight'].values[0]
+    height_p1 = META.loc[(META['session'] == int(sessionID)) & (META['pcn'] == 'p1'), 'height'].values[0]
+    updated_toml_p1 = update_participant_info(input_toml, height_p1, mass_p1)
+    
+    # Save the updated TOML data
+    save_toml(updated_toml_p0, i+'/P0/Config.toml')
+    save_toml(updated_toml_p1, i+'/P1/Config.toml')
+
+    p0_source = i+'/P0/Config.toml'
+    p1_source = i+'/P1/Config.toml'
+
+    # Copy necessary files 
+    for j in pcnfolders:
+        if 'P0' in j:
+            shutil.copy(p0_source, j + '/')
+            print('source = ' + source1 + ' to destination: ' + j+'/')
+
+        if 'P1' in j:
+            shutil.copy(p1_source, j + '/')
+            print('source = ' + source1 + ' to destination: ' + j+'/')
+
+    if not os.path.exists(i+'/P0/opensim/'):
+        shutil.copytree(source2, i+'/P0/opensim/')
+        print('source = ' + source2 + ' to destination: ' + i+'/P0/opensim/')
+
+    if not os.path.exists(i+'/P1/opensim/'):
+        shutil.copytree(source2, i+'/P1/opensim/')
+        print('source = ' + source2 + ' to destination: ' + i+'/P1/opensim/')
+
+    # Now we calibrate
+    print('Step: Calibration')
+
+    # Calibrate only if there is no toml file in the calibration folder
+    if not os.path.exists(i+'/calibration/Calib_board.toml'):
+        print('Calibration file not found')
+        
+        # Now we prepare images from calibration videos
+        calib_folders = glob.glob(i+'/calibration/*/*')
+
+        for c in calib_folders:
+            print(c)
+            split = c.split(os.path.sep)
+            camIndex = split[-1]
+            # Extrinsic calibration
+            if 'extrinsics' in c:
+                input_video = c+'/'+ sessionID +'_checker_extrinsics_'+camIndex+'.avi' 
+            # Intrinsic
+            else:
+                input_video = c+'/'+ sessionID +'_checker_intrinsics_'+camIndex+'.avi'
+
+            output_dir = c + '/'
+            
+            print('We are now saving frames extracted from calibration videos')
+            saveFrame_fromVideo(framepick, output_dir, input_video)
+    
+        print('Calibration file does not exist, calibrating...')
+        Pose2Sim.calibration() 
+
+        # Get the last element of the i
+        split = i.split(os.path.sep)
+        parts = split[-1].split('_')
+        # Get the sessionID
+        session_id = parts[1]
+        session_part = parts[-1]
+
+        # If session_part is 1, we copy trc and calib file to the session that has some id, but part 2
+        if session_part == '1':
+            # Copy the calibration file to the session with the same id, but part 2
+            copy_to_part = '2'
+            # Get the new folder name
+            new_folder = 'Session_'+session_id+'_'+copy_to_part
+            # Get the new folder path
+            new_folder_path = inputfolder + new_folder
+            # In new_folder_path, create folder calibration if it doesn't exist
+            if not os.path.exists(new_folder_path+'\\calibration\\'):
+                os.makedirs(new_folder_path+'\\calibration\\')
+            
+            # Get the calibration file path
+            calib_file = i + '/calibration/Calib_board.toml'
+            # Get the trc file path
+            trc_file = i + '/calibration/Object_points.trc'
+            
+            # Copy the files to the new folder
+            shutil.copy(calib_file, new_folder_path + '/calibration/')
+            shutil.copy(trc_file, new_folder_path + '/calibration/')
+        
+        # Part 2 does not need to be calibrated so we can just proceed
+        else:
+            continue
+
+    # If calibration file exists, then we can skip calibration
+    else:
+        print('Calibration file found, no need to calibrate')
+    
+    # Camera synchronization (our cameras are natively synchronized so we do not need this step)
+    #print('Step: synchronization')
+    #Pose2Sim.synchronization()
+
+    # Person association if there is more people in a video
+    #print('Step: person association')
+    #Pose2Sim.personAssociation()
+
+    # Prepare special log txt
+    error_log = curfolder + '/error_log.txt'
+
+    try:
+        print('Step: triangulation')
+        Pose2Sim.triangulation()
+    except:
+        print('Triangulation failed')
+        with open(error_log, 'a') as f:
+            f.write(f'Triangulation failed for {j}\n')
+
+        continue
+
+    try:
+        print('Step: filtering')
+        Pose2Sim.filtering()
+    except:
+        print('Filtering failed')
+        # Print the folder
+        with open(error_log, 'a') as f:
+            f.write(f'Filtering failed for {j}\n')
+
+        continue
+
+    # Marker augmentation (note that this works only with model 25)
+    #print('Step: marker augmentation')
+    #Pose2Sim.markerAugmentation()
+
+```
+
+Note that all output errors per each trial are saved in logs.txt file in *projectdata/Session_x* 
+
+Because the output files are in .trc format, we also want to convert them to .csv to have more convenient format for later processing
+
+```{python}
+#| eval: false
+
+trctoconvert = []
+
+for j in pcnfolders:
+    # Here we store the 3D pose data
+    posefolder = '/pose-3d/'
+    # Check any .trc files in the folder
+    trcfiles = glob.glob(j+posefolder + '*.trc')
+    #print(trcfiles)
+    
+    # Append
+    trctoconvert = trctoconvert + trcfiles
+
+# Loop through files and convert to csv
+for file in trctoconvert:
+    print(file)
+    # There is a mistake in LSTM files formatting (those are output of marker augmentation), se we want to skip them
+    if 'LSTM' not in file:
+        mocap_data = TRCData()
+        mocap_data.load(os.path.abspath(file))
+        num_frames = mocap_data['NumFrames']
+        markernames = mocap_data['Markers'] # the marker names are not
+
+        # Convert mocap_data to pandas dataframe
+        mocap_data_df = pd.DataFrame(mocap_data, columns=mocap_data['Markers'])
+        # Each value within the dataframe consists a list of x,y,z coordinates, we want to seperate these out so that each marker and dimension has its own column
+        colnames = []
+        for marker in markernames:
+            colnames.append(marker + '_x')
+            colnames.append(marker + '_y')
+            colnames.append(marker + '_z')
+
+        # Create a new DataFrame to store separated values
+        new_df = pd.DataFrame()
+
+        # Iterate through each column in the original DataFrame
+        for column in mocap_data_df.columns:
+            # Extract the x, y, z values from each cell
+            xyz = mocap_data_df[column].tolist()
+            # Create a new DataFrame with the values in the cell separated into their own columns
+            xyz_df = pd.DataFrame(xyz, columns=[column + '_x', column + '_y', column + '_z'])
+            # Add the new columns to the new DataFrame
+            new_df = pd.concat([new_df, xyz_df], axis=1)
+
+        # Add a new time column to the new dataframe assuming the framerate was 60 fps
+        time = []
+        ts = 0
+        for i in range(0, int(num_frames)):
+            ts = ts + 1/framerate
+            time.append(ts)
+
+        # Add the time column to the new dataframe
+        new_df['Time'] = time
+
+        # Write pd dataframe to csv
+        new_df.to_csv(file+'.csv', index=False)
+
+    else:
+        continue
+```
+
+Here is an animation of the keypoints plotted in 3D space. 
+
+```{python}
+#| echo: false
+
+# 3D tracking checking
+trackingfolders = glob.glob(curfolder + '\\projectdata\\*\\*\\*\\pose-3d\\', recursive=True)
+rawfolders = glob.glob(curfolder + '\\projectdata\\*\\*\\*\\raw-2d\\', recursive=True)
+# Pick one and get the csv files
+csvtracked = glob.glob(trackingfolders[25] + '*.csv')
+fileexample = csvtracked[1]
+
+# Get the same video
+videoexample = glob.glob(rawfolders[25] + '*.avi')
+
+MT_tracking = pd.read_csv(fileexample)
+
+# Create a figure and axis
+fig = plt.figure(figsize=(10, 6))
+ax = fig.add_subplot(111, projection='3d')
+
+# Define the number of frames
+num_frames = len(MT_tracking)
+
+# Define the scatter plot
+scatter = ax.scatter([], [], [], marker='o')
+
+# Update function for animation
+def update(frame):
+    ax.clear()
+    ax.set_xlabel('X Label')
+    ax.set_ylabel('Y Label')
+    ax.set_zlabel('Z Label')
+    ax.set_title('3D Animation')
+    
+    # Set the limits of the axes based on the maximum values
+    ax.set_xlim3d(-3, 1)
+    ax.set_ylim3d(1, 3)
+    ax.set_zlim3d(-2.5, 0)
+
+    # Plot the data for the current frame
+    frame_data = MT_tracking.iloc[frame]
+    x = frame_data.filter(like='_x')
+    y = frame_data.filter(like='_y')
+    z = frame_data.filter(like='_z')
+    scatter = ax.scatter(x, y, z, marker='o') 
+    return scatter,
+
+# Create the animation
+ani = FuncAnimation(fig, update, frames=num_frames, interval=1000/60)
+
+# Close the figure to prevent displaying the first frame
+plt.close(fig)
+
+# Save the animation as a video
+ani.save('3D_animation.mp4', writer='ffmpeg')
+
+# Display the animation
+video_path = '3D_animation.mp4'
+Video(video_path, embed=True, width=700)
+
+```
+
+This is the raw video that it corresponds to
+
+```{python}
+#| echo: false
+
+# Create a temporary folder
+temp_dir = tempfile.mkdtemp()
+
+# Define input and output paths
+sample = videoexample[1]
+mp4_path = os.path.join(temp_dir, "converted_rawtrackingvideo.mp4")  # Save MP4 in temp folder
+
+
+# Convert AVI to MP4 with video and audio
+if not os.path.exists(mp4_path):
+    subprocess.run([
+        "ffmpeg", "-i", sample, 
+        "-vcodec", "libx264", "-acodec", "aac", "-b:a", "192k",  # Ensure audio is included
+        "-crf", "23", "-preset", "fast", mp4_path
+    ])
+
+# Display the video inside Jupyter Notebook
+Video(mp4_path, embed=True, width=400)
+```
+
