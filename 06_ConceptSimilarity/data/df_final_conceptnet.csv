@@ -1,172 +1,171 @@
-word,answer,exp,English,answer_en,cosine_similarity,mean_similarity
-bloem,feest,1,flower,party,0.1355711966753006,2.1
-dansen,juichen,1,to dance,to cheer,0.17788837850093842,3.6
-bitter,lekker,1,bitter,tasty,0.2575053572654724,3.0
-vechten,schieten,1,to fight,to shoot,0.2057914435863495,5.1
-ademen,ademen,1,to breathe,to breathe,1.0000001192092896,10.0
-bijten,zombie,1,to bite,zombie,0.06859606504440308,4.8
-zoemen,bij,1,buzz,bee,0.16450800001621246,6.0
-fluisteren,zee,1,to whisper,sea,0.07260463386774063,0.9
-walgen,vies,1,disgusted,dirty,0.3536999523639679,4.4
-langzaam,lekker,1,slow,tasty,0.07707321643829346,0.9
-auto,auto,1,car,car,1.0000001192092896,10.0
-eten,eten,1,to eat,to eat,1.0000001192092896,10.0
-ei,eten,1,egg,to eat,0.23318687081336975,3.7
-zwemmen,waaien,1,to swim,to blow,0.0657273530960083,1.5
-snel,waterslang,1,fast,hose,0.08174990117549896,0.3
-regen,waterslang,1,rain,hose,0.21286162734031677,3.5
-boos,ergeren,1,angry,to annoy,0.6299861073493958,4.0
-luidruchtig,lawaai maken,1,noisy,to make noise,,7.6
-luidruchtig,lawaai maken,1,loud,to make noise,,6.3
-snel,wegrennen,1,fast,to run away,0.3272090554237366,5.1
-olifant,olifant,1,elephant,elephant,1.0,10.0
-verdrietig,huilen,1,sad,to cry,0.38903310894966125,6.6
-koud,koud,1,cold,cold,1.0,10.0
-staan,outfit,1,to stand,outfit,0.0757368952035904,1.6
-stil,stilte,1,silent,silence,0.7922731637954712,8.9
-lopen,skiën,1,to walk,to ski,0.16633456945419312,3.6
-bang,fout,1,scared,wrong,0.07202954590320587,1.8
-gooien,basketballen,1,to throw,to play basketball,0.09539289027452469,4.7
-haasten,zoeken,1,to hurry,to search,0.1550692319869995,2.1
-gek,gestoord,1,crazy,disturbed,0.8723226189613342,4.9
-rennen,rennen,1,to run,to run,1.0000001192092896,10.0
-likken,likken,1,to lick,to lick,1.0000001192092896,10.0
-klein,liften,1,small,to lift,0.0827055275440216,0.9
-onweer,bliksemen,1,thunder,lightning,0.6110057234764099,6.3
-man,nadenken,1,male,to think,0.05793149769306183,0.8
-springen,springen,1,to jump,to jump,1.0000001192092896,10.0
-langzaam,vallen,1,slow,to fall,0.2339901179075241,1.2
-snijden,schrijven,1,to cut,to write,0.1072593405842781,0.8
-comfortabel,dansen,1,comfortable,to dance,-0.008114277385175228,1.7
-kind,schouderhoogte,1,child,shoulder height,,2.0
-hoorn,hoorn,1,horn,horn,1.0000001192092896,10.0
-kotsen,vies,1,to vomit,dirty,0.29583388566970825,3.4
-dood,saai,1,dead,boring,0.18344159424304962,2.3
-drinken,drinken,1,to drink,to drink,1.0,10.0
-sterk,sterk,1,strong,strong,1.0000001192092896,10.0
-oud,bejaard,1,old,elderly,0.8142762184143066,8.0
-koken,mixen,1,to cook,to mix,0.190166175365448,4.1
-slang,vis,1,snake,fish,0.21175946295261383,3.0
-slang,vis,1,snake,fish,0.21175946295261383,3.0
-zuur,vies,1,sour,dirty,0.24612300097942352,0.8
-niet,fout,1,not,wrong,0.2576199471950531,4.1
-weten,slim,1,to know,smart,0.2119264453649521,6.1
-slaan,boksen,1,to hit,to box,0.29258832335472107,5.5
-slaan,boksen,1,to beat,to box,0.29258832335472107,
-hond,hond,1,dog,dog,1.0,10.0
-vangen,vangen,1,to catch,to catch,1.0,10.0
-juichen,juichen,2,to cheer,to cheer,1.0,10.0
-zingen,zingen,2,to sing,to sing,1.0,10.0
-vrouw,zwanger,2,female,pregnant,0.2654910683631897,4.3
-vrouw,haar,2,female,hair,0.23565936088562012,2.7
-vrouw,douchen,2,female,to shower,0.025075221434235573,0.5
-verbranden,pijn,2,to burn,pain,0.1188255101442337,4.4
-verbranden,verbrand,2,to burn,burnt,0.8831810355186462,8.5
-verbranden,heet,2,to burn,hot,0.4118509888648987,6.8
-ik,ik,2,I,I,1.0,10.0
-kauwen,kauwen,2,to chew,to chew,1.0000001192092896,10.0
-vliegen,vogel,2,to fly,bird,0.4330742359161377,5.9
-vliegen,vliegtuig,2,to fly,airplane,0.7446833252906799,6.4
-vliegen,vliegen,2,to fly,to fly,1.0,10.0
-misschien,denken,2,maybe,to think,0.5673613548278809,3.1
-misschien,kiezen,2,maybe,to choose,0.1589268445968628,2.9
-misschien,twijfelen,2,maybe,to doubt,0.2835351526737213,5.6
-bliksem,graffiti,2,lightning,graffiti,0.01239568367600441,1.0
-bliksem,vuurwerk,2,lightning,fireworks,0.27701398730278015,5.2
-bliksem,bom,2,lightning,bomb,0.17981497943401337,3.2
-glimlach,glimlachen,2,smile,to smile,0.984552264213562,8.8
-glimlach,lachen,2,smile,to laugh,0.715158998966217,7.0
-glimlach,glimlach,2,smile,smile,1.0000001192092896,10.0
-klok,klok,2,clock,clock,1.0000001192092896,10.0
-groot,verwonderen,2,big,to wonder,0.1656673103570938,1.7
-groot,hoogte,2,big,height,0.20170778036117554,5.3
-groot,groot,2,big,big,1.0,10.0
-hoog,hoogte,2,high,height,0.5711844563484192,8.2
-hoog,ruimte,2,high,space,0.06765154749155045,2.8
-hoog,verkijken,2,high,to misjudge,0.020472155883908272,0.6
-blij,wachten,2,happy,to wait,0.22441132366657257,0.6
-blij,tevreden,2,happy,satisfied,0.6427852511405945,6.2
-blij,gelukkig,2,happy,happy,0.8694668412208557,10.0
-vis,vis,2,fish,fish,1.0000001192092896,10.0
-ruiken,ruiken,2,to smell,to smell,1.0000001192092896,10.0
-wind,wind,2,wind,wind,1.0000001192092896,10.0
-heet,pijn,2,hot,pain,0.1196223720908165,4.5
-heet,verbranden,2,hot,to burn,0.4118509888648987,6.5
-heet,heet,2,hot,hot,1.0,10.0
-fiets,fietsen,2,bicycle,to cycle,0.9496454000473022,7.6
-vliegtuig,vliegen,2,airplane,to fly,0.7446833252906799,6.2
-vliegtuig,vliegtuig,2,airplane,airplane,1.0,10.0
-vogel,vogel,2,bird,bird,1.0000001192092896,10.0
-kruipen,kruipen,2,to crawl,to crawl,1.0,10.0
-water,drinken,2,water,to drink,0.38477951288223267,6.0
-water,waterval,2,water,waterfall,0.45319536328315735,6.9
-water,water,2,water,water,1.0,10.0
-vuur,vuur,2,fire,fire,1.0,10.0
-goed,top,2,good,top,0.10844699293375015,4.3
-goed,goed,2,good,good,1.0,10.0
-horen,horen,2,to hear,to hear,1.0000001192092896,10.0
-ver,wijzen,2,far,to point,0.15792475640773773,2.5
-ver,afstand,2,far,distance,0.3983745276927948,6.3
-ver,daar,2,far,there,0.36222219467163086,3.9
-geheim,fluisteren,2,secret,to whisper,0.2897973954677582,5.2
-geheim,stil,2,secret,quiet,0.26632198691368103,4.9
-geheim,zwijgen,2,secret,to be silent,0.41747182607650757,4.9
-telefoon,telefoon,2,telephone,telephone,1.0000001192092896,10.0
-blazen,blazen,2,to blow,to blow,1.0000001192092896,10.0
-geven,uitdelen,2,to give,to distribute,0.5947207808494568,5.4
-geven,geven,2,to give,to give,1.0000001192092896,10.0
-kat,kat,2,cat,cat,1.0,10.0
-lachen,lachen,2,to laugh,to laugh,1.0,10.0
-zoet,lekker,2,sweet,tasty,0.6140753030776978,4.8
-zoet,eten,2,sweet,to eat,0.2919922173023224,3.8
-zoet,jammie,2,sweet,yummy,0.6775800585746765,5.5
-slapen,slapen,2,to sleep,to sleep,1.0000001192092896,10.0
-berg,berg,2,mountain,mountain,1.0000001192092896,10.0
-ziek,vies,2,sick,dirty,0.4233357310295105,2.9
-ziek,kotsen,2,sick,to vomit,0.37013450264930725,6.6
-ziek,walgen,2,sick,to be disgusted,0.4011227488517761,4.4
-zwaaien,groet,2,to wave,to greet,0.1893499344587326,6.5
-zwaaien,hallo,2,to wave,hello,0.0519983246922493,5.8
-zwaaien,gedag,2,to wave,goodbye,0.18371814489364624,6.2
-geur,ruiken,2,odor,to smell,0.8665924072265625,6.3
-geur,neus,2,odor,nose,0.3301391899585724,5.6
-geur,geur,2,odor,odor,1.0,10.0
-vlieg,vliegen,2,fly,to fly,0.8833990693092346,8.4
-vlieg,vuurwerk,2,fly,fireworks,0.11695444583892822,2.5
-vlieg,blazen,2,fly,to blow,0.121942438185215,2.0
-scherp,snijden,2,sharp,to cut,0.24570320546627045,5.9
-scherp,pijn,2,sharp,pain,0.18820814788341522,4.0
-scherp,heet,2,sharp,hot,0.3191711902618408,2.4
-staart,slurpen,2,tail,to slurp,0.1346837729215622,1.0
-staart,gooien,2,tail,to throw,-0.050649963319301605,0.9
-staart,vallen,2,tail,to fall,0.006501197349280119,1.0
-vallen,vallen,2,to fall,to fall,1.0000001192092896,10.0
-piepen,fluit,2,squeak,whistle,0.2772964835166931,4.0
-piepen,hartslag,2,squeak,heartbeat,0.22106097638607025,1.5
-piepen,muis,2,squeak,mouse,0.15806584060192108,5.2
-jagen,slaan,2,to hunt,to hit,0.34528419375419617,3.5
-jagen,vangen,2,to hunt,to catch,0.41323307156562805,5.6
-jagen,pakken,2,to hunt,to grab,0.40452250838279724,2.9
-bal,gooien,2,ball,to throw,0.3127214014530182,6.0
-bal,vallen,2,ball,to fall,0.0335862897336483,2.9
-bal,afschieten,2,ball,to shoot,0.17586228251457214,3.9
-sneeuw,circus,2,snow,circus,0.023055849596858025,0.6
-sneeuw,slurf,2,snow,trunk,0.05696111172437668,1.4
-sneeuw,vallen,2,snow,to fall,0.1364249736070633,4.1
-zwaar,vechten,2,heavy,to fight,0.1554836630821228,2.5
-zwaar,pijn,2,heavy,pain,0.28796133399009705,3.2
-zwaar,openduwen,2,heavy,to push open,,2.1
-grommen,grommen,2,to growl,to growl,1.0,10.0
-zout,snijden,2,salt,to cut,0.04221188649535179,0.8
-zout,eten,2,salt,to eat,0.1593654602766037,3.5
-zout,mes,2,salt,knife,0.07118155807256699,0.7
-zuigen,slurpen,2,to suck,to slurp,0.5446138381958008,5.4
-zuigen,drinken,2,to suck,to drink,0.25621411204338074,4.7
-zuigen,drink,2,to suck,drink,0.2284037470817566,4.5
-dik,eten,2,thick,to eat,0.11236264556646347,1.3
-dik,heerlijk,2,thick,delicious,0.18792209029197693,2.0
-dik,lekker,2,thick,tasty,0.2902525067329407,1.5
-ziek,hoesten,2,sick,to cough,0.322108656167984,6.2
-ziek,ziek,2,sick,sick,1.0000001192092896,10.0
-huilen,huilen,2,to cry,to cry,1.0000001192092896,10.0
-huilen,huilen,2,to weep,to cry,1.0000001192092896,
+word,answer,exp,English,mean_similarity
+bloem,feest,1,flower,1.7857142857142858
+dansen,juichen,1,to dance,3.2142857142857144
+bitter,lekker,1,bitter,2.357142857142857
+vechten,schieten,1,to fight,4.642857142857143
+ademen,ademen,1,to breathe,10.0
+bijten,zombie,1,to bite,4.285714285714286
+zoemen,bij,1,buzz,5.785714285714286
+fluisteren,zee,1,to whisper,1.2857142857142858
+walgen,vies,1,disgusted,6.642857142857143
+langzaam,lekker,1,slow,0.7857142857142857
+auto,auto,1,car,10.0
+eten,eten,1,to eat,10.0
+ei,eten,1,egg,5.285714285714286
+zwemmen,waaien,1,to swim,1.1428571428571428
+snel,waterslang,1,fast,0.5
+regen,waterslang,1,rain,3.5714285714285716
+boos,ergeren,1,angry,5.857142857142857
+luidruchtig,lawaai maken,1,noisy,7.071428571428571
+luidruchtig,lawaai maken,1,loud,7.071428571428571
+snel,wegrennen,1,fast,5.142857142857143
+olifant,olifant,1,elephant,10.0
+verdrietig,huilen,1,sad,7.0
+koud,koud,1,cold,10.0
+staan,outfit,1,to stand,0.9285714285714286
+stil,stilte,1,silent,8.5
+lopen,skiën,1,to walk,2.5714285714285716
+bang,fout,1,scared,2.357142857142857
+gooien,basketballen,1,to throw,5.428571428571429
+haasten,zoeken,1,to hurry,1.9285714285714286
+gek,gestoord,1,crazy,7.357142857142857
+rennen,rennen,1,to run,10.0
+likken,likken,1,to lick,10.0
+klein,liften,1,small,0.7142857142857143
+onweer,bliksemen,1,thunder,7.357142857142857
+man,nadenken,1,male,0.7142857142857143
+springen,springen,1,to jump,10.0
+langzaam,vallen,1,slow,1.1428571428571428
+snijden,schrijven,1,to cut,1.7142857142857142
+comfortabel,dansen,1,comfortable,1.5714285714285714
+kind,schouderhoogte,1,child,2.7142857142857144
+hoorn,hoorn,1,horn,10.0
+kotsen,vies,1,to vomit,5.714285714285714
+dood,saai,1,dead,2.5714285714285716
+drinken,drinken,1,to drink,10.0
+sterk,sterk,1,strong,10.0
+oud,bejaard,1,old,7.428571428571429
+koken,mixen,1,to cook,4.928571428571429
+slang,vis,1,snake,3.5714285714285716
+slang,vis,1,snake,3.5714285714285716
+zuur,vies,1,sour,3.7857142857142856
+niet,fout,1,not,4.285714285714286
+weten,slim,1,to know,5.642857142857143
+slaan,boksen,1,to hit,6.642857142857143
+slaan,boksen,1,to beat,6.642857142857143
+hond,hond,1,dog,10.0
+vangen,vangen,1,to catch,10.0
+juichen,juichen,2,to cheer,10.0
+zingen,zingen,2,to sing,10.0
+vrouw,zwanger,2,female,4.928571428571429
+vrouw,haar,2,female,3.7142857142857144
+vrouw,douchen,2,female,0.5714285714285714
+verbranden,pijn,2,to burn,5.642857142857143
+verbranden,verbrand,2,to burn,8.714285714285714
+verbranden,heet,2,to burn,6.785714285714286
+ik,ik,2,I,10.0
+kauwen,kauwen,2,to chew,10.0
+vliegen,vogel,2,to fly,7.142857142857143
+vliegen,vliegtuig,2,to fly,8.071428571428571
+vliegen,vliegen,2,to fly,10.0
+misschien,denken,2,maybe,3.142857142857143
+misschien,kiezen,2,maybe,3.642857142857143
+misschien,twijfelen,2,maybe,6.928571428571429
+bliksem,graffiti,2,lightning,0.5714285714285714
+bliksem,vuurwerk,2,lightning,4.357142857142857
+bliksem,bom,2,lightning,3.142857142857143
+glimlach,glimlachen,2,smile,9.0
+glimlach,lachen,2,smile,8.0
+glimlach,glimlach,2,smile,10.0
+klok,klok,2,clock,10.0
+groot,verwonderen,2,big,2.7142857142857144
+groot,hoogte,2,big,6.214285714285714
+groot,groot,2,big,10.0
+hoog,hoogte,2,high,8.714285714285714
+hoog,ruimte,2,high,3.2142857142857144
+hoog,verkijken,2,high,3.0714285714285716
+blij,wachten,2,happy,0.6428571428571429
+blij,tevreden,2,happy,6.785714285714286
+blij,gelukkig,2,happy,7.428571428571429
+vis,vis,2,fish,10.0
+ruiken,ruiken,2,to smell,10.0
+wind,wind,2,wind,10.0
+heet,pijn,2,hot,4.142857142857143
+heet,verbranden,2,hot,6.214285714285714
+heet,heet,2,hot,10.0
+fiets,fietsen,2,bicycle,8.714285714285714
+vliegtuig,vliegen,2,airplane,8.214285714285714
+vliegtuig,vliegtuig,2,airplane,10.0
+vogel,vogel,2,bird,10.0
+kruipen,kruipen,2,to crawl,10.0
+water,drinken,2,water,6.142857142857143
+water,waterval,2,water,7.214285714285714
+water,water,2,water,10.0
+vuur,vuur,2,fire,10.0
+goed,top,2,good,7.071428571428571
+goed,goed,2,good,10.0
+horen,horen,2,to hear,10.0
+ver,wijzen,2,far,4.428571428571429
+ver,afstand,2,far,6.714285714285714
+ver,daar,2,far,4.857142857142857
+geheim,fluisteren,2,secret,5.214285714285714
+geheim,stil,2,secret,4.285714285714286
+geheim,zwijgen,2,secret,5.214285714285714
+telefoon,telefoon,2,telephone,10.0
+blazen,blazen,2,to blow,10.0
+geven,uitdelen,2,to give,6.142857142857143
+geven,geven,2,to give,10.0
+kat,kat,2,cat,10.0
+lachen,lachen,2,to laugh,10.0
+zoet,lekker,2,sweet,4.928571428571429
+zoet,eten,2,sweet,4.5
+zoet,jammie,2,sweet,4.714285714285714
+slapen,slapen,2,to sleep,10.0
+berg,berg,2,mountain,10.0
+ziek,vies,2,sick,3.0714285714285716
+ziek,kotsen,2,sick,6.357142857142857
+ziek,walgen,2,sick,4.142857142857143
+zwaaien,groet,2,to wave,6.642857142857143
+zwaaien,hallo,2,to wave,6.357142857142857
+zwaaien,gedag,2,to wave,6.5
+geur,ruiken,2,odor,6.857142857142857
+geur,neus,2,odor,7.214285714285714
+geur,geur,2,odor,10.0
+vlieg,vliegen,2,fly,8.285714285714286
+vlieg,vuurwerk,2,fly,0.7857142857142857
+vlieg,blazen,2,fly,1.7142857142857142
+scherp,snijden,2,sharp,6.214285714285714
+scherp,pijn,2,sharp,4.5
+scherp,heet,2,sharp,5.357142857142857
+staart,slurpen,2,tail,0.42857142857142855
+staart,gooien,2,tail,0.7142857142857143
+staart,vallen,2,tail,0.8571428571428571
+vallen,vallen,2,to fall,10.0
+piepen,fluit,2,squeak,4.285714285714286
+piepen,hartslag,2,squeak,1.0
+piepen,muis,2,squeak,6.571428571428571
+jagen,slaan,2,to hunt,2.7142857142857144
+jagen,vangen,2,to hunt,5.571428571428571
+jagen,pakken,2,to hunt,4.214285714285714
+bal,gooien,2,ball,5.928571428571429
+bal,vallen,2,ball,2.357142857142857
+bal,afschieten,2,ball,2.357142857142857
+sneeuw,circus,2,snow,0.14285714285714285
+sneeuw,slurf,2,snow,0.42857142857142855
+sneeuw,vallen,2,snow,3.857142857142857
+zwaar,vechten,2,heavy,2.0714285714285716
+zwaar,pijn,2,heavy,2.7857142857142856
+zwaar,openduwen,2,heavy,3.857142857142857
+grommen,grommen,2,to growl,10.0
+zout,snijden,2,salt,1.1428571428571428
+zout,eten,2,salt,4.214285714285714
+zout,mes,2,salt,0.7857142857142857
+zuigen,slurpen,2,to suck,5.428571428571429
+zuigen,drinken,2,to suck,4.571428571428571
+zuigen,drink,2,to suck,4.714285714285714
+dik,eten,2,thick,4.142857142857143
+dik,heerlijk,2,thick,2.5
+dik,lekker,2,thick,2.357142857142857
+ziek,hoesten,2,sick,6.071428571428571
+ziek,ziek,2,sick,10.0
+huilen,huilen,2,to cry,10.0
