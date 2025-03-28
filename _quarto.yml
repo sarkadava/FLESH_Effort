@@ -2,13 +2,25 @@ project:
   type: book
 
 book:
-  title: "EffortPreregistration"
-  author: "Norah Jones"
+  title: "[Preregistration] Putting in the Effort: Modulation of Multimodal Effort in Communicative Breakdowns during a Gestural-Vocal Referential Game"
+  author: ""
   date: "19/11/2024"
   chapters:
     - index.qmd
-    - /01_XDF_processing/xdf_workflow.qmd
     - intro.qmd
+    - /01_XDF_processing/xdf_workflow_final.qmd
+    - /02_MotionTracking_processing/01_Video_preparation_final.qmd
+    - /02_MotionTracking_processing/02_Track_OpenPose_final.qmd
+    - /02_MotionTracking_processing/03_Track_pose2sim_final.qmd
+    - /02_MotionTracking_processing/04_Track_InverseKinDyn_final.qmd
+    - /03_TS_processing/01_TS_processing_motion_final.qmd
+    - /03_TS_processing/02_TS_processing_acoustics_final.qmd
+    - /03_TS_processing/03_TS_merging_final.qmd
+    - /04_TS_movementAnnotation/01_Classify_preparation_final.qmd
+    - /04_TS_movementAnnotation/02_MovementClassifier_final.qmd
+    - /04_TS_movementAnnotation/03_InterAgreement_final.qmd
+    - /05_finalMerge/TS_mergeAnnotations_final.qmd
+    - /06_ConceptSimilarity/ConceptNet_similarity_final.qmd
     - summary.qmd
     - references.qmd
 

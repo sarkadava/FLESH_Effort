@@ -50,6 +50,8 @@ library(tidyverse)
 # current folder (first go to session -> set working directory -> to source file location)
 parentfolder <- dirname(getwd())
 
+featurefolder <- paste0(parentfolder, '/07_TS_featureExtraction/Datasets/')
+demofolder    <- paste0(parentfolder, '/00_RAWDATA/Demographics_all/')
 datasets      <- paste0(parentfolder, '/09_Analysis_Modeling/datasets/')
 models        <- paste0(parentfolder, '/09_Analysis_Modeling/models/')
 plots         <- paste0(parentfolder, '/09_Analysis_Modeling/plots/')
@@ -59,12 +61,47 @@ plots         <- paste0(parentfolder, '/09_Analysis_Modeling/plots/')
 
 # Loading in our data
 
+This is the feature dataframe we will be using. Additionally, we will also need some demographic information
+
 ```{r loading data, echo=TRUE, message=FALSE, warning=FALSE}
 
-#TODO
+data_feat <- read_csv(paste0(featurefolder, "features_df_final.csv"))
+data_demo <- read_csv(paste0(demofolder, "all_demodata.csv"))
+
 ```
 
-Because current pilot data are quite likely unsifficient in terms of power, and would hinder testing the design of the statistical models, we will create synthetic data with assumed coefficients for all predictors we plan to add to the model.
+For confirmatory analysis, we will need only 6 features - arm torque integral, arm torque peak mean, COPc integral, COPc peak mean, envelope integral and envelope peak mean from the data_feat. From data_demo, we will need only BFI and Familiarity
+
+```{r}
+
+featstokeep <- c('COPc_pospeak_mean', 'envelope_pospeak_mean', 'arm_moment_sum_change_pospeak_mean', 'COPc_integral', 'envelope_integral', 'arm_moment_sum_change_integral', 'correction_info', 'concept', 'TrialID', 'modality', 'expressibility', 'answer_prev', 'answer_prev_dist')
+
+demotokeep <- c('BFI_extra', 'BFI_agree', 'BFI_consc', 'BFI_negemo', 'BFI_open', 'Familiarity', 'pcn_ID')
+
+# Subset the dataframe
+data_feat <- data_feat %>% select(all_of(featstokeep))
+data_demo <- data_demo %>% select(all_of(demotokeep))
+
+```
+
+To merge them, we will need to have column pcn_ID in data_feat too.
+```{r}
+
+# Extract participant part from TrialID
+data_feat <- data_feat %>%
+  mutate(
+    pcn_ID = str_extract(TrialID, "^[0-9]+") %>%  # Extract first number (before first underscore)
+      paste0("_", str_extract(TrialID, "p[0-9]+") %>% str_remove("p")) # Extract last part and format as pcn_ID
+  )
+
+final_data <- left_join(data_feat, data_demo, by = "pcn_ID")
+
+
+
+```
+
+
+Because current pilot data are quite likely unsifficient in terms of power (65 observations), and would hinder testing the design of the statistical models, we will create synthetic data with assumed coefficients for all predictors we plan to add to the model.
 
 # Creating synthetic data
 ```{r synthetic data, echo=TRUE, message=FALSE, warning=FALSE}
@@ -355,6 +392,7 @@ d1 <- ggdag(daggy_h1, text = TRUE, use_labels = "name") +
 d1
 
 ```
+
 These are the implied conditional independencies
 ```{r dag h1 independencies, echo=FALSE, message=FALSE, warning=FALSE}
 
@@ -458,7 +496,7 @@ We include 1.-5. as fixed factors. For 6.-7., we include varying intercepts as w
 
 We will now not include PrevAn (previous answer) variable because we will need to do some further data-wrangling when building model for H2. That is mainly because PrevAn has some NA values, concretely for first attempts. Models would automatically exclude NA data, and we would therefore loose all effort data for attempt 1. For H1, however, we want to keep it there.
 
-This is OUR FIRST model without setting any priors, leaving them to default values
+This is our first model without setting any priors, leaving them to default values
 ```{r h1.m1 model, eval=FALSE, message=FALSE, warning=FALSE}
 
 h1.m1 <- brm(Eff ~ 1 + CommAtt + Familiarity + Big5 + Expressibility_z + TrialNumber_c + Modality + (1 | Participant) + (1 | Concept),
@@ -1610,48 +1648,49 @@ Now we can need to account also for our second hypothesis, namely
 
 *H2: A higher degree of misunderstanding will require a performer to engage in more effortful correction.*
 
-The difficulty with our data structure is that PrevAn is a variable that has values only for second and third correction (i.e., there is no previous answer for the first performance). If we left it unchange, the model will eventually get rid of all NA values, which means we will loose the relationship between effort in second and first communicative attempt. To avoid this, we will create a new variable which we call *Effort Change Ratio*. We will simply calculate the ratio of change from effort in communicative attempt x to communicative attempt x+1. Like that, we will still get rid of communicative attempt 1, but the ratio that will be associated with CommAtt==2 already encapsulates the relationship towards this attempt.
+The difficulty with our data structure is that PrevAn is a variable that has values only for second and third correction (i.e., there is no previous answer for the first performance). If we left it unchange, the model will eventually get rid of all NA values, which means we will loose the relationship between effort in second and first communicative attempt. To avoid this, we will create a new variable which we call *Effort Change*. We will simply calculate the change from effort in communicative attempt x to communicative attempt x+1. Like that, we will still get rid of communicative attempt 1, but the change that will be associated with CommAtt==2 already encapsulates the relationship towards this attempt.
 
 
 ```{r h2 loading data, message=FALSE, warning=FALSE, include=FALSE}
 
 # load our data back if we lost them
-final_data <- data_ges <- read_csv(paste0(datasets, "synthetic_data.csv"))
+final_data <- read_csv(paste0(datasets, "synthetic_data.csv"))
 
 ```
 
 
 ```{r effort change ratio, message=FALSE, warning=FALSE}
 
-# Calculate Effort Change Ratio
+# Calculate Effort Change (Difference)
 final_data_2 <- final_data %>%
   group_by(Participant, Concept) %>%
   mutate(
     Effort_1 = Eff[CommAtt == 1][1],  # Effort for attempt 1
     Effort_2 = Eff[CommAtt == 2][1],  # Effort for attempt 2
     Effort_3 = Eff[CommAtt == 3][1],  # Effort for attempt 3
-    Effort_Change_Ratio_1_to_2 = case_when(
-      CommAtt == 2 & !is.na(Effort_1) ~ Eff / Effort_1,
+    Effort_Change_1_to_2 = case_when(
+      CommAtt == 2 & !is.na(Effort_1) ~ Eff - Effort_1,  # Change from 1st to 2nd attempt
       TRUE ~ NA_real_
     ),
-    Effort_Change_Ratio_2_to_3 = case_when(
-      CommAtt == 3 & !is.na(Effort_2) ~ Eff / Effort_2,
+    Effort_Change_2_to_3 = case_when(
+      CommAtt == 3 & !is.na(Effort_2) ~ Eff - Effort_2,  # Change from 2nd to 3rd attempt
       TRUE ~ NA_real_
     )
   ) %>%
   ungroup()
 
-# Collide ratios into single col
+# Collide changes into a single column
 final_data_2 <- final_data_2 %>%
   mutate(
-    Effort_Change_Ratio = coalesce(Effort_Change_Ratio_1_to_2, Effort_Change_Ratio_2_to_3)
+    Effort_Change = coalesce(Effort_Change_1_to_2, Effort_Change_2_to_3)
   ) 
 
 # Remove unnecessary columns
-final_data_2 <- subset(final_data_2, select = -c(Effort_1, Effort_2, Effort_3, Effort_Change_Ratio_1_to_2, Effort_Change_Ratio_2_to_3)) 
+final_data_2 <- subset(final_data_2, select = -c(Effort_1, Effort_2, Effort_3, Effort_Change_1_to_2, Effort_Change_2_to_3)) 
 
 # View the result
 head(final_data_2)
+
 
 
 ```
@@ -1677,7 +1716,7 @@ ggplot(filtered_data, aes(x = PrevAn, y = Eff)) +
 
 ```{r h2 plot 2, message=FALSE, warning=FALSE, echo=FALSE}
 
-ggplot(filtered_data, aes(x = PrevAn, y = Effort_Change_Ratio)) +
+ggplot(filtered_data, aes(x = PrevAn, y = Effort_Change)) +
   geom_point(alpha = 0.6, color = "blue") +  # Scatter points
   geom_smooth(method = "lm", color = "red", se = FALSE) +  # Regression line
   labs(x = "Previous Answer Similarity (PrevAn)", 
@@ -1690,10 +1729,10 @@ ggplot(filtered_data, aes(x = PrevAn, y = Effort_Change_Ratio)) +
 
 ```{r h2 hist, message=FALSE, warning=FALSE, echo=FALSE}
 
-hist(filtered_data$Effort_Change_Ratio, breaks=100)
+hist(filtered_data$Effort_Change, breaks=100)
 
 ```
-So we will have to work with bimodal distribution, as we either have a decrease in effort (Ratio < 1) or increase (Ratio > 1)
+So we will have to work with bimodal distribution, as we either have a decrease in effort or increase
 
 #H2: Stating causal model
 
