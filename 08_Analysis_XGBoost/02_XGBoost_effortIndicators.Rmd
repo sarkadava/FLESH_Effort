@@ -1,5 +1,5 @@
 ---
-title: 'Indicators of effort: XGBoost'
+title: 'Indicators of physical effort: XGBoost'
 author: "Aleksandra Ćwiek (original code), Sarka Kadava (adaptation)"
 output: html_document
 date: "2024-08-30"
@@ -135,7 +135,7 @@ Building the untuned model.
 # Untuned Model with importance (permutation) option set
 gesUntuned <- ranger(
   y = train_data$correction_info,
-  x = train_data[,0:401],
+  x = train_data[,0:324],
   num.trees = 500,
   importance = "permutation"
 )
@@ -178,7 +178,7 @@ Tuning the random forest.
 
 ```{r tuning RF ges, message=FALSE, warning=FALSE}
 
-tuneGes <- makeClassifTask(data = data_ges[,0:402],
+tuneGes <- makeClassifTask(data = data_ges[,0:325],
                            target = "correction_info")
 
 tuneGes <- tuneRanger(tuneGes,
@@ -190,18 +190,18 @@ tuneGes
 
 # Recommended parameter settings: 
 #   mtry min.node.size sample.fraction
-# 1   94             2       0.7665596
+# 1   57             4       0.2279307
 # Results: 
 #   multiclass.brier exec.time
-# 1        0.7246027     0.188
+# 1         0.790973     0.164
 
 gesTuned <- ranger(
   y = train_data$correction_info,
-  x = train_data[,0:401], 
+  x = train_data[,0:324], 
   num.trees = 5000, 
-  mtry = 94, # Set the recommended mtry value (number of features).
-  min.node.size = 2, # Set the recommended min.node.size value (number of samples before a node terminates).
-  sample.fraction = 0.7665596, # Set the recommended sample fraction value.(% of data for bagging).
+  mtry = 57, # Set the recommended mtry value (number of features).
+  min.node.size = 4, # Set the recommended min.node.size value (number of samples before a node terminates).
+  sample.fraction = 0.2279307, # Set the recommended sample fraction value.(% of data for bagging).
   importance = "permutation" # Permutation is a computationally intensive test.
 )
 
@@ -238,7 +238,7 @@ Create a tuned model only.
 ```{r tuned model imputed ges, echo=TRUE, message=FALSE, warning=FALSE}
 
 # Create a classification task for tuning
-tuneGes <- makeClassifTask(data = train_data[, 0:402], target = "correction_info")
+tuneGes <- makeClassifTask(data = train_data[, 0:325], target = "correction_info")
 
 # Tune the model
 tuneGes <- tuneRanger(tuneGes, measure = list(multiclass.brier), num.trees = 500)
@@ -248,19 +248,19 @@ tuneGes
 
 # Recommended parameter settings: 
 #   mtry min.node.size sample.fraction
-# 1  354             3       0.6975628
+# 1  221             3       0.2056429
 # Results: 
 #   multiclass.brier exec.time
-# 1        0.7621535     0.192
+# 1        0.8124712     0.168
 
 # Fit the tuned model on the training data
 gesTuned <- ranger(
   y = train_data$correction_info,
-  x = train_data[, 0:401],
+  x = train_data[, 0:324],
   num.trees = 5000,
-  mtry = 354,
+  mtry = 221,
   min.node.size = 3,
-  sample.fraction = 0.6975628,
+  sample.fraction = 0.2056429,
   importance = "permutation"
 )
 
@@ -380,7 +380,7 @@ train_control <- trainControl(
 numSubsets <- 5
 
 # Load MICE-imputed data (using placeholder 'data_ges' as the input dataset)
-gesDataXGB <- data_ges
+gesDataXGB <- read_csv(paste0(datasets, "gesDataXGB.csv.csv"))
 
 # Ensure 'correction_info' is a factor
 gesDataXGB$correction_info <- as.factor(gesDataXGB$correction_info)
@@ -463,6 +463,9 @@ This code does not ensure that sets contain all levels
 # Set seed for reproducibility
 set.seed(998)
 
+# Load in the XGBoost-ready df
+gesDataXGB <- read_csv(paste0(datasets, "gesDataXGB.csv"))
+
 # Set up train control
 train_control <- trainControl(
   method = "cv",        # Cross-validation
@@ -484,26 +487,29 @@ for (level in levels(gesDataXGB$correction_info)) {
   # Subset the data by level
   level_data <- gesDataXGB[gesDataXGB$correction_info == level, ]
   
-  # Calculate subset size for each level
+  # Calculate subset size and extra samples
   subsetSize <- nrow(level_data) %/% numSubsets
   extraSamples <- nrow(level_data) %% numSubsets
   
-  # Randomly assign samples of each level to subsets
-  shuffled <- sample(nrow(level_data)) # Randomly shuffle row indices
+  # Shuffle row indices
+  shuffled <- sample(nrow(level_data)) 
+  
+  # Distribute samples evenly
+  start_idx <- 1
   for (i in 1:numSubsets) {
-    start_idx <- (i - 1) * subsetSize + 1
-    end_idx <- ifelse(i < numSubsets, i * subsetSize, nrow(level_data))
-    if (i == numSubsets && extraSamples > 0) {
-      end_idx <- end_idx + extraSamples
+    end_idx <- start_idx + subsetSize - 1
+    
+    # Distribute extra samples more evenly
+    if (i <= extraSamples) {
+      end_idx <- end_idx + 1
     }
-    if (is.null(gesSubsets[[i]])) {
-      gesSubsets[[i]] <- level_data[shuffled[start_idx:end_idx], ]
-    } else {
-      gesSubsets[[i]] <- rbind(gesSubsets[[i]], level_data[shuffled[start_idx:end_idx], ])
-    }
+    
+    gesSubsets[[i]] <- rbind(gesSubsets[[i]], level_data[shuffled[start_idx:end_idx], ])
+    
+    # Update start index for next iteration
+    start_idx <- end_idx + 1
   }
 }
-
 
 
 # load MICE imputed data
@@ -548,12 +554,22 @@ gesData3 <- gesSubsets$gesData3
 gesData4 <- gesSubsets$gesData4
 gesData5 <- gesSubsets$gesData5
 
+## Get rid of NAs (if there are from the sampling)
+gesData1 <- na.omit(gesData1)
+gesData2 <- na.omit(gesData2)
+gesData3 <- na.omit(gesData3)
+gesData4 <- na.omit(gesData4)
+gesData5 <- na.omit(gesData5)
+
+
 # Combine subsets into 80% groups.
 gesData1234 <- rbind(gesData1, gesData2, gesData3, gesData4)
 gesData1235 <- rbind(gesData1, gesData2, gesData3, gesData5)
 gesData1245 <- rbind(gesData1, gesData2, gesData4, gesData5)
 gesData1345 <- rbind(gesData1, gesData3, gesData4, gesData5)
 gesData2345 <- rbind(gesData2, gesData3, gesData4, gesData5)
+
+
 
 ```
 
@@ -640,6 +656,7 @@ gesModel2 <- readRDS(paste0(models, "gesModel2.rds"))
 gesModel3 <- readRDS(paste0(models, "gesModel3.rds"))
 gesModel4 <- readRDS(paste0(models, "gesModel4.rds"))
 gesModel5 <- readRDS(paste0(models, "gesModel5.rds"))
+
 ```
 
 #### Test models
@@ -774,77 +791,84 @@ gesCumulativeImportance <- gesCumulativeImportance[order(-gesCumulativeImportanc
 print(gesCumulativeImportance)
 ```
 
-
 ## PCA
+
+Now, to select features along different (uncorrelated) dimensions, we want to connect these results with the results of PCA we performed in script @ADDREF.
 
 This is a function to extract features per components
 
 ```{r}
 
-# Combined function to extract top n features, rank by importance, and save as CSV
-extract_and_save_top_features <- function(df_pca, CumulativeImportance, n = 3, file_name = "top_features_per_pc.csv") {
-  
-  # Initialize an empty list to store the results
-  top_features_per_pc <- list()
-  
-  # Loop through each row in ges_pca (corresponding to each principal component)
-  for (pc_index in 1:nrow(df_pca)) {
-    
-    # Get the feature list for the current principal component (the row)
-    pc_features_str <- df_pca[pc_index, ]
-    
-    # Remove the square brackets, single quotes, and extra spaces
-    pc_features <- gsub("\\[|\\]", "", pc_features_str)  # Remove square brackets
-    pc_features <- gsub("'", "", pc_features)           # Remove single quotes
-    pc_features <- gsub("\\s+", " ", pc_features)       # Replace multiple spaces with a single space
-    
-    # Split the string by commas to get individual feature names
-    pc_features <- unlist(strsplit(pc_features, ","))
-    
-    # Clean up any leading/trailing spaces from each feature name
-    pc_features <- trimws(pc_features)
-    
-    # Filter XGBoost importance data for features present in the current PC
-    important_features <- CumulativeImportance[CumulativeImportance$Feature %in% pc_features, ]
-    
-    # Sort features by importance in descending order
-    important_features <- important_features[order(-important_features$Cumulative), ]
-    
-    # Get the top n features for the current PC
-    top_features <- head(important_features, n)
-    
-    # Add a column for the PC number
-    top_features$PC <- paste("PC", pc_index)
-    
-    # Store the sorted features in the results list
-    top_features_per_pc[[paste("PC", pc_index)]] <- top_features
-  }
-  
-  # Combine all results into a single dataframe
-  result_df <- do.call(rbind, top_features_per_pc)
-  
-  # Save the dataframe to a CSV file
-  write.csv(result_df, file_name, row.names = FALSE)
-  
-  # Return the dataframe
-  return(result_df)
+# Function to select top 3 features per component
+select_top_features <- function(pc_column, xgb_importance, top_n = 3) {
+
+  # Find common features ranked by XGBoost importance
+  common_features <- intersect(pc_column, xgb_importance$Feature)
+  common_features <- xgb_importance %>%
+    filter(Feature %in% common_features) %>%
+    arrange(Rank) %>%
+    pull(Feature)
+  return(head(common_features, top_n))
 }
 
 ```
 
-
-Now let's collect 3 features per component and bind all to single df
+Now let's collect 10 features per component that have highest combined ranking from PCA and XGBoost. This means that for each feature we sum up the ranking it obtained in cumulative importance (XGBoost) and loading on a principal component (PCA).
 
 ```{r}
 
-# Load in the df
+# Rank the features based on XGBoost importance (cumulative)
+gesCumulativeImportance$XGB_Rank <- rank(-gesCumulativeImportance$Cumulative)
+
+# Load in PCA for gesture
 ges_pca <- read_csv(paste0(datasets, "PCA_top_contributors_ges.csv"))
 
-# Call the function to extract top features, rank by importance, and save as CSV
-top_features_ges <- extract_and_save_top_features(ges_pca, gesCumulativeImportance, n = 3, file_name = "top_features_ges_final.csv")
+# 2. For each PC (PC1, PC2, PC3), rank the features based on their loadings
+combined_ranks_per_pc <- list()
 
-# Print the resulting dataframe
-print(top_features_ges)
+for (pc in c("PC1", "PC2", "PC3")) {
+  # Extract the features and loadings for the current PC
+  pca_pc_loadings <- ges_pca[, c(pc, paste0(pc, "_Loading"))]
+  colnames(pca_pc_loadings) <- c("Feature", "Loading")
+  
+  # Rank the features based on the absolute loading values (higher loadings should get lower rank)
+  pca_pc_loadings$PCA_Rank <- rank(-abs(pca_pc_loadings$Loading))
+  
+  # Merge PCA loadings with XGBoost importance ranks
+  merged_data <- merge(pca_pc_loadings, gesCumulativeImportance[, c("Feature", "XGB_Rank")], by = "Feature")
+  
+  # Calculate combined rank by summing XGBoost rank and PCA rank
+  merged_data$Combined_Rank <- merged_data$XGB_Rank + merged_data$PCA_Rank
+  
+  # Sort by the combined rank (lower rank is better)
+  sorted_data <- merged_data[order(merged_data$Combined_Rank), ]
+  
+  # Select the top n features based on the combined rank for the current PC
+  top_n_features <- 10  # Adjust the number of top features as needed
+  combined_ranks_per_pc[[pc]] <- head(sorted_data, top_n_features)
+}
+
+# Output the top features per PC based on combined ranking
+combined_ranks_per_pc
+
+```
+Now we have 10 features per component with highest combined ranking. For modelling, we want to pick three features per component. Which would it be in this case?
+
+```{r}
+
+# Number of top features to display
+top_n_features <- 3
+
+# Print the top 3 features per component
+for (pc in c("PC1", "PC2", "PC3")) {
+  cat("\nTop 3 Features for", pc, ":\n")
+  
+  # Get the top 3 features based on combined rank for the current PC
+  top_features <- head(combined_ranks_per_pc[[pc]], top_n_features)
+  
+  # Print the results
+  print(top_features[, c("Feature", "XGB_Rank", "PCA_Rank", "Combined_Rank")])
+}
 
 ```
 
@@ -923,7 +947,7 @@ Building the untuned model.
 # Untuned Model with importance (permutation) option set
 vocUntuned <- ranger(
   y = train_data$correction_info,
-  x = train_data[,0:109], # FLAGGED: adapt
+  x = train_data[,0:70], # without outcome var
   num.trees = 500,
   importance = "permutation"
 )
@@ -964,7 +988,7 @@ cl <- makeCluster(num_cores)
 Tuning the random forest.
 
 ```{r tuning RF ger, message=FALSE, warning=FALSE}
-tuneVoc <- makeClassifTask(data = data_voc[,0:110], # FLAGGED: adapt
+tuneVoc <- makeClassifTask(data = data_voc[,0:71], # with OV
                            target = "correction_info")
 
 tuneVoc <- tuneRanger(tuneVoc,
@@ -975,19 +999,19 @@ tuneVoc <- tuneRanger(tuneVoc,
 tuneVoc
 
 # Recommended parameter settings: 
-#   mtry min.node.size sample.fraction
-# 1   56             5       0.2063411
+# mtry min.node.size sample.fraction
+# 1    6             4        0.522745
 # Results: 
 #   multiclass.brier exec.time
-# 1        0.7598987     0.176
+# 1        0.7256575     0.166
 
 vocTuned <- ranger(
   y = train_data$correction_info,
-  x = train_data[,0:109],  #FLAGGED: adapt
+  x = train_data[,0:70],  #without OV
   num.trees = 5000, 
-  mtry = 56, # Set the recommended mtry value (number of features).
-  min.node.size = 5, # Set the recommended min.node.size value (number of samples before a node terminates).
-  sample.fraction = 0.2063411, # Set the recommended sample fraction value.(% of data for bagging).
+  mtry = 6, # Set the recommended mtry value (number of features).
+  min.node.size = 4, # Set the recommended min.node.size value (number of samples before a node terminates).
+  sample.fraction = 0.522745, # Set the recommended sample fraction value.(% of data for bagging).
   importance = "permutation" # Permutation is a computationally intensive test.
 )
 
@@ -1023,7 +1047,7 @@ Create a tuned model only.
 
 ```{r tuned model imputed ger, echo=TRUE, message=FALSE, warning=FALSE}
 # Create a classification task for tuning
-tuneVoc <- makeClassifTask(data = train_data[, 0:110], target = "correction_info") # FLAGGED: adapt
+tuneVoc <- makeClassifTask(data = train_data[, 0:71], target = "correction_info") #with OV
 
 # Tune the model
 tuneVoc <- tuneRanger(tuneVoc, measure = list(multiclass.brier), num.trees = 500)
@@ -1032,19 +1056,19 @@ tuneVoc <- tuneRanger(tuneVoc, measure = list(multiclass.brier), num.trees = 500
 tuneVoc
 # Recommended parameter settings: 
 #   mtry min.node.size sample.fraction
-# 1   85             3       0.2015707
+# 1    3             3       0.5835222
 # Results: 
 #   multiclass.brier exec.time
-# 1        0.7756091     0.184
+# 1        0.7457527      0.16
 
 # Fit the tuned model on the training data
 vocTuned <- ranger(
   y = train_data$correction_info,
-  x = train_data[, 0:109], # FLAGGED: adapt
+  x = train_data[, 0:70], # without OV
   num.trees = 5000,
-  mtry = 85,
+  mtry = 3,
   min.node.size = 3,
-  sample.fraction = 0.2015707,
+  sample.fraction = 0.5835222,
   importance = "permutation"
 )
 
@@ -1074,7 +1098,6 @@ print(sorted_feature_importance)
 # Close the cluster when you're done with your parallel tasks
 #stopCluster(cl)
 ```
-
 
 Save  data frame.
 
@@ -1163,7 +1186,7 @@ train_control <- trainControl(
 numSubsets <- 5
 
 # Load MICE-imputed data (using placeholder 'data_ges' as the input dataset)
-vocDataXGB <- data_voc
+vocDataXGB <- read_csv(paste0(datasets, "vocDataXGB.csv"))
 
 # Ensure 'correction_info' is a factor
 vocDataXGB$correction_info <- as.factor(vocDataXGB$correction_info)
@@ -1194,7 +1217,7 @@ for (level in correction_levels) {
   indices <- cumsum(c(0, subset_sizes))
   
   for (i in 1:numSubsets) {
-    if (is.null(gesSubsets[[i]])) {
+    if (is.null(vocSubsets[[i]])) {
       vocSubsets[[i]] <- shuffled_data[(indices[i] + 1):indices[i + 1], ]
     } else {
       vocSubsets[[i]] <- rbind(vocSubsets[[i]], shuffled_data[(indices[i] + 1):indices[i + 1], ])
@@ -1458,22 +1481,64 @@ vocCumulativeImportance <- vocCumulativeImportance[order(-vocCumulativeImportanc
 print(vocCumulativeImportance)
 ```
 
-
-
 ## PCA
 
-Now let's collect 3 features per component and bind all to single df
+Now let's collect 10 features per component that have highest combined ranking from PCA and XGBoost. This means that for each feature we sum up the ranking it obtained in cumulative importance (XGBoost) and loading on a principal component (PCA).
 
 ```{r}
 
-# Load in the df
+# Rank the features based on XGBoost importance (cumulative)
+vocCumulativeImportance$XGB_Rank <- rank(-vocCumulativeImportance$Cumulative)
+
+# Load in PCA for gesture
 voc_pca <- read_csv(paste0(datasets, "PCA_top_contributors_voc.csv"))
 
-# Call the function to extract top features, rank by importance, and save as CSV
-top_features_voc <- extract_and_save_top_features(voc_pca, vocCumulativeImportance, n = 3, file_name = "top_features_voc_final.csv")
+# For each PC (PC1, PC2, PC3), rank the features based on their loadings
+combined_ranks_per_pc <- list()
 
-# Print the resulting dataframe
-print(top_features_voc)
+for (pc in c("PC1", "PC2", "PC3")) {
+  # Extract the features and loadings for the current PC
+  pca_pc_loadings <- voc_pca[, c(pc, paste0(pc, "_Loading"))]
+  colnames(pca_pc_loadings) <- c("Feature", "Loading")
+  
+  # Rank the features based on the absolute loading values (higher loadings should get lower rank)
+  pca_pc_loadings$PCA_Rank <- rank(-abs(pca_pc_loadings$Loading))
+  
+  # Merge PCA loadings with XGBoost importance ranks
+  merged_data <- merge(pca_pc_loadings, vocCumulativeImportance[, c("Feature", "XGB_Rank")], by = "Feature")
+  
+  # Calculate combined rank by summing XGBoost rank and PCA rank
+  merged_data$Combined_Rank <- merged_data$XGB_Rank + merged_data$PCA_Rank
+  
+  # Sort by the combined rank (lower rank is better)
+  sorted_data <- merged_data[order(merged_data$Combined_Rank), ]
+  
+  # Select the top n features based on the combined rank for the current PC
+  top_n_features <- 10  # Adjust the number of top features as needed
+  combined_ranks_per_pc[[pc]] <- head(sorted_data, top_n_features)
+}
+
+# Output the top features per PC based on combined ranking
+combined_ranks_per_pc
+
+```
+Now we have 10 features per component with highest combined ranking. For modelling, we want to pick three features per component. Which would it be in this case?
+
+```{r}
+
+# Number of top features to display
+top_n_features <- 3
+
+# Print the top 3 features per component
+for (pc in c("PC1", "PC2", "PC3")) {
+  cat("\nTop 3 Features for", pc, ":\n")
+  
+  # Get the top 3 features based on combined rank for the current PC
+  top_features <- head(combined_ranks_per_pc[[pc]], top_n_features)
+  
+  # Print the results
+  print(top_features[, c("Feature", "XGB_Rank", "PCA_Rank", "Combined_Rank")])
+}
 
 ```
 
@@ -1551,7 +1616,7 @@ Building the untuned model.
 # Untuned Model with importance (permutation) option set
 multUntuned <- ranger(
   y = train_data$correction_info,
-  x = train_data[,0:510], # FLAGGED: adapt
+  x = train_data[,0:394], # without OV
   num.trees = 500,
   importance = "permutation"
 )
@@ -1593,7 +1658,7 @@ Tuning the random forest.
 
 ```{r tuning RF ger, message=FALSE, warning=FALSE}
 
-tuneMult <- makeClassifTask(data = data_mult[,0:511], # FLAGGED: adapt
+tuneMult <- makeClassifTask(data = data_mult[,0:395], # with OV
                            target = "correction_info")
 
 tuneMult <- tuneRanger(tuneMult,
@@ -1602,20 +1667,21 @@ tuneMult <- tuneRanger(tuneMult,
 
 #Return hyperparameter values
 tuneMult
+
 # Recommended parameter settings: 
 #   mtry min.node.size sample.fraction
-# 1  142             3       0.3627617
+# 1  232             3         0.70919
 # Results: 
 #   multiclass.brier exec.time
-# 1        0.7947098     0.188
+# 1        0.7385408       0.2
 
 multTuned <- ranger(
   y = train_data$correction_info,
-  x = train_data[,0:510],  # FLAGGED: adapt
+  x = train_data[,0:394],  # without OV
   num.trees = 5000, 
-  mtry = 142, # Set the recommended mtry value (number of features).
+  mtry = 232, # Set the recommended mtry value (number of features).
   min.node.size = 3, # Set the recommended min.node.size value (number of samples before a node terminates).
-  sample.fraction = 0.3627617, # Set the recommended sample fraction value.(% of data for bagging).
+  sample.fraction = 0.70919, # Set the recommended sample fraction value.(% of data for bagging).
   importance = "permutation" # Permutation is a computationally intensive test.
 )
 
@@ -1651,7 +1717,7 @@ Create a tuned model only.
 
 ```{r tuned model imputed ger, echo=TRUE, message=FALSE, warning=FALSE}
 # Create a classification task for tuning
-tuneMult <- makeClassifTask(data = train_data[, 0:511], target = "correction_info") # FLAGGED: adapt
+tuneMult <- makeClassifTask(data = train_data[, 0:395], target = "correction_info") # with OV
 
 # Tune the model
 tuneMult <- tuneRanger(tuneMult, measure = list(multiclass.brier), num.trees = 500)
@@ -1659,20 +1725,20 @@ tuneMult <- tuneRanger(tuneMult, measure = list(multiclass.brier), num.trees = 5
 # Return hyperparameter values
 tuneMult
 # Recommended parameter settings: 
-#   mtry min.node.size sample.fraction
-# 1   32             2       0.2087997
+# mtry min.node.size sample.fraction
+# 1  268             3       0.3295434
 # Results: 
 #   multiclass.brier exec.time
-# 1         0.820066     0.188
+# 1        0.8275102     0.172
 
 # Fit the tuned model on the training data
 multTuned <- ranger(
   y = train_data$correction_info,
-  x = train_data[, 0:511],  # FLAGGED: adapt
+  x = train_data[, 0:394],  # without OV
   num.trees = 5000,
-  mtry = 32,
-  min.node.size = 2,
-  sample.fraction = 0.2087997,
+  mtry = 268,
+  min.node.size = 3,
+  sample.fraction = 0.3295434,
   importance = "permutation"
 )
 
@@ -1822,7 +1888,7 @@ for (level in correction_levels) {
   indices <- cumsum(c(0, subset_sizes))
   
   for (i in 1:numSubsets) {
-    if (is.null(gesSubsets[[i]])) {
+    if (is.null(multSubsets[[i]])) {
       multSubsets[[i]] <- shuffled_data[(indices[i] + 1):indices[i + 1], ]
     } else {
       multSubsets[[i]] <- rbind(multSubsets[[i]], shuffled_data[(indices[i] + 1):indices[i + 1], ])
@@ -2089,18 +2155,69 @@ print(multCumulativeImportance)
 
 ## PCA
 
-Now let's collect 3 features per component and bind all to single df
+Now let's collect 10 features per component that have highest combined ranking from PCA and XGBoost. This means that for each feature we sum up the ranking it obtained in cumulative importance (XGBoost) and loading on a principal component (PCA).
 
 ```{r}
 
-# Load in the df
+# Rank the features based on XGBoost importance (cumulative)
+multCumulativeImportance$XGB_Rank <- rank(-multCumulativeImportance$Cumulative)
+
+# Load in PCA for gesture
 mult_pca <- read_csv(paste0(datasets, "PCA_top_contributors_multi.csv"))
 
-# Call the function to extract top features, rank by importance, and save as CSV
-top_features_mult <- extract_and_save_top_features(mult_pca, multCumulativeImportance, n = 3, file_name = "top_features_mult_final.csv")
+# For each PC (PC1, PC2, PC3), rank the features based on their loadings
+combined_ranks_per_pc <- list()
 
-# Print the resulting dataframe
-print(top_features_mult)
+for (pc in c("PC1", "PC2", "PC3")) {
+  # Extract the features and loadings for the current PC
+  pca_pc_loadings <- mult_pca[, c(pc, paste0(pc, "_Loading"))]
+  colnames(pca_pc_loadings) <- c("Feature", "Loading")
+  
+  # Rank the features based on the absolute loading values (higher loadings should get lower rank)
+  pca_pc_loadings$PCA_Rank <- rank(-abs(pca_pc_loadings$Loading))
+  
+  # Merge PCA loadings with XGBoost importance ranks
+  merged_data <- merge(pca_pc_loadings, multCumulativeImportance[, c("Feature", "XGB_Rank")], by = "Feature")
+  
+  # Calculate combined rank by summing XGBoost rank and PCA rank
+  merged_data$Combined_Rank <- merged_data$XGB_Rank + merged_data$PCA_Rank
+  
+  # Sort by the combined rank (lower rank is better)
+  sorted_data <- merged_data[order(merged_data$Combined_Rank), ]
+  
+  # Select the top n features based on the combined rank for the current PC
+  top_n_features <- 10  # Adjust the number of top features as needed
+  combined_ranks_per_pc[[pc]] <- head(sorted_data, top_n_features)
+}
+
+# Output the top features per PC based on combined ranking
+combined_ranks_per_pc
+
+```
+Now we have 10 features per component with highest combined ranking. For modelling, we want to pick three features per component. Which would it be in this case?
+
+```{r}
+
+# Number of top features to display
+top_n_features <- 3
+
+# Print the top 3 features per component
+for (pc in c("PC1", "PC2", "PC3")) {
+  cat("\nTop 3 Features for", pc, ":\n")
+  
+  # Get the top 3 features based on combined rank for the current PC
+  top_features <- head(combined_ranks_per_pc[[pc]], top_n_features)
+  
+  # Print the results
+  print(top_features[, c("Feature", "XGB_Rank", "PCA_Rank", "Combined_Rank")])
+}
+
+```
+
+
+```{r}
+
+
 
 ```
 

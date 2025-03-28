@@ -1,17 +1,24 @@
 ---
 title: Concept Similarity
-jupyter: bert
+jupyter: tsprocess
+format:
+  html:
+    code-overflow: wrap
+    code-width: 1200  # Adjust the width in pixels
 ---
-
+---
 
 Our second hypothesis tests the effect of degree of misunderstanding on the magnitude of effort. 
 
-We operationalize degree of misunderstanding as a conceptual similarity between target concept and answer offered by a guesser. To have a reproducible measure of conceptual similarity, we use the ConceptNet Numberbatch embeddings (REF). Alongside, in online anonymous rating study, we have collected data from XX people (XX English, XX Dutch) who were asked to rate the similarity between each pair of words. We then compare the 'perceived similarity' with cosine similarity computed from ConceptNet embeddings, to validate the use of ConceptNet embeddings as a measure of conceptual similarity.
+We operationalize degree of misunderstanding as a conceptual similarity between target concept and answer offered by a guesser. 
 
+To have a reproducible measure of conceptual similarity, we use the ConceptNet (@speer_etal18) to extract embeddings for concepts used in our study, and calculate cosine similarity between the target concept and guessed answer. 
+
+To verify the utility of the cosine similarity, we have collected data from 14 Dutch-native peoplewho were asked to rate the similarity between each pair of words in online anonymous rating study. We then compare the 'perceived similarity' with cosine similarity computed from ConceptNet embeddings, to validate the use of ConceptNet embeddings as a measure of conceptual similarity.
 
 ```{python}
 #| code-fold: true
-#| code-summary: "Code to load packages and prepare environment"
+#| code-summary: Code to load packages and prepare environment
 
 import numpy as np
 import os
@@ -20,15 +27,16 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 import pingouin
+import openpyxl
 
 curfolder = os.getcwd()
 rawdata = curfolder + '\\..\\00_RAWDATA\\'
 answerfiles = glob.glob(rawdata + '*\\*.csv', recursive=True)
 datafolder = curfolder + '\\data\\'
 
-# load all files that have '_1_results' in the name 
+# Load all files that have '_1_results' in the name 
 answerfiles_1 = [f for f in answerfiles if '_1_results' in f]
-# loop over list and add it into one big df
+# Loop over list and add it into one big df
 df_all1 = pd.DataFrame()
 for file in answerfiles_1:
     df = pd.read_csv(file)
@@ -36,9 +44,9 @@ for file in answerfiles_1:
 
 df_all1['exp'] = 1 
 
-# load all files that have '_2_results' in the name
+# Load all files that have '_2_results' in the name
 answerfiles_2 = [f for f in answerfiles if '_2_results' in f]
-# loop over list and add it into one big df
+# Loop over list and add it into one big df
 df_all2 = pd.DataFrame()
 for file in answerfiles_2:
     df = pd.read_csv(file)
@@ -46,16 +54,18 @@ for file in answerfiles_2:
 
 df_all2['exp'] = 2
 
-# merge dfs
+# Merge
 df_all = pd.concat([df_all1, df_all2], ignore_index=True)
 
-# keep only columns word and answer
+# Keep only columns word and answer
 df = df_all[['word', 'answer', 'exp']]
 ```
 
 First we need to do some data-wrangling to get all in the right format for the embedding extraction and comparison
 
 ```{python}
+#| eval: false
+
 # concept list
 df_concepts = pd.read_excel(rawdata + '/conceptlist_info.xlsx')
 
@@ -103,6 +113,8 @@ df['answer'] = df['answer'].str.replace('skien', 'skiën')
 df_final = df[df['English'] != 'to beat']
 # and to weep
 df_final = df[df['English'] != 'to weep']
+# and noisy
+df_final = df[df['English'] != 'noisy']
 
 # add those to df as answers_en
 df['answer_en'] = answers_en
@@ -114,12 +126,30 @@ meanings_nl = list(df['word'])
 # Dutch answers
 answers_nl = list(df['answer'])
 
+# Save it
+df.to_csv(datafolder + 'concept_answer_withoutcossim.csv', index=False)
+```
+
+This is how the dataframe looks like
+
+```{python}
+#| echo: false
+
+# load in
+df = pd.read_csv(datafolder + 'concept_answer_withoutcossim.csv')
+
+# display
 df.head(15)
 ```
 
-Now we will load in ConceptNet numberbatch (version XX) and compute cosine similarity for each pair
+# Calculating cosine similarity
+
+Now we will load in [ConceptNet numberbatch (version 19.08)](https://github.com/commonsense/conceptnet-numberbatch) and compute cosine similarity for each pair
 
 ```{python}
+#| code-fold: true
+#| code-summary: Custom functions
+
 # Load embeddings from a file
 def load_embeddings(file_path):
     embeddings = {}
@@ -143,19 +173,23 @@ We will use multilingual numberbatch to extract words in the original language o
 
 ```{python}
 # load embeddings
-embeddings = load_embeddings('numberbatch\\numberbatch.txt') # downloaded from https://github.com/commonsense/conceptnet-numberbatch?tab=readme-ov-file
-#embeddings_en = load_embeddings('numberbatch-en.txt') # downloaded from https://github.com/commonsense/conceptnet-numberbatch?tab=readme-ov-file
+embeddings = load_embeddings('numberbatch\\numberbatch.txt')
+```
 
-# this is how words are represented
+This is how a single concept is represented (here skiën, engl. skiing)
+
+```{python}
+#| echo: false
+
 vec_nl = embeddings.get('/c/nl/skiën')
 print(vec_nl)
 ```
 
 Now we take the list of target-answer pairs, transform them into embedding format and perform cosine similarity.
 
-There will probably be some answers that will not be represented in the numberbatch (e.g., if the answer has more than one word). So we will need to think about how to handle these.
-
 ```{python}
+#| eval: false
+
 # get the embeddings for the words in the list meanings_en
 word_embeddings_t = {}
 for word in meanings_nl:
@@ -190,27 +224,65 @@ for i in range(len(meanings_nl)):
         cosine_similarities.append(None)
 
 df['cosine_similarity'] = cosine_similarities
-df_final.to_csv(datafolder + 'conceptnet_clean.csv', index=False)
-df.head(15)
+
+# Save it
+df.to_csv(datafolder + 'conceptnet_clean.csv', index=False)
 ```
+
+```{python}
+#| echo: false
+
+# load in the df
+df = pd.read_csv(datafolder + 'conceptnet_clean.csv')
+
+# display
+df.head(20)
+```
+
+When running the code, we will see that some target or answered concepts are not represented in numberbatch (e.g., if the answer has more than one word). 
+
+Because we verified that cosine similarity and perceived similarity are highly correlated (see below), we will collect the missing data through new online rating study.
 
 # Comparing cosine similarity against perceived similarity
 
-To validate the use of ConceptNet embeddings as a measure of conceptual similarity, we compare the cosine similarity computed from ConceptNet embeddings with the 'perceived similarity' ratings collected in the online anonymous rating study. We use Pearson correlation to compare the two measures.
+To validate the use of ConceptNet embeddings as a measure of conceptual similarity, we compare the cosine similarity computed from ConceptNet embeddings with the 'perceived similarity' ratings collected in the online anonymous rating study. 
+
+The rating study has been introduced to the participants in a way that closely relates to the experiment. The instructions go as follows:
+
+*Below is a list of 171 pairs of words. 
+
+Your task is to go through them and rate on the scale from 0 to 10 how similar they are/feel for you. 
+
+You can for example imagine that you are playing a game where you need to explain the first word from the pair (e.g., to dance), and someone answers the second word in the pair. In such a situation, how close is the guesser from the intended word? If they answer 'to dance', then the two words are completely identical. But if they answer 'a car' it is not similar at all. 
+
+Rate it according to your intuition, there is no incorrect answer.
+
+Note that the survey is completely anonymous and we are not collecting any of your personal data, only the ratings.*
+
+This is how the survey looks
 
 ```{python}
+#| echo: false
+
 # load in excel similarity_en_survey
-df_survey = pd.read_excel(datafolder + '\\similarity_en_survey.xlsx')
+df_survey = pd.read_excel(datafolder + '\\similarity_nl_survey.xlsx')
 
 # get rid of Timestamp column
 df_survey = df_survey.drop(columns='Timestamp')
 
+# display
+df_survey.head(15)
+```
+
+Now we have to calculate mean rating for each pair
+
+```{python}
 # for each column, calculate the mean and save it to a df
 df_survey_means = pd.DataFrame(df_survey.mean()).reset_index()
 
 # separate the index, the first part is English, the second part is the answer_en
-df_survey_means['English'] = df_survey_means['index'].str.split(' - ').str[0]
-df_survey_means['answer_en'] = df_survey_means['index'].str.split(' - ').str[1]
+df_survey_means['word'] = df_survey_means['index'].str.split(' - ').str[0]
+df_survey_means['answer'] = df_survey_means['index'].str.split(' - ').str[1]
 
 # get rid of the index column
 df_survey_means = df_survey_means.drop(columns='index')
@@ -218,41 +290,47 @@ df_survey_means = df_survey_means.drop(columns='index')
 # rename the column 0 to mean_similarity
 df_survey_means = df_survey_means.rename(columns={0: 'mean_similarity'})
 
-# change to lightning into lightning
-df_survey_means.loc[df_survey_means['answer_en'] == 'to lightning', 'answer_en'] = 'lightning'
-# phone to telephone
-df_survey_means.loc[df_survey_means['answer_en'] == 'phone', 'answer_en'] = 'telephone'
-# scent to odor
-df_survey_means.loc[df_survey_means['answer_en'] == 'scent', 'answer_en'] = 'odor'
+##### some corrections ####
+# get rid of all invisible spaces in answer
+df_survey_means['answer'] = df_survey_means['answer'].str.strip()
+# where word is vangen and answer vagen, change answer to vangen, and add similarity to 10
+df_survey_means.loc[(df_survey_means['word'] == 'vagen') & (df_survey_means['answer'] == 'vangen'), 'word'] = 'vangen'
+df_survey_means.loc[(df_survey_means['word'] == 'vangen') & (df_survey_means['answer'] == 'vangen'), 'mean_similarity'] = 10
+# where word is lopen and answer skien, change answer to skiën
+df_survey_means.loc[(df_survey_means['word'] == 'lopen') & (df_survey_means['answer'] == 'skien'), 'answer'] = 'skiën'
+# add one missing pair vallen-vallen with mean_similarity 10
+missing_row = pd.DataFrame({'word': ['vallen'], 'answer': ['vallen'], 'mean_similarity': [10]})
+df_survey_means = pd.concat([df_survey_means, missing_row], ignore_index=True)
 
+# display
 df_survey_means.head(15)
 ```
 
+Now we can merge it with the cosine similarity dataframe
+
 ```{python}
+# load in similarity
+df_similarity = pd.read_csv(datafolder + 'conceptnet_clean.csv')
+
 # merge df_survey_means with df on English and answer_en
-df_final = pd.merge(df, df_survey_means, on=['English', 'answer_en'], how='left')
+df_final = pd.merge(df_similarity, df_survey_means, on=['word', 'answer'], how='left')
 
 # get rid of English 'to beat'
 df_final = df_final[df_final['English'] != 'beat']
 # and to weep
 df_final = df_final[df_final['English'] != 'weep']
 
-# show me the rows where mean_similarity is NaN
-df_final[df_final['mean_similarity'].isnull()]
-
-# mean_similarity of row where English is sharp and answer_en is pain is 4.0 (don't know why it's NaN)
-df_final.loc[(df_final['English'] == 'sharp') & (df_final['answer_en'] == 'pain'), 'mean_similarity'] = 4.0
-
 # save it
 df_final.to_csv(datafolder + '/df_final_conceptnet.csv', index=False)
 
+# Display
 df_final.head(15)
 ```
 
 Now we can finally run correlation
 
 ```{python}
-# get rid of all lines where mean_similarity is 10.0
+# get rid of all lines where mean_similarity is 10.0 - otherwise we will drag the correlation up
 df_corr = df_final[df_final['mean_similarity'] != 10.0]
 
 feature1 = "cosine_similarity"
@@ -263,10 +341,17 @@ subdf = df_corr[[feature1, feature2]].dropna()
 
 # compute the correlation coefficient, with Bayes factor
 corr_with_bf = pingouin.pairwise_corr(subdf, columns=['cosine_similarity', 'mean_similarity'], method='pearson', alternative='two-sided')
+
 print(corr_with_bf)
+```
+
+And here we see the relationship visually
+
+```{python}
+#| echo: false
 
 # create a joint plot with scatter and marginal histograms
-plt.figure(figsize=(10, 6))
+plt.figure(figsize=(8, 6))
 sns.set(style="whitegrid")
 
 # scatter plot with histograms
@@ -283,3 +368,10 @@ plot_name = f"{feature1}_vs_{feature2}_jointplot.png"
 g.savefig(plot_name, dpi=300)
 ```
 
+The strong correlation (r=0.73) validates the use of ConceptNet embeddings as a measure of conceptual similarity. In the next script @ADDREF, we will load it in together with our effort features.
+
+
+```{python}
+import sys
+print(sys.executable)
+```

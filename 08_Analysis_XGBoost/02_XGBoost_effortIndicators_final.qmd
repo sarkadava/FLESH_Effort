@@ -1,0 +1,4449 @@
+---
+title: "Untitled"
+format: html
+---
+
+# Data preparation
+
+## Source setup
+
+```{r source setup, echo = TRUE, message=FALSE, warning = FALSE}
+
+########## folders ##########
+# current folder (first go to session -> set working directory -> to source file location)
+parentfolder <- dirname(getwd())
+
+datasets      <- paste0(parentfolder, '/08_Analysis_XGBoost/datasets/')
+models        <- paste0(parentfolder, '/08_Analysis_XGBoost/models/')
+plots         <- paste0(parentfolder, '/08_Analysis_XGBoost/plots/')
+
+########## source file ##########
+
+#source(paste0(scripts, "adjectives-preparation.R"))
+
+#################### packages ####################
+# Data Manipulation
+library(tibble)
+library(stringr)
+library(tidyverse) # includes readr, tidyr, dplyr, ggplot2
+library(data.table)
+
+# Plotting
+library(ggforce)
+library(ggpubr)
+library(gridExtra)
+
+# Random Forests and XGBoost
+library(rpart)
+library(rpart.plot)
+library(ranger)
+library(tuneRanger)
+library(caret)
+library(xgboost)
+library(parallel)
+library(mice)
+library(doParallel)
+# use all available cores for parallel computing
+options(mc.cores = parallel::detectCores())
+
+colorBlindBlack8  <- c("#000000", "#E69F00", "#56B4E9", "#009E73", 
+                       "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+
+```
+
+In the previous script, we have already separated trials into modalities and clean the resulting dataframes of superfluous columns so now we can directly load them and continue modelling.
+
+####################### 
+
+# Gesture
+
+####################### 
+
+First, for gesture modality, we need to remove columns with features that are not present in gesture modality overal. These are all vocal features. They should be anyway mostly filled with NaNs as in gesture modality, any vocalizations were 'forbidden'. Additionally, we need to make sure that df does not contain any NAs.
+
+```{r}
+
+data_ges <- read_csv(paste0(datasets, "ges_clean_df.csv"))
+
+# Make predictor a factor variable
+data_ges$correction_info <- as.factor(data_ges$correction_info)
+
+```
+
+## Random forests
+
+```{r}
+
+# prepare predictors
+predictors <- setdiff(names(data_ges), "correction_info")
+
+formula_str <- paste("correction_info ~", paste(predictors, collapse = " + "))
+
+# Convert the formula string to a formula object
+gesTree_formula <- as.formula(formula_str)
+
+# Now use the formula in rpart
+gesTree <- rpart(formula = gesTree_formula, data = data_ges, 
+                method='class', # Specify that it's a classification tree
+                control = rpart.control(maxdepth = 5)  # Control parameters for the 'rpart' function
+)
+
+prp(
+  gesTree,         # The decision tree object to be visualized
+  extra = 1,      # Show extra information (like node statistics) in the plot
+  varlen = 0,     # Length of variable names (0 means auto-determined)
+  faclen = 0     # Length of factor levels displayed on the plot (increase as needed)
+)
+```
+
+We will build a random forest first.
+
+```{r set seed, echo=TRUE, message=FALSE, warning=FALSE}
+set.seed(998) # Set a seed for reproducibility
+```
+
+Split the data
+
+```{r split the data, echo=TRUE, message=FALSE, warning=FALSE}
+
+
+# Split the data into training and testing subsets
+# sample_indices <- sample(1:nrow(data_ges), 0.8*nrow(data_ges)) # 80% training, 20% testing
+# train_data <- data_ges[sample_indices, ]
+# test_data <- data_ges[-sample_indices, ]
+
+# This method should ensure that all levels of our dependent variable are present in both sets
+# Ensure each level is present in both sets
+train_data <- data_ges %>%
+  group_by(correction_info) %>%
+  sample_frac(0.8, replace = FALSE) %>%
+  ungroup()
+
+# Assign the remaining samples to the test set
+test_data <- anti_join(data_ges, train_data)
+
+```
+
+Building the untuned model.
+
+```{r untuned ges, echo=TRUE, message=FALSE, warning=FALSE}
+
+# Untuned Model with importance (permutation) option set
+gesUntuned <- ranger(
+  y = train_data$correction_info,
+  x = train_data[,0:324],
+  num.trees = 500,
+  importance = "permutation"
+)
+
+predictions <- predict(gesUntuned, data = test_data)$predictions
+
+# Create a confusion matrix
+confusion_matrix <- confusionMatrix(predictions, test_data$correction_info)
+
+# Print the confusion matrix
+print(confusion_matrix)
+
+# Calculate feature importance
+feature_importance <- importance(gesUntuned, num.threads = 1, type = 1) 
+
+# Convert to data frame
+feature_importance <- as.data.frame(feature_importance, stringsAsFactors = FALSE)
+feature_importance$Feature <- rownames(feature_importance)
+colnames(feature_importance) <- c("Importance", "Feature")
+
+# Sort by importance
+sorted_feature_importance <- feature_importance[order(-feature_importance$Importance), ]
+
+# Print sorted feature importance
+print(sorted_feature_importance)
+```
+
+Set the parameters for the random forest.
+
+```{r settings for RF ges, echo=TRUE, message=FALSE, warning=FALSE}
+
+# Define the number of CPU cores to use
+num_cores <- detectCores()
+
+# Create a cluster with specified number of cores
+cl <- makeCluster(num_cores)
+```
+
+Tuning the random forest.
+
+```{r tuning RF ges, message=FALSE, warning=FALSE}
+
+tuneGes <- makeClassifTask(data = data_ges[,0:325],
+                           target = "correction_info")
+
+tuneGes <- tuneRanger(tuneGes,
+                      measure = list(multiclass.brier),
+                      num.trees = 500)
+
+# Return hyperparameter values
+tuneGes
+
+# Recommended parameter settings: 
+#   mtry min.node.size sample.fraction
+# 1   57             4       0.2279307
+# Results: 
+#   multiclass.brier exec.time
+# 1         0.790973     0.164
+
+gesTuned <- ranger(
+  y = train_data$correction_info,
+  x = train_data[,0:324], 
+  num.trees = 5000, 
+  mtry = 57, # Set the recommended mtry value (number of features).
+  min.node.size = 4, # Set the recommended min.node.size value (number of samples before a node terminates).
+  sample.fraction = 0.2279307, # Set the recommended sample fraction value.(% of data for bagging).
+  importance = "permutation" # Permutation is a computationally intensive test.
+)
+
+predictions <- predict(gesTuned, data = test_data)$predictions
+
+# Create a confusion matrix
+confusion_matrix <- confusionMatrix(predictions, test_data$correction_info)
+
+# Print the confusion matrix
+print(confusion_matrix)
+
+# Calculate feature importance
+feature_importance <- importance(gesTuned, num.threads = 1, type = 1) 
+
+# Convert to data frame
+feature_importance <- as.data.frame(feature_importance, stringsAsFactors = FALSE)
+feature_importance$Feature <- rownames(feature_importance)
+colnames(feature_importance) <- c("Importance", "Feature")
+
+# Sort by importance
+sorted_feature_importance <- feature_importance[order(-feature_importance$Importance), ]
+
+# Print sorted feature importance
+print(sorted_feature_importance)
+
+
+# Close the cluster when you're done with your parallel tasks
+#stopCluster(cl)
+```
+
+Create a tuned model only.
+
+```{r tuned model imputed ges, echo=TRUE, message=FALSE, warning=FALSE}
+
+# Create a classification task for tuning
+tuneGes <- makeClassifTask(data = train_data[, 0:325], target = "correction_info")
+
+# Tune the model
+tuneGes <- tuneRanger(tuneGes, measure = list(multiclass.brier), num.trees = 500)
+
+# Return hyperparameter values
+tuneGes
+
+# Recommended parameter settings: 
+#   mtry min.node.size sample.fraction
+# 1  221             3       0.2056429
+# Results: 
+#   multiclass.brier exec.time
+# 1        0.8124712     0.168
+
+# Fit the tuned model on the training data
+gesTuned <- ranger(
+  y = train_data$correction_info,
+  x = train_data[, 0:324],
+  num.trees = 5000,
+  mtry = 221,
+  min.node.size = 3,
+  sample.fraction = 0.2056429,
+  importance = "permutation"
+)
+
+# Predict on the test data
+predictions <- predict(gesTuned, data = test_data)$predictions
+
+# Create a confusion matrix
+confusion_matrix <- confusionMatrix(predictions, test_data$correction_info)
+
+# Print the confusion matrix
+print(confusion_matrix)
+
+# Calculate feature importance
+feature_importance <- importance(gesTuned, num.threads = 1, type = 1)
+
+# Convert to data frame
+feature_importance_df <- as.data.frame(feature_importance, stringsAsFactors = FALSE)
+feature_importance_df$Feature <- rownames(feature_importance_df)
+colnames(feature_importance_df) <- c("Importance", "Feature")
+
+# Sort by importance
+sorted_feature_importance <- feature_importance_df[order(-feature_importance_df$Importance), ]
+
+# Print sorted feature importance
+print(sorted_feature_importance)
+
+# Close the cluster when you're done with your parallel tasks
+#stopCluster(cl)
+```
+
+Save data frame.
+
+```{r save imputed data, echo=TRUE, message=FALSE, warning=FALSE, eval = FALSE}
+
+write.csv(data_ges, file = paste0(datasets, "gesDataXGB.csv"), row.names = FALSE)
+```
+
+# XGBoost
+
+Ensure parallel processing.
+
+```{r parallel, echo=TRUE, message=FALSE, warning=FALSE}
+# Detect the number of available cores
+cores <- detectCores() #- 1  # Leave one core free
+
+# Create a cluster with the detected number of cores
+cl <- makeCluster(cores)
+
+# Register the parallel backend
+registerDoParallel(cl)
+```
+
+Define the grid and estimate runtime.
+
+```{r grid, echo=TRUE, message=FALSE, warning=FALSE}
+grid_tune <- expand.grid(
+  nrounds = c(5000, 10000), 
+  max_depth = c(3, 6), 
+  eta = c(0.05, 0.1), 
+  gamma = c(0.1), 
+  colsample_bytree = c(0.6, 0.8), 
+  min_child_weight = c(1), 
+  subsample = c(0.75, 1.0)
+)
+
+# Calculate total combinations
+total_combinations <- nrow(grid_tune)
+
+# Estimate single model run time (assume 1 minute per run)
+single_model_time <- 10 # minute
+
+# Total runs for cross-validation
+folds <- 5
+total_runs <- total_combinations * folds
+
+# Total time estimation without parallel processing
+total_time <- total_runs * single_model_time # in minutes
+
+# Convert to hours
+total_time_hours <- total_time / 60
+
+# Output estimated time without parallel processing
+print(paste("Estimated time for grid search without parallel processing:", total_time_hours, "hours"))
+
+# Parallel processing with 4 cores
+cores <- 24
+total_time_parallel <- total_time / cores # in minutes
+
+# Convert to hours
+total_time_parallel_hours <- total_time_parallel / 60
+
+# Output estimated time with parallel processing
+print(paste("Estimated time for grid search with", cores, "cores:", total_time_parallel_hours, "hours"))
+
+rm(total_combinations,single_model_time,folds,total_runs,total_time,total_time_hours,total_time_parallel,total_time_parallel_hours,cores)
+
+```
+
+#### K-fold cross-validation
+
+Create subsets to train and test data (80/20).
+
+```{r}
+
+# Set seed for reproducibility
+set.seed(998)
+
+# Set up train control
+train_control <- trainControl(
+  method = "cv",        # Cross-validation
+  number = 5,           # 5-fold cross-validation
+  allowParallel = TRUE  # Enable parallel processing
+)
+
+# Define the number of subsets
+numSubsets <- 5
+
+# Load MICE-imputed data (using placeholder 'data_ges' as the input dataset)
+gesDataXGB <- read_csv(paste0(datasets, "gesDataXGB.csv.csv"))
+
+# Ensure 'correction_info' is a factor
+gesDataXGB$correction_info <- as.factor(gesDataXGB$correction_info)
+
+# Remove rows with only NA values
+gesDataXGB <- gesDataXGB[rowSums(is.na(gesDataXGB)) < ncol(gesDataXGB), ]
+
+# Split data by levels of 'correction_info'
+correction_levels <- levels(gesDataXGB$correction_info)
+split_data <- split(gesDataXGB, gesDataXGB$correction_info)
+
+# Initialize a list to store subsets
+gesSubsets <- vector("list", length = numSubsets)
+
+# Distribute rows for each level equally across subsets
+for (level in correction_levels) {
+  level_data <- split_data[[level]]
+  subset_sizes <- rep(floor(nrow(level_data) / numSubsets), numSubsets)
+  remainder <- nrow(level_data) %% numSubsets
+  
+  # Distribute remainder rows randomly
+  if (remainder > 0) {
+    subset_sizes[seq_len(remainder)] <- subset_sizes[seq_len(remainder)] + 1
+  }
+  
+  # Shuffle rows of the level and assign to subsets
+  shuffled_data <- level_data[sample(nrow(level_data)), ]
+  indices <- cumsum(c(0, subset_sizes))
+  
+  for (i in 1:numSubsets) {
+    if (is.null(gesSubsets[[i]])) {
+      gesSubsets[[i]] <- shuffled_data[(indices[i] + 1):indices[i + 1], ]
+    } else {
+      gesSubsets[[i]] <- rbind(gesSubsets[[i]], shuffled_data[(indices[i] + 1):indices[i + 1], ])
+    }
+  }
+}
+
+# Naming the subsets
+names(gesSubsets) <- paste0("gesData", 1:numSubsets)
+
+# Verify balance in subsets
+for (i in 1:numSubsets) {
+  cat("Subset", i, "contains rows:", nrow(gesSubsets[[i]]), "and levels:\n")
+  print(table(gesSubsets[[i]]$correction_info))
+}
+
+# Remove any rows with only NAs from subsets just to ensure cleanliness
+gesSubsets <- lapply(gesSubsets, function(subset) {
+  subset[rowSums(is.na(subset)) < ncol(subset), ]
+})
+
+# Access the subsets
+gesData1 <- gesSubsets$gesData1
+gesData2 <- gesSubsets$gesData2
+gesData3 <- gesSubsets$gesData3
+gesData4 <- gesSubsets$gesData4
+gesData5 <- gesSubsets$gesData5
+
+# Combine subsets into 80% groups
+gesData1234 <- rbind(gesData1, gesData2, gesData3, gesData4)
+gesData1235 <- rbind(gesData1, gesData2, gesData3, gesData5)
+gesData1245 <- rbind(gesData1, gesData2, gesData4, gesData5)
+gesData1345 <- rbind(gesData1, gesData3, gesData4, gesData5)
+gesData2345 <- rbind(gesData2, gesData3, gesData4, gesData5)
+
+# Final verification of all levels in the combined datasets
+combined_sets <- list(gesData1234, gesData1235, gesData1245, gesData1345, gesData2345)
+names(combined_sets) <- c("gesData1234", "gesData1235", "gesData1245", "gesData1345", "gesData2345")
+
+for (set_name in names(combined_sets)) {
+  cat("Dataset", set_name, "contains rows:", nrow(combined_sets[[set_name]]), "and levels:\n")
+  print(table(combined_sets[[set_name]]$correction_info))
+}
+
+```
+
+This code does not ensure that sets contain all levels
+
+```{r k-fold subset, echo=TRUE, message=FALSE, warning=FALSE, eval = FALSE}
+# Set seed for reproducibility
+set.seed(998)
+
+# Load in the XGBoost-ready df
+gesDataXGB <- read_csv(paste0(datasets, "gesDataXGB.csv"))
+
+# Set up train control
+train_control <- trainControl(
+  method = "cv",        # Cross-validation
+  number = 5,           # 5-fold cross-validation
+  allowParallel = TRUE  # Enable parallel processing
+)
+
+# Define the number of subsets
+numSubsets <- 5
+
+# Create an empty list to store subsets
+gesSubsets <- vector("list", length = numSubsets)
+
+# Ensure 'correction_info' is a factor
+gesDataXGB$correction_info <- as.factor(gesDataXGB$correction_info)
+
+# Perform stratified sampling
+for (level in levels(gesDataXGB$correction_info)) {
+  # Subset the data by level
+  level_data <- gesDataXGB[gesDataXGB$correction_info == level, ]
+  
+  # Calculate subset size and extra samples
+  subsetSize <- nrow(level_data) %/% numSubsets
+  extraSamples <- nrow(level_data) %% numSubsets
+  
+  # Shuffle row indices
+  shuffled <- sample(nrow(level_data)) 
+  
+  # Distribute samples evenly
+  start_idx <- 1
+  for (i in 1:numSubsets) {
+    end_idx <- start_idx + subsetSize - 1
+    
+    # Distribute extra samples more evenly
+    if (i <= extraSamples) {
+      end_idx <- end_idx + 1
+    }
+    
+    gesSubsets[[i]] <- rbind(gesSubsets[[i]], level_data[shuffled[start_idx:end_idx], ])
+    
+    # Update start index for next iteration
+    start_idx <- end_idx + 1
+  }
+}
+
+
+# load MICE imputed data
+# #gerDataXGB <- read_csv(paste0(datasets, "gerDataXGB.csv"))
+# gesDataXGB <- data_ges
+# # ensure percProm is factor
+# gesDataXGB$correction_info <- as.factor(gesDataXGB$correction_info)
+# levels(gesDataXGB$correction_info)
+# # only keep the columns of output and predictor variables
+# #gerDataXGB <- gerDataXGB[,13:52] 
+# 
+# # Calculate the number of samples in each subset
+# subsetSize <- nrow(gesDataXGB) %/% numSubsets
+# extraSamples <- nrow(level_data) %% numSubsets
+# 
+
+# 
+# 
+# 
+# # Randomly assign samples to subsets
+# for (i in 1:numSubsets) {
+#   if (i < numSubsets) {
+#     gesSubsets[[i]] <- gesDataXGB[sample((1:nrow(gesDataXGB)), size = subsetSize), ]
+#   } else {
+#     gesSubsets[[i]] <- gesDataXGB[sample((1:nrow(gesDataXGB)), size = subsetSize + (nrow(gesDataXGB) %% numSubsets)), ]
+#   }
+# }
+
+# Naming the subsets
+names(gesSubsets) <- paste0("gesData", 1:numSubsets)
+
+# Verify that all subsets contain all levels
+for (i in 1:numSubsets) {
+  cat("Subset", i, "contains levels:", levels(gesSubsets[[i]]$correction_info), "\n")
+}
+
+
+# Access the subsets (e.g., gerData1, gerData2, etc.)
+gesData1 <- gesSubsets$gesData1
+gesData2 <- gesSubsets$gesData2
+gesData3 <- gesSubsets$gesData3
+gesData4 <- gesSubsets$gesData4
+gesData5 <- gesSubsets$gesData5
+
+## Get rid of NAs (if there are from the sampling)
+gesData1 <- na.omit(gesData1)
+gesData2 <- na.omit(gesData2)
+gesData3 <- na.omit(gesData3)
+gesData4 <- na.omit(gesData4)
+gesData5 <- na.omit(gesData5)
+
+
+# Combine subsets into 80% groups.
+gesData1234 <- rbind(gesData1, gesData2, gesData3, gesData4)
+gesData1235 <- rbind(gesData1, gesData2, gesData3, gesData5)
+gesData1245 <- rbind(gesData1, gesData2, gesData4, gesData5)
+gesData1345 <- rbind(gesData1, gesData3, gesData4, gesData5)
+gesData2345 <- rbind(gesData2, gesData3, gesData4, gesData5)
+
+
+
+```
+
+#### Models
+
+Only run the models one time and then readRDS.
+
+##### Model 1
+
+```{r ges model1, echo=TRUE, message=FALSE, warning=FALSE, eval = FALSE}
+gesModel1 <- caret::train(
+  correction_info ~ .,              
+  data = gesData1234,
+  method = "xgbTree",     
+  trControl = train_control,
+  tuneGrid = grid_tune    
+)
+
+saveRDS(gesModel1, file = paste0(models, "gesModel1.rds"), compress = TRUE)
+```
+
+##### Model 2
+
+```{r ges model2, echo=TRUE, message=FALSE, warning=FALSE, eval = FALSE}
+gesModel2 <- caret::train(
+  correction_info ~ .,              
+  data = gesData1235,
+  method = "xgbTree",     
+  trControl = train_control,
+  tuneGrid = grid_tune    
+)
+
+saveRDS(gesModel2, file = paste0(models, "gesModel2.rds"), compress = TRUE)
+```
+
+##### Model 3
+
+```{r ges model3, echo=TRUE, message=FALSE, warning=FALSE, eval = FALSE}
+gesModel3 <- caret::train(
+  correction_info ~ .,              
+  data = gesData1245,
+  method = "xgbTree",     
+  trControl = train_control,
+  tuneGrid = grid_tune    
+)
+
+saveRDS(gesModel3, file = paste0(models, "gesModel3.rds"), compress = TRUE)
+```
+
+##### Model 4
+
+```{r ges model4, echo=TRUE, message=FALSE, warning=FALSE, eval = FALSE}
+gesModel4 <- caret::train(
+  correction_info ~ .,              
+  data = gesData1345,
+  method = "xgbTree",     
+  trControl = train_control,
+  tuneGrid = grid_tune    
+)
+saveRDS(gesModel4, file = paste0(models, "gesModel4.rds"), compress = TRUE)
+```
+
+##### Model 5
+
+```{r ges model5, echo=TRUE, message=FALSE, warning=FALSE, eval = FALSE}
+gesModel5 <- caret::train(
+  correction_info ~ .,              
+  data = gesData2345,
+  method = "xgbTree",     
+  trControl = train_control,
+  tuneGrid = grid_tune    
+)
+
+saveRDS(gesModel5, file = paste0(models, "gesModel5.rds"), compress = TRUE)
+```
+
+##### Load models
+
+Load all models after running, if necessary.
+
+```{r loas models ges, echo=TRUE, message=FALSE, warning=FALSE}
+gesModel1 <- readRDS(paste0(models, "gesModel1.rds"))
+gesModel2 <- readRDS(paste0(models, "gesModel2.rds"))
+gesModel3 <- readRDS(paste0(models, "gesModel3.rds"))
+gesModel4 <- readRDS(paste0(models, "gesModel4.rds"))
+gesModel5 <- readRDS(paste0(models, "gesModel5.rds"))
+
+```
+
+#### Test models
+
+Generate predictions and confusion matrices
+
+```{r test models ges, echo=TRUE, message=FALSE, warning=FALSE}
+# Generate predictions
+gesPredictions1 <- predict(gesModel1, newdata = gesData5)
+gesPredictions2 <- predict(gesModel2, newdata = gesData4)
+gesPredictions3 <- predict(gesModel3, newdata = gesData3)
+gesPredictions4 <- predict(gesModel4, newdata = gesData2)
+gesPredictions5 <- predict(gesModel5, newdata = gesData1)
+
+# Compute confusion matrices
+gesCm1 <- confusionMatrix(gesPredictions1, gesData5$correction_info)
+gesCm2 <- confusionMatrix(gesPredictions2, gesData4$correction_info)
+gesCm3 <- confusionMatrix(gesPredictions3, gesData3$correction_info)
+gesCm4 <- confusionMatrix(gesPredictions4, gesData2$correction_info)
+gesCm5 <- confusionMatrix(gesPredictions5, gesData1$correction_info)
+
+# Extract p-values (you need to define how to extract these based on your metric, here assumed to be some metric from confusion matrix)
+gesPValues <- c(gesCm1$overall['AccuracyPValue'], 
+              gesCm2$overall['AccuracyPValue'], 
+              gesCm3$overall['AccuracyPValue'], 
+              gesCm4$overall['AccuracyPValue'], 
+              gesCm5$overall['AccuracyPValue'])
+```
+
+Combine p-values using Fisher's method
+
+```{r combine p-vals ges, echo=TRUE, message=FALSE, warning=FALSE}
+# Fisher's method
+gesFisher_combined <- -2 * sum(log(gesPValues))
+df <- 2 * length(gesPValues)
+gesPCcombined_fisher <- 1 - pchisq(gesFisher_combined, df)
+print(gesPCcombined_fisher)
+
+# Stouffer's method
+gesZ_scores <- qnorm(1 - gesPValues/2)
+gesCombined_z <- sum(gesZ_scores) / sqrt(length(gesPValues))
+gesP_combined_stouffer <- 2 * (1 - pnorm(abs(gesCombined_z)))
+print(gesP_combined_stouffer)
+```
+
+The p-values sum up to 0, since they are all so small.
+
+#### Feature importance
+
+##### Model 1
+
+```{r ges feature importance 1, echo=TRUE, message=FALSE, warning=FALSE}
+XGBgesModel1 <- gesModel1$finalModel
+importanceXGBgesModel1 <- xgb.importance(model = XGBgesModel1)
+print(importanceXGBgesModel1)
+xgb.plot.importance(importanceXGBgesModel1)
+```
+
+##### Model 2
+
+```{r ges feature importance 2, echo=TRUE, message=FALSE, warning=FALSE}
+XGBgesModel2 <- gesModel2$finalModel
+importanceXGBgesModel2 <- xgb.importance(model = XGBgesModel2)
+print(importanceXGBgesModel2)
+xgb.plot.importance(importanceXGBgesModel2)
+```
+
+##### Model 3
+
+```{r ges feature importance 3, echo=TRUE, message=FALSE, warning=FALSE}
+XGBgesModel3 <- gesModel3$finalModel
+importanceXGBgesModel3 <- xgb.importance(model = XGBgesModel3)
+print(importanceXGBgesModel3)
+xgb.plot.importance(importanceXGBgesModel3)
+```
+
+##### Model 4
+
+```{r ges feature importance 4, echo=TRUE, message=FALSE, warning=FALSE}
+XGBgesModel4 <- gesModel4$finalModel
+importanceXGBgesModel4 <- xgb.importance(model = XGBgesModel4)
+print(importanceXGBgesModel4)
+xgb.plot.importance(importanceXGBgesModel4)
+```
+
+##### Model 5
+
+```{r ges feature importance 5, echo=TRUE, message=FALSE, warning=FALSE}
+XGBgesModel5 <- gesModel5$finalModel
+importanceXGBgesModel5 <- xgb.importance(model = XGBgesModel5)
+print(importanceXGBgesModel5)
+xgb.plot.importance(importanceXGBgesModel5)
+```
+
+##### Cumulative feature importance
+
+```{r ges cumulative importance, echo=TRUE, message=FALSE, warning=FALSE}
+# Function to extract and normalize importance
+get_normalized_importance <- function(model) {
+  importance <- xgb.importance(model = model)
+  importance$Gain <- importance$Gain / sum(importance$Gain)
+  return(importance)
+}
+
+# Extract normalized importance for each model
+gesImportance1 <- get_normalized_importance(gesModel1$finalModel)
+gesImportance2 <- get_normalized_importance(gesModel2$finalModel)
+gesImportance3 <- get_normalized_importance(gesModel3$finalModel)
+gesImportance4 <- get_normalized_importance(gesModel4$finalModel)
+gesImportance5 <- get_normalized_importance(gesModel5$finalModel)
+
+# Combine importances
+gesAllImportances <- list(gesImportance1, gesImportance2, gesImportance3, gesImportance4, gesImportance5)
+
+# Function to merge importances
+merge_importances <- function(importances) {
+  for (i in 2:length(importances)) {
+    names(importances[[i]])[2:4] <- paste0(names(importances[[i]])[2:4], "_", i)
+  }
+  merged <- Reduce(function(x, y) merge(x, y, by = "Feature", all = TRUE), importances)
+  merged[is.na(merged)] <- 0  # Replace NAs with 0
+  gain_cols <- grep("Gain", colnames(merged), value = TRUE)
+  merged$Cumulative <- rowSums(merged[, ..gain_cols])
+  return(merged[, .(Feature, Cumulative)])
+}
+
+# Merge and sort importances
+gesCumulativeImportance <- merge_importances(gesAllImportances)
+gesCumulativeImportance <- gesCumulativeImportance[order(-gesCumulativeImportance$Cumulative), ]
+
+# Print cumulative feature importance
+print(gesCumulativeImportance)
+```
+
+## PCA
+
+Now, to select features along different (uncorrelated) dimensions, we want to connect these results with the results of PCA we performed in script @ADDREF.
+
+This is a function to extract features per components
+
+```{r}
+
+# Function to select top 3 features per component
+select_top_features <- function(pc_column, xgb_importance, top_n = 3) {
+
+  # Find common features ranked by XGBoost importance
+  common_features <- intersect(pc_column, xgb_importance$Feature)
+  common_features <- xgb_importance %>%
+    filter(Feature %in% common_features) %>%
+    arrange(Rank) %>%
+    pull(Feature)
+  return(head(common_features, top_n))
+}
+
+```
+
+Now let's collect 10 features per component that have highest combined ranking from PCA and XGBoost. This means that for each feature we sum up the ranking it obtained in cumulative importance (XGBoost) and loading on a principal component (PCA).
+
+```{r}
+
+# Rank the features based on XGBoost importance (cumulative)
+gesCumulativeImportance$XGB_Rank <- rank(-gesCumulativeImportance$Cumulative)
+
+# Load in PCA for gesture
+ges_pca <- read_csv(paste0(datasets, "PCA_top_contributors_ges.csv"))
+
+# 2. For each PC (PC1, PC2, PC3), rank the features based on their loadings
+combined_ranks_per_pc <- list()
+
+for (pc in c("PC1", "PC2", "PC3")) {
+  # Extract the features and loadings for the current PC
+  pca_pc_loadings <- ges_pca[, c(pc, paste0(pc, "_Loading"))]
+  colnames(pca_pc_loadings) <- c("Feature", "Loading")
+  
+  # Rank the features based on the absolute loading values (higher loadings should get lower rank)
+  pca_pc_loadings$PCA_Rank <- rank(-abs(pca_pc_loadings$Loading))
+  
+  # Merge PCA loadings with XGBoost importance ranks
+  merged_data <- merge(pca_pc_loadings, gesCumulativeImportance[, c("Feature", "XGB_Rank")], by = "Feature")
+  
+  # Calculate combined rank by summing XGBoost rank and PCA rank
+  merged_data$Combined_Rank <- merged_data$XGB_Rank + merged_data$PCA_Rank
+  
+  # Sort by the combined rank (lower rank is better)
+  sorted_data <- merged_data[order(merged_data$Combined_Rank), ]
+  
+  # Select the top n features based on the combined rank for the current PC
+  top_n_features <- 10  # Adjust the number of top features as needed
+  combined_ranks_per_pc[[pc]] <- head(sorted_data, top_n_features)
+}
+
+# Output the top features per PC based on combined ranking
+combined_ranks_per_pc
+
+```
+
+Now we have 10 features per component with highest combined ranking. For modelling, we want to pick three features per component. Which would it be in this case?
+
+```{r}
+
+# Number of top features to display
+top_n_features <- 3
+
+# Print the top 3 features per component
+for (pc in c("PC1", "PC2", "PC3")) {
+  cat("\nTop 3 Features for", pc, ":\n")
+  
+  # Get the top 3 features based on combined rank for the current PC
+  top_features <- head(combined_ranks_per_pc[[pc]], top_n_features)
+  
+  # Print the results
+  print(top_features[, c("Feature", "XGB_Rank", "PCA_Rank", "Combined_Rank")])
+}
+
+```
+
+###################### 
+
+# Vocalization
+
+###################### 
+
+First, for vocal modality, we need to remove columns with features that are not present in vocal modality overal. These are all gesture features. They should be anyway mostly filled with NaNs as in vocal modality, any gestures were 'forbidden'. However, we will keep the balance features (associated with center of pressure, COP) as they still reflect bodily posture during vocal performance. Additionally, we need to make sure that df does not contain any NAs.
+
+```{r}
+
+data_voc <- read_csv(paste0(datasets, "voc_clean_df.csv"))
+
+# Make predictor a factor variable
+data_voc$correction_info <- as.factor(data_voc$correction_info)
+
+```
+
+## Random forests
+
+```{r}
+
+# prepare predictors
+predictors <- setdiff(names(data_voc), "correction_info")
+
+formula_str <- paste("correction_info ~", paste(predictors, collapse = " + "))
+
+# Convert the formula string to a formula object
+vocTree_formula <- as.formula(formula_str)
+
+# Now use the formula in rpart
+vocTree <- rpart(formula = vocTree_formula, data = data_voc, 
+                method='class', # Specify that it's a classification tree
+                control = rpart.control(maxdepth = 5)  # Control parameters for the 'rpart' function
+)
+
+prp(
+  vocTree,         # The decision tree object to be visualized
+  extra = 1,      # Show extra information (like node statistics) in the plot
+  varlen = 0,     # Length of variable names (0 means auto-determined)
+  faclen = 0     # Length of factor levels displayed on the plot (increase as needed)
+)
+```
+
+We will build a random forest first.
+
+```{r set seed, echo=TRUE, message=FALSE, warning=FALSE}
+set.seed(995) # Set a seed for reproducibility
+```
+
+Split the data
+
+```{r}
+
+
+# # Split the data into training and testing subsets
+# sample_indices <- sample(1:nrow(data_voc), 0.8*nrow(data_voc)) # 80% training, 20% testing
+# train_data <- data_voc[sample_indices, ]
+# test_data <- data_voc[-sample_indices, ]
+
+# This method should ensure that all levels of our dependent variable are present in both sets
+# Ensure each level is present in both sets
+train_data <- data_voc %>%
+  group_by(correction_info) %>%
+  sample_frac(0.8, replace = FALSE) %>%
+  ungroup()
+
+# Assign the remaining samples to the test set
+test_data <- anti_join(data_voc, train_data)
+
+```
+
+Building the untuned model.
+
+```{r untuned ger, echo=TRUE, message=FALSE, warning=FALSE}
+# Untuned Model with importance (permutation) option set
+vocUntuned <- ranger(
+  y = train_data$correction_info,
+  x = train_data[,0:70], # without outcome var
+  num.trees = 500,
+  importance = "permutation"
+)
+
+predictions <- predict(vocUntuned, data = test_data)$predictions
+
+# Create a confusion matrix
+confusion_matrix <- confusionMatrix(predictions, test_data$correction_info)
+
+# Print the confusion matrix
+print(confusion_matrix)
+
+# Calculate feature importance
+feature_importance <- importance(vocUntuned, num.threads = 1, type = 1) 
+
+# Convert to data frame
+feature_importance <- as.data.frame(feature_importance, stringsAsFactors = FALSE)
+feature_importance$Feature <- rownames(feature_importance)
+colnames(feature_importance) <- c("Importance", "Feature")
+
+# Sort by importance
+sorted_feature_importance <- feature_importance[order(-feature_importance$Importance), ]
+
+# Print sorted feature importance
+print(sorted_feature_importance)
+```
+
+Set the parameters for the random forest.
+
+```{r settings for RF ges, echo=TRUE, message=FALSE, warning=FALSE}
+# Define the number of CPU cores to use
+num_cores <- detectCores()
+
+# Create a cluster with specified number of cores
+cl <- makeCluster(num_cores)
+```
+
+Tuning the random forest.
+
+```{r tuning RF ger, message=FALSE, warning=FALSE}
+tuneVoc <- makeClassifTask(data = data_voc[,0:71], # with OV
+                           target = "correction_info")
+
+tuneVoc <- tuneRanger(tuneVoc,
+                      measure = list(multiclass.brier),
+                      num.trees = 500)
+
+#Return hyperparameter values
+tuneVoc
+
+# Recommended parameter settings: 
+# mtry min.node.size sample.fraction
+# 1    6             4        0.522745
+# Results: 
+#   multiclass.brier exec.time
+# 1        0.7256575     0.166
+
+vocTuned <- ranger(
+  y = train_data$correction_info,
+  x = train_data[,0:70],  #without OV
+  num.trees = 5000, 
+  mtry = 6, # Set the recommended mtry value (number of features).
+  min.node.size = 4, # Set the recommended min.node.size value (number of samples before a node terminates).
+  sample.fraction = 0.522745, # Set the recommended sample fraction value.(% of data for bagging).
+  importance = "permutation" # Permutation is a computationally intensive test.
+)
+
+predictions <- predict(vocTuned, data = test_data)$predictions
+
+# Create a confusion matrix
+confusion_matrix <- confusionMatrix(predictions, test_data$correction_info)
+
+# Print the confusion matrix
+print(confusion_matrix)
+
+# Calculate feature importance
+feature_importance <- importance(vocTuned, num.threads = 1, type = 1) 
+
+# Convert to data frame
+feature_importance <- as.data.frame(feature_importance, stringsAsFactors = FALSE)
+feature_importance$Feature <- rownames(feature_importance)
+colnames(feature_importance) <- c("Importance", "Feature")
+
+# Sort by importance
+sorted_feature_importance <- feature_importance[order(-feature_importance$Importance), ]
+
+# Print sorted feature importance
+print(sorted_feature_importance)
+
+
+# Close the cluster when you're done with your parallel tasks
+#stopCluster(cl)
+```
+
+Create a tuned model only.
+
+```{r tuned model imputed ger, echo=TRUE, message=FALSE, warning=FALSE}
+# Create a classification task for tuning
+tuneVoc <- makeClassifTask(data = train_data[, 0:71], target = "correction_info") #with OV
+
+# Tune the model
+tuneVoc <- tuneRanger(tuneVoc, measure = list(multiclass.brier), num.trees = 500)
+
+# Return hyperparameter values
+tuneVoc
+# Recommended parameter settings: 
+#   mtry min.node.size sample.fraction
+# 1    3             3       0.5835222
+# Results: 
+#   multiclass.brier exec.time
+# 1        0.7457527      0.16
+
+# Fit the tuned model on the training data
+vocTuned <- ranger(
+  y = train_data$correction_info,
+  x = train_data[, 0:70], # without OV
+  num.trees = 5000,
+  mtry = 3,
+  min.node.size = 3,
+  sample.fraction = 0.5835222,
+  importance = "permutation"
+)
+
+# Predict on the test data
+predictions <- predict(vocTuned, data = test_data)$predictions
+
+# Create a confusion matrix
+confusion_matrix <- confusionMatrix(predictions, test_data$correction_info)
+
+# Print the confusion matrix
+print(confusion_matrix)
+
+# Calculate feature importance
+feature_importance <- importance(vocTuned, num.threads = 1, type = 1)
+
+# Convert to data frame
+feature_importance_df <- as.data.frame(feature_importance, stringsAsFactors = FALSE)
+feature_importance_df$Feature <- rownames(feature_importance_df)
+colnames(feature_importance_df) <- c("Importance", "Feature")
+
+# Sort by importance
+sorted_feature_importance <- feature_importance_df[order(-feature_importance_df$Importance), ]
+
+# Print sorted feature importance
+print(sorted_feature_importance)
+
+# Close the cluster when you're done with your parallel tasks
+#stopCluster(cl)
+```
+
+Save data frame.
+
+```{r save imputed data, echo=TRUE, message=FALSE, warning=FALSE, eval = FALSE}
+
+write.csv(data_voc, file = paste0(datasets, "vocDataXGB.csv"), row.names = FALSE)
+```
+
+# XGBoost
+
+Ensure parallel processing.
+
+```{r parallel, echo=TRUE, message=FALSE, warning=FALSE}
+# Detect the number of available cores
+cores <- detectCores() #- 1  # Leave one core free
+
+# Create a cluster with the detected number of cores
+cl <- makeCluster(cores)
+
+# Register the parallel backend
+registerDoParallel(cl)
+```
+
+Define the grid and estimate runtime.
+
+```{r grid, echo=TRUE, message=FALSE, warning=FALSE}
+grid_tune <- expand.grid(
+  nrounds = c(5000, 10000), 
+  max_depth = c(3, 6), 
+  eta = c(0.05, 0.1), 
+  gamma = c(0.1), 
+  colsample_bytree = c(0.6, 0.8), 
+  min_child_weight = c(1), 
+  subsample = c(0.75, 1.0)
+)
+
+# Calculate total combinations
+total_combinations <- nrow(grid_tune)
+
+# Estimate single model run time (assume 1 minute per run)
+single_model_time <- 10 # minute
+
+# Total runs for cross-validation
+folds <- 5
+total_runs <- total_combinations * folds
+
+# Total time estimation without parallel processing
+total_time <- total_runs * single_model_time # in minutes
+
+# Convert to hours
+total_time_hours <- total_time / 60
+
+# Output estimated time without parallel processing
+print(paste("Estimated time for grid search without parallel processing:", total_time_hours, "hours"))
+
+# Parallel processing with 4 cores
+cores <- 24
+total_time_parallel <- total_time / cores # in minutes
+
+# Convert to hours
+total_time_parallel_hours <- total_time_parallel / 60
+
+# Output estimated time with parallel processing
+print(paste("Estimated time for grid search with", cores, "cores:", total_time_parallel_hours, "hours"))
+
+rm(total_combinations,single_model_time,folds,total_runs,total_time,total_time_hours,total_time_parallel,total_time_parallel_hours,cores)
+```
+
+#### K-fold cross-validation
+
+Create subsets to train and test data (80/20).
+
+```{r k-fold subset, echo=TRUE, message=FALSE, warning=FALSE}
+# Set seed for reproducibility
+set.seed(998)
+
+# Set up train control
+train_control <- trainControl(
+  method = "cv",        # Cross-validation
+  number = 5,           # 5-fold cross-validation
+  allowParallel = TRUE  # Enable parallel processing
+)
+
+
+# Define the number of subsets
+numSubsets <- 5
+
+# Load MICE-imputed data (using placeholder 'data_ges' as the input dataset)
+vocDataXGB <- read_csv(paste0(datasets, "vocDataXGB.csv"))
+
+# Ensure 'correction_info' is a factor
+vocDataXGB$correction_info <- as.factor(vocDataXGB$correction_info)
+
+# Remove rows with only NA values
+vocDataXGB <- vocDataXGB[rowSums(is.na(vocDataXGB)) < ncol(vocDataXGB), ]
+
+# Split data by levels of 'correction_info'
+correction_levels <- levels(vocDataXGB$correction_info)
+split_data <- split(vocDataXGB, vocDataXGB$correction_info)
+
+# Initialize a list to store subsets
+vocSubsets <- vector("list", length = numSubsets)
+
+# Distribute rows for each level equally across subsets
+for (level in correction_levels) {
+  level_data <- split_data[[level]]
+  subset_sizes <- rep(floor(nrow(level_data) / numSubsets), numSubsets)
+  remainder <- nrow(level_data) %% numSubsets
+  
+  # Distribute remainder rows randomly
+  if (remainder > 0) {
+    subset_sizes[seq_len(remainder)] <- subset_sizes[seq_len(remainder)] + 1
+  }
+  
+  # Shuffle rows of the level and assign to subsets
+  shuffled_data <- level_data[sample(nrow(level_data)), ]
+  indices <- cumsum(c(0, subset_sizes))
+  
+  for (i in 1:numSubsets) {
+    if (is.null(vocSubsets[[i]])) {
+      vocSubsets[[i]] <- shuffled_data[(indices[i] + 1):indices[i + 1], ]
+    } else {
+      vocSubsets[[i]] <- rbind(vocSubsets[[i]], shuffled_data[(indices[i] + 1):indices[i + 1], ])
+    }
+  }
+}
+
+# Naming the subsets
+names(vocSubsets) <- paste0("vocData", 1:numSubsets)
+
+# Verify balance in subsets
+for (i in 1:numSubsets) {
+  cat("Subset", i, "contains rows:", nrow(vocSubsets[[i]]), "and levels:\n")
+  print(table(vocSubsets[[i]]$correction_info))
+}
+
+# Remove any rows with only NAs from subsets just to ensure cleanliness
+vocSubsets <- lapply(vocSubsets, function(subset) {
+  subset[rowSums(is.na(subset)) < ncol(subset), ]
+})
+
+# Access the subsets
+vocData1 <- vocSubsets$vocData1
+vocData2 <- vocSubsets$vocData2
+vocData3 <- vocSubsets$vocData3
+vocData4 <- vocSubsets$vocData4
+vocData5 <- vocSubsets$vocData5
+
+# Combine subsets into 80% groups
+vocData1234 <- rbind(vocData1, vocData2, vocData3, vocData4)
+vocData1235 <- rbind(vocData1, vocData2, vocData3, vocData5)
+vocData1245 <- rbind(vocData1, vocData2, vocData4, vocData5)
+vocData1345 <- rbind(vocData1, vocData3, vocData4, vocData5)
+vocData2345 <- rbind(vocData2, vocData3, vocData4, vocData5)
+
+# Final verification of all levels in the combined datasets
+combined_sets <- list(vocData1234, vocData1235, vocData1245, vocData1345, vocData2345)
+names(combined_sets) <- c("vocData1234", "vocData1235", "vocData1245", "vocData1345", "vocData2345")
+
+for (set_name in names(combined_sets)) {
+  cat("Dataset", set_name, "contains rows:", nrow(combined_sets[[set_name]]), "and levels:\n")
+  print(table(combined_sets[[set_name]]$correction_info))
+}
+
+```
+
+#### Models
+
+Only run the models one time and then readRDS.
+
+##### Model 1
+
+```{r ger model1, echo=TRUE, message=FALSE, warning=FALSE, eval = FALSE}
+vocModel1 <- caret::train(
+  correction_info ~ .,              
+  data = vocData1234,
+  method = "xgbTree",     
+  trControl = train_control,
+  tuneGrid = grid_tune    
+)
+
+saveRDS(vocModel1, file = paste0(models, "vocModel1.rds"), compress = TRUE)
+```
+
+##### Model 2
+
+```{r ger model2, echo=TRUE, message=FALSE, warning=FALSE, eval = FALSE}
+vocModel2 <- caret::train(
+  correction_info ~ .,              
+  data = vocData1235,
+  method = "xgbTree",     
+  trControl = train_control,
+  tuneGrid = grid_tune    
+)
+
+saveRDS(vocModel2, file = paste0(models, "vocModel2.rds"), compress = TRUE)
+```
+
+##### Model 3
+
+```{r ger model3, echo=TRUE, message=FALSE, warning=FALSE, eval = FALSE}
+vocModel3 <- caret::train(
+  correction_info ~ .,              
+  data = vocData1245,
+  method = "xgbTree",     
+  trControl = train_control,
+  tuneGrid = grid_tune    
+)
+
+saveRDS(vocModel3, file = paste0(models, "vocModel3.rds"), compress = TRUE)
+```
+
+##### Model 4
+
+```{r ger model4, echo=TRUE, message=FALSE, warning=FALSE, eval = FALSE}
+vocModel4 <- caret::train(
+  correction_info ~ .,              
+  data = vocData1345,
+  method = "xgbTree",     
+  trControl = train_control,
+  tuneGrid = grid_tune    
+)
+saveRDS(vocModel4, file = paste0(models, "vocModel4.rds"), compress = TRUE)
+```
+
+##### Model 5
+
+```{r ger model5, echo=TRUE, message=FALSE, warning=FALSE, eval = FALSE}
+vocModel5 <- caret::train(
+  correction_info ~ .,              
+  data = vocData2345,
+  method = "xgbTree",     
+  trControl = train_control,
+  tuneGrid = grid_tune    
+)
+
+saveRDS(vocModel5, file = paste0(models, "vocModel5.rds"), compress = TRUE)
+```
+
+##### Load models
+
+Load all models after running, if necessary.
+
+```{r loas models ger, echo=TRUE, message=FALSE, warning=FALSE}
+vocModel1 <- readRDS(paste0(models, "vocModel1.rds"))
+vocModel2 <- readRDS(paste0(models, "vocModel2.rds"))
+vocModel3 <- readRDS(paste0(models, "vocModel3.rds"))
+vocModel4 <- readRDS(paste0(models, "vocModel4.rds"))
+vocModel5 <- readRDS(paste0(models, "vocModel5.rds"))
+```
+
+#### Test models
+
+Generate predictions and confusion matrices
+
+```{r test models ger, echo=TRUE, message=FALSE, warning=FALSE}
+# Generate predictions
+vocPredictions1 <- predict(vocModel1, newdata = vocData5)
+vocPredictions2 <- predict(vocModel2, newdata = vocData4)
+vocPredictions3 <- predict(vocModel3, newdata = vocData3)
+vocPredictions4 <- predict(vocModel4, newdata = vocData2)
+vocPredictions5 <- predict(vocModel5, newdata = vocData1)
+
+# Compute confusion matrices
+vocCm1 <- confusionMatrix(vocPredictions1, vocData5$correction_info)
+vocCm2 <- confusionMatrix(vocPredictions2, vocData4$correction_info)
+vocCm3 <- confusionMatrix(vocPredictions3, vocData3$correction_info)
+vocCm4 <- confusionMatrix(vocPredictions4, vocData2$correction_info)
+vocCm5 <- confusionMatrix(vocPredictions5, vocData1$correction_info)
+
+# Extract p-values (you need to define how to extract these based on your metric, here assumed to be some metric from confusion matrix)
+vocPValues <- c(vocCm1$overall['AccuracyPValue'], 
+              vocCm2$overall['AccuracyPValue'], 
+              vocCm3$overall['AccuracyPValue'], 
+              vocCm4$overall['AccuracyPValue'], 
+              vocCm5$overall['AccuracyPValue'])
+```
+
+Combine p-values using Fisher's method
+
+```{r combine p-vals ger, echo=TRUE, message=FALSE, warning=FALSE}
+# Fisher's method
+vocFisher_combined <- -2 * sum(log(vocPValues))
+df <- 2 * length(vocPValues)
+vocPCcombined_fisher <- 1 - pchisq(vocFisher_combined, df)
+print(vocPCcombined_fisher)
+
+# Stouffer's method
+vocZ_scores <- qnorm(1 - vocPValues/2)
+vocCombined_z <- sum(vocZ_scores) / sqrt(length(vocPValues))
+vocP_combined_stouffer <- 2 * (1 - pnorm(abs(vocCombined_z)))
+print(vocP_combined_stouffer)
+```
+
+The p-values sum up to 0, since they are all so small.
+
+#### Feature importance
+
+##### Model 1
+
+```{r ger feature importance 1, echo=TRUE, message=FALSE, warning=FALSE}
+XGBvocModel1 <- vocModel1$finalModel
+importanceXGBvocModel1 <- xgb.importance(model = XGBvocModel1)
+print(importanceXGBvocModel1)
+xgb.plot.importance(importanceXGBvocModel1)
+```
+
+##### Model 2
+
+```{r ger feature importance 2, echo=TRUE, message=FALSE, warning=FALSE}
+XGBvocModel2 <- vocModel2$finalModel
+importanceXGBvocModel2 <- xgb.importance(model = XGBvocModel2)
+print(importanceXGBvocModel2)
+xgb.plot.importance(importanceXGBvocModel2)
+```
+
+##### Model 3
+
+```{r ger feature importance 3, echo=TRUE, message=FALSE, warning=FALSE}
+XGBvocModel3 <- vocModel3$finalModel
+importanceXGBvocModel3 <- xgb.importance(model = XGBvocModel3)
+print(importanceXGBvocModel3)
+xgb.plot.importance(importanceXGBvocModel3)
+```
+
+##### Model 4
+
+```{r ger feature importance 4, echo=TRUE, message=FALSE, warning=FALSE}
+XGBvocModel4 <- vocModel4$finalModel
+importanceXGBvocModel4 <- xgb.importance(model = XGBvocModel4)
+print(importanceXGBvocModel4)
+xgb.plot.importance(importanceXGBvocModel4)
+```
+
+##### Model 5
+
+```{r ger feature importance 5, echo=TRUE, message=FALSE, warning=FALSE}
+XGBvocModel5 <- vocModel5$finalModel
+importanceXGBvocModel5 <- xgb.importance(model = XGBvocModel5)
+print(importanceXGBvocModel5)
+xgb.plot.importance(importanceXGBvocModel5)
+```
+
+##### Cumulative feature importance
+
+```{r ger cumulative importance, echo=TRUE, message=FALSE, warning=FALSE}
+# Function to extract and normalize importance
+get_normalized_importance <- function(model) {
+  importance <- xgb.importance(model = model)
+  importance$Gain <- importance$Gain / sum(importance$Gain)
+  return(importance)
+}
+
+# Extract normalized importance for each model
+vocImportance1 <- get_normalized_importance(vocModel1$finalModel)
+vocImportance2 <- get_normalized_importance(vocModel2$finalModel)
+vocImportance3 <- get_normalized_importance(vocModel3$finalModel)
+vocImportance4 <- get_normalized_importance(vocModel4$finalModel)
+vocImportance5 <- get_normalized_importance(vocModel5$finalModel)
+
+# Combine importances
+vocAllImportances <- list(vocImportance1, vocImportance2, vocImportance3, vocImportance4, vocImportance5)
+
+# Function to merge importances
+merge_importances <- function(importances) {
+  for (i in 2:length(importances)) {
+    names(importances[[i]])[2:4] <- paste0(names(importances[[i]])[2:4], "_", i)
+  }
+  merged <- Reduce(function(x, y) merge(x, y, by = "Feature", all = TRUE), importances)
+  merged[is.na(merged)] <- 0  # Replace NAs with 0
+  gain_cols <- grep("Gain", colnames(merged), value = TRUE)
+  merged$Cumulative <- rowSums(merged[, ..gain_cols])
+  return(merged[, .(Feature, Cumulative)])
+}
+
+# Merge and sort importances
+vocCumulativeImportance <- merge_importances(vocAllImportances)
+vocCumulativeImportance <- vocCumulativeImportance[order(-vocCumulativeImportance$Cumulative), ]
+
+# Print cumulative feature importance
+print(vocCumulativeImportance)
+```
+
+## PCA
+
+Now let's collect 10 features per component that have highest combined ranking from PCA and XGBoost. This means that for each feature we sum up the ranking it obtained in cumulative importance (XGBoost) and loading on a principal component (PCA).
+
+```{r}
+
+# Rank the features based on XGBoost importance (cumulative)
+vocCumulativeImportance$XGB_Rank <- rank(-vocCumulativeImportance$Cumulative)
+
+# Load in PCA for gesture
+voc_pca <- read_csv(paste0(datasets, "PCA_top_contributors_voc.csv"))
+
+# For each PC (PC1, PC2, PC3), rank the features based on their loadings
+combined_ranks_per_pc <- list()
+
+for (pc in c("PC1", "PC2", "PC3")) {
+  # Extract the features and loadings for the current PC
+  pca_pc_loadings <- voc_pca[, c(pc, paste0(pc, "_Loading"))]
+  colnames(pca_pc_loadings) <- c("Feature", "Loading")
+  
+  # Rank the features based on the absolute loading values (higher loadings should get lower rank)
+  pca_pc_loadings$PCA_Rank <- rank(-abs(pca_pc_loadings$Loading))
+  
+  # Merge PCA loadings with XGBoost importance ranks
+  merged_data <- merge(pca_pc_loadings, vocCumulativeImportance[, c("Feature", "XGB_Rank")], by = "Feature")
+  
+  # Calculate combined rank by summing XGBoost rank and PCA rank
+  merged_data$Combined_Rank <- merged_data$XGB_Rank + merged_data$PCA_Rank
+  
+  # Sort by the combined rank (lower rank is better)
+  sorted_data <- merged_data[order(merged_data$Combined_Rank), ]
+  
+  # Select the top n features based on the combined rank for the current PC
+  top_n_features <- 10  # Adjust the number of top features as needed
+  combined_ranks_per_pc[[pc]] <- head(sorted_data, top_n_features)
+}
+
+# Output the top features per PC based on combined ranking
+combined_ranks_per_pc
+
+```
+
+Now we have 10 features per component with highest combined ranking. For modelling, we want to pick three features per component. Which would it be in this case?
+
+```{r}
+
+# Number of top features to display
+top_n_features <- 3
+
+# Print the top 3 features per component
+for (pc in c("PC1", "PC2", "PC3")) {
+  cat("\nTop 3 Features for", pc, ":\n")
+  
+  # Get the top 3 features based on combined rank for the current PC
+  top_features <- head(combined_ranks_per_pc[[pc]], top_n_features)
+  
+  # Print the results
+  print(top_features[, c("Feature", "XGB_Rank", "PCA_Rank", "Combined_Rank")])
+}
+
+```
+
+###################### 
+
+# Multimodal
+
+###################### 
+
+In multimodal/combined condition, all features stay as both gesture and vocalization suppose to be used by performers. But we still need to make sure that df does not contain any NAs.
+
+```{r}
+
+data_mult <- read_csv(paste0(datasets, "multi_clean_df.csv"))
+
+# Make predictor a factor variable
+data_mult$correction_info <- as.factor(data_mult$correction_info)
+
+```
+
+## Random forests
+
+```{r}
+
+# prepare predictors
+predictors <- setdiff(names(data_mult), "correction_info")
+
+formula_str <- paste("correction_info ~", paste(predictors, collapse = " + "))
+
+# Convert the formula string to a formula object
+multTree_formula <- as.formula(formula_str)
+
+# Now use the formula in rpart
+multTree <- rpart(formula = multTree_formula, data = data_mult, 
+                method='class', # Specify that it's a classification tree
+                control = rpart.control(maxdepth = 5)  # Control parameters for the 'rpart' function
+)
+
+prp(
+  multTree,         # The decision tree object to be visualized
+  extra = 1,      # Show extra information (like node statistics) in the plot
+  varlen = 0,     # Length of variable names (0 means auto-determined)
+  faclen = 0     # Length of factor levels displayed on the plot (increase as needed)
+)
+```
+
+We will build a random forest first.
+
+```{r set seed, echo=TRUE, message=FALSE, warning=FALSE}
+set.seed(989) # Set a seed for reproducibility
+```
+
+Split the data
+
+```{r}
+
+
+# # Split the data into training and testing subsets
+# sample_indices <- sample(1:nrow(data_voc), 0.8*nrow(data_voc)) # 80% training, 20% testing
+# train_data <- data_voc[sample_indices, ]
+# test_data <- data_voc[-sample_indices, ]
+
+# This method should ensure that all levels of our dependent variable are present in both sets
+# Ensure each level is present in both sets
+train_data <- data_mult %>%
+  group_by(correction_info) %>%
+  sample_frac(0.8, replace = FALSE) %>%
+  ungroup()
+
+# Assign the remaining samples to the test set
+test_data <- anti_join(data_mult, train_data)
+
+```
+
+Building the untuned model.
+
+```{r untuned ger, echo=TRUE, message=FALSE, warning=FALSE}
+# Untuned Model with importance (permutation) option set
+multUntuned <- ranger(
+  y = train_data$correction_info,
+  x = train_data[,0:394], # without OV
+  num.trees = 500,
+  importance = "permutation"
+)
+
+predictions <- predict(multUntuned, data = test_data)$predictions
+
+# Create a confusion matrix
+confusion_matrix <- confusionMatrix(predictions, test_data$correction_info)
+
+# Print the confusion matrix
+print(confusion_matrix)
+
+# Calculate feature importance
+feature_importance <- importance(multUntuned, num.threads = 1, type = 1) 
+
+# Convert to data frame
+feature_importance <- as.data.frame(feature_importance, stringsAsFactors = FALSE)
+feature_importance$Feature <- rownames(feature_importance)
+colnames(feature_importance) <- c("Importance", "Feature")
+
+# Sort by importance
+sorted_feature_importance <- feature_importance[order(-feature_importance$Importance), ]
+
+# Print sorted feature importance
+print(sorted_feature_importance)
+```
+
+Set the parameters for the random forest.
+
+```{r settings for RF mult, echo=TRUE, message=FALSE, warning=FALSE}
+# Define the number of CPU cores to use
+num_cores <- detectCores()
+
+# Create a cluster with specified number of cores
+cl <- makeCluster(num_cores)
+```
+
+Tuning the random forest.
+
+```{r tuning RF ger, message=FALSE, warning=FALSE}
+
+tuneMult <- makeClassifTask(data = data_mult[,0:395], # with OV
+                           target = "correction_info")
+
+tuneMult <- tuneRanger(tuneMult,
+                      measure = list(multiclass.brier),
+                      num.trees = 500)
+
+#Return hyperparameter values
+tuneMult
+
+# Recommended parameter settings: 
+#   mtry min.node.size sample.fraction
+# 1  232             3         0.70919
+# Results: 
+#   multiclass.brier exec.time
+# 1        0.7385408       0.2
+
+multTuned <- ranger(
+  y = train_data$correction_info,
+  x = train_data[,0:394],  # without OV
+  num.trees = 5000, 
+  mtry = 232, # Set the recommended mtry value (number of features).
+  min.node.size = 3, # Set the recommended min.node.size value (number of samples before a node terminates).
+  sample.fraction = 0.70919, # Set the recommended sample fraction value.(% of data for bagging).
+  importance = "permutation" # Permutation is a computationally intensive test.
+)
+
+predictions <- predict(multTuned, data = test_data)$predictions
+
+# Create a confusion matrix
+confusion_matrix <- confusionMatrix(predictions, test_data$correction_info)
+
+# Print the confusion matrix
+print(confusion_matrix)
+
+# Calculate feature importance
+feature_importance <- importance(multTuned, num.threads = 1, type = 1) 
+
+# Convert to data frame
+feature_importance <- as.data.frame(feature_importance, stringsAsFactors = FALSE)
+feature_importance$Feature <- rownames(feature_importance)
+colnames(feature_importance) <- c("Importance", "Feature")
+
+# Sort by importance
+sorted_feature_importance <- feature_importance[order(-feature_importance$Importance), ]
+
+# Print sorted feature importance
+print(sorted_feature_importance)
+
+
+# Close the cluster when you're done with your parallel tasks
+#stopCluster(cl)
+```
+
+Create a tuned model only.
+
+```{r tuned model imputed ger, echo=TRUE, message=FALSE, warning=FALSE}
+# Create a classification task for tuning
+tuneMult <- makeClassifTask(data = train_data[, 0:395], target = "correction_info") # with OV
+
+# Tune the model
+tuneMult <- tuneRanger(tuneMult, measure = list(multiclass.brier), num.trees = 500)
+
+# Return hyperparameter values
+tuneMult
+# Recommended parameter settings: 
+# mtry min.node.size sample.fraction
+# 1  268             3       0.3295434
+# Results: 
+#   multiclass.brier exec.time
+# 1        0.8275102     0.172
+
+# Fit the tuned model on the training data
+multTuned <- ranger(
+  y = train_data$correction_info,
+  x = train_data[, 0:394],  # without OV
+  num.trees = 5000,
+  mtry = 268,
+  min.node.size = 3,
+  sample.fraction = 0.3295434,
+  importance = "permutation"
+)
+
+# Predict on the test data
+predictions <- predict(multTuned, data = test_data)$predictions
+
+# Create a confusion matrix
+confusion_matrix <- confusionMatrix(predictions, test_data$correction_info)
+
+# Print the confusion matrix
+print(confusion_matrix)
+
+# Calculate feature importance
+feature_importance <- importance(multTuned, num.threads = 1, type = 1)
+
+# Convert to data frame
+feature_importance_df <- as.data.frame(feature_importance, stringsAsFactors = FALSE)
+feature_importance_df$Feature <- rownames(feature_importance_df)
+colnames(feature_importance_df) <- c("Importance", "Feature")
+
+# Sort by importance
+sorted_feature_importance <- feature_importance_df[order(-feature_importance_df$Importance), ]
+
+# Print sorted feature importance
+print(sorted_feature_importance)
+
+# Close the cluster when you're done with your parallel tasks
+#stopCluster(cl)
+```
+
+Save data frame.
+
+```{r save imputed data, echo=TRUE, message=FALSE, warning=FALSE, eval = FALSE}
+
+write.csv(data_mult, file = paste0(datasets, "multDataXGB.csv"), row.names = FALSE)
+```
+
+# XGBoost
+
+Ensure parallel processing.
+
+```{r parallel, echo=TRUE, message=FALSE, warning=FALSE}
+# Detect the number of available cores
+cores <- detectCores() #- 1  # Leave one core free
+
+# Create a cluster with the detected number of cores
+cl <- makeCluster(cores)
+
+# Register the parallel backend
+registerDoParallel(cl)
+```
+
+Define the grid and estimate runtime.
+
+```{r grid, echo=TRUE, message=FALSE, warning=FALSE}
+grid_tune <- expand.grid(
+  nrounds = c(5000, 10000), 
+  max_depth = c(3, 6), 
+  eta = c(0.05, 0.1), 
+  gamma = c(0.1), 
+  colsample_bytree = c(0.6, 0.8), 
+  min_child_weight = c(1), 
+  subsample = c(0.75, 1.0)
+)
+
+# Calculate total combinations
+total_combinations <- nrow(grid_tune)
+
+# Estimate single model run time (assume 1 minute per run)
+single_model_time <- 10 # minute
+
+# Total runs for cross-validation
+folds <- 5
+total_runs <- total_combinations * folds
+
+# Total time estimation without parallel processing
+total_time <- total_runs * single_model_time # in minutes
+
+# Convert to hours
+total_time_hours <- total_time / 60
+
+# Output estimated time without parallel processing
+print(paste("Estimated time for grid search without parallel processing:", total_time_hours, "hours"))
+
+# Parallel processing with 4 cores
+cores <- 24
+total_time_parallel <- total_time / cores # in minutes
+
+# Convert to hours
+total_time_parallel_hours <- total_time_parallel / 60
+
+# Output estimated time with parallel processing
+print(paste("Estimated time for grid search with", cores, "cores:", total_time_parallel_hours, "hours"))
+
+rm(total_combinations,single_model_time,folds,total_runs,total_time,total_time_hours,total_time_parallel,total_time_parallel_hours,cores)
+```
+
+#### K-fold cross-validation
+
+Create subsets to train and test data (80/20).
+
+```{r k-fold subset, echo=TRUE, message=FALSE, warning=FALSE}
+
+# Set seed for reproducibility
+set.seed(998)
+
+# Set up train control
+train_control <- trainControl(
+  method = "cv",        # Cross-validation
+  number = 5,           # 5-fold cross-validation
+  allowParallel = TRUE  # Enable parallel processing
+)
+
+# Define the number of subsets
+numSubsets <- 5
+
+# Load MICE-imputed data (using placeholder 'data_ges' as the input dataset)
+multDataXGB <- data_mult
+
+# Ensure 'correction_info' is a factor
+multDataXGB$correction_info <- as.factor(multDataXGB$correction_info)
+
+# Remove rows with only NA values
+multDataXGB <- multDataXGB[rowSums(is.na(multDataXGB)) < ncol(multDataXGB), ]
+
+# Split data by levels of 'correction_info'
+correction_levels <- levels(multDataXGB$correction_info)
+split_data <- split(multDataXGB, multDataXGB$correction_info)
+
+# Initialize a list to store subsets
+multSubsets <- vector("list", length = numSubsets)
+
+# Distribute rows for each level equally across subsets
+for (level in correction_levels) {
+  level_data <- split_data[[level]]
+  subset_sizes <- rep(floor(nrow(level_data) / numSubsets), numSubsets)
+  remainder <- nrow(level_data) %% numSubsets
+  
+  # Distribute remainder rows randomly
+  if (remainder > 0) {
+    subset_sizes[seq_len(remainder)] <- subset_sizes[seq_len(remainder)] + 1
+  }
+  
+  # Shuffle rows of the level and assign to subsets
+  shuffled_data <- level_data[sample(nrow(level_data)), ]
+  indices <- cumsum(c(0, subset_sizes))
+  
+  for (i in 1:numSubsets) {
+    if (is.null(multSubsets[[i]])) {
+      multSubsets[[i]] <- shuffled_data[(indices[i] + 1):indices[i + 1], ]
+    } else {
+      multSubsets[[i]] <- rbind(multSubsets[[i]], shuffled_data[(indices[i] + 1):indices[i + 1], ])
+    }
+  }
+}
+
+# Naming the subsets
+names(multSubsets) <- paste0("multData", 1:numSubsets)
+
+# Verify balance in subsets
+for (i in 1:numSubsets) {
+  cat("Subset", i, "contains rows:", nrow(multSubsets[[i]]), "and levels:\n")
+  print(table(multSubsets[[i]]$correction_info))
+}
+
+# Remove any rows with only NAs from subsets just to ensure cleanliness
+multSubsets <- lapply(multSubsets, function(subset) {
+  subset[rowSums(is.na(subset)) < ncol(subset), ]
+})
+
+# Access the subsets
+multData1 <- multSubsets$multData1
+multData2 <- multSubsets$multData2
+multData3 <- multSubsets$multData3
+multData4 <- multSubsets$multData4
+multData5 <- multSubsets$multData5
+
+# Combine subsets into 80% groups
+multData1234 <- rbind(multData1, multData2, multData3, multData4)
+multData1235 <- rbind(multData1, multData2, multData3, multData5)
+multData1245 <- rbind(multData1, multData2, multData4, multData5)
+multData1345 <- rbind(multData1, multData3, multData4, multData5)
+multData2345 <- rbind(multData2, multData3, multData4, multData5)
+
+# Final verification of all levels in the combined datasets
+combined_sets <- list(multData1234, multData1235, multData1245, multData1345, multData2345)
+names(combined_sets) <- c("multData1234", "multData1235", "multData1245", "multData1345", "multData2345")
+
+for (set_name in names(combined_sets)) {
+  cat("Dataset", set_name, "contains rows:", nrow(combined_sets[[set_name]]), "and levels:\n")
+  print(table(combined_sets[[set_name]]$correction_info))
+}
+
+
+```
+
+#### Models
+
+Only run the models one time and then readRDS.
+
+##### Model 1
+
+```{r ger model1, echo=TRUE, message=FALSE, warning=FALSE, eval = FALSE}
+multModel1 <- caret::train(
+  correction_info ~ .,              
+  data = multData1234,
+  method = "xgbTree",     
+  trControl = train_control,
+  tuneGrid = grid_tune    
+)
+
+saveRDS(multModel1, file = paste0(models, "multModel1.rds"), compress = TRUE)
+```
+
+##### Model 2
+
+```{r ger model2, echo=TRUE, message=FALSE, warning=FALSE, eval = FALSE}
+multModel2 <- caret::train(
+  correction_info ~ .,              
+  data = multData1235,
+  method = "xgbTree",     
+  trControl = train_control,
+  tuneGrid = grid_tune    
+)
+
+saveRDS(multModel2, file = paste0(models, "multModel2.rds"), compress = TRUE)
+```
+
+##### Model 3
+
+```{r ger model3, echo=TRUE, message=FALSE, warning=FALSE, eval = FALSE}
+multModel3 <- caret::train(
+  correction_info ~ .,              
+  data = multData1245,
+  method = "xgbTree",     
+  trControl = train_control,
+  tuneGrid = grid_tune    
+)
+
+saveRDS(multModel3, file = paste0(models, "multModel3.rds"), compress = TRUE)
+```
+
+##### Model 4
+
+```{r ger model4, echo=TRUE, message=FALSE, warning=FALSE, eval = FALSE}
+multModel4 <- caret::train(
+  correction_info ~ .,              
+  data = multData1345,
+  method = "xgbTree",     
+  trControl = train_control,
+  tuneGrid = grid_tune    
+)
+saveRDS(multModel4, file = paste0(models, "multModel4.rds"), compress = TRUE)
+```
+
+##### Model 5
+
+```{r ger model5, echo=TRUE, message=FALSE, warning=FALSE, eval = FALSE}
+multModel5 <- caret::train(
+  correction_info ~ .,              
+  data = multData2345,
+  method = "xgbTree",     
+  trControl = train_control,
+  tuneGrid = grid_tune    
+)
+
+saveRDS(multModel5, file = paste0(models, "multModel5.rds"), compress = TRUE)
+```
+
+##### Load models
+
+Load all models after running, if necessary.
+
+```{r loas models ger, echo=TRUE, message=FALSE, warning=FALSE}
+multModel1 <- readRDS(paste0(models, "multModel1.rds"))
+multModel2 <- readRDS(paste0(models, "multModel2.rds"))
+multModel3 <- readRDS(paste0(models, "multModel3.rds"))
+multModel4 <- readRDS(paste0(models, "multModel4.rds"))
+multModel5 <- readRDS(paste0(models, "multModel5.rds"))
+```
+
+#### Test models
+
+Generate predictions and confusion matrices
+
+```{r test models ger, echo=TRUE, message=FALSE, warning=FALSE}
+# Generate predictions
+multPredictions1 <- predict(multModel1, newdata = multData5)
+multPredictions2 <- predict(multModel2, newdata = multData4)
+multPredictions3 <- predict(multModel3, newdata = multData3)
+multPredictions4 <- predict(multModel4, newdata = multData2)
+multPredictions5 <- predict(multModel5, newdata = multData1)
+
+# Compute confusion matrices
+multCm1 <- confusionMatrix(multPredictions1, multData5$correction_info)
+multCm2 <- confusionMatrix(multPredictions2, multData4$correction_info)
+multCm3 <- confusionMatrix(multPredictions3, multData3$correction_info)
+multCm4 <- confusionMatrix(multPredictions4, multData2$correction_info)
+multCm5 <- confusionMatrix(multPredictions5, multData1$correction_info)
+
+# Extract p-values (you need to define how to extract these based on your metric, here assumed to be some metric from confusion matrix)
+multPValues <- c(multCm1$overall['AccuracyPValue'], 
+              multCm2$overall['AccuracyPValue'], 
+              multCm3$overall['AccuracyPValue'], 
+              multCm4$overall['AccuracyPValue'], 
+              multCm5$overall['AccuracyPValue'])
+```
+
+Combine p-values using Fisher's method
+
+```{r combine p-vals ger, echo=TRUE, message=FALSE, warning=FALSE}
+# Fisher's method
+multFisher_combined <- -2 * sum(log(multPValues))
+df <- 2 * length(multPValues)
+multPCcombined_fisher <- 1 - pchisq(multFisher_combined, df)
+print(multPCcombined_fisher)
+
+# Stouffer's method
+multZ_scores <- qnorm(1 - multPValues/2)
+multCombined_z <- sum(multZ_scores) / sqrt(length(multPValues))
+multP_combined_stouffer <- 2 * (1 - pnorm(abs(multCombined_z)))
+print(multP_combined_stouffer)
+```
+
+The p-values sum up to 0, since they are all so small.
+
+#### Feature importance
+
+##### Model 1
+
+```{r ger feature importance 1, echo=TRUE, message=FALSE, warning=FALSE}
+XGBmultModel1 <- multModel1$finalModel
+importanceXGBmultModel1 <- xgb.importance(model = XGBmultModel1)
+print(importanceXGBmultModel1)
+xgb.plot.importance(importanceXGBmultModel1)
+```
+
+##### Model 2
+
+```{r ger feature importance 2, echo=TRUE, message=FALSE, warning=FALSE}
+XGBmultModel2 <- multModel2$finalModel
+importanceXGBmultModel2 <- xgb.importance(model = XGBmultModel2)
+print(importanceXGBmultModel2)
+xgb.plot.importance(importanceXGBmultModel2)
+```
+
+##### Model 3
+
+```{r ger feature importance 3, echo=TRUE, message=FALSE, warning=FALSE}
+XGBmultModel3 <- multModel3$finalModel
+importanceXGBmultModel3 <- xgb.importance(model = XGBmultModel3)
+print(importanceXGBmultModel3)
+xgb.plot.importance(importanceXGBmultModel3)
+```
+
+##### Model 4
+
+```{r ger feature importance 4, echo=TRUE, message=FALSE, warning=FALSE}
+XGBmultModel4 <- multModel4$finalModel
+importanceXGBmultModel4 <- xgb.importance(model = XGBmultModel4)
+print(importanceXGBmultModel4)
+xgb.plot.importance(importanceXGBmultModel4)
+```
+
+##### Model 5
+
+```{r ger feature importance 5, echo=TRUE, message=FALSE, warning=FALSE}
+XGBmultModel5 <- multModel5$finalModel
+importanceXGBmultModel5 <- xgb.importance(model = XGBmultModel5)
+print(importanceXGBmultModel5)
+xgb.plot.importance(importanceXGBmultModel5)
+```
+
+##### Cumulative feature importance
+
+```{r ger cumulative importance, echo=TRUE, message=FALSE, warning=FALSE}
+# Function to extract and normalize importance
+get_normalized_importance <- function(model) {
+  importance <- xgb.importance(model = model)
+  importance$Gain <- importance$Gain / sum(importance$Gain)
+  return(importance)
+}
+
+# Extract normalized importance for each model
+multImportance1 <- get_normalized_importance(multModel1$finalModel)
+multImportance2 <- get_normalized_importance(multModel2$finalModel)
+multImportance3 <- get_normalized_importance(multModel3$finalModel)
+multImportance4 <- get_normalized_importance(multModel4$finalModel)
+multImportance5 <- get_normalized_importance(multModel5$finalModel)
+
+# Combine importances
+multAllImportances <- list(multImportance1, multImportance2, multImportance3, multImportance4, multImportance5)
+
+# Function to merge importances
+merge_importances <- function(importances) {
+  for (i in 2:length(importances)) {
+    names(importances[[i]])[2:4] <- paste0(names(importances[[i]])[2:4], "_", i)
+  }
+  merged <- Reduce(function(x, y) merge(x, y, by = "Feature", all = TRUE), importances)
+  merged[is.na(merged)] <- 0  # Replace NAs with 0
+  gain_cols <- grep("Gain", colnames(merged), value = TRUE)
+  merged$Cumulative <- rowSums(merged[, ..gain_cols])
+  return(merged[, .(Feature, Cumulative)])
+}
+
+# Merge and sort importances
+multCumulativeImportance <- merge_importances(multAllImportances)
+multCumulativeImportance <- multCumulativeImportance[order(-multCumulativeImportance$Cumulative), ]
+
+# Print cumulative feature importance
+print(multCumulativeImportance)
+```
+
+## PCA
+
+Now let's collect 10 features per component that have highest combined ranking from PCA and XGBoost. This means that for each feature we sum up the ranking it obtained in cumulative importance (XGBoost) and loading on a principal component (PCA).
+
+```{r}
+
+# Rank the features based on XGBoost importance (cumulative)
+multCumulativeImportance$XGB_Rank <- rank(-multCumulativeImportance$Cumulative)
+
+# Load in PCA for gesture
+mult_pca <- read_csv(paste0(datasets, "PCA_top_contributors_multi.csv"))
+
+# For each PC (PC1, PC2, PC3), rank the features based on their loadings
+combined_ranks_per_pc <- list()
+
+for (pc in c("PC1", "PC2", "PC3")) {
+  # Extract the features and loadings for the current PC
+  pca_pc_loadings <- mult_pca[, c(pc, paste0(pc, "_Loading"))]
+  colnames(pca_pc_loadings) <- c("Feature", "Loading")
+  
+  # Rank the features based on the absolute loading values (higher loadings should get lower rank)
+  pca_pc_loadings$PCA_Rank <- rank(-abs(pca_pc_loadings$Loading))
+  
+  # Merge PCA loadings with XGBoost importance ranks
+  merged_data <- merge(pca_pc_loadings, multCumulativeImportance[, c("Feature", "XGB_Rank")], by = "Feature")
+  
+  # Calculate combined rank by summing XGBoost rank and PCA rank
+  merged_data$Combined_Rank <- merged_data$XGB_Rank + merged_data$PCA_Rank
+  
+  # Sort by the combined rank (lower rank is better)
+  sorted_data <- merged_data[order(merged_data$Combined_Rank), ]
+  
+  # Select the top n features based on the combined rank for the current PC
+  top_n_features <- 10  # Adjust the number of top features as needed
+  combined_ranks_per_pc[[pc]] <- head(sorted_data, top_n_features)
+}
+
+# Output the top features per PC based on combined ranking
+combined_ranks_per_pc
+
+```
+
+Now we have 10 features per component with highest combined ranking. For modelling, we want to pick three features per component. Which would it be in this case?
+
+```{r}
+
+# Number of top features to display
+top_n_features <- 3
+
+# Print the top 3 features per component
+for (pc in c("PC1", "PC2", "PC3")) {
+  cat("\nTop 3 Features for", pc, ":\n")
+  
+  # Get the top 3 features based on combined rank for the current PC
+  top_features <- head(combined_ranks_per_pc[[pc]], top_n_features)
+  
+  # Print the results
+  print(top_features[, c("Feature", "XGB_Rank", "PCA_Rank", "Combined_Rank")])
+}
+
+```
+
+```{r}
+
+
+
+```
+
+---
+title: 'Indicators of physical effort: XGBoost'
+author: "Aleksandra Ćwiek (original code), Sarka Kadava (adaptation)"
+output: html_document
+date: "2024-08-30"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Data preparation
+
+## Source setup
+
+```{r source setup, echo = TRUE, message=FALSE, warning = FALSE}
+
+########## folders ##########
+# current folder (first go to session -> set working directory -> to source file location)
+parentfolder <- dirname(getwd())
+
+datasets      <- paste0(parentfolder, '/08_Analysis_XGBoost/datasets/')
+models        <- paste0(parentfolder, '/08_Analysis_XGBoost/models/')
+plots         <- paste0(parentfolder, '/08_Analysis_XGBoost/plots/')
+
+########## source file ##########
+
+#source(paste0(scripts, "adjectives-preparation.R"))
+
+#################### packages ####################
+# Data Manipulation
+library(tibble)
+library(stringr)
+library(tidyverse) # includes readr, tidyr, dplyr, ggplot2
+library(data.table)
+
+# Plotting
+library(ggforce)
+library(ggpubr)
+library(gridExtra)
+
+# Random Forests and XGBoost
+library(rpart)
+library(rpart.plot)
+library(ranger)
+library(tuneRanger)
+library(caret)
+library(xgboost)
+library(parallel)
+library(mice)
+library(doParallel)
+# use all available cores for parallel computing
+options(mc.cores = parallel::detectCores())
+
+colorBlindBlack8  <- c("#000000", "#E69F00", "#56B4E9", "#009E73", 
+                       "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+
+```
+
+In the previous script, we have already separated trials into modalities and clean the resulting dataframes of superfluous columns so now we can directly load them and continue modelling.
+
+####################### 
+
+# Gesture
+
+####################### 
+
+First, for gesture modality, we need to remove columns with features that are not present in gesture modality overal. These are all vocal features. They should be anyway mostly filled with NaNs as in gesture modality, any vocalizations were 'forbidden'. Additionally, we need to make sure that df does not contain any NAs.
+
+```{r}
+
+data_ges <- read_csv(paste0(datasets, "ges_clean_df.csv"))
+
+# Make predictor a factor variable
+data_ges$correction_info <- as.factor(data_ges$correction_info)
+
+```
+
+## Random forests
+
+```{r}
+
+# prepare predictors
+predictors <- setdiff(names(data_ges), "correction_info")
+
+formula_str <- paste("correction_info ~", paste(predictors, collapse = " + "))
+
+# Convert the formula string to a formula object
+gesTree_formula <- as.formula(formula_str)
+
+# Now use the formula in rpart
+gesTree <- rpart(formula = gesTree_formula, data = data_ges, 
+                method='class', # Specify that it's a classification tree
+                control = rpart.control(maxdepth = 5)  # Control parameters for the 'rpart' function
+)
+
+prp(
+  gesTree,         # The decision tree object to be visualized
+  extra = 1,      # Show extra information (like node statistics) in the plot
+  varlen = 0,     # Length of variable names (0 means auto-determined)
+  faclen = 0     # Length of factor levels displayed on the plot (increase as needed)
+)
+```
+
+We will build a random forest first.
+
+```{r set seed, echo=TRUE, message=FALSE, warning=FALSE}
+set.seed(998) # Set a seed for reproducibility
+```
+
+Split the data
+
+```{r split the data, echo=TRUE, message=FALSE, warning=FALSE}
+
+
+# Split the data into training and testing subsets
+# sample_indices <- sample(1:nrow(data_ges), 0.8*nrow(data_ges)) # 80% training, 20% testing
+# train_data <- data_ges[sample_indices, ]
+# test_data <- data_ges[-sample_indices, ]
+
+# This method should ensure that all levels of our dependent variable are present in both sets
+# Ensure each level is present in both sets
+train_data <- data_ges %>%
+  group_by(correction_info) %>%
+  sample_frac(0.8, replace = FALSE) %>%
+  ungroup()
+
+# Assign the remaining samples to the test set
+test_data <- anti_join(data_ges, train_data)
+
+```
+
+Building the untuned model.
+
+```{r untuned ges, echo=TRUE, message=FALSE, warning=FALSE}
+
+# Untuned Model with importance (permutation) option set
+gesUntuned <- ranger(
+  y = train_data$correction_info,
+  x = train_data[,0:324],
+  num.trees = 500,
+  importance = "permutation"
+)
+
+predictions <- predict(gesUntuned, data = test_data)$predictions
+
+# Create a confusion matrix
+confusion_matrix <- confusionMatrix(predictions, test_data$correction_info)
+
+# Print the confusion matrix
+print(confusion_matrix)
+
+# Calculate feature importance
+feature_importance <- importance(gesUntuned, num.threads = 1, type = 1) 
+
+# Convert to data frame
+feature_importance <- as.data.frame(feature_importance, stringsAsFactors = FALSE)
+feature_importance$Feature <- rownames(feature_importance)
+colnames(feature_importance) <- c("Importance", "Feature")
+
+# Sort by importance
+sorted_feature_importance <- feature_importance[order(-feature_importance$Importance), ]
+
+# Print sorted feature importance
+print(sorted_feature_importance)
+```
+
+Set the parameters for the random forest.
+
+```{r settings for RF ges, echo=TRUE, message=FALSE, warning=FALSE}
+
+# Define the number of CPU cores to use
+num_cores <- detectCores()
+
+# Create a cluster with specified number of cores
+cl <- makeCluster(num_cores)
+```
+
+Tuning the random forest.
+
+```{r tuning RF ges, message=FALSE, warning=FALSE}
+
+tuneGes <- makeClassifTask(data = data_ges[,0:325],
+                           target = "correction_info")
+
+tuneGes <- tuneRanger(tuneGes,
+                      measure = list(multiclass.brier),
+                      num.trees = 500)
+
+# Return hyperparameter values
+tuneGes
+
+# Recommended parameter settings: 
+#   mtry min.node.size sample.fraction
+# 1   57             4       0.2279307
+# Results: 
+#   multiclass.brier exec.time
+# 1         0.790973     0.164
+
+gesTuned <- ranger(
+  y = train_data$correction_info,
+  x = train_data[,0:324], 
+  num.trees = 5000, 
+  mtry = 57, # Set the recommended mtry value (number of features).
+  min.node.size = 4, # Set the recommended min.node.size value (number of samples before a node terminates).
+  sample.fraction = 0.2279307, # Set the recommended sample fraction value.(% of data for bagging).
+  importance = "permutation" # Permutation is a computationally intensive test.
+)
+
+predictions <- predict(gesTuned, data = test_data)$predictions
+
+# Create a confusion matrix
+confusion_matrix <- confusionMatrix(predictions, test_data$correction_info)
+
+# Print the confusion matrix
+print(confusion_matrix)
+
+# Calculate feature importance
+feature_importance <- importance(gesTuned, num.threads = 1, type = 1) 
+
+# Convert to data frame
+feature_importance <- as.data.frame(feature_importance, stringsAsFactors = FALSE)
+feature_importance$Feature <- rownames(feature_importance)
+colnames(feature_importance) <- c("Importance", "Feature")
+
+# Sort by importance
+sorted_feature_importance <- feature_importance[order(-feature_importance$Importance), ]
+
+# Print sorted feature importance
+print(sorted_feature_importance)
+
+
+# Close the cluster when you're done with your parallel tasks
+#stopCluster(cl)
+```
+
+Create a tuned model only.
+
+```{r tuned model imputed ges, echo=TRUE, message=FALSE, warning=FALSE}
+
+# Create a classification task for tuning
+tuneGes <- makeClassifTask(data = train_data[, 0:325], target = "correction_info")
+
+# Tune the model
+tuneGes <- tuneRanger(tuneGes, measure = list(multiclass.brier), num.trees = 500)
+
+# Return hyperparameter values
+tuneGes
+
+# Recommended parameter settings: 
+#   mtry min.node.size sample.fraction
+# 1  221             3       0.2056429
+# Results: 
+#   multiclass.brier exec.time
+# 1        0.8124712     0.168
+
+# Fit the tuned model on the training data
+gesTuned <- ranger(
+  y = train_data$correction_info,
+  x = train_data[, 0:324],
+  num.trees = 5000,
+  mtry = 221,
+  min.node.size = 3,
+  sample.fraction = 0.2056429,
+  importance = "permutation"
+)
+
+# Predict on the test data
+predictions <- predict(gesTuned, data = test_data)$predictions
+
+# Create a confusion matrix
+confusion_matrix <- confusionMatrix(predictions, test_data$correction_info)
+
+# Print the confusion matrix
+print(confusion_matrix)
+
+# Calculate feature importance
+feature_importance <- importance(gesTuned, num.threads = 1, type = 1)
+
+# Convert to data frame
+feature_importance_df <- as.data.frame(feature_importance, stringsAsFactors = FALSE)
+feature_importance_df$Feature <- rownames(feature_importance_df)
+colnames(feature_importance_df) <- c("Importance", "Feature")
+
+# Sort by importance
+sorted_feature_importance <- feature_importance_df[order(-feature_importance_df$Importance), ]
+
+# Print sorted feature importance
+print(sorted_feature_importance)
+
+# Close the cluster when you're done with your parallel tasks
+#stopCluster(cl)
+```
+
+Save data frame.
+
+```{r save imputed data, echo=TRUE, message=FALSE, warning=FALSE, eval = FALSE}
+
+write.csv(data_ges, file = paste0(datasets, "gesDataXGB.csv"), row.names = FALSE)
+```
+
+# XGBoost
+
+Ensure parallel processing.
+
+```{r parallel, echo=TRUE, message=FALSE, warning=FALSE}
+# Detect the number of available cores
+cores <- detectCores() #- 1  # Leave one core free
+
+# Create a cluster with the detected number of cores
+cl <- makeCluster(cores)
+
+# Register the parallel backend
+registerDoParallel(cl)
+```
+
+Define the grid and estimate runtime.
+
+```{r grid, echo=TRUE, message=FALSE, warning=FALSE}
+grid_tune <- expand.grid(
+  nrounds = c(5000, 10000), 
+  max_depth = c(3, 6), 
+  eta = c(0.05, 0.1), 
+  gamma = c(0.1), 
+  colsample_bytree = c(0.6, 0.8), 
+  min_child_weight = c(1), 
+  subsample = c(0.75, 1.0)
+)
+
+# Calculate total combinations
+total_combinations <- nrow(grid_tune)
+
+# Estimate single model run time (assume 1 minute per run)
+single_model_time <- 10 # minute
+
+# Total runs for cross-validation
+folds <- 5
+total_runs <- total_combinations * folds
+
+# Total time estimation without parallel processing
+total_time <- total_runs * single_model_time # in minutes
+
+# Convert to hours
+total_time_hours <- total_time / 60
+
+# Output estimated time without parallel processing
+print(paste("Estimated time for grid search without parallel processing:", total_time_hours, "hours"))
+
+# Parallel processing with 4 cores
+cores <- 24
+total_time_parallel <- total_time / cores # in minutes
+
+# Convert to hours
+total_time_parallel_hours <- total_time_parallel / 60
+
+# Output estimated time with parallel processing
+print(paste("Estimated time for grid search with", cores, "cores:", total_time_parallel_hours, "hours"))
+
+rm(total_combinations,single_model_time,folds,total_runs,total_time,total_time_hours,total_time_parallel,total_time_parallel_hours,cores)
+
+```
+
+#### K-fold cross-validation
+
+Create subsets to train and test data (80/20).
+
+```{r}
+
+# Set seed for reproducibility
+set.seed(998)
+
+# Set up train control
+train_control <- trainControl(
+  method = "cv",        # Cross-validation
+  number = 5,           # 5-fold cross-validation
+  allowParallel = TRUE  # Enable parallel processing
+)
+
+# Define the number of subsets
+numSubsets <- 5
+
+# Load MICE-imputed data (using placeholder 'data_ges' as the input dataset)
+gesDataXGB <- read_csv(paste0(datasets, "gesDataXGB.csv.csv"))
+
+# Ensure 'correction_info' is a factor
+gesDataXGB$correction_info <- as.factor(gesDataXGB$correction_info)
+
+# Remove rows with only NA values
+gesDataXGB <- gesDataXGB[rowSums(is.na(gesDataXGB)) < ncol(gesDataXGB), ]
+
+# Split data by levels of 'correction_info'
+correction_levels <- levels(gesDataXGB$correction_info)
+split_data <- split(gesDataXGB, gesDataXGB$correction_info)
+
+# Initialize a list to store subsets
+gesSubsets <- vector("list", length = numSubsets)
+
+# Distribute rows for each level equally across subsets
+for (level in correction_levels) {
+  level_data <- split_data[[level]]
+  subset_sizes <- rep(floor(nrow(level_data) / numSubsets), numSubsets)
+  remainder <- nrow(level_data) %% numSubsets
+  
+  # Distribute remainder rows randomly
+  if (remainder > 0) {
+    subset_sizes[seq_len(remainder)] <- subset_sizes[seq_len(remainder)] + 1
+  }
+  
+  # Shuffle rows of the level and assign to subsets
+  shuffled_data <- level_data[sample(nrow(level_data)), ]
+  indices <- cumsum(c(0, subset_sizes))
+  
+  for (i in 1:numSubsets) {
+    if (is.null(gesSubsets[[i]])) {
+      gesSubsets[[i]] <- shuffled_data[(indices[i] + 1):indices[i + 1], ]
+    } else {
+      gesSubsets[[i]] <- rbind(gesSubsets[[i]], shuffled_data[(indices[i] + 1):indices[i + 1], ])
+    }
+  }
+}
+
+# Naming the subsets
+names(gesSubsets) <- paste0("gesData", 1:numSubsets)
+
+# Verify balance in subsets
+for (i in 1:numSubsets) {
+  cat("Subset", i, "contains rows:", nrow(gesSubsets[[i]]), "and levels:\n")
+  print(table(gesSubsets[[i]]$correction_info))
+}
+
+# Remove any rows with only NAs from subsets just to ensure cleanliness
+gesSubsets <- lapply(gesSubsets, function(subset) {
+  subset[rowSums(is.na(subset)) < ncol(subset), ]
+})
+
+# Access the subsets
+gesData1 <- gesSubsets$gesData1
+gesData2 <- gesSubsets$gesData2
+gesData3 <- gesSubsets$gesData3
+gesData4 <- gesSubsets$gesData4
+gesData5 <- gesSubsets$gesData5
+
+# Combine subsets into 80% groups
+gesData1234 <- rbind(gesData1, gesData2, gesData3, gesData4)
+gesData1235 <- rbind(gesData1, gesData2, gesData3, gesData5)
+gesData1245 <- rbind(gesData1, gesData2, gesData4, gesData5)
+gesData1345 <- rbind(gesData1, gesData3, gesData4, gesData5)
+gesData2345 <- rbind(gesData2, gesData3, gesData4, gesData5)
+
+# Final verification of all levels in the combined datasets
+combined_sets <- list(gesData1234, gesData1235, gesData1245, gesData1345, gesData2345)
+names(combined_sets) <- c("gesData1234", "gesData1235", "gesData1245", "gesData1345", "gesData2345")
+
+for (set_name in names(combined_sets)) {
+  cat("Dataset", set_name, "contains rows:", nrow(combined_sets[[set_name]]), "and levels:\n")
+  print(table(combined_sets[[set_name]]$correction_info))
+}
+
+```
+
+This code does not ensure that sets contain all levels
+
+```{r k-fold subset, echo=TRUE, message=FALSE, warning=FALSE, eval = FALSE}
+# Set seed for reproducibility
+set.seed(998)
+
+# Load in the XGBoost-ready df
+gesDataXGB <- read_csv(paste0(datasets, "gesDataXGB.csv"))
+
+# Set up train control
+train_control <- trainControl(
+  method = "cv",        # Cross-validation
+  number = 5,           # 5-fold cross-validation
+  allowParallel = TRUE  # Enable parallel processing
+)
+
+# Define the number of subsets
+numSubsets <- 5
+
+# Create an empty list to store subsets
+gesSubsets <- vector("list", length = numSubsets)
+
+# Ensure 'correction_info' is a factor
+gesDataXGB$correction_info <- as.factor(gesDataXGB$correction_info)
+
+# Perform stratified sampling
+for (level in levels(gesDataXGB$correction_info)) {
+  # Subset the data by level
+  level_data <- gesDataXGB[gesDataXGB$correction_info == level, ]
+  
+  # Calculate subset size and extra samples
+  subsetSize <- nrow(level_data) %/% numSubsets
+  extraSamples <- nrow(level_data) %% numSubsets
+  
+  # Shuffle row indices
+  shuffled <- sample(nrow(level_data)) 
+  
+  # Distribute samples evenly
+  start_idx <- 1
+  for (i in 1:numSubsets) {
+    end_idx <- start_idx + subsetSize - 1
+    
+    # Distribute extra samples more evenly
+    if (i <= extraSamples) {
+      end_idx <- end_idx + 1
+    }
+    
+    gesSubsets[[i]] <- rbind(gesSubsets[[i]], level_data[shuffled[start_idx:end_idx], ])
+    
+    # Update start index for next iteration
+    start_idx <- end_idx + 1
+  }
+}
+
+
+# load MICE imputed data
+# #gerDataXGB <- read_csv(paste0(datasets, "gerDataXGB.csv"))
+# gesDataXGB <- data_ges
+# # ensure percProm is factor
+# gesDataXGB$correction_info <- as.factor(gesDataXGB$correction_info)
+# levels(gesDataXGB$correction_info)
+# # only keep the columns of output and predictor variables
+# #gerDataXGB <- gerDataXGB[,13:52] 
+# 
+# # Calculate the number of samples in each subset
+# subsetSize <- nrow(gesDataXGB) %/% numSubsets
+# extraSamples <- nrow(level_data) %% numSubsets
+# 
+
+# 
+# 
+# 
+# # Randomly assign samples to subsets
+# for (i in 1:numSubsets) {
+#   if (i < numSubsets) {
+#     gesSubsets[[i]] <- gesDataXGB[sample((1:nrow(gesDataXGB)), size = subsetSize), ]
+#   } else {
+#     gesSubsets[[i]] <- gesDataXGB[sample((1:nrow(gesDataXGB)), size = subsetSize + (nrow(gesDataXGB) %% numSubsets)), ]
+#   }
+# }
+
+# Naming the subsets
+names(gesSubsets) <- paste0("gesData", 1:numSubsets)
+
+# Verify that all subsets contain all levels
+for (i in 1:numSubsets) {
+  cat("Subset", i, "contains levels:", levels(gesSubsets[[i]]$correction_info), "\n")
+}
+
+
+# Access the subsets (e.g., gerData1, gerData2, etc.)
+gesData1 <- gesSubsets$gesData1
+gesData2 <- gesSubsets$gesData2
+gesData3 <- gesSubsets$gesData3
+gesData4 <- gesSubsets$gesData4
+gesData5 <- gesSubsets$gesData5
+
+## Get rid of NAs (if there are from the sampling)
+gesData1 <- na.omit(gesData1)
+gesData2 <- na.omit(gesData2)
+gesData3 <- na.omit(gesData3)
+gesData4 <- na.omit(gesData4)
+gesData5 <- na.omit(gesData5)
+
+
+# Combine subsets into 80% groups.
+gesData1234 <- rbind(gesData1, gesData2, gesData3, gesData4)
+gesData1235 <- rbind(gesData1, gesData2, gesData3, gesData5)
+gesData1245 <- rbind(gesData1, gesData2, gesData4, gesData5)
+gesData1345 <- rbind(gesData1, gesData3, gesData4, gesData5)
+gesData2345 <- rbind(gesData2, gesData3, gesData4, gesData5)
+
+
+
+```
+
+#### Models
+
+Only run the models one time and then readRDS.
+
+##### Model 1
+
+```{r ges model1, echo=TRUE, message=FALSE, warning=FALSE, eval = FALSE}
+gesModel1 <- caret::train(
+  correction_info ~ .,              
+  data = gesData1234,
+  method = "xgbTree",     
+  trControl = train_control,
+  tuneGrid = grid_tune    
+)
+
+saveRDS(gesModel1, file = paste0(models, "gesModel1.rds"), compress = TRUE)
+```
+
+##### Model 2
+
+```{r ges model2, echo=TRUE, message=FALSE, warning=FALSE, eval = FALSE}
+gesModel2 <- caret::train(
+  correction_info ~ .,              
+  data = gesData1235,
+  method = "xgbTree",     
+  trControl = train_control,
+  tuneGrid = grid_tune    
+)
+
+saveRDS(gesModel2, file = paste0(models, "gesModel2.rds"), compress = TRUE)
+```
+
+##### Model 3
+
+```{r ges model3, echo=TRUE, message=FALSE, warning=FALSE, eval = FALSE}
+gesModel3 <- caret::train(
+  correction_info ~ .,              
+  data = gesData1245,
+  method = "xgbTree",     
+  trControl = train_control,
+  tuneGrid = grid_tune    
+)
+
+saveRDS(gesModel3, file = paste0(models, "gesModel3.rds"), compress = TRUE)
+```
+
+##### Model 4
+
+```{r ges model4, echo=TRUE, message=FALSE, warning=FALSE, eval = FALSE}
+gesModel4 <- caret::train(
+  correction_info ~ .,              
+  data = gesData1345,
+  method = "xgbTree",     
+  trControl = train_control,
+  tuneGrid = grid_tune    
+)
+saveRDS(gesModel4, file = paste0(models, "gesModel4.rds"), compress = TRUE)
+```
+
+##### Model 5
+
+```{r ges model5, echo=TRUE, message=FALSE, warning=FALSE, eval = FALSE}
+gesModel5 <- caret::train(
+  correction_info ~ .,              
+  data = gesData2345,
+  method = "xgbTree",     
+  trControl = train_control,
+  tuneGrid = grid_tune    
+)
+
+saveRDS(gesModel5, file = paste0(models, "gesModel5.rds"), compress = TRUE)
+```
+
+##### Load models
+
+Load all models after running, if necessary.
+
+```{r loas models ges, echo=TRUE, message=FALSE, warning=FALSE}
+gesModel1 <- readRDS(paste0(models, "gesModel1.rds"))
+gesModel2 <- readRDS(paste0(models, "gesModel2.rds"))
+gesModel3 <- readRDS(paste0(models, "gesModel3.rds"))
+gesModel4 <- readRDS(paste0(models, "gesModel4.rds"))
+gesModel5 <- readRDS(paste0(models, "gesModel5.rds"))
+
+```
+
+#### Test models
+
+Generate predictions and confusion matrices
+
+```{r test models ges, echo=TRUE, message=FALSE, warning=FALSE}
+# Generate predictions
+gesPredictions1 <- predict(gesModel1, newdata = gesData5)
+gesPredictions2 <- predict(gesModel2, newdata = gesData4)
+gesPredictions3 <- predict(gesModel3, newdata = gesData3)
+gesPredictions4 <- predict(gesModel4, newdata = gesData2)
+gesPredictions5 <- predict(gesModel5, newdata = gesData1)
+
+# Compute confusion matrices
+gesCm1 <- confusionMatrix(gesPredictions1, gesData5$correction_info)
+gesCm2 <- confusionMatrix(gesPredictions2, gesData4$correction_info)
+gesCm3 <- confusionMatrix(gesPredictions3, gesData3$correction_info)
+gesCm4 <- confusionMatrix(gesPredictions4, gesData2$correction_info)
+gesCm5 <- confusionMatrix(gesPredictions5, gesData1$correction_info)
+
+# Extract p-values (you need to define how to extract these based on your metric, here assumed to be some metric from confusion matrix)
+gesPValues <- c(gesCm1$overall['AccuracyPValue'], 
+              gesCm2$overall['AccuracyPValue'], 
+              gesCm3$overall['AccuracyPValue'], 
+              gesCm4$overall['AccuracyPValue'], 
+              gesCm5$overall['AccuracyPValue'])
+```
+
+Combine p-values using Fisher's method
+
+```{r combine p-vals ges, echo=TRUE, message=FALSE, warning=FALSE}
+# Fisher's method
+gesFisher_combined <- -2 * sum(log(gesPValues))
+df <- 2 * length(gesPValues)
+gesPCcombined_fisher <- 1 - pchisq(gesFisher_combined, df)
+print(gesPCcombined_fisher)
+
+# Stouffer's method
+gesZ_scores <- qnorm(1 - gesPValues/2)
+gesCombined_z <- sum(gesZ_scores) / sqrt(length(gesPValues))
+gesP_combined_stouffer <- 2 * (1 - pnorm(abs(gesCombined_z)))
+print(gesP_combined_stouffer)
+```
+
+The p-values sum up to 0, since they are all so small.
+
+#### Feature importance
+
+##### Model 1
+
+```{r ges feature importance 1, echo=TRUE, message=FALSE, warning=FALSE}
+XGBgesModel1 <- gesModel1$finalModel
+importanceXGBgesModel1 <- xgb.importance(model = XGBgesModel1)
+print(importanceXGBgesModel1)
+xgb.plot.importance(importanceXGBgesModel1)
+```
+
+##### Model 2
+
+```{r ges feature importance 2, echo=TRUE, message=FALSE, warning=FALSE}
+XGBgesModel2 <- gesModel2$finalModel
+importanceXGBgesModel2 <- xgb.importance(model = XGBgesModel2)
+print(importanceXGBgesModel2)
+xgb.plot.importance(importanceXGBgesModel2)
+```
+
+##### Model 3
+
+```{r ges feature importance 3, echo=TRUE, message=FALSE, warning=FALSE}
+XGBgesModel3 <- gesModel3$finalModel
+importanceXGBgesModel3 <- xgb.importance(model = XGBgesModel3)
+print(importanceXGBgesModel3)
+xgb.plot.importance(importanceXGBgesModel3)
+```
+
+##### Model 4
+
+```{r ges feature importance 4, echo=TRUE, message=FALSE, warning=FALSE}
+XGBgesModel4 <- gesModel4$finalModel
+importanceXGBgesModel4 <- xgb.importance(model = XGBgesModel4)
+print(importanceXGBgesModel4)
+xgb.plot.importance(importanceXGBgesModel4)
+```
+
+##### Model 5
+
+```{r ges feature importance 5, echo=TRUE, message=FALSE, warning=FALSE}
+XGBgesModel5 <- gesModel5$finalModel
+importanceXGBgesModel5 <- xgb.importance(model = XGBgesModel5)
+print(importanceXGBgesModel5)
+xgb.plot.importance(importanceXGBgesModel5)
+```
+
+##### Cumulative feature importance
+
+```{r ges cumulative importance, echo=TRUE, message=FALSE, warning=FALSE}
+# Function to extract and normalize importance
+get_normalized_importance <- function(model) {
+  importance <- xgb.importance(model = model)
+  importance$Gain <- importance$Gain / sum(importance$Gain)
+  return(importance)
+}
+
+# Extract normalized importance for each model
+gesImportance1 <- get_normalized_importance(gesModel1$finalModel)
+gesImportance2 <- get_normalized_importance(gesModel2$finalModel)
+gesImportance3 <- get_normalized_importance(gesModel3$finalModel)
+gesImportance4 <- get_normalized_importance(gesModel4$finalModel)
+gesImportance5 <- get_normalized_importance(gesModel5$finalModel)
+
+# Combine importances
+gesAllImportances <- list(gesImportance1, gesImportance2, gesImportance3, gesImportance4, gesImportance5)
+
+# Function to merge importances
+merge_importances <- function(importances) {
+  for (i in 2:length(importances)) {
+    names(importances[[i]])[2:4] <- paste0(names(importances[[i]])[2:4], "_", i)
+  }
+  merged <- Reduce(function(x, y) merge(x, y, by = "Feature", all = TRUE), importances)
+  merged[is.na(merged)] <- 0  # Replace NAs with 0
+  gain_cols <- grep("Gain", colnames(merged), value = TRUE)
+  merged$Cumulative <- rowSums(merged[, ..gain_cols])
+  return(merged[, .(Feature, Cumulative)])
+}
+
+# Merge and sort importances
+gesCumulativeImportance <- merge_importances(gesAllImportances)
+gesCumulativeImportance <- gesCumulativeImportance[order(-gesCumulativeImportance$Cumulative), ]
+
+# Print cumulative feature importance
+print(gesCumulativeImportance)
+```
+
+## PCA
+
+Now, to select features along different (uncorrelated) dimensions, we want to connect these results with the results of PCA we performed in script @ADDREF.
+
+This is a function to extract features per components
+
+```{r}
+
+# Function to select top 3 features per component
+select_top_features <- function(pc_column, xgb_importance, top_n = 3) {
+
+  # Find common features ranked by XGBoost importance
+  common_features <- intersect(pc_column, xgb_importance$Feature)
+  common_features <- xgb_importance %>%
+    filter(Feature %in% common_features) %>%
+    arrange(Rank) %>%
+    pull(Feature)
+  return(head(common_features, top_n))
+}
+
+```
+
+Now let's collect 10 features per component that have highest combined ranking from PCA and XGBoost. This means that for each feature we sum up the ranking it obtained in cumulative importance (XGBoost) and loading on a principal component (PCA).
+
+```{r}
+
+# Rank the features based on XGBoost importance (cumulative)
+gesCumulativeImportance$XGB_Rank <- rank(-gesCumulativeImportance$Cumulative)
+
+# Load in PCA for gesture
+ges_pca <- read_csv(paste0(datasets, "PCA_top_contributors_ges.csv"))
+
+# 2. For each PC (PC1, PC2, PC3), rank the features based on their loadings
+combined_ranks_per_pc <- list()
+
+for (pc in c("PC1", "PC2", "PC3")) {
+  # Extract the features and loadings for the current PC
+  pca_pc_loadings <- ges_pca[, c(pc, paste0(pc, "_Loading"))]
+  colnames(pca_pc_loadings) <- c("Feature", "Loading")
+  
+  # Rank the features based on the absolute loading values (higher loadings should get lower rank)
+  pca_pc_loadings$PCA_Rank <- rank(-abs(pca_pc_loadings$Loading))
+  
+  # Merge PCA loadings with XGBoost importance ranks
+  merged_data <- merge(pca_pc_loadings, gesCumulativeImportance[, c("Feature", "XGB_Rank")], by = "Feature")
+  
+  # Calculate combined rank by summing XGBoost rank and PCA rank
+  merged_data$Combined_Rank <- merged_data$XGB_Rank + merged_data$PCA_Rank
+  
+  # Sort by the combined rank (lower rank is better)
+  sorted_data <- merged_data[order(merged_data$Combined_Rank), ]
+  
+  # Select the top n features based on the combined rank for the current PC
+  top_n_features <- 10  # Adjust the number of top features as needed
+  combined_ranks_per_pc[[pc]] <- head(sorted_data, top_n_features)
+}
+
+# Output the top features per PC based on combined ranking
+combined_ranks_per_pc
+
+```
+
+Now we have 10 features per component with highest combined ranking. For modelling, we want to pick three features per component. Which would it be in this case?
+
+```{r}
+
+# Number of top features to display
+top_n_features <- 3
+
+# Print the top 3 features per component
+for (pc in c("PC1", "PC2", "PC3")) {
+  cat("\nTop 3 Features for", pc, ":\n")
+  
+  # Get the top 3 features based on combined rank for the current PC
+  top_features <- head(combined_ranks_per_pc[[pc]], top_n_features)
+  
+  # Print the results
+  print(top_features[, c("Feature", "XGB_Rank", "PCA_Rank", "Combined_Rank")])
+}
+
+```
+
+###################### 
+
+# Vocalization
+
+###################### 
+
+First, for vocal modality, we need to remove columns with features that are not present in vocal modality overal. These are all gesture features. They should be anyway mostly filled with NaNs as in vocal modality, any gestures were 'forbidden'. However, we will keep the balance features (associated with center of pressure, COP) as they still reflect bodily posture during vocal performance. Additionally, we need to make sure that df does not contain any NAs.
+
+```{r}
+
+data_voc <- read_csv(paste0(datasets, "voc_clean_df.csv"))
+
+# Make predictor a factor variable
+data_voc$correction_info <- as.factor(data_voc$correction_info)
+
+```
+
+## Random forests
+
+```{r}
+
+# prepare predictors
+predictors <- setdiff(names(data_voc), "correction_info")
+
+formula_str <- paste("correction_info ~", paste(predictors, collapse = " + "))
+
+# Convert the formula string to a formula object
+vocTree_formula <- as.formula(formula_str)
+
+# Now use the formula in rpart
+vocTree <- rpart(formula = vocTree_formula, data = data_voc, 
+                method='class', # Specify that it's a classification tree
+                control = rpart.control(maxdepth = 5)  # Control parameters for the 'rpart' function
+)
+
+prp(
+  vocTree,         # The decision tree object to be visualized
+  extra = 1,      # Show extra information (like node statistics) in the plot
+  varlen = 0,     # Length of variable names (0 means auto-determined)
+  faclen = 0     # Length of factor levels displayed on the plot (increase as needed)
+)
+```
+
+We will build a random forest first.
+
+```{r set seed, echo=TRUE, message=FALSE, warning=FALSE}
+set.seed(995) # Set a seed for reproducibility
+```
+
+Split the data
+
+```{r}
+
+
+# # Split the data into training and testing subsets
+# sample_indices <- sample(1:nrow(data_voc), 0.8*nrow(data_voc)) # 80% training, 20% testing
+# train_data <- data_voc[sample_indices, ]
+# test_data <- data_voc[-sample_indices, ]
+
+# This method should ensure that all levels of our dependent variable are present in both sets
+# Ensure each level is present in both sets
+train_data <- data_voc %>%
+  group_by(correction_info) %>%
+  sample_frac(0.8, replace = FALSE) %>%
+  ungroup()
+
+# Assign the remaining samples to the test set
+test_data <- anti_join(data_voc, train_data)
+
+```
+
+Building the untuned model.
+
+```{r untuned ger, echo=TRUE, message=FALSE, warning=FALSE}
+# Untuned Model with importance (permutation) option set
+vocUntuned <- ranger(
+  y = train_data$correction_info,
+  x = train_data[,0:70], # without outcome var
+  num.trees = 500,
+  importance = "permutation"
+)
+
+predictions <- predict(vocUntuned, data = test_data)$predictions
+
+# Create a confusion matrix
+confusion_matrix <- confusionMatrix(predictions, test_data$correction_info)
+
+# Print the confusion matrix
+print(confusion_matrix)
+
+# Calculate feature importance
+feature_importance <- importance(vocUntuned, num.threads = 1, type = 1) 
+
+# Convert to data frame
+feature_importance <- as.data.frame(feature_importance, stringsAsFactors = FALSE)
+feature_importance$Feature <- rownames(feature_importance)
+colnames(feature_importance) <- c("Importance", "Feature")
+
+# Sort by importance
+sorted_feature_importance <- feature_importance[order(-feature_importance$Importance), ]
+
+# Print sorted feature importance
+print(sorted_feature_importance)
+```
+
+Set the parameters for the random forest.
+
+```{r settings for RF ges, echo=TRUE, message=FALSE, warning=FALSE}
+# Define the number of CPU cores to use
+num_cores <- detectCores()
+
+# Create a cluster with specified number of cores
+cl <- makeCluster(num_cores)
+```
+
+Tuning the random forest.
+
+```{r tuning RF ger, message=FALSE, warning=FALSE}
+tuneVoc <- makeClassifTask(data = data_voc[,0:71], # with OV
+                           target = "correction_info")
+
+tuneVoc <- tuneRanger(tuneVoc,
+                      measure = list(multiclass.brier),
+                      num.trees = 500)
+
+#Return hyperparameter values
+tuneVoc
+
+# Recommended parameter settings: 
+# mtry min.node.size sample.fraction
+# 1    6             4        0.522745
+# Results: 
+#   multiclass.brier exec.time
+# 1        0.7256575     0.166
+
+vocTuned <- ranger(
+  y = train_data$correction_info,
+  x = train_data[,0:70],  #without OV
+  num.trees = 5000, 
+  mtry = 6, # Set the recommended mtry value (number of features).
+  min.node.size = 4, # Set the recommended min.node.size value (number of samples before a node terminates).
+  sample.fraction = 0.522745, # Set the recommended sample fraction value.(% of data for bagging).
+  importance = "permutation" # Permutation is a computationally intensive test.
+)
+
+predictions <- predict(vocTuned, data = test_data)$predictions
+
+# Create a confusion matrix
+confusion_matrix <- confusionMatrix(predictions, test_data$correction_info)
+
+# Print the confusion matrix
+print(confusion_matrix)
+
+# Calculate feature importance
+feature_importance <- importance(vocTuned, num.threads = 1, type = 1) 
+
+# Convert to data frame
+feature_importance <- as.data.frame(feature_importance, stringsAsFactors = FALSE)
+feature_importance$Feature <- rownames(feature_importance)
+colnames(feature_importance) <- c("Importance", "Feature")
+
+# Sort by importance
+sorted_feature_importance <- feature_importance[order(-feature_importance$Importance), ]
+
+# Print sorted feature importance
+print(sorted_feature_importance)
+
+
+# Close the cluster when you're done with your parallel tasks
+#stopCluster(cl)
+```
+
+Create a tuned model only.
+
+```{r tuned model imputed ger, echo=TRUE, message=FALSE, warning=FALSE}
+# Create a classification task for tuning
+tuneVoc <- makeClassifTask(data = train_data[, 0:71], target = "correction_info") #with OV
+
+# Tune the model
+tuneVoc <- tuneRanger(tuneVoc, measure = list(multiclass.brier), num.trees = 500)
+
+# Return hyperparameter values
+tuneVoc
+# Recommended parameter settings: 
+#   mtry min.node.size sample.fraction
+# 1    3             3       0.5835222
+# Results: 
+#   multiclass.brier exec.time
+# 1        0.7457527      0.16
+
+# Fit the tuned model on the training data
+vocTuned <- ranger(
+  y = train_data$correction_info,
+  x = train_data[, 0:70], # without OV
+  num.trees = 5000,
+  mtry = 3,
+  min.node.size = 3,
+  sample.fraction = 0.5835222,
+  importance = "permutation"
+)
+
+# Predict on the test data
+predictions <- predict(vocTuned, data = test_data)$predictions
+
+# Create a confusion matrix
+confusion_matrix <- confusionMatrix(predictions, test_data$correction_info)
+
+# Print the confusion matrix
+print(confusion_matrix)
+
+# Calculate feature importance
+feature_importance <- importance(vocTuned, num.threads = 1, type = 1)
+
+# Convert to data frame
+feature_importance_df <- as.data.frame(feature_importance, stringsAsFactors = FALSE)
+feature_importance_df$Feature <- rownames(feature_importance_df)
+colnames(feature_importance_df) <- c("Importance", "Feature")
+
+# Sort by importance
+sorted_feature_importance <- feature_importance_df[order(-feature_importance_df$Importance), ]
+
+# Print sorted feature importance
+print(sorted_feature_importance)
+
+# Close the cluster when you're done with your parallel tasks
+#stopCluster(cl)
+```
+
+Save data frame.
+
+```{r save imputed data, echo=TRUE, message=FALSE, warning=FALSE, eval = FALSE}
+
+write.csv(data_voc, file = paste0(datasets, "vocDataXGB.csv"), row.names = FALSE)
+```
+
+# XGBoost
+
+Ensure parallel processing.
+
+```{r parallel, echo=TRUE, message=FALSE, warning=FALSE}
+# Detect the number of available cores
+cores <- detectCores() #- 1  # Leave one core free
+
+# Create a cluster with the detected number of cores
+cl <- makeCluster(cores)
+
+# Register the parallel backend
+registerDoParallel(cl)
+```
+
+Define the grid and estimate runtime.
+
+```{r grid, echo=TRUE, message=FALSE, warning=FALSE}
+grid_tune <- expand.grid(
+  nrounds = c(5000, 10000), 
+  max_depth = c(3, 6), 
+  eta = c(0.05, 0.1), 
+  gamma = c(0.1), 
+  colsample_bytree = c(0.6, 0.8), 
+  min_child_weight = c(1), 
+  subsample = c(0.75, 1.0)
+)
+
+# Calculate total combinations
+total_combinations <- nrow(grid_tune)
+
+# Estimate single model run time (assume 1 minute per run)
+single_model_time <- 10 # minute
+
+# Total runs for cross-validation
+folds <- 5
+total_runs <- total_combinations * folds
+
+# Total time estimation without parallel processing
+total_time <- total_runs * single_model_time # in minutes
+
+# Convert to hours
+total_time_hours <- total_time / 60
+
+# Output estimated time without parallel processing
+print(paste("Estimated time for grid search without parallel processing:", total_time_hours, "hours"))
+
+# Parallel processing with 4 cores
+cores <- 24
+total_time_parallel <- total_time / cores # in minutes
+
+# Convert to hours
+total_time_parallel_hours <- total_time_parallel / 60
+
+# Output estimated time with parallel processing
+print(paste("Estimated time for grid search with", cores, "cores:", total_time_parallel_hours, "hours"))
+
+rm(total_combinations,single_model_time,folds,total_runs,total_time,total_time_hours,total_time_parallel,total_time_parallel_hours,cores)
+```
+
+#### K-fold cross-validation
+
+Create subsets to train and test data (80/20).
+
+```{r k-fold subset, echo=TRUE, message=FALSE, warning=FALSE}
+# Set seed for reproducibility
+set.seed(998)
+
+# Set up train control
+train_control <- trainControl(
+  method = "cv",        # Cross-validation
+  number = 5,           # 5-fold cross-validation
+  allowParallel = TRUE  # Enable parallel processing
+)
+
+
+# Define the number of subsets
+numSubsets <- 5
+
+# Load MICE-imputed data (using placeholder 'data_ges' as the input dataset)
+vocDataXGB <- read_csv(paste0(datasets, "vocDataXGB.csv"))
+
+# Ensure 'correction_info' is a factor
+vocDataXGB$correction_info <- as.factor(vocDataXGB$correction_info)
+
+# Remove rows with only NA values
+vocDataXGB <- vocDataXGB[rowSums(is.na(vocDataXGB)) < ncol(vocDataXGB), ]
+
+# Split data by levels of 'correction_info'
+correction_levels <- levels(vocDataXGB$correction_info)
+split_data <- split(vocDataXGB, vocDataXGB$correction_info)
+
+# Initialize a list to store subsets
+vocSubsets <- vector("list", length = numSubsets)
+
+# Distribute rows for each level equally across subsets
+for (level in correction_levels) {
+  level_data <- split_data[[level]]
+  subset_sizes <- rep(floor(nrow(level_data) / numSubsets), numSubsets)
+  remainder <- nrow(level_data) %% numSubsets
+  
+  # Distribute remainder rows randomly
+  if (remainder > 0) {
+    subset_sizes[seq_len(remainder)] <- subset_sizes[seq_len(remainder)] + 1
+  }
+  
+  # Shuffle rows of the level and assign to subsets
+  shuffled_data <- level_data[sample(nrow(level_data)), ]
+  indices <- cumsum(c(0, subset_sizes))
+  
+  for (i in 1:numSubsets) {
+    if (is.null(vocSubsets[[i]])) {
+      vocSubsets[[i]] <- shuffled_data[(indices[i] + 1):indices[i + 1], ]
+    } else {
+      vocSubsets[[i]] <- rbind(vocSubsets[[i]], shuffled_data[(indices[i] + 1):indices[i + 1], ])
+    }
+  }
+}
+
+# Naming the subsets
+names(vocSubsets) <- paste0("vocData", 1:numSubsets)
+
+# Verify balance in subsets
+for (i in 1:numSubsets) {
+  cat("Subset", i, "contains rows:", nrow(vocSubsets[[i]]), "and levels:\n")
+  print(table(vocSubsets[[i]]$correction_info))
+}
+
+# Remove any rows with only NAs from subsets just to ensure cleanliness
+vocSubsets <- lapply(vocSubsets, function(subset) {
+  subset[rowSums(is.na(subset)) < ncol(subset), ]
+})
+
+# Access the subsets
+vocData1 <- vocSubsets$vocData1
+vocData2 <- vocSubsets$vocData2
+vocData3 <- vocSubsets$vocData3
+vocData4 <- vocSubsets$vocData4
+vocData5 <- vocSubsets$vocData5
+
+# Combine subsets into 80% groups
+vocData1234 <- rbind(vocData1, vocData2, vocData3, vocData4)
+vocData1235 <- rbind(vocData1, vocData2, vocData3, vocData5)
+vocData1245 <- rbind(vocData1, vocData2, vocData4, vocData5)
+vocData1345 <- rbind(vocData1, vocData3, vocData4, vocData5)
+vocData2345 <- rbind(vocData2, vocData3, vocData4, vocData5)
+
+# Final verification of all levels in the combined datasets
+combined_sets <- list(vocData1234, vocData1235, vocData1245, vocData1345, vocData2345)
+names(combined_sets) <- c("vocData1234", "vocData1235", "vocData1245", "vocData1345", "vocData2345")
+
+for (set_name in names(combined_sets)) {
+  cat("Dataset", set_name, "contains rows:", nrow(combined_sets[[set_name]]), "and levels:\n")
+  print(table(combined_sets[[set_name]]$correction_info))
+}
+
+```
+
+#### Models
+
+Only run the models one time and then readRDS.
+
+##### Model 1
+
+```{r ger model1, echo=TRUE, message=FALSE, warning=FALSE, eval = FALSE}
+vocModel1 <- caret::train(
+  correction_info ~ .,              
+  data = vocData1234,
+  method = "xgbTree",     
+  trControl = train_control,
+  tuneGrid = grid_tune    
+)
+
+saveRDS(vocModel1, file = paste0(models, "vocModel1.rds"), compress = TRUE)
+```
+
+##### Model 2
+
+```{r ger model2, echo=TRUE, message=FALSE, warning=FALSE, eval = FALSE}
+vocModel2 <- caret::train(
+  correction_info ~ .,              
+  data = vocData1235,
+  method = "xgbTree",     
+  trControl = train_control,
+  tuneGrid = grid_tune    
+)
+
+saveRDS(vocModel2, file = paste0(models, "vocModel2.rds"), compress = TRUE)
+```
+
+##### Model 3
+
+```{r ger model3, echo=TRUE, message=FALSE, warning=FALSE, eval = FALSE}
+vocModel3 <- caret::train(
+  correction_info ~ .,              
+  data = vocData1245,
+  method = "xgbTree",     
+  trControl = train_control,
+  tuneGrid = grid_tune    
+)
+
+saveRDS(vocModel3, file = paste0(models, "vocModel3.rds"), compress = TRUE)
+```
+
+##### Model 4
+
+```{r ger model4, echo=TRUE, message=FALSE, warning=FALSE, eval = FALSE}
+vocModel4 <- caret::train(
+  correction_info ~ .,              
+  data = vocData1345,
+  method = "xgbTree",     
+  trControl = train_control,
+  tuneGrid = grid_tune    
+)
+saveRDS(vocModel4, file = paste0(models, "vocModel4.rds"), compress = TRUE)
+```
+
+##### Model 5
+
+```{r ger model5, echo=TRUE, message=FALSE, warning=FALSE, eval = FALSE}
+vocModel5 <- caret::train(
+  correction_info ~ .,              
+  data = vocData2345,
+  method = "xgbTree",     
+  trControl = train_control,
+  tuneGrid = grid_tune    
+)
+
+saveRDS(vocModel5, file = paste0(models, "vocModel5.rds"), compress = TRUE)
+```
+
+##### Load models
+
+Load all models after running, if necessary.
+
+```{r loas models ger, echo=TRUE, message=FALSE, warning=FALSE}
+vocModel1 <- readRDS(paste0(models, "vocModel1.rds"))
+vocModel2 <- readRDS(paste0(models, "vocModel2.rds"))
+vocModel3 <- readRDS(paste0(models, "vocModel3.rds"))
+vocModel4 <- readRDS(paste0(models, "vocModel4.rds"))
+vocModel5 <- readRDS(paste0(models, "vocModel5.rds"))
+```
+
+#### Test models
+
+Generate predictions and confusion matrices
+
+```{r test models ger, echo=TRUE, message=FALSE, warning=FALSE}
+# Generate predictions
+vocPredictions1 <- predict(vocModel1, newdata = vocData5)
+vocPredictions2 <- predict(vocModel2, newdata = vocData4)
+vocPredictions3 <- predict(vocModel3, newdata = vocData3)
+vocPredictions4 <- predict(vocModel4, newdata = vocData2)
+vocPredictions5 <- predict(vocModel5, newdata = vocData1)
+
+# Compute confusion matrices
+vocCm1 <- confusionMatrix(vocPredictions1, vocData5$correction_info)
+vocCm2 <- confusionMatrix(vocPredictions2, vocData4$correction_info)
+vocCm3 <- confusionMatrix(vocPredictions3, vocData3$correction_info)
+vocCm4 <- confusionMatrix(vocPredictions4, vocData2$correction_info)
+vocCm5 <- confusionMatrix(vocPredictions5, vocData1$correction_info)
+
+# Extract p-values (you need to define how to extract these based on your metric, here assumed to be some metric from confusion matrix)
+vocPValues <- c(vocCm1$overall['AccuracyPValue'], 
+              vocCm2$overall['AccuracyPValue'], 
+              vocCm3$overall['AccuracyPValue'], 
+              vocCm4$overall['AccuracyPValue'], 
+              vocCm5$overall['AccuracyPValue'])
+```
+
+Combine p-values using Fisher's method
+
+```{r combine p-vals ger, echo=TRUE, message=FALSE, warning=FALSE}
+# Fisher's method
+vocFisher_combined <- -2 * sum(log(vocPValues))
+df <- 2 * length(vocPValues)
+vocPCcombined_fisher <- 1 - pchisq(vocFisher_combined, df)
+print(vocPCcombined_fisher)
+
+# Stouffer's method
+vocZ_scores <- qnorm(1 - vocPValues/2)
+vocCombined_z <- sum(vocZ_scores) / sqrt(length(vocPValues))
+vocP_combined_stouffer <- 2 * (1 - pnorm(abs(vocCombined_z)))
+print(vocP_combined_stouffer)
+```
+
+The p-values sum up to 0, since they are all so small.
+
+#### Feature importance
+
+##### Model 1
+
+```{r ger feature importance 1, echo=TRUE, message=FALSE, warning=FALSE}
+XGBvocModel1 <- vocModel1$finalModel
+importanceXGBvocModel1 <- xgb.importance(model = XGBvocModel1)
+print(importanceXGBvocModel1)
+xgb.plot.importance(importanceXGBvocModel1)
+```
+
+##### Model 2
+
+```{r ger feature importance 2, echo=TRUE, message=FALSE, warning=FALSE}
+XGBvocModel2 <- vocModel2$finalModel
+importanceXGBvocModel2 <- xgb.importance(model = XGBvocModel2)
+print(importanceXGBvocModel2)
+xgb.plot.importance(importanceXGBvocModel2)
+```
+
+##### Model 3
+
+```{r ger feature importance 3, echo=TRUE, message=FALSE, warning=FALSE}
+XGBvocModel3 <- vocModel3$finalModel
+importanceXGBvocModel3 <- xgb.importance(model = XGBvocModel3)
+print(importanceXGBvocModel3)
+xgb.plot.importance(importanceXGBvocModel3)
+```
+
+##### Model 4
+
+```{r ger feature importance 4, echo=TRUE, message=FALSE, warning=FALSE}
+XGBvocModel4 <- vocModel4$finalModel
+importanceXGBvocModel4 <- xgb.importance(model = XGBvocModel4)
+print(importanceXGBvocModel4)
+xgb.plot.importance(importanceXGBvocModel4)
+```
+
+##### Model 5
+
+```{r ger feature importance 5, echo=TRUE, message=FALSE, warning=FALSE}
+XGBvocModel5 <- vocModel5$finalModel
+importanceXGBvocModel5 <- xgb.importance(model = XGBvocModel5)
+print(importanceXGBvocModel5)
+xgb.plot.importance(importanceXGBvocModel5)
+```
+
+##### Cumulative feature importance
+
+```{r ger cumulative importance, echo=TRUE, message=FALSE, warning=FALSE}
+# Function to extract and normalize importance
+get_normalized_importance <- function(model) {
+  importance <- xgb.importance(model = model)
+  importance$Gain <- importance$Gain / sum(importance$Gain)
+  return(importance)
+}
+
+# Extract normalized importance for each model
+vocImportance1 <- get_normalized_importance(vocModel1$finalModel)
+vocImportance2 <- get_normalized_importance(vocModel2$finalModel)
+vocImportance3 <- get_normalized_importance(vocModel3$finalModel)
+vocImportance4 <- get_normalized_importance(vocModel4$finalModel)
+vocImportance5 <- get_normalized_importance(vocModel5$finalModel)
+
+# Combine importances
+vocAllImportances <- list(vocImportance1, vocImportance2, vocImportance3, vocImportance4, vocImportance5)
+
+# Function to merge importances
+merge_importances <- function(importances) {
+  for (i in 2:length(importances)) {
+    names(importances[[i]])[2:4] <- paste0(names(importances[[i]])[2:4], "_", i)
+  }
+  merged <- Reduce(function(x, y) merge(x, y, by = "Feature", all = TRUE), importances)
+  merged[is.na(merged)] <- 0  # Replace NAs with 0
+  gain_cols <- grep("Gain", colnames(merged), value = TRUE)
+  merged$Cumulative <- rowSums(merged[, ..gain_cols])
+  return(merged[, .(Feature, Cumulative)])
+}
+
+# Merge and sort importances
+vocCumulativeImportance <- merge_importances(vocAllImportances)
+vocCumulativeImportance <- vocCumulativeImportance[order(-vocCumulativeImportance$Cumulative), ]
+
+# Print cumulative feature importance
+print(vocCumulativeImportance)
+```
+
+## PCA
+
+Now let's collect 10 features per component that have highest combined ranking from PCA and XGBoost. This means that for each feature we sum up the ranking it obtained in cumulative importance (XGBoost) and loading on a principal component (PCA).
+
+```{r}
+
+# Rank the features based on XGBoost importance (cumulative)
+vocCumulativeImportance$XGB_Rank <- rank(-vocCumulativeImportance$Cumulative)
+
+# Load in PCA for gesture
+voc_pca <- read_csv(paste0(datasets, "PCA_top_contributors_voc.csv"))
+
+# For each PC (PC1, PC2, PC3), rank the features based on their loadings
+combined_ranks_per_pc <- list()
+
+for (pc in c("PC1", "PC2", "PC3")) {
+  # Extract the features and loadings for the current PC
+  pca_pc_loadings <- voc_pca[, c(pc, paste0(pc, "_Loading"))]
+  colnames(pca_pc_loadings) <- c("Feature", "Loading")
+  
+  # Rank the features based on the absolute loading values (higher loadings should get lower rank)
+  pca_pc_loadings$PCA_Rank <- rank(-abs(pca_pc_loadings$Loading))
+  
+  # Merge PCA loadings with XGBoost importance ranks
+  merged_data <- merge(pca_pc_loadings, vocCumulativeImportance[, c("Feature", "XGB_Rank")], by = "Feature")
+  
+  # Calculate combined rank by summing XGBoost rank and PCA rank
+  merged_data$Combined_Rank <- merged_data$XGB_Rank + merged_data$PCA_Rank
+  
+  # Sort by the combined rank (lower rank is better)
+  sorted_data <- merged_data[order(merged_data$Combined_Rank), ]
+  
+  # Select the top n features based on the combined rank for the current PC
+  top_n_features <- 10  # Adjust the number of top features as needed
+  combined_ranks_per_pc[[pc]] <- head(sorted_data, top_n_features)
+}
+
+# Output the top features per PC based on combined ranking
+combined_ranks_per_pc
+
+```
+
+Now we have 10 features per component with highest combined ranking. For modelling, we want to pick three features per component. Which would it be in this case?
+
+```{r}
+
+# Number of top features to display
+top_n_features <- 3
+
+# Print the top 3 features per component
+for (pc in c("PC1", "PC2", "PC3")) {
+  cat("\nTop 3 Features for", pc, ":\n")
+  
+  # Get the top 3 features based on combined rank for the current PC
+  top_features <- head(combined_ranks_per_pc[[pc]], top_n_features)
+  
+  # Print the results
+  print(top_features[, c("Feature", "XGB_Rank", "PCA_Rank", "Combined_Rank")])
+}
+
+```
+
+###################### 
+
+# Multimodal
+
+###################### 
+
+In multimodal/combined condition, all features stay as both gesture and vocalization suppose to be used by performers. But we still need to make sure that df does not contain any NAs.
+
+```{r}
+
+data_mult <- read_csv(paste0(datasets, "multi_clean_df.csv"))
+
+# Make predictor a factor variable
+data_mult$correction_info <- as.factor(data_mult$correction_info)
+
+```
+
+## Random forests
+
+```{r}
+
+# prepare predictors
+predictors <- setdiff(names(data_mult), "correction_info")
+
+formula_str <- paste("correction_info ~", paste(predictors, collapse = " + "))
+
+# Convert the formula string to a formula object
+multTree_formula <- as.formula(formula_str)
+
+# Now use the formula in rpart
+multTree <- rpart(formula = multTree_formula, data = data_mult, 
+                method='class', # Specify that it's a classification tree
+                control = rpart.control(maxdepth = 5)  # Control parameters for the 'rpart' function
+)
+
+prp(
+  multTree,         # The decision tree object to be visualized
+  extra = 1,      # Show extra information (like node statistics) in the plot
+  varlen = 0,     # Length of variable names (0 means auto-determined)
+  faclen = 0     # Length of factor levels displayed on the plot (increase as needed)
+)
+```
+
+We will build a random forest first.
+
+```{r set seed, echo=TRUE, message=FALSE, warning=FALSE}
+set.seed(989) # Set a seed for reproducibility
+```
+
+Split the data
+
+```{r}
+
+
+# # Split the data into training and testing subsets
+# sample_indices <- sample(1:nrow(data_voc), 0.8*nrow(data_voc)) # 80% training, 20% testing
+# train_data <- data_voc[sample_indices, ]
+# test_data <- data_voc[-sample_indices, ]
+
+# This method should ensure that all levels of our dependent variable are present in both sets
+# Ensure each level is present in both sets
+train_data <- data_mult %>%
+  group_by(correction_info) %>%
+  sample_frac(0.8, replace = FALSE) %>%
+  ungroup()
+
+# Assign the remaining samples to the test set
+test_data <- anti_join(data_mult, train_data)
+
+```
+
+Building the untuned model.
+
+```{r untuned ger, echo=TRUE, message=FALSE, warning=FALSE}
+# Untuned Model with importance (permutation) option set
+multUntuned <- ranger(
+  y = train_data$correction_info,
+  x = train_data[,0:394], # without OV
+  num.trees = 500,
+  importance = "permutation"
+)
+
+predictions <- predict(multUntuned, data = test_data)$predictions
+
+# Create a confusion matrix
+confusion_matrix <- confusionMatrix(predictions, test_data$correction_info)
+
+# Print the confusion matrix
+print(confusion_matrix)
+
+# Calculate feature importance
+feature_importance <- importance(multUntuned, num.threads = 1, type = 1) 
+
+# Convert to data frame
+feature_importance <- as.data.frame(feature_importance, stringsAsFactors = FALSE)
+feature_importance$Feature <- rownames(feature_importance)
+colnames(feature_importance) <- c("Importance", "Feature")
+
+# Sort by importance
+sorted_feature_importance <- feature_importance[order(-feature_importance$Importance), ]
+
+# Print sorted feature importance
+print(sorted_feature_importance)
+```
+
+Set the parameters for the random forest.
+
+```{r settings for RF mult, echo=TRUE, message=FALSE, warning=FALSE}
+# Define the number of CPU cores to use
+num_cores <- detectCores()
+
+# Create a cluster with specified number of cores
+cl <- makeCluster(num_cores)
+```
+
+Tuning the random forest.
+
+```{r tuning RF ger, message=FALSE, warning=FALSE}
+
+tuneMult <- makeClassifTask(data = data_mult[,0:395], # with OV
+                           target = "correction_info")
+
+tuneMult <- tuneRanger(tuneMult,
+                      measure = list(multiclass.brier),
+                      num.trees = 500)
+
+#Return hyperparameter values
+tuneMult
+
+# Recommended parameter settings: 
+#   mtry min.node.size sample.fraction
+# 1  232             3         0.70919
+# Results: 
+#   multiclass.brier exec.time
+# 1        0.7385408       0.2
+
+multTuned <- ranger(
+  y = train_data$correction_info,
+  x = train_data[,0:394],  # without OV
+  num.trees = 5000, 
+  mtry = 232, # Set the recommended mtry value (number of features).
+  min.node.size = 3, # Set the recommended min.node.size value (number of samples before a node terminates).
+  sample.fraction = 0.70919, # Set the recommended sample fraction value.(% of data for bagging).
+  importance = "permutation" # Permutation is a computationally intensive test.
+)
+
+predictions <- predict(multTuned, data = test_data)$predictions
+
+# Create a confusion matrix
+confusion_matrix <- confusionMatrix(predictions, test_data$correction_info)
+
+# Print the confusion matrix
+print(confusion_matrix)
+
+# Calculate feature importance
+feature_importance <- importance(multTuned, num.threads = 1, type = 1) 
+
+# Convert to data frame
+feature_importance <- as.data.frame(feature_importance, stringsAsFactors = FALSE)
+feature_importance$Feature <- rownames(feature_importance)
+colnames(feature_importance) <- c("Importance", "Feature")
+
+# Sort by importance
+sorted_feature_importance <- feature_importance[order(-feature_importance$Importance), ]
+
+# Print sorted feature importance
+print(sorted_feature_importance)
+
+
+# Close the cluster when you're done with your parallel tasks
+#stopCluster(cl)
+```
+
+Create a tuned model only.
+
+```{r tuned model imputed ger, echo=TRUE, message=FALSE, warning=FALSE}
+# Create a classification task for tuning
+tuneMult <- makeClassifTask(data = train_data[, 0:395], target = "correction_info") # with OV
+
+# Tune the model
+tuneMult <- tuneRanger(tuneMult, measure = list(multiclass.brier), num.trees = 500)
+
+# Return hyperparameter values
+tuneMult
+# Recommended parameter settings: 
+# mtry min.node.size sample.fraction
+# 1  268             3       0.3295434
+# Results: 
+#   multiclass.brier exec.time
+# 1        0.8275102     0.172
+
+# Fit the tuned model on the training data
+multTuned <- ranger(
+  y = train_data$correction_info,
+  x = train_data[, 0:394],  # without OV
+  num.trees = 5000,
+  mtry = 268,
+  min.node.size = 3,
+  sample.fraction = 0.3295434,
+  importance = "permutation"
+)
+
+# Predict on the test data
+predictions <- predict(multTuned, data = test_data)$predictions
+
+# Create a confusion matrix
+confusion_matrix <- confusionMatrix(predictions, test_data$correction_info)
+
+# Print the confusion matrix
+print(confusion_matrix)
+
+# Calculate feature importance
+feature_importance <- importance(multTuned, num.threads = 1, type = 1)
+
+# Convert to data frame
+feature_importance_df <- as.data.frame(feature_importance, stringsAsFactors = FALSE)
+feature_importance_df$Feature <- rownames(feature_importance_df)
+colnames(feature_importance_df) <- c("Importance", "Feature")
+
+# Sort by importance
+sorted_feature_importance <- feature_importance_df[order(-feature_importance_df$Importance), ]
+
+# Print sorted feature importance
+print(sorted_feature_importance)
+
+# Close the cluster when you're done with your parallel tasks
+#stopCluster(cl)
+```
+
+Save data frame.
+
+```{r save imputed data, echo=TRUE, message=FALSE, warning=FALSE, eval = FALSE}
+
+write.csv(data_mult, file = paste0(datasets, "multDataXGB.csv"), row.names = FALSE)
+```
+
+# XGBoost
+
+Ensure parallel processing.
+
+```{r parallel, echo=TRUE, message=FALSE, warning=FALSE}
+# Detect the number of available cores
+cores <- detectCores() #- 1  # Leave one core free
+
+# Create a cluster with the detected number of cores
+cl <- makeCluster(cores)
+
+# Register the parallel backend
+registerDoParallel(cl)
+```
+
+Define the grid and estimate runtime.
+
+```{r grid, echo=TRUE, message=FALSE, warning=FALSE}
+grid_tune <- expand.grid(
+  nrounds = c(5000, 10000), 
+  max_depth = c(3, 6), 
+  eta = c(0.05, 0.1), 
+  gamma = c(0.1), 
+  colsample_bytree = c(0.6, 0.8), 
+  min_child_weight = c(1), 
+  subsample = c(0.75, 1.0)
+)
+
+# Calculate total combinations
+total_combinations <- nrow(grid_tune)
+
+# Estimate single model run time (assume 1 minute per run)
+single_model_time <- 10 # minute
+
+# Total runs for cross-validation
+folds <- 5
+total_runs <- total_combinations * folds
+
+# Total time estimation without parallel processing
+total_time <- total_runs * single_model_time # in minutes
+
+# Convert to hours
+total_time_hours <- total_time / 60
+
+# Output estimated time without parallel processing
+print(paste("Estimated time for grid search without parallel processing:", total_time_hours, "hours"))
+
+# Parallel processing with 4 cores
+cores <- 24
+total_time_parallel <- total_time / cores # in minutes
+
+# Convert to hours
+total_time_parallel_hours <- total_time_parallel / 60
+
+# Output estimated time with parallel processing
+print(paste("Estimated time for grid search with", cores, "cores:", total_time_parallel_hours, "hours"))
+
+rm(total_combinations,single_model_time,folds,total_runs,total_time,total_time_hours,total_time_parallel,total_time_parallel_hours,cores)
+```
+
+#### K-fold cross-validation
+
+Create subsets to train and test data (80/20).
+
+```{r k-fold subset, echo=TRUE, message=FALSE, warning=FALSE}
+
+# Set seed for reproducibility
+set.seed(998)
+
+# Set up train control
+train_control <- trainControl(
+  method = "cv",        # Cross-validation
+  number = 5,           # 5-fold cross-validation
+  allowParallel = TRUE  # Enable parallel processing
+)
+
+# Define the number of subsets
+numSubsets <- 5
+
+# Load MICE-imputed data (using placeholder 'data_ges' as the input dataset)
+multDataXGB <- data_mult
+
+# Ensure 'correction_info' is a factor
+multDataXGB$correction_info <- as.factor(multDataXGB$correction_info)
+
+# Remove rows with only NA values
+multDataXGB <- multDataXGB[rowSums(is.na(multDataXGB)) < ncol(multDataXGB), ]
+
+# Split data by levels of 'correction_info'
+correction_levels <- levels(multDataXGB$correction_info)
+split_data <- split(multDataXGB, multDataXGB$correction_info)
+
+# Initialize a list to store subsets
+multSubsets <- vector("list", length = numSubsets)
+
+# Distribute rows for each level equally across subsets
+for (level in correction_levels) {
+  level_data <- split_data[[level]]
+  subset_sizes <- rep(floor(nrow(level_data) / numSubsets), numSubsets)
+  remainder <- nrow(level_data) %% numSubsets
+  
+  # Distribute remainder rows randomly
+  if (remainder > 0) {
+    subset_sizes[seq_len(remainder)] <- subset_sizes[seq_len(remainder)] + 1
+  }
+  
+  # Shuffle rows of the level and assign to subsets
+  shuffled_data <- level_data[sample(nrow(level_data)), ]
+  indices <- cumsum(c(0, subset_sizes))
+  
+  for (i in 1:numSubsets) {
+    if (is.null(multSubsets[[i]])) {
+      multSubsets[[i]] <- shuffled_data[(indices[i] + 1):indices[i + 1], ]
+    } else {
+      multSubsets[[i]] <- rbind(multSubsets[[i]], shuffled_data[(indices[i] + 1):indices[i + 1], ])
+    }
+  }
+}
+
+# Naming the subsets
+names(multSubsets) <- paste0("multData", 1:numSubsets)
+
+# Verify balance in subsets
+for (i in 1:numSubsets) {
+  cat("Subset", i, "contains rows:", nrow(multSubsets[[i]]), "and levels:\n")
+  print(table(multSubsets[[i]]$correction_info))
+}
+
+# Remove any rows with only NAs from subsets just to ensure cleanliness
+multSubsets <- lapply(multSubsets, function(subset) {
+  subset[rowSums(is.na(subset)) < ncol(subset), ]
+})
+
+# Access the subsets
+multData1 <- multSubsets$multData1
+multData2 <- multSubsets$multData2
+multData3 <- multSubsets$multData3
+multData4 <- multSubsets$multData4
+multData5 <- multSubsets$multData5
+
+# Combine subsets into 80% groups
+multData1234 <- rbind(multData1, multData2, multData3, multData4)
+multData1235 <- rbind(multData1, multData2, multData3, multData5)
+multData1245 <- rbind(multData1, multData2, multData4, multData5)
+multData1345 <- rbind(multData1, multData3, multData4, multData5)
+multData2345 <- rbind(multData2, multData3, multData4, multData5)
+
+# Final verification of all levels in the combined datasets
+combined_sets <- list(multData1234, multData1235, multData1245, multData1345, multData2345)
+names(combined_sets) <- c("multData1234", "multData1235", "multData1245", "multData1345", "multData2345")
+
+for (set_name in names(combined_sets)) {
+  cat("Dataset", set_name, "contains rows:", nrow(combined_sets[[set_name]]), "and levels:\n")
+  print(table(combined_sets[[set_name]]$correction_info))
+}
+
+
+```
+
+#### Models
+
+Only run the models one time and then readRDS.
+
+##### Model 1
+
+```{r ger model1, echo=TRUE, message=FALSE, warning=FALSE, eval = FALSE}
+multModel1 <- caret::train(
+  correction_info ~ .,              
+  data = multData1234,
+  method = "xgbTree",     
+  trControl = train_control,
+  tuneGrid = grid_tune    
+)
+
+saveRDS(multModel1, file = paste0(models, "multModel1.rds"), compress = TRUE)
+```
+
+##### Model 2
+
+```{r ger model2, echo=TRUE, message=FALSE, warning=FALSE, eval = FALSE}
+multModel2 <- caret::train(
+  correction_info ~ .,              
+  data = multData1235,
+  method = "xgbTree",     
+  trControl = train_control,
+  tuneGrid = grid_tune    
+)
+
+saveRDS(multModel2, file = paste0(models, "multModel2.rds"), compress = TRUE)
+```
+
+##### Model 3
+
+```{r ger model3, echo=TRUE, message=FALSE, warning=FALSE, eval = FALSE}
+multModel3 <- caret::train(
+  correction_info ~ .,              
+  data = multData1245,
+  method = "xgbTree",     
+  trControl = train_control,
+  tuneGrid = grid_tune    
+)
+
+saveRDS(multModel3, file = paste0(models, "multModel3.rds"), compress = TRUE)
+```
+
+##### Model 4
+
+```{r ger model4, echo=TRUE, message=FALSE, warning=FALSE, eval = FALSE}
+multModel4 <- caret::train(
+  correction_info ~ .,              
+  data = multData1345,
+  method = "xgbTree",     
+  trControl = train_control,
+  tuneGrid = grid_tune    
+)
+saveRDS(multModel4, file = paste0(models, "multModel4.rds"), compress = TRUE)
+```
+
+##### Model 5
+
+```{r ger model5, echo=TRUE, message=FALSE, warning=FALSE, eval = FALSE}
+multModel5 <- caret::train(
+  correction_info ~ .,              
+  data = multData2345,
+  method = "xgbTree",     
+  trControl = train_control,
+  tuneGrid = grid_tune    
+)
+
+saveRDS(multModel5, file = paste0(models, "multModel5.rds"), compress = TRUE)
+```
+
+##### Load models
+
+Load all models after running, if necessary.
+
+```{r loas models ger, echo=TRUE, message=FALSE, warning=FALSE}
+multModel1 <- readRDS(paste0(models, "multModel1.rds"))
+multModel2 <- readRDS(paste0(models, "multModel2.rds"))
+multModel3 <- readRDS(paste0(models, "multModel3.rds"))
+multModel4 <- readRDS(paste0(models, "multModel4.rds"))
+multModel5 <- readRDS(paste0(models, "multModel5.rds"))
+```
+
+#### Test models
+
+Generate predictions and confusion matrices
+
+```{r test models ger, echo=TRUE, message=FALSE, warning=FALSE}
+# Generate predictions
+multPredictions1 <- predict(multModel1, newdata = multData5)
+multPredictions2 <- predict(multModel2, newdata = multData4)
+multPredictions3 <- predict(multModel3, newdata = multData3)
+multPredictions4 <- predict(multModel4, newdata = multData2)
+multPredictions5 <- predict(multModel5, newdata = multData1)
+
+# Compute confusion matrices
+multCm1 <- confusionMatrix(multPredictions1, multData5$correction_info)
+multCm2 <- confusionMatrix(multPredictions2, multData4$correction_info)
+multCm3 <- confusionMatrix(multPredictions3, multData3$correction_info)
+multCm4 <- confusionMatrix(multPredictions4, multData2$correction_info)
+multCm5 <- confusionMatrix(multPredictions5, multData1$correction_info)
+
+# Extract p-values (you need to define how to extract these based on your metric, here assumed to be some metric from confusion matrix)
+multPValues <- c(multCm1$overall['AccuracyPValue'], 
+              multCm2$overall['AccuracyPValue'], 
+              multCm3$overall['AccuracyPValue'], 
+              multCm4$overall['AccuracyPValue'], 
+              multCm5$overall['AccuracyPValue'])
+```
+
+Combine p-values using Fisher's method
+
+```{r combine p-vals ger, echo=TRUE, message=FALSE, warning=FALSE}
+# Fisher's method
+multFisher_combined <- -2 * sum(log(multPValues))
+df <- 2 * length(multPValues)
+multPCcombined_fisher <- 1 - pchisq(multFisher_combined, df)
+print(multPCcombined_fisher)
+
+# Stouffer's method
+multZ_scores <- qnorm(1 - multPValues/2)
+multCombined_z <- sum(multZ_scores) / sqrt(length(multPValues))
+multP_combined_stouffer <- 2 * (1 - pnorm(abs(multCombined_z)))
+print(multP_combined_stouffer)
+```
+
+The p-values sum up to 0, since they are all so small.
+
+#### Feature importance
+
+##### Model 1
+
+```{r ger feature importance 1, echo=TRUE, message=FALSE, warning=FALSE}
+XGBmultModel1 <- multModel1$finalModel
+importanceXGBmultModel1 <- xgb.importance(model = XGBmultModel1)
+print(importanceXGBmultModel1)
+xgb.plot.importance(importanceXGBmultModel1)
+```
+
+##### Model 2
+
+```{r ger feature importance 2, echo=TRUE, message=FALSE, warning=FALSE}
+XGBmultModel2 <- multModel2$finalModel
+importanceXGBmultModel2 <- xgb.importance(model = XGBmultModel2)
+print(importanceXGBmultModel2)
+xgb.plot.importance(importanceXGBmultModel2)
+```
+
+##### Model 3
+
+```{r ger feature importance 3, echo=TRUE, message=FALSE, warning=FALSE}
+XGBmultModel3 <- multModel3$finalModel
+importanceXGBmultModel3 <- xgb.importance(model = XGBmultModel3)
+print(importanceXGBmultModel3)
+xgb.plot.importance(importanceXGBmultModel3)
+```
+
+##### Model 4
+
+```{r ger feature importance 4, echo=TRUE, message=FALSE, warning=FALSE}
+XGBmultModel4 <- multModel4$finalModel
+importanceXGBmultModel4 <- xgb.importance(model = XGBmultModel4)
+print(importanceXGBmultModel4)
+xgb.plot.importance(importanceXGBmultModel4)
+```
+
+##### Model 5
+
+```{r ger feature importance 5, echo=TRUE, message=FALSE, warning=FALSE}
+XGBmultModel5 <- multModel5$finalModel
+importanceXGBmultModel5 <- xgb.importance(model = XGBmultModel5)
+print(importanceXGBmultModel5)
+xgb.plot.importance(importanceXGBmultModel5)
+```
+
+##### Cumulative feature importance
+
+```{r ger cumulative importance, echo=TRUE, message=FALSE, warning=FALSE}
+# Function to extract and normalize importance
+get_normalized_importance <- function(model) {
+  importance <- xgb.importance(model = model)
+  importance$Gain <- importance$Gain / sum(importance$Gain)
+  return(importance)
+}
+
+# Extract normalized importance for each model
+multImportance1 <- get_normalized_importance(multModel1$finalModel)
+multImportance2 <- get_normalized_importance(multModel2$finalModel)
+multImportance3 <- get_normalized_importance(multModel3$finalModel)
+multImportance4 <- get_normalized_importance(multModel4$finalModel)
+multImportance5 <- get_normalized_importance(multModel5$finalModel)
+
+# Combine importances
+multAllImportances <- list(multImportance1, multImportance2, multImportance3, multImportance4, multImportance5)
+
+# Function to merge importances
+merge_importances <- function(importances) {
+  for (i in 2:length(importances)) {
+    names(importances[[i]])[2:4] <- paste0(names(importances[[i]])[2:4], "_", i)
+  }
+  merged <- Reduce(function(x, y) merge(x, y, by = "Feature", all = TRUE), importances)
+  merged[is.na(merged)] <- 0  # Replace NAs with 0
+  gain_cols <- grep("Gain", colnames(merged), value = TRUE)
+  merged$Cumulative <- rowSums(merged[, ..gain_cols])
+  return(merged[, .(Feature, Cumulative)])
+}
+
+# Merge and sort importances
+multCumulativeImportance <- merge_importances(multAllImportances)
+multCumulativeImportance <- multCumulativeImportance[order(-multCumulativeImportance$Cumulative), ]
+
+# Print cumulative feature importance
+print(multCumulativeImportance)
+```
+
+## PCA
+
+Now let's collect 10 features per component that have highest combined ranking from PCA and XGBoost. This means that for each feature we sum up the ranking it obtained in cumulative importance (XGBoost) and loading on a principal component (PCA).
+
+```{r}
+
+# Rank the features based on XGBoost importance (cumulative)
+multCumulativeImportance$XGB_Rank <- rank(-multCumulativeImportance$Cumulative)
+
+# Load in PCA for gesture
+mult_pca <- read_csv(paste0(datasets, "PCA_top_contributors_multi.csv"))
+
+# For each PC (PC1, PC2, PC3), rank the features based on their loadings
+combined_ranks_per_pc <- list()
+
+for (pc in c("PC1", "PC2", "PC3")) {
+  # Extract the features and loadings for the current PC
+  pca_pc_loadings <- mult_pca[, c(pc, paste0(pc, "_Loading"))]
+  colnames(pca_pc_loadings) <- c("Feature", "Loading")
+  
+  # Rank the features based on the absolute loading values (higher loadings should get lower rank)
+  pca_pc_loadings$PCA_Rank <- rank(-abs(pca_pc_loadings$Loading))
+  
+  # Merge PCA loadings with XGBoost importance ranks
+  merged_data <- merge(pca_pc_loadings, multCumulativeImportance[, c("Feature", "XGB_Rank")], by = "Feature")
+  
+  # Calculate combined rank by summing XGBoost rank and PCA rank
+  merged_data$Combined_Rank <- merged_data$XGB_Rank + merged_data$PCA_Rank
+  
+  # Sort by the combined rank (lower rank is better)
+  sorted_data <- merged_data[order(merged_data$Combined_Rank), ]
+  
+  # Select the top n features based on the combined rank for the current PC
+  top_n_features <- 10  # Adjust the number of top features as needed
+  combined_ranks_per_pc[[pc]] <- head(sorted_data, top_n_features)
+}
+
+# Output the top features per PC based on combined ranking
+combined_ranks_per_pc
+
+```
+
+Now we have 10 features per component with highest combined ranking. For modelling, we want to pick three features per component. Which would it be in this case?
+
+```{r}
+
+# Number of top features to display
+top_n_features <- 3
+
+# Print the top 3 features per component
+for (pc in c("PC1", "PC2", "PC3")) {
+  cat("\nTop 3 Features for", pc, ":\n")
+  
+  # Get the top 3 features based on combined rank for the current PC
+  top_features <- head(combined_ranks_per_pc[[pc]], top_n_features)
+  
+  # Print the results
+  print(top_features[, c("Feature", "XGB_Rank", "PCA_Rank", "Combined_Rank")])
+}
+
+```
+
+```{r}
+
+
+
+```
