@@ -27,7 +27,7 @@
         </ANNOTATION>
         <ANNOTATION>
             <ALIGNABLE_ANNOTATION ANNOTATION_ID="a3" TIME_SLOT_REF1="ts5" TIME_SLOT_REF2="ts6">
-                <ANNOTATION_VALUE>sounding</ANNOTATION_VALUE>
+                <ANNOTATION_VALUE />
             </ALIGNABLE_ANNOTATION>
         </ANNOTATION>
     </TIER>

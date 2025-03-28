@@ -1,0 +1,850 @@
+---
+title: 'Processing I: Motion tracking and balance'
+jupyter: tsprocess
+format:
+  html:
+    code-overflow: wrap
+    code-width: 1200  # Adjust the width in pixels
+---
+
+In the previous notebook, we have ran pose estimation on the trial videos (OpenPose), and triangulated the coordinates to get 3D coordinates for each trial (Pose2sim). Furthermore, we have performed inverse kinematics and dynamics to extract joint angles and moments (OpenSim).
+
+In this script, we will clean the data, and extract further information (such as speed, acceleration, etc.). 
+
+```{python}
+#| code-fold: true
+#| code-summary: Code to load packages and prepare the environment
+
+# packages
+import os
+import glob
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import scipy
+import random
+
+
+
+curfolder = os.getcwd()
+
+# files to work with
+MTfolder = curfolder + '\\..\\02_MotionTracking_processing\\projectdata\\' ## FLAGGED CHANGE
+BBfolder = curfolder + '\\..\\01_XDF_processing\\data\\Data_processed\\Data_trials\\'
+
+# folders to save the processed data
+MTfolder_processed = curfolder + '\\TS_motiontracking\\'
+```
+
+# Motion processing - kinematics
+
+Here we use the keypoint coordinates estimated via OpenPose (@ADDREF) and triangulated via Pose2Sim (@ADDREF). While Pose2sim does provie in-built filter, it is not particularly strong and the data can be still noisy.
+
+To decide on the smoothing strength, we can use a custom function `check_smooth_strength` to check the effect of different smoothing strengths on the data. 
+
+
+```{python}
+#| code-fold: true
+#| code-summary: Code to prepare files to process
+
+MTtotrack = glob.glob(MTfolder + '*/P*/*', recursive=True)
+
+# get rid of all the folders that are not the ones we want to track, like .sto files
+    ## FLAG! why not do glob.glob(MTfolder + '*/P*/*butterworth*.csv', recursive=True)
+MTtotrack = [x for x in MTtotrack if 'sto' not in x]
+MTtotrack = [x for x in MTtotrack if 'txt' not in x]
+MTtotrack = [x for x in MTtotrack if 'xml' not in x]
+MTtotrack = [x for x in MTtotrack if 'opensim' not in x]
+MTtotrack = [x for x in MTtotrack if 'Results' not in x]
+MTtotrack = [x for x in MTtotrack if 'toml' not in x]
+
+MTfiles_all = []
+
+for folder in MTtotrack:
+    # last element is trialid
+    trialid = folder.split('\\')[-1]
+    
+    # get all csv files in the folder
+    csvfiles = glob.glob(folder + '\\**\\*.csv', recursive=True)
+    # keep only the ones that have butterworth in the name - those are filtered with native Pose2sim function
+    csvfiles = [x for x in csvfiles if 'butterworth' in x]
+    butterfile = csvfiles[0]
+    # append to list with trialid
+    MTfiles_all.append([trialid, butterfile])
+```
+
+```{python}
+#| code-fold: false
+#| code-summary: Code with function to check smoothing strength
+
+# function to check different smoothing windows and orders
+def check_smooth_strength(df, windows, orders, keytoplot):
+
+    # prepare new df
+    df_smooth = pd.DataFrame()
+
+    for win in windows:
+        for ord in orders:
+            df_smooth[keytoplot + '_savgol' + str(win) + '_' + str(ord)] = scipy.signal.savgol_filter(df[keytoplot], win, ord)
+
+    # make R_Hand_x from df_sample a list
+    keytoplot_unsmoothed = df[keytoplot].tolist()
+
+    # load these values into df_smooth as a new column
+    df_smooth[keytoplot] = keytoplot_unsmoothed
+
+    # plot keytoplot in all strngths
+    colstoplot = [x for x in df_smooth.columns if keytoplot in x]
+    plt.figure()
+    for col in colstoplot:
+        plt.plot(df_smooth[col], label=col)
+    plt.legend()
+    plt.show()
+```
+
+Here we can see a timeseries of vertical dimension of the left knee (note that pose2sim gave us y and z dimensions flipped, we will deal with this in a second). Each color represents the timeseries in different smoothed version, pink one is the raw signal (which is smoothed only with the Butterworth 10Hz cut-off filter). The first number in the legend corresponds to window length and the second number to polynomial order.
+
+```{python}
+#| echo: false
+
+sample = pd.read_csv(MTfiles_all[12][1], sep=',')
+
+windows = [41, 51, 61,] # list possible window
+orders = [2] # list possible orders
+
+check_smooth_strength(sample, windows, orders, 'LKnee_z')
+```
+
+Here we can see the same thing for wrist.
+
+```{python}
+#| echo: false
+
+sample = pd.read_csv(MTfiles_all[12][1], sep=',')
+
+windows = [25, 35] # list possible window
+orders = [2, 3] # list possible orders
+
+check_smooth_strength(sample, windows, orders, 'RWrist_z')
+```
+
+Legs seem to be more noisy than arms. One reason could be that legs are more commonly covered by clothes, which can make the pose estimation more prone to errors. Also, legs often stay without movement, making them more sensitive to noise.
+
+For that reason, we opt for different smoothing strengths for leg-related keypoints than for upper body.
+
+For lower body positional data, we will use 2nd polynomial Savitzky-Golay filter with window of 816 ms. 
+
+For upper body positional data, 3rd order Savitzky-Golay filter with window of 400 ms seems to be a good choice. We will use it both for raw coordinates as well as for the derivatives.
+
+Further, we obtain the first, second and third derivative of the timeseries, namely speed, acceleration, and jerk. For derivatives, we will use 3rd order Savitzky-Golay filter with window of 400 ms for both.
+
+Lastly, to be able to work with timeseries that represent bigger segment of body than a single joint, we aggregate the kinematic derivatives for each body group (i.e., head, upperbody, arms, lowerbody) by computing euclidian sum over every derivative belonging to the group. This gives us, for instance, a measure for arm speed that represents a sum of speeds of all keypoints associated with the arm (i.e., wrist, elbow, shoulder, index)
+
+```{python}
+#| code-fold: true
+#| code-summary: Code with functions for processing kinematic data
+
+# function to get euclidian sum of associated keypoints
+def aggregate_keypoints(df, measurement, finalcolname, use):
+
+    if use == 'kinematics':
+        # group keypoints that belong together
+        lowerbodycols = ['RHip', 'LHip']
+        legcols = ['RKnee', 'RAnkle', 'LAnkle', 'LKnee', 'RHeel', 'LHeel']
+        headcols = ['Head', 'Neck', 'Nose']
+        armcols = ['RShoulder', 'RElbow', 'RWrist', 'LShoulder', 'LElbow', 'LWrist', 'RIndex', 'LIndex']
+
+        groups = [lowerbodycols, legcols, headcols, armcols]
+
+    elif use == 'angles':
+        pelviscols = ['pelvis']
+        spinecols = ['L5_S1', 'L4_L5', 'L3_L4', 'L2_L3', 'L1_L2', 'L1_T12']
+        lowerbodycols = ['pelvis', 'hip']
+        legcols = ['knee', 'ankle', 'subtalar']
+        headcols = ['neck']
+        armcols = ['arm', 'elbow', 'wrist', 'pro_sup']
+
+        groups = [lowerbodycols, legcols, headcols, armcols, pelviscols, spinecols]
+
+    # make subdf only with speed
+    subdf = df[[x for x in df.columns if measurement in x]]
+
+    # loop through each joint group
+    for group in groups:
+        # get cols
+        cols = [x for x in subdf.columns if any(y in x for y in group)]
+        subdf_temp = subdf[cols]
+
+        for index, row in subdf_temp.iterrows():
+            # get all values of that row
+            values = row.values
+            # calculate euclidian sum
+            euclidian_sum = np.sqrt(np.sum(np.square(values))) ## FLAGGED: possibly normalize
+            # get a name for new col
+            if group == lowerbodycols:
+                colname = 'lowerbody'
+            elif group == legcols:
+                colname = 'leg'
+            elif group == headcols:
+                colname = 'head'
+            elif group == armcols:
+                colname = 'arm'
+            elif group == pelviscols:
+                colname = 'pelvis'
+            elif group == spinecols:
+                colname = 'spine'
+                
+
+            df.loc[index, colname + finalcolname] = euclidian_sum
+
+    return df
+
+
+# get kinematic derivatives
+def get_derivatives(df, sr, upperbodycols, lowerbodycols, use):
+
+    mtcols = df.columns
+    if use == 'kinematics':
+        # get rid of cols that are not x, y or z
+        mtcols = [x for x in mtcols if '_x' in x or '_y' in x or '_z' in x]
+    
+
+        # prepare cols for speed
+        cols = [x.split('_')[0] for x in mtcols]
+        colsforspeed = list(set(cols))
+
+        # for each unique colname (cols), calculate speed 
+        for col in colsforspeed:
+            # get x and y columns
+            x = df[col + '_x']
+            y = df[col + '_y']
+            z = df[col + '_z'] # note that y and z are flipped
+            # calculate speed
+            speed = np.insert(np.sqrt(np.diff(x)**2 + np.diff(y)**2 + np.diff(z)**2),0,0)
+            # multiply the values by sr, because now we have values in m/(s/sr)
+            speed = speed*sr
+
+            # smooth
+            speed = scipy.signal.savgol_filter(speed, 25, 3)
+
+            # if the col contains wrist, we will alco calculate the vertical velocity (z dimension)
+            if 'Wrist' in col:
+                verticvel = np.insert(np.diff(z), 0, 0)
+                verticvel = verticvel*sr
+                verticvel = scipy.signal.savgol_filter(verticvel, 25, 3)
+
+            # derive acceleration	
+            acceleration = np.insert(np.diff(speed), 0, 0)
+            acceleration = scipy.signal.savgol_filter(acceleration, 25, 3)
+
+            # derive jerk
+            jerk = np.insert(np.diff(acceleration), 0, 0)
+            jerk = scipy.signal.savgol_filter(jerk, 25, 3)
+
+            # new_data
+            new_data = pd.DataFrame({col + '_speed': speed, col + '_acc': acceleration, col + '_jerk': jerk})
+            df = pd.concat([df, new_data], axis=1)
+
+    elif use == 'angles':
+        # get rid of cols that are not angles (so skip time)
+        mtcols = mtcols[1:]
+
+        # derive speed
+        for col in mtcols:
+            speed = np.insert(np.diff(df[col]), 0, 0)
+            speed = speed*sr
+            speed = scipy.signal.savgol_filter(speed, 35, 1)
+
+            # derive acceleration
+            acceleration = np.insert(np.diff(speed), 0, 0)
+            acceleration = scipy.signal.savgol_filter(acceleration, 35, 1)
+            
+            # derive jerk
+            jerk = np.insert(np.diff(acceleration), 0, 0)
+            jerk = scipy.signal.savgol_filter(jerk, 35, 1)
+
+            # new_data
+            new_data = pd.DataFrame({col + '_speed': speed, col + '_acc': acceleration, col + '_jerk': jerk})
+            df = pd.concat([df, new_data], axis=1)
+
+    return df
+```
+
+```{python}
+#| code-fold: false
+#| eval: false
+
+# upper body cols
+upperbodycols = ['Head', 'Neck', 'RShoulder', 'RElbow', 'RWrist', 'LShoulder', 'LElbow', 'LWrist', 'Nose', 'RIndex', 'LIndex']
+# lower body cols
+lowerbodycols = ['RHip', 'RKnee', 'RAnkle', 'RHeel', 'LHip', 'LKnee', 'LAnkle', 'LHeel']
+
+for folder in MTtotrack:
+    # last element is trialid
+    trialid = folder.split('\\')[-1]
+    print('working on:' + trialid)
+    
+    # get all csv files in the folder
+    csvfiles = glob.glob(folder + '/**/*.csv', recursive=True)
+    # keep only the ones that have butterworth in the name
+    csvfiles = [x for x in csvfiles if 'butterworth' in x]
+    butterfile = csvfiles[0]
+
+    # load it
+    mt = pd.read_csv(butterfile)
+
+    # the mt is missing 0 ms timepoint, so we need to create a row that copies the first row of mt and time = 0
+    padrow = mt.iloc[0].copy()
+    padrow['Time'] = 0
+
+    # concatenate it to the beginning of mt 
+    mt = pd.concat([pd.DataFrame(padrow).T, mt], ignore_index=True)
+
+    # keep only cols of interest
+    colstokeep = ["Time", "RHip", "RKnee", "RAnkle", "RHeel", "LHip", "LKnee", "LAnkle", "LHeel", "Neck", "Head", "Nose", "RShoulder", "RElbow", "RWrist", "RIndex", "LShoulder", "LElbow", "LWrist",
+    "LIndex",
+]
+    mt = mt[[col for col in mt.columns if any(x in col for x in colstokeep)]]
+
+    # flip y and z dimension as they are reversed from OpenPose/Pose2sim
+
+    # if col has _y in it, replace it by _temp
+    mt.columns = [x.replace('_y', '_temp') for x in mt.columns]
+    # replace _z by _y
+    mt.columns = [x.replace('_z', '_y') for x in mt.columns]
+    # replace _temp by _z
+    mt.columns = [x.replace('_temp', '_z') for x in mt.columns]
+
+    ####### SMOOTHING ######
+
+    # smooth all columns except time with savgol
+    mtcols = mt.columns
+    colstosmooth = mtcols[:-1]
+
+    mt_smooth = pd.DataFrame()
+
+    for col in colstosmooth:
+        colname = col.split('_')[0] # to get rid of _x, _y, _z
+        if colname in upperbodycols:
+            mt_smooth[col] = scipy.signal.savgol_filter(mt[col], 25, 3)
+        elif colname in lowerbodycols:
+            mt_smooth[col] = scipy.signal.savgol_filter(mt[col], 51, 2)
+
+    # And put them all to cms
+    mt_smooth = mt_smooth*100
+
+    if 'LHip_x' not in mt_smooth.columns:
+        print('LHip missing in already noq ' + trialid)
+        break
+
+    # add back time column
+    mt_smooth['Time'] = mt['Time']
+
+    # get sampling rate
+    sr = 1/np.mean(np.diff(mt['Time']))
+
+    ###### DERIVATIVES ######
+
+    # get kinematic derivatives
+    mt_smooth = get_derivatives(mt_smooth, sr, upperbodycols, lowerbodycols, 'kinematics')
+
+    ###### AGGREGATING ######
+
+    # getting aggreagated sums for groups of cols
+    mt_smooth = aggregate_keypoints(mt_smooth, 'speed', '_speedKin_sum', 'kinematics')
+    mt_smooth = aggregate_keypoints(mt_smooth, 'acc', '_accKin_sum', 'kinematics')
+    mt_smooth = aggregate_keypoints(mt_smooth, 'jerk', '_jerkKin_sum', 'kinematics')
+
+    # add trialid
+    mt_smooth['TrialID'] = trialid
+    # convert time to ms
+    mt_smooth['Time'] = mt_smooth['Time']*1000
+
+    # write to csv
+    mt_smooth.to_csv(MTfolder_processed + '/mt_' + trialid + '.csv', index=False)
+```
+
+Here is an example of the file
+
+```{python}
+#| echo: false
+
+mtfiles = glob.glob(MTfolder_processed + '*.csv')
+# Keep only mt_
+mtfiles = [x for x in mtfiles if 'mt_' in x]
+mtfile = random.choice(mtfiles)
+
+# Display
+mt = pd.read_csv(mtfile)
+mt.head(15)
+```
+
+Let's check one file to see how the data looks like by plotting RWrist and its kinematics, and also the euclidian sum for the whole arm along with it (as dashed black line)
+
+Note that aggregates will always be directionless (i.e., in positive numbers) as they are squared when computed.
+
+```{python}
+#| echo: false
+
+# Load one file to check
+MTfiles = glob.glob(MTfolder_processed + '/*.csv')
+# Keep only mt_
+MTfiles = [x for x in MTfiles if 'mt_' in x]
+sample = pd.read_csv(MTfiles[4])
+
+# Define colors and styles
+colors = ['blue', 'orange', 'green', 'red']
+titles = ['RWrist_y', 'RWrist_speed', 'RWrist_acc', 'RWrist_jerk']
+
+# Create a 2x2 grid of plots
+fig, axs = plt.subplots(2, 2, figsize=(8, 6), constrained_layout=True)
+fig.suptitle('Kinematics of RWrist', fontsize=20, fontweight='bold', color='darkblue')
+
+# Plot RWrist_y
+axs[0, 0].plot(sample['RWrist_y'], color=colors[0], linewidth=2)
+axs[0, 0].set_title('RWrist Position (y)', fontsize=14)
+axs[0, 0].set_xlabel('Frame')
+axs[0, 0].set_ylabel('Position')
+axs[0, 0].grid(True, linestyle='--', alpha=0.6)
+
+# Plot RWrist_speed
+axs[0, 1].plot(sample['RWrist_speed'], color=colors[1], linewidth=2)
+# add arm sum
+axs[0, 1].plot(sample['arm_speedKin_sum'], color='black', linewidth=2, linestyle='--')
+axs[0, 1].set_title('RWrist Speed', fontsize=14)
+axs[0, 1].set_xlabel('Frame')
+axs[0, 1].set_ylabel('Speed')
+axs[0, 1].grid(True, linestyle='--', alpha=0.6)
+
+# Plot RWrist_acc
+axs[1, 0].plot(sample['RWrist_acc'], color=colors[2], linewidth=2)
+# add arm sum
+axs[1, 0].plot(sample['arm_accKin_sum'], color='black', linewidth=2, linestyle='--')
+axs[1, 0].set_title('RWrist Acceleration', fontsize=14)
+axs[1, 0].set_xlabel('Frame')
+axs[1, 0].set_ylabel('Acceleration')
+axs[1, 0].grid(True, linestyle='--', alpha=0.6)
+
+# Plot RWrist_jerk
+axs[1, 1].plot(sample['RWrist_jerk'], color=colors[3], linewidth=2)
+# add arm sum
+axs[1, 1].plot(sample['arm_jerkKin_sum'], color='black', linewidth=2, linestyle='--')
+axs[1, 1].set_title('RWrist Jerk', fontsize=14)
+axs[1, 1].set_xlabel('Frame')
+axs[1, 1].set_ylabel('Jerk')
+axs[1, 1].grid(True, linestyle='--', alpha=0.6)
+
+# Show the plot
+plt.show()
+```
+
+# Motion processing - inverse kinematics
+
+In the previous notebook, we have extracted joint angles using OpenSim (@ADDREF). Now again, we clean the data, smooth them, and extract further information before saving it into csv file per trial
+
+We can once again check what would be the proper filter
+
+```{python}
+#| code-fold: true
+#| code-summary: Code to prepare environment
+
+# get all mot files in the folder
+mot_files = glob.glob(MTfolder + '*/P*/*/*.mot', recursive=True)
+keypoints = ['wrist', 'pro_sup', 'elbow', 'arm', 'neck', 'subtalar', 'ankle', 'knee', 'hip', 'pelvis', 'L5_S1', 'L4_L5', 'L3_L4', 'L2_L3', 'L1_L2', 'L1_T12']
+```
+
+```{python}
+#| echo: false
+
+sample = pd.read_csv(mot_files[9], sep='\t', skiprows=10)
+
+windows = [25, 35] # list possible window
+orders = [1, 2, 3] # list possible orders
+
+check_smooth_strength(sample, windows, orders, 'wrist_flex_r')
+```
+
+And for legs
+
+```{python}
+#| echo: false
+
+sample = pd.read_csv(mot_files[9], sep='\t', skiprows=10)
+
+windows = [25, 35] # list possible window
+orders = [1, 2, 3] # list possible orders
+
+check_smooth_strength(sample, windows, orders, 'knee_angle_l')
+```
+
+We will apply a bit stronger filter of 1st order with span of 560 ms because the data are more noisy than the kinematics.
+
+```{python}
+#| eval: false
+
+# get all mot files in the folder
+mot_files = glob.glob(MTfolder + '*/P*/*/*.mot', recursive=True)
+keypoints = ['wrist', 'pro_sup', 'elbow', 'arm', 'neck', 'subtalar', 'ankle', 'knee', 'hip', 'pelvis', 'L5_S1', 'L4_L5', 'L3_L4', 'L2_L3', 'L1_L2', 'L1_T12']
+
+for mot in mot_files:
+    # get trialid
+    trialid = mot.split('\\')[-1].split('.')[0]
+    print('working on ' + trialid)
+
+    # get rid of the first element before _
+    trialid = '_'.join(trialid.split('_')[1:])
+
+    # load it
+    mot_df = pd.read_csv(mot, sep='\t', skiprows=10)
+    
+    # pad 0 ms row
+    padrow = mot_df.iloc[0].copy()
+    padrow['time'] = 0
+
+    # concatenate it to the beginning of mot_df
+    mot_df = pd.concat([pd.DataFrame(padrow).T, mot_df], ignore_index=True)
+    
+    # get the sr
+    sr = 1/np.mean(np.diff(mot_df['time']))
+
+    ##### SMOOTHING ######
+
+    # smooth all columns except the firts time (time) and last (trialid)
+    colstosmooth = [x for x in mot_df.columns if 'time' not in x]
+
+    # smooth
+    for col in colstosmooth:
+        mot_df[col] = scipy.signal.savgol_filter(mot_df[col], 35, 1)
+        # convert to radians
+        mot_df[col] = np.deg2rad(mot_df[col])
+
+    # keep only columns you might use
+    coi = [x for x in mot_df.columns if any(y in x for y in keypoints) or 'time' in x or 'TrialID' in x]
+    mot_df2 = mot_df[coi]
+
+    ##### DERIVATIVES ######
+
+    # get derivatives
+    mot_df2 = get_derivatives(mot_df2, sr, [], [], 'angles')
+
+    #### AGGREGATING #####
+
+    # aggregate data
+    mot_df2 = aggregate_keypoints(mot_df2, 'speed', '_angSpeed_sum', 'angles')
+    mot_df2 = aggregate_keypoints(mot_df2, 'acc', '_angAcc_sum', 'angles')
+    mot_df2 = aggregate_keypoints(mot_df2, 'jerk', '_angJerk_sum', 'angles')
+
+    # add time and trialid
+    mot_df2['time'] = mot_df['time']
+    # convert time to ms
+    mot_df2['time'] = mot_df2['time']*1000
+    mot_df2['TrialID'] = trialid
+
+    # write to csv
+    mot_df2.to_csv(MTfolder_processed + '/ik_' + trialid + '.csv', index=False)
+    
+```
+
+Here is an example file
+
+```{python}
+#| echo: false
+
+motfiles = glob.glob(MTfolder_processed + '*.csv')
+# Keep only ik_
+motfiles = [x for x in motfiles if 'ik_' in x]
+motfile = random.choice(motfiles)
+
+# Display
+mot = pd.read_csv(motfile)
+mot.head(15)
+```
+
+Here we can see the joint angle speed next to kinematic speed.
+
+```{python}
+#| echo: false
+
+# load in one id and mt file with the same trialid
+ikfiles = glob.glob(MTfolder_processed + '/ik*.csv')
+mtfiles = glob.glob(MTfolder_processed + '/mt*.csv')
+
+id = pd.read_csv(ikfiles[0])
+mt = pd.read_csv(mtfiles[0])
+
+# plot
+fig, ax = plt.subplots(1, 2, figsize=(8, 5))
+
+ax[0].plot(mt['Time'], mt['LWrist_speed'], label='LWrist_speed')
+ax[0].plot(mt['Time'], mt['RWrist_speed'], label='RWrist_speed')
+ax[0].set_title('Wrist speed (kinematic)')
+ax[0].set_ylabel('speed (cm/s)')
+ax[0].set_xlabel('time (ms)')
+ax[0].legend()
+
+# elbow flexion
+ax[1].plot(id['time'], id['wrist_flex_l_speed'], label='wrist_flex_l_speed')
+ax[1].plot(id['time'], id['wrist_flex_r_speed'], label='wrist_flex_r_speed')
+ax[1].set_title('Wrist flexion speed (angular)')
+ax[1].set_ylabel('rad/s')
+ax[1].set_xlabel('time (ms)')
+ax[1].legend()
+
+plt.show()
+```
+
+# Motion processing - inverse dynamics
+
+Now we do exactly the same also for inverse dynamics data (joint torques). 
+
+```{python}
+#| code-fold: true
+#| code-summary: Code to prepare environment
+
+# in MTfolders, find all sto files
+sto_files = glob.glob(MTfolder + '*/P*/*/*.sto', recursive=True)
+sto_files = [x for x in sto_files if 'ID' in x]
+```
+
+Let's once again check the different smoothing strengths
+
+```{python}
+#| echo: false
+
+sample = pd.read_csv(sto_files[20], sep='\t', skiprows=6)
+
+windows = [25, 35] # list possible window
+orders = [1, 2, 3] # list possible orders
+
+check_smooth_strength(sample, windows, orders, 'elbow_flex_r_moment')
+```
+
+And for legs
+
+```{python}
+#| echo: false
+
+sample = pd.read_csv(sto_files[20], sep='\t', skiprows=6)
+
+windows = [25, 35] # list possible window
+orders = [1, 2, 3] # list possible orders
+
+check_smooth_strength(sample, windows, orders, 'knee_angle_r_moment')
+```
+
+We will again reuse 1st order Savitzky-Golay filter with window of 560 ms for the moments and their first derivate (moment change).
+
+```{python}
+#| eval: false
+
+# in MTfolders, find all sto files
+sto_files = glob.glob(MTfolder + '*/P*/*/*.sto', recursive=True)
+sto_files = [x for x in sto_files if 'ID' in x]
+
+for sto in sto_files:
+
+    # from the filename, get the trialid
+    trialid = sto.split('\\')[-1].split('.')[0]
+    trialid = '_'.join(trialid.split('_')[:-1])
+    trialid = '_'.join(trialid.split('_')[1:])
+
+    print('working on ' + trialid)
+
+    # load it
+    id_df = pd.read_csv(sto, sep='\t', skiprows=6)
+
+    # pad 0 ms row
+    padrow = id_df.iloc[0].copy()
+    padrow['time'] = 0
+
+    # concatenate it to the beginning of id_df
+    id_df = pd.concat([pd.DataFrame(padrow).T, id_df], ignore_index=True)
+
+    ##### SMOOTHING #####
+
+    # smooth all columns except the firts time (time) and last (trialid)
+    colstosmooth = [x for x in id_df.columns if 'time' not in x]
+    colstosmooth = [x for x in colstosmooth if 'TrialID' not in x]
+
+    # smooth
+    for col in colstosmooth:
+        id_df[col] = scipy.signal.savgol_filter(id_df[col], 35, 1)
+
+    ##### AGGREGATING #####
+
+    # get aggregated euclidian sum for each joint group
+    id_df = aggregate_keypoints(id_df, 'moment', '_moment_sum', 'angles')
+
+    #### TORQUE CHANGE #####
+
+    # for each moment col, we will also calculate the change 
+    torquestodiff = [x for x in id_df.columns if 'moment' in x]
+
+    for col in torquestodiff:
+        torquechange = np.abs(np.insert(np.diff(id_df[col]), 0, 0))
+        torquechange_smoothed = scipy.signal.savgol_filter(torquechange, 35, 1)
+        # new data
+        new_data = pd.DataFrame({col + '_change': torquechange_smoothed})
+        id_df = pd.concat([id_df, new_data], axis=1)
+    
+    # convert time to ms
+    id_df['time'] = id_df['time']*1000
+        # add trialid
+    id_df['TrialID'] = trialid
+
+    # write to csv
+    id_df.to_csv(MTfolder_processed + '/id_' + trialid + '.csv', index=False)
+```
+
+Here is an example file
+
+```{python}
+#| echo: false
+
+stofiles = glob.glob(MTfolder_processed + '*.csv')
+# Keep only ik_
+stofiles = [x for x in stofiles if 'id_' in x]
+stofile = random.choice(stofiles)
+
+# Display
+sto = pd.read_csv(stofile)
+sto.head(15)
+```
+
+Now we can check by ploting the joint moment change against kinematic acceleration
+
+```{python}
+#| echo: false
+
+# load in one id and mt file with the same trialid
+idfiles = glob.glob(MTfolder_processed + '/id*.csv')
+mtfiles = glob.glob(MTfolder_processed + '/mt*.csv')
+
+id = pd.read_csv(idfiles[0])
+mt = pd.read_csv(mtfiles[0])
+
+# plot
+fig, ax = plt.subplots(1, 2, figsize=(8, 5))
+
+ax[0].plot(mt['Time'], mt['RElbow_acc'], label='RElbow_acceleration')
+ax[0].plot(mt['Time'], mt['LElbow_acc'], label='LElbow_acceleration')
+ax[0].set_title('Elbow acceleration (kinematic)')
+ax[0].set_ylabel('acceleration (cm/s^2)')
+ax[0].set_xlabel('time (ms)')
+ax[0].legend()
+
+# elbow flexion
+ax[1].plot(id['time'], id['elbow_flex_r_moment_change'], label='elbow_flex_r_moment_change')
+ax[1].plot(id['time'], id['elbow_flex_l_moment_change'], label='elbow_flex_l_moment_change')
+ax[1].set_title('Elbow moment change (angular)')
+ax[1].set_ylabel('moment/s (Nm/s)')
+ax[1].set_xlabel('time (ms)')
+ax[1].legend()
+
+plt.show()
+```
+
+# Balance Board (Ground reaction forces) - processing
+
+Lastly, we need to process the balance board data. We apply 5th order Savitzky-Golay filter to windows of 102 ms. To have a measure for postural adjustments, we compute the change in 2D magnitude (L2 norm of the center of pressure x and y) in center of pressure.
+
+```{python}
+#| eval: false
+
+BB_files = glob.glob(BBfolder + '*BalanceBoard*.csv', recursive=True)
+
+for bb in BB_files:
+    # get trialid
+    trialid = bb.split('\\')[-1].split('.')[0]
+    # get the first, second, fourth, nineth elements
+    trialid = '_'.join(trialid.split('_')[:2] + trialid.split('_')[3:4] + trialid.split('_')[8:9])
+
+    print('working on ' + trialid)
+
+    # because we are going to merge on bb, we will store also more information
+    fileinfo = bb.split('\\')[-1].split('.')[0]
+
+    # if second element is 1, we will store last three elements
+    if fileinfo.split('_')[1] == '1':
+        # if there is not 'corrected' in the name, we will store last three elements
+        if 'corrected' not in fileinfo:
+            info = '_'.join(fileinfo.split('_')[-3:])
+        else:
+            info = '_'.join(fileinfo.split('_')[-4:])
+    elif fileinfo.split('_')[1] == '2':
+        # otherwise we store last four elements (5 when corrected)
+        if 'corrected' not in fileinfo:
+            info = '_'.join(fileinfo.split('_')[-4:])
+        else:
+            info = '_'.join(fileinfo.split('_')[-5:])
+
+    # Load the balanceboard data
+    df_bb = pd.read_csv(bb)
+
+    # Rename columns
+    df_bb.columns = ['time_s', 'left_back', 'right_forward', 'right_back', 'left_forward']
+
+    # Calculate sampling rate
+    bbsamp = 1 / np.mean(np.diff(df_bb['time_s'] - min(df_bb['time_s'])))
+
+    # Apply Savitzky-Golay filter to smooth the data
+    for col in df_bb.columns[1:]:
+        df_bb[col] = scipy.signal.savgol_filter(df_bb[col], 51, 5) # window of 102 ms
+
+    # Calculate COPX and COPY
+    COPX = (df_bb['right_forward'] + df_bb['right_back']) - (df_bb['left_forward'] + df_bb['left_back'])
+    COPY = (df_bb['right_forward'] + df_bb['left_forward']) - (df_bb['left_back'] + df_bb['right_back'])
+
+    # Calculate COPXc and COPYc 
+    df_bb['COPXc'] = scipy.signal.savgol_filter(np.insert(np.diff(COPX), 0, 0), 51, 5) 
+    df_bb['COPYc'] = scipy.signal.savgol_filter(np.insert(np.diff(COPY), 0, 0), 51, 5)
+
+    # Calculate COPc
+    df_bb['COPc'] = np.sqrt(df_bb['COPXc']**2 + df_bb['COPYc']**2)
+
+    # restart the time so that starts from 0
+    df_bb['time_s'] = df_bb['time_s'] - min(df_bb['time_s'])
+    # convert to ms
+    df_bb['time_s'] = df_bb['time_s']*1000
+
+    # rename time_s to time
+    df_bb.rename(columns={'time_s': 'time'}, inplace=True)
+
+    # Add trialid
+    df_bb['TrialID'] = trialid
+    # Add info
+    df_bb['FileInfo'] = info
+
+    # Write as csv to MTfolder_processed
+    df_bb.to_csv(MTfolder_processed + '/bb_' + trialid + '.csv', index=False)
+```
+
+Here is an example of a file
+
+```{python}
+#| echo: false
+
+bbfiles = glob.glob(MTfolder_processed + '*.csv')
+# Keep only bb_
+bbfiles = [x for x in bbfiles if 'bb_' in x]
+bbfile = random.choice(bbfiles)
+
+# Display
+bb = pd.read_csv(bbfile)
+bb.head(15)
+```
+
+Here is an example of a timeseries representing change in center of pressure (COPc)
+
+```{python}
+#| echo: false
+
+bbfiles = glob.glob(MTfolder_processed + '/bb*.csv')
+samplebb = pd.read_csv(bbfiles[20])
+
+# plot COPc the sample
+plt.plot(samplebb['time'], samplebb['COPc'])
+#plt.xlim(1000,2000)
+plt.show()
+```
+

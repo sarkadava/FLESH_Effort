@@ -52,6 +52,26 @@ videos_ex = glob.glob(calibfolder + '*\\*extrinsics.avi', recursive=True)
 video_in = glob.glob(calibfolder + '*\\*intrinsics.avi', recursive=True)
 ```
 
+First, we need to take care that we are not working with wrongly cut videos, but only with the corrected version (if it exists). From the list of videos, we will hence exclude all videos that have also corrected version in the list.
+
+```{python}
+
+# Get all corrected videos from the list
+videos_corr = []
+for file in videos:
+    if 'corrected' in file:
+        videos_corr.append(file)
+
+# Now get the name of this trial without the corrected part
+videos_old = []
+for file in videos_corr:
+    videos_old.append(file.replace('_corrected', ''))
+
+# From videos, remove trials that are in videos_old
+videos = [x for x in videos if x not in videos_old]
+
+```
+
 This is how the video looks like when the cameras are still concatenated
 
 ```{python}
@@ -73,8 +93,12 @@ if not os.path.exists(mp4_path):
     ])
 
 # Display the video inside Jupyter Notebook
-Video(mp4_path, embed=True, width=800)
+Video(mp4_path, embed=True, width=500)
 ```
+
+# Cutting trial videos
+
+We will first start with the trial videos, as they require a bit different structuring into folders than the calibration videos. Each video-tryad will be saved into following structure */sessionID/pcnID/trialID/raw-2d* with its original name and identificator of each camera (i.e., 1-3)
 
 ```{python}
 #| code-fold: true
@@ -127,10 +151,6 @@ def split_camera_views(input_file, output_files):
     cap.release()
     cv2.destroyAllWindows()
 ```
-
-# Cutting trial videos
-
-We will first start with the trial videos, as they require a bit different structuring into folders than the calibration videos. Each video-tryad will be saved into following structure */sessionID/pcnID/trialID/raw-2d* with its original name and identificator of each camera (i.e., 1-3)
 
 ```{python}
 #| eval: false

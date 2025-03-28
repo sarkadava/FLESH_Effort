@@ -7,7 +7,6 @@ format:
     code-width: 1200  # Adjust the width in pixels
 ---
 
-
 In the previous script (@ADD), we have extracted 2D keypoints for each trial (per each video, 3 in total). In this script, we will use Pose2sim to calibrate the 3 cameras present in the lab setup, and triangulate the 3D position of the keypoints.
 
 Demo of this pipeline has been published on [EnvisionBOX](https://www.envisionbox.org/embedded_openpose_to_pose2sim_tracking.html)
@@ -28,12 +27,6 @@ import shutil
 import cv2
 import numpy as np
 import toml
-import tempfile
-import subprocess
-import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
-from matplotlib.animation import FuncAnimation
-from IPython.display import Video
 
 curfolder = os.getcwd()
 
@@ -44,6 +37,9 @@ pose2simprjfolder = curfolder + '\Pose2Sim\Empty_project_FLESH_settings\\'
 inputfolder = curfolder + '\projectdata\\'
 folderstotrack = glob.glob(curfolder+'\\projectdata\*')
 #print(folderstotrack)
+
+# Here we store mass information (weight, height) about participants
+META = pd.read_csv(curfolder + '\\..\\00_RAWDATA\META_mass.txt', sep='\t') # Note that we actually need the weight only if we do the marker augmentation
 
 # Initiate empty list
 pcnfolders = []
@@ -65,6 +61,7 @@ pcnfolders = [x for x in pcnfolders if 'ResultsInverseDynamics' not in x]
 pcnfolders = [x for x in pcnfolders if 'ResultsInverseKinematics' not in x]
 pcnfolders = [x for x in pcnfolders if 'sto' not in x]
 pcnfolders = [x for x in pcnfolders if 'txt' not in x]
+
 ```
 
 ```{python}
@@ -148,8 +145,6 @@ framepick = 3
 source1 = pose2simprjfolder+'/Config.toml'
 source2 = pose2simprjfolder+'/opensim/'
 
-# Load in the txt file META from curfolder
-META = pd.read_csv(curfolder + '\META.txt', sep='\t') # Note that we actually need the weight only if we do the marker augmentation
 
 for i in folderstotrack:
     os.chdir(i)
@@ -373,6 +368,13 @@ Here is an animation of the keypoints plotted in 3D space.
 ```{python}
 #| echo: false
 
+# import pandas as pd
+import glob
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+from matplotlib.animation import FuncAnimation
+from IPython.display import Video
+
 # 3D tracking checking
 trackingfolders = glob.glob(curfolder + '\\projectdata\\*\\*\\*\\pose-3d\\', recursive=True)
 rawfolders = glob.glob(curfolder + '\\projectdata\\*\\*\\*\\raw-2d\\', recursive=True)
@@ -431,10 +433,15 @@ Video(video_path, embed=True, width=700)
 
 ```
 
+Note that here we see that the Y and Z axis are flipped. We will therefore need to adjust the columns in script @ADDREFF.
+
 This is the raw video that it corresponds to
 
 ```{python}
 #| echo: false
+
+import tempfile
+import subprocess
 
 # Create a temporary folder
 temp_dir = tempfile.mkdtemp()
@@ -454,5 +461,71 @@ if not os.path.exists(mp4_path):
 
 # Display the video inside Jupyter Notebook
 Video(mp4_path, embed=True, width=400)
+```
+
+Now let's get information about the intrinsic and extrinsic error for each trial. The error log is saved in logs.txt file in the first session of the list that we have processed, here Session_0_1.
+
+To get more comprehensive overview of the error for each file, we will extract the relevant information for each trial by acessing regular expressions in the logs.txt file.
+
+```{python}
+
+import re
+
+log = curfolder + '/projectdata/Session_0_1/logs.txt'
+
+# Function to load text file
+def load_log_file(filename):
+    with open(filename, 'r') as file:
+        text = file.read()
+    return text
+
+# Sample file path (replace with the actual path to your log file)
+file_path = log  # Replace with your actual file path
+
+# Load the log file text
+log_data = load_log_file(file_path)
+
+# Pattern to extract trials (trial name, date, triangulation, mean reprojection error, and camera exclusions)
+trial_pattern = r"(Triangulation of 2D points for (\S+).*?11. December.*?Mean reprojection error for all points on all frames is (\d+\.\d+) px.*?which roughly corresponds to (\d+\.\d+) mm.*?Camera (cam\d) was excluded (\d+)%.*?)(?=Triangulation|$)"
+
+# Find all trials for 11 December
+trial_chunks = re.findall(trial_pattern, log_data, flags=re.DOTALL)
+
+# Store results
+trial_results = []
+
+# Process each trial
+for trial_chunk in trial_chunks:
+    full_trial_info = trial_chunk[0]  # Entire chunk related to a trial
+    trial_name = trial_chunk[1]  # Extract trial name (e.g., 0_2_38_p0)
+    mean_reprojection_error_px = trial_chunk[2]  # Mean reprojection error in px
+    mean_reprojection_error_mm = trial_chunk[3]  # Mean reprojection error in mm
+    
+    # Add extracted information to results
+    trial_results.append({
+        'trial_name': trial_name,
+        'mean_reprojection_error_px': mean_reprojection_error_px,
+        'mean_reprojection_error_mm': mean_reprojection_error_mm
+    })
+
+# trial_results to df
+df = pd.DataFrame(trial_results)
+
+df.head(15)
+```
+
+What is the mean reprojection error across trials in mm?
+
+```{python}
+df['mean_reprojection_error_mm'] = df['mean_reprojection_error_mm'].astype(float)
+mean_repro = df['mean_reprojection_error_mm'].mean()
+print('Mean reprojection error for all trials is ', mean_repro, ' mm')
+```
+
+Is there any trial that has an error above 2 cm?
+
+```{python}
+df['mean_reprojection_error_mm'] = df['mean_reprojection_error_mm'].astype(float)
+df[df['mean_reprojection_error_mm'] > 20]
 ```
 

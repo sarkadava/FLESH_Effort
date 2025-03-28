@@ -189,8 +189,8 @@ Anno_R2	0	780	nomovement	0_2_33_p1_ELAN_tiers.eaf
 Anno_R2	3240	3667	nomovement	0_2_33_p1_ELAN_tiers.eaf
 Anno_R2	1240	4040	movement	0_2_34_p1_ELAN_tiers.eaf
 Anno_R2	0	1240	nomovement	0_2_34_p1_ELAN_tiers.eaf
-Anno_R2	1010	5175	movement	0_2_35_p1_ELAN_tiers.eaf
 Anno_R2	0	1010	nomovement	0_2_35_p1_ELAN_tiers.eaf
+Anno_R2	1010	5175	movement	0_2_35_p1_ELAN_tiers.eaf
 Anno_R2	5175	5426	nomovement	0_2_35_p1_ELAN_tiers.eaf
 Anno_R2	1100	4260	movement	0_2_36_p1_ELAN_tiers.eaf
 Anno_R2	0	1100	nomovement	0_2_36_p1_ELAN_tiers.eaf

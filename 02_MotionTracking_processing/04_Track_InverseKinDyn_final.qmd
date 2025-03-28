@@ -32,7 +32,7 @@ projectdata = os.path.join(curfolder, 'projectdata')
 sessionstotrack = glob.glob(os.path.join(projectdata, 'Session*'))
 
 # Here we store the metadata about weight, height
-META = pd.read_csv('META.txt', sep='\t')
+META = pd.read_csv(curfolder + '\\..\\00_RAWDATA\META_mass.txt', sep='\t')
 
 # Here are the config files for the OpenSim pipeline
 scalefile = curfolder + '/Pose2Sim/OpenSim_Setup/Scaling_Setup_Pose2Sim_Body135_FLESH.xml'

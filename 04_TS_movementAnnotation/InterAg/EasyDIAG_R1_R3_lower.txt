@@ -1,0 +1,31 @@
+EasyDIAg version: 1.0.0
+File created: 25-Mar-2025
+
+ELAN data export filename:
+E:\FLESH_ContinuousBodilyEffort\04_TS_movementAnnotation\InterAg\IA_R3_R1_lower_manual.txt
+Contained 500 annotations.
+Overlap value used = 60 %
+
+1) Percentage of linked units:
+linked         = 0.74 %
+
+2) Overall agreement indicies (including no match):
+Raw agreement  = 0.71
+kappa          = 0.46
+kappa_max      = 0.89
+
+3) Overall agreement indicies (excluding no match):
+Raw agreement  = 0.97
+kappa          = 0.91
+kappa_max      = 0.94
+
+4) Global agreement matrix:
+                         	    m	    n	    n	
+                 movement	   82	    2	   12	
+               nomovement	   10	  274	   39	
+                 no match	   22	   59	    0	
+
+5) Individual agreement scores:
+                     Type	       kappa	Pos agreement	   Kappa_max	Raw agreement	
+                 movement	        0.72	        0.78	        0.89	         0.91
+               nomovement	        0.51	        0.83	        0.95	         0.78
