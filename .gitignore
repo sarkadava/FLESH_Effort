@@ -22,3 +22,13 @@ RAWDATA.rar
 *.caffemodel
 /02_MotionTracking
 
+/03_TS_processing/01_TS_processing_motion_final_files
+/06_ConceptSimilarity/ConceptNet_similarity_files
+/03_TS_processing/02_TS_processing_acoustics_final_files
+/03_TS_processing/03_TS_merging_final_files
+/03_TS_processing/03_TS_merging_final_files
+/09_Analysis_Modeling
+/08_Analysis_XGBoost
+/08_Analysis_XGBoost
+/09_Analysis_Modeling
+/08_Analysis_XGBoost
