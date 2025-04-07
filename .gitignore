@@ -12,6 +12,9 @@
 /02_MotionTracking_processing/projectdata
 *.caffemodel
 
+04_TS_movementAnnotation/Models
+04_TS_movementAnnotation/TS_forClassifying
+
 06_ConceptSimilarity/numberbatch
 
 08_Analysis_XGBoost/models
