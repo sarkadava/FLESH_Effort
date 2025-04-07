@@ -48,7 +48,7 @@ Below you'll find an overview of the steps in this workflow. Each step builds on
 - [`02_XGBoost_effortIndicators.qmd`](08_Analysis_XGBoost/02_XGBoost_effortIndicators.qmd): Assess feature importance using XGBoost.
 
 ### 10. Analysis: statistical modelling
-
+- [`Modelling_syntheticData.qmd`](09_Analysis_Modeling/Modelling_syntheticData.qmd)
 ---
 
 
