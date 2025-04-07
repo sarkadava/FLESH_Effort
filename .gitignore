@@ -12,7 +12,6 @@
 /02_MotionTracking_processing/projectdata
 *.caffemodel
 
-
 06_ConceptSimilarity/numberbatch
 
 08_Analysis_XGBoost/models
