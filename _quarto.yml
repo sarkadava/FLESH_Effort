@@ -5,7 +5,6 @@ project:
     - "*.qmd"
     - "*.ipynb"
     - "!/00_RAWDATA"
-    - "!/08_Analysis_XGBoost"
     - "!/09_Analysis_Modeling"
     - "!/Miscellaneous"
 
