@@ -5,30 +5,22 @@
 *.pfsx
 *.wav
 *.xdf
-RAWDATA.rar
 
-06_ConceptSimilarity/numberbatch
-/.quarto/
-06_Modeling/models
 01_XDF_processing/data/Data_processed/CsvDataTS_raw
-02_MotionTracking/openpose
-02_MotionTracking/projectdata
-02_MotionTracking/misc
-/_book
-/Miscellaneous
 
 /02_MotionTracking_processing/openpose/bin
 /02_MotionTracking_processing/projectdata
 *.caffemodel
-/02_MotionTracking
 
-/03_TS_processing/01_TS_processing_motion_final_files
-/06_ConceptSimilarity/ConceptNet_similarity_files
-/03_TS_processing/02_TS_processing_acoustics_final_files
-/03_TS_processing/03_TS_merging_final_files
-/03_TS_processing/03_TS_merging_final_files
-/09_Analysis_Modeling
-/08_Analysis_XGBoost
-/08_Analysis_XGBoost
-/09_Analysis_Modeling
-/08_Analysis_XGBoost
+
+06_ConceptSimilarity/numberbatch
+
+08_Analysis_XGBoost/models
+
+09_Analysis_Modeling/models
+
+/Miscellaneous
+/.quarto/
+
+
+
