@@ -1,6 +1,14 @@
 project:
   type: website
   output-dir: docs
+  render:
+    - "*.qmd"
+    - "*.ipynb"
+    - "!/00_RAWDATA"
+    - "!/08_Analysis_XGBoost"
+    - "!/09_Analysis_Modeling"
+    - "!/Miscellaneous"
+
 
 book:
   title: "[Preregistration] Putting in the Effort: Modulation of Multimodal Effort in Communicative Breakdowns during a Gestural-Vocal Referential Game"
@@ -9,21 +17,23 @@ book:
   chapters:
     - index.qmd
     - intro.qmd
-    - /01_XDF_processing/xdf_workflow_final.qmd
-    - /02_MotionTracking_processing/01_Video_preparation_final.qmd
-    - /02_MotionTracking_processing/02_Track_OpenPose_final.qmd
-    - /02_MotionTracking_processing/03_Track_pose2sim_final.qmd
-    - /02_MotionTracking_processing/04_Track_InverseKinDyn_final.qmd
-    - /03_TS_processing/01_TS_processing_motion_final.qmd
-    - /03_TS_processing/02_TS_processing_acoustics_final.qmd
-    - /03_TS_processing/03_TS_merging_final.qmd
-    - /04_TS_movementAnnotation/01_Classify_preparation_final.qmd
-    - /04_TS_movementAnnotation/02_MovementClassifier_final.qmd
-    - /04_TS_movementAnnotation/03_InterAgreement_final.qmd
-    - /05_finalMerge/TS_mergeAnnotations_final.qmd
-    - /06_ConceptSimilarity/ConceptNet_similarity_final.qmd
+    - /01_XDF_processing/xdf_workflow.ipynb
+    - /02_MotionTracking_processing/01_Video_preparation.ipynb
+    - /02_MotionTracking_processing/02_Track_OpenPose.ipynb
+    - /02_MotionTracking_processing/03_Track_pose2sim.ipynb
+    - /02_MotionTracking_processing/04_Track_InverseKinDyn.ipynb
+    - /03_TS_processing/01_TS_processing_motion.ipynb
+    - /03_TS_processing/02_TS_processing_acoustics.ipynb
+    - /03_TS_processing/03_TS_merging.ipynb
+    - /04_TS_movementAnnotation/01_Classify_preparation.ipynb
+    - /04_TS_movementAnnotation/02_MovementClassifier.ipynb
+    - /04_TS_movementAnnotation/03_InterAgreement.ipynb
+    - /05_finalMerge/TS_mergeAnnotations.ipynb
+    - /06_ConceptSimilarity/ConceptNet_similarity.ipynb
     - summary.qmd
     - references.qmd
+    
+
 
 bibliography: references.bib
 
