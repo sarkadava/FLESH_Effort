@@ -29,6 +29,10 @@ book:
     - /04_TS_movementAnnotation/03_InterAgreement.ipynb
     - /05_finalMerge/TS_mergeAnnotations.ipynb
     - /06_ConceptSimilarity/ConceptNet_similarity.ipynb
+    - /07_TS_featureExtraction/TS_extraction.ipynb
+    - /08_Analysis_XGBoost/01_PCA_featureDimensions.ipynb
+    - /08_Analysis_XGBoost/02_XGBoost_effortIndicators.qmd
+    
     - summary.qmd
     - references.qmd
     

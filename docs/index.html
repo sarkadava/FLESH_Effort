@@ -85,11 +85,86 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="preface" class="level1 unnumbered">
-<h1 class="unnumbered">Preface</h1>
-<p>This is a Quarto book.</p>
+<section id="preregistration-putting-in-the-effort-modulation-of-multimodal-effort-in-communicative-breakdowns-during-a-gestural-vocal-referential-game" class="level1">
+<h1>[Preregistration] Putting in the Effort: Modulation of Multimodal Effort in Communicative Breakdowns during a Gestural-Vocal Referential Game</h1>
+<p>Authors: XXXX</p>
+<p>This website documents data processing pipeline developed for the project <strong>Modulation of Multimodal Effort in Communicative Breakdowns during a Gestural-Vocal Referential Game</strong>. The pipeline covers every step from raw data ingestion to feature extraction and analysis, focusing on synchronizing and processing motion, audio, and derived signal data.</p>
+<p>Below you’ll find an overview of the steps in this workflow. Each step builds on the previous one, enabling modular processing and transparent documentation.</p>
+<section id="here-image-from-data" class="level3">
+<h3 class="anchored" data-anchor-id="here-image-from-data">HERE IMAGE FROM DATA</h3>
+<hr>
+</section>
+<section id="workflow-overview" class="level2">
+<h2 class="anchored" data-anchor-id="workflow-overview">Workflow Overview</h2>
+<section id="introduction" class="level3">
+<h3 class="anchored" data-anchor-id="introduction">1. Introduction</h3>
+<ul>
+<li><a href="./intro.html"><code>intro.qmd</code></a>: Overview of the project goals, data types, and guiding research questions.</li>
+</ul>
+</section>
+<section id="xdf-processing" class="level3">
+<h3 class="anchored" data-anchor-id="xdf-processing">2. XDF Processing</h3>
+<ul>
+<li><a href="./01_XDF_processing/xdf_workflow.html"><code>xdf_workflow.ipynb</code></a>: Load and clean raw XDF data, align streams, and prepare for downstream processing.</li>
+</ul>
+</section>
+<section id="motion-tracking-processing" class="level3">
+<h3 class="anchored" data-anchor-id="motion-tracking-processing">3. Motion Tracking Processing</h3>
+<ul>
+<li><a href="./02_MotionTracking_processing/01_Video_preparation.html"><code>01_Video_preparation.ipynb</code></a>: Prepare and crop video recordings.</li>
+<li><a href="./02_MotionTracking_processing/02_Track_OpenPose.html"><code>02_Track_OpenPose.ipynb</code></a>: Use OpenPose for 2D pose estimation.</li>
+<li><a href="./02_MotionTracking_processing/03_Track_pose2sim.html"><code>03_Track_pose2sim.ipynb</code></a>: Convert 2D coordinates to 3D using pose2sim.</li>
+<li><a href="./02_MotionTracking_processing/04_Track_InverseKinDyn.html"><code>04_Track_InverseKinDyn.ipynb</code></a>: Compute inverse kinematics and dynamics.</li>
+</ul>
+</section>
+<section id="time-series-processing" class="level3">
+<h3 class="anchored" data-anchor-id="time-series-processing">4. Time Series Processing</h3>
+<ul>
+<li><a href="./03_TS_processing/01_TS_processing_motion.html"><code>01_TS_processing_motion.ipynb</code></a>: Clean and interpolate motion signals, extract features.</li>
+<li><a href="./03_TS_processing/02_TS_processing_acoustics.html"><code>02_TS_processing_acoustics.ipynb</code></a>: Extract acoustic features.</li>
+<li><a href="./03_TS_processing/03_TS_merging.html"><code>03_TS_merging.ipynb</code></a>: Merge motion and acoustic time series.</li>
+</ul>
+</section>
+<section id="movement-annotation" class="level3">
+<h3 class="anchored" data-anchor-id="movement-annotation">5. Movement Annotation</h3>
+<ul>
+<li><a href="./04_TS_movementAnnotation/01_Classify_preparation.html"><code>01_Classify_preparation.ipynb</code></a>: Segment time windows and prepare labels for training classifier.</li>
+<li><a href="./04_TS_movementAnnotation/02_MovementClassifier.html"><code>02_MovementClassifier.ipynb</code></a>: Train and evaluate classifiers for movement detection.</li>
+<li><a href="./04_TS_movementAnnotation/03_InterAgreement.html"><code>03_InterAgreement.ipynb</code></a>: Evaluate inter-annotator agreement.</li>
+</ul>
+</section>
+<section id="final-merge" class="level3">
+<h3 class="anchored" data-anchor-id="final-merge">6. Final Merge</h3>
+<ul>
+<li><a href="./05_finalMerge/TS_mergeAnnotations.html"><code>TS_mergeAnnotations.ipynb</code></a>: Merge annotations with timeseries.</li>
+</ul>
+</section>
+<section id="concept-similarity" class="level3">
+<h3 class="anchored" data-anchor-id="concept-similarity">7. Concept Similarity</h3>
+<ul>
+<li><a href="./06_ConceptSimilarity/ConceptNet_similarity.html"><code>ConceptNet_similarity.ipynb</code></a>: Assess semantic similarity between concepts using ConceptNet.</li>
+</ul>
+</section>
+<section id="feature-extraction" class="level3">
+<h3 class="anchored" data-anchor-id="feature-extraction">8. Feature Extraction</h3>
+<ul>
+<li><a href="./07_TS_featureExtraction/TS_extraction.html"><code>TS_extraction.ipynb</code></a>: Extract final time series features for modeling.</li>
+</ul>
+</section>
+<section id="analysis-exploratory" class="level3">
+<h3 class="anchored" data-anchor-id="analysis-exploratory">9. Analysis (exploratory)</h3>
+<ul>
+<li><a href="./08_Analysis_XGBoost/01_PCA_featureDimensions.html"><code>01_PCA_featureDimensions.ipynb</code></a>: Explore dimensionality of extracted features using PCA.</li>
+<li><a href="./08_Analysis_XGBoost/02_XGBoost_effortIndicators.html"><code>02_XGBoost_effortIndicators.qmd</code></a>: Assess feature importance using XGBoost.</li>
+</ul>
+</section>
+<section id="analysis-statistical-modelling" class="level3">
+<h3 class="anchored" data-anchor-id="analysis-statistical-modelling">10. Analysis: statistical modelling</h3>
+<hr>
 
 
+</section>
+</section>
 </section>
 
 </main> <!-- /main -->

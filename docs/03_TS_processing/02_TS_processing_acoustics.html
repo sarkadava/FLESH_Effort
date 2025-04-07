@@ -114,8 +114,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="02_TS_processing_acoustics.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></div>
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#extracting-intensity-vocalic-energy" id="toc-extracting-intensity-vocalic-energy" class="nav-link active" data-scroll-target="#extracting-intensity-vocalic-energy">Extracting intensity (vocalic energy)</a></li>
+  <li><a href="#extracting-fundamental-frequency-f0" id="toc-extracting-fundamental-frequency-f0" class="nav-link" data-scroll-target="#extracting-fundamental-frequency-f0">Extracting fundamental frequency (f0)</a></li>
+  <li><a href="#extracting-spectral-centroid" id="toc-extracting-spectral-centroid" class="nav-link" data-scroll-target="#extracting-spectral-centroid">Extracting spectral centroid</a></li>
+  <li><a href="#extracting-formants" id="toc-extracting-formants" class="nav-link" data-scroll-target="#extracting-formants">Extracting formants</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
@@ -2010,14 +2019,6 @@ working on 0_1_19_p0</code></pre>
 <span id="cb23-38"><a href="#cb23-38" aria-hidden="true" tabindex="-1"></a>    merged_df[col <span class="op">+</span> <span class="st">'_clean'</span>] <span class="op">=</span> merged_df[col] <span class="op">*</span> merged_df[<span class="st">'peak_width'</span>]</span>
 <span id="cb23-39"><a href="#cb23-39" aria-hidden="true" tabindex="-1"></a>    <span class="co">#instead of 0, put NaN</span></span>
 <span id="cb23-40"><a href="#cb23-40" aria-hidden="true" tabindex="-1"></a>    merged_df[col <span class="op">+</span> <span class="st">'_clean'</span>] <span class="op">=</span> merged_df[col <span class="op">+</span> <span class="st">'_clean'</span>].replace(<span class="dv">0</span>, np.nan)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>C:\Users\Sarka Kadava\AppData\Local\Temp\ipykernel_21516\958394636.py:5: SettingWithCopyWarning: 
-A value is trying to be set on a copy of a slice from a DataFrame.
-Try using .loc[row_indexer,col_indexer] = value instead
-
-See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
-  formants_trial['time'] = formants_trial['time'] * 1000</code></pre>
-</div>
 </div>
 <p>Here we can see visualized overlap of formants and envelope (peaks). The darker part of the formants signal is the window of an envelope peak.</p>
 <div id="cell-56" class="cell" data-execution_count="39">

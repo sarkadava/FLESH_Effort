@@ -1,7 +1,9 @@
 ---
-title: "Modelling the Effect of Communicative Attempt (H1) and Answer Similarity (H2) on Effort"
+title: "Statistical Analysis: Modelling the Effect of Communicative Attempt (H1) and Answer Similarity (H2) on Effort"
+execute:
+  warning: false
 format: html
-editor: visual
+toc: true
 ---
 
 # Introduction
@@ -16,35 +18,31 @@ H2: The enhancement depends on similarity of the guesser's answer and the origin
 
 To assess the design and performance of the model, we will use synthetic data that we create to have certain interdependencies and where the effects have pre-defined values. We use this approach instead of using our dyad 0 data, because the pilot data do not include enough data to have a sensible testing sample.
 
-Since we cannot predict the outcomes of the XGBoost modelling (in the previous script) and therefore do not know the variables we will model after preregistration, our model only assumes a continuous variable but it is otherwise free of any other assumptions.
-
-# Setting up the environment
+Since we cannot predict the outcomes of the XGBoost modelling (in the previous script @ADDREFTOSCRIPT) and therefore do not know the variables we will model after preregistration, our model only assumes a continuous variable but it is otherwise free of any other assumptions.
 
 ```{r setup environment, echo=TRUE, message=FALSE, warning=FALSE}
+#| code-fold: true
+#| code-summary: Code to prepare the environment
 
 library(here)
 library(dplyr) # for data-wrangling
-library(lme4)  # for linear mixed-effects models
 library(tidyr)  # for reshaping data (if needed)
 library(ggplot2)
 library(tibble)
 library(rcartocolor)
-
+library(patchwork)
 
 library(ggdag) # for dag
 library(dagitty)
 
-
-library(ggplot2) # bayesian stuff
-library(patchwork)
-library(bayesplot)
+library(bayesplot) # bayesian stuff
 library(brms)
 library(beepr)
 library(bayestestR)
 library(tidyverse)
 
 # current folder (first go to session -> set working directory -> to source file location)
-parentfolder <- dirname(getwd())
+parentfolder <- getwd()
 
 featurefolder <- paste0(parentfolder, '/07_TS_featureExtraction/Datasets/')
 demofolder    <- paste0(parentfolder, '/00_RAWDATA/Demographics_all/')
@@ -57,7 +55,7 @@ plots         <- paste0(parentfolder, '/09_Analysis_Modeling/plots/')
 
 # Loading in our data
 
-This is the feature dataframe we will be using. Additionally, we will also need some demographic information
+This is the feature dataframe we will be using when having access to full data. Additionally, we will merge the feature dataframe with demographic data collected via Qualtrics.
 
 ```{r loading data, echo=TRUE, message=FALSE, warning=FALSE}
 
@@ -93,13 +91,101 @@ data_feat <- data_feat %>%
 
 final_data <- left_join(data_feat, data_demo, by = "pcn_ID")
 
+head(final_data, n=15)
+```
 
+Because current pilot data are quite likely unsifficient in terms of power (65 observations), and would hinder testing the design of the statistical models, we will create synthetic data with assumed coefficients for all predictors we plan to add to the model. 
+
+# H1: Stating causal model
+
+Before simulating synthetic data, we will first formulate our causal model to explicitly identify common causes, and hence prevent (or rather minimize) confounding in our statistical model. Note that while we are interested in causal relationship between effort (outcome) and communicative attempt (predictor for H1) and answer similarity (predictor for H2), we need to acknowledge that there are other factors possibly contributing to the outcome variable, despite the experiment beling relatively controlled. These relate, for instance, to the participants (e.g., personality traits) or stimuli (i.e., concepts). Our causal model therefore includes more variables that are identified as potentially sharing causal path with our primary predictor - communicative attempt. They are not of primary interest, they ensure we can isolate the causal effect of the main predictor on the outcome variable - effort.
+
+To explicitly formulate the causal paths, we will start our analysis visualizing our causal model using directed acyclic graph (DAG). We will use packages `dagitty` and `ggdag` to create these DAGs and to extract implied independencies and adjustment set. DAG will help us clarify the causal model and introduce the predictors we aim to model (@McElreath). This model goes hand in hand with the logic underlying the synthetic data we create below.
+
+Our first hypothesis goes as follows:
+
+*H1: Correction recruits more physical effort than the baseline performance.*
+
+The relationship of interest is the causal effect of *communicative attempt* on *effort*. Further, our causal model includes following assumptions:
+
+-   Personality traits (measured with Big5) will influence effort (e.g., people are more willing to put more effort if they are open-minded) and also communicative attempt (e.g., more extroverted people are better in this game, therefore they need less attempts)
+
+-   Familiarity with guessing partner influences effort (ditto) as well as communicative attempt (e.g., friends are better in this game than strangers)
+
+-   Similarly, participant will also directly influence effort and commAtt, because personality traits might not be capturing all variation
+
+-   Expressibility of concepts is going to influence effort (e.g., more expressible concepts allow more enhancement - but could be also other direction) as well as CommAtt (e.g., more expressible concepts are more readily guessed and don't need more attempts)
+
+-   Similarly, concept will also directly influence effort and commAtt, because expressibility might not be capturing all variation
+
+-   Modality (uni vs. multi) will influence the value of effort. We assume that in unimodal condition, the feature does not need to account for synergic relations with the other modality, and may carry the whole signal. In multimodal condition, however, there may be synergic relations that moderate the full expressiveness of this feature
+
+-   Trial number (characterising how far one is in the experiment) could be hinting on learning processes through out the experiment, or - the other direction - on increasing fatigue
+
+```{r dag h1, echo=TRUE, message=FALSE, warning=FALSE}
+
+daggy_h1 <- dagitty('dag {
+Big5 [adjusted,pos="-1.5,1"]
+CommAtt [exposure,pos="-2,0"]
+Conc [adjusted,pos="-2,-1.5"]
+Eff [outcome,pos="0,0"]
+Expr [adjusted,pos="-1.5,-1.5"]
+Fam [adjusted,pos="-0.5,1"]
+Pcn [adjusted,pos="-1,2"]
+TrNum [adjusted,pos="-2.5,-1.5"]
+Mod [adjusted,pos="0.5,0.5"]
+
+Big5 -> CommAtt     
+Big5 -> Eff
+CommAtt -> Eff
+Conc -> Expr
+Expr -> CommAtt
+Expr -> Eff
+Fam -> CommAtt
+Fam -> Eff
+Mod -> Eff
+Mod -> CommAtt
+Pcn -> Big5
+Pcn -> CommAtt 
+Pcn -> Eff
+Pcn -> Fam
+TrNum -> CommAtt
+TrNum -> Eff
+Conc -> CommAtt
+Conc -> Eff
+}')
+
+# Use ggdag for a cleaner visualization
+d1 <- ggdag(daggy_h1, text = TRUE, use_labels = "name") +
+  theme_dag() +
+  ggtitle("Causal DAG for H1") +
+  theme(plot.title = element_text(hjust = 0.5))
+
+d1
 
 ```
 
-Because current pilot data are quite likely unsifficient in terms of power (65 observations), and would hinder testing the design of the statistical models, we will create synthetic data with assumed coefficients for all predictors we plan to add to the model.
+These are the implied conditional independencies
 
-# Creating synthetic data
+```{r dag h1 independencies, echo=FALSE, message=FALSE, warning=FALSE}
+
+impliedConditionalIndependencies(daggy_h1)
+
+```
+
+This is the adjustment set that needs to be included in the model to make sure we are not confounding
+
+```{r dag h1 adjustset, echo=FALSE, message=FALSE, warning=FALSE}
+
+dagitty::adjustmentSets(daggy_h1, exposure = "CommAtt", outcome = "Eff")
+
+```
+
+# Creating synthetic data (for pre-registration purposes only)
+
+Now we can proceed with creating synthetic data, incorporating the relationships we have acknowledged in our causal model. We will then use these data to validate the statistical models. Following McElreath (@ADDREF), we believe this approach constitutes a principled and transparent method for model validation. By evaluating the model structure on simulated data before fitting it to empirical observations, we reduce the risk of overfitting and p-hacking, as model assumptions and inferences are tested independently of the observed data.
+
+Note that the synthetic data do not copy the structure of the data and the experimental design perfectly, but they do provide a reliable ground to build the models and test their performance.
 
 ```{r synthetic data, echo=TRUE, message=FALSE, warning=FALSE}
 
@@ -218,33 +304,21 @@ simulate_participant <- function(participant_id) {
 final_data_synt <- do.call(rbind, lapply(participants, simulate_participant))
 
 # Preview results
-head(final_data_synt)
-
+head(final_data_synt, n=15)
 
 ```
 
-So now we have synthetic data where we exactly defined what is the relationship between certain variables
 
-Note that the synthetic data do not copy the structure of the data and the experimental design perfectly, but it does provide a reliable ground to build the models and test their performance.
+# Exploring the synthetic data
 
-# Exploring structure
-
-```{r nrows, echo=TRUE, message=FALSE, warning=FALSE}
-
-nrow(final_data_synt) # this is the number of datapoints
-```
+This is the distribution of our simulated effort feature
 
 ```{r effort hist, echo=TRUE, message=FALSE, warning=FALSE}
-hist(final_data_synt$Eff)
+
+hist(final_data_synt$Eff, breaks=100)
 ```
 
-```{r data exploration, echo=TRUE, message=FALSE, warning=FALSE}
-
-final_data_synt |> 
-  janitor::tabyl(Participant, Concept) # the number of repetition per concept by participant
-```
-
-## Plot: H1
+This is the relationship between effort and communicative attempt (H1) as seen in the raw (synthetic) data
 
 ```{r h1 raw plot, echo=TRUE, message=FALSE, warning=FALSE}
 
@@ -260,124 +334,12 @@ ggplot(final_data_synt, aes(x = as.factor(CommAtt), y = Eff)) +
 
 ```
 
-The visual already hints on the effects we expect to exist in the data.
 
-## Plot: H2
+```{r save data, include=FALSE, message=FALSE, warning=FALSE, include=FALSE}
 
-```{r h2 raw plot, echo=TRUE, message=FALSE, warning=FALSE}
-
-# Filter out CommAtt == 1
-filtered_data <- final_data_synt[final_data_synt$CommAtt != 1, ]
-
-# Scatter plot with regression line
-library(ggplot2)
-
-ggplot(filtered_data, aes(x = PrevAn, y = Eff)) +
-  geom_point(alpha = 0.6, color = "blue") +  # Scatter points
-  geom_smooth(method = "lm", color = "red", se = FALSE) +  # Regression line
-  labs(x = "Previous Answer Similarity (PrevAn)", 
-       y = "Effort (Eff)", 
-       title = "Relationship between Effort and Previous Answer Similarity") +
-  theme_minimal()
-
-
-```
-
-```{r save data, include=FALSE, message=FALSE, warning=FALSE}
+# Save the synthetic data for future purposes
 
 write.csv(final_data_synt, file = here("09_Analysis_Modeling", "datasets", "synthetic_data.csv"), row.names = FALSE)
-
-```
-
-# H1: Stating causal model
-
-Before doing that, we create a causal diagram, so-called directed acyclic graphs (DAG). This will help us clarify the causal model and introduce the predictors we aim to model.
-
-Our two hypothesis go as follows:
-
-*H1: Correction recruits more physical effort than the baseline performance.*
-
-*H2: A higher degree of misunderstanding will require a performer to engage in more effortful correction.*
-
-The relationship of interest is the causal effect of communicative attempt on effort. Our assumptions include:
-
--   Personality traits (measured with Big5) will influence effort (e.g., people are more willing to put more effort if they are open-minded) and also communicative attempt (e.g., more extroverted people are better in this game, therefore they need less attempts)
-
--   Familiarity with guessing partner influences effort (ditto) as well as communicative attempt (e.g., friends are better in this game than strangers)
-
--   Similarly, participant will also directly influence effort and commAtt, because personality traits might not be capturing all variation
-
--   Expressibility of concepts is going to influence effort (e.g., more expressible concepts allow more enhancement - but could be also other direction) as well as CommAtt (e.g., more expressible concepts are more readily guessed and don't need more attempts)
-
--   Similarly, concept will also directly influence effort and commAtt, because expressibility might not be capturing all variation
-
--   Modality (uni vs. multi) will influence the value of effort. We assume that in unimodal condition, the feature does not need to account for synergic relations with the other modality, and may carry the whole signal. In multimodal condition, however, there may be synergic relations that moderate the full expressiveness of this feature
-
--   Trial number (characterising how far one is in the experiment) could be hinting on learning processes through out the experiment, or - the other direction - on increasing fatigue
-
--   Previous answer (PrevAn) will affect the effort (more similar answer will require less effortful correction) as well as communicative attempt (correct answers do not require further corrections)
-
--   Expressibility of concepts will influence the answer (more expressible are easier to guess)
-
--   Trial number will also affect previous answer if there is learning involved, or conversely, increasing fatigue
-
-```{r dag h1, echo=FALSE, message=FALSE, warning=FALSE}
-
-
-daggy_h1 <- dagitty('dag {
-Big5 [adjusted,pos="-1.5,1"]
-CommAtt [exposure,pos="-2,0"]
-Conc [adjusted,pos="-2,-1.5"]
-Eff [outcome,pos="0,0"]
-Expr [adjusted,pos="-1.5,-1.5"]
-Fam [adjusted,pos="-0.5,1"]
-Pcn [adjusted,pos="-1,2"]
-TrNum [adjusted,pos="-2.5,-1.5"]
-Mod [adjusted,pos="0.5,0.5"]
-
-Big5 -> CommAtt     
-Big5 -> Eff
-CommAtt -> Eff
-Conc -> Expr
-Expr -> CommAtt
-Expr -> Eff
-Fam -> CommAtt
-Fam -> Eff
-Mod -> Eff
-Mod -> CommAtt
-Pcn -> Big5
-Pcn -> CommAtt 
-Pcn -> Eff
-Pcn -> Fam
-TrNum -> CommAtt
-TrNum -> Eff
-Conc -> CommAtt
-Conc -> Eff
-}')
-
-# Use ggdag for a cleaner visualization
-d1 <- ggdag(daggy_h1, text = TRUE, use_labels = "name") +
-  theme_dag() +
-  ggtitle("Causal DAG for H1") +
-  theme(plot.title = element_text(hjust = 0.5))
-
-d1
-
-```
-
-These are the implied conditional independencies
-
-```{r dag h1 independencies, echo=FALSE, message=FALSE, warning=FALSE}
-
-impliedConditionalIndependencies(daggy_h1)
-
-```
-
-This is the adjustment set that needs to be included in the model to make sure we are not confounding
-
-```{r dag h1 adjustset, echo=FALSE, message=FALSE, warning=FALSE}
-
-dagitty::adjustmentSets(daggy_h1, exposure = "CommAtt", outcome = "Eff")
 
 ```
 
@@ -397,12 +359,12 @@ options(mc.cores = parallel::detectCores())
 
 To be able to interpret the data, we will first need to do some contrast coding
 
-```{r load data1, include=FALSE, message=FALSE, warning=FALSE}
+```{r load data1, include=FALSE, message=FALSE, warning=FALSE, include=FALSE}
 
 final_data <- read_csv(paste0(datasets, "synthetic_data.csv"))
 ```
 
-1)  Convert columns to factors
+Convert columns to factors
 
 ```{r h1 factorizing, message=FALSE, warning=FALSE}
 
@@ -414,30 +376,30 @@ final_data$Concept <- as.factor(final_data$Concept)
 final_data$TrialNumber <- as.numeric(final_data$TrialNumber)  # Ensure TrialNumber is numeric
 ```
 
-2)  Contrast-coding of categorical variables
+Contrast-coding of categorical variables
 
 ```{r h1 contrast coding, message=FALSE, warning=FALSE}
+
 contrasts(final_data$CommAtt) <- MASS::contr.sdif(3)
 contrasts(final_data$Modality) <- contr.sum(3)/2
 ```
 
+::: {.callout-note}
+
 This is how CommAtt is contrast-coded now
+         
+  2-1        3-2
 
-```         
-     2-1        3-2
-```
-
-1 -0.6666667 -0.3333333 2 0.3333333 -0.3333333 3 0.3333333 0.6666667
+  1 -0.6666667 -0.3333333 2 0.3333333 -0.3333333 3 0.3333333 0.6666667
 
 This is how modality is cc-ed
+        
+  [,1] [,2]
 
-```         
-     [,1] [,2]
-```
+  combined 0.5 0.0 gesture 0.0 0.5 vocal -0.5 -0.5
+:::
 
-combined 0.5 0.0 gesture 0.0 0.5 vocal -0.5 -0.5
-
-3)  Center continuous variables
+Centering continuous variables
 
 ```{r h1 centering, message=FALSE, warning=FALSE}
 
@@ -448,7 +410,7 @@ final_data$Big5 <- final_data$Big5 - median(range(final_data$Big5))
 
 ```
 
-4)  Z-score expressibility within a modality
+Z-scoring expressibility within a modality
 
 ```{r h1 zscoring, message=FALSE, warning=FALSE}
 
@@ -457,11 +419,12 @@ final_data <-
   group_by(Modality) |>
   mutate(Expressibility_z = (Expressibility - mean(Expressibility))/ sd(final_data$Expressibility, na.rm = T)) |>
   ungroup()
+
 ```
 
 ## Model 1 - Simple reproduction of DAG
 
-First we want to do a simple model that, however, reproduce our DAG.
+First we want to do a simple model that reproduce our DAG.
 
 Our main predictor is communicative attempt (CommAtt). To account for confounders - variables affecting both the predictor and the dependent variable - we need to adjust for them in the model by including them as covariates to isolate the effect of the predictor. Based on our DAG, confounders include:
 
@@ -509,9 +472,11 @@ h1.m1_R2 <- readRDS(here("09_Analysis_Modeling", "models", "h1.m1_R2.rds"))
 # Summary
 summary(h1.m1)
 
-# Note on modality: Modality1 represents the baseline difference between combined and the other modalities, and Modality2 represents the difference between gesture and vocal compared to combined.
-
 ```
+
+::: {.callout-note}
+Note on modality: Modality1 represents the baseline difference between combined and the other modalities, and Modality2 represents the difference between gesture and vocal compared to combined.
+:::
 
 ### Transforming coefficients
 
@@ -536,7 +501,6 @@ transform_attempt <- function(intercept, CommAtt2M1, CommAtt3M2) {
   return(data.frame(b_attempt2, b_attempt3))
 }
 
-
 h1m1_coeff <- transform_attempt(4.02, 3.08, -4.39)
 print(h1m1_coeff)
 
@@ -548,9 +512,11 @@ print(fam)
 bif = (4.02 + 1.29) / 4.02
 print(bif)
 
-# Expressibility is z-scored so we will not get to the coefficient in the same way but we can check the conditinal effects for checking whether it looks good
-
 ```
+
+::: {.callout-note}
+Expressibility is z-scored so we will not get to the coefficient in the same way but we can check the conditinal effects for checking whether it looks good
+:::
 
 Let's also check the visuals
 
@@ -569,7 +535,6 @@ pp_check(h1.m1, type = "error_scatter_avg")
 # half blobby, half correlated, so still some room for improvement
 # positive correlation means that errors increase with predicted values. So the model does perform well for some range, but becomes less reliable with increase in the predicted values
 # also the blob is centered around 0 which is good
-
 # it could be we are ignoring some interaction terms or non-linearity (which we know we kind of do). Transformation could also help (e.g., log). Of course, we are also still not specifying any priors so let's not yet make it a disaster
 
 h1.m1_R2
@@ -581,7 +546,7 @@ Overall, we see good directions of all predictors, mostly also in accordance wit
 
 Let's have another model for comparison.
 
-The fixed predictors make sense like this, as it will allow us to assess the effect of each on the effort, despite it not being our main research question. But we can assume that participants and concept have not only different baselines of effort (varying intercept). The effect of CommAtt on effort might vary across them too, hence we can try to add varying slopes for them and see whether the diagnostics improves. We will also add TrialNumber as a varying intercept, because we expect variation between earlier and later performances (because of learning, or opposite, fatigue) and we do not really need a single coefficient for this predictor anyway.
+We can assume that participants and concept have not only different baselines of effort (varying intercept). The effect of CommAtt on effort might vary across them too, hence we can try to add varying slopes for them and see whether the diagnostics improves. We will also add TrialNumber as a varying intercept, because we expect variation between earlier and later performances (because of learning, or opposite, fatigue).
 
 ## Model 2 - Varying slopes and intercepts
 
@@ -604,14 +569,12 @@ saveRDS(h1.m2_R2, here("09_Analysis_Modeling", "models", "h1.m2_R2.rds"))
 
 beep(5)
 
-
 ```
 
 ```{r h1.m2 sum, message=FALSE, warning=FALSE}
 
 h1.m2 <- readRDS(here("09_Analysis_Modeling", "models", "h1.m2.rds"))
 h1.m2_R2 <- readRDS(here("09_Analysis_Modeling", "models", "h1.m2_R2.rds"))
-
 
 # Summary
 summary(h1.m2)
@@ -665,10 +628,8 @@ beep(5)
 
 ```{r h1.m3 sum, message=FALSE, warning=FALSE}
 
-
 h1.m3 <- readRDS(here("09_Analysis_Modeling", "models", "h1.m3.rds"))
 h1.m3_R2 <- readRDS(here("09_Analysis_Modeling", "models", "h1.m3_R2.rds"))
-
 
 # Summary
 summary(h1.m3)
@@ -697,6 +658,8 @@ h1.m3_R2
 ```
 
 ## Model 3.1 - adding priors
+
+Now we will add some minimal priors, giving the model some reasonably informative, yet weak information.
 
 ```{r h1.m3p run, eval=FALSE, message=FALSE, warning=FALSE}
 
@@ -875,7 +838,7 @@ h1.m4_R2
 
 ## Model 5 - student family
 
-So we still see negative values in the posterior simulations, so let's try Student's t-distribution which is more robut to outliers and can potentially reduce the likelihood of negative values (if we reduce degrees of freedom)
+We still see negative values in the posterior simulations, so let's try Student's t-distribution which is more robust to outliers and can potentially reduce the likelihood of negative values (if we reduce degrees of freedom)
 
 ```{r h1.m5 run, eval=FALSE, message=FALSE, warning=FALSE}
 
@@ -1024,9 +987,9 @@ print(coeff1)
 print(coeff2) # which is very close to the mean values we see from the model
 ```
 
-We see that the effect estimated by the model is now stronger than in our simulated data - also maybe because the values are averaged over predictor modality
+We see that the effect estimated by the model is now stronger than in our simulated data. However, note that these values are averaged over predictor modality
 
-Now let's try a different method to get the coefficients (code adapted from <https://bruno.nicenboim.me/bayescogsci/ch-reg.html#sec-trial)>
+We can also try a different method to get the coefficients (code adapted from [here](https://bruno.nicenboim.me/bayescogsci/ch-reg.html#sec-trial))
 
 ```{r h1.m6 converting3, message=FALSE, warning=FALSE}
 
@@ -1071,7 +1034,7 @@ print(h1m6_coeff)
 
 Now this looks closer again to our betas.
 
-This is for all predictors (except concept and participant)
+This code does the same for all predictors (except concept and participant)
 
 ```{r h1.m6 converting5, message=FALSE, warning=FALSE}
 
@@ -1161,6 +1124,8 @@ effect_df
 
 So here we also see the negative effect of combined modality (mod1)
 
+Now we can also check some visual diagnostics.
+
 ```{r h1.m6 check, message=FALSE, warning=FALSE}
 
 plot(h1.m6)
@@ -1243,7 +1208,7 @@ h1.m6c_R2
 
 ## Diagnostics I
 
-Let's now check which model has the best diagnostics
+We now have several models that we can test for predictive performance.
 
 ```{r h1 diagnostics I, include=FALSE, message=FALSE, warning=FALSE}
 
@@ -1254,6 +1219,8 @@ r2_list <- list(h1.m1_R2, h1.m2_R2, h1.m3_R2, h1.m3p_R2, h1.m4_R2, h1.m5_R2, h1.
 ```
 
 ### Rhat
+
+Rhat tells us whether the model's Markov chains have converged—values close to 1 mean the model has likely converged well.
 
 ```{r h1 rhat I, message=FALSE, warning=FALSE}
 
@@ -1307,7 +1274,7 @@ So there are some considerable differences for different coefficients
 
 ### LOO & WAIC
 
-Leave-one-out (loo) validation
+Leave-One-Out (LOO) validation is a technique where, for each iteration, one data point is left out as the test set, and the model is trained on the remaining data points; this process is repeated for each data point, and the model's overall performance is averaged over all iterations.
 
 ```{r h1 loo I, message=FALSE, warning=FALSE}
 
@@ -1317,6 +1284,7 @@ print(l, simplify = F)
 
 ```
 
+::: {.callout-note}
 elpd_loo: This is the expected log pointwise predictive density for LOO. Higher values indicate a better fit to the data.
 
 se_elpd_loo: The standard error of the elpd_loo, representing uncertainty in the model’s predictive fit according to LOO.
@@ -1326,10 +1294,9 @@ looic: The LOO Information Criterion, which is similar to waic but based on leav
 p_loo: The effective number of parameters according to LOO, indicating the model’s complexity.
 
 se_p_loo: The standard error of p_loo, representing uncertainty around the effective number of parameters.
+:::
 
-So lognormal seems the best.
-
-Information criterion (WAIC)
+Model with lognormal distribution seems the best as assessed by LOO.
 
 ```{r h1 waic I, message=FALSE, warning=FALSE}
 
@@ -1343,6 +1310,7 @@ cbind(waic_diff = w[,1] * -2,
 
 ```
 
+::: {.callout-note}
 elpd_waic (expected log pointwise predictive density for WAIC): This represents the model's predictive fit to the data. Higher values indicate a better fit.
 
 se_elpd_waic (standard error of elpd_waic): Measures uncertainty around the elpd_waic estimate.
@@ -1356,6 +1324,7 @@ elpd_diff: The difference in the elpd_waic between the model in question and the
 se_diff: The standard error of the elpd_diff, indicating how much uncertainty there is in the difference in predictive performance.
 
 p_waic: The number of effective parameters in the model (related to model complexity). Lower values indicate simpler models, and higher values suggest more complexity.
+:::
 
 Plot the comparison
 
@@ -1399,7 +1368,7 @@ prior_summary(h1.m6c)
 
 ```
 
-Ok, we can keep all defaulted ones, but we do not need to leave flat priors for the beta coefficients as we do have some assumptions/expectations
+Wee can keep all defaulted ones, but we do not need to leave flat priors for the beta coefficients as we do have some assumptions/expectations
 
 Let's reuse priors we have already used for h1.m3p
 
@@ -1417,7 +1386,6 @@ priors_h1m7 <- c(
 )
 
 # The rest we will leave default (and check afterwards)
-
 h1.m7 <- brm(Eff ~ 1 + CommAtt + Modality + Big5 + Familiarity + Expressibility_z +  (1 + CommAtt | Participant) + (1 + CommAtt | Concept) + (1 | TrialNumber_c), 
                 data = final_data,
                 family = lognormal(),
@@ -1446,11 +1414,9 @@ beep(5)
 h1.m7 <- readRDS(here("09_Analysis_Modeling", "models", "h1.m7.rds"))
 h1.m7_R2 <- readRDS(here("09_Analysis_Modeling", "models", "h1.m7_R2.rds"))
 
-
 # Summary
 summary(h1.m7)
 # Coefficients remain mostly unchanged 
-
 
 ```
 
@@ -1502,33 +1468,21 @@ pp_check(h1.m7,
   ggtitle("Prior predictive distribution of maximal values")
 # this too looks reasonable
 
-
-
 ```
 
 ## Model 8 - adding interactions
 
 Possible interactions include:
 
--   CommAtt x Modality - Effort could increase differently across modalities, depending on whether concept is guessed on the first, second or third attempt. E.g., gesture might require more effort on initial attempt, but vocal require more effort in repeated attempt
+-   CommAtt x Modality - Effort could increase differently across modalities, depending on whether concept is guessed on the first, second or third attempt. E.g., gesture might require more effort on initial attempt, but vocal require more effort in repeated attempt. This is interesting question and it would help disentangle the benfit of multimodality over unimodality (i.e., multimodal trials might be more effortful, but overal have less attempts). However, we already model effect of modality on effort, so maybe this is not top priority.
 
-Note: Interesting, it would help disentagle the benefit of multimodality over other - maybe more effort overal but less attempts. However, we already model effect of modality on effort, so maybe this is not top priority
+-   CommAtt x Expressibility - Higher expressibility should moderate the effect of repeated attempts, such that the increase in effort with each additional attempt is smaller (or bigger?) for more expressible concepts.This is not a priority for our analysis.
 
--   CommAtt x Expressibility - Higher expressibility should moderate the effect of repeated attempts, such that the increase in effort with each additional attempt is smaller (or bigger?) for more expressible concepts.
+-   Modality × Expressibility_z - The influence of expressibility on effort could be modality-specific — perhaps effort increases less with expressibility in the combined modality. For our analysis, this is also not a priority (especially since expressibiliy has already modality encoded)
 
-Note: Not priority I would say
+-   Familiarity x CommAtt - More familiar partners may guess faster (fewer attempts) and require less effort, but this effect could diminish over multiple attempts. For our analysis, this is not a priority,
 
--   Modality × Expressibility_z - The influence of expressibility on effort could be modality-specific — perhaps effort increases less with expressibility in the combined modality.
-
-Note: Not priority (especially since expressibiliy has already modality encoded)
-
--   Familiarity x CommAtt - More familiar partners may guess faster (fewer attempts) and require less effort, but this effect could diminish over multiple attempts.
-
-Note: Does not seem to be priority
-
--   Big5 × Modality or Big5 × CommAtt - More open/extraverted participants might maintain higher effort over attempts, or adjust more dynamically depending on the communicative channel.
-
-Note: Not priority, but it is interesting if we want to tap more into the interindividual variability
+-   Big5 × Modality or Big5 × CommAtt - More open/extraverted participants might maintain higher effort over attempts, or adjust more dynamically depending on the communicative channel. While not priority, it is an interesting question if we want to tap more into the inter-individual variability.
 
 Let's try CommAtt x Modality and Big5 x CommAtt
 
@@ -1568,7 +1522,6 @@ summary(h1.m8)
 # Coefficients remain mostly unchanged 
 # Since we did not really focused on the interactions during the simulation, we also don't have strong expectations here. But for the real data, there is a good reason to expect some meaningful values
 
-
 ```
 
 ```{r h1.m8 check, message=FALSE, warning=FALSE}
@@ -1603,14 +1556,11 @@ effective_sample(h1.m6c)
 effective_sample(h1.m7) 
 effective_sample(h1.m8) 
 
-
 # Now h1m6 looks as the weakest, while h1m8 looks much better - but ESS for Intercept is for some reason still quite low
 
 ```
 
 ### LOO & WAIC
-
-Add the criteria to each model
 
 ```{r h1 loo II, message=FALSE, warning=FALSE}
 
@@ -1632,7 +1582,7 @@ cbind(waic_diff = w[,1] * -2,
 
 ```
 
-So in terms of WAIC&LOO, interactions do not really add predictive power. This might be specific for the synthetic data, as we did not explicitly focused on the interaction coefficients there. At the same time, the difference of h1.m8 from h1.m6c is not so significant. For now, we stop here and with the real data, we will proceed with the same evaluation to pick up the best model
+So in terms of WAIC & LOO, interactions do not really add predictive power. This might be specific for the synthetic data, as we did not explicitly focused on the interaction coefficients there. At the same time, the difference of h1.m8 from h1.m6c is not so significant. For now, we stop here. With the full data, we will proceed with the same evaluation.
 
 # H2: Data wrangling
 
@@ -1640,7 +1590,7 @@ Now we can need to account also for our second hypothesis, namely
 
 *H2: A higher degree of misunderstanding will require a performer to engage in more effortful correction.*
 
-The difficulty with our data structure is that PrevAn is a variable that has values only for second and third correction (i.e., there is no previous answer for the first performance). If we left it unchange, the model will eventually get rid of all NA values, which means we will loose the relationship between effort in second and first communicative attempt. To avoid this, we will create a new variable which we call *Effort Change*. We will simply calculate the change from effort in communicative attempt x to communicative attempt x+1. Like that, we will still get rid of communicative attempt 1, but the change that will be associated with CommAtt==2 already encapsulates the relationship towards this attempt.
+The difficulty with our data structure is that PrevAn is a variable that has values only for second and third correction (i.e., there is no previous answer for the first performance). If we left it unchange, the model will eventually get rid of all NA values, which means we will loose the relationship between effort in second and first communicative attempt. To avoid this, we will create a new variable which we call *Effort Change*. We will simply calculate the change from effort in communicative attempt x to communicative attempt x+1. We will still loose communicative attempt 1, but the change that will be associated with CommAtt==2 already encapsulates the relationship towards this attempt.
 
 ```{r h2 loading data, message=FALSE, warning=FALSE, include=FALSE}
 
@@ -1679,15 +1629,13 @@ final_data_2 <- final_data_2 %>%
 final_data_2 <- subset(final_data_2, select = -c(Effort_1, Effort_2, Effort_3, Effort_Change_1_to_2, Effort_Change_2_to_3)) 
 
 # View the result
-head(final_data_2)
-
-
+head(final_data_2, n=15)
 
 ```
 
 ## Exploring structure
 
-Let's check in plots
+This is the relationship between effort and answer similarity (H2) as seen in the raw (synthetic) data
 
 ```{r h2 plot, message=FALSE, warning=FALSE, echo=FALSE}
 
@@ -1702,7 +1650,6 @@ ggplot(filtered_data, aes(x = PrevAn, y = Eff)) +
        title = "Relationship between Effort and Previous Answer Similarity") +
   theme_minimal()
 
-
 ```
 
 ```{r h2 plot 2, message=FALSE, warning=FALSE, echo=FALSE}
@@ -1712,11 +1659,12 @@ ggplot(filtered_data, aes(x = PrevAn, y = Effort_Change)) +
   geom_smooth(method = "lm", color = "red", se = FALSE) +  # Regression line
   labs(x = "Previous Answer Similarity (PrevAn)", 
        y = "Effort (Eff)", 
-       title = "Relationship between Effort and Previous Answer Similarity") +
+       title = "Relationship between Effort Change and Previous Answer Similarity") +
   theme_minimal()
 
 ```
 
+This is how effort change is distributed
 ```{r h2 hist, message=FALSE, warning=FALSE, echo=FALSE}
 
 hist(filtered_data$Effort_Change, breaks=100)
@@ -1725,11 +1673,11 @@ hist(filtered_data$Effort_Change, breaks=100)
 
 So we will have to work with bimodal distribution, as we either have a decrease in effort or increase
 
-#H2: Stating causal model
+# H2: Stating causal model
 
 We now also need a new DAG. Essentially, what we said will influence CommAtt in H1, will now also influence PrevAn because they are tightly related. For instance, more extroverted people can be expected to be better guessers, therefore the similarity of the previous answer will be higher.
 
-```{r dag h2, message=FALSE, warning=FALSE, echo=FALSE}
+```{r dag h2, message=FALSE, warning=FALSE, echo=TRUE}
 
 daggy_h2 <- dagitty('dag {
 EffChange [outcome,pos="0,0"]
@@ -1775,21 +1723,23 @@ d2
 
 ```
 
-```{r dag h2 adjustset, message=FALSE, warning=FALSE, echo=FALSE}
+```{r dag h2 adjustset, message=FALSE, warning=FALSE, echo=TRUE}
 
 dagitty::adjustmentSets(daggy_h2, exposure = "PrevAn", outcome = "EffChange")
 
 ```
 
-The adjustment set is identical to the one of H1. Note that we are here omitting arrows going from all these variables to ComAtt. However, since PrevAn affects CommAtt, and not the other way, we anyway do not need to block this path to avoid confounds. However, if we want to asses direct effect of PrevAn on EffChange, we have to add CommAtt to the model as well
+The adjustment set is identical to the one of H1. Note that we are here omitting arrows going from all these variables to ComAtt. Since PrevAn affects CommAtt, and not the other way, we do not need to block this path to avoid confounds. However, if we want to asses direct effect of PrevAn on EffChange, we have to add CommAtt to the model as well
 
 # Modeling: H2
+
+This is our hypothesis regarding relationship between effort change and answer similarity
 
 *H2: A higher degree of misunderstanding will require a performer to engage in more effortful correction.*
 
 ## Contrast coding
 
-1)  Convert collumns to factors
+Converting collumns to factors
 
 ```{r h2 factorizing, message=FALSE, warning=FALSE}
 
@@ -1801,7 +1751,7 @@ filtered_data$Concept <- as.factor(filtered_data$Concept)
 filtered_data$TrialNumber <- as.numeric(filtered_data$TrialNumber)  # Ensure TrialNumber is numeric
 ```
 
-2)  Contrast-coding for categorical predictors
+Contrast-coding for categorical predictors
 
 ```{r h2 contrastcoding, message=FALSE, warning=FALSE}
 
@@ -1809,7 +1759,7 @@ contrasts(filtered_data$CommAtt) <- MASS::contr.sdif(2)
 contrasts(filtered_data$Modality) <- contr.sum(3)/2
 ```
 
-3)  Centering continuous predictors
+Centering continuous predictors
 
 ```{r h2 centering, message=FALSE, warning=FALSE}
 
@@ -1820,7 +1770,7 @@ filtered_data$Big5 <- filtered_data$Big5 - median(range(filtered_data$Big5))
 
 ```
 
-4)  Z-scoring expressibility and similarity (PrevAn)
+Z-scoring expressibility and similarity (PrevAn)
 
 ```{r h2 zscoring, message=FALSE, warning=FALSE}
 
@@ -1834,15 +1784,16 @@ filtered_data <-
   filtered_data |>
   mutate(PrevAn_z = (PrevAn - mean(PrevAn))/ sd(filtered_data$PrevAn, na.rm = T)) |>
   ungroup()
+
 ```
 
-```         
+<!-- z-scoring -->   
 Note: maybe we should center where we z-score to get better sense of the predictors (right now, for me it's still a bit uninterpretable)
-```
+<!-- z-scoring -->  
 
 ```{r centering instead of zscoring, include=FALSE, message=FALSE, warning=FALSE}
 
-#To test, we will also center both expressibility and prevan to see what offers better interpretation
+# To test, we will also center both expressibility and prevan to see what offers better interpretation
 
 filtered_data$PrevAn_c <- filtered_data$PrevAn - median(range(filtered_data$PrevAn))
 
@@ -1856,9 +1807,11 @@ filtered_data <-
 
 ## Model 1 - DAG
 
+Similarly to H1, we will start with reproducing the DAG for H2
+
 ```{r h2.m1 run, eval=FALSE, message=FALSE, warning=FALSE}
 
-h2.m1 <- brm(Effort_Change_Ratio ~ 1 + PrevAn_z + CommAtt + Familiarity + Big5 + Expressibility_z + TrialNumber_c + Modality + (1 | Participant) + (1 | Concept),
+h2.m1 <- brm(Effort_Change ~ 1 + PrevAn_z + CommAtt + Familiarity + Big5 + Expressibility_z + TrialNumber_c + Modality + (1 | Participant) + (1 | Concept),
                 data = filtered_data,
                 iter = 4000,
                 cores = 4)
@@ -1874,7 +1827,6 @@ saveRDS(h2.m1, here("09_Analysis_Modeling", "models", "h2.m1.rds"))
 saveRDS(h2.m1_R2, here("09_Analysis_Modeling", "models", "h2.m1_R2.rds"))
 
 beep(5)
-
 
 ```
 
