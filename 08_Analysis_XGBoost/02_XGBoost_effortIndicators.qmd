@@ -14,7 +14,7 @@ This script is an adaption of pipeline by @cwiek_etal_inprep2.
 
 In this script, we are going to use eXtreme Gradient Boosting (XGBoost, @chen_guestrin16) to identify effort-related features beyond those investigated within our confirmatory analysis, i.e., torque change, amplitude envelope, and change in center of pressure.
 
-XGBoost is a machine learning algorithm that builds an ensemble of decision trees to predict an outcome based on input features. For us, outcome refers to *communicative attempt* (baseline, first correction, second correction) and input features refer to all *features of effort* collected in @sec-features.
+XGBoost is a machine learning algorithm that builds an ensemble of decision trees to predict an outcome based on input features. For us, outcome refers to *communicative attempt* (baseline, first correction, second correction) and input features refer to all *features of effort* collected in [Feature extraction](TS_extraction.ipynb#sec-features).
 
 We are going to use separate models for each modality, as we expect differences in how (significantly) features contribute to resolving misunderstanding in first and second correction. Finally, when having list of features ordered by their importance in predicting communicative attempt, we will combine the XGBoost-computed importance with PCA analysis we have performed in script @sec-pca. This is to ensure we pick features from uncorrelated dimensions and thus cover more explanatory planes of effort.
 
@@ -2093,3 +2093,15 @@ for (pc in c("PC1", "PC2", "PC3")) {
 }
 
 ```
+
+# Session info
+
+Here is session information for reproducibility: 
+
+```{r session info print, echo=FALSE, message=FALSE, warning=FALSE}
+
+sessionInfo()
+
+```
+
+# References

@@ -20,7 +20,7 @@ H2: The enhancement depends on similarity of the guesser's answer and the origin
 
 To assess the design and performance of the model, we will use synthetic data that we create to have certain interdependencies and where the effects have pre-defined values. We use this approach instead of using our dyad 0 data, because the pilot data do not include enough data to have a sensible testing sample.
 
-The confirmatory analysis concerns six outcome variables, namely integral of torque change, integral of amplitude envelope, integral of change in center of pressure, and mean peak value of torque change, mean peak value of amplitude envelope, and mean peak value of change in center of pressure. For our exploratory analysis, we will model variables that will result as most predictive in relation to communicative attempt, assessed by XGBoost modelling (in the previous script @sec-xgboost). This is why in our synthetic data, we create a variable Effort that is continuous, but oterwise free of any other assumptions.
+The confirmatory analysis concerns six outcome variables, namely integral of torque change, integral of amplitude envelope, integral of change in center of pressure, and mean peak value of torque change, mean peak value of amplitude envelope, and mean peak value of change in center of pressure. For our exploratory analysis, we will model variables that will result as most predictive in relation to communicative attempt, assessed by XGBoost modelling (in the previous script @02_XGBoost_effortIndicators.qmd#sec-xgboost). This is why in our synthetic data, we create a variable Effort that is continuous, but oterwise free of any other assumptions.
 
 ```{r setup environment, echo=TRUE, message=FALSE, warning=FALSE}
 #| code-fold: true
@@ -353,6 +353,8 @@ write.csv(final_data_synt, file = here("09_Analysis_Modeling", "datasets", "synt
 In this part, we are going to test the following hypothesis:
 
 *H1: Correction recruits more physical effort than the baseline performance.*
+
+We will fit Bayesian mixed effect models using `brms` package (@burkner17)
 
 ```{r cores, include=FALSE, message=FALSE, warning=FALSE}
 
@@ -2415,3 +2417,16 @@ Because we are currently already reaching the ceiling of R\^2, we are not going 
 -   Big x PrevAn - same like with familiarity
 
 Similar to the workflow adopted in H1 modelling, we would fit two new models, one with priors and one with interactions, and perform another round of diagnostics to see which model seems to have the most predictive power.
+
+
+# Session info
+
+Here is session information for reproducibility: 
+
+```{r session info print, echo=FALSE, message=FALSE, warning=FALSE}
+
+sessionInfo()
+
+```
+
+# References

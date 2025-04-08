@@ -1,12 +1,16 @@
 # [Preregistration] Putting in the Effort: Modulation of Multimodal Effort in Communicative Breakdowns during a Gestural-Vocal Referential Game
 
-Authors: XXXX
+Authors: Šárka Kadavá, Wim Pouw, Susanne Fuchs, Judith Holler, Aleksandra Ćwiek
+
+This is a material to a study associated with ViCom project **On the FLExibility and Stability of Gesture-speecH Coordination (FLESH)** (see more [here](https://vicom.info/projects/on-the-flexibility-and-stability-of-gesture-speech-coordination-flesh-evidence-from-production-comprehension-and-imitation/)).
 
 This website documents data processing pipeline developed for the project **Modulation of Multimodal Effort in Communicative Breakdowns during a Gestural-Vocal Referential Game**. The pipeline covers every step from raw data ingestion to feature extraction and analysis, focusing on synchronizing and processing motion, audio, and derived signal data.
 
 Below you'll find an overview of the steps in this workflow. Each step builds on the previous one, enabling modular processing and transparent documentation.
 
 ### HERE IMAGE FROM DATA
+
+
 
 ---
 
