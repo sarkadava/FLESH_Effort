@@ -58,6 +58,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
@@ -103,47 +104,266 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </head>
 
-<body>
+<body class="nav-sidebar docked fullcontent">
 
 <div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Exploratory Analysis II: Identifying effort-related features contributing to misunderstanding resolution</li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-<!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#gesture" id="toc-gesture" class="nav-link active" data-scroll-target="#gesture">Gesture</a>
-  <ul class="collapse">
-  <li><a href="#random-forests" id="toc-random-forests" class="nav-link" data-scroll-target="#random-forests">Random forests</a></li>
-  <li><a href="#xgboost" id="toc-xgboost" class="nav-link" data-scroll-target="#xgboost">XGBoost</a>
-  <ul class="collapse">
-  <li><a href="#models" id="toc-models" class="nav-link" data-scroll-target="#models">Models</a></li>
-  </ul></li>
-  </ul></li>
-  <li><a href="#vocalization" id="toc-vocalization" class="nav-link" data-scroll-target="#vocalization">Vocalization</a>
-  <ul class="collapse">
-  <li><a href="#random-forests-1" id="toc-random-forests-1" class="nav-link" data-scroll-target="#random-forests-1">Random forests</a></li>
-  <li><a href="#xgboost-1" id="toc-xgboost-1" class="nav-link" data-scroll-target="#xgboost-1">XGBoost</a>
-  <ul class="collapse">
-  <li><a href="#k-fold-cross-validation-1" id="toc-k-fold-cross-validation-1" class="nav-link" data-scroll-target="#k-fold-cross-validation-1">K-fold cross-validation</a></li>
-  <li><a href="#models-1" id="toc-models-1" class="nav-link" data-scroll-target="#models-1">Models</a></li>
-  </ul></li>
-  </ul></li>
-  <li><a href="#multimodal" id="toc-multimodal" class="nav-link" data-scroll-target="#multimodal">Multimodal</a>
-  <ul class="collapse">
-  <li><a href="#random-forests-2" id="toc-random-forests-2" class="nav-link" data-scroll-target="#random-forests-2">Random forests</a></li>
-  <li><a href="#xgboost-2" id="toc-xgboost-2" class="nav-link" data-scroll-target="#xgboost-2">XGBoost</a>
-  <ul class="collapse">
-  <li><a href="#k-fold-cross-validation-2" id="toc-k-fold-cross-validation-2" class="nav-link" data-scroll-target="#k-fold-cross-validation-2">K-fold cross-validation</a></li>
-  <li><a href="#models-2" id="toc-models-2" class="nav-link" data-scroll-target="#models-2">Models</a></li>
-  </ul></li>
-  </ul></li>
-  </ul>
-</nav>
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Home</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">XDF Processing</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="//01_XDF_processing/xdf_workflow.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Pre-Processing I: from XDF to raw files</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text">Motion Tracking Processing</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="//02_MotionTracking_processing/01_Video_preparation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Motion tracking I: Preparation of videos</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="//02_MotionTracking_processing/02_Track_OpenPose.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Motion tracking II: 2D pose estimation via OpenPose</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="//02_MotionTracking_processing/03_Track_pose2sim.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Motion tracking III: Triangulation via Pose2sim</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="//02_MotionTracking_processing/04_Track_InverseKinDyn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Motion tracking IV: Modeling inverse kinematics and dynamics</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+ <span class="menu-text">Time Series Processing</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="//03_TS_processing/01_TS_processing_motion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Processing I: Motion tracking and balance</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="//03_TS_processing/02_TS_processing_acoustics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Processing II: Acoustics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="//03_TS_processing/03_TS_merging.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Processing III: Merging multimodal data</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+ <span class="menu-text">Time Series Annotation</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="//04_TS_movementAnnotation/01_Classify_preparation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Movement annotation I: Preparing training data and data for classifier</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="//04_TS_movementAnnotation/02_MovementClassifier.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Movement annotation II: Training movement classifier, and annotating timeseries data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="//04_TS_movementAnnotation/03_InterAgreement.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Movement annotation III: Computing interrater agreement between manual and automatic annotation</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+ <span class="menu-text">Final Merge</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="//05_finalMerge/TS_mergeAnnotations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Final merge</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">
+ <span class="menu-text">Concept Similarity</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="//06_ConceptSimilarity/ConceptNet_similarity.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Computing concept similarity using ConceptNet word embeddings</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true">
+ <span class="menu-text">Feature Extraction</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="//07_TS_featureExtraction/TS_extraction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Extraction of effort-related features</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true">
+ <span class="menu-text">Analysis: XGBoost</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="//08_Analysis_XGBoost/01_PCA_featureDimensions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Exploratory Analysis I: Using PCA to identify effort dimensions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="//08_Analysis_XGBoost/02_XGBoost_effortIndicators.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Exploratory Analysis II: Identifying effort-related features contributing to misunderstanding resolution</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" aria-expanded="true">
+ <span class="menu-text">Analysis: Modeling</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="//09_Analysis_Modeling/Modelling_syntheticData.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Statistical Analysis: Modelling the Effect of Communicative Attempt (H1) and Answer Similarity (H2) on Effort</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Summary</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
     </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
@@ -166,10 +386,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
+<section id="sec-xgboost" class="level1">
+<h1>Overview</h1>
 <p>This script is an adaption of pipeline by <span class="citation" data-cites="ADDREFTOCWIEK">(<a href="#ref-ADDREFTOCWIEK" role="doc-biblioref"><strong>ADDREFTOCWIEK?</strong></a>)</span></p>
 <p>In this script, we are going to use eXtreme Gradient Boosting (XGBoost, <span class="citation" data-cites="ADDREF">(<a href="#ref-ADDREF" role="doc-biblioref"><strong>ADDREF?</strong></a>)</span>) to identify effort-related features beyond those investigated within our confirmatory analysis, i.e., torque change, amplitude envelope, and change in center of pressure.</p>
-<p>XGBoost is a machine learning algorithm that builds an ensemble of decision trees to predict an outcome based on input features. For us, outcome refers to <em>communicative attempt</em> (baseline, first correction, second correction) and input features refer to all <em>features of effort</em> collected in <span class="citation" data-cites="ADDSCRIPTREF">(<a href="#ref-ADDSCRIPTREF" role="doc-biblioref"><strong>ADDSCRIPTREF?</strong></a>)</span>.</p>
-<p>We are going to use separate models for each modality, as we expect differences in how (significantly) features contribute to resolving misunderstanding in first and second correction. Finally, when having list of features ordered by their importance in predicting communicative attempt, we will combine the XGBoost-computed importance with PCA analysis we have performed in script <span class="citation" data-cites="ADDREFTOSCRIPT">(<a href="#ref-ADDREFTOSCRIPT" role="doc-biblioref"><strong>ADDREFTOSCRIPT?</strong></a>)</span>. This is to ensure we pick features from uncorrelated dimensions and thus cover more explanatory planes of effort.</p>
+<p>XGBoost is a machine learning algorithm that builds an ensemble of decision trees to predict an outcome based on input features. For us, outcome refers to <em>communicative attempt</em> (baseline, first correction, second correction) and input features refer to all <em>features of effort</em> collected in <strong>?@sec-features</strong>.</p>
+<p>We are going to use separate models for each modality, as we expect differences in how (significantly) features contribute to resolving misunderstanding in first and second correction. Finally, when having list of features ordered by their importance in predicting communicative attempt, we will combine the XGBoost-computed importance with PCA analysis we have performed in script <strong>?@sec-pca</strong>. This is to ensure we pick features from uncorrelated dimensions and thus cover more explanatory planes of effort.</p>
 <p>Note that the current version of the script is used with data only from dyad 0. Since this is not sufficient amount of data for any meaningful conclusions, this script serves for building the workflow. We will use identical pipeline with the full dataset, and any deviations from this script will be reported.</p>
 <div class="cell">
 <details class="code-fold">
@@ -207,9 +429,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>                       <span class="st">"#F0E442"</span>, <span class="st">"#0072B2"</span>, <span class="st">"#D55E00"</span>, <span class="st">"#CC79A7"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
+</section>
 <section id="gesture" class="level1">
 <h1>Gesture</h1>
-<p>In the previous script (<span class="citation" data-cites="ADDREFTOSCRIPT">(<a href="#ref-ADDREFTOSCRIPT" role="doc-biblioref"><strong>ADDREFTOSCRIPT?</strong></a>)</span>), we have already separated trials into modalities and clean the resulting dataframes of superfluous columns so now we can directly load them and continue modelling.</p>
+<p>In the previous script (<strong>?@sec-pca</strong>), we have already separated trials into modalities and clean the resulting dataframes of superfluous columns so now we can directly load them and continue modelling.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load in</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>data_ges <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="fu">paste0</span>(datasets, <span class="st">"ges_clean_df.csv"</span>))</span>
@@ -861,7 +1084,7 @@ Dataset gesData2345 contains rows: 18 and levels:
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate predictions</span></span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>gesPredictions1 <span class="ot">&lt;-</span> <span class="fu">predict</span>(gesModel1, <span class="at">newdata =</span> gesData5)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[16:32:50] WARNING: src/learner.cc:553: 
+<pre><code>[12:10:53] WARNING: src/learner.cc:553: 
   If you are loading a serialized model (like pickle in Python, RDS in R) generated by
   older XGBoost, please export the model by calling `Booster.save_model` from that version
   first, then load it back in current version. See:
@@ -872,7 +1095,7 @@ Dataset gesData2345 contains rows: 18 and levels:
 </div>
 <div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>gesPredictions2 <span class="ot">&lt;-</span> <span class="fu">predict</span>(gesModel2, <span class="at">newdata =</span> gesData4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[16:32:50] WARNING: src/learner.cc:553: 
+<pre><code>[12:10:53] WARNING: src/learner.cc:553: 
   If you are loading a serialized model (like pickle in Python, RDS in R) generated by
   older XGBoost, please export the model by calling `Booster.save_model` from that version
   first, then load it back in current version. See:
@@ -883,7 +1106,7 @@ Dataset gesData2345 contains rows: 18 and levels:
 </div>
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>gesPredictions3 <span class="ot">&lt;-</span> <span class="fu">predict</span>(gesModel3, <span class="at">newdata =</span> gesData3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[16:32:50] WARNING: src/learner.cc:553: 
+<pre><code>[12:10:53] WARNING: src/learner.cc:553: 
   If you are loading a serialized model (like pickle in Python, RDS in R) generated by
   older XGBoost, please export the model by calling `Booster.save_model` from that version
   first, then load it back in current version. See:
@@ -894,7 +1117,7 @@ Dataset gesData2345 contains rows: 18 and levels:
 </div>
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>gesPredictions4 <span class="ot">&lt;-</span> <span class="fu">predict</span>(gesModel4, <span class="at">newdata =</span> gesData2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[16:32:50] WARNING: src/learner.cc:553: 
+<pre><code>[12:10:53] WARNING: src/learner.cc:553: 
   If you are loading a serialized model (like pickle in Python, RDS in R) generated by
   older XGBoost, please export the model by calling `Booster.save_model` from that version
   first, then load it back in current version. See:
@@ -905,7 +1128,7 @@ Dataset gesData2345 contains rows: 18 and levels:
 </div>
 <div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>gesPredictions5 <span class="ot">&lt;-</span> <span class="fu">predict</span>(gesModel5, <span class="at">newdata =</span> gesData1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[16:32:51] WARNING: src/learner.cc:553: 
+<pre><code>[12:10:53] WARNING: src/learner.cc:553: 
   If you are loading a serialized model (like pickle in Python, RDS in R) generated by
   older XGBoost, please export the model by calling `Booster.save_model` from that version
   first, then load it back in current version. See:
@@ -1944,7 +2167,7 @@ Dataset vocData2345 contains rows: 18 and levels:
 <div class="sourceCode cell-code" id="cb110"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb110-1"><a href="#cb110-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate predictions</span></span>
 <span id="cb110-2"><a href="#cb110-2" aria-hidden="true" tabindex="-1"></a>vocPredictions1 <span class="ot">&lt;-</span> <span class="fu">predict</span>(vocModel1, <span class="at">newdata =</span> vocData5)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[16:33:44] WARNING: src/learner.cc:553: 
+<pre><code>[12:11:47] WARNING: src/learner.cc:553: 
   If you are loading a serialized model (like pickle in Python, RDS in R) generated by
   older XGBoost, please export the model by calling `Booster.save_model` from that version
   first, then load it back in current version. See:
@@ -1955,7 +2178,7 @@ Dataset vocData2345 contains rows: 18 and levels:
 </div>
 <div class="sourceCode cell-code" id="cb112"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb112-1"><a href="#cb112-1" aria-hidden="true" tabindex="-1"></a>vocPredictions2 <span class="ot">&lt;-</span> <span class="fu">predict</span>(vocModel2, <span class="at">newdata =</span> vocData4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[16:33:44] WARNING: src/learner.cc:553: 
+<pre><code>[12:11:47] WARNING: src/learner.cc:553: 
   If you are loading a serialized model (like pickle in Python, RDS in R) generated by
   older XGBoost, please export the model by calling `Booster.save_model` from that version
   first, then load it back in current version. See:
@@ -1966,7 +2189,7 @@ Dataset vocData2345 contains rows: 18 and levels:
 </div>
 <div class="sourceCode cell-code" id="cb114"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb114-1"><a href="#cb114-1" aria-hidden="true" tabindex="-1"></a>vocPredictions3 <span class="ot">&lt;-</span> <span class="fu">predict</span>(vocModel3, <span class="at">newdata =</span> vocData3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[16:33:44] WARNING: src/learner.cc:553: 
+<pre><code>[12:11:47] WARNING: src/learner.cc:553: 
   If you are loading a serialized model (like pickle in Python, RDS in R) generated by
   older XGBoost, please export the model by calling `Booster.save_model` from that version
   first, then load it back in current version. See:
@@ -1977,7 +2200,7 @@ Dataset vocData2345 contains rows: 18 and levels:
 </div>
 <div class="sourceCode cell-code" id="cb116"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb116-1"><a href="#cb116-1" aria-hidden="true" tabindex="-1"></a>vocPredictions4 <span class="ot">&lt;-</span> <span class="fu">predict</span>(vocModel4, <span class="at">newdata =</span> vocData2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[16:33:44] WARNING: src/learner.cc:553: 
+<pre><code>[12:11:48] WARNING: src/learner.cc:553: 
   If you are loading a serialized model (like pickle in Python, RDS in R) generated by
   older XGBoost, please export the model by calling `Booster.save_model` from that version
   first, then load it back in current version. See:
@@ -1988,7 +2211,7 @@ Dataset vocData2345 contains rows: 18 and levels:
 </div>
 <div class="sourceCode cell-code" id="cb118"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb118-1"><a href="#cb118-1" aria-hidden="true" tabindex="-1"></a>vocPredictions5 <span class="ot">&lt;-</span> <span class="fu">predict</span>(vocModel5, <span class="at">newdata =</span> vocData1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[16:33:44] WARNING: src/learner.cc:553: 
+<pre><code>[12:11:48] WARNING: src/learner.cc:553: 
   If you are loading a serialized model (like pickle in Python, RDS in R) generated by
   older XGBoost, please export the model by calling `Booster.save_model` from that version
   first, then load it back in current version. See:
@@ -3010,7 +3233,7 @@ Dataset multData2345 contains rows: 16 and levels:
 <div class="sourceCode cell-code" id="cb181"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb181-1"><a href="#cb181-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate predictions</span></span>
 <span id="cb181-2"><a href="#cb181-2" aria-hidden="true" tabindex="-1"></a>multPredictions1 <span class="ot">&lt;-</span> <span class="fu">predict</span>(multModel1, <span class="at">newdata =</span> multData5)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[16:34:40] WARNING: src/learner.cc:553: 
+<pre><code>[12:12:44] WARNING: src/learner.cc:553: 
   If you are loading a serialized model (like pickle in Python, RDS in R) generated by
   older XGBoost, please export the model by calling `Booster.save_model` from that version
   first, then load it back in current version. See:
@@ -3021,7 +3244,7 @@ Dataset multData2345 contains rows: 16 and levels:
 </div>
 <div class="sourceCode cell-code" id="cb183"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb183-1"><a href="#cb183-1" aria-hidden="true" tabindex="-1"></a>multPredictions2 <span class="ot">&lt;-</span> <span class="fu">predict</span>(multModel2, <span class="at">newdata =</span> multData4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[16:34:41] WARNING: src/learner.cc:553: 
+<pre><code>[12:12:44] WARNING: src/learner.cc:553: 
   If you are loading a serialized model (like pickle in Python, RDS in R) generated by
   older XGBoost, please export the model by calling `Booster.save_model` from that version
   first, then load it back in current version. See:
@@ -3032,7 +3255,7 @@ Dataset multData2345 contains rows: 16 and levels:
 </div>
 <div class="sourceCode cell-code" id="cb185"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb185-1"><a href="#cb185-1" aria-hidden="true" tabindex="-1"></a>multPredictions3 <span class="ot">&lt;-</span> <span class="fu">predict</span>(multModel3, <span class="at">newdata =</span> multData3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[16:34:41] WARNING: src/learner.cc:553: 
+<pre><code>[12:12:44] WARNING: src/learner.cc:553: 
   If you are loading a serialized model (like pickle in Python, RDS in R) generated by
   older XGBoost, please export the model by calling `Booster.save_model` from that version
   first, then load it back in current version. See:
@@ -3043,7 +3266,7 @@ Dataset multData2345 contains rows: 16 and levels:
 </div>
 <div class="sourceCode cell-code" id="cb187"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb187-1"><a href="#cb187-1" aria-hidden="true" tabindex="-1"></a>multPredictions4 <span class="ot">&lt;-</span> <span class="fu">predict</span>(multModel4, <span class="at">newdata =</span> multData2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[16:34:41] WARNING: src/learner.cc:553: 
+<pre><code>[12:12:44] WARNING: src/learner.cc:553: 
   If you are loading a serialized model (like pickle in Python, RDS in R) generated by
   older XGBoost, please export the model by calling `Booster.save_model` from that version
   first, then load it back in current version. See:
@@ -3054,7 +3277,7 @@ Dataset multData2345 contains rows: 16 and levels:
 </div>
 <div class="sourceCode cell-code" id="cb189"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb189-1"><a href="#cb189-1" aria-hidden="true" tabindex="-1"></a>multPredictions5 <span class="ot">&lt;-</span> <span class="fu">predict</span>(multModel5, <span class="at">newdata =</span> multData1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[16:34:41] WARNING: src/learner.cc:553: 
+<pre><code>[12:12:44] WARNING: src/learner.cc:553: 
   If you are loading a serialized model (like pickle in Python, RDS in R) generated by
   older XGBoost, please export the model by calling `Booster.save_model` from that version
   first, then load it back in current version. See:

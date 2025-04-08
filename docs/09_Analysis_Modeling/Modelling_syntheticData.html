@@ -58,6 +58,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
@@ -103,78 +104,266 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </head>
 
-<body>
+<body class="nav-sidebar docked fullcontent">
 
 <div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Statistical Analysis: Modelling the Effect of Communicative Attempt (H1) and Answer Similarity (H2) on Effort</li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-<!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
-  <li><a href="#loading-in-our-data" id="toc-loading-in-our-data" class="nav-link" data-scroll-target="#loading-in-our-data">Loading in our data</a></li>
-  <li><a href="#h1-stating-causal-model" id="toc-h1-stating-causal-model" class="nav-link" data-scroll-target="#h1-stating-causal-model">H1: Stating causal model</a></li>
-  <li><a href="#creating-synthetic-data-for-pre-registration-purposes-only" id="toc-creating-synthetic-data-for-pre-registration-purposes-only" class="nav-link" data-scroll-target="#creating-synthetic-data-for-pre-registration-purposes-only">Creating synthetic data (for pre-registration purposes only)</a></li>
-  <li><a href="#exploring-the-synthetic-data" id="toc-exploring-the-synthetic-data" class="nav-link" data-scroll-target="#exploring-the-synthetic-data">Exploring the synthetic data</a></li>
-  <li><a href="#h1-modelling" id="toc-h1-modelling" class="nav-link" data-scroll-target="#h1-modelling">H1: Modelling</a>
-  <ul class="collapse">
-  <li><a href="#data-wrangling" id="toc-data-wrangling" class="nav-link" data-scroll-target="#data-wrangling">Data wrangling</a></li>
-  <li><a href="#model-1---simple-reproduction-of-dag" id="toc-model-1---simple-reproduction-of-dag" class="nav-link" data-scroll-target="#model-1---simple-reproduction-of-dag">Model 1 - Simple reproduction of DAG</a>
-  <ul class="collapse">
-  <li><a href="#transforming-coefficients" id="toc-transforming-coefficients" class="nav-link" data-scroll-target="#transforming-coefficients">Transforming coefficients</a></li>
-  </ul></li>
-  <li><a href="#model-2---varying-slopes-and-intercepts" id="toc-model-2---varying-slopes-and-intercepts" class="nav-link" data-scroll-target="#model-2---varying-slopes-and-intercepts">Model 2 - Varying slopes and intercepts</a></li>
-  <li><a href="#model-3---no-correlation-coefficient" id="toc-model-3---no-correlation-coefficient" class="nav-link" data-scroll-target="#model-3---no-correlation-coefficient">Model 3 - No correlation coefficient</a></li>
-  <li><a href="#model-3.1---adding-priors" id="toc-model-3.1---adding-priors" class="nav-link" data-scroll-target="#model-3.1---adding-priors">Model 3.1 - adding priors</a></li>
-  <li><a href="#model-4---restricting-priors-with-exponential-distribution" id="toc-model-4---restricting-priors-with-exponential-distribution" class="nav-link" data-scroll-target="#model-4---restricting-priors-with-exponential-distribution">Model 4 - Restricting priors with exponential distribution</a></li>
-  <li><a href="#model-5---student-family" id="toc-model-5---student-family" class="nav-link" data-scroll-target="#model-5---student-family">Model 5 - student family</a></li>
-  <li><a href="#model-6---log-normal-distribution" id="toc-model-6---log-normal-distribution" class="nav-link" data-scroll-target="#model-6---log-normal-distribution">Model 6 - log-normal distribution</a>
-  <ul class="collapse">
-  <li><a href="#converting-to-original-scale" id="toc-converting-to-original-scale" class="nav-link" data-scroll-target="#converting-to-original-scale">Converting to original scale</a></li>
-  </ul></li>
-  <li><a href="#model-6.1---with-correlation" id="toc-model-6.1---with-correlation" class="nav-link" data-scroll-target="#model-6.1---with-correlation">Model 6.1 - with correlation</a></li>
-  <li><a href="#diagnostics-i" id="toc-diagnostics-i" class="nav-link" data-scroll-target="#diagnostics-i">Diagnostics I</a>
-  <ul class="collapse">
-  <li><a href="#rhat" id="toc-rhat" class="nav-link" data-scroll-target="#rhat">Rhat</a></li>
-  <li><a href="#ess" id="toc-ess" class="nav-link" data-scroll-target="#ess">ESS</a></li>
-  <li><a href="#loo-waic" id="toc-loo-waic" class="nav-link" data-scroll-target="#loo-waic">LOO &amp; WAIC</a></li>
-  </ul></li>
-  <li><a href="#model-7---lognormal-with-priors" id="toc-model-7---lognormal-with-priors" class="nav-link" data-scroll-target="#model-7---lognormal-with-priors">Model 7 - lognormal with priors</a></li>
-  <li><a href="#model-8---adding-interactions" id="toc-model-8---adding-interactions" class="nav-link" data-scroll-target="#model-8---adding-interactions">Model 8 - adding interactions</a></li>
-  <li><a href="#diagnostics-ii" id="toc-diagnostics-ii" class="nav-link" data-scroll-target="#diagnostics-ii">Diagnostics II</a>
-  <ul class="collapse">
-  <li><a href="#ess-1" id="toc-ess-1" class="nav-link" data-scroll-target="#ess-1">ESS</a></li>
-  <li><a href="#loo-waic-1" id="toc-loo-waic-1" class="nav-link" data-scroll-target="#loo-waic-1">LOO &amp; WAIC</a></li>
-  </ul></li>
-  </ul></li>
-  <li><a href="#h2-modelling" id="toc-h2-modelling" class="nav-link" data-scroll-target="#h2-modelling">H2: Modelling</a>
-  <ul class="collapse">
-  <li><a href="#data-wrangling-i" id="toc-data-wrangling-i" class="nav-link" data-scroll-target="#data-wrangling-i">Data wrangling I</a></li>
-  <li><a href="#exploring-structure" id="toc-exploring-structure" class="nav-link" data-scroll-target="#exploring-structure">Exploring structure</a></li>
-  </ul></li>
-  <li><a href="#h2-stating-causal-model" id="toc-h2-stating-causal-model" class="nav-link" data-scroll-target="#h2-stating-causal-model">H2: Stating causal model</a></li>
-  <li><a href="#h2-modelling-1" id="toc-h2-modelling-1" class="nav-link" data-scroll-target="#h2-modelling-1">H2: Modelling</a>
-  <ul class="collapse">
-  <li><a href="#model-1---dag" id="toc-model-1---dag" class="nav-link" data-scroll-target="#model-1---dag">Model 1 - DAG</a></li>
-  <li><a href="#splines-1---fitting-b-splines" id="toc-splines-1---fitting-b-splines" class="nav-link" data-scroll-target="#splines-1---fitting-b-splines">Splines 1 - fitting b-splines</a></li>
-  <li><a href="#splines-2---bayesian-gams" id="toc-splines-2---bayesian-gams" class="nav-link" data-scroll-target="#splines-2---bayesian-gams">Splines 2 - Bayesian GAMs</a></li>
-  <li><a href="#splines-3---gams-with-fr-effects" id="toc-splines-3---gams-with-fr-effects" class="nav-link" data-scroll-target="#splines-3---gams-with-fr-effects">Splines 3 - GAMs with f+r effects</a></li>
-  <li><a href="#diagnostics-i-1" id="toc-diagnostics-i-1" class="nav-link" data-scroll-target="#diagnostics-i-1">Diagnostics I</a>
-  <ul class="collapse">
-  <li><a href="#rhat-1" id="toc-rhat-1" class="nav-link" data-scroll-target="#rhat-1">Rhat</a></li>
-  <li><a href="#ess-2" id="toc-ess-2" class="nav-link" data-scroll-target="#ess-2">ESS</a></li>
-  <li><a href="#loo-waic-2" id="toc-loo-waic-2" class="nav-link" data-scroll-target="#loo-waic-2">LOO &amp; WAIC</a></li>
-  </ul></li>
-  <li><a href="#adding-priors" id="toc-adding-priors" class="nav-link" data-scroll-target="#adding-priors">Adding priors</a></li>
-  <li><a href="#adding-interactions" id="toc-adding-interactions" class="nav-link" data-scroll-target="#adding-interactions">Adding Interactions</a></li>
-  </ul></li>
-  </ul>
-</nav>
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Home</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">XDF Processing</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="//01_XDF_processing/xdf_workflow.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Pre-Processing I: from XDF to raw files</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text">Motion Tracking Processing</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="//02_MotionTracking_processing/01_Video_preparation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Motion tracking I: Preparation of videos</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="//02_MotionTracking_processing/02_Track_OpenPose.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Motion tracking II: 2D pose estimation via OpenPose</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="//02_MotionTracking_processing/03_Track_pose2sim.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Motion tracking III: Triangulation via Pose2sim</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="//02_MotionTracking_processing/04_Track_InverseKinDyn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Motion tracking IV: Modeling inverse kinematics and dynamics</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+ <span class="menu-text">Time Series Processing</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="//03_TS_processing/01_TS_processing_motion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Processing I: Motion tracking and balance</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="//03_TS_processing/02_TS_processing_acoustics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Processing II: Acoustics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="//03_TS_processing/03_TS_merging.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Processing III: Merging multimodal data</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+ <span class="menu-text">Time Series Annotation</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="//04_TS_movementAnnotation/01_Classify_preparation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Movement annotation I: Preparing training data and data for classifier</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="//04_TS_movementAnnotation/02_MovementClassifier.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Movement annotation II: Training movement classifier, and annotating timeseries data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="//04_TS_movementAnnotation/03_InterAgreement.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Movement annotation III: Computing interrater agreement between manual and automatic annotation</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+ <span class="menu-text">Final Merge</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="//05_finalMerge/TS_mergeAnnotations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Final merge</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">
+ <span class="menu-text">Concept Similarity</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="//06_ConceptSimilarity/ConceptNet_similarity.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Computing concept similarity using ConceptNet word embeddings</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true">
+ <span class="menu-text">Feature Extraction</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="//07_TS_featureExtraction/TS_extraction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Extraction of effort-related features</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true">
+ <span class="menu-text">Analysis: XGBoost</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="//08_Analysis_XGBoost/01_PCA_featureDimensions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Exploratory Analysis I: Using PCA to identify effort dimensions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="//08_Analysis_XGBoost/02_XGBoost_effortIndicators.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Exploratory Analysis II: Identifying effort-related features contributing to misunderstanding resolution</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" aria-expanded="true">
+ <span class="menu-text">Analysis: Modeling</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="//09_Analysis_Modeling/Modelling_syntheticData.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Statistical Analysis: Modelling the Effect of Communicative Attempt (H1) and Answer Similarity (H2) on Effort</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Summary</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
     </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
@@ -197,14 +386,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="introduction" class="level1">
-<h1>Introduction</h1>
+<section id="sec-stats" class="level1">
+<h1>Overview</h1>
 <p>In this script, we will be modelling the causal relation between effort and correction to confirm/reject our hypothesis.</p>
 <p>These are:</p>
 <p>H1: In corrections, people enhance some effort-related kinematic and/or acoustic features of their behaviour relative to the baseline.</p>
 <p>H2: The enhancement depends on similarity of the guesser’s answer and the original meaning. More similar answer will require/result in smaller enhancement (but still enhancement) than less similar answer.</p>
 <p>To assess the design and performance of the model, we will use synthetic data that we create to have certain interdependencies and where the effects have pre-defined values. We use this approach instead of using our dyad 0 data, because the pilot data do not include enough data to have a sensible testing sample.</p>
-<p>Since we cannot predict the outcomes of the XGBoost modelling (in the previous script <span class="citation" data-cites="ADDREFTOSCRIPT">(<a href="#ref-ADDREFTOSCRIPT" role="doc-biblioref"><strong>ADDREFTOSCRIPT?</strong></a>)</span>) and therefore do not know the variables we will model after preregistration, our model only assumes a continuous variable but it is otherwise free of any other assumptions.</p>
+<p>The confirmatory analysis concerns six outcome variables, namely integral of torque change, integral of amplitude envelope, integral of change in center of pressure, and mean peak value of torque change, mean peak value of amplitude envelope, and mean peak value of change in center of pressure. For our exploratory analysis, we will model variables that will result as most predictive in relation to communicative attempt, assessed by XGBoost modelling (in the previous script <strong>?@sec-xgboost</strong>). This is why in our synthetic data, we create a variable Effort that is continuous, but oterwise free of any other assumptions.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code to prepare the environment</summary>
@@ -3258,7 +3447,7 @@ h1.m8  8.7265395 3.7869214</code></pre>
 <h1>H2: Modelling</h1>
 <p>Now we can need to account also for our second hypothesis, namely</p>
 <p><em>H2: A higher degree of misunderstanding will require a performer to engage in more effortful correction.</em></p>
-<p>The difficulty with our data structure is that PrevAn is a variable that has values only for second and third correction (i.e., there is no previous answer for the first performance). If we left it unchange, the model will eventually get rid of all NA values, which means we will loose the relationship between effort in second and first communicative attempt. To avoid this, we will create a new variable which we call <em>Effort Change</em>. We will simply calculate the change from effort in communicative attempt x to communicative attempt x+1. We will still loose communicative attempt 1, but the change that will be associated with CommAtt==2 already encapsulates the relationship towards this attempt.</p>
+<p>We operationalize degree of misunderstanding as a cosine similarity of performer’s target and guesser’s answer (PrevAn). The difficulty with our data structure is that PrevAn is a variable that has values only for second and third correction (i.e., there is no previous answer for the first performance). If we left it unchange, the model will eventually get rid of all NA values, which means we will loose the relationship between effort in second and first communicative attempt. To avoid this, we will create a new variable which we call <em>Effort Change</em>. We will simply calculate the change from effort in communicative attempt x to communicative attempt x+1. We will still loose communicative attempt 1, but the change that will be associated with CommAtt==2 already encapsulates the relationship towards this attempt.</p>
 <section id="data-wrangling-i" class="level2">
 <h2 class="anchored" data-anchor-id="data-wrangling-i">Data wrangling I</h2>
 <div class="cell">
@@ -3596,7 +3785,7 @@ R2 0.8921087 0.001381664 0.8892535 0.8946349</code></pre>
 </div>
 </div>
 </div>
-<p>B-splines allow to build up wiggly functions from more simple components which are called ‘basis functions’ (B). They divide a full range of predictor into parts and assign a parameter to each part. The parameters are gradually turned on and off in a way that makes their sum into a curve. Unlike polynomial regression, b-splines do not transform predictor, but they invent a series of new synthetic predictor variables. Each of them then exists only to gradually turn a specific parameter on and off within a specific range of the real predictor variable. Each of these synthetic variables is called a basis function B. See more in Richard McElreath’s Statistical Rethinking.</p>
+<p>B-splines allow to build up wiggly functions from more simple components which are called ‘basis functions’ (B). They divide a full range of predictor into parts and assign a parameter to each part. The parameters are gradually turned on and off in a way that makes their sum into a curve. Unlike polynomial regression, b-splines do not transform predictor, but they invent a series of new synthetic predictor variables. Each of them then exists only to gradually turn a specific parameter on and off within a specific range of the real predictor variable. Each of these synthetic variables is called a basis function B. See more in Richard McElreath’s Statistical Rethinking (<span class="citation" data-cites="ADDREF">(<a href="#ref-ADDREF" role="doc-biblioref"><strong>ADDREF?</strong></a>)</span>).</p>
 <p>We are using the <a href="https://bookdown.org/content/4857/geocentric-models.html">code</a> from Solomon Kurz’s adaptation of this book.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb201"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb201-1"><a href="#cb201-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get rid of NAs in the predictor</span></span>
@@ -3745,7 +3934,6 @@ $ B              &lt;bs[,9]&gt; &lt;bs[26 x 9]&gt;</code></pre>
 <span id="cb211-21"><a href="#cb211-21" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb211-22"><a href="#cb211-22" aria-hidden="true" tabindex="-1"></a><span class="fu">beep</span>(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Model summary</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb212"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb212-1"><a href="#cb212-1" aria-hidden="true" tabindex="-1"></a>h2.s1 <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="fu">here</span>(<span class="st">"09_Analysis_Modeling"</span>, <span class="st">"models"</span>, <span class="st">"h2.s1.rds"</span>))</span>
 <span id="cb212-2"><a href="#cb212-2" aria-hidden="true" tabindex="-1"></a>h2.s1_R2 <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="fu">here</span>(<span class="st">"09_Analysis_Modeling"</span>, <span class="st">"models"</span>, <span class="st">"h2.s1_R2.rds"</span>))</span>
@@ -3859,7 +4047,7 @@ R2 0.0299754 0.006354033 0.01827862 0.04305631</code></pre>
 </section>
 <section id="splines-2---bayesian-gams" class="level2">
 <h2 class="anchored" data-anchor-id="splines-2---bayesian-gams">Splines 2 - Bayesian GAMs</h2>
-<p>Now we will use a different workflow, using smooth functions with brms. brms allow for non-linear models by borrowing functions from mgcv package (@ADDREFWood)</p>
+<p>Now we will use a different workflow, using smooth functions with <code>brms</code> package. Brms allow for non-linear models by borrowing functions from <code>mgcv</code> package (<span class="citation" data-cites="ADDREFWood">(<a href="#ref-ADDREFWood" role="doc-biblioref"><strong>ADDREFWood?</strong></a>)</span>)</p>
 <p>This is how priors should look like for one of these functions</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb220"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb220-1"><a href="#cb220-1" aria-hidden="true" tabindex="-1"></a><span class="fu">get_prior</span>(<span class="at">data =</span> d2,</span>

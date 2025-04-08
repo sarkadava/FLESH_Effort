@@ -1,18 +1,22 @@
 ---
 title: "Exploratory Analysis II: Identifying effort-related features contributing to misunderstanding resolution"
+format:
+  html:
+    code-overflow: wrap
+    code-width: 1200  # Adjust the width in pixels
 execute:
-  warning: false
-format: html
-toc: true
+   warning: false 
 ---
+
+# Overview {#sec-xgboost}
 
 This script is an adaption of pipeline by @ADDREFTOCWIEK
 
 In this script, we are going to use eXtreme Gradient Boosting (XGBoost, @ADDREF) to identify effort-related features beyond those investigated within our confirmatory analysis, i.e., torque change, amplitude envelope, and change in center of pressure.
 
-XGBoost is a machine learning algorithm that builds an ensemble of decision trees to predict an outcome based on input features. For us, outcome refers to *communicative attempt* (baseline, first correction, second correction) and input features refer to all *features of effort* collected in @ADDSCRIPTREF.
+XGBoost is a machine learning algorithm that builds an ensemble of decision trees to predict an outcome based on input features. For us, outcome refers to *communicative attempt* (baseline, first correction, second correction) and input features refer to all *features of effort* collected in @sec-features.
 
-We are going to use separate models for each modality, as we expect differences in how (significantly) features contribute to resolving misunderstanding in first and second correction. Finally, when having list of features ordered by their importance in predicting communicative attempt, we will combine the XGBoost-computed importance with PCA analysis we have performed in script @ADDREFTOSCRIPT. This is to ensure we pick features from uncorrelated dimensions and thus cover more explanatory planes of effort.
+We are going to use separate models for each modality, as we expect differences in how (significantly) features contribute to resolving misunderstanding in first and second correction. Finally, when having list of features ordered by their importance in predicting communicative attempt, we will combine the XGBoost-computed importance with PCA analysis we have performed in script @sec-pca. This is to ensure we pick features from uncorrelated dimensions and thus cover more explanatory planes of effort.
 
 Note that the current version of the script is used with data only from dyad 0. Since this is not sufficient amount of data for any meaningful conclusions, this script serves for building the workflow. We will use identical pipeline with the full dataset, and any deviations from this script will be reported.
 
@@ -56,7 +60,7 @@ colorBlindBlack8  <- c("#000000", "#E69F00", "#56B4E9", "#009E73",
 
 # Gesture
 
-In the previous script (@ADDREFTOSCRIPT), we have already separated trials into modalities and clean the resulting dataframes of superfluous columns so now we can directly load them and continue modelling.
+In the previous script (@sec-pca), we have already separated trials into modalities and clean the resulting dataframes of superfluous columns so now we can directly load them and continue modelling.
 
 ```{r gesture data}
 

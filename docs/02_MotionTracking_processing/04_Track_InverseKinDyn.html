@@ -58,6 +58,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
@@ -103,16 +104,266 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </head>
 
-<body>
+<body class="nav-sidebar docked fullcontent">
 
 <div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Motion tracking IV: Modeling inverse kinematics and dynamics</li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-<!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Home</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">XDF Processing</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="//01_XDF_processing/xdf_workflow.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Pre-Processing I: from XDF to raw files</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text">Motion Tracking Processing</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="//02_MotionTracking_processing/01_Video_preparation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Motion tracking I: Preparation of videos</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="//02_MotionTracking_processing/02_Track_OpenPose.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Motion tracking II: 2D pose estimation via OpenPose</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="//02_MotionTracking_processing/03_Track_pose2sim.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Motion tracking III: Triangulation via Pose2sim</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="//02_MotionTracking_processing/04_Track_InverseKinDyn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Motion tracking IV: Modeling inverse kinematics and dynamics</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+ <span class="menu-text">Time Series Processing</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="//03_TS_processing/01_TS_processing_motion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Processing I: Motion tracking and balance</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="//03_TS_processing/02_TS_processing_acoustics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Processing II: Acoustics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="//03_TS_processing/03_TS_merging.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Processing III: Merging multimodal data</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+ <span class="menu-text">Time Series Annotation</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="//04_TS_movementAnnotation/01_Classify_preparation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Movement annotation I: Preparing training data and data for classifier</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="//04_TS_movementAnnotation/02_MovementClassifier.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Movement annotation II: Training movement classifier, and annotating timeseries data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="//04_TS_movementAnnotation/03_InterAgreement.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Movement annotation III: Computing interrater agreement between manual and automatic annotation</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+ <span class="menu-text">Final Merge</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="//05_finalMerge/TS_mergeAnnotations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Final merge</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">
+ <span class="menu-text">Concept Similarity</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="//06_ConceptSimilarity/ConceptNet_similarity.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Computing concept similarity using ConceptNet word embeddings</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true">
+ <span class="menu-text">Feature Extraction</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="//07_TS_featureExtraction/TS_extraction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Extraction of effort-related features</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true">
+ <span class="menu-text">Analysis: XGBoost</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="//08_Analysis_XGBoost/01_PCA_featureDimensions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Exploratory Analysis I: Using PCA to identify effort dimensions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="//08_Analysis_XGBoost/02_XGBoost_effortIndicators.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Exploratory Analysis II: Identifying effort-related features contributing to misunderstanding resolution</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" aria-expanded="true">
+ <span class="menu-text">Analysis: Modeling</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="//09_Analysis_Modeling/Modelling_syntheticData.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Statistical Analysis: Modelling the Effect of Communicative Attempt (H1) and Answer Similarity (H2) on Effort</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Summary</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
     </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
@@ -135,9 +386,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>In this script, we will use the <code>opensim</code> library to model the inverse kinematics (i.e., joint angles) and dynamics (i.e., joint forces) of the motion tracking data.</p>
+<section id="sec-opensim" class="level1">
+<h1>Overview</h1>
+<p>In this script, we will use the OpenSim (<span class="citation" data-cites="ADDREF">(<a href="#ref-ADDREF" role="doc-biblioref"><strong>ADDREF?</strong></a>)</span>) to model the inverse kinematics (i.e., joint angles) and dynamics (i.e., joint forces) of the motion tracking data.</p>
 <p>The documentation of OpenSim project is available <a href="https://opensimconfluence.atlassian.net/wiki/spaces/OpenSim/overview">here</a></p>
-<div id="cell-2" class="cell" data-execution_count="3">
+<div id="cell-2" class="cell">
 <details class="code-fold">
 <summary>Code to prepare the environment</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> opensim</span>
@@ -176,183 +429,179 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(sessionIDs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-stdout">
-<pre><code>['e:\\FLESH_ContinuousBodilyEffort\\02_MotionTracking_processing\\projectdata\\Session_0_1', 'e:\\FLESH_ContinuousBodilyEffort\\02_MotionTracking_processing\\projectdata\\Session_0_2']
-['0']</code></pre>
-</div>
 </div>
 <div id="cell-3" class="cell">
 <details class="code-fold">
 <summary>Custom functions</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to update XML file</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> update_xml_file(<span class="bu">dir</span>, input_file, output_file, new_mass<span class="op">=</span><span class="va">None</span>, new_model_file<span class="op">=</span><span class="va">None</span>, new_marker_file<span class="op">=</span><span class="va">None</span>, new_timerange<span class="op">=</span><span class="va">None</span>, new_output_model_file<span class="op">=</span><span class="va">None</span>, new_coord_file<span class="op">=</span><span class="va">None</span>):</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Load the XML document</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    tree <span class="op">=</span> ET.parse(input_file)</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    root <span class="op">=</span> tree.getroot()</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># If the file has Scaling in the name, we need to update the marker file</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="st">'Scaling'</span> <span class="kw">in</span> input_file:</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Update the &lt;mass&gt; element if a new value is provided</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> new_mass <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>            mass_element <span class="op">=</span> root.find(<span class="st">'.//mass'</span>)</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> mass_element <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>                mass_element.text <span class="op">=</span> new_mass</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Update the &lt;model_file&gt; element within &lt;GenericModelMaker&gt; if a new value is provided</span></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> new_model_file <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>            model_file_element <span class="op">=</span> root.find(<span class="st">'.//GenericModelMaker/model_file'</span>)</span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> model_file_element <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>                model_file_element.text <span class="op">=</span> new_model_file</span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Update the &lt;marker_file&gt; element within &lt;ModelScaler&gt; and &lt;MarkerPlacer&gt; if a new value is provided</span></span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> new_marker_file <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>            marker_file_elements <span class="op">=</span> root.findall(<span class="st">'.//marker_file'</span>)</span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> marker_file_element <span class="kw">in</span> marker_file_elements:</span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>                marker_file_element.text <span class="op">=</span> new_marker_file</span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Update all time ranges</span></span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> new_timerange <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>            timerange_elements <span class="op">=</span> root.findall(<span class="st">'.//time_range'</span>)</span>
-<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> timerange_element <span class="kw">in</span> timerange_elements:</span>
-<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>                timerange_element.text <span class="op">=</span> new_timerange</span>
-<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Update the &lt;output_model_file&gt; element within &lt;MarkerPlacer&gt; if a new value is provided</span></span>
-<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> new_output_model_file <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
-<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>            output_model_file_element <span class="op">=</span> root.find(<span class="st">'.//MarkerPlacer/output_model_file'</span>)</span>
-<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> output_model_file_element <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
-<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>                output_model_file_element.text <span class="op">=</span> new_output_model_file</span>
-<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Update the &lt;output_model_file&gt; element within &lt;ModelScaler&gt; if a new value is provided</span></span>
-<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> new_output_model_file <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
-<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>            output_model_file_element <span class="op">=</span> root.find(<span class="st">'.//ModelScaler/output_model_file'</span>)</span>
-<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> output_model_file_element <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
-<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>                output_model_file_element.text <span class="op">=</span> new_output_model_file</span>
-<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> <span class="st">'IK'</span> <span class="kw">in</span> input_file:</span>
-<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>        <span class="co"># We update model_file</span></span>
-<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> new_model_file <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
-<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>            model_file_element <span class="op">=</span> root.find(<span class="st">'.//model_file'</span>)</span>
-<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> model_file_element <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
-<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a>                model_file_element.text <span class="op">=</span> new_model_file</span>
-<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a>        <span class="co"># We need to update time range</span></span>
-<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> new_timerange <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
-<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a>            timerange_elements <span class="op">=</span> root.findall(<span class="st">'.//time_range'</span>)</span>
-<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> timerange_element <span class="kw">in</span> timerange_elements:</span>
-<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a>                timerange_element.text <span class="op">=</span> new_timerange</span>
-<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a>        <span class="co"># And we need to update the path to trc file</span></span>
-<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> new_marker_file <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
-<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a>            marker_file_element <span class="op">=</span> root.find(<span class="st">'.//marker_file'</span>)</span>
-<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> marker_file_element <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
-<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a>                marker_file_element.text <span class="op">=</span> new_marker_file</span>
-<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a>        <span class="co"># And output_motion_file</span></span>
-<span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> new_output_model_file <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
-<span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a>            output_model_file_element <span class="op">=</span> root.find(<span class="st">'.//output_motion_file'</span>)</span>
-<span id="cb3-69"><a href="#cb3-69" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> output_model_file_element <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
-<span id="cb3-70"><a href="#cb3-70" aria-hidden="true" tabindex="-1"></a>                output_model_file_element.text <span class="op">=</span> new_output_model_file</span>
-<span id="cb3-71"><a href="#cb3-71" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-72"><a href="#cb3-72" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> <span class="st">'ID'</span> <span class="kw">in</span> input_file:</span>
-<span id="cb3-73"><a href="#cb3-73" aria-hidden="true" tabindex="-1"></a>        <span class="co"># We update model_file</span></span>
-<span id="cb3-74"><a href="#cb3-74" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> new_model_file <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
-<span id="cb3-75"><a href="#cb3-75" aria-hidden="true" tabindex="-1"></a>            model_file_element <span class="op">=</span> root.find(<span class="st">'.//model_file'</span>)</span>
-<span id="cb3-76"><a href="#cb3-76" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> model_file_element <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
-<span id="cb3-77"><a href="#cb3-77" aria-hidden="true" tabindex="-1"></a>                model_file_element.text <span class="op">=</span> new_model_file</span>
-<span id="cb3-78"><a href="#cb3-78" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-79"><a href="#cb3-79" aria-hidden="true" tabindex="-1"></a>        <span class="co"># We need to update time range</span></span>
-<span id="cb3-80"><a href="#cb3-80" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> new_timerange <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
-<span id="cb3-81"><a href="#cb3-81" aria-hidden="true" tabindex="-1"></a>            timerange_elements <span class="op">=</span> root.findall(<span class="st">'.//time_range'</span>)</span>
-<span id="cb3-82"><a href="#cb3-82" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> timerange_element <span class="kw">in</span> timerange_elements:</span>
-<span id="cb3-83"><a href="#cb3-83" aria-hidden="true" tabindex="-1"></a>                timerange_element.text <span class="op">=</span> new_timerange</span>
-<span id="cb3-84"><a href="#cb3-84" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-85"><a href="#cb3-85" aria-hidden="true" tabindex="-1"></a>        <span class="co"># And we need to update the path to mot file</span></span>
-<span id="cb3-86"><a href="#cb3-86" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> new_coord_file <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
-<span id="cb3-87"><a href="#cb3-87" aria-hidden="true" tabindex="-1"></a>            coord_file_element <span class="op">=</span> root.find(<span class="st">'.//coordinates_file'</span>)</span>
-<span id="cb3-88"><a href="#cb3-88" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> coord_file_element <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
-<span id="cb3-89"><a href="#cb3-89" aria-hidden="true" tabindex="-1"></a>                coord_file_element.text <span class="op">=</span> new_coord_file</span>
-<span id="cb3-90"><a href="#cb3-90" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-91"><a href="#cb3-91" aria-hidden="true" tabindex="-1"></a>        <span class="co"># And output_motion_file</span></span>
-<span id="cb3-92"><a href="#cb3-92" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> new_output_model_file <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
-<span id="cb3-93"><a href="#cb3-93" aria-hidden="true" tabindex="-1"></a>            output_model_file_element <span class="op">=</span> root.find(<span class="st">'.//output_gen_force_file'</span>)</span>
-<span id="cb3-94"><a href="#cb3-94" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> output_model_file_element <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
-<span id="cb3-95"><a href="#cb3-95" aria-hidden="true" tabindex="-1"></a>                output_model_file_element.text <span class="op">=</span> new_output_model_file</span>
-<span id="cb3-96"><a href="#cb3-96" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-97"><a href="#cb3-97" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="st">'Scaling'</span> <span class="kw">in</span> input_file:</span>
-<span id="cb3-98"><a href="#cb3-98" aria-hidden="true" tabindex="-1"></a>        output_file_path <span class="op">=</span> os.path.join(<span class="bu">dir</span>, output_file) <span class="co"># Scaling is saved in the participant folder</span></span>
-<span id="cb3-99"><a href="#cb3-99" aria-hidden="true" tabindex="-1"></a>        tree.write(output_file_path, encoding<span class="op">=</span><span class="st">'UTF-8'</span>, xml_declaration<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb3-100"><a href="#cb3-100" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
-<span id="cb3-101"><a href="#cb3-101" aria-hidden="true" tabindex="-1"></a>        tree.write(output_file, encoding<span class="op">=</span><span class="st">'UTF-8'</span>, xml_declaration<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb3-102"><a href="#cb3-102" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-103"><a href="#cb3-103" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to extract time range from a trial</span></span>
-<span id="cb3-104"><a href="#cb3-104" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> extract_first_and_last_time(file_path):</span>
-<span id="cb3-105"><a href="#cb3-105" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-106"><a href="#cb3-106" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> pd.read_csv(file_path, sep<span class="op">=</span><span class="st">'</span><span class="ch">\t</span><span class="st">'</span>, skiprows<span class="op">=</span><span class="dv">4</span>)</span>
-<span id="cb3-107"><a href="#cb3-107" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Extract the first and last time values, time is the second column</span></span>
-<span id="cb3-108"><a href="#cb3-108" aria-hidden="true" tabindex="-1"></a>    first_time <span class="op">=</span> df.iloc[<span class="dv">0</span>, <span class="dv">1</span>]</span>
-<span id="cb3-109"><a href="#cb3-109" aria-hidden="true" tabindex="-1"></a>    last_time <span class="op">=</span> df.iloc[<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>]</span>
-<span id="cb3-110"><a href="#cb3-110" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb3-111"><a href="#cb3-111" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> first_time, last_time</span>
-<span id="cb3-112"><a href="#cb3-112" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-113"><a href="#cb3-113" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to smooth .mot file</span></span>
-<span id="cb3-114"><a href="#cb3-114" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> smooth_data(input_path, output_path, smoothing_params, plot<span class="op">=</span><span class="va">False</span>, plot_column<span class="op">=</span><span class="va">None</span>):</span>
-<span id="cb3-115"><a href="#cb3-115" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-116"><a href="#cb3-116" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Read the entire file</span></span>
-<span id="cb3-117"><a href="#cb3-117" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(input_path, <span class="st">'r'</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
-<span id="cb3-118"><a href="#cb3-118" aria-hidden="true" tabindex="-1"></a>        lines <span class="op">=</span> <span class="bu">file</span>.readlines()</span>
-<span id="cb3-119"><a href="#cb3-119" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-120"><a href="#cb3-120" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Identify header and data section</span></span>
-<span id="cb3-121"><a href="#cb3-121" aria-hidden="true" tabindex="-1"></a>    header_lines <span class="op">=</span> []</span>
-<span id="cb3-122"><a href="#cb3-122" aria-hidden="true" tabindex="-1"></a>    data_start_index <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb3-123"><a href="#cb3-123" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-124"><a href="#cb3-124" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i, line <span class="kw">in</span> <span class="bu">enumerate</span>(lines):</span>
-<span id="cb3-125"><a href="#cb3-125" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> line.strip() <span class="op">==</span> <span class="st">'endheader'</span>:</span>
-<span id="cb3-126"><a href="#cb3-126" aria-hidden="true" tabindex="-1"></a>            header_lines <span class="op">=</span> lines[:i <span class="op">+</span> <span class="dv">1</span>]</span>
-<span id="cb3-127"><a href="#cb3-127" aria-hidden="true" tabindex="-1"></a>            data_start_index <span class="op">=</span> i <span class="op">+</span> <span class="dv">1</span></span>
-<span id="cb3-128"><a href="#cb3-128" aria-hidden="true" tabindex="-1"></a>            <span class="cf">break</span></span>
-<span id="cb3-129"><a href="#cb3-129" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-130"><a href="#cb3-130" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Extract the column headers and numerical data</span></span>
-<span id="cb3-131"><a href="#cb3-131" aria-hidden="true" tabindex="-1"></a>    column_headers <span class="op">=</span> lines[data_start_index].split()</span>
-<span id="cb3-132"><a href="#cb3-132" aria-hidden="true" tabindex="-1"></a>    data_lines <span class="op">=</span> lines[data_start_index <span class="op">+</span> <span class="dv">1</span>:]</span>
-<span id="cb3-133"><a href="#cb3-133" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> np.array([<span class="bu">list</span>(<span class="bu">map</span>(<span class="bu">float</span>, line.split())) <span class="cf">for</span> line <span class="kw">in</span> data_lines])</span>
-<span id="cb3-134"><a href="#cb3-134" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-135"><a href="#cb3-135" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Identify the column index for plotting (if applicable)</span></span>
-<span id="cb3-136"><a href="#cb3-136" aria-hidden="true" tabindex="-1"></a>    plot_column_idx <span class="op">=</span> column_headers.index(plot_column) <span class="cf">if</span> plot_column <span class="cf">else</span> <span class="va">None</span></span>
-<span id="cb3-137"><a href="#cb3-137" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-138"><a href="#cb3-138" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Apply smoothing to each column except 'time'</span></span>
-<span id="cb3-139"><a href="#cb3-139" aria-hidden="true" tabindex="-1"></a>    smoothed_data <span class="op">=</span> data.copy()</span>
-<span id="cb3-140"><a href="#cb3-140" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> col_idx <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, data.shape[<span class="dv">1</span>]):  <span class="co"># Skip 'time' (assumed to be the first column)</span></span>
-<span id="cb3-141"><a href="#cb3-141" aria-hidden="true" tabindex="-1"></a>        smoothed_data[:, col_idx] <span class="op">=</span> savgol_filter(</span>
-<span id="cb3-142"><a href="#cb3-142" aria-hidden="true" tabindex="-1"></a>            data[:, col_idx], </span>
-<span id="cb3-143"><a href="#cb3-143" aria-hidden="true" tabindex="-1"></a>            window_length<span class="op">=</span>smoothing_params[<span class="st">'window_length'</span>], </span>
-<span id="cb3-144"><a href="#cb3-144" aria-hidden="true" tabindex="-1"></a>            polyorder<span class="op">=</span>smoothing_params[<span class="st">'polyorder'</span>]</span>
-<span id="cb3-145"><a href="#cb3-145" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb3-146"><a href="#cb3-146" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-147"><a href="#cb3-147" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> plot <span class="op">==</span> <span class="va">True</span>:</span>
-<span id="cb3-148"><a href="#cb3-148" aria-hidden="true" tabindex="-1"></a>        <span class="co">#Plot unsmoothed vs smoothed data for the specified column</span></span>
-<span id="cb3-149"><a href="#cb3-149" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> plot_column <span class="kw">and</span> plot_column_idx <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
-<span id="cb3-150"><a href="#cb3-150" aria-hidden="true" tabindex="-1"></a>            plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
-<span id="cb3-151"><a href="#cb3-151" aria-hidden="true" tabindex="-1"></a>            plt.plot(data[:, <span class="dv">0</span>], data[:, plot_column_idx], label<span class="op">=</span><span class="st">'Unsmoothed'</span>, alpha<span class="op">=</span><span class="fl">0.7</span>)</span>
-<span id="cb3-152"><a href="#cb3-152" aria-hidden="true" tabindex="-1"></a>            plt.plot(data[:, <span class="dv">0</span>], smoothed_data[:, plot_column_idx], label<span class="op">=</span><span class="st">'Smoothed'</span>, alpha<span class="op">=</span><span class="fl">0.7</span>)</span>
-<span id="cb3-153"><a href="#cb3-153" aria-hidden="true" tabindex="-1"></a>            plt.xlabel(<span class="st">'Time'</span>)</span>
-<span id="cb3-154"><a href="#cb3-154" aria-hidden="true" tabindex="-1"></a>            plt.ylabel(plot_column)</span>
-<span id="cb3-155"><a href="#cb3-155" aria-hidden="true" tabindex="-1"></a>            plt.title(<span class="ss">f'Unsmoothed vs Smoothed: </span><span class="sc">{</span>plot_column<span class="sc">}</span><span class="ss">'</span>)</span>
-<span id="cb3-156"><a href="#cb3-156" aria-hidden="true" tabindex="-1"></a>            plt.legend()</span>
-<span id="cb3-157"><a href="#cb3-157" aria-hidden="true" tabindex="-1"></a>            plt.grid(<span class="va">True</span>)</span>
-<span id="cb3-158"><a href="#cb3-158" aria-hidden="true" tabindex="-1"></a>            plt.show()</span>
-<span id="cb3-159"><a href="#cb3-159" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-160"><a href="#cb3-160" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Write back the original structure with smoothed data</span></span>
-<span id="cb3-161"><a href="#cb3-161" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(output_path, <span class="st">'w'</span>) <span class="im">as</span> output_file:</span>
-<span id="cb3-162"><a href="#cb3-162" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Write the header</span></span>
-<span id="cb3-163"><a href="#cb3-163" aria-hidden="true" tabindex="-1"></a>        output_file.writelines(header_lines)</span>
-<span id="cb3-164"><a href="#cb3-164" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Write the column headers</span></span>
-<span id="cb3-165"><a href="#cb3-165" aria-hidden="true" tabindex="-1"></a>        output_file.write(<span class="st">'</span><span class="ch">\t</span><span class="st">'</span>.join(column_headers) <span class="op">+</span> <span class="st">'</span><span class="ch">\n</span><span class="st">'</span>)</span>
-<span id="cb3-166"><a href="#cb3-166" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Write the smoothed data row by row - this is necessary to maintain the same formatting, otherwise inverse dynamics will fail</span></span>
-<span id="cb3-167"><a href="#cb3-167" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> row <span class="kw">in</span> smoothed_data:</span>
-<span id="cb3-168"><a href="#cb3-168" aria-hidden="true" tabindex="-1"></a>            output_file.write(<span class="st">'</span><span class="ch">\t</span><span class="st">'</span>.join(<span class="ss">f'</span><span class="sc">{</span>x<span class="sc">:.6f}</span><span class="ss">'</span> <span class="cf">for</span> x <span class="kw">in</span> row) <span class="op">+</span> <span class="st">'</span><span class="ch">\n</span><span class="st">'</span>)</span>
-<span id="cb3-169"><a href="#cb3-169" aria-hidden="true" tabindex="-1"></a>    </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to update XML file</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> update_xml_file(<span class="bu">dir</span>, input_file, output_file, new_mass<span class="op">=</span><span class="va">None</span>, new_model_file<span class="op">=</span><span class="va">None</span>, new_marker_file<span class="op">=</span><span class="va">None</span>, new_timerange<span class="op">=</span><span class="va">None</span>, new_output_model_file<span class="op">=</span><span class="va">None</span>, new_coord_file<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Load the XML document</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    tree <span class="op">=</span> ET.parse(input_file)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    root <span class="op">=</span> tree.getroot()</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># If the file has Scaling in the name, we need to update the marker file</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="st">'Scaling'</span> <span class="kw">in</span> input_file:</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Update the &lt;mass&gt; element if a new value is provided</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> new_mass <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>            mass_element <span class="op">=</span> root.find(<span class="st">'.//mass'</span>)</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> mass_element <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>                mass_element.text <span class="op">=</span> new_mass</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Update the &lt;model_file&gt; element within &lt;GenericModelMaker&gt; if a new value is provided</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> new_model_file <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>            model_file_element <span class="op">=</span> root.find(<span class="st">'.//GenericModelMaker/model_file'</span>)</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> model_file_element <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>                model_file_element.text <span class="op">=</span> new_model_file</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Update the &lt;marker_file&gt; element within &lt;ModelScaler&gt; and &lt;MarkerPlacer&gt; if a new value is provided</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> new_marker_file <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>            marker_file_elements <span class="op">=</span> root.findall(<span class="st">'.//marker_file'</span>)</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> marker_file_element <span class="kw">in</span> marker_file_elements:</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>                marker_file_element.text <span class="op">=</span> new_marker_file</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Update all time ranges</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> new_timerange <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>            timerange_elements <span class="op">=</span> root.findall(<span class="st">'.//time_range'</span>)</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> timerange_element <span class="kw">in</span> timerange_elements:</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>                timerange_element.text <span class="op">=</span> new_timerange</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Update the &lt;output_model_file&gt; element within &lt;MarkerPlacer&gt; if a new value is provided</span></span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> new_output_model_file <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>            output_model_file_element <span class="op">=</span> root.find(<span class="st">'.//MarkerPlacer/output_model_file'</span>)</span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> output_model_file_element <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>                output_model_file_element.text <span class="op">=</span> new_output_model_file</span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Update the &lt;output_model_file&gt; element within &lt;ModelScaler&gt; if a new value is provided</span></span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> new_output_model_file <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>            output_model_file_element <span class="op">=</span> root.find(<span class="st">'.//ModelScaler/output_model_file'</span>)</span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> output_model_file_element <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>                output_model_file_element.text <span class="op">=</span> new_output_model_file</span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> <span class="st">'IK'</span> <span class="kw">in</span> input_file:</span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>        <span class="co"># We update model_file</span></span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> new_model_file <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>            model_file_element <span class="op">=</span> root.find(<span class="st">'.//model_file'</span>)</span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> model_file_element <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>                model_file_element.text <span class="op">=</span> new_model_file</span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a>        <span class="co"># We need to update time range</span></span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> new_timerange <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a>            timerange_elements <span class="op">=</span> root.findall(<span class="st">'.//time_range'</span>)</span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> timerange_element <span class="kw">in</span> timerange_elements:</span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a>                timerange_element.text <span class="op">=</span> new_timerange</span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a>        <span class="co"># And we need to update the path to trc file</span></span>
+<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> new_marker_file <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a>            marker_file_element <span class="op">=</span> root.find(<span class="st">'.//marker_file'</span>)</span>
+<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> marker_file_element <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a>                marker_file_element.text <span class="op">=</span> new_marker_file</span>
+<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a>        <span class="co"># And output_motion_file</span></span>
+<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> new_output_model_file <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a>            output_model_file_element <span class="op">=</span> root.find(<span class="st">'.//output_motion_file'</span>)</span>
+<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> output_model_file_element <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a>                output_model_file_element.text <span class="op">=</span> new_output_model_file</span>
+<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> <span class="st">'ID'</span> <span class="kw">in</span> input_file:</span>
+<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a>        <span class="co"># We update model_file</span></span>
+<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> new_model_file <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a>            model_file_element <span class="op">=</span> root.find(<span class="st">'.//model_file'</span>)</span>
+<span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> model_file_element <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb2-77"><a href="#cb2-77" aria-hidden="true" tabindex="-1"></a>                model_file_element.text <span class="op">=</span> new_model_file</span>
+<span id="cb2-78"><a href="#cb2-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-79"><a href="#cb2-79" aria-hidden="true" tabindex="-1"></a>        <span class="co"># We need to update time range</span></span>
+<span id="cb2-80"><a href="#cb2-80" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> new_timerange <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb2-81"><a href="#cb2-81" aria-hidden="true" tabindex="-1"></a>            timerange_elements <span class="op">=</span> root.findall(<span class="st">'.//time_range'</span>)</span>
+<span id="cb2-82"><a href="#cb2-82" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> timerange_element <span class="kw">in</span> timerange_elements:</span>
+<span id="cb2-83"><a href="#cb2-83" aria-hidden="true" tabindex="-1"></a>                timerange_element.text <span class="op">=</span> new_timerange</span>
+<span id="cb2-84"><a href="#cb2-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-85"><a href="#cb2-85" aria-hidden="true" tabindex="-1"></a>        <span class="co"># And we need to update the path to mot file</span></span>
+<span id="cb2-86"><a href="#cb2-86" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> new_coord_file <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb2-87"><a href="#cb2-87" aria-hidden="true" tabindex="-1"></a>            coord_file_element <span class="op">=</span> root.find(<span class="st">'.//coordinates_file'</span>)</span>
+<span id="cb2-88"><a href="#cb2-88" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> coord_file_element <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb2-89"><a href="#cb2-89" aria-hidden="true" tabindex="-1"></a>                coord_file_element.text <span class="op">=</span> new_coord_file</span>
+<span id="cb2-90"><a href="#cb2-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-91"><a href="#cb2-91" aria-hidden="true" tabindex="-1"></a>        <span class="co"># And output_motion_file</span></span>
+<span id="cb2-92"><a href="#cb2-92" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> new_output_model_file <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb2-93"><a href="#cb2-93" aria-hidden="true" tabindex="-1"></a>            output_model_file_element <span class="op">=</span> root.find(<span class="st">'.//output_gen_force_file'</span>)</span>
+<span id="cb2-94"><a href="#cb2-94" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> output_model_file_element <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb2-95"><a href="#cb2-95" aria-hidden="true" tabindex="-1"></a>                output_model_file_element.text <span class="op">=</span> new_output_model_file</span>
+<span id="cb2-96"><a href="#cb2-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-97"><a href="#cb2-97" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="st">'Scaling'</span> <span class="kw">in</span> input_file:</span>
+<span id="cb2-98"><a href="#cb2-98" aria-hidden="true" tabindex="-1"></a>        output_file_path <span class="op">=</span> os.path.join(<span class="bu">dir</span>, output_file) <span class="co"># Scaling is saved in the participant folder</span></span>
+<span id="cb2-99"><a href="#cb2-99" aria-hidden="true" tabindex="-1"></a>        tree.write(output_file_path, encoding<span class="op">=</span><span class="st">'UTF-8'</span>, xml_declaration<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb2-100"><a href="#cb2-100" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb2-101"><a href="#cb2-101" aria-hidden="true" tabindex="-1"></a>        tree.write(output_file, encoding<span class="op">=</span><span class="st">'UTF-8'</span>, xml_declaration<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb2-102"><a href="#cb2-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-103"><a href="#cb2-103" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to extract time range from a trial</span></span>
+<span id="cb2-104"><a href="#cb2-104" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> extract_first_and_last_time(file_path):</span>
+<span id="cb2-105"><a href="#cb2-105" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-106"><a href="#cb2-106" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> pd.read_csv(file_path, sep<span class="op">=</span><span class="st">'</span><span class="ch">\t</span><span class="st">'</span>, skiprows<span class="op">=</span><span class="dv">4</span>)</span>
+<span id="cb2-107"><a href="#cb2-107" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Extract the first and last time values, time is the second column</span></span>
+<span id="cb2-108"><a href="#cb2-108" aria-hidden="true" tabindex="-1"></a>    first_time <span class="op">=</span> df.iloc[<span class="dv">0</span>, <span class="dv">1</span>]</span>
+<span id="cb2-109"><a href="#cb2-109" aria-hidden="true" tabindex="-1"></a>    last_time <span class="op">=</span> df.iloc[<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>]</span>
+<span id="cb2-110"><a href="#cb2-110" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-111"><a href="#cb2-111" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> first_time, last_time</span>
+<span id="cb2-112"><a href="#cb2-112" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-113"><a href="#cb2-113" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to smooth .mot file</span></span>
+<span id="cb2-114"><a href="#cb2-114" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> smooth_data(input_path, output_path, smoothing_params, plot<span class="op">=</span><span class="va">False</span>, plot_column<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb2-115"><a href="#cb2-115" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-116"><a href="#cb2-116" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Read the entire file</span></span>
+<span id="cb2-117"><a href="#cb2-117" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(input_path, <span class="st">'r'</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
+<span id="cb2-118"><a href="#cb2-118" aria-hidden="true" tabindex="-1"></a>        lines <span class="op">=</span> <span class="bu">file</span>.readlines()</span>
+<span id="cb2-119"><a href="#cb2-119" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-120"><a href="#cb2-120" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Identify header and data section</span></span>
+<span id="cb2-121"><a href="#cb2-121" aria-hidden="true" tabindex="-1"></a>    header_lines <span class="op">=</span> []</span>
+<span id="cb2-122"><a href="#cb2-122" aria-hidden="true" tabindex="-1"></a>    data_start_index <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb2-123"><a href="#cb2-123" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-124"><a href="#cb2-124" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i, line <span class="kw">in</span> <span class="bu">enumerate</span>(lines):</span>
+<span id="cb2-125"><a href="#cb2-125" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> line.strip() <span class="op">==</span> <span class="st">'endheader'</span>:</span>
+<span id="cb2-126"><a href="#cb2-126" aria-hidden="true" tabindex="-1"></a>            header_lines <span class="op">=</span> lines[:i <span class="op">+</span> <span class="dv">1</span>]</span>
+<span id="cb2-127"><a href="#cb2-127" aria-hidden="true" tabindex="-1"></a>            data_start_index <span class="op">=</span> i <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb2-128"><a href="#cb2-128" aria-hidden="true" tabindex="-1"></a>            <span class="cf">break</span></span>
+<span id="cb2-129"><a href="#cb2-129" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-130"><a href="#cb2-130" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Extract the column headers and numerical data</span></span>
+<span id="cb2-131"><a href="#cb2-131" aria-hidden="true" tabindex="-1"></a>    column_headers <span class="op">=</span> lines[data_start_index].split()</span>
+<span id="cb2-132"><a href="#cb2-132" aria-hidden="true" tabindex="-1"></a>    data_lines <span class="op">=</span> lines[data_start_index <span class="op">+</span> <span class="dv">1</span>:]</span>
+<span id="cb2-133"><a href="#cb2-133" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> np.array([<span class="bu">list</span>(<span class="bu">map</span>(<span class="bu">float</span>, line.split())) <span class="cf">for</span> line <span class="kw">in</span> data_lines])</span>
+<span id="cb2-134"><a href="#cb2-134" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-135"><a href="#cb2-135" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Identify the column index for plotting (if applicable)</span></span>
+<span id="cb2-136"><a href="#cb2-136" aria-hidden="true" tabindex="-1"></a>    plot_column_idx <span class="op">=</span> column_headers.index(plot_column) <span class="cf">if</span> plot_column <span class="cf">else</span> <span class="va">None</span></span>
+<span id="cb2-137"><a href="#cb2-137" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-138"><a href="#cb2-138" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Apply smoothing to each column except 'time'</span></span>
+<span id="cb2-139"><a href="#cb2-139" aria-hidden="true" tabindex="-1"></a>    smoothed_data <span class="op">=</span> data.copy()</span>
+<span id="cb2-140"><a href="#cb2-140" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> col_idx <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, data.shape[<span class="dv">1</span>]):  <span class="co"># Skip 'time' (assumed to be the first column)</span></span>
+<span id="cb2-141"><a href="#cb2-141" aria-hidden="true" tabindex="-1"></a>        smoothed_data[:, col_idx] <span class="op">=</span> savgol_filter(</span>
+<span id="cb2-142"><a href="#cb2-142" aria-hidden="true" tabindex="-1"></a>            data[:, col_idx], </span>
+<span id="cb2-143"><a href="#cb2-143" aria-hidden="true" tabindex="-1"></a>            window_length<span class="op">=</span>smoothing_params[<span class="st">'window_length'</span>], </span>
+<span id="cb2-144"><a href="#cb2-144" aria-hidden="true" tabindex="-1"></a>            polyorder<span class="op">=</span>smoothing_params[<span class="st">'polyorder'</span>]</span>
+<span id="cb2-145"><a href="#cb2-145" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb2-146"><a href="#cb2-146" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-147"><a href="#cb2-147" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> plot <span class="op">==</span> <span class="va">True</span>:</span>
+<span id="cb2-148"><a href="#cb2-148" aria-hidden="true" tabindex="-1"></a>        <span class="co">#Plot unsmoothed vs smoothed data for the specified column</span></span>
+<span id="cb2-149"><a href="#cb2-149" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> plot_column <span class="kw">and</span> plot_column_idx <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb2-150"><a href="#cb2-150" aria-hidden="true" tabindex="-1"></a>            plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb2-151"><a href="#cb2-151" aria-hidden="true" tabindex="-1"></a>            plt.plot(data[:, <span class="dv">0</span>], data[:, plot_column_idx], label<span class="op">=</span><span class="st">'Unsmoothed'</span>, alpha<span class="op">=</span><span class="fl">0.7</span>)</span>
+<span id="cb2-152"><a href="#cb2-152" aria-hidden="true" tabindex="-1"></a>            plt.plot(data[:, <span class="dv">0</span>], smoothed_data[:, plot_column_idx], label<span class="op">=</span><span class="st">'Smoothed'</span>, alpha<span class="op">=</span><span class="fl">0.7</span>)</span>
+<span id="cb2-153"><a href="#cb2-153" aria-hidden="true" tabindex="-1"></a>            plt.xlabel(<span class="st">'Time'</span>)</span>
+<span id="cb2-154"><a href="#cb2-154" aria-hidden="true" tabindex="-1"></a>            plt.ylabel(plot_column)</span>
+<span id="cb2-155"><a href="#cb2-155" aria-hidden="true" tabindex="-1"></a>            plt.title(<span class="ss">f'Unsmoothed vs Smoothed: </span><span class="sc">{</span>plot_column<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb2-156"><a href="#cb2-156" aria-hidden="true" tabindex="-1"></a>            plt.legend()</span>
+<span id="cb2-157"><a href="#cb2-157" aria-hidden="true" tabindex="-1"></a>            plt.grid(<span class="va">True</span>)</span>
+<span id="cb2-158"><a href="#cb2-158" aria-hidden="true" tabindex="-1"></a>            plt.show()</span>
+<span id="cb2-159"><a href="#cb2-159" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-160"><a href="#cb2-160" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Write back the original structure with smoothed data</span></span>
+<span id="cb2-161"><a href="#cb2-161" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(output_path, <span class="st">'w'</span>) <span class="im">as</span> output_file:</span>
+<span id="cb2-162"><a href="#cb2-162" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Write the header</span></span>
+<span id="cb2-163"><a href="#cb2-163" aria-hidden="true" tabindex="-1"></a>        output_file.writelines(header_lines)</span>
+<span id="cb2-164"><a href="#cb2-164" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Write the column headers</span></span>
+<span id="cb2-165"><a href="#cb2-165" aria-hidden="true" tabindex="-1"></a>        output_file.write(<span class="st">'</span><span class="ch">\t</span><span class="st">'</span>.join(column_headers) <span class="op">+</span> <span class="st">'</span><span class="ch">\n</span><span class="st">'</span>)</span>
+<span id="cb2-166"><a href="#cb2-166" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Write the smoothed data row by row - this is necessary to maintain the same formatting, otherwise inverse dynamics will fail</span></span>
+<span id="cb2-167"><a href="#cb2-167" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> row <span class="kw">in</span> smoothed_data:</span>
+<span id="cb2-168"><a href="#cb2-168" aria-hidden="true" tabindex="-1"></a>            output_file.write(<span class="st">'</span><span class="ch">\t</span><span class="st">'</span>.join(<span class="ss">f'</span><span class="sc">{</span>x<span class="sc">:.6f}</span><span class="ss">'</span> <span class="cf">for</span> x <span class="kw">in</span> row) <span class="op">+</span> <span class="st">'</span><span class="ch">\n</span><span class="st">'</span>)</span>
+<span id="cb2-169"><a href="#cb2-169" aria-hidden="true" tabindex="-1"></a>    </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>The opensim pipeline has three steps - scaling - inverse kinematics - inverse dynamics</p>
@@ -360,669 +609,156 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>In inverse kinematics, we use the scaled model to estimate the joint angles of the participant. We use the motion tracking data to estimate the joint angles. Joint angles are saved as .mot files in /ResultsInverseKinematics folder per each trial.</p>
 <p>In inverse dynamics, we use the joint angles to estimate the joint forces. Joint forces are saved as .sto files in /ResultsInverseDynamics folder per each trial.</p>
 <div id="cell-5" class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Note that session contains of two parts that have the same participants (it's always sessionID_1 and sessionID_2)</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> sessionID <span class="kw">in</span> sessionIDs:</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Get the session path of the first session</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    session1path <span class="op">=</span> os.path.join(projectdata, <span class="st">'Session_'</span> <span class="op">+</span> sessionID <span class="op">+</span> <span class="st">'_1'</span>)</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    session2path <span class="op">=</span> os.path.join(projectdata, <span class="st">'Session_'</span> <span class="op">+</span> sessionID <span class="op">+</span> <span class="st">'_2'</span>)</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Get p0 folders from both sessions</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    p0session1 <span class="op">=</span> os.path.join(session1path, <span class="st">'P0'</span>)</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    p0session2 <span class="op">=</span> os.path.join(session2path, <span class="st">'P0'</span>)</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Get p1 folders from both sessions</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    p1session1 <span class="op">=</span> os.path.join(session1path, <span class="st">'P1'</span>)</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    p1session2 <span class="op">=</span> os.path.join(session2path, <span class="st">'P1'</span>)</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Merge them</span></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    participants <span class="op">=</span> [p0session1, p0session2, p1session1, p1session2] <span class="co">#p0session1,p0session2</span></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(participants)</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> p <span class="kw">in</span> participants:</span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>        os.chdir(p)</span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>        <span class="co">###### SCALING ######</span></span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>        <span class="co"># We do scaling only for Session x_1 (and copy it to x_2)</span></span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="st">'Session_'</span> <span class="op">+</span> sessionID <span class="op">+</span> <span class="st">'_1'</span> <span class="kw">in</span> p:</span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(p)</span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Get weight from META for this pcn</span></span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>            pcn <span class="op">=</span> p.split(<span class="st">'</span><span class="ch">\\</span><span class="st">'</span>)[<span class="op">-</span><span class="dv">1</span>].lower()</span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>            weight <span class="op">=</span> META.loc[META[<span class="st">'pcn'</span>] <span class="op">==</span> pcn, <span class="st">'weight'</span>].values[<span class="dv">0</span>]</span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>            new_mass <span class="op">=</span> <span class="bu">str</span>(weight)</span>
-<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Get the path to the input model</span></span>
-<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>            new_model_file <span class="op">=</span> <span class="st">'opensim\Model_Pose2Sim_Body135.osim'</span></span>
-<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>            new_model_file <span class="op">=</span> os.path.join(p, new_model_file)</span>
-<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Get the path to the marker file</span></span>
-<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>            tposefolder <span class="op">=</span> glob.glob(os.path.join(p, <span class="st">'*tpose*'</span>))[<span class="dv">0</span>]</span>
-<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>            trcfolder <span class="op">=</span> os.path.join(tposefolder, <span class="st">'pose-3d'</span>)</span>
-<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>            trcfiles <span class="op">=</span> glob.glob(os.path.join(trcfolder, <span class="st">'*.trc'</span>))</span>
-<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Keep only the one with 'butterworth' in its name (this is filtered file)</span></span>
-<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>            new_marker_file <span class="op">=</span> [trc <span class="cf">for</span> trc <span class="kw">in</span> trcfiles <span class="cf">if</span> <span class="st">'butterworth'</span> <span class="kw">in</span> trc][<span class="dv">0</span>]</span>
-<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Get the time range of this file</span></span>
-<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>            first_time, last_time <span class="op">=</span> extract_first_and_last_time(new_marker_file)</span>
-<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>            new_timerange <span class="op">=</span> <span class="bu">str</span>(first_time) <span class="op">+</span> <span class="st">' '</span> <span class="op">+</span> <span class="bu">str</span>(last_time)</span>
-<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a>            <span class="co"># New output model file</span></span>
-<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>            participant <span class="op">=</span> p.split(<span class="st">'</span><span class="ch">\\</span><span class="st">'</span>)[<span class="op">-</span><span class="dv">1</span>]</span>
-<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>            new_output_model_file <span class="op">=</span> <span class="st">'opensim\Model_Pose2Sim_scaled_'</span> <span class="op">+</span> sessionID <span class="op">+</span> <span class="st">'_'</span> <span class="op">+</span> participant <span class="op">+</span> <span class="st">'.osim'</span></span>
-<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Update the XML file with new values</span></span>
-<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a>            new_scalefile <span class="op">=</span> <span class="st">'Scaling_Setup_Pose2Sim_Body135_FLESH_'</span> <span class="op">+</span> sessionID <span class="op">+</span> <span class="st">'_'</span> <span class="op">+</span> participant <span class="op">+</span> <span class="st">'.xml'</span></span>
-<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a>            update_xml_file(p, scalefile, new_scalefile, new_mass<span class="op">=</span>new_mass, new_model_file<span class="op">=</span>new_model_file, new_marker_file<span class="op">=</span>new_marker_file, new_timerange<span class="op">=</span>new_timerange, new_output_model_file<span class="op">=</span>new_output_model_file)</span>
-<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="st">'Scaling...'</span>)</span>
-<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a>            opensim.ScaleTool(new_scalefile).run()</span>
-<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a>            </span>
-<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Copy scaling setup also to session 2 of the same participant</span></span>
-<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a>            session2Path <span class="op">=</span> os.path.join(projectdata, <span class="st">'Session_'</span> <span class="op">+</span> sessionID <span class="op">+</span> <span class="st">'_2'</span>, participant)</span>
-<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a>            os.makedirs(session2Path, exist_ok<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a>            shutil.copy(new_scalefile, session2Path)</span>
-<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a>            <span class="co"># And scaled model too</span></span>
-<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a>            session2ScaledModelPath <span class="op">=</span> os.path.join(session2Path, <span class="st">'opensim'</span>)</span>
-<span id="cb4-62"><a href="#cb4-62" aria-hidden="true" tabindex="-1"></a>            os.makedirs(session2ScaledModelPath, exist_ok<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb4-63"><a href="#cb4-63" aria-hidden="true" tabindex="-1"></a>            shutil.copy(new_output_model_file, session2ScaledModelPath)</span>
-<span id="cb4-64"><a href="#cb4-64" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-65"><a href="#cb4-65" aria-hidden="true" tabindex="-1"></a>        <span class="co"># If its session x_2, we directly go to IK and ID</span></span>
-<span id="cb4-66"><a href="#cb4-66" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
-<span id="cb4-67"><a href="#cb4-67" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="st">'Session x_2, skipping scaling...'</span>)</span>
-<span id="cb4-68"><a href="#cb4-68" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-69"><a href="#cb4-69" aria-hidden="true" tabindex="-1"></a>        <span class="co">###### INVERSE KINEMATICS ######</span></span>
-<span id="cb4-70"><a href="#cb4-70" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-71"><a href="#cb4-71" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Create folder ResultsInverseKinematics</span></span>
-<span id="cb4-72"><a href="#cb4-72" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="kw">not</span> os.path.exists(os.path.join(p, <span class="st">'ResultsInverseKinematics'</span>)):</span>
-<span id="cb4-73"><a href="#cb4-73" aria-hidden="true" tabindex="-1"></a>            os.makedirs(os.path.join(p, <span class="st">'ResultsInverseKinematics'</span>))</span>
-<span id="cb4-74"><a href="#cb4-74" aria-hidden="true" tabindex="-1"></a>            </span>
-<span id="cb4-75"><a href="#cb4-75" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Collect all folders in p</span></span>
-<span id="cb4-76"><a href="#cb4-76" aria-hidden="true" tabindex="-1"></a>        folders <span class="op">=</span> glob.glob(os.path.join(p, <span class="st">'*'</span>))</span>
-<span id="cb4-77"><a href="#cb4-77" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-78"><a href="#cb4-78" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Get rid of all folders/files that we don't want now</span></span>
-<span id="cb4-79"><a href="#cb4-79" aria-hidden="true" tabindex="-1"></a>        folders <span class="op">=</span> [f <span class="cf">for</span> f <span class="kw">in</span> folders <span class="cf">if</span> <span class="st">'opensim'</span> <span class="kw">not</span> <span class="kw">in</span> f]</span>
-<span id="cb4-80"><a href="#cb4-80" aria-hidden="true" tabindex="-1"></a>        folders <span class="op">=</span> [f <span class="cf">for</span> f <span class="kw">in</span> folders <span class="cf">if</span> <span class="st">'toml'</span> <span class="kw">not</span> <span class="kw">in</span> f]</span>
-<span id="cb4-81"><a href="#cb4-81" aria-hidden="true" tabindex="-1"></a>        folders <span class="op">=</span> [f <span class="cf">for</span> f <span class="kw">in</span> folders <span class="cf">if</span> <span class="st">'txt'</span> <span class="kw">not</span> <span class="kw">in</span> f]</span>
-<span id="cb4-82"><a href="#cb4-82" aria-hidden="true" tabindex="-1"></a>        folders <span class="op">=</span> [f <span class="cf">for</span> f <span class="kw">in</span> folders <span class="cf">if</span> <span class="st">'xml'</span> <span class="kw">not</span> <span class="kw">in</span> f]</span>
-<span id="cb4-83"><a href="#cb4-83" aria-hidden="true" tabindex="-1"></a>        folders <span class="op">=</span> [f <span class="cf">for</span> f <span class="kw">in</span> folders <span class="cf">if</span> <span class="st">'sto'</span> <span class="kw">not</span> <span class="kw">in</span> f]</span>
-<span id="cb4-84"><a href="#cb4-84" aria-hidden="true" tabindex="-1"></a>        folders <span class="op">=</span> [f <span class="cf">for</span> f <span class="kw">in</span> folders <span class="cf">if</span> <span class="st">'tpose'</span> <span class="kw">not</span> <span class="kw">in</span> f]</span>
-<span id="cb4-85"><a href="#cb4-85" aria-hidden="true" tabindex="-1"></a>        folders <span class="op">=</span> [f <span class="cf">for</span> f <span class="kw">in</span> folders <span class="cf">if</span> <span class="st">'ResultsInverseKinematics'</span> <span class="kw">not</span> <span class="kw">in</span> f]</span>
-<span id="cb4-86"><a href="#cb4-86" aria-hidden="true" tabindex="-1"></a>        folders <span class="op">=</span> [f <span class="cf">for</span> f <span class="kw">in</span> folders <span class="cf">if</span> <span class="st">'ResultsInverseDynamics'</span> <span class="kw">not</span> <span class="kw">in</span> f]</span>
-<span id="cb4-87"><a href="#cb4-87" aria-hidden="true" tabindex="-1"></a>        <span class="co">#print(folders)</span></span>
-<span id="cb4-88"><a href="#cb4-88" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-89"><a href="#cb4-89" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> f <span class="kw">in</span> folders:</span>
-<span id="cb4-90"><a href="#cb4-90" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(f)</span>
-<span id="cb4-91"><a href="#cb4-91" aria-hidden="true" tabindex="-1"></a>            trialid <span class="op">=</span> f.split(<span class="st">'</span><span class="ch">\\</span><span class="st">'</span>)[<span class="op">-</span><span class="dv">1</span>]</span>
-<span id="cb4-92"><a href="#cb4-92" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-93"><a href="#cb4-93" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Get trc file</span></span>
-<span id="cb4-94"><a href="#cb4-94" aria-hidden="true" tabindex="-1"></a>            trcfiles <span class="op">=</span> glob.glob(os.path.join(f, <span class="st">'*/*.trc'</span>), recursive<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb4-95"><a href="#cb4-95" aria-hidden="true" tabindex="-1"></a>            new_trc_file <span class="op">=</span> [trc <span class="cf">for</span> trc <span class="kw">in</span> trcfiles <span class="cf">if</span> <span class="st">'butterworth'</span> <span class="kw">in</span> trc][<span class="dv">0</span>]</span>
-<span id="cb4-96"><a href="#cb4-96" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-97"><a href="#cb4-97" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Get the time range from it</span></span>
-<span id="cb4-98"><a href="#cb4-98" aria-hidden="true" tabindex="-1"></a>            first_time, last_time <span class="op">=</span> extract_first_and_last_time(new_trc_file)</span>
-<span id="cb4-99"><a href="#cb4-99" aria-hidden="true" tabindex="-1"></a>            new_timerange <span class="op">=</span> <span class="bu">str</span>(first_time) <span class="op">+</span> <span class="st">' '</span> <span class="op">+</span> <span class="bu">str</span>(last_time)</span>
-<span id="cb4-100"><a href="#cb4-100" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-101"><a href="#cb4-101" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Get the scaled model</span></span>
-<span id="cb4-102"><a href="#cb4-102" aria-hidden="true" tabindex="-1"></a>            scaled_model <span class="op">=</span> new_output_model_file</span>
-<span id="cb4-103"><a href="#cb4-103" aria-hidden="true" tabindex="-1"></a>      </span>
-<span id="cb4-104"><a href="#cb4-104" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Output motion file</span></span>
-<span id="cb4-105"><a href="#cb4-105" aria-hidden="true" tabindex="-1"></a>            output_motion_file <span class="op">=</span> <span class="st">'ResultsInverseKinematics/'</span> <span class="op">+</span> sessionID <span class="op">+</span> <span class="st">'_'</span> <span class="op">+</span> trialid <span class="op">+</span> <span class="st">'.mot'</span></span>
-<span id="cb4-106"><a href="#cb4-106" aria-hidden="true" tabindex="-1"></a>            output_motion_file <span class="op">=</span> os.path.join(p, output_motion_file)</span>
-<span id="cb4-107"><a href="#cb4-107" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-108"><a href="#cb4-108" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Update the XML file</span></span>
-<span id="cb4-109"><a href="#cb4-109" aria-hidden="true" tabindex="-1"></a>            new_ikfile_name <span class="op">=</span> <span class="st">'IK_Setup_Pose2Sim_Body135_FLESH_'</span> <span class="op">+</span> sessionID <span class="op">+</span> <span class="st">'_'</span> <span class="op">+</span> trialid <span class="op">+</span> <span class="st">'.xml'</span></span>
-<span id="cb4-110"><a href="#cb4-110" aria-hidden="true" tabindex="-1"></a>            new_ikfile <span class="op">=</span> os.path.join(p, new_ikfile_name)</span>
-<span id="cb4-111"><a href="#cb4-111" aria-hidden="true" tabindex="-1"></a>            update_xml_file(p, ikfile, new_ikfile, new_model_file<span class="op">=</span>scaled_model, new_marker_file<span class="op">=</span>new_trc_file, new_timerange<span class="op">=</span>new_timerange, new_output_model_file<span class="op">=</span>output_motion_file)</span>
-<span id="cb4-112"><a href="#cb4-112" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-113"><a href="#cb4-113" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="st">'Inverse Kinematics...'</span>)</span>
-<span id="cb4-114"><a href="#cb4-114" aria-hidden="true" tabindex="-1"></a>            <span class="cf">try</span>:</span>
-<span id="cb4-115"><a href="#cb4-115" aria-hidden="true" tabindex="-1"></a>                opensim.InverseKinematicsTool(new_ikfile).run()</span>
-<span id="cb4-116"><a href="#cb4-116" aria-hidden="true" tabindex="-1"></a>            <span class="cf">except</span>:</span>
-<span id="cb4-117"><a href="#cb4-117" aria-hidden="true" tabindex="-1"></a>                <span class="bu">print</span>(<span class="st">'Error in IK'</span>)</span>
-<span id="cb4-118"><a href="#cb4-118" aria-hidden="true" tabindex="-1"></a>                <span class="cf">continue</span></span>
-<span id="cb4-119"><a href="#cb4-119" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-120"><a href="#cb4-120" aria-hidden="true" tabindex="-1"></a>            <span class="co"># opensim doesn't smooth the data, but we need to smooth them before inverse dynamics, otherwise we will magnify the noise</span></span>
-<span id="cb4-121"><a href="#cb4-121" aria-hidden="true" tabindex="-1"></a>            smoothing_params <span class="op">=</span> {<span class="st">'window_length'</span>: <span class="dv">35</span>, <span class="st">'polyorder'</span>: <span class="dv">3</span>}</span>
-<span id="cb4-122"><a href="#cb4-122" aria-hidden="true" tabindex="-1"></a>            smooth_data(output_motion_file, output_motion_file, smoothing_params, plot<span class="op">=</span><span class="va">True</span>, plot_column<span class="op">=</span><span class="st">'arm_flex_r'</span>)</span>
-<span id="cb4-123"><a href="#cb4-123" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-124"><a href="#cb4-124" aria-hidden="true" tabindex="-1"></a>            <span class="co">###### INVERSE DYNAMICS ######</span></span>
-<span id="cb4-125"><a href="#cb4-125" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-126"><a href="#cb4-126" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Create folder ResultsInverseKinematics</span></span>
-<span id="cb4-127"><a href="#cb4-127" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="kw">not</span> os.path.exists(os.path.join(p, <span class="st">'ResultsInverseDynamics'</span>)):</span>
-<span id="cb4-128"><a href="#cb4-128" aria-hidden="true" tabindex="-1"></a>                os.makedirs(os.path.join(p, <span class="st">'ResultsInverseDynamics'</span>))</span>
-<span id="cb4-129"><a href="#cb4-129" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-130"><a href="#cb4-130" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Time range is the same as in IK</span></span>
-<span id="cb4-131"><a href="#cb4-131" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Scaled model is the same</span></span>
-<span id="cb4-132"><a href="#cb4-132" aria-hidden="true" tabindex="-1"></a>            <span class="co"># mot file is the new_ikfile</span></span>
-<span id="cb4-133"><a href="#cb4-133" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Output force file</span></span>
-<span id="cb4-134"><a href="#cb4-134" aria-hidden="true" tabindex="-1"></a>            output_gen_force_file <span class="op">=</span> <span class="st">'ResultsInverseDynamics/'</span> <span class="op">+</span> sessionID <span class="op">+</span> <span class="st">'_'</span> <span class="op">+</span> trialid <span class="op">+</span> <span class="st">'_ID.sto'</span></span>
-<span id="cb4-135"><a href="#cb4-135" aria-hidden="true" tabindex="-1"></a>            output_gen_force_file <span class="op">=</span> os.path.join(p, output_gen_force_file)</span>
-<span id="cb4-136"><a href="#cb4-136" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-137"><a href="#cb4-137" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Update the XML file</span></span>
-<span id="cb4-138"><a href="#cb4-138" aria-hidden="true" tabindex="-1"></a>            new_idfile_name <span class="op">=</span> <span class="st">'ID_Setup_Pose2Sim_Body135_FLESH_'</span> <span class="op">+</span> sessionID <span class="op">+</span> <span class="st">'_'</span> <span class="op">+</span> trialid <span class="op">+</span> <span class="st">'.xml'</span></span>
-<span id="cb4-139"><a href="#cb4-139" aria-hidden="true" tabindex="-1"></a>            new_idfile <span class="op">=</span> os.path.join(p, new_idfile_name)</span>
-<span id="cb4-140"><a href="#cb4-140" aria-hidden="true" tabindex="-1"></a>            update_xml_file(p, idfile, new_idfile, new_model_file<span class="op">=</span>scaled_model, new_timerange<span class="op">=</span>new_timerange, new_coord_file<span class="op">=</span>output_motion_file, new_output_model_file<span class="op">=</span>output_gen_force_file)</span>
-<span id="cb4-141"><a href="#cb4-141" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-142"><a href="#cb4-142" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="st">'Inverse Dynamics...'</span>)</span>
-<span id="cb4-143"><a href="#cb4-143" aria-hidden="true" tabindex="-1"></a>            <span class="cf">try</span>:</span>
-<span id="cb4-144"><a href="#cb4-144" aria-hidden="true" tabindex="-1"></a>                opensim.InverseDynamicsTool(new_idfile).run()</span>
-<span id="cb4-145"><a href="#cb4-145" aria-hidden="true" tabindex="-1"></a>            <span class="cf">except</span>:</span>
-<span id="cb4-146"><a href="#cb4-146" aria-hidden="true" tabindex="-1"></a>                <span class="bu">print</span>(<span class="st">'Error in ID'</span>)</span>
-<span id="cb4-147"><a href="#cb4-147" aria-hidden="true" tabindex="-1"></a>                <span class="cf">continue</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>['e:\\FLESH_ContinuousBodilyEffort\\02_MotionTracking_processing\\projectdata\\Session_0_1\\P0', 'e:\\FLESH_ContinuousBodilyEffort\\02_MotionTracking_processing\\projectdata\\Session_0_2\\P0', 'e:\\FLESH_ContinuousBodilyEffort\\02_MotionTracking_processing\\projectdata\\Session_0_1\\P1', 'e:\\FLESH_ContinuousBodilyEffort\\02_MotionTracking_processing\\projectdata\\Session_0_2\\P1']
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_1\P0
-Scaling...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_1\P0\0_1_0_p0
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_1\P0\0_1_3_p0
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_1\P0\0_1_4_p0
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_1\P0\0_1_5_p0
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_1\P0\0_1_6_p0
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_1\P0\0_1_7_p0
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_1\P0\0_1_19_p0
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_1\P0\0_1_20_p0
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_1\P0\0_1_21_p0
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_1\P0\0_1_22_p0
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_1\P0\0_1_23_p0
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_1\P0\0_1_24_p0
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_1\P0\0_1_25_p0
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_1\P0\0_1_26_p0
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_1\P0\0_1_36_p0
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_1\P0\0_1_37_p0
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_1\P0\0_1_38_p0
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_1\P0\0_1_39_p0
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_1\P0\0_1_40_p0
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_1\P0\0_1_41_p0
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_1\P0\0_1_42_p0
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_1\P0\0_1_43_p0
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_1\P0\0_1_44_p0
-Inverse Kinematics...
-Error in IK
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_1\P0\0_1_1_p0
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_1\P0\0_1_18_p0
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_1\P0\0_1_2_p0
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_1\P0\0_1_8_p0
-Inverse Kinematics...
-Inverse Dynamics...
-Session x_2, skipping scaling...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P0\0_2_0_p0
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P0\0_2_1_p0
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P0\0_2_2_p0
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P0\0_2_3_p0
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P0\0_2_4_p0
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P0\0_2_5_p0
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P0\0_2_6_p0
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P0\0_2_7_p0
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P0\0_2_8_p0
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P0\0_2_9_p0
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P0\0_2_10_p0
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P0\0_2_11_p0
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P0\0_2_12_p0
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P0\0_2_13_p0
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P0\0_2_14_p0
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P0\0_2_15_p0
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P0\0_2_16_p0
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P0\0_2_17_p0
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P0\0_2_18_p0
-Inverse Kinematics...
-Error in IK
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P0\0_2_38_p0
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P0\0_2_39_p0
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P0\0_2_40_p0
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P0\0_2_41_p0
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P0\0_2_42_p0
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P0\0_2_43_p0
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P0\0_2_44_p0
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P0\0_2_45_p0
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P0\0_2_46_p0
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P0\0_2_47_p0
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P0\0_2_48_p0
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P0\0_2_49_p0
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P0\0_2_50_p0
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P0\0_2_51_p0
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P0\0_2_52_p0
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P0\0_2_67_p0
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P0\0_2_68_p0
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P0\0_2_69_p0
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P0\0_2_70_p0
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P0\0_2_71_p0
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P0\0_2_72_p0
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P0\0_2_73_p0
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P0\0_2_74_p0
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P0\0_2_75_p0
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P0\0_2_76_p0
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P0\0_2_77_p0
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P0\0_2_78_p0
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P0\0_2_79_p0
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P0\0_2_80_p0
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P0\0_2_81_p0
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P0\0_2_82_p0
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P0\0_2_83_p0
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P0\0_2_84_p0
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P0\0_2_85_p0
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P0\0_2_86_p0
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P0\0_2_87_p0
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P0\0_2_88_p0
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P0\0_2_89_p0
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P0\0_2_90_p0
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P0\0_2_91_p0
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_1\P1
-Scaling...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_1\P1\0_1_11_p1
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_1\P1\0_1_12_p1
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_1\P1\0_1_13_p1
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_1\P1\0_1_14_p1
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_1\P1\0_1_15_p1
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_1\P1\0_1_16_p1
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_1\P1\0_1_17_p1
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_1\P1\0_1_27_p1
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_1\P1\0_1_28_p1
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_1\P1\0_1_29_p1
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_1\P1\0_1_30_p1
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_1\P1\0_1_31_p1
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_1\P1\0_1_32_p1
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_1\P1\0_1_33_p1
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_1\P1\0_1_34_p1
-Inverse Kinematics...
-Error in IK
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_1\P1\0_1_35_p1
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_1\P1\0_1_45_p1
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_1\P1\0_1_46_p1
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_1\P1\0_1_47_p1
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_1\P1\0_1_48_p1
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_1\P1\0_1_49_p1
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_1\P1\0_1_50_p1
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_1\P1\0_1_51_p1
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_1\P1\0_1_52_p1
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_1\P1\0_1_53_p1
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_1\P1\0_1_10_p1
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_1\P1\0_1_9_p1
-Inverse Kinematics...
-Inverse Dynamics...
-Session x_2, skipping scaling...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P1\0_2_19_p1
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P1\0_2_20_p1
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P1\0_2_21_p1
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P1\0_2_22_p1
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P1\0_2_23_p1
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P1\0_2_24_p1
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P1\0_2_25_p1
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P1\0_2_26_p1
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P1\0_2_27_p1
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P1\0_2_28_p1
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P1\0_2_29_p1
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P1\0_2_30_p1
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P1\0_2_31_p1
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P1\0_2_32_p1
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P1\0_2_33_p1
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P1\0_2_34_p1
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P1\0_2_35_p1
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P1\0_2_36_p1
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P1\0_2_37_p1
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P1\0_2_53_p1
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P1\0_2_54_p1
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P1\0_2_55_p1
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P1\0_2_56_p1
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P1\0_2_57_p1
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P1\0_2_58_p1
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P1\0_2_59_p1
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P1\0_2_60_p1
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P1\0_2_61_p1
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P1\0_2_62_p1
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P1\0_2_63_p1
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P1\0_2_64_p1
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P1\0_2_65_p1
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P1\0_2_66_p1
-Inverse Kinematics...
-Error in IK
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P1\0_2_92_p1
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P1\0_2_93_p1
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P1\0_2_94_p1
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P1\0_2_95_p1
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P1\0_2_96_p1
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P1\0_2_97_p1
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P1\0_2_98_p1
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P1\0_2_99_p1
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P1\0_2_100_p1
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P1\0_2_101_p1
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P1\0_2_102_p1
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P1\0_2_103_p1
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P1\0_2_104_p1
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P1\0_2_105_p1
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P1\0_2_106_p1
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P1\0_2_107_p1
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P1\0_2_108_p1
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P1\0_2_109_p1
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P1\0_2_110_p1
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P1\0_2_111_p1
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P1\0_2_112_p1
-Inverse Kinematics...
-Inverse Dynamics...
-e:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_0_2\P1\0_2_113_p1
-Inverse Kinematics...
-Inverse Dynamics...</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Note that session contains of two parts that have the same participants (it's always sessionID_1 and sessionID_2)</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> sessionID <span class="kw">in</span> sessionIDs:</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Get the session path of the first session</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    session1path <span class="op">=</span> os.path.join(projectdata, <span class="st">'Session_'</span> <span class="op">+</span> sessionID <span class="op">+</span> <span class="st">'_1'</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    session2path <span class="op">=</span> os.path.join(projectdata, <span class="st">'Session_'</span> <span class="op">+</span> sessionID <span class="op">+</span> <span class="st">'_2'</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Get p0 folders from both sessions</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    p0session1 <span class="op">=</span> os.path.join(session1path, <span class="st">'P0'</span>)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    p0session2 <span class="op">=</span> os.path.join(session2path, <span class="st">'P0'</span>)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Get p1 folders from both sessions</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    p1session1 <span class="op">=</span> os.path.join(session1path, <span class="st">'P1'</span>)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    p1session2 <span class="op">=</span> os.path.join(session2path, <span class="st">'P1'</span>)</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Merge them</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    participants <span class="op">=</span> [p0session1, p0session2, p1session1, p1session2] <span class="co">#p0session1,p0session2</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(participants)</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> p <span class="kw">in</span> participants:</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>        os.chdir(p)</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>        <span class="co">###### SCALING ######</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>        <span class="co"># We do scaling only for Session x_1 (and copy it to x_2)</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="st">'Session_'</span> <span class="op">+</span> sessionID <span class="op">+</span> <span class="st">'_1'</span> <span class="kw">in</span> p:</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(p)</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Get weight from META for this pcn</span></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>            pcn <span class="op">=</span> p.split(<span class="st">'</span><span class="ch">\\</span><span class="st">'</span>)[<span class="op">-</span><span class="dv">1</span>].lower()</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>            weight <span class="op">=</span> META.loc[META[<span class="st">'pcn'</span>] <span class="op">==</span> pcn, <span class="st">'weight'</span>].values[<span class="dv">0</span>]</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>            new_mass <span class="op">=</span> <span class="bu">str</span>(weight)</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Get the path to the input model</span></span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>            new_model_file <span class="op">=</span> <span class="st">'opensim\Model_Pose2Sim_Body135.osim'</span></span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>            new_model_file <span class="op">=</span> os.path.join(p, new_model_file)</span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Get the path to the marker file</span></span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>            tposefolder <span class="op">=</span> glob.glob(os.path.join(p, <span class="st">'*tpose*'</span>))[<span class="dv">0</span>]</span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>            trcfolder <span class="op">=</span> os.path.join(tposefolder, <span class="st">'pose-3d'</span>)</span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>            trcfiles <span class="op">=</span> glob.glob(os.path.join(trcfolder, <span class="st">'*.trc'</span>))</span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Keep only the one with 'butterworth' in its name (this is filtered file)</span></span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>            new_marker_file <span class="op">=</span> [trc <span class="cf">for</span> trc <span class="kw">in</span> trcfiles <span class="cf">if</span> <span class="st">'butterworth'</span> <span class="kw">in</span> trc][<span class="dv">0</span>]</span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Get the time range of this file</span></span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>            first_time, last_time <span class="op">=</span> extract_first_and_last_time(new_marker_file)</span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>            new_timerange <span class="op">=</span> <span class="bu">str</span>(first_time) <span class="op">+</span> <span class="st">' '</span> <span class="op">+</span> <span class="bu">str</span>(last_time)</span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>            <span class="co"># New output model file</span></span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>            participant <span class="op">=</span> p.split(<span class="st">'</span><span class="ch">\\</span><span class="st">'</span>)[<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>            new_output_model_file <span class="op">=</span> <span class="st">'opensim\Model_Pose2Sim_scaled_'</span> <span class="op">+</span> sessionID <span class="op">+</span> <span class="st">'_'</span> <span class="op">+</span> participant <span class="op">+</span> <span class="st">'.osim'</span></span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Update the XML file with new values</span></span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>            new_scalefile <span class="op">=</span> <span class="st">'Scaling_Setup_Pose2Sim_Body135_FLESH_'</span> <span class="op">+</span> sessionID <span class="op">+</span> <span class="st">'_'</span> <span class="op">+</span> participant <span class="op">+</span> <span class="st">'.xml'</span></span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a>            update_xml_file(p, scalefile, new_scalefile, new_mass<span class="op">=</span>new_mass, new_model_file<span class="op">=</span>new_model_file, new_marker_file<span class="op">=</span>new_marker_file, new_timerange<span class="op">=</span>new_timerange, new_output_model_file<span class="op">=</span>new_output_model_file)</span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="st">'Scaling...'</span>)</span>
+<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a>            opensim.ScaleTool(new_scalefile).run()</span>
+<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Copy scaling setup also to session 2 of the same participant</span></span>
+<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a>            session2Path <span class="op">=</span> os.path.join(projectdata, <span class="st">'Session_'</span> <span class="op">+</span> sessionID <span class="op">+</span> <span class="st">'_2'</span>, participant)</span>
+<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a>            os.makedirs(session2Path, exist_ok<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a>            shutil.copy(new_scalefile, session2Path)</span>
+<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a>            <span class="co"># And scaled model too</span></span>
+<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a>            session2ScaledModelPath <span class="op">=</span> os.path.join(session2Path, <span class="st">'opensim'</span>)</span>
+<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a>            os.makedirs(session2ScaledModelPath, exist_ok<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a>            shutil.copy(new_output_model_file, session2ScaledModelPath)</span>
+<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a>        <span class="co"># If its session x_2, we directly go to IK and ID</span></span>
+<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="st">'Session x_2, skipping scaling...'</span>)</span>
+<span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-69"><a href="#cb3-69" aria-hidden="true" tabindex="-1"></a>        <span class="co">###### INVERSE KINEMATICS ######</span></span>
+<span id="cb3-70"><a href="#cb3-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-71"><a href="#cb3-71" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Create folder ResultsInverseKinematics</span></span>
+<span id="cb3-72"><a href="#cb3-72" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="kw">not</span> os.path.exists(os.path.join(p, <span class="st">'ResultsInverseKinematics'</span>)):</span>
+<span id="cb3-73"><a href="#cb3-73" aria-hidden="true" tabindex="-1"></a>            os.makedirs(os.path.join(p, <span class="st">'ResultsInverseKinematics'</span>))</span>
+<span id="cb3-74"><a href="#cb3-74" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb3-75"><a href="#cb3-75" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Collect all folders in p</span></span>
+<span id="cb3-76"><a href="#cb3-76" aria-hidden="true" tabindex="-1"></a>        folders <span class="op">=</span> glob.glob(os.path.join(p, <span class="st">'*'</span>))</span>
+<span id="cb3-77"><a href="#cb3-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-78"><a href="#cb3-78" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Get rid of all folders/files that we don't want now</span></span>
+<span id="cb3-79"><a href="#cb3-79" aria-hidden="true" tabindex="-1"></a>        folders <span class="op">=</span> [f <span class="cf">for</span> f <span class="kw">in</span> folders <span class="cf">if</span> <span class="st">'opensim'</span> <span class="kw">not</span> <span class="kw">in</span> f]</span>
+<span id="cb3-80"><a href="#cb3-80" aria-hidden="true" tabindex="-1"></a>        folders <span class="op">=</span> [f <span class="cf">for</span> f <span class="kw">in</span> folders <span class="cf">if</span> <span class="st">'toml'</span> <span class="kw">not</span> <span class="kw">in</span> f]</span>
+<span id="cb3-81"><a href="#cb3-81" aria-hidden="true" tabindex="-1"></a>        folders <span class="op">=</span> [f <span class="cf">for</span> f <span class="kw">in</span> folders <span class="cf">if</span> <span class="st">'txt'</span> <span class="kw">not</span> <span class="kw">in</span> f]</span>
+<span id="cb3-82"><a href="#cb3-82" aria-hidden="true" tabindex="-1"></a>        folders <span class="op">=</span> [f <span class="cf">for</span> f <span class="kw">in</span> folders <span class="cf">if</span> <span class="st">'xml'</span> <span class="kw">not</span> <span class="kw">in</span> f]</span>
+<span id="cb3-83"><a href="#cb3-83" aria-hidden="true" tabindex="-1"></a>        folders <span class="op">=</span> [f <span class="cf">for</span> f <span class="kw">in</span> folders <span class="cf">if</span> <span class="st">'sto'</span> <span class="kw">not</span> <span class="kw">in</span> f]</span>
+<span id="cb3-84"><a href="#cb3-84" aria-hidden="true" tabindex="-1"></a>        folders <span class="op">=</span> [f <span class="cf">for</span> f <span class="kw">in</span> folders <span class="cf">if</span> <span class="st">'tpose'</span> <span class="kw">not</span> <span class="kw">in</span> f]</span>
+<span id="cb3-85"><a href="#cb3-85" aria-hidden="true" tabindex="-1"></a>        folders <span class="op">=</span> [f <span class="cf">for</span> f <span class="kw">in</span> folders <span class="cf">if</span> <span class="st">'ResultsInverseKinematics'</span> <span class="kw">not</span> <span class="kw">in</span> f]</span>
+<span id="cb3-86"><a href="#cb3-86" aria-hidden="true" tabindex="-1"></a>        folders <span class="op">=</span> [f <span class="cf">for</span> f <span class="kw">in</span> folders <span class="cf">if</span> <span class="st">'ResultsInverseDynamics'</span> <span class="kw">not</span> <span class="kw">in</span> f]</span>
+<span id="cb3-87"><a href="#cb3-87" aria-hidden="true" tabindex="-1"></a>        <span class="co">#print(folders)</span></span>
+<span id="cb3-88"><a href="#cb3-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-89"><a href="#cb3-89" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> f <span class="kw">in</span> folders:</span>
+<span id="cb3-90"><a href="#cb3-90" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(f)</span>
+<span id="cb3-91"><a href="#cb3-91" aria-hidden="true" tabindex="-1"></a>            trialid <span class="op">=</span> f.split(<span class="st">'</span><span class="ch">\\</span><span class="st">'</span>)[<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb3-92"><a href="#cb3-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-93"><a href="#cb3-93" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Get trc file</span></span>
+<span id="cb3-94"><a href="#cb3-94" aria-hidden="true" tabindex="-1"></a>            trcfiles <span class="op">=</span> glob.glob(os.path.join(f, <span class="st">'*/*.trc'</span>), recursive<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb3-95"><a href="#cb3-95" aria-hidden="true" tabindex="-1"></a>            new_trc_file <span class="op">=</span> [trc <span class="cf">for</span> trc <span class="kw">in</span> trcfiles <span class="cf">if</span> <span class="st">'butterworth'</span> <span class="kw">in</span> trc][<span class="dv">0</span>]</span>
+<span id="cb3-96"><a href="#cb3-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-97"><a href="#cb3-97" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Get the time range from it</span></span>
+<span id="cb3-98"><a href="#cb3-98" aria-hidden="true" tabindex="-1"></a>            first_time, last_time <span class="op">=</span> extract_first_and_last_time(new_trc_file)</span>
+<span id="cb3-99"><a href="#cb3-99" aria-hidden="true" tabindex="-1"></a>            new_timerange <span class="op">=</span> <span class="bu">str</span>(first_time) <span class="op">+</span> <span class="st">' '</span> <span class="op">+</span> <span class="bu">str</span>(last_time)</span>
+<span id="cb3-100"><a href="#cb3-100" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-101"><a href="#cb3-101" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Get the scaled model</span></span>
+<span id="cb3-102"><a href="#cb3-102" aria-hidden="true" tabindex="-1"></a>            scaled_model <span class="op">=</span> new_output_model_file</span>
+<span id="cb3-103"><a href="#cb3-103" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb3-104"><a href="#cb3-104" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Output motion file</span></span>
+<span id="cb3-105"><a href="#cb3-105" aria-hidden="true" tabindex="-1"></a>            output_motion_file <span class="op">=</span> <span class="st">'ResultsInverseKinematics/'</span> <span class="op">+</span> sessionID <span class="op">+</span> <span class="st">'_'</span> <span class="op">+</span> trialid <span class="op">+</span> <span class="st">'.mot'</span></span>
+<span id="cb3-106"><a href="#cb3-106" aria-hidden="true" tabindex="-1"></a>            output_motion_file <span class="op">=</span> os.path.join(p, output_motion_file)</span>
+<span id="cb3-107"><a href="#cb3-107" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-108"><a href="#cb3-108" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Update the XML file</span></span>
+<span id="cb3-109"><a href="#cb3-109" aria-hidden="true" tabindex="-1"></a>            new_ikfile_name <span class="op">=</span> <span class="st">'IK_Setup_Pose2Sim_Body135_FLESH_'</span> <span class="op">+</span> sessionID <span class="op">+</span> <span class="st">'_'</span> <span class="op">+</span> trialid <span class="op">+</span> <span class="st">'.xml'</span></span>
+<span id="cb3-110"><a href="#cb3-110" aria-hidden="true" tabindex="-1"></a>            new_ikfile <span class="op">=</span> os.path.join(p, new_ikfile_name)</span>
+<span id="cb3-111"><a href="#cb3-111" aria-hidden="true" tabindex="-1"></a>            update_xml_file(p, ikfile, new_ikfile, new_model_file<span class="op">=</span>scaled_model, new_marker_file<span class="op">=</span>new_trc_file, new_timerange<span class="op">=</span>new_timerange, new_output_model_file<span class="op">=</span>output_motion_file)</span>
+<span id="cb3-112"><a href="#cb3-112" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-113"><a href="#cb3-113" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="st">'Inverse Kinematics...'</span>)</span>
+<span id="cb3-114"><a href="#cb3-114" aria-hidden="true" tabindex="-1"></a>            <span class="cf">try</span>:</span>
+<span id="cb3-115"><a href="#cb3-115" aria-hidden="true" tabindex="-1"></a>                opensim.InverseKinematicsTool(new_ikfile).run()</span>
+<span id="cb3-116"><a href="#cb3-116" aria-hidden="true" tabindex="-1"></a>            <span class="cf">except</span>:</span>
+<span id="cb3-117"><a href="#cb3-117" aria-hidden="true" tabindex="-1"></a>                <span class="bu">print</span>(<span class="st">'Error in IK'</span>)</span>
+<span id="cb3-118"><a href="#cb3-118" aria-hidden="true" tabindex="-1"></a>                <span class="cf">continue</span></span>
+<span id="cb3-119"><a href="#cb3-119" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-120"><a href="#cb3-120" aria-hidden="true" tabindex="-1"></a>            <span class="co"># opensim doesn't smooth the data, but we need to smooth them before inverse dynamics, otherwise we will magnify the noise</span></span>
+<span id="cb3-121"><a href="#cb3-121" aria-hidden="true" tabindex="-1"></a>            smoothing_params <span class="op">=</span> {<span class="st">'window_length'</span>: <span class="dv">35</span>, <span class="st">'polyorder'</span>: <span class="dv">3</span>}</span>
+<span id="cb3-122"><a href="#cb3-122" aria-hidden="true" tabindex="-1"></a>            smooth_data(output_motion_file, output_motion_file, smoothing_params, plot<span class="op">=</span><span class="va">True</span>, plot_column<span class="op">=</span><span class="st">'arm_flex_r'</span>)</span>
+<span id="cb3-123"><a href="#cb3-123" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-124"><a href="#cb3-124" aria-hidden="true" tabindex="-1"></a>            <span class="co">###### INVERSE DYNAMICS ######</span></span>
+<span id="cb3-125"><a href="#cb3-125" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-126"><a href="#cb3-126" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Create folder ResultsInverseKinematics</span></span>
+<span id="cb3-127"><a href="#cb3-127" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="kw">not</span> os.path.exists(os.path.join(p, <span class="st">'ResultsInverseDynamics'</span>)):</span>
+<span id="cb3-128"><a href="#cb3-128" aria-hidden="true" tabindex="-1"></a>                os.makedirs(os.path.join(p, <span class="st">'ResultsInverseDynamics'</span>))</span>
+<span id="cb3-129"><a href="#cb3-129" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-130"><a href="#cb3-130" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Time range is the same as in IK</span></span>
+<span id="cb3-131"><a href="#cb3-131" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Scaled model is the same</span></span>
+<span id="cb3-132"><a href="#cb3-132" aria-hidden="true" tabindex="-1"></a>            <span class="co"># mot file is the new_ikfile</span></span>
+<span id="cb3-133"><a href="#cb3-133" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Output force file</span></span>
+<span id="cb3-134"><a href="#cb3-134" aria-hidden="true" tabindex="-1"></a>            output_gen_force_file <span class="op">=</span> <span class="st">'ResultsInverseDynamics/'</span> <span class="op">+</span> sessionID <span class="op">+</span> <span class="st">'_'</span> <span class="op">+</span> trialid <span class="op">+</span> <span class="st">'_ID.sto'</span></span>
+<span id="cb3-135"><a href="#cb3-135" aria-hidden="true" tabindex="-1"></a>            output_gen_force_file <span class="op">=</span> os.path.join(p, output_gen_force_file)</span>
+<span id="cb3-136"><a href="#cb3-136" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-137"><a href="#cb3-137" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Update the XML file</span></span>
+<span id="cb3-138"><a href="#cb3-138" aria-hidden="true" tabindex="-1"></a>            new_idfile_name <span class="op">=</span> <span class="st">'ID_Setup_Pose2Sim_Body135_FLESH_'</span> <span class="op">+</span> sessionID <span class="op">+</span> <span class="st">'_'</span> <span class="op">+</span> trialid <span class="op">+</span> <span class="st">'.xml'</span></span>
+<span id="cb3-139"><a href="#cb3-139" aria-hidden="true" tabindex="-1"></a>            new_idfile <span class="op">=</span> os.path.join(p, new_idfile_name)</span>
+<span id="cb3-140"><a href="#cb3-140" aria-hidden="true" tabindex="-1"></a>            update_xml_file(p, idfile, new_idfile, new_model_file<span class="op">=</span>scaled_model, new_timerange<span class="op">=</span>new_timerange, new_coord_file<span class="op">=</span>output_motion_file, new_output_model_file<span class="op">=</span>output_gen_force_file)</span>
+<span id="cb3-141"><a href="#cb3-141" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-142"><a href="#cb3-142" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="st">'Inverse Dynamics...'</span>)</span>
+<span id="cb3-143"><a href="#cb3-143" aria-hidden="true" tabindex="-1"></a>            <span class="cf">try</span>:</span>
+<span id="cb3-144"><a href="#cb3-144" aria-hidden="true" tabindex="-1"></a>                opensim.InverseDynamicsTool(new_idfile).run()</span>
+<span id="cb3-145"><a href="#cb3-145" aria-hidden="true" tabindex="-1"></a>            <span class="cf">except</span>:</span>
+<span id="cb3-146"><a href="#cb3-146" aria-hidden="true" tabindex="-1"></a>                <span class="bu">print</span>(<span class="st">'Error in ID'</span>)</span>
+<span id="cb3-147"><a href="#cb3-147" aria-hidden="true" tabindex="-1"></a>                <span class="cf">continue</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>All error information is in the opensim.log file in the <em>/Session_x/Participant</em> folder</p>
-<p>Here is an example of angle (full line) and moment/torque (dashed) data for right hip. They are further processed in <span class="citation" data-cites="ADDREF">(<a href="#ref-ADDREF" role="doc-biblioref"><strong>ADDREF?</strong></a>)</span></p>
+<p>Here is an example of angle (full line) and moment/torque (dashed) data for right hip. They are further processed in <strong>?@sec-procmot</strong>.</p>
 <div id="cell-7" class="cell" data-execution_count="18">
 <div class="cell-output cell-output-display">
 <div>
@@ -1034,6 +770,7 @@ Inverse Dynamics...</code></pre>
 </div>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
