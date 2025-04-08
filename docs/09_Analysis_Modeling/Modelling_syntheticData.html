@@ -54,7 +54,27 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -491,7 +511,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="h1-stating-causal-model" class="level1">
 <h1>H1: Stating causal model</h1>
 <p>Before simulating synthetic data, we will first formulate our causal model to explicitly identify common causes, and hence prevent (or rather minimize) confounding in our statistical model. Note that while we are interested in causal relationship between effort (outcome) and communicative attempt (predictor for H1) and answer similarity (predictor for H2), we need to acknowledge that there are other factors possibly contributing to the outcome variable, despite the experiment beling relatively controlled. These relate, for instance, to the participants (e.g., personality traits) or stimuli (i.e., concepts). Our causal model therefore includes more variables that are identified as potentially sharing causal path with our primary predictor - communicative attempt. They are not of primary interest, they ensure we can isolate the causal effect of the main predictor on the outcome variable - effort.</p>
-<p>To explicitly formulate the causal paths, we will start our analysis visualizing our causal model using directed acyclic graph (DAG). We will use packages <code>dagitty</code> and <code>ggdag</code> to create these DAGs and to extract implied independencies and adjustment set. DAG will help us clarify the causal model and introduce the predictors we aim to model (<span class="citation" data-cites="McElreath">(<a href="#ref-McElreath" role="doc-biblioref"><strong>McElreath?</strong></a>)</span>). This model goes hand in hand with the logic underlying the synthetic data we create below.</p>
+<p>To explicitly formulate the causal paths, we will start our analysis visualizing our causal model using directed acyclic graph (DAG). We will use packages <code>dagitty</code> and <code>ggdag</code> to create these DAGs and to extract implied independencies and adjustment set. DAG will help us clarify the causal model and introduce the predictors we aim to model (<span class="citation" data-cites="mcelreath18">McElreath (<a href="#ref-mcelreath18" role="doc-biblioref">2018</a>)</span>). This model goes hand in hand with the logic underlying the synthetic data we create below.</p>
 <p>Our first hypothesis goes as follows:</p>
 <p><em>H1: Correction recruits more physical effort than the baseline performance.</em></p>
 <p>The relationship of interest is the causal effect of <em>communicative attempt</em> on <em>effort</em>. Further, our causal model includes following assumptions:</p>
@@ -545,7 +565,7 @@ Pcn _||_ TrNm</code></pre>
 </section>
 <section id="creating-synthetic-data-for-pre-registration-purposes-only" class="level1">
 <h1>Creating synthetic data (for pre-registration purposes only)</h1>
-<p>Now we can proceed with creating synthetic data, incorporating the relationships we have acknowledged in our causal model. We will then use these data to validate the statistical models. Following McElreath (<span class="citation" data-cites="ADDREF">(<a href="#ref-ADDREF" role="doc-biblioref"><strong>ADDREF?</strong></a>)</span>), we believe this approach constitutes a principled and transparent method for model validation. By evaluating the model structure on simulated data before fitting it to empirical observations, we reduce the risk of overfitting and p-hacking, as model assumptions and inferences are tested independently of the observed data.</p>
+<p>Now we can proceed with creating synthetic data, incorporating the relationships we have acknowledged in our causal model. We will then use these data to validate the statistical models. We believe this approach constitutes a principled and transparent method for model validation (<span class="citation" data-cites="mcelreath18">McElreath (<a href="#ref-mcelreath18" role="doc-biblioref">2018</a>)</span>, <span class="citation" data-cites="morris_etal19">Morris, White, and Crowther (<a href="#ref-morris_etal19" role="doc-biblioref">2019</a>)</span>). By evaluating the model structure on simulated data before fitting it to empirical observations, we reduce the risk of overfitting and p-hacking, as model assumptions and inferences are tested independently of the observed data.</p>
 <p>Note that the synthetic data do not copy the structure of the data and the experimental design perfectly, but they do provide a reliable ground to build the models and test their performance.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set seed for reproducibility</span></span>
@@ -3785,7 +3805,7 @@ R2 0.8921087 0.001381664 0.8892535 0.8946349</code></pre>
 </div>
 </div>
 </div>
-<p>B-splines allow to build up wiggly functions from more simple components which are called ‘basis functions’ (B). They divide a full range of predictor into parts and assign a parameter to each part. The parameters are gradually turned on and off in a way that makes their sum into a curve. Unlike polynomial regression, b-splines do not transform predictor, but they invent a series of new synthetic predictor variables. Each of them then exists only to gradually turn a specific parameter on and off within a specific range of the real predictor variable. Each of these synthetic variables is called a basis function B. See more in Richard McElreath’s Statistical Rethinking (<span class="citation" data-cites="ADDREF">(<a href="#ref-ADDREF" role="doc-biblioref"><strong>ADDREF?</strong></a>)</span>).</p>
+<p>B-splines allow to build up wiggly functions from more simple components which are called ‘basis functions’ (B). They divide a full range of predictor into parts and assign a parameter to each part. The parameters are gradually turned on and off in a way that makes their sum into a curve. Unlike polynomial regression, b-splines do not transform predictor, but they invent a series of new synthetic predictor variables. Each of them then exists only to gradually turn a specific parameter on and off within a specific range of the real predictor variable. Each of these synthetic variables is called a basis function B. See more in Richard McElreath’s Statistical Rethinking (<span class="citation" data-cites="mcelreath18">McElreath (<a href="#ref-mcelreath18" role="doc-biblioref">2018</a>)</span>).</p>
 <p>We are using the <a href="https://bookdown.org/content/4857/geocentric-models.html">code</a> from Solomon Kurz’s adaptation of this book.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb201"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb201-1"><a href="#cb201-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get rid of NAs in the predictor</span></span>
@@ -4047,7 +4067,7 @@ R2 0.0299754 0.006354033 0.01827862 0.04305631</code></pre>
 </section>
 <section id="splines-2---bayesian-gams" class="level2">
 <h2 class="anchored" data-anchor-id="splines-2---bayesian-gams">Splines 2 - Bayesian GAMs</h2>
-<p>Now we will use a different workflow, using smooth functions with <code>brms</code> package. Brms allow for non-linear models by borrowing functions from <code>mgcv</code> package (<span class="citation" data-cites="ADDREFWood">(<a href="#ref-ADDREFWood" role="doc-biblioref"><strong>ADDREFWood?</strong></a>)</span>)</p>
+<p>Now we will use a different workflow, using smooth functions with <code>brms</code> package. Brms allow for non-linear models by borrowing functions from <code>mgcv</code> package (<span class="citation" data-cites="wood17">Wood (<a href="#ref-wood17" role="doc-biblioref">2017</a>)</span>)</p>
 <p>This is how priors should look like for one of these functions</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb220"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb220-1"><a href="#cb220-1" aria-hidden="true" tabindex="-1"></a><span class="fu">get_prior</span>(<span class="at">data =</span> d2,</span>
@@ -4572,6 +4592,17 @@ h2.s1 5621.6500755 76.529817</code></pre>
 <p>Similar to the workflow adopted in H1 modelling, we would fit two new models, one with priors and one with interactions, and perform another round of diagnostics to see which model seems to have the most predictive power.</p>
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-mcelreath18" class="csl-entry" role="listitem">
+McElreath, Richard. 2018. <em>Statistical <span>Rethinking</span>: <span>A Bayesian Course</span> with <span>Examples</span> in <span>R</span> and <span>Stan</span></em>. New York: <span>Chapman and Hall/CRC</span>. <a href="https://doi.org/10.1201/9781315372495">https://doi.org/10.1201/9781315372495</a>.
+</div>
+<div id="ref-morris_etal19" class="csl-entry" role="listitem">
+Morris, Tim P., Ian R. White, and Michael J. Crowther. 2019. <span>“Using Simulation Studies to Evaluate Statistical Methods.”</span> <em>Statistics in Medicine</em> 38 (11): 2074–2102. <a href="https://doi.org/10.1002/sim.8086">https://doi.org/10.1002/sim.8086</a>.
+</div>
+<div id="ref-wood17" class="csl-entry" role="listitem">
+Wood, S. N. 2017. <em>Generalized <span>A</span>dditive <span>M</span>odels: An Introduction with <span>R</span></em>. 2nd ed. Chapman; Hall/CRC.
+</div>
+</div>
 </section>
 </section>
 

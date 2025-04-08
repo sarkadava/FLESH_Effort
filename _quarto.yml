@@ -65,7 +65,11 @@ website:
         href: summary.qmd
       - text: "References"
         href: references.qmd
-        
+
+metadata:
+  crossref:
+    chapters: true
+
 book:
   title: "[Preregistration] Putting in the Effort: Modulation of Multimodal Effort in Communicative Breakdowns during a Gestural-Vocal Referential Game"
   author: ""

@@ -8,11 +8,11 @@ execute:
    warning: false 
 ---
 
-# Overview {#sec-xgboost}
+## Overview {#sec-xgboost}
 
-This script is an adaption of pipeline by @ADDREFTOCWIEK
+This script is an adaption of pipeline by @cwiek_etal_inprep2.
 
-In this script, we are going to use eXtreme Gradient Boosting (XGBoost, @ADDREF) to identify effort-related features beyond those investigated within our confirmatory analysis, i.e., torque change, amplitude envelope, and change in center of pressure.
+In this script, we are going to use eXtreme Gradient Boosting (XGBoost, @chen_guestrin16) to identify effort-related features beyond those investigated within our confirmatory analysis, i.e., torque change, amplitude envelope, and change in center of pressure.
 
 XGBoost is a machine learning algorithm that builds an ensemble of decision trees to predict an outcome based on input features. For us, outcome refers to *communicative attempt* (baseline, first correction, second correction) and input features refer to all *features of effort* collected in @sec-features.
 
@@ -676,7 +676,7 @@ head(gesCumulativeImportance, n=10)
 
 #### PCA
 
-Now, to select features along different (uncorrelated) dimensions, we want to connect these results with the results of PCA we performed in script @ADDREF.
+Now, to select features along different (uncorrelated) dimensions, we want to connect these results with the results of PCA we performed in script @sec-pca.
 
 ```{r ges pca function}
 #| code-fold: true

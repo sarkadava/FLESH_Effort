@@ -54,7 +54,27 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -391,7 +411,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="sec-openpose" class="level1">
 <h1>Overview</h1>
-<p>In this script, we take the videos prepared in the previous script (<strong>?@sec-vidprep</strong>) and perform OpenPose 2D pose estimation (<span class="citation" data-cites="ADDREF">(<a href="#ref-ADDREF" role="doc-biblioref"><strong>ADDREF?</strong></a>)</span>) on them.</p>
+<p>In this script, we take the videos prepared in the previous script (<strong>?@sec-vidprep</strong>) and perform OpenPose 2D pose estimation (<span class="citation" data-cites="cao_etal19">Cao et al. (<a href="#ref-cao_etal19" role="doc-biblioref">2019</a>)</span>) on them.</p>
 <p>We are using the BODY_135 model with 135 keypoints.</p>
 <p>Demo of this pipeline has been published on <a href="https://www.envisionbox.org/embedded_openpose_to_pose2sim_tracking.html">EnvisionBOX</a></p>
 <p>See <a href="https://github.com/CMU-Perceptual-Computing-Lab/openpose">OpenPose documentation</a> for more information.</p>
@@ -505,7 +525,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>        runcommand(command)</span>
 <span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>    </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>The results are saved in /pose folder in json format, and are later used for triangulation via Pose2sim (<span class="citation" data-cites="ADD">(<a href="#ref-ADD" role="doc-biblioref"><strong>ADD?</strong></a>)</span>).</p>
+<p>The results are saved in /pose folder in json format, and are later used for triangulation via Pose2sim (<span class="citation" data-cites="pagnon_etal22">Pagnon, Domalain, and Reveret (<a href="#ref-pagnon_etal22" role="doc-biblioref">2022</a>)</span>).</p>
 <p>The videos with the estimated poses are saved in the /pose-2d-trackingvideos folder</p>
 <p>Here is an example of the output:</p>
 <div id="cell-7" class="cell" data-execution_count="3">
@@ -518,6 +538,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-cao_etal19" class="csl-entry" role="listitem">
+Cao, Zhe, Gines Hidalgo, Tomas Simon, Shih-En Wei, and Yaser Sheikh. 2019. <span>“<span>OpenPose</span>: <span>Realtime Multi-Person 2D Pose Estimation</span> Using <span>Part Affinity Fields</span>.”</span> May 30, 2019. <a href="https://doi.org/10.48550/arXiv.1812.08008">https://doi.org/10.48550/arXiv.1812.08008</a>.
+</div>
+<div id="ref-pagnon_etal22" class="csl-entry" role="listitem">
+Pagnon, David, Mathieu Domalain, and Lionel Reveret. 2022. <span>“<span>Pose2Sim</span>: <span class="nocase">An End-to-End Workflow</span> for <span>3D Markerless Sports Kinematics</span>—<span>Part</span> 2: <span>Accuracy</span>.”</span> <em>Sensors</em> 22 (7, 7): 2712. <a href="https://doi.org/10.3390/s22072712">https://doi.org/10.3390/s22072712</a>.
+</div>
+</div>
 </section>
 
 </main> <!-- /main -->

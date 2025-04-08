@@ -54,7 +54,27 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -392,7 +412,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="sec-annoia" class="level1">
 <h1>Overview</h1>
 <p>In this script, we prepare data to test the interrater agreement (IA) on movement annotation. To test the robustness, we compute interrater agreement between two human annotators (AC, GR) and between each human annotator and the automatic annotations created in the previous script (<strong>?@sec-annoclass</strong>). We compute IA for each tier separately.</p>
-<p>We use EasyDIAG (<span class="citation" data-cites="holle_rein15">(<a href="#ref-holle_rein15" role="doc-biblioref"><strong>holle_rein15?</strong></a>)</span>) to compute the IA, but document the results here in the table.</p>
+<p>We use EasyDIAG (<span class="citation" data-cites="holle_rein15">Holle and Rein (<a href="#ref-holle_rein15" role="doc-biblioref">2015</a>)</span>) to compute the IA, but document the results here in the table.</p>
 <div id="cell-2" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code to prepare the environment</summary>
@@ -817,7 +837,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="interrater-agreement-results" class="level1">
 <h1>Interrater agreement: results</h1>
-<p>Here we report the raw agreements together with kappa coefficients for interrater agreement between manual annotators (R1, R3) and automatic annotations (with threshold 60 and 80). Interrater agreement was computed using EasyDIAG (<span class="citation" data-cites="ADDREF">(<a href="#ref-ADDREF" role="doc-biblioref"><strong>ADDREF?</strong></a>)</span>), and the results have been saved in txt files. We will now extract relevant information to report in the table. The overlap was kept at default value of 60% for all tiers.</p>
+<p>Here we report the raw agreements together with kappa coefficients for interrater agreement between manual annotators (R1, R3) and automatic annotations (with threshold 60 and 80). Interrater agreement was computed using EasyDIAG (<span class="citation" data-cites="holle_rein15">Holle and Rein (<a href="#ref-holle_rein15" role="doc-biblioref">2015</a>)</span>), and the results have been saved in txt files. We will now extract relevant information to report in the table. The overlap was kept at default value of 60% for all tiers.</p>
 <div id="cell-15" class="cell" data-execution_count="25">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> extract_ia(lines):</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Extracting values</span></span>
@@ -1058,12 +1078,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p>From the table, we can observe few things: - 60% and 80% thresholds for automatic annotations are yielding similar results both in terms of raw agreement and kappa coefficient. - for arms, interrater agreement between automatic annotation and manual annotator R1 results in kappa coefficient 0.65, which is considered substantial agreement (by <span class="citation" data-cites="PAPER">(<a href="#ref-PAPER" role="doc-biblioref"><strong>PAPER?</strong></a>)</span>). - for upper body and lower body - the kappa signifies moderate agreement, but the same drop we can see in the interrater agreement between manual annotators. - for head, we see only fair agreement both between manual annotators and between automatic annotation and manual annotators.</p>
+<p>From the table, we can observe few things: - 60% and 80% thresholds for automatic annotations are yielding similar results both in terms of raw agreement and kappa coefficient. - for arms, interrater agreement between automatic annotation and manual annotator R1 results in kappa coefficient 0.65, which is considered substantial agreement (e.g., by <span class="citation" data-cites="landis_koch77">Landis and Koch (<a href="#ref-landis_koch77" role="doc-biblioref">1977</a>)</span>). - for upper body and lower body - the kappa signifies moderate agreement, but the same drop we can see in the interrater agreement between manual annotators. - for head, we see only fair agreement both between manual annotators and between automatic annotation and manual annotators.</p>
 <p>Generally, interrater agreement between manual annotator R1 and automatic annotation is comparable to the agreement between the two human annotators across all tiers. This suggests that the automatic annotation is a reliable tool for movement annotation, especially for arms. It seems like head is the most difficult tier to annotate, which is also reflected in the interrater agreement between manual annotators.</p>
 <p>To improve its predictions for head, upper body, and lower body, and to avoid the risk of overfitting the model on a specific type of behaviour generated by individuals in dyad 0, we will extend the training data by annotating 10% of behaviour per participant per dyad before the final analysis. If kappa does not result in minimum substantial agreement (k = 0.61), we will annotate a larger portion of the data</p>
 <p>In the next script <strong>?@sec-merge</strong>, we will work with 60% threshold to annotate all the data.</p>
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-holle_rein15" class="csl-entry" role="listitem">
+Holle, Henning, and Robert Rein. 2015. <span>“<span>EasyDIAg</span>: <span>A</span> Tool for Easy Determination of Interrater Agreement.”</span> <em>Behavior Research Methods</em> 47 (3): 837–47. <a href="https://doi.org/10.3758/s13428-014-0506-7">https://doi.org/10.3758/s13428-014-0506-7</a>.
+</div>
+<div id="ref-landis_koch77" class="csl-entry" role="listitem">
+Landis, J. R., and G. G. Koch. 1977. <span>“The Measurement of Observer Agreement for Categorical Data.”</span> <em>Biometrics</em> 33 (1). <a href="https://pubmed.ncbi.nlm.nih.gov/843571/">https://pubmed.ncbi.nlm.nih.gov/843571/</a>.
+</div>
+</div>
 </section>
 
 </main> <!-- /main -->

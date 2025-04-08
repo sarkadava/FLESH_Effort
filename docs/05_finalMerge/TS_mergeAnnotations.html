@@ -54,7 +54,27 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -392,7 +412,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="sec-merge" class="level1">
 <h1>Overview</h1>
 <p>In this notebook, we will merge all the data we have been preparing so far, i.e., timeseries data for acoustics and motion (see <strong>?@sec-procmerge</strong>), and annotations we have been working with in the previous notebook (<strong>?@sec-annoclass</strong>).</p>
-<p>We will also add annotations of sounding/silence created in Praat (<span class="citation" data-cites="ADDREF">(<a href="#ref-ADDREF" role="doc-biblioref"><strong>ADDREF?</strong></a>)</span>).</p>
+<p>We will also add annotations of sounding/silence created in Praat (<span class="citation" data-cites="boersma_weenink25">Boersma and Weenink (<a href="#ref-boersma_weenink25" role="doc-biblioref">2025</a>)</span>).</p>
 <div id="cell-2" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code to prepare the environment</summary>
@@ -1092,6 +1112,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-boersma_weenink25" class="csl-entry" role="listitem">
+Boersma, Paul, and David Weenink. 2025. <span>“Praat: Doing Phonetics by Computer.”</span> <a href="http://www.praat.org/">http://www.praat.org/</a>.
+</div>
+</div>
 </section>
 
 </main> <!-- /main -->

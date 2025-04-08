@@ -54,7 +54,27 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -391,7 +411,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="sec-pose2sim" class="level1">
 <h1>Overview</h1>
-<p>In the previous script (<strong>?@sec-openpose</strong>), we have extracted 2D keypoints for each trial (per each video, 3 in total). In this script, we will use Pose2sim (<span class="citation" data-cites="ADDREF">(<a href="#ref-ADDREF" role="doc-biblioref"><strong>ADDREF?</strong></a>)</span>) to calibrate the 3 cameras present in the lab setup, and triangulate the 3D position of the keypoints.</p>
+<p>In the previous script (<strong>?@sec-openpose</strong>), we have extracted 2D keypoints for each trial (per each video, 3 in total). In this script, we will use Pose2sim (<span class="citation" data-cites="pagnon_etal22">Pagnon, Domalain, and Reveret (<a href="#ref-pagnon_etal22" role="doc-biblioref">2022</a>)</span>) to calibrate the 3 cameras present in the lab setup, and triangulate the 3D position of the keypoints.</p>
 <p>Demo of this pipeline has been published on <a href="https://www.envisionbox.org/embedded_openpose_to_pose2sim_tracking.html">EnvisionBOX</a></p>
 <p>For more information on Pose2sim, please refer to the <a href="https://github.com/perfanalytics/pose2sim">Pose2sim documentation</a></p>
 <div id="cell-2" class="cell">
@@ -923,6 +943,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-pagnon_etal22" class="csl-entry" role="listitem">
+Pagnon, David, Mathieu Domalain, and Lionel Reveret. 2022. <span>“<span>Pose2Sim</span>: <span class="nocase">An End-to-End Workflow</span> for <span>3D Markerless Sports Kinematics</span>—<span>Part</span> 2: <span>Accuracy</span>.”</span> <em>Sensors</em> 22 (7, 7): 2712. <a href="https://doi.org/10.3390/s22072712">https://doi.org/10.3390/s22072712</a>.
+</div>
+</div>
 </section>
 
 </main> <!-- /main -->

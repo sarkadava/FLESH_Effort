@@ -107,7 +107,7 @@ Because current pilot data are quite likely unsufficient in terms of power (65 o
 
 Before simulating synthetic data, we will first formulate our causal model to explicitly identify common causes, and hence prevent (or rather minimize) confounding in our statistical model. Note that while we are interested in causal relationship between effort (outcome) and communicative attempt (predictor for H1) and answer similarity (predictor for H2), we need to acknowledge that there are other factors possibly contributing to the outcome variable, despite the experiment beling relatively controlled. These relate, for instance, to the participants (e.g., personality traits) or stimuli (i.e., concepts). Our causal model therefore includes more variables that are identified as potentially sharing causal path with our primary predictor - communicative attempt. They are not of primary interest, they ensure we can isolate the causal effect of the main predictor on the outcome variable - effort.
 
-To explicitly formulate the causal paths, we will start our analysis visualizing our causal model using directed acyclic graph (DAG). We will use packages `dagitty` and `ggdag` to create these DAGs and to extract implied independencies and adjustment set. DAG will help us clarify the causal model and introduce the predictors we aim to model (@McElreath). This model goes hand in hand with the logic underlying the synthetic data we create below.
+To explicitly formulate the causal paths, we will start our analysis visualizing our causal model using directed acyclic graph (DAG). We will use packages `dagitty` and `ggdag` to create these DAGs and to extract implied independencies and adjustment set. DAG will help us clarify the causal model and introduce the predictors we aim to model (@mcelreath18). This model goes hand in hand with the logic underlying the synthetic data we create below.
 
 Our first hypothesis goes as follows:
 
@@ -190,7 +190,7 @@ dagitty::adjustmentSets(daggy_h1, exposure = "CommAtt", outcome = "Eff")
 
 # Creating synthetic data (for pre-registration purposes only)
 
-Now we can proceed with creating synthetic data, incorporating the relationships we have acknowledged in our causal model. We will then use these data to validate the statistical models. Following McElreath (@ADDREF), we believe this approach constitutes a principled and transparent method for model validation. By evaluating the model structure on simulated data before fitting it to empirical observations, we reduce the risk of overfitting and p-hacking, as model assumptions and inferences are tested independently of the observed data.
+Now we can proceed with creating synthetic data, incorporating the relationships we have acknowledged in our causal model. We will then use these data to validate the statistical models. We believe this approach constitutes a principled and transparent method for model validation (@mcelreath18, @morris_etal19). By evaluating the model structure on simulated data before fitting it to empirical observations, we reduce the risk of overfitting and p-hacking, as model assumptions and inferences are tested independently of the observed data.
 
 Note that the synthetic data do not copy the structure of the data and the experimental design perfectly, but they do provide a reliable ground to build the models and test their performance.
 
@@ -1888,7 +1888,7 @@ ggplot(filtered_data, aes(x = PrevAn, y = Eff)) +
 
 ```
 
-B-splines allow to build up wiggly functions from more simple components which are called 'basis functions' (B). They divide a full range of predictor into parts and assign a parameter to each part. The parameters are gradually turned on and off in a way that makes their sum into a curve. Unlike polynomial regression, b-splines do not transform predictor, but they invent a series of new synthetic predictor variables. Each of them then exists only to gradually turn a specific parameter on and off within a specific range of the real predictor variable. Each of these synthetic variables is called a basis function B. See more in Richard McElreath's Statistical Rethinking (@ADDREF).
+B-splines allow to build up wiggly functions from more simple components which are called 'basis functions' (B). They divide a full range of predictor into parts and assign a parameter to each part. The parameters are gradually turned on and off in a way that makes their sum into a curve. Unlike polynomial regression, b-splines do not transform predictor, but they invent a series of new synthetic predictor variables. Each of them then exists only to gradually turn a specific parameter on and off within a specific range of the real predictor variable. Each of these synthetic variables is called a basis function B. See more in Richard McElreath's Statistical Rethinking (@mcelreath18).
 
 We are using the [code](https://bookdown.org/content/4857/geocentric-models.html) from Solomon Kurz's adaptation of this book.
 
@@ -2115,7 +2115,7 @@ h2.s1_R2
 
 ## Splines 2 - Bayesian GAMs
 
-Now we will use a different workflow, using smooth functions with `brms` package. Brms allow for non-linear models by borrowing functions from `mgcv` package (@ADDREFWood)
+Now we will use a different workflow, using smooth functions with `brms` package. Brms allow for non-linear models by borrowing functions from `mgcv` package (@wood17)
 
 This is how priors should look like for one of these functions
 

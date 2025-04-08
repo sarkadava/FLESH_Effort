@@ -54,7 +54,27 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -392,7 +412,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="sec-annoprep" class="level1">
 <h1>Overview</h1>
 <p>Since we have around 9000 trials in the final dataset, it is not feasible to manually annotate the movement onset and offset for each trial. Instead, we will use a simple logistic regression model to predict the movement onset and offset from all the movement features we have collected into the merge dataset (see <strong>?@sec-procmerge</strong>).</p>
-<p>We have annotated the movement onset and offset in <span class="citation" data-cites="ELAN22">(<a href="#ref-ELAN22" role="doc-biblioref"><strong>ELAN22?</strong></a>)</span> for a pilot data (dyad 0). Two annotators have independently annotated the movement onset and offset for four tiers: - upper body - lower body - arms - head</p>
+<p>We have annotated the movement onset and offset in <span class="citation" data-cites="wittenburg_etal06">Wittenburg et al. (<a href="#ref-wittenburg_etal06" role="doc-biblioref">2006</a>)</span> for a pilot data (dyad 0). Two annotators have independently annotated the movement onset and offset for four tiers: - upper body - lower body - arms - head</p>
 <p>Parent tier ‘movement’ summarizes overal movement across all tiers.</p>
 <p>Now, we will use these ground truth annotations to create a training set for the logistic regression model.</p>
 <div id="cell-2" class="cell" data-execution_count="21">
@@ -1876,6 +1896,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Now we are ready to train the logistic regression classifier.</p>
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-wittenburg_etal06" class="csl-entry" role="listitem">
+Wittenburg, Peter, Hennie Brugman, Albert Russel, Alex Klassmann, and Han Sloetjes. 2006. <span>“<span>ELAN</span>: <span>A</span> Professional Framework for Multimodality Research.”</span> <em>Proceedings of the Fifth International Conference on Language Resources and Evaluation (LREC 2006)</em>, January.
+</div>
+</div>
 </section>
 
 </main> <!-- /main -->

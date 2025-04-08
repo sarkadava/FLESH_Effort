@@ -54,7 +54,27 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -389,11 +409,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="overview-sec-conceptnet" class="level1">
-<h1>Overview (#sec-conceptnet)</h1>
+<section id="sec-conceptnet" class="level1">
+<h1>Overview</h1>
 <p>Our second hypothesis tests the effect of degree of misunderstanding on the magnitude of effort.</p>
 <p>We operationalize degree of misunderstanding as a conceptual similarity between target concept and answer offered by a guesser.</p>
-<p>To have a reproducible measure of conceptual similarity, we use the ConceptNet (<span class="citation" data-cites="speer_etal18">(<a href="#ref-speer_etal18" role="doc-biblioref"><strong>speer_etal18?</strong></a>)</span>) to extract embeddings for concepts used in our study, and calculate cosine similarity between the target concept and guessed answer.</p>
+<p>To have a reproducible measure of conceptual similarity, we use the ConceptNet (<span class="citation" data-cites="speer_etal18">Speer, Chin, and Havasi (<a href="#ref-speer_etal18" role="doc-biblioref">2018</a>)</span>) to extract embeddings for concepts used in our study, and calculate cosine similarity between the target concept and guessed answer.</p>
 <p>To verify the utility of the cosine similarity, we have collected data from 14 Dutch-native peoplewho were asked to rate the similarity between each pair of words in online anonymous rating study. We then compare the ‘perceived similarity’ with cosine similarity computed from ConceptNet embeddings, to validate the use of ConceptNet embeddings as a measure of conceptual similarity.</p>
 <div id="ffe81d02" class="cell" data-execution_count="1">
 <details class="code-fold">
@@ -1541,6 +1561,11 @@ Concept not found: openduwen</code></pre>
 <p>The strong correlation (r=0.73) validates the use of ConceptNet embeddings as a measure of conceptual similarity. In the next script <strong>?@sec-features</strong>, we will load it in together with our effort features.</p>
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-speer_etal18" class="csl-entry" role="listitem">
+Speer, Robyn, Joshua Chin, and Catherine Havasi. 2018. <span>“<span>ConceptNet</span> 5.5: <span>An Open Multilingual Graph</span> of <span>General Knowledge</span>.”</span> December 11, 2018. <a href="https://doi.org/10.48550/arXiv.1612.03975">https://doi.org/10.48550/arXiv.1612.03975</a>.
+</div>
+</div>
 </section>
 
 </main> <!-- /main -->
