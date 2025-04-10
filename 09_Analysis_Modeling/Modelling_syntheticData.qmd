@@ -6,6 +6,7 @@ format:
     code-width: 1200  # Adjust the width in pixels
 execute:
    warning: false 
+toc: true
 ---
 
 # Overview {#sec-stats}
@@ -130,6 +131,8 @@ The relationship of interest is the causal effect of *communicative attempt* on 
 -   Modality (uni vs. multi) will influence the value of effort. We assume that in unimodal condition, the feature does not need to account for synergic relations with the other modality, and may carry the whole signal. In multimodal condition, however, there may be synergic relations that moderate the full expressiveness of this feature
 
 -   Trial number (characterising how far one is in the experiment) could be hinting on learning processes through out the experiment, or - the other direction - on increasing fatigue
+
+Note that we are aware that some of the parameters might be correlated and we might run into issues with collinearity. While DAG does not help to solve it, it does help in detecting whether the two potentially highly correlated variables have separate causal effect or share a common cause. If they share common cause, there might be a problem in distinguishing their effects from each other. We will report inter-variable correlations when analyzing the actual data.
 
 ```{r dag h1, echo=FALSE, message=FALSE, warning=FALSE}
 

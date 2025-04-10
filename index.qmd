@@ -2,13 +2,14 @@
 
 Authors: Šárka Kadavá, Wim Pouw, Susanne Fuchs, Judith Holler, Aleksandra Ćwiek
 
+![Multimodal animation](assets/multimodal_anim.gif)
+
 This is a material to a study associated with ViCom project **On the FLExibility and Stability of Gesture-speecH Coordination (FLESH)** (see more [here](https://vicom.info/projects/on-the-flexibility-and-stability-of-gesture-speech-coordination-flesh-evidence-from-production-comprehension-and-imitation/)).
 
 This website documents data processing pipeline developed for the project **Modulation of Multimodal Effort in Communicative Breakdowns during a Gestural-Vocal Referential Game**. The pipeline covers every step from raw data ingestion to feature extraction and analysis, focusing on synchronizing and processing motion, audio, and derived signal data.
 
 The repository associated with this project can be found [at Github](LINK).
 
-![Multimodal animation](multimodal_anim.gif)
 
 ## This study
 
@@ -24,9 +25,18 @@ You can read more about the theoretical reasonings in the [introduction](LINK).
 
 This study has been preregistered in two phases.
 
-In phase I, we preregistered the experimental design, laboratory setup and power analysis. The preregistration is available at the [OSF Registries](LINK)
+In phase I, we preregistered the experimental design, laboratory setup and power analysis. The preregistration is available at the [OSF Registries](https://osf.io/m9xep)
 
 In phase II, we preregister the research questions and hypothesis, together with code pipeline covering pre-processing, processing and the analysis itself. The preregistration is available at the [OSF Registries](LINK)
+
+## Updates
+
+[✅] Preregistration of data collection  <br>
+[✅] Data collection completed  <br>
+[] Preregistration of analysis and processing steps  <br>
+[] Preprint published  <br>
+[] Manuscript published  <br>
+[] Data available at open access repository  <br>
 
 
 ---
@@ -77,11 +87,20 @@ In this workflow, each step builds on the previous one. However, it is possible 
 - [Statistical Analysis: Modelling the Effect of Communicative Attempt (H1) and Answer Similarity (H2) on Effort](09_Analysis_Modeling/Modelling_syntheticData.qmd) we build causal and statistical models testing our hypothesis.
 ---
 
+## Acknowledgements
+
+We would like to thank to all participants of this study. Special thanks belong also to the Donders lab coordinator Jiska Koemans and the Donders research integrity officer Miriam Kos. Lastly, thank to members of Donders Technical Support Group, namely Erik van den Berge, Norbert Hermesdorf, Gerard van Oijen, Maarten Snellen and Pascal de Water, for helping with the technical setup.
+
 ## Contact
 
 add contact
 
 ## Funding
 
+![ViCom](assets/ViCom.webp)
+![DFG](assets/DFG-logo-blau.svg.png)
+![ZAS](assets/logo_leibniz_zas.png)
+![Donders](assets/donders_logo.svg)
+![Gottingen](assets/Logo_Uni_G%C3%B6ttingen.png)
 
-add logos
+

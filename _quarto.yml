@@ -14,8 +14,6 @@ website:
     contents:
       - text: "Home"
         href: index.qmd
-      - text: "Introduction"
-        href: intro.qmd
 
       - section: "Processing"
         contents:
@@ -42,15 +40,12 @@ website:
           - 08_Analysis_XGBoost/01_PCA_featureDimensions.ipynb
           - 08_Analysis_XGBoost/02_XGBoost_effortIndicators.qmd
           - 09_Analysis_Modeling/Modelling_syntheticData.qmd
-
-      - text: "Summary"
-        href: summary.qmd
       - text: "References"
         href: references.qmd
 
   navbar:
     tools:
-      - icon: bluesky
+      - icon: butterfly
         href: https://bsky.app/profile/sarkadava.bsky.social
       - icon: github
         menu:
@@ -87,7 +82,6 @@ book:
     - 08_Analysis_XGBoost/01_PCA_featureDimensions.ipynb
     - 08_Analysis_XGBoost/02_XGBoost_effortIndicators.qmd
     - 09_Analysis_Modeling/Modelling_syntheticData.qmd
-    
     - references.qmd
     
 

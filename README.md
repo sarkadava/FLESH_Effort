@@ -1,10 +1,10 @@
 # Github repository to project Putting in the Effort: Modulation of Multimodal Effort in Communicative Breakdowns during a Gestural-Vocal Referential Game
 
-![Multimodal animation](multimodal_anim.gif)
+![Multimodal animation](assets/multimodal_anim.gif)
 
 This repository stores coding pipeline to process and analyze data associated with project "Putting in the Effort: Modulation of Multimodal Effort in Communicative Breakdowns during a Gestural-Vocal Referential Game" (FLESH). This project investigates how people modulate their effort when they encounter communicative breakdowns in a referential game. The project is part of the FLESH project (ViCom, DFG).
 
-This project has been preregistered as a two-phase preregistration. In [Phase I](), we preregistered the data collection. In [Phase II](), we have preregistered the analysis plan, including the processing steps.
+This project has been preregistered as a two-phase preregistration. In [Phase I](), we preregistered the data collection. In [Phase II](https://osf.io/3nygq), we have preregistered the analysis plan, including the processing steps.
 
 ## Updates
 

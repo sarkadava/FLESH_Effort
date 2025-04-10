@@ -6,6 +6,7 @@ format:
     code-width: 1200  # Adjust the width in pixels
 execute:
    warning: false 
+toc: true
 ---
 
 # Overview {#sec-xgboost}
