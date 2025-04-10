@@ -2,13 +2,11 @@
 
 ![Multimodal animation](multimodal_anim.gif)
 
-## Overview
-
 This repository stores coding pipeline to process and analyze data associated with project "Putting in the Effort: Modulation of Multimodal Effort in Communicative Breakdowns during a Gestural-Vocal Referential Game" (FLESH). This project investigates how people modulate their effort when they encounter communicative breakdowns in a referential game. The project is part of the FLESH project (ViCom, DFG).
 
 This project has been preregistered as a two-phase preregistration. In [Phase I](), we preregistered the data collection. In [Phase II](), we have preregistered the analysis plan, including the processing steps.
 
-### Updates
+## Updates
 
 [✅] Preregistration of data collection  <br>
 [✅] Data collection completed  <br>
@@ -17,7 +15,8 @@ This project has been preregistered as a two-phase preregistration. In [Phase I]
 [] Manuscript published  <br>
 [] Data available at open access repository  <br>
 
----
+
+## Overview
 
 The pipeline consists of several processing and analysis steps, whereby each step works on the output of the previous step. However, they are build in modular way such that one can implement individual scripts for their own purposes.
 
