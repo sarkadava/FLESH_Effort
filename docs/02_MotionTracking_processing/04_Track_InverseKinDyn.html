@@ -124,14 +124,14 @@ div.csl-indent {
 
 </head>
 
-<body class="nav-sidebar floating nav-fixed fullcontent">
+<body class="nav-sidebar floating nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
         <div class="quarto-navbar-tools tools-end">
-    <a href="https://bsky.app/profile/sarkadava.bsky.social" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-bluesky"></i></a>
+    <a href="https://bsky.app/profile/sarkadava.bsky.social" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-butterfly"></i></a>
     <div class="dropdown">
       <a href="" title="" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" aria-label=""><i class="bi bi-github"></i></a>
       <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="quarto-navigation-tool-dropdown-0">
@@ -180,12 +180,6 @@ div.csl-indent {
   <div class="sidebar-item-container"> 
   <a href="../index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Home</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Introduction</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -325,12 +319,6 @@ div.csl-indent {
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../summary.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Summary</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="../references.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">References</span></a>
   </div>
@@ -340,7 +328,17 @@ div.csl-indent {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#sec-opensim" id="toc-sec-opensim" class="nav-link active" data-scroll-target="#sec-opensim">Overview</a></li>
+  <li><a href="#inverse-kinematics-and-dynamics-with-opensim" id="toc-inverse-kinematics-and-dynamics-with-opensim" class="nav-link" data-scroll-target="#inverse-kinematics-and-dynamics-with-opensim">Inverse kinematics and dynamics with OpenSim</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
@@ -737,7 +735,6 @@ div.csl-indent {
 <span id="cb3-146"><a href="#cb3-146" aria-hidden="true" tabindex="-1"></a>                <span class="bu">print</span>(<span class="st">'Error in ID'</span>)</span>
 <span id="cb3-147"><a href="#cb3-147" aria-hidden="true" tabindex="-1"></a>                <span class="cf">continue</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>All error information is in the opensim.log file in the <em>/Session_x/Participant</em> folder</p>
 <p>Here is an example of angle (full line) and moment/torque (dashed) data for right hip. They are further processed in <a href="../03_TS_processing/01_TS_processing_motion.html#sec-procmot">motion processing script</a>.</p>
 <div id="cell-8" class="cell" data-execution_count="18">
 <div class="cell-output cell-output-display">

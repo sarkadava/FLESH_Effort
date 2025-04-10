@@ -1,6 +1,5 @@
 ---
 title: References
-jupyter: tsprocess
 format:
   html:
     code-overflow: wrap
@@ -11,3 +10,4 @@ format:
 
 ::: {#refs}
 :::
+

@@ -124,14 +124,14 @@ div.csl-indent {
 
 </head>
 
-<body class="nav-sidebar floating nav-fixed fullcontent">
+<body class="nav-sidebar floating nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
         <div class="quarto-navbar-tools tools-end">
-    <a href="https://bsky.app/profile/sarkadava.bsky.social" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-bluesky"></i></a>
+    <a href="https://bsky.app/profile/sarkadava.bsky.social" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-butterfly"></i></a>
     <div class="dropdown">
       <a href="" title="" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" aria-label=""><i class="bi bi-github"></i></a>
       <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="quarto-navigation-tool-dropdown-0">
@@ -180,12 +180,6 @@ div.csl-indent {
   <div class="sidebar-item-container"> 
   <a href="../index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Home</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Introduction</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -325,12 +319,6 @@ div.csl-indent {
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../summary.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Summary</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="../references.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">References</span></a>
   </div>
@@ -340,7 +328,73 @@ div.csl-indent {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#sec-stats" id="toc-sec-stats" class="nav-link active" data-scroll-target="#sec-stats">Overview</a></li>
+  <li><a href="#loading-in-our-data" id="toc-loading-in-our-data" class="nav-link" data-scroll-target="#loading-in-our-data">Loading in our data</a></li>
+  <li><a href="#h1-stating-causal-model" id="toc-h1-stating-causal-model" class="nav-link" data-scroll-target="#h1-stating-causal-model">H1: Stating causal model</a></li>
+  <li><a href="#creating-synthetic-data-for-pre-registration-purposes-only" id="toc-creating-synthetic-data-for-pre-registration-purposes-only" class="nav-link" data-scroll-target="#creating-synthetic-data-for-pre-registration-purposes-only">Creating synthetic data (for pre-registration purposes only)</a></li>
+  <li><a href="#exploring-the-synthetic-data" id="toc-exploring-the-synthetic-data" class="nav-link" data-scroll-target="#exploring-the-synthetic-data">Exploring the synthetic data</a></li>
+  <li><a href="#h1-modelling" id="toc-h1-modelling" class="nav-link" data-scroll-target="#h1-modelling">H1: Modelling</a>
+  <ul class="collapse">
+  <li><a href="#data-wrangling" id="toc-data-wrangling" class="nav-link" data-scroll-target="#data-wrangling">Data wrangling</a></li>
+  <li><a href="#model-1---simple-reproduction-of-dag" id="toc-model-1---simple-reproduction-of-dag" class="nav-link" data-scroll-target="#model-1---simple-reproduction-of-dag">Model 1 - Simple reproduction of DAG</a>
+  <ul class="collapse">
+  <li><a href="#transforming-coefficients" id="toc-transforming-coefficients" class="nav-link" data-scroll-target="#transforming-coefficients">Transforming coefficients</a></li>
+  </ul></li>
+  <li><a href="#model-2---varying-slopes-and-intercepts" id="toc-model-2---varying-slopes-and-intercepts" class="nav-link" data-scroll-target="#model-2---varying-slopes-and-intercepts">Model 2 - Varying slopes and intercepts</a></li>
+  <li><a href="#model-3---no-correlation-coefficient" id="toc-model-3---no-correlation-coefficient" class="nav-link" data-scroll-target="#model-3---no-correlation-coefficient">Model 3 - No correlation coefficient</a></li>
+  <li><a href="#model-3.1---adding-priors" id="toc-model-3.1---adding-priors" class="nav-link" data-scroll-target="#model-3.1---adding-priors">Model 3.1 - adding priors</a></li>
+  <li><a href="#model-4---restricting-priors-with-exponential-distribution" id="toc-model-4---restricting-priors-with-exponential-distribution" class="nav-link" data-scroll-target="#model-4---restricting-priors-with-exponential-distribution">Model 4 - Restricting priors with exponential distribution</a></li>
+  <li><a href="#model-5---student-family" id="toc-model-5---student-family" class="nav-link" data-scroll-target="#model-5---student-family">Model 5 - student family</a></li>
+  <li><a href="#model-6---log-normal-distribution" id="toc-model-6---log-normal-distribution" class="nav-link" data-scroll-target="#model-6---log-normal-distribution">Model 6 - log-normal distribution</a>
+  <ul class="collapse">
+  <li><a href="#converting-to-original-scale" id="toc-converting-to-original-scale" class="nav-link" data-scroll-target="#converting-to-original-scale">Converting to original scale</a></li>
+  </ul></li>
+  <li><a href="#model-6.1---with-correlation" id="toc-model-6.1---with-correlation" class="nav-link" data-scroll-target="#model-6.1---with-correlation">Model 6.1 - with correlation</a></li>
+  <li><a href="#diagnostics-i" id="toc-diagnostics-i" class="nav-link" data-scroll-target="#diagnostics-i">Diagnostics I</a>
+  <ul class="collapse">
+  <li><a href="#rhat" id="toc-rhat" class="nav-link" data-scroll-target="#rhat">Rhat</a></li>
+  <li><a href="#ess" id="toc-ess" class="nav-link" data-scroll-target="#ess">ESS</a></li>
+  <li><a href="#loo-waic" id="toc-loo-waic" class="nav-link" data-scroll-target="#loo-waic">LOO &amp; WAIC</a></li>
+  </ul></li>
+  <li><a href="#model-7---lognormal-with-priors" id="toc-model-7---lognormal-with-priors" class="nav-link" data-scroll-target="#model-7---lognormal-with-priors">Model 7 - lognormal with priors</a></li>
+  <li><a href="#model-8---adding-interactions" id="toc-model-8---adding-interactions" class="nav-link" data-scroll-target="#model-8---adding-interactions">Model 8 - adding interactions</a></li>
+  <li><a href="#diagnostics-ii" id="toc-diagnostics-ii" class="nav-link" data-scroll-target="#diagnostics-ii">Diagnostics II</a>
+  <ul class="collapse">
+  <li><a href="#ess-1" id="toc-ess-1" class="nav-link" data-scroll-target="#ess-1">ESS</a></li>
+  <li><a href="#loo-waic-1" id="toc-loo-waic-1" class="nav-link" data-scroll-target="#loo-waic-1">LOO &amp; WAIC</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#h2-modelling" id="toc-h2-modelling" class="nav-link" data-scroll-target="#h2-modelling">H2: Modelling</a>
+  <ul class="collapse">
+  <li><a href="#data-wrangling-i" id="toc-data-wrangling-i" class="nav-link" data-scroll-target="#data-wrangling-i">Data wrangling I</a></li>
+  <li><a href="#exploring-structure" id="toc-exploring-structure" class="nav-link" data-scroll-target="#exploring-structure">Exploring structure</a></li>
+  </ul></li>
+  <li><a href="#h2-stating-causal-model" id="toc-h2-stating-causal-model" class="nav-link" data-scroll-target="#h2-stating-causal-model">H2: Stating causal model</a></li>
+  <li><a href="#h2-modelling-1" id="toc-h2-modelling-1" class="nav-link" data-scroll-target="#h2-modelling-1">H2: Modelling</a>
+  <ul class="collapse">
+  <li><a href="#model-1---dag" id="toc-model-1---dag" class="nav-link" data-scroll-target="#model-1---dag">Model 1 - DAG</a></li>
+  <li><a href="#splines-1---fitting-b-splines" id="toc-splines-1---fitting-b-splines" class="nav-link" data-scroll-target="#splines-1---fitting-b-splines">Splines 1 - fitting b-splines</a></li>
+  <li><a href="#splines-2---bayesian-gams" id="toc-splines-2---bayesian-gams" class="nav-link" data-scroll-target="#splines-2---bayesian-gams">Splines 2 - Bayesian GAMs</a></li>
+  <li><a href="#splines-3---gams-with-fr-effects" id="toc-splines-3---gams-with-fr-effects" class="nav-link" data-scroll-target="#splines-3---gams-with-fr-effects">Splines 3 - GAMs with f+r effects</a></li>
+  <li><a href="#diagnostics-i-1" id="toc-diagnostics-i-1" class="nav-link" data-scroll-target="#diagnostics-i-1">Diagnostics I</a>
+  <ul class="collapse">
+  <li><a href="#rhat-1" id="toc-rhat-1" class="nav-link" data-scroll-target="#rhat-1">Rhat</a></li>
+  <li><a href="#ess-2" id="toc-ess-2" class="nav-link" data-scroll-target="#ess-2">ESS</a></li>
+  <li><a href="#loo-waic-2" id="toc-loo-waic-2" class="nav-link" data-scroll-target="#loo-waic-2">LOO &amp; WAIC</a></li>
+  </ul></li>
+  <li><a href="#adding-priors" id="toc-adding-priors" class="nav-link" data-scroll-target="#adding-priors">Adding priors</a></li>
+  <li><a href="#adding-interactions" id="toc-adding-interactions" class="nav-link" data-scroll-target="#adding-interactions">Adding Interactions</a></li>
+  </ul></li>
+  <li><a href="#session-info" id="toc-session-info" class="nav-link" data-scroll-target="#session-info">Session info</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
@@ -482,6 +536,7 @@ div.csl-indent {
 <li><p>Modality (uni vs.&nbsp;multi) will influence the value of effort. We assume that in unimodal condition, the feature does not need to account for synergic relations with the other modality, and may carry the whole signal. In multimodal condition, however, there may be synergic relations that moderate the full expressiveness of this feature</p></li>
 <li><p>Trial number (characterising how far one is in the experiment) could be hinting on learning processes through out the experiment, or - the other direction - on increasing fatigue</p></li>
 </ul>
+<p>Note that we are aware that some of the parameters might be correlated and we might run into issues with collinearity. While DAG does not help to solve it, it does help in detecting whether the two potentially highly correlated variables have separate causal effect or share a common cause. If they share common cause, there might be a problem in distinguishing their effects from each other. We will report inter-variable correlations when analyzing the actual data.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div>

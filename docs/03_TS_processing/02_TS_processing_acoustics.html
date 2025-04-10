@@ -127,14 +127,14 @@ div.csl-indent {
 
 </head>
 
-<body class="nav-sidebar floating nav-fixed fullcontent">
+<body class="nav-sidebar floating nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
         <div class="quarto-navbar-tools tools-end">
-    <a href="https://bsky.app/profile/sarkadava.bsky.social" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-bluesky"></i></a>
+    <a href="https://bsky.app/profile/sarkadava.bsky.social" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-butterfly"></i></a>
     <div class="dropdown">
       <a href="" title="" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" aria-label=""><i class="bi bi-github"></i></a>
       <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="quarto-navigation-tool-dropdown-0">
@@ -183,12 +183,6 @@ div.csl-indent {
   <div class="sidebar-item-container"> 
   <a href="../index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Home</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Introduction</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -328,12 +322,6 @@ div.csl-indent {
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../summary.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Summary</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="../references.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">References</span></a>
   </div>
@@ -343,7 +331,20 @@ div.csl-indent {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#sec-procaco" id="toc-sec-procaco" class="nav-link active" data-scroll-target="#sec-procaco">Overview</a></li>
+  <li><a href="#extracting-intensity-vocalic-energy" id="toc-extracting-intensity-vocalic-energy" class="nav-link" data-scroll-target="#extracting-intensity-vocalic-energy">Extracting intensity (vocalic energy)</a></li>
+  <li><a href="#extracting-fundamental-frequency-f0" id="toc-extracting-fundamental-frequency-f0" class="nav-link" data-scroll-target="#extracting-fundamental-frequency-f0">Extracting fundamental frequency (f0)</a></li>
+  <li><a href="#extracting-spectral-centroid" id="toc-extracting-spectral-centroid" class="nav-link" data-scroll-target="#extracting-spectral-centroid">Extracting spectral centroid</a></li>
+  <li><a href="#extracting-formants" id="toc-extracting-formants" class="nav-link" data-scroll-target="#extracting-formants">Extracting formants</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
@@ -757,7 +758,7 @@ div.csl-indent {
 <p>Now we extract pitch using the <code>parselmouth</code> library (<span class="citation" data-cites="jadoul_etal18">Jadoul, Thompson, and de Boer (<a href="#ref-jadoul_etal18" role="doc-biblioref">2018</a>)</span>).</p>
 <p>Because we need take into consideration the sex of participant to set the f0 range accordingly, prior to this script we have extracted the speakers’ register using Praat script <code>Get_Speakers_register.praat</code> from Celine De Looze and save it in file <em>SpeakerRegister.txt</em>.</p>
 <p>Now, we first check the mean min and max f0 values across all available data and set the range accordingly.</p>
-<div id="cell-21" class="cell" data-execution_count="15">
+<div id="cell-21" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># this is where we store the min-max f0 values of each speaker</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>register <span class="op">=</span> pd.read_csv(curfolder <span class="op">+</span> <span class="st">'</span><span class="ch">\\</span><span class="st">SpeakerRegister.txt'</span>, sep<span class="op">=</span><span class="st">'</span><span class="ch">\t</span><span class="st">'</span>) </span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -785,14 +786,14 @@ div.csl-indent {
 <span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>    register.at[idx, <span class="st">'sex'</span>] <span class="op">=</span> sex</span>
 <span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a><span class="co"># now group sex by each value and find the mean of f0min and f0max</span></span>
-<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>f0min <span class="op">=</span> register.groupby(<span class="st">'sex'</span>)[<span class="st">'f0min'</span>].<span class="bu">min</span>()</span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>f0min <span class="op">=</span> register.groupby(<span class="st">'sex'</span>)[<span class="st">'f0min'</span>].mean()</span>
 <span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>f0max <span class="op">=</span> register.groupby(<span class="st">'sex'</span>)[<span class="st">'f0max'</span>].mean()</span>
 <span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a><span class="co"># bind in df</span></span>
 <span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>df_register <span class="op">=</span> pd.DataFrame({<span class="st">'f0min'</span>: f0min, <span class="st">'f0max'</span>: f0max})</span>
 <span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>df_register.head(<span class="dv">5</span>)</span>
 <span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>    </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="15">
+<div class="cell-output cell-output-display" data-execution_count="2">
 <div>
 <div>
 
@@ -813,7 +814,7 @@ div.csl-indent {
 <tbody>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">f</td>
-<td>22.0</td>
+<td>185.895425</td>
 <td>380.660131</td>
 </tr>
 </tbody>
@@ -836,11 +837,11 @@ div.csl-indent {
 <span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    snd <span class="op">=</span> parselmouth.Sound(audio, sampling_frequency<span class="op">=</span>sr)</span>
 <span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> sex <span class="op">==</span> <span class="st">'f'</span>:</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>        f0min <span class="op">=</span> <span class="dv">22</span>      <span class="co">## calculated by previous chunk</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>        f0min <span class="op">=</span> <span class="dv">186</span>      <span class="co">## calculated by previous chunk</span></span>
 <span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>        f0max <span class="op">=</span> <span class="dv">381</span></span>
 <span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>        f0min <span class="op">=</span> <span class="dv">30</span>      <span class="co">## Note: don't have any males in dyad 0 so this is only placeholder</span></span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>        f0max <span class="op">=</span> <span class="dv">650</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>        f0min <span class="op">=</span> <span class="dv">75</span>      <span class="co">## Note: don't have any males in dyad 0 so this is only placeholder</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>        f0max <span class="op">=</span> <span class="dv">300</span></span>
 <span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>    pitch <span class="op">=</span> snd.to_pitch(time_step <span class="op">=</span> <span class="fl">0.002</span>, pitch_floor<span class="op">=</span>f0min, pitch_ceiling<span class="op">=</span>f0max) <span class="co"># time_step to get 500Hz</span></span>
 <span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a></span>
