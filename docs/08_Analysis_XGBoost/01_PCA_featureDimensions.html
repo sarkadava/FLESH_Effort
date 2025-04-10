@@ -165,6 +165,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Home</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../method.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Overview of Methods</span></a>
+  </div>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
@@ -289,7 +295,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../08_Analysis_XGBoost/02_XGBoost_effortIndicators.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Exploratory Analysis II: Identifying effort-related features contributing to misunderstanding resolution</span></a>
+ <span class="menu-text">Exploratory Analysis II: Identifying effort-related features contributing to misunderstanding resolution via XGBoost</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -824,7 +830,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p>Now, we first standardize the data and apply PCA to extract principal components. We use custom function <code>PCA_biplot</code> (adapted from <a href="https://stackoverflow.com/questions/50796024/feature-variable-importance-after-a-pca-analysis">here</a>) to visualize the first two principal components. Data points are color-coded on the target variable (correction info) and red arrows represent the contributions of selected variables to the PC.</p>
+<p><br> Now, we first standardize the data and apply PCA to extract principal components. We use custom function <code>PCA_biplot</code> (adapted from <a href="https://stackoverflow.com/questions/50796024/feature-variable-importance-after-a-pca-analysis">here</a>) to visualize the first two principal components. Data points are color-coded on the target variable (correction info) and red arrows represent the contributions of selected variables to the PC.</p>
 <div id="cell-9" class="cell">
 <details class="code-fold">
 <summary>Custom functions</summary>
@@ -911,7 +917,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p>What amount of variances each PC explains?</p>
+<p><br> What amount of variances each PC explains?</p>
 <div id="cell-12" class="cell">
 <div class="cell-output cell-output-display" data-execution_count="10">
 <pre><code>array([3.84511094e-01, 1.33517247e-01, 1.13255439e-01, 7.31860616e-02,
@@ -922,7 +928,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
        8.22273514e-33])</code></pre>
 </div>
 </div>
-<p>So we have really few data, therefore even the first principal component explains only 38% of the variance, second 13% and third 11%. But we will be focusing on the first three principal components, as they together explain at least 50% of the variance</p>
+<p><br> So we have really few data, therefore even the first principal component explains only 38% of the variance, second 13% and third 11%. But we will be focusing on the first three principal components, as they together explain at least 50% of the variance</p>
 <p>Now we can check the most important features. The larger the absolute value of the Eigenvalue, the more important the feature is for the principal component.</p>
 <div id="cell-15" class="cell">
 <div class="cell-output cell-output-stdout">
@@ -1169,8 +1175,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p>Now we have dataframe for gesture modality where each column represents a principal component (PC1-PC3) and each row represents a feature. The values in the dataframe are the loadings of the features on the principal components. The loadings are the correlation coefficients between the features and the principal components. The higher the absolute value of the loading, the more important the feature is for the principal component. The dataframe is sorted by the absolute value of the loadings in descending order.</p>
-<p>Save the top contributors as a file so that we can load it in for the XGBoost analysis. We will also save the clean data which we can use for XGBoost modeling too.</p>
+<p><br> Now we have dataframe for gesture modality where each column represents a principal component (PC1-PC3) and each row represents a feature. The values in the dataframe are the loadings of the features on the principal components. The loadings are the correlation coefficients between the features and the principal components. The higher the absolute value of the loading, the more important the feature is for the principal component. The dataframe is sorted by the absolute value of the loadings in descending order.</p>
+<p>We will save the top contributors as a file so that we can load it in for the XGBoost analysis. We will also save the clean data which we can use for XGBoost modeling too.</p>
 <div id="cell-19" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Save top contributors</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>results_df_ges.to_csv(curfolder <span class="op">+</span> <span class="st">'</span><span class="ch">\\</span><span class="st">datasets</span><span class="ch">\\</span><span class="st">PCA_top_contributors_ges.csv'</span>, index<span class="op">=</span><span class="va">False</span>)</span>
@@ -1665,7 +1671,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p>Now we can use the function to perform the same PCA analysis but on vocal features</p>
+<p><br> Now we can use the function to perform the same PCA analysis but on vocal features</p>
 <div id="cell-26" class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform PCA analysis</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>results_df_voc <span class="op">=</span> pca_analysis(voc_clean)</span>
@@ -1891,7 +1897,7 @@ PC3: 12.03%</code></pre>
 </div>
 </div>
 </div>
-<p>Save contributors as a file</p>
+<p><br> Now we save contributors as a file</p>
 <div id="cell-28" class="cell" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Save top contributors</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>results_df_voc.to_csv(curfolder <span class="op">+</span> <span class="st">'</span><span class="ch">\\</span><span class="st">datasets</span><span class="ch">\\</span><span class="st">PCA_top_contributors_voc.csv'</span>, index<span class="op">=</span><span class="va">False</span>)</span>
@@ -2315,7 +2321,7 @@ PC3: 12.03%</code></pre>
 </div>
 </div>
 </div>
-<p>Now we can use the function to perform the same PCA analysis but all (i.e., both vocal and gestural) features</p>
+<p><br> Now we can use the function to perform the same PCA analysis but all (i.e., both vocal and gestural) features</p>
 <div id="cell-33" class="cell" data-execution_count="20">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform PCA analysis</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>results_df_multi <span class="op">=</span> pca_analysis(multi_clean)</span>
@@ -2548,7 +2554,7 @@ PC3: 8.72%</code></pre>
 <span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Save clean data</span></span>
 <span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>multi_clean.to_csv(curfolder <span class="op">+</span> <span class="st">'</span><span class="ch">\\</span><span class="st">datasets</span><span class="ch">\\</span><span class="st">multi_clean_df.csv'</span>, index<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>In the <a href="../08_Analysis_XGBoost/02_XGBoost_effortIndicators.html#sec-xgboost">XGBoost script</a>, we will combine the ranking from Principal Component Analysis with the ranking of cummulative importance to get most predictive features of effort from uncorrelated dimensions.</p>
+<p><br> In the <a href="../08_Analysis_XGBoost/02_XGBoost_effortIndicators.html#sec-xgboost">XGBoost script</a>, we will combine the ranking from Principal Component Analysis with the ranking of cummulative importance to get most predictive features of effort from uncorrelated dimensions.</p>
 
 
 </section>

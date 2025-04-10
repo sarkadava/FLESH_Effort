@@ -185,6 +185,12 @@ div.csl-indent {
  <span class="menu-text">Home</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../method.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Overview of Methods</span></a>
+  </div>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
@@ -309,7 +315,7 @@ div.csl-indent {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../08_Analysis_XGBoost/02_XGBoost_effortIndicators.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Exploratory Analysis II: Identifying effort-related features contributing to misunderstanding resolution</span></a>
+ <span class="menu-text">Exploratory Analysis II: Identifying effort-related features contributing to misunderstanding resolution via XGBoost</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -366,7 +372,7 @@ div.csl-indent {
 
 <section id="sec-openpose" class="level1">
 <h1>Overview</h1>
-<p>In this script, we take the videos prepared in the <a href="../02_MotionTracking_processing/01_Video_preparation.html#vidprep">previous script</a> and perform OpenPose 2D pose estimation (<span class="citation" data-cites="cao_etal19">Cao et al. (<a href="#ref-cao_etal19" role="doc-biblioref">2019</a>)</span>) on them.</p>
+<p>In this script, we take the videos prepared in the <a href="../02_MotionTracking_processing/01_Video_preparation.html#vidprep">previous script</a> and perform OpenPose 2D pose estimation <span class="citation" data-cites="cao_etal19">(<a href="#ref-cao_etal19" role="doc-biblioref">Cao et al. 2019</a>)</span> on them.</p>
 <p>We are using the BODY_135 model with <a href="https://github.com/CMU-Perceptual-Computing-Lab/openpose/blob/41d8c087459fae844e477dda50a6f732e70f2cb8/src/openpose/pose/poseParameters.cpp#L149">135 keypoints</a>.</p>
 <p>Demo of this pipeline has been published on <a href="https://www.envisionbox.org/embedded_openpose_to_pose2sim_tracking.html">EnvisionBOX</a></p>
 <p>See <a href="https://github.com/CMU-Perceptual-Computing-Lab/openpose">OpenPose documentation</a> for more information.</p>
@@ -484,8 +490,8 @@ div.csl-indent {
 <span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>        runcommand(command)</span>
 <span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>    </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>The results are saved in /pose folder in json format, and are used for triangulation via Pose2sim (<span class="citation" data-cites="pagnon_etal22">Pagnon, Domalain, and Reveret (<a href="#ref-pagnon_etal22" role="doc-biblioref">2022</a>)</span>) in the <a href="../02_MotionTracking_processing/03_Track_pose2sim.html#sec-pose2sim">next script</a>.</p>
-<p>The videos with the estimated poses are saved in the /pose-2d-trackingvideos folder</p>
+<p>The results are saved in /pose folder in json format, and are used for triangulation via Pose2sim <span class="citation" data-cites="pagnon_etal22">(<a href="#ref-pagnon_etal22" role="doc-biblioref">Pagnon, Domalain, and Reveret 2022</a>)</span> in the <a href="../02_MotionTracking_processing/03_Track_pose2sim.html#sec-pose2sim">next script</a>.</p>
+<p>The videos with the estimated poses are saved in the <em>/pose-2d-trackingvideos</em> folder</p>
 <p>Here is an example of the output:</p>
 <div id="cell-7" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-display" data-execution_count="3">
@@ -502,7 +508,7 @@ div.csl-indent {
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
 <div id="ref-cao_etal19" class="csl-entry" role="listitem">
-Cao, Zhe, Gines Hidalgo, Tomas Simon, Shih-En Wei, and Yaser Sheikh. 2019. <span>“<span>OpenPose</span>: <span>Realtime Multi-Person 2D Pose Estimation</span> Using <span>Part Affinity Fields</span>.”</span> May 30, 2019. <a href="https://doi.org/10.48550/arXiv.1812.08008">https://doi.org/10.48550/arXiv.1812.08008</a>.
+Cao, Zhe, Gines Hidalgo, Tomas Simon, Shih-En Wei, and Yaser Sheikh. 2019. <span>“<span>OpenPose</span>: <span>Realtime Multi-Person 2D Pose Estimation</span> Using <span>Part Affinity Fields</span>.”</span> 2019. <a href="https://doi.org/10.48550/arXiv.1812.08008">https://doi.org/10.48550/arXiv.1812.08008</a>.
 </div>
 <div id="ref-pagnon_etal22" class="csl-entry" role="listitem">
 Pagnon, David, Mathieu Domalain, and Lionel Reveret. 2022. <span>“<span>Pose2Sim</span>: <span class="nocase">An End-to-End Workflow</span> for <span>3D Markerless Sports Kinematics</span>—<span>Part</span> 2: <span>Accuracy</span>.”</span> <em>Sensors</em> 22 (7, 7): 2712. <a href="https://doi.org/10.3390/s22072712">https://doi.org/10.3390/s22072712</a>.

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Exploratory Analysis II: Identifying effort-related features contributing to misunderstanding resolution</title>
+<title>Exploratory Analysis II: Identifying effort-related features contributing to misunderstanding resolution via XGBoost</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -156,7 +156,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../06_ConceptSimilarity/ConceptNet_similarity.html">Analysis</a></li><li class="breadcrumb-item"><a href="../08_Analysis_XGBoost/02_XGBoost_effortIndicators.html">Exploratory Analysis II: Identifying effort-related features contributing to misunderstanding resolution</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../06_ConceptSimilarity/ConceptNet_similarity.html">Analysis</a></li><li class="breadcrumb-item"><a href="../08_Analysis_XGBoost/02_XGBoost_effortIndicators.html">Exploratory Analysis II: Identifying effort-related features contributing to misunderstanding resolution via XGBoost</a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -180,6 +180,12 @@ div.csl-indent {
   <div class="sidebar-item-container"> 
   <a href="../index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Home</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../method.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Overview of Methods</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -306,7 +312,7 @@ div.csl-indent {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../08_Analysis_XGBoost/02_XGBoost_effortIndicators.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Exploratory Analysis II: Identifying effort-related features contributing to misunderstanding resolution</span></a>
+ <span class="menu-text">Exploratory Analysis II: Identifying effort-related features contributing to misunderstanding resolution via XGBoost</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -368,9 +374,9 @@ div.csl-indent {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../06_ConceptSimilarity/ConceptNet_similarity.html">Analysis</a></li><li class="breadcrumb-item"><a href="../08_Analysis_XGBoost/02_XGBoost_effortIndicators.html">Exploratory Analysis II: Identifying effort-related features contributing to misunderstanding resolution</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../06_ConceptSimilarity/ConceptNet_similarity.html">Analysis</a></li><li class="breadcrumb-item"><a href="../08_Analysis_XGBoost/02_XGBoost_effortIndicators.html">Exploratory Analysis II: Identifying effort-related features contributing to misunderstanding resolution via XGBoost</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Exploratory Analysis II: Identifying effort-related features contributing to misunderstanding resolution</h1>
+<h1 class="title">Exploratory Analysis II: Identifying effort-related features contributing to misunderstanding resolution via XGBoost</h1>
 </div>
 
 
@@ -390,7 +396,7 @@ div.csl-indent {
 <section id="sec-xgboost" class="level1">
 <h1>Overview</h1>
 <p>This script is an adaption of pipeline by <span class="citation" data-cites="cwiek_etal_inprep2">Ćwiek et al. (<a href="#ref-cwiek_etal_inprep2" role="doc-biblioref">n.d.</a>)</span>.</p>
-<p>In this script, we are going to use eXtreme Gradient Boosting (XGBoost, <span class="citation" data-cites="chen_guestrin16">Chen and Guestrin (<a href="#ref-chen_guestrin16" role="doc-biblioref">2016</a>)</span>) to identify effort-related features beyond those investigated within our confirmatory analysis, i.e., torque change, amplitude envelope, and change in center of pressure.</p>
+<p>In this script, we are going to use XGBoost, eXtreme Gradient Boosting <span class="citation" data-cites="chen_guestrin16">(<a href="#ref-chen_guestrin16" role="doc-biblioref">Chen and Guestrin 2016</a>)</span>, to identify effort-related features beyond those investigated within our confirmatory analysis, i.e., torque change, amplitude envelope, and change in center of pressure.</p>
 <p>XGBoost is a machine learning algorithm that builds an ensemble of decision trees to predict an outcome based on input features. For us, outcome refers to <em>communicative attempt</em> (baseline, first correction, second correction) and input features refer to all <em>features of effort</em> collected in <a href="../07_TS_featureExtraction/TS_extraction.html#sec-features">Feature extraction script</a>.</p>
 <p>We are going to use separate models for each modality, as we expect differences in how (significantly) features contribute to resolving misunderstanding in first and second correction. Finally, when having list of features ordered by their importance in predicting communicative attempt, we will combine the XGBoost-computed importance with PCA analysis we have performed in <a href="../08_Analysis_XGBoost/01_PCA_featureDimensions.html#sec-pca">this script</a>. This is to ensure we pick features from uncorrelated dimensions and thus cover more explanatory planes of effort.</p>
 <p>Note that the current version of the script is used with data only from dyad 0. Since this is not sufficient amount of data for any meaningful conclusions, this script serves for building the workflow. We will use identical pipeline with the full dataset, and any deviations from this script will be reported.</p>
@@ -1085,7 +1091,7 @@ Dataset gesData2345 contains rows: 18 and levels:
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate predictions</span></span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>gesPredictions1 <span class="ot">&lt;-</span> <span class="fu">predict</span>(gesModel1, <span class="at">newdata =</span> gesData5)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[14:19:08] WARNING: src/learner.cc:553: 
+<pre><code>[16:12:54] WARNING: src/learner.cc:553: 
   If you are loading a serialized model (like pickle in Python, RDS in R) generated by
   older XGBoost, please export the model by calling `Booster.save_model` from that version
   first, then load it back in current version. See:
@@ -1096,7 +1102,7 @@ Dataset gesData2345 contains rows: 18 and levels:
 </div>
 <div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>gesPredictions2 <span class="ot">&lt;-</span> <span class="fu">predict</span>(gesModel2, <span class="at">newdata =</span> gesData4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[14:19:08] WARNING: src/learner.cc:553: 
+<pre><code>[16:12:55] WARNING: src/learner.cc:553: 
   If you are loading a serialized model (like pickle in Python, RDS in R) generated by
   older XGBoost, please export the model by calling `Booster.save_model` from that version
   first, then load it back in current version. See:
@@ -1107,7 +1113,7 @@ Dataset gesData2345 contains rows: 18 and levels:
 </div>
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>gesPredictions3 <span class="ot">&lt;-</span> <span class="fu">predict</span>(gesModel3, <span class="at">newdata =</span> gesData3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[14:19:09] WARNING: src/learner.cc:553: 
+<pre><code>[16:12:55] WARNING: src/learner.cc:553: 
   If you are loading a serialized model (like pickle in Python, RDS in R) generated by
   older XGBoost, please export the model by calling `Booster.save_model` from that version
   first, then load it back in current version. See:
@@ -1118,7 +1124,7 @@ Dataset gesData2345 contains rows: 18 and levels:
 </div>
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>gesPredictions4 <span class="ot">&lt;-</span> <span class="fu">predict</span>(gesModel4, <span class="at">newdata =</span> gesData2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[14:19:09] WARNING: src/learner.cc:553: 
+<pre><code>[16:12:55] WARNING: src/learner.cc:553: 
   If you are loading a serialized model (like pickle in Python, RDS in R) generated by
   older XGBoost, please export the model by calling `Booster.save_model` from that version
   first, then load it back in current version. See:
@@ -1129,7 +1135,7 @@ Dataset gesData2345 contains rows: 18 and levels:
 </div>
 <div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>gesPredictions5 <span class="ot">&lt;-</span> <span class="fu">predict</span>(gesModel5, <span class="at">newdata =</span> gesData1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[14:19:09] WARNING: src/learner.cc:553: 
+<pre><code>[16:12:55] WARNING: src/learner.cc:553: 
   If you are loading a serialized model (like pickle in Python, RDS in R) generated by
   older XGBoost, please export the model by calling `Booster.save_model` from that version
   first, then load it back in current version. See:
@@ -2168,7 +2174,7 @@ Dataset vocData2345 contains rows: 18 and levels:
 <div class="sourceCode cell-code" id="cb110"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb110-1"><a href="#cb110-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate predictions</span></span>
 <span id="cb110-2"><a href="#cb110-2" aria-hidden="true" tabindex="-1"></a>vocPredictions1 <span class="ot">&lt;-</span> <span class="fu">predict</span>(vocModel1, <span class="at">newdata =</span> vocData5)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[14:20:05] WARNING: src/learner.cc:553: 
+<pre><code>[16:13:51] WARNING: src/learner.cc:553: 
   If you are loading a serialized model (like pickle in Python, RDS in R) generated by
   older XGBoost, please export the model by calling `Booster.save_model` from that version
   first, then load it back in current version. See:
@@ -2179,7 +2185,7 @@ Dataset vocData2345 contains rows: 18 and levels:
 </div>
 <div class="sourceCode cell-code" id="cb112"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb112-1"><a href="#cb112-1" aria-hidden="true" tabindex="-1"></a>vocPredictions2 <span class="ot">&lt;-</span> <span class="fu">predict</span>(vocModel2, <span class="at">newdata =</span> vocData4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[14:20:05] WARNING: src/learner.cc:553: 
+<pre><code>[16:13:51] WARNING: src/learner.cc:553: 
   If you are loading a serialized model (like pickle in Python, RDS in R) generated by
   older XGBoost, please export the model by calling `Booster.save_model` from that version
   first, then load it back in current version. See:
@@ -2190,7 +2196,7 @@ Dataset vocData2345 contains rows: 18 and levels:
 </div>
 <div class="sourceCode cell-code" id="cb114"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb114-1"><a href="#cb114-1" aria-hidden="true" tabindex="-1"></a>vocPredictions3 <span class="ot">&lt;-</span> <span class="fu">predict</span>(vocModel3, <span class="at">newdata =</span> vocData3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[14:20:05] WARNING: src/learner.cc:553: 
+<pre><code>[16:13:51] WARNING: src/learner.cc:553: 
   If you are loading a serialized model (like pickle in Python, RDS in R) generated by
   older XGBoost, please export the model by calling `Booster.save_model` from that version
   first, then load it back in current version. See:
@@ -2201,7 +2207,7 @@ Dataset vocData2345 contains rows: 18 and levels:
 </div>
 <div class="sourceCode cell-code" id="cb116"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb116-1"><a href="#cb116-1" aria-hidden="true" tabindex="-1"></a>vocPredictions4 <span class="ot">&lt;-</span> <span class="fu">predict</span>(vocModel4, <span class="at">newdata =</span> vocData2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[14:20:05] WARNING: src/learner.cc:553: 
+<pre><code>[16:13:51] WARNING: src/learner.cc:553: 
   If you are loading a serialized model (like pickle in Python, RDS in R) generated by
   older XGBoost, please export the model by calling `Booster.save_model` from that version
   first, then load it back in current version. See:
@@ -2212,7 +2218,7 @@ Dataset vocData2345 contains rows: 18 and levels:
 </div>
 <div class="sourceCode cell-code" id="cb118"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb118-1"><a href="#cb118-1" aria-hidden="true" tabindex="-1"></a>vocPredictions5 <span class="ot">&lt;-</span> <span class="fu">predict</span>(vocModel5, <span class="at">newdata =</span> vocData1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[14:20:06] WARNING: src/learner.cc:553: 
+<pre><code>[16:13:52] WARNING: src/learner.cc:553: 
   If you are loading a serialized model (like pickle in Python, RDS in R) generated by
   older XGBoost, please export the model by calling `Booster.save_model` from that version
   first, then load it back in current version. See:
@@ -3234,7 +3240,7 @@ Dataset multData2345 contains rows: 16 and levels:
 <div class="sourceCode cell-code" id="cb181"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb181-1"><a href="#cb181-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate predictions</span></span>
 <span id="cb181-2"><a href="#cb181-2" aria-hidden="true" tabindex="-1"></a>multPredictions1 <span class="ot">&lt;-</span> <span class="fu">predict</span>(multModel1, <span class="at">newdata =</span> multData5)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[14:21:03] WARNING: src/learner.cc:553: 
+<pre><code>[16:14:49] WARNING: src/learner.cc:553: 
   If you are loading a serialized model (like pickle in Python, RDS in R) generated by
   older XGBoost, please export the model by calling `Booster.save_model` from that version
   first, then load it back in current version. See:
@@ -3245,7 +3251,7 @@ Dataset multData2345 contains rows: 16 and levels:
 </div>
 <div class="sourceCode cell-code" id="cb183"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb183-1"><a href="#cb183-1" aria-hidden="true" tabindex="-1"></a>multPredictions2 <span class="ot">&lt;-</span> <span class="fu">predict</span>(multModel2, <span class="at">newdata =</span> multData4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[14:21:03] WARNING: src/learner.cc:553: 
+<pre><code>[16:14:49] WARNING: src/learner.cc:553: 
   If you are loading a serialized model (like pickle in Python, RDS in R) generated by
   older XGBoost, please export the model by calling `Booster.save_model` from that version
   first, then load it back in current version. See:
@@ -3256,7 +3262,7 @@ Dataset multData2345 contains rows: 16 and levels:
 </div>
 <div class="sourceCode cell-code" id="cb185"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb185-1"><a href="#cb185-1" aria-hidden="true" tabindex="-1"></a>multPredictions3 <span class="ot">&lt;-</span> <span class="fu">predict</span>(multModel3, <span class="at">newdata =</span> multData3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[14:21:04] WARNING: src/learner.cc:553: 
+<pre><code>[16:14:49] WARNING: src/learner.cc:553: 
   If you are loading a serialized model (like pickle in Python, RDS in R) generated by
   older XGBoost, please export the model by calling `Booster.save_model` from that version
   first, then load it back in current version. See:
@@ -3267,7 +3273,7 @@ Dataset multData2345 contains rows: 16 and levels:
 </div>
 <div class="sourceCode cell-code" id="cb187"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb187-1"><a href="#cb187-1" aria-hidden="true" tabindex="-1"></a>multPredictions4 <span class="ot">&lt;-</span> <span class="fu">predict</span>(multModel4, <span class="at">newdata =</span> multData2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[14:21:04] WARNING: src/learner.cc:553: 
+<pre><code>[16:14:49] WARNING: src/learner.cc:553: 
   If you are loading a serialized model (like pickle in Python, RDS in R) generated by
   older XGBoost, please export the model by calling `Booster.save_model` from that version
   first, then load it back in current version. See:
@@ -3278,7 +3284,7 @@ Dataset multData2345 contains rows: 16 and levels:
 </div>
 <div class="sourceCode cell-code" id="cb189"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb189-1"><a href="#cb189-1" aria-hidden="true" tabindex="-1"></a>multPredictions5 <span class="ot">&lt;-</span> <span class="fu">predict</span>(multModel5, <span class="at">newdata =</span> multData1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[14:21:04] WARNING: src/learner.cc:553: 
+<pre><code>[16:14:49] WARNING: src/learner.cc:553: 
   If you are loading a serialized model (like pickle in Python, RDS in R) generated by
   older XGBoost, please export the model by calling `Booster.save_model` from that version
   first, then load it back in current version. See:
@@ -3665,7 +3671,7 @@ Top 3 Features for PC3 :
 104               head_duration        9       28            37</code></pre>
 </div>
 </div>
-<p>Now we are ready to model the most predictive features to get deeper understanding of their causal relationship with our predictive variable, i.e., communicative attempt.</p>
+<p><br> Now we are ready to model the most predictive features to get deeper understanding of their causal relationship with our predictive variable, i.e., communicative attempt.</p>
 </section>
 </section>
 </section>

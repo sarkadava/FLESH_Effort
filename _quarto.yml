@@ -14,6 +14,8 @@ website:
     contents:
       - text: "Home"
         href: index.qmd
+      - text: "Overview of Methods"
+        href: method.qmd
 
       - section: "Processing"
         contents:
@@ -61,7 +63,7 @@ metadata:
 book:
   title: "[Preregistration] Putting in the Effort: Modulation of Multimodal Effort in Communicative Breakdowns during a Gestural-Vocal Referential Game"
   author: ""
-  date: "19/11/2024"
+  date: "11/04/2025"
   chapters:
     - index.qmd
     - intro.qmd

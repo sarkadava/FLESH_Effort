@@ -185,6 +185,12 @@ div.csl-indent {
  <span class="menu-text">Home</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../method.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Overview of Methods</span></a>
+  </div>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
@@ -309,7 +315,7 @@ div.csl-indent {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../08_Analysis_XGBoost/02_XGBoost_effortIndicators.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Exploratory Analysis II: Identifying effort-related features contributing to misunderstanding resolution</span></a>
+ <span class="menu-text">Exploratory Analysis II: Identifying effort-related features contributing to misunderstanding resolution via XGBoost</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -494,7 +500,7 @@ div.csl-indent {
 </section>
 <section id="extracting-intensity-vocalic-energy" class="level1">
 <h1>Extracting intensity (vocalic energy)</h1>
-<p>To extract the amplitude envelope of the acoustic signal, we follow a method by <span class="citation" data-cites="tilsen_arvaniti13">Tilsen and Arvaniti (<a href="#ref-tilsen_arvaniti13" role="doc-biblioref">2013</a>)</span>, adapted by <span class="citation" data-cites="pouw24">Pouw (<a href="#ref-pouw24" role="doc-biblioref">2024</a>)</span> (see <a href="https://www.envisionbox.org/embedded_AnimatingSoundMovement.html">EnvisionBOX</a>). We use bandpass and 2nd order 10Hz low-pass zero-phase Butterworth filter.</p>
+<p>To extract the amplitude envelope of the acoustic signal, we follow a method by <span class="citation" data-cites="tilsen_arvaniti13">Tilsen and Arvaniti (<a href="#ref-tilsen_arvaniti13" role="doc-biblioref">2013</a>)</span>, adapted by <span class="citation" data-cites="pouw24">Pouw (<a href="#ref-pouw24" role="doc-biblioref">2024</a>)</span>. We use a bandpass and 2nd order 10Hz low-pass zero-phase Butterworth filter.</p>
 <div id="cell-11" class="cell" data-execution_count="9">
 <details class="code-fold">
 <summary>Code with functions to extract the amplitude envelope</summary>
@@ -742,7 +748,7 @@ div.csl-indent {
 </div>
 </div>
 </div>
-<p>Here it is visualized</p>
+<p><br> Here it is visualized</p>
 <div id="cell-19" class="cell" data-execution_count="18">
 <div class="cell-output cell-output-display">
 <div>
@@ -1012,7 +1018,7 @@ div.csl-indent {
 </div>
 </div>
 </div>
-<p>And here visualized</p>
+<p><br> And here visualized</p>
 <div id="cell-29" class="cell" data-execution_count="23">
 <div class="cell-output cell-output-display">
 <div>
@@ -1423,7 +1429,7 @@ div.csl-indent {
 </div>
 </div>
 </div>
-<p>This is how the formants look for a single trial.</p>
+<p><br> This is how the formants look for a single trial.</p>
 <div id="cell-43" class="cell" data-execution_count="19">
 <div class="cell-output cell-output-display">
 <div>
@@ -1453,7 +1459,7 @@ div.csl-indent {
 </div>
 </div>
 </div>
-<p>This all looks reasonable. However, we should still be careful. Formant values are most reliable where f0 is present. Since in this project, we work with non-speech sounds, they are frequently unvoiced. Because research shows that there are also weak ‘formants’ beyond f0 contour (e.g., resonances of sub- and supraglottal tract during breathing, see <span class="citation" data-cites="werneretal">(<a href="#ref-werneretal" role="doc-biblioref"><strong>werneretal?</strong></a>)</span> ), we will also consider formant values in the moments of envelope peaks. This will maximize the number of data points we can use for analysis.</p>
+<p>This all looks reasonable. However, we should still be careful. Formant values are most reliable where f0 is present. Since in this project, we work with non-speech sounds, they are frequently unvoiced. Because research shows that there are also weak ‘formants’ beyond f0 contour, resulting, for instance, from resonances of sub- and supraglottal tract during breathing <span class="citation" data-cites="werneretal2024">(<a href="#ref-werneretal2024" role="doc-biblioref">Werner et al. 2024</a>)</span>, we will also consider formant values in the moments of envelope peaks. This will maximize the number of data points we can use for analysis.</p>
 <p>We can use <code>findpeaks()</code> function from the <code>signal</code> package to find the peaks in the envelope. We can then use these peaks as a reference point for formant extraction.</p>
 <div id="cell-49" class="cell" data-execution_count="35">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>env_df <span class="op">=</span> pd.DataFrame()</span>
@@ -1554,13 +1560,16 @@ div.csl-indent {
 Fuchs, Susanne, Uwe Reichel, and Amélie Rochet-Capellan. 2016. <span>“F0 Declination and Speech Planning in Face to Face Dialogues.”</span> In. <a href="https://doi.org/10.13140/RG.2.1.4909.0320">https://doi.org/10.13140/RG.2.1.4909.0320</a>.
 </div>
 <div id="ref-jadoul_etal18" class="csl-entry" role="listitem">
-Jadoul, Yannick, Bill Thompson, and Bart de Boer. 2018. <span>“Introducing <span>Parselmouth</span>: <span>A Python</span> Interface to <span>Praat</span>.”</span> <em>Journal of Phonetics</em> 71 (November): 1–15. <a href="https://doi.org/10.1016/j.wocn.2018.07.001">https://doi.org/10.1016/j.wocn.2018.07.001</a>.
+Jadoul, Yannick, Bill Thompson, and Bart de Boer. 2018. <span>“Introducing <span>Parselmouth</span>: <span>A Python</span> Interface to <span>Praat</span>.”</span> <em>Journal of Phonetics</em> 71: 1–15. <a href="https://doi.org/10.1016/j.wocn.2018.07.001">https://doi.org/10.1016/j.wocn.2018.07.001</a>.
 </div>
 <div id="ref-pouw24" class="csl-entry" role="listitem">
 Pouw, Wim. 2024. <span>“Wim <span>Pouw</span>’s <span>EnvisionBOX</span> Modules for Social Signal Processing.”</span> <a href="https://github.com/WimPouw/envisionBOX_modulesWP">https://github.com/WimPouw/envisionBOX_modulesWP</a>.
 </div>
 <div id="ref-tilsen_arvaniti13" class="csl-entry" role="listitem">
 Tilsen, Sam, and Amalia Arvaniti. 2013. <span>“Speech Rhythm Analysis with Decomposition of the Amplitude Envelope: <span>Characterizing</span> Rhythmic Patterns Within and Across Languages.”</span> <em>The Journal of the Acoustical Society of America</em> 134 (1): 628–39. <a href="https://doi.org/10.1121/1.4807565">https://doi.org/10.1121/1.4807565</a>.
+</div>
+<div id="ref-werneretal2024" class="csl-entry" role="listitem">
+Werner, Raphael, Susanne Fuchs, Jürgen Trouvain, Steffen Kürbis, Bernd Möbius, and Peter Birkholz. 2024. <span>“Acoustics of Breath Noises in Human Speech: Descriptive and Three-Dimensional Modeling Approaches.”</span> <em>Journal of Speech, Language, and Hearing Research</em> 67 (10S): 3947–61. <a href="https://doi.org/10.1044/2023\_JSLHR-23-00112">https://doi.org/10.1044/2023\_JSLHR-23-00112</a>.
 </div>
 </div>
 </section>

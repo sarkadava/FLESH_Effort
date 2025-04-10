@@ -1,25 +1,27 @@
-# Putting in the Effort: Modulation of Multimodal Effort in Communicative Breakdowns during a Gestural-Vocal Referential Game
+---
+title: "FLESH | Effort project"
+authors: Šárka Kadavá, Wim Pouw, Susanne Fuchs, Judith Holler, Aleksandra Ćwiek
+date-modified: April 11, 2025
+format:
+  html:
+    code-overflow: wrap
+    code-width: 1200  # Adjust the width in pixels
+toc: true
+---
 
-Authors: Šárka Kadavá, Wim Pouw, Susanne Fuchs, Judith Holler, Aleksandra Ćwiek
+This website documents data processing pipeline developed for the study **Putting in the Effort: Modulation of Multimodal Effort in Communicative Breakdowns during a Gestural-Vocal Referential Game**. The study is investigated as a part of the project tudy associated with ViCom project [**On the FLExibility and Stability of Gesture-speecH Coordination (FLESH)**](https://vicom.info/projects/on-the-flexibility-and-stability-of-gesture-speech-coordination-flesh-evidence-from-production-comprehension-and-imitation/). The pipeline covers every step from raw data ingestion to feature extraction and analysis, focusing on synchronizing and processing motion, audio, and derived signal data.
 
-![Multimodal animation](assets/multimodal_anim.gif)
+![Example of multimodal signals from FLESH data](assets/multimodal_anim.gif)
 
-This is a material to a study associated with ViCom project **On the FLExibility and Stability of Gesture-speecH Coordination (FLESH)** (see more [here](https://vicom.info/projects/on-the-flexibility-and-stability-of-gesture-speech-coordination-flesh-evidence-from-production-comprehension-and-imitation/)).
-
-This website documents data processing pipeline developed for the project **Modulation of Multimodal Effort in Communicative Breakdowns during a Gestural-Vocal Referential Game**. The pipeline covers every step from raw data ingestion to feature extraction and analysis, focusing on synchronizing and processing motion, audio, and derived signal data.
-
-The repository associated with this project can be found [at Github](LINK).
-
+The repository associated with this project can be found on [Github](LINK).
 
 ## This study
 
-This study investigates whether (and how) people become more effortful when they attempt to resolve misunderstanding in a novel-communication gestural-vocal task. 
+We recruited 60 Dutch dyads (i.e., 120 individuals) ti participate in a gestural-vocal referential game. One person of the dyad acts as a performer, and one as a guesser. The performer’s role is to express meaning in one of the three conditions: using only voice, only gesture, or both. The guesser’s role is to guess the meaning. If the answer is not correct, the performer has two more chances to repair themselves. In total, each dyad performs 42 different concepts in three modality conditions, and partners swap roles within each condition. We recorded performers' movement, vocalizations, and postural sway. 
 
-In the task, people are asked to .....
+Our main research question addressess whether (and how) people become more effortful when they attempt to resolve misunderstanding in a novel-communication gestural-vocal task. Effort-related features of interest include upper limb torque, acoustic amplitude envelope, and center of pressure.
 
-We recorded ....
-
-You can read more about the theoretical reasonings in the [introduction](LINK).
+You can read more about the theoretical reasonings in the [prereregistration's introduction](LINK).
 
 ## Two-phase preregistration
 
@@ -27,19 +29,17 @@ This study has been preregistered in two phases.
 
 In phase I, we preregistered the experimental design, laboratory setup and power analysis. The preregistration is available at the [OSF Registries](https://osf.io/m9xep)
 
-In phase II, we preregister the research questions and hypothesis, together with code pipeline covering pre-processing, processing and the analysis itself. The preregistration is available at the [OSF Registries](LINK)
+In phase II, we preregistered the research questions and hypothesis, together with code pipeline covering pre-processing, processing and the analysis itself. The preregistration is available at the [OSF Registries](LINK)
 
 ## Updates
 
 [✅] Preregistration of data collection  <br>
 [✅] Data collection completed  <br>
-[] Preregistration of analysis and processing steps  <br>
+[✅] Preregistration of analysis and processing steps  <br>
 [] Preprint published  <br>
 [] Manuscript published  <br>
 [] Data available at open access repository  <br>
 
-
----
 
 ## Pipeline Overview
 
@@ -49,58 +49,67 @@ This study builds on multi-step pipeline that serves to
 - extract relevant features
 - analyze with regards to research questions
 
-In this workflow, each step builds on the previous one. However, it is possible to use parts of the workflow for different purposes.
+See [Methods section](method.qmd) for conceptual overview of the processing and analysis steps.
 
-### Preprocessing of the raw data
+Note that in this workflow, each step builds on the previous one. However, it is possible to use parts of the workflow for different purposes.
+
+#### Preprocessing of the raw data
 - In [Pre-Processing I: from XDF to raw files](01_XDF_processing/xdf_workflow.ipynb) we load and clean raw XDF data, align streams, and prepare for downstream processing.
 
-### Motion Tracking Processing
+#### Motion Tracking Processing
 - In [Motion tracking I: Preparation of videos](02_MotionTracking_processing/01_Video_preparation.ipynb) we crop video recordings and prepare them for motion capture.
 - In [Motion tracking II: 2D pose estimation via OpenPose](02_MotionTracking_processing/02_Track_OpenPose.ipynb) we use OpenPose for 2D pose estimation.
-- [Motion tracking III: Triangulation via Pose2sim](02_MotionTracking_processing/03_Track_pose2sim.ipynb) we convert 2D coordinates to 3D using pose2sim.
-- [Motion tracking IV: Modeling inverse kinematics and dynamics](02_MotionTracking_processing/04_Track_InverseKinDyn.ipynb) we compute inverse kinematics and dynamics using OpenSim
+- In [Motion tracking III: Triangulation via Pose2sim](02_MotionTracking_processing/03_Track_pose2sim.ipynb) we convert 2D coordinates to 3D using pose2sim.
+- In [Motion tracking IV: Modeling inverse kinematics and dynamics](02_MotionTracking_processing/04_Track_InverseKinDyn.ipynb) we compute inverse kinematics and dynamics using OpenSim
 
-### Signal Processing
+#### Signal Processing
 - In [Processing I: Motion tracking and balance](03_TS_processing/01_TS_processing_motion.ipynb) we clean and interpolate motion signals, and extract derivatives such as speed, acceleration and jerk.
-- [Processing II: Acoustics](03_TS_processing/02_TS_processing_acoustics.ipynb) we extract relevant acoustic features.
-- [Processing III: Merging multimodal data](03_TS_processing/03_TS_merging.ipynb) we merge motion and acoustic time series.
+- In [Processing II: Acoustics](03_TS_processing/02_TS_processing_acoustics.ipynb) we extract relevant acoustic features.
+- In [Processing III: Merging multimodal data](03_TS_processing/03_TS_merging.ipynb) we merge motion and acoustic time series.
 
-### Movement Annotation
+#### Movement Annotation
 - In [Movement annotation I: Preparing training data and data for classifier](04_TS_movementAnnotation/01_Classify_preparation.ipynb) we prepare our multimodal time series for training purposes.
 - In [Movement annotation II: Training movement classifier, and annotating timeseries data](04_TS_movementAnnotation/02_MovementClassifier.ipynb) we train and evaluate classifiers for movement detection.
 - In [Movement annotation III: Computing interrater agreement between manual and automatic annotation](04_TS_movementAnnotation/03_InterAgreement.ipynb) we evaluate inter-annotator agreement.
 
-### Final Merge
+#### Final Merge
 - In [Final merge](05_finalMerge/TS_mergeAnnotations.ipynb) we merge annotations with timeseries.
 
-### Concept Similarity
+#### Concept Similarity
 - In [Computing concept similarity using ConceptNet word embeddings](06_ConceptSimilarity/ConceptNet_similarity.ipynb): we assess semantic similarity between concepts using ConceptNet.
 
-### Feature Extraction
+#### Feature Extraction
 - In [Extraction of effort-related features](07_TS_featureExtraction/TS_extraction.ipynb) we extract features from the multimodal time series for modelling purposes.
 
-### Exploratory analysis: Most predictive features of effort
+#### Exploratory Analysis: Most Predictive Features of Effort
 - In [Exploratory Analysis I: Using PCA to identify effort dimensions](08_Analysis_XGBoost/01_PCA_featureDimensions.ipynb) we explore dimensionality of extracted features using Principal Component Analysis.
-- [Exploratory Analysis II: Identifying effort-related features contributing to misunderstanding resolution](08_Analysis_XGBoost/02_XGBoost_effortIndicators.qmd) we assess feature importance using eXtreme Gradient Boosting.
+- In [Exploratory Analysis II: Identifying effort-related features contributing to misunderstanding resolution](08_Analysis_XGBoost/02_XGBoost_effortIndicators.qmd) we assess feature importance using eXtreme Gradient Boosting.
 
-### Confirmatory nalysis: statistical modelling
-- [Statistical Analysis: Modelling the Effect of Communicative Attempt (H1) and Answer Similarity (H2) on Effort](09_Analysis_Modeling/Modelling_syntheticData.qmd) we build causal and statistical models testing our hypothesis.
----
+#### Confirmatory Analysis: Statistical Modelling
+- In [Statistical Analysis: Modelling the Effect of Communicative Attempt (H1) and Answer Similarity (H2) on Effort](09_Analysis_Modeling/Modelling_syntheticData.qmd) we build causal and statistical models testing our hypothesis.
 
 ## Acknowledgements
 
-We would like to thank to all participants of this study. Special thanks belong also to the Donders lab coordinator Jiska Koemans and the Donders research integrity officer Miriam Kos. Lastly, thank to members of Donders Technical Support Group, namely Erik van den Berge, Norbert Hermesdorf, Gerard van Oijen, Maarten Snellen and Pascal de Water, for helping with the technical setup.
+We would like to thank to all participants of this study. Special thanks belong also to the Donders lab coordinator Jiska Koemans and the Donders research integrity officer Miriam Kos. Lastly, we thank to members of Donders Technical Support Group, namely Erik van den Berge, Norbert Hermesdorf, Gerard van Oijen, Maarten Snellen and Pascal de Water, for helping with the technical setup.
 
 ## Contact
 
-add contact
+Corresponding author: kadava[et]leibniz-zas[dot]de 
 
-## Funding
+## Funding and support
 
-![ViCom](assets/ViCom.webp)
-![DFG](assets/DFG-logo-blau.svg.png)
-![ZAS](assets/logo_leibniz_zas.png)
-![Donders](assets/donders_logo.svg)
-![Gottingen](assets/Logo_Uni_G%C3%B6ttingen.png)
-
-
+<a href="https://vicom.info/" target="_blank">
+  <img src="assets/ViCom.webp" width="110px">
+</a>
+<a href="https://www.dfg.de/" target="_blank">
+  <img src="assets/DFG-logo-blau.svg.png" width="150px">
+</a>
+<a href="https://www.leibniz-zas.de/de/" target="_blank">
+  <img src="assets/logo_leibniz_zas.png" width="150px">
+</a>
+<a href="https://www.ru.nl/en/donders-institute" target="_blank">
+  <img src="assets/donders_logo.svg" width="150px">
+</a>
+<a href="https://www.uni-goettingen.de/en/1.html" target="_blank">
+  <img src="assets/Logo_Uni_G%C3%B6ttingen.png" width="150px">
+</a>

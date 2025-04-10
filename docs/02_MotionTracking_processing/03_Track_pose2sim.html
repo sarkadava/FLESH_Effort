@@ -185,6 +185,12 @@ div.csl-indent {
  <span class="menu-text">Home</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../method.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Overview of Methods</span></a>
+  </div>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
@@ -309,7 +315,7 @@ div.csl-indent {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../08_Analysis_XGBoost/02_XGBoost_effortIndicators.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Exploratory Analysis II: Identifying effort-related features contributing to misunderstanding resolution</span></a>
+ <span class="menu-text">Exploratory Analysis II: Identifying effort-related features contributing to misunderstanding resolution via XGBoost</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -368,7 +374,7 @@ div.csl-indent {
 
 <section id="sec-pose2sim" class="level1">
 <h1>Overview</h1>
-<p>In the <a href="../02_MotionTracking_processing/02_Track_OpenPose.html#sec-openpose">previous script</a>, we have extracted 2D keypoints for each trial (per each video, 3 in total). In this script, we will use Pose2sim (<span class="citation" data-cites="pagnon_etal22">Pagnon, Domalain, and Reveret (<a href="#ref-pagnon_etal22" role="doc-biblioref">2022</a>)</span>) to calibrate the 3 cameras present in the lab setup, and triangulate the 3D position of the keypoints.</p>
+<p>In the <a href="../02_MotionTracking_processing/02_Track_OpenPose.html#sec-openpose">previous script</a>, we have extracted 2D keypoints for each trial (per each video, 3 in total). In this script, we will use Pose2sim <span class="citation" data-cites="pagnon_etal22">(<a href="#ref-pagnon_etal22" role="doc-biblioref">Pagnon, Domalain, and Reveret 2022</a>)</span> to calibrate the 3 cameras present in the lab setup, and triangulate the 3D position of the keypoints.</p>
 <p>Demo of this pipeline has been published on <a href="https://www.envisionbox.org/embedded_openpose_to_pose2sim_tracking.html">EnvisionBOX</a></p>
 <p>For more information on Pose2sim, please refer to the <a href="https://github.com/perfanalytics/pose2sim">Pose2sim documentation</a></p>
 <div id="cell-2" class="cell">
@@ -478,7 +484,7 @@ div.csl-indent {
 <p>Note that extrinsic are sometimes not automatically detected so the corners need to be annotated manually.</p>
 <p>In triangulation, we will use the keypoints extracted in the previous script to triangulate the 3D position of the keypoints. The output will be a 3D position for each keypoint in each frame.</p>
 <p>In filtering, we will filter the 3D position of the keypoints to remove noise and outliers with the in-build Butterworth filter (order 4, cut-off frequency 10 Hz).</p>
-<p>Refer to the Config.toml file in ’2Sim_project_FLESH_settings\’ for the configuration of the pipeline.</p>
+<p>Refer to the Config.toml file in <em>Pose2Sim/Empty_project_FLESH_settings</em> gfolder for the configuration of the pipeline.</p>
 <p>There are additional three steps available in Pose2sim that we will not utilize in this script - synchronization, person association, and marker augmentation.</p>
 <div id="cell-6" class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set framerate</span></span>

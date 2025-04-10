@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>index</title>
+<title>FLESH | Effort project</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -70,7 +70,7 @@ ul.task-list li input[type="checkbox"] {
 
 </head>
 
-<body class="nav-sidebar floating nav-fixed fullcontent">
+<body class="nav-sidebar floating nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -126,6 +126,12 @@ ul.task-list li input[type="checkbox"] {
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Home</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./method.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Overview of Methods</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -252,7 +258,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./08_Analysis_XGBoost/02_XGBoost_effortIndicators.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Exploratory Analysis II: Identifying effort-related features contributing to misunderstanding resolution</span></a>
+ <span class="menu-text">Exploratory Analysis II: Identifying effort-related features contributing to misunderstanding resolution via XGBoost</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -274,125 +280,160 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#this-study" id="toc-this-study" class="nav-link active" data-scroll-target="#this-study">This study</a></li>
+  <li><a href="#two-phase-preregistration" id="toc-two-phase-preregistration" class="nav-link" data-scroll-target="#two-phase-preregistration">Two-phase preregistration</a></li>
+  <li><a href="#updates" id="toc-updates" class="nav-link" data-scroll-target="#updates">Updates</a></li>
+  <li><a href="#pipeline-overview" id="toc-pipeline-overview" class="nav-link" data-scroll-target="#pipeline-overview">Pipeline Overview</a></li>
+  <li><a href="#acknowledgements" id="toc-acknowledgements" class="nav-link" data-scroll-target="#acknowledgements">Acknowledgements</a></li>
+  <li><a href="#contact" id="toc-contact" class="nav-link" data-scroll-target="#contact">Contact</a></li>
+  <li><a href="#funding-and-support" id="toc-funding-and-support" class="nav-link" data-scroll-target="#funding-and-support">Funding and support</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">FLESH | Effort project</h1>
+</div>
 
 
 
-<section id="putting-in-the-effort-modulation-of-multimodal-effort-in-communicative-breakdowns-during-a-gestural-vocal-referential-game" class="level1">
-<h1>Putting in the Effort: Modulation of Multimodal Effort in Communicative Breakdowns during a Gestural-Vocal Referential Game</h1>
-<p>Authors: Šárka Kadavá, Wim Pouw, Susanne Fuchs, Judith Holler, Aleksandra Ćwiek</p>
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Šárka Kadavá, Wim Pouw, Susanne Fuchs, Judith Holler, Aleksandra Ćwiek </p>
+          </div>
+  </div>
+    
+  
+    <div>
+    <div class="quarto-title-meta-heading">Modified</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date-modified">April 11, 2025</p>
+    </div>
+  </div>
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>This website documents data processing pipeline developed for the study <strong>Putting in the Effort: Modulation of Multimodal Effort in Communicative Breakdowns during a Gestural-Vocal Referential Game</strong>. The study is investigated as a part of the project tudy associated with ViCom project <a href="https://vicom.info/projects/on-the-flexibility-and-stability-of-gesture-speech-coordination-flesh-evidence-from-production-comprehension-and-imitation/"><strong>On the FLExibility and Stability of Gesture-speecH Coordination (FLESH)</strong></a>. The pipeline covers every step from raw data ingestion to feature extraction and analysis, focusing on synchronizing and processing motion, audio, and derived signal data.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="assets/multimodal_anim.gif" class="img-fluid figure-img"></p>
-<figcaption>Multimodal animation</figcaption>
+<figcaption>Example of multimodal signals from FLESH data</figcaption>
 </figure>
 </div>
-<p>This is a material to a study associated with ViCom project <strong>On the FLExibility and Stability of Gesture-speecH Coordination (FLESH)</strong> (see more <a href="https://vicom.info/projects/on-the-flexibility-and-stability-of-gesture-speech-coordination-flesh-evidence-from-production-comprehension-and-imitation/">here</a>).</p>
-<p>This website documents data processing pipeline developed for the project <strong>Modulation of Multimodal Effort in Communicative Breakdowns during a Gestural-Vocal Referential Game</strong>. The pipeline covers every step from raw data ingestion to feature extraction and analysis, focusing on synchronizing and processing motion, audio, and derived signal data.</p>
-<p>The repository associated with this project can be found <a href="LINK">at Github</a>.</p>
+<p>The repository associated with this project can be found on <a href="LINK">Github</a>.</p>
 <section id="this-study" class="level2">
 <h2 class="anchored" data-anchor-id="this-study">This study</h2>
-<p>This study investigates whether (and how) people become more effortful when they attempt to resolve misunderstanding in a novel-communication gestural-vocal task.</p>
-<p>In the task, people are asked to …..</p>
-<p>We recorded ….</p>
-<p>You can read more about the theoretical reasonings in the <a href="LINK">introduction</a>.</p>
+<p>We recruited 60 Dutch dyads (i.e., 120 individuals) ti participate in a gestural-vocal referential game. One person of the dyad acts as a performer, and one as a guesser. The performer’s role is to express meaning in one of the three conditions: using only voice, only gesture, or both. The guesser’s role is to guess the meaning. If the answer is not correct, the performer has two more chances to repair themselves. In total, each dyad performs 42 different concepts in three modality conditions, and partners swap roles within each condition. We recorded performers’ movement, vocalizations, and postural sway.</p>
+<p>Our main research question addressess whether (and how) people become more effortful when they attempt to resolve misunderstanding in a novel-communication gestural-vocal task. Effort-related features of interest include upper limb torque, acoustic amplitude envelope, and center of pressure.</p>
+<p>You can read more about the theoretical reasonings in the <a href="LINK">prereregistration’s introduction</a>.</p>
 </section>
 <section id="two-phase-preregistration" class="level2">
 <h2 class="anchored" data-anchor-id="two-phase-preregistration">Two-phase preregistration</h2>
 <p>This study has been preregistered in two phases.</p>
 <p>In phase I, we preregistered the experimental design, laboratory setup and power analysis. The preregistration is available at the <a href="https://osf.io/m9xep">OSF Registries</a></p>
-<p>In phase II, we preregister the research questions and hypothesis, together with code pipeline covering pre-processing, processing and the analysis itself. The preregistration is available at the <a href="LINK">OSF Registries</a></p>
+<p>In phase II, we preregistered the research questions and hypothesis, together with code pipeline covering pre-processing, processing and the analysis itself. The preregistration is available at the <a href="LINK">OSF Registries</a></p>
 </section>
 <section id="updates" class="level2">
 <h2 class="anchored" data-anchor-id="updates">Updates</h2>
-<p>[✅] Preregistration of data collection <br> [✅] Data collection completed <br> [] Preregistration of analysis and processing steps <br> [] Preprint published <br> [] Manuscript published <br> [] Data available at open access repository <br></p>
-<hr>
+<p>[✅] Preregistration of data collection <br> [✅] Data collection completed <br> [✅] Preregistration of analysis and processing steps <br> [] Preprint published <br> [] Manuscript published <br> [] Data available at open access repository <br></p>
 </section>
 <section id="pipeline-overview" class="level2">
 <h2 class="anchored" data-anchor-id="pipeline-overview">Pipeline Overview</h2>
 <p>This study builds on multi-step pipeline that serves to - extract the raw data - process them - extract relevant features - analyze with regards to research questions</p>
-<p>In this workflow, each step builds on the previous one. However, it is possible to use parts of the workflow for different purposes.</p>
-<section id="preprocessing-of-the-raw-data" class="level3">
-<h3 class="anchored" data-anchor-id="preprocessing-of-the-raw-data">Preprocessing of the raw data</h3>
+<p>See <a href="./method.html">Methods section</a> for conceptual overview of the processing and analysis steps.</p>
+<p>Note that in this workflow, each step builds on the previous one. However, it is possible to use parts of the workflow for different purposes.</p>
+<section id="preprocessing-of-the-raw-data" class="level4">
+<h4 class="anchored" data-anchor-id="preprocessing-of-the-raw-data">Preprocessing of the raw data</h4>
 <ul>
 <li>In <a href="./01_XDF_processing/xdf_workflow.html">Pre-Processing I: from XDF to raw files</a> we load and clean raw XDF data, align streams, and prepare for downstream processing.</li>
 </ul>
 </section>
-<section id="motion-tracking-processing" class="level3">
-<h3 class="anchored" data-anchor-id="motion-tracking-processing">Motion Tracking Processing</h3>
+<section id="motion-tracking-processing" class="level4">
+<h4 class="anchored" data-anchor-id="motion-tracking-processing">Motion Tracking Processing</h4>
 <ul>
 <li>In <a href="./02_MotionTracking_processing/01_Video_preparation.html">Motion tracking I: Preparation of videos</a> we crop video recordings and prepare them for motion capture.</li>
 <li>In <a href="./02_MotionTracking_processing/02_Track_OpenPose.html">Motion tracking II: 2D pose estimation via OpenPose</a> we use OpenPose for 2D pose estimation.</li>
-<li><a href="./02_MotionTracking_processing/03_Track_pose2sim.html">Motion tracking III: Triangulation via Pose2sim</a> we convert 2D coordinates to 3D using pose2sim.</li>
-<li><a href="./02_MotionTracking_processing/04_Track_InverseKinDyn.html">Motion tracking IV: Modeling inverse kinematics and dynamics</a> we compute inverse kinematics and dynamics using OpenSim</li>
+<li>In <a href="./02_MotionTracking_processing/03_Track_pose2sim.html">Motion tracking III: Triangulation via Pose2sim</a> we convert 2D coordinates to 3D using pose2sim.</li>
+<li>In <a href="./02_MotionTracking_processing/04_Track_InverseKinDyn.html">Motion tracking IV: Modeling inverse kinematics and dynamics</a> we compute inverse kinematics and dynamics using OpenSim</li>
 </ul>
 </section>
-<section id="signal-processing" class="level3">
-<h3 class="anchored" data-anchor-id="signal-processing">Signal Processing</h3>
+<section id="signal-processing" class="level4">
+<h4 class="anchored" data-anchor-id="signal-processing">Signal Processing</h4>
 <ul>
 <li>In <a href="./03_TS_processing/01_TS_processing_motion.html">Processing I: Motion tracking and balance</a> we clean and interpolate motion signals, and extract derivatives such as speed, acceleration and jerk.</li>
-<li><a href="./03_TS_processing/02_TS_processing_acoustics.html">Processing II: Acoustics</a> we extract relevant acoustic features.</li>
-<li><a href="./03_TS_processing/03_TS_merging.html">Processing III: Merging multimodal data</a> we merge motion and acoustic time series.</li>
+<li>In <a href="./03_TS_processing/02_TS_processing_acoustics.html">Processing II: Acoustics</a> we extract relevant acoustic features.</li>
+<li>In <a href="./03_TS_processing/03_TS_merging.html">Processing III: Merging multimodal data</a> we merge motion and acoustic time series.</li>
 </ul>
 </section>
-<section id="movement-annotation" class="level3">
-<h3 class="anchored" data-anchor-id="movement-annotation">Movement Annotation</h3>
+<section id="movement-annotation" class="level4">
+<h4 class="anchored" data-anchor-id="movement-annotation">Movement Annotation</h4>
 <ul>
 <li>In <a href="./04_TS_movementAnnotation/01_Classify_preparation.html">Movement annotation I: Preparing training data and data for classifier</a> we prepare our multimodal time series for training purposes.</li>
 <li>In <a href="./04_TS_movementAnnotation/02_MovementClassifier.html">Movement annotation II: Training movement classifier, and annotating timeseries data</a> we train and evaluate classifiers for movement detection.</li>
 <li>In <a href="./04_TS_movementAnnotation/03_InterAgreement.html">Movement annotation III: Computing interrater agreement between manual and automatic annotation</a> we evaluate inter-annotator agreement.</li>
 </ul>
 </section>
-<section id="final-merge" class="level3">
-<h3 class="anchored" data-anchor-id="final-merge">Final Merge</h3>
+<section id="final-merge" class="level4">
+<h4 class="anchored" data-anchor-id="final-merge">Final Merge</h4>
 <ul>
 <li>In <a href="./05_finalMerge/TS_mergeAnnotations.html">Final merge</a> we merge annotations with timeseries.</li>
 </ul>
 </section>
-<section id="concept-similarity" class="level3">
-<h3 class="anchored" data-anchor-id="concept-similarity">Concept Similarity</h3>
+<section id="concept-similarity" class="level4">
+<h4 class="anchored" data-anchor-id="concept-similarity">Concept Similarity</h4>
 <ul>
 <li>In <a href="./06_ConceptSimilarity/ConceptNet_similarity.html">Computing concept similarity using ConceptNet word embeddings</a>: we assess semantic similarity between concepts using ConceptNet.</li>
 </ul>
 </section>
-<section id="feature-extraction" class="level3">
-<h3 class="anchored" data-anchor-id="feature-extraction">Feature Extraction</h3>
+<section id="feature-extraction" class="level4">
+<h4 class="anchored" data-anchor-id="feature-extraction">Feature Extraction</h4>
 <ul>
 <li>In <a href="./07_TS_featureExtraction/TS_extraction.html">Extraction of effort-related features</a> we extract features from the multimodal time series for modelling purposes.</li>
 </ul>
 </section>
-<section id="exploratory-analysis-most-predictive-features-of-effort" class="level3">
-<h3 class="anchored" data-anchor-id="exploratory-analysis-most-predictive-features-of-effort">Exploratory analysis: Most predictive features of effort</h3>
+<section id="exploratory-analysis-most-predictive-features-of-effort" class="level4">
+<h4 class="anchored" data-anchor-id="exploratory-analysis-most-predictive-features-of-effort">Exploratory Analysis: Most Predictive Features of Effort</h4>
 <ul>
 <li>In <a href="./08_Analysis_XGBoost/01_PCA_featureDimensions.html">Exploratory Analysis I: Using PCA to identify effort dimensions</a> we explore dimensionality of extracted features using Principal Component Analysis.</li>
-<li><a href="./08_Analysis_XGBoost/02_XGBoost_effortIndicators.html">Exploratory Analysis II: Identifying effort-related features contributing to misunderstanding resolution</a> we assess feature importance using eXtreme Gradient Boosting.</li>
+<li>In <a href="./08_Analysis_XGBoost/02_XGBoost_effortIndicators.html">Exploratory Analysis II: Identifying effort-related features contributing to misunderstanding resolution</a> we assess feature importance using eXtreme Gradient Boosting.</li>
 </ul>
 </section>
-<section id="confirmatory-nalysis-statistical-modelling" class="level3">
-<h3 class="anchored" data-anchor-id="confirmatory-nalysis-statistical-modelling">Confirmatory nalysis: statistical modelling</h3>
+<section id="confirmatory-analysis-statistical-modelling" class="level4">
+<h4 class="anchored" data-anchor-id="confirmatory-analysis-statistical-modelling">Confirmatory Analysis: Statistical Modelling</h4>
 <ul>
-<li><a href="./09_Analysis_Modeling/Modelling_syntheticData.html">Statistical Analysis: Modelling the Effect of Communicative Attempt (H1) and Answer Similarity (H2) on Effort</a> we build causal and statistical models testing our hypothesis.</li>
+<li>In <a href="./09_Analysis_Modeling/Modelling_syntheticData.html">Statistical Analysis: Modelling the Effect of Communicative Attempt (H1) and Answer Similarity (H2) on Effort</a> we build causal and statistical models testing our hypothesis.</li>
 </ul>
-<hr>
 </section>
 </section>
 <section id="acknowledgements" class="level2">
 <h2 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h2>
-<p>We would like to thank to all participants of this study. Special thanks belong also to the Donders lab coordinator Jiska Koemans and the Donders research integrity officer Miriam Kos. Lastly, thank to members of Donders Technical Support Group, namely Erik van den Berge, Norbert Hermesdorf, Gerard van Oijen, Maarten Snellen and Pascal de Water, for helping with the technical setup.</p>
+<p>We would like to thank to all participants of this study. Special thanks belong also to the Donders lab coordinator Jiska Koemans and the Donders research integrity officer Miriam Kos. Lastly, we thank to members of Donders Technical Support Group, namely Erik van den Berge, Norbert Hermesdorf, Gerard van Oijen, Maarten Snellen and Pascal de Water, for helping with the technical setup.</p>
 </section>
 <section id="contact" class="level2">
 <h2 class="anchored" data-anchor-id="contact">Contact</h2>
-<p>add contact</p>
+<p>Corresponding author: kadava[et]leibniz-zas[dot]de</p>
 </section>
-<section id="funding" class="level2">
-<h2 class="anchored" data-anchor-id="funding">Funding</h2>
-<p><img src="assets/ViCom.webp" class="img-fluid" alt="ViCom"> <img src="assets/DFG-logo-blau.svg.png" class="img-fluid" alt="DFG"> <img src="assets/logo_leibniz_zas.png" class="img-fluid" alt="ZAS"> <img src="assets/donders_logo.svg" class="img-fluid" alt="Donders"> <img src="assets/Logo_Uni_Göttingen.png" class="img-fluid" alt="Gottingen"></p>
+<section id="funding-and-support" class="level2">
+<h2 class="anchored" data-anchor-id="funding-and-support">Funding and support</h2>
+<p><a href="https://vicom.info/" target="_blank"> <img src="assets/ViCom.webp" width="110px"> </a> <a href="https://www.dfg.de/" target="_blank"> <img src="assets/DFG-logo-blau.svg.png" width="150px"> </a> <a href="https://www.leibniz-zas.de/de/" target="_blank"> <img src="assets/logo_leibniz_zas.png" width="150px"> </a> <a href="https://www.ru.nl/en/donders-institute" target="_blank"> <img src="assets/donders_logo.svg" width="150px"> </a> <a href="https://www.uni-goettingen.de/en/1.html" target="_blank"> <img src="assets/Logo_Uni_Göttingen.png" width="150px"> </a></p>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

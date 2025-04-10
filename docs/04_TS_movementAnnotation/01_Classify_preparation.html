@@ -185,6 +185,12 @@ div.csl-indent {
  <span class="menu-text">Home</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../method.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Overview of Methods</span></a>
+  </div>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
@@ -309,7 +315,7 @@ div.csl-indent {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../08_Analysis_XGBoost/02_XGBoost_effortIndicators.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Exploratory Analysis II: Identifying effort-related features contributing to misunderstanding resolution</span></a>
+ <span class="menu-text">Exploratory Analysis II: Identifying effort-related features contributing to misunderstanding resolution via XGBoost</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -341,6 +347,7 @@ div.csl-indent {
   <li><a href="#preparing-data-for-classifier" id="toc-preparing-data-for-classifier" class="nav-link" data-scroll-target="#preparing-data-for-classifier">Preparing data for classifier</a></li>
   <li><a href="#sumarizing-features-for-training-dataset" id="toc-sumarizing-features-for-training-dataset" class="nav-link" data-scroll-target="#sumarizing-features-for-training-dataset">Sumarizing features for training dataset</a></li>
   <li><a href="#preparing-timeseries-for-classifying" id="toc-preparing-timeseries-for-classifying" class="nav-link" data-scroll-target="#preparing-timeseries-for-classifying">Preparing timeseries for classifying</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
 </nav>
     </div>
@@ -369,7 +376,7 @@ div.csl-indent {
 <section id="sec-annoprep" class="level1">
 <h1>Overview</h1>
 <p>Since we have around 9000 trials in the final dataset, it is not feasible to manually annotate the movement onset and offset for each trial. Instead, we will use a simple logistic regression model to predict the movement onset and offset from all the movement features we have collected into the <a href="../03_TS_processing/03_TS_merging.html#sec-procmerge">merge dataset</a>.</p>
-<p>We have annotated the movement onset and offset in <span class="citation" data-cites="wittenburg_etal06">Wittenburg et al. (<a href="#ref-wittenburg_etal06" role="doc-biblioref">2006</a>)</span> for a pilot data (dyad 0). Two annotators have independently annotated the movement onset and offset for four tiers: - upper body - lower body - arms - head</p>
+<p>We have annotated the movement onset and offset in <span class="citation" data-cites="wittenburg_etal06">Wittenburg et al. (<a href="#ref-wittenburg_etal06" role="doc-biblioref">2006</a>)</span> for a pilot data (dyad 0). Two annotators have independently annotated the movement onset and offset for four tiers:<br><br> - upper body<br> - lower body<br> - arms<br> - head<br></p>
 <p>Parent tier ‘movement’ summarizes overal movement across all tiers.</p>
 <p>Now, we will use these ground truth annotations to create a training set for the logistic regression model.</p>
 <div id="cell-2" class="cell" data-execution_count="21">
@@ -517,7 +524,7 @@ div.csl-indent {
 <span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>    add_nomovement_annotations(<span class="bu">file</span>, newfile)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Now, we need to get the manual annotation from ELAN to simple text file so that we can merge the timeseries we prepared in <strong>?@sec-procmerge</strong> with information about movement in the trial</p>
+<p>Now, we need to get the manual annotation from ELAN to simple text file so that we can merge the timeseries we prepared in <a href="../03_TS_processing/03_TS_merging.html#sec-procmerge">merging script</a> with information about movement in the trial</p>
 <div id="cell-8" class="cell" data-execution_count="24">
 <details class="code-fold">
 <summary>Custom functions</summary>
@@ -1850,12 +1857,15 @@ div.csl-indent {
 </div>
 </div>
 </div>
-<p>Now we are ready to train the logistic regression classifier.</p>
+<p><br> Now we are ready to train the logistic regression classifier.</p>
+</section>
+<section id="references" class="level1">
+<h1>References</h1>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
 <div id="ref-wittenburg_etal06" class="csl-entry" role="listitem">
-Wittenburg, Peter, Hennie Brugman, Albert Russel, Alex Klassmann, and Han Sloetjes. 2006. <span>“<span>ELAN</span>: <span>A</span> Professional Framework for Multimodality Research.”</span> <em>Proceedings of the Fifth International Conference on Language Resources and Evaluation (LREC 2006)</em>, January.
+Wittenburg, Peter, Hennie Brugman, Albert Russel, Alex Klassmann, and Han Sloetjes. 2006. <span>“<span>ELAN</span>: <span>A</span> Professional Framework for Multimodality Research.”</span> <em>Proceedings of the Fifth International Conference on Language Resources and Evaluation (LREC 2006)</em>.
 </div>
 </div>
 </section>

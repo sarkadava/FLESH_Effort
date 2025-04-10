@@ -185,6 +185,12 @@ div.csl-indent {
  <span class="menu-text">Home</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../method.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Overview of Methods</span></a>
+  </div>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
@@ -309,7 +315,7 @@ div.csl-indent {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../08_Analysis_XGBoost/02_XGBoost_effortIndicators.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Exploratory Analysis II: Identifying effort-related features contributing to misunderstanding resolution</span></a>
+ <span class="menu-text">Exploratory Analysis II: Identifying effort-related features contributing to misunderstanding resolution via XGBoost</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -369,7 +375,7 @@ div.csl-indent {
 <section id="sec-merge" class="level1">
 <h1>Overview</h1>
 <p>In this notebook, we will merge all the data we have been preparing so far, i.e., timeseries data for acoustics and motion (see <a href="../03_TS_processing/03_TS_merging.html#sec-procmerge">merging script</a>), and annotations we have been working with in the <a href="../04_TS_movementAnnotation/02_MovementClassifier.html#@sec-annoclass">previous notebook</a>.</p>
-<p>We will also add annotations of sounding/silence created in Praat (<span class="citation" data-cites="boersma_weenink25">Boersma and Weenink (<a href="#ref-boersma_weenink25" role="doc-biblioref">2025</a>)</span>).</p>
+<p>We will also add annotations of sounding/silence created in Praat <span class="citation" data-cites="boersma_weenink25">(<a href="#ref-boersma_weenink25" role="doc-biblioref">Boersma and Weenink 2025</a>)</span>.</p>
 <div id="cell-2" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code to prepare the environment</summary>
@@ -461,7 +467,7 @@ div.csl-indent {
 <h1>Preparing movement annotations</h1>
 <p>Similarly, we also want to get ready our movement annotations to simple txt file. We store all the predicted annotations separately per tier and per trial, so now we merge all the files into a single txt file, per each tier separately.</p>
 <p>As already mentioned in <a href="../04_TS_movementAnnotation/03_InterAgreement.html#@sec-annoia">previous script</a>, we need to handle two issues that stem from the the fact that the classifier can create flickering annotations, as the confidence values continuously vary throughout each trial.</p>
-<p>Similarly to <span class="citation" data-cites="pouw_etal21b">Pouw et al. (<a href="#ref-pouw_etal21b" role="doc-biblioref">2021</a>)</span>, we apply two rules to handle this flickering: - Rule 1: If there is a nomovement event between two movement events that is shorter than 200 ms, this is considered as part of the movement event. - Rule 2: If there is a movement event between two nomovement events that is shorter than 200 ms, this is considered as part of the nomovement event.</p>
+<p>Similarly to <span class="citation" data-cites="pouw_etal21b">Pouw et al. (<a href="#ref-pouw_etal21b" role="doc-biblioref">2021</a>)</span>, we apply two rules to handle this flickering:<br><br> - Rule 1: If there is a nomovement event between two movement events that is shorter than 200 ms, this is considered as part of the movement event.<br> - Rule 2: If there is a movement event between two nomovement events that is shorter than 200 ms, this is considered as part of the nomovement event.<br></p>
 <p>Afterwards, we take the first movement event and the very last movement event, and consider everything in between as a movement.</p>
 <p>Then we write the final movement annotations to a txt file.</p>
 <div id="cell-7" class="cell" data-execution_count="4">
@@ -1067,6 +1073,7 @@ div.csl-indent {
 </div>
 </div>
 </div>
+<p><br> Now we are ready to proceed with the analysis.</p>
 </section>
 <section id="references" class="level1">
 <h1>References</h1>

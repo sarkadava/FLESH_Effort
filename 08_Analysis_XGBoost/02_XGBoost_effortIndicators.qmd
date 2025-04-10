@@ -1,5 +1,5 @@
 ---
-title: "Exploratory Analysis II: Identifying effort-related features contributing to misunderstanding resolution"
+title: "Exploratory Analysis II: Identifying effort-related features contributing to misunderstanding resolution via XGBoost"
 format:
   html:
     code-overflow: wrap
@@ -13,7 +13,7 @@ toc: true
 
 This script is an adaption of pipeline by @cwiek_etal_inprep2.
 
-In this script, we are going to use eXtreme Gradient Boosting (XGBoost, @chen_guestrin16) to identify effort-related features beyond those investigated within our confirmatory analysis, i.e., torque change, amplitude envelope, and change in center of pressure.
+In this script, we are going to use XGBoost, eXtreme Gradient Boosting [@chen_guestrin16], to identify effort-related features beyond those investigated within our confirmatory analysis, i.e., torque change, amplitude envelope, and change in center of pressure.
 
 XGBoost is a machine learning algorithm that builds an ensemble of decision trees to predict an outcome based on input features. For us, outcome refers to *communicative attempt* (baseline, first correction, second correction) and input features refer to all *features of effort* collected in [Feature extraction script](../07_TS_featureExtraction/TS_extraction.ipynb#sec-features).
 
@@ -2095,6 +2095,7 @@ for (pc in c("PC1", "PC2", "PC3")) {
 
 ```
 
+<br>
 Now we are ready to model the most predictive features to get deeper understanding of their causal relationship with our predictive variable, i.e., communicative attempt. 
 
 # Session info
