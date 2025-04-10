@@ -20,7 +20,9 @@ H2: The enhancement depends on similarity of the guesser's answer and the origin
 
 To assess the design and performance of the model, we will use synthetic data that we create to have certain interdependencies and where the effects have pre-defined values. We use this approach instead of using our dyad 0 data, because the pilot data do not include enough data to have a sensible testing sample.
 
-The confirmatory analysis concerns six outcome variables, namely integral of torque change, integral of amplitude envelope, integral of change in center of pressure, and mean peak value of torque change, mean peak value of amplitude envelope, and mean peak value of change in center of pressure. For our exploratory analysis, we will model variables that will result as most predictive in relation to communicative attempt, assessed by XGBoost modelling (in the previous script @02_XGBoost_effortIndicators.qmd#sec-xgboost). This is why in our synthetic data, we create a variable Effort that is continuous, but oterwise free of any other assumptions.
+The confirmatory analysis concerns six outcome variables, namely integral of torque change, integral of amplitude envelope, integral of change in center of pressure, and mean peak value of torque change, mean peak value of amplitude envelope, and mean peak value of change in center of pressure. 
+
+For our exploratory analysis, we will model variables that will result as most predictive in relation to communicative attempt, assessed by [XGBoost modelling](../08_Analysis_XGBoost/02_XGBoost_effortIndicators.qmd#sec-xgboost). This is why in our synthetic data, we create a variable *Effort* that is continuous, but oterwise free of any other assumptions.
 
 ```{r setup environment, echo=TRUE, message=FALSE, warning=FALSE}
 #| code-fold: true

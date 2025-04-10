@@ -9,7 +9,7 @@ project:
 
 website:
   sidebar:
-    style: "docked"
+    style: "floating"
     search: true
     contents:
       - text: "Home"
@@ -17,54 +17,47 @@ website:
       - text: "Introduction"
         href: intro.qmd
 
-      - section: "XDF Processing"
+      - section: "Processing"
         contents:
           - 01_XDF_processing/xdf_workflow.ipynb
-
-      - section: "Motion Tracking Processing"
-        contents:
-          - 01_Video_preparation.ipynb
-          - 02_Track_OpenPose.ipynb
+          - 02_MotionTracking_processing/01_Video_preparation.ipynb
+          - 02_MotionTracking_processing/02_Track_OpenPose.ipynb
           - 02_MotionTracking_processing/03_Track_pose2sim.ipynb
           - 02_MotionTracking_processing/04_Track_InverseKinDyn.ipynb
-
-      - section: "Time Series Processing"
-        contents:
           - 03_TS_processing/01_TS_processing_motion.ipynb
-          - 03_TS_processing/02_TS_processing_acoustics.html
-          - 03_TS_processing/03_TS_merging.html
+          - 03_TS_processing/02_TS_processing_acoustics.ipynb
+          - 03_TS_processing/03_TS_merging.ipynb
 
       - section: "Time Series Annotation"
         contents:
           - 04_TS_movementAnnotation/01_Classify_preparation.ipynb
           - 04_TS_movementAnnotation/02_MovementClassifier.ipynb
           - 04_TS_movementAnnotation/03_InterAgreement.ipynb
-
-      - section: "Final Merge"
-        contents:
           - 05_finalMerge/TS_mergeAnnotations.ipynb
 
-      - section: "Concept Similarity"
+      - section: "Analysis"
         contents:
           - 06_ConceptSimilarity/ConceptNet_similarity.ipynb
-
-      - section: "Feature Extraction"
-        contents:
           - 07_TS_featureExtraction/TS_extraction.ipynb
-
-      - section: "Analysis: XGBoost"
-        contents:
           - 08_Analysis_XGBoost/01_PCA_featureDimensions.ipynb
           - 08_Analysis_XGBoost/02_XGBoost_effortIndicators.qmd
-
-      - section: "Analysis: Modeling"
-        contents:
           - 09_Analysis_Modeling/Modelling_syntheticData.qmd
 
       - text: "Summary"
         href: summary.qmd
       - text: "References"
         href: references.qmd
+
+  navbar:
+    tools:
+      - icon: bluesky
+        href: https://bsky.app/profile/sarkadava.bsky.social
+      - icon: github
+        menu:
+          - text: Source Code
+            href:  https://code.com
+          - text: Report a Bug
+            href:  https://bugs.com
 
 metadata:
   crossref:
@@ -95,7 +88,6 @@ book:
     - 08_Analysis_XGBoost/02_XGBoost_effortIndicators.qmd
     - 09_Analysis_Modeling/Modelling_syntheticData.qmd
     
-    - summary.qmd
     - references.qmd
     
 
@@ -105,8 +97,7 @@ bibliography: references.bib
 format:
   html:
     theme: cosmo
-  pdf:
-    documentclass: scrreprt
+
 
 
 

@@ -94,11 +94,11 @@ div.csl-indent {
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
-  "location": "sidebar",
+  "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
-  "panel-placement": "start",
-  "type": "textbox",
+  "panel-placement": "end",
+  "type": "overlay",
   "limit": 50,
   "keyboard-shortcut": [
     "f",
@@ -127,16 +127,39 @@ div.csl-indent {
 
 </head>
 
-<body class="nav-sidebar docked fullcontent">
+<body class="nav-sidebar floating nav-fixed fullcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+        <div class="quarto-navbar-tools tools-end">
+    <a href="https://bsky.app/profile/sarkadava.bsky.social" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-bluesky"></i></a>
+    <div class="dropdown">
+      <a href="" title="" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" aria-label=""><i class="bi bi-github"></i></a>
+      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item quarto-navbar-tools-item" href="https://code.com">
+            Source Code
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item quarto-navbar-tools-item" href="https://bugs.com">
+            Report a Bug
+            </a>
+          </li>
+      </ul>
+    </div>
+</div>
+          <div id="quarto-search" class="" title="Search"></div>
+      </div> <!-- /container-fluid -->
+    </nav>
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../05_finalMerge/TS_mergeAnnotations.html">Final Merge</a></li><li class="breadcrumb-item"><a href="../05_finalMerge/TS_mergeAnnotations.html">Final merge</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../04_TS_movementAnnotation/01_Classify_preparation.html">Time Series Annotation</a></li><li class="breadcrumb-item"><a href="../05_finalMerge/TS_mergeAnnotations.html">Final merge</a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -146,9 +169,9 @@ div.csl-indent {
   </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
         <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Search"></div>
@@ -171,7 +194,7 @@ div.csl-indent {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
- <span class="menu-text">XDF Processing</span></a>
+ <span class="menu-text">Processing</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -183,23 +206,18 @@ div.csl-indent {
  <span class="menu-text">Pre-Processing I: from XDF to raw files</span></a>
   </div>
 </li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
- <span class="menu-text">Motion Tracking Processing</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
- <span class="menu-text">01_Video_preparation.ipynb</span>
-  </li>
+  <div class="sidebar-item-container"> 
+  <a href="../02_MotionTracking_processing/01_Video_preparation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Motion tracking I: Preparation of videos</span></a>
+  </div>
+</li>
           <li class="sidebar-item">
- <span class="menu-text">02_Track_OpenPose.ipynb</span>
-  </li>
+  <div class="sidebar-item-container"> 
+  <a href="../02_MotionTracking_processing/02_Track_OpenPose.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Motion tracking II: 2D pose estimation via OpenPose</span></a>
+  </div>
+</li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../02_MotionTracking_processing/03_Track_pose2sim.html" class="sidebar-item-text sidebar-link">
@@ -212,17 +230,6 @@ div.csl-indent {
  <span class="menu-text">Motion tracking IV: Modeling inverse kinematics and dynamics</span></a>
   </div>
 </li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
- <span class="menu-text">Time Series Processing</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../03_TS_processing/01_TS_processing_motion.html" class="sidebar-item-text sidebar-link">
@@ -230,22 +237,28 @@ div.csl-indent {
   </div>
 </li>
           <li class="sidebar-item">
- <span class="menu-text">03_TS_processing/02_TS_processing_acoustics.html</span>
-  </li>
+  <div class="sidebar-item-container"> 
+  <a href="../03_TS_processing/02_TS_processing_acoustics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Processing II: Acoustics</span></a>
+  </div>
+</li>
           <li class="sidebar-item">
- <span class="menu-text">03_TS_processing/03_TS_merging.html</span>
-  </li>
+  <div class="sidebar-item-container"> 
+  <a href="../03_TS_processing/03_TS_merging.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Processing III: Merging multimodal data</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
  <span class="menu-text">Time Series Annotation</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../04_TS_movementAnnotation/01_Classify_preparation.html" class="sidebar-item-text sidebar-link">
@@ -264,17 +277,6 @@ div.csl-indent {
  <span class="menu-text">Movement annotation III: Computing interrater agreement between manual and automatic annotation</span></a>
   </div>
 </li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
- <span class="menu-text">Final Merge</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../05_finalMerge/TS_mergeAnnotations.html" class="sidebar-item-text sidebar-link active">
@@ -285,47 +287,25 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">
- <span class="menu-text">Concept Similarity</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+ <span class="menu-text">Analysis</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../06_ConceptSimilarity/ConceptNet_similarity.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Computing concept similarity using ConceptNet word embeddings</span></a>
   </div>
 </li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true">
- <span class="menu-text">Feature Extraction</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../07_TS_featureExtraction/TS_extraction.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Extraction of effort-related features</span></a>
   </div>
 </li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true">
- <span class="menu-text">Analysis: XGBoost</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../08_Analysis_XGBoost/01_PCA_featureDimensions.html" class="sidebar-item-text sidebar-link">
@@ -338,17 +318,6 @@ div.csl-indent {
  <span class="menu-text">Exploratory Analysis II: Identifying effort-related features contributing to misunderstanding resolution</span></a>
   </div>
 </li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" aria-expanded="true">
- <span class="menu-text">Analysis: Modeling</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../09_Analysis_Modeling/Modelling_syntheticData.html" class="sidebar-item-text sidebar-link">
@@ -378,7 +347,7 @@ div.csl-indent {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../05_finalMerge/TS_mergeAnnotations.html">Final Merge</a></li><li class="breadcrumb-item"><a href="../05_finalMerge/TS_mergeAnnotations.html">Final merge</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../04_TS_movementAnnotation/01_Classify_preparation.html">Time Series Annotation</a></li><li class="breadcrumb-item"><a href="../05_finalMerge/TS_mergeAnnotations.html">Final merge</a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title">Final merge</h1>
 </div>
@@ -399,7 +368,7 @@ div.csl-indent {
 
 <section id="sec-merge" class="level1">
 <h1>Overview</h1>
-<p>In this notebook, we will merge all the data we have been preparing so far, i.e., timeseries data for acoustics and motion (see <strong>?@sec-procmerge</strong>), and annotations we have been working with in the previous notebook (<strong>?@sec-annoclass</strong>).</p>
+<p>In this notebook, we will merge all the data we have been preparing so far, i.e., timeseries data for acoustics and motion (see <a href="../03_TS_processing/03_TS_merging.html#sec-procmerge">merging script</a>), and annotations we have been working with in the <a href="../04_TS_movementAnnotation/02_MovementClassifier.html#@sec-annoclass">previous notebook</a>.</p>
 <p>We will also add annotations of sounding/silence created in Praat (<span class="citation" data-cites="boersma_weenink25">Boersma and Weenink (<a href="#ref-boersma_weenink25" role="doc-biblioref">2025</a>)</span>).</p>
 <div id="cell-2" class="cell" data-execution_count="1">
 <details class="code-fold">
@@ -435,7 +404,7 @@ div.csl-indent {
 <section id="getting-vocalization-annotations-from-elan-file" class="level1">
 <h1>Getting vocalization annotations from ELAN file</h1>
 <p>We have used Praat to annotate the sounding/silence in the trials and loaded it to ELAN file with the remaining annotations of movement to save all in a single file. Now we want to get the annotations of sounding/silence from the ELAN file and merge it with the rest of the data.</p>
-<p>(Note that we are working on automatic annotator of speech that would allow to get the annotations of sounding/silence without the need for external software, similar to our movement annotation pipeline introduced in <strong>?@sec-annoclass</strong>.)</p>
+<p>(Note that we are working on automatic annotator of speech that would allow to get the annotations of sounding/silence without the need for external software, similar to our movement annotation pipeline.)</p>
 <div id="cell-4" class="cell">
 <details class="code-fold">
 <summary>Custom functions</summary>
@@ -491,7 +460,7 @@ div.csl-indent {
 <section id="preparing-movement-annotations" class="level1">
 <h1>Preparing movement annotations</h1>
 <p>Similarly, we also want to get ready our movement annotations to simple txt file. We store all the predicted annotations separately per tier and per trial, so now we merge all the files into a single txt file, per each tier separately.</p>
-<p>As already mentioned in previous script (<strong>?@sec-annoia</strong>), we need to handle two issues that stem from the the fact that the classifier can create flickering annotations, as the confidence values continuously vary throughout each trial.</p>
+<p>As already mentioned in <a href="../04_TS_movementAnnotation/03_InterAgreement.html#@sec-annoia">previous script</a>, we need to handle two issues that stem from the the fact that the classifier can create flickering annotations, as the confidence values continuously vary throughout each trial.</p>
 <p>Similarly to <span class="citation" data-cites="pouw_etal21b">Pouw et al. (<a href="#ref-pouw_etal21b" role="doc-biblioref">2021</a>)</span>, we apply two rules to handle this flickering: - Rule 1: If there is a nomovement event between two movement events that is shorter than 200 ms, this is considered as part of the movement event. - Rule 2: If there is a movement event between two nomovement events that is shorter than 200 ms, this is considered as part of the nomovement event.</p>
 <p>Afterwards, we take the first movement event and the very last movement event, and consider everything in between as a movement.</p>
 <p>Then we write the final movement annotations to a txt file.</p>
@@ -1098,6 +1067,9 @@ div.csl-indent {
 </div>
 </div>
 </div>
+</section>
+<section id="references" class="level1">
+<h1>References</h1>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">

@@ -94,11 +94,11 @@ div.csl-indent {
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
-  "location": "sidebar",
+  "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
-  "panel-placement": "start",
-  "type": "textbox",
+  "panel-placement": "end",
+  "type": "overlay",
   "limit": 50,
   "keyboard-shortcut": [
     "f",
@@ -127,16 +127,39 @@ div.csl-indent {
 
 </head>
 
-<body class="nav-sidebar docked fullcontent">
+<body class="nav-sidebar floating nav-fixed fullcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+        <div class="quarto-navbar-tools tools-end">
+    <a href="https://bsky.app/profile/sarkadava.bsky.social" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-bluesky"></i></a>
+    <div class="dropdown">
+      <a href="" title="" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" aria-label=""><i class="bi bi-github"></i></a>
+      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item quarto-navbar-tools-item" href="https://code.com">
+            Source Code
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item quarto-navbar-tools-item" href="https://bugs.com">
+            Report a Bug
+            </a>
+          </li>
+      </ul>
+    </div>
+</div>
+          <div id="quarto-search" class="" title="Search"></div>
+      </div> <!-- /container-fluid -->
+    </nav>
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../07_TS_featureExtraction/TS_extraction.html">Feature Extraction</a></li><li class="breadcrumb-item"><a href="../07_TS_featureExtraction/TS_extraction.html">Extraction of effort-related features</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../06_ConceptSimilarity/ConceptNet_similarity.html">Analysis</a></li><li class="breadcrumb-item"><a href="../07_TS_featureExtraction/TS_extraction.html">Extraction of effort-related features</a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -146,9 +169,9 @@ div.csl-indent {
   </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
         <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Search"></div>
@@ -171,7 +194,7 @@ div.csl-indent {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
- <span class="menu-text">XDF Processing</span></a>
+ <span class="menu-text">Processing</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -183,23 +206,18 @@ div.csl-indent {
  <span class="menu-text">Pre-Processing I: from XDF to raw files</span></a>
   </div>
 </li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
- <span class="menu-text">Motion Tracking Processing</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
- <span class="menu-text">01_Video_preparation.ipynb</span>
-  </li>
+  <div class="sidebar-item-container"> 
+  <a href="../02_MotionTracking_processing/01_Video_preparation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Motion tracking I: Preparation of videos</span></a>
+  </div>
+</li>
           <li class="sidebar-item">
- <span class="menu-text">02_Track_OpenPose.ipynb</span>
-  </li>
+  <div class="sidebar-item-container"> 
+  <a href="../02_MotionTracking_processing/02_Track_OpenPose.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Motion tracking II: 2D pose estimation via OpenPose</span></a>
+  </div>
+</li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../02_MotionTracking_processing/03_Track_pose2sim.html" class="sidebar-item-text sidebar-link">
@@ -212,17 +230,6 @@ div.csl-indent {
  <span class="menu-text">Motion tracking IV: Modeling inverse kinematics and dynamics</span></a>
   </div>
 </li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
- <span class="menu-text">Time Series Processing</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../03_TS_processing/01_TS_processing_motion.html" class="sidebar-item-text sidebar-link">
@@ -230,22 +237,28 @@ div.csl-indent {
   </div>
 </li>
           <li class="sidebar-item">
- <span class="menu-text">03_TS_processing/02_TS_processing_acoustics.html</span>
-  </li>
+  <div class="sidebar-item-container"> 
+  <a href="../03_TS_processing/02_TS_processing_acoustics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Processing II: Acoustics</span></a>
+  </div>
+</li>
           <li class="sidebar-item">
- <span class="menu-text">03_TS_processing/03_TS_merging.html</span>
-  </li>
+  <div class="sidebar-item-container"> 
+  <a href="../03_TS_processing/03_TS_merging.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Processing III: Merging multimodal data</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
  <span class="menu-text">Time Series Annotation</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../04_TS_movementAnnotation/01_Classify_preparation.html" class="sidebar-item-text sidebar-link">
@@ -264,17 +277,6 @@ div.csl-indent {
  <span class="menu-text">Movement annotation III: Computing interrater agreement between manual and automatic annotation</span></a>
   </div>
 </li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
- <span class="menu-text">Final Merge</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../05_finalMerge/TS_mergeAnnotations.html" class="sidebar-item-text sidebar-link">
@@ -285,47 +287,25 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">
- <span class="menu-text">Concept Similarity</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+ <span class="menu-text">Analysis</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../06_ConceptSimilarity/ConceptNet_similarity.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Computing concept similarity using ConceptNet word embeddings</span></a>
   </div>
 </li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true">
- <span class="menu-text">Feature Extraction</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../07_TS_featureExtraction/TS_extraction.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Extraction of effort-related features</span></a>
   </div>
 </li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true">
- <span class="menu-text">Analysis: XGBoost</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../08_Analysis_XGBoost/01_PCA_featureDimensions.html" class="sidebar-item-text sidebar-link">
@@ -338,17 +318,6 @@ div.csl-indent {
  <span class="menu-text">Exploratory Analysis II: Identifying effort-related features contributing to misunderstanding resolution</span></a>
   </div>
 </li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" aria-expanded="true">
- <span class="menu-text">Analysis: Modeling</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../09_Analysis_Modeling/Modelling_syntheticData.html" class="sidebar-item-text sidebar-link">
@@ -378,7 +347,7 @@ div.csl-indent {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../07_TS_featureExtraction/TS_extraction.html">Feature Extraction</a></li><li class="breadcrumb-item"><a href="../07_TS_featureExtraction/TS_extraction.html">Extraction of effort-related features</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../06_ConceptSimilarity/ConceptNet_similarity.html">Analysis</a></li><li class="breadcrumb-item"><a href="../07_TS_featureExtraction/TS_extraction.html">Extraction of effort-related features</a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title">Extraction of effort-related features</h1>
 </div>
@@ -399,7 +368,7 @@ div.csl-indent {
 
 <section id="sec-features" class="level1">
 <h1>Overview</h1>
-<p>In this script, we will extract effort-related features from the merged multimodal data we created for each trial in script <strong>?@sec-merge</strong>.</p>
+<p>In this script, we will extract effort-related features from the merged multimodal data we created for each trial in <a href="../05_finalMerge/TS_mergeAnnotations.html#@sec-merge">merging script</a>.</p>
 <p>Because we are dealing with time-varying data, we will extract number of statistics that characterize both instantaneous as well as cumulative nature of each (acoustic, motion, postural) timeseries in terms of effort.</p>
 <p>Before we collect all relevant features, we normalize all time-varying features in the trial by minimum and maximum observed values for that feature for a participant. This is because we want to account for individual differences/strategies in using the whole range of motion and/or acoustic features. We therefore treat effort as a relative measure - but because we cannot access information about the minimum/maximum possible by a participant, we take the maximum and minimum that were observed within the whole experiment.</p>
 <div id="cell-2" class="cell" data-execution_count="45">
@@ -459,8 +428,8 @@ div.csl-indent {
 <h1>Preparing additional metadata</h1>
 <p>To get additional metadata about the trials, we also need to load in and pre-process some more data, such as:</p>
 <ul>
-<li><p>Similarity between answer and a target concept (created in <strong>?@sec-conceptnet</strong>). This dataframe has information about the similarity between an answer and performed target concept, computed as cosine similarity of embeddings retrieved from ConceptNet.</p></li>
-<li><p>Expressibility of a concept. This dataframe has information about expressibility of each concept in a stimuli list. The ratings were acquired from a separate group of people that participated in an online study (<span class="citation" data-cites="cwiek_etal_inprep">Ćwiek and Kadavá (<a href="#ref-cwiek_etal_inprep" role="doc-biblioref">n.d.</a>)</span>, similar to <span class="citation" data-cites="kadava_etal24">Kadavá et al. (<a href="#ref-kadava_etal24" role="doc-biblioref">2024</a>)</span>).</p></li>
+<li><p>Similarity between answer and a target concept (computed with <a href="../06_ConceptSimilarity/ConceptNet_similarity.html#sec-conceptnet">ConceptNet</a>). This dataframe has information about the similarity between an answer and performed target concept, computed as cosine similarity of embeddings retrieved from ConceptNet.</p></li>
+<li><p>Expressibility of a concept. This dataframe has information about expressibility of each concept in a stimuli list. The ratings were acquired from a separate group of people that participated in an online study (<span class="citation" data-cites="cwiek_etal_inprep">Ćwiek et al. (<a href="#ref-cwiek_etal_inprep" role="doc-biblioref">n.d.</a>)</span>, similar to <span class="citation" data-cites="kadava_etal24">Kadavá et al. (<a href="#ref-kadava_etal24" role="doc-biblioref">2024</a>)</span>).</p></li>
 <li><p>Response time. This dataframe has information about how long it took a guesser to provide an answer to a performance, measured from the end of the performance until pressing an Enter to confirm the answer.</p></li>
 </ul>
 <p>This is the similarity dataframe</p>
@@ -2062,7 +2031,7 @@ div.csl-indent {
 </section>
 <section id="symmetry-of-arm-movement-multi-movement-asymmetry-of-submovements" class="level2">
 <h2 class="anchored" data-anchor-id="symmetry-of-arm-movement-multi-movement-asymmetry-of-submovements">Symmetry of arm movement / multi-movement asymmetry of submovements</h2>
-<p>Symmetry of arm movement is a measure of how much the participant uses both arms. Symmetrical movement is expected to be less effortful than asymmetrical movement, as asymmetrical movement might require more cognitive resources to coordinate the two arms. We will compute symmetry as the correlation between left and right arm trajectories. If it’s close to 1, it means that the participant uses both arms in a symmetrical way.</p>
+<p>Symmetry of arm movement is a measure of how much the participant uses both arms. Symmetrical movement is expected to be less effortful than asymmetrical movement, as asymmetrical movement might require more cognitive resources to coordinate the two arms. We will compute symmetry as the correlation between left and right arm trajectories, similar to <span class="citation" data-cites="xiongetal2002">Xiong, Quek, and Mcneill (<a href="#ref-xiongetal2002" role="doc-biblioref">2002</a>)</span>. If it’s close to 1, it means that the participant uses both arms in a symmetrical way.</p>
 <div id="cell-34" class="cell" data-execution_count="61">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_ArmCoupling(df, keypoints<span class="op">=</span>[<span class="st">'Wrist'</span>], dimensions<span class="op">=</span>[<span class="st">'x'</span>, <span class="st">'y'</span>, <span class="st">'z'</span>], absolute<span class="op">=</span><span class="va">True</span>, z<span class="op">=</span><span class="va">False</span>):</span>
@@ -2386,7 +2355,7 @@ PCA for arm movement complexity (3, 0.11732507841208828, 5, 0.09053436514831179)
 <section id="extracting-features-for-all-trials" class="level1">
 <h1>Extracting features for all trials</h1>
 <p>Now we will loop through each file (representing a trial), extract the features, add all necessary metadata and save each trial in a overall dataframe. Before any feature is collected, we min-max normalize all data to get to relative feature of effort per participant</p>
-<div id="cell-44" class="cell" data-execution_count="66">
+<div id="cell-44" class="cell">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> warnings</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>warnings.filterwarnings(<span class="st">"ignore"</span>)</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -2777,137 +2746,6 @@ PCA for arm movement complexity (3, 0.11732507841208828, 5, 0.09053436514831179)
 <span id="cb16-388"><a href="#cb16-388" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-389"><a href="#cb16-389" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-390"><a href="#cb16-390" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>working on file:  e:\FLESH_ContinuousBodilyEffort\07_TS_featureExtraction\..\05_finalMerge\TS_final\merged_anno_0_2_23_p1.csv
-working on file:  e:\FLESH_ContinuousBodilyEffort\07_TS_featureExtraction\..\05_finalMerge\TS_final\merged_anno_0_2_24_p1.csv
-working on file:  e:\FLESH_ContinuousBodilyEffort\07_TS_featureExtraction\..\05_finalMerge\TS_final\merged_anno_0_2_25_p1.csv
-working on file:  e:\FLESH_ContinuousBodilyEffort\07_TS_featureExtraction\..\05_finalMerge\TS_final\merged_anno_0_2_26_p1.csv
-working on file:  e:\FLESH_ContinuousBodilyEffort\07_TS_featureExtraction\..\05_finalMerge\TS_final\merged_anno_0_2_27_p1.csv
-working on file:  e:\FLESH_ContinuousBodilyEffort\07_TS_featureExtraction\..\05_finalMerge\TS_final\merged_anno_0_2_28_p1.csv
-working on file:  e:\FLESH_ContinuousBodilyEffort\07_TS_featureExtraction\..\05_finalMerge\TS_final\merged_anno_0_2_29_p1.csv
-No movement in arms
-working on file:  e:\FLESH_ContinuousBodilyEffort\07_TS_featureExtraction\..\05_finalMerge\TS_final\merged_anno_0_2_2_p0.csv
-No vocalization in the trial
-No f1, f2 in the dataframe
-working on file:  e:\FLESH_ContinuousBodilyEffort\07_TS_featureExtraction\..\05_finalMerge\TS_final\merged_anno_0_2_30_p1.csv
-working on file:  e:\FLESH_ContinuousBodilyEffort\07_TS_featureExtraction\..\05_finalMerge\TS_final\merged_anno_0_2_31_p1.csv
-working on file:  e:\FLESH_ContinuousBodilyEffort\07_TS_featureExtraction\..\05_finalMerge\TS_final\merged_anno_0_2_32_p1.csv
-working on file:  e:\FLESH_ContinuousBodilyEffort\07_TS_featureExtraction\..\05_finalMerge\TS_final\merged_anno_0_2_33_p1.csv
-working on file:  e:\FLESH_ContinuousBodilyEffort\07_TS_featureExtraction\..\05_finalMerge\TS_final\merged_anno_0_2_34_p1.csv
-working on file:  e:\FLESH_ContinuousBodilyEffort\07_TS_featureExtraction\..\05_finalMerge\TS_final\merged_anno_0_2_35_p1.csv
-working on file:  e:\FLESH_ContinuousBodilyEffort\07_TS_featureExtraction\..\05_finalMerge\TS_final\merged_anno_0_2_36_p1.csv
-working on file:  e:\FLESH_ContinuousBodilyEffort\07_TS_featureExtraction\..\05_finalMerge\TS_final\merged_anno_0_2_37_p1.csv
-working on file:  e:\FLESH_ContinuousBodilyEffort\07_TS_featureExtraction\..\05_finalMerge\TS_final\merged_anno_0_2_3_p0.csv
-working on file:  e:\FLESH_ContinuousBodilyEffort\07_TS_featureExtraction\..\05_finalMerge\TS_final\merged_anno_0_2_41_p0.csv
-No vocalization in the trial
-No f1, f2 in the dataframe
-working on file:  e:\FLESH_ContinuousBodilyEffort\07_TS_featureExtraction\..\05_finalMerge\TS_final\merged_anno_0_2_42_p0.csv
-No vocalization in the trial
-No f1, f2 in the dataframe
-working on file:  e:\FLESH_ContinuousBodilyEffort\07_TS_featureExtraction\..\05_finalMerge\TS_final\merged_anno_0_2_43_p0.csv
-No vocalization in the trial
-No f1, f2 in the dataframe
-working on file:  e:\FLESH_ContinuousBodilyEffort\07_TS_featureExtraction\..\05_finalMerge\TS_final\merged_anno_0_2_44_p0.csv
-No vocalization in the trial
-No f1, f2 in the dataframe
-working on file:  e:\FLESH_ContinuousBodilyEffort\07_TS_featureExtraction\..\05_finalMerge\TS_final\merged_anno_0_2_45_p0.csv
-No vocalization in the trial
-No f1, f2 in the dataframe
-working on file:  e:\FLESH_ContinuousBodilyEffort\07_TS_featureExtraction\..\05_finalMerge\TS_final\merged_anno_0_2_46_p0.csv
-working on file:  e:\FLESH_ContinuousBodilyEffort\07_TS_featureExtraction\..\05_finalMerge\TS_final\merged_anno_0_2_47_p0.csv
-No vocalization in the trial
-No f1, f2 in the dataframe
-working on file:  e:\FLESH_ContinuousBodilyEffort\07_TS_featureExtraction\..\05_finalMerge\TS_final\merged_anno_0_2_48_p0.csv
-No vocalization in the trial
-No f1, f2 in the dataframe
-working on file:  e:\FLESH_ContinuousBodilyEffort\07_TS_featureExtraction\..\05_finalMerge\TS_final\merged_anno_0_2_49_p0.csv
-No vocalization in the trial
-No f1, f2 in the dataframe
-working on file:  e:\FLESH_ContinuousBodilyEffort\07_TS_featureExtraction\..\05_finalMerge\TS_final\merged_anno_0_2_4_p0.csv
-No f1, f2 in the dataframe
-working on file:  e:\FLESH_ContinuousBodilyEffort\07_TS_featureExtraction\..\05_finalMerge\TS_final\merged_anno_0_2_50_p0.csv
-No vocalization in the trial
-No f1, f2 in the dataframe
-working on file:  e:\FLESH_ContinuousBodilyEffort\07_TS_featureExtraction\..\05_finalMerge\TS_final\merged_anno_0_2_51_p0.csv
-No vocalization in the trial
-No f1, f2 in the dataframe
-working on file:  e:\FLESH_ContinuousBodilyEffort\07_TS_featureExtraction\..\05_finalMerge\TS_final\merged_anno_0_2_52_p0.csv
-No vocalization in the trial
-No f1, f2 in the dataframe
-working on file:  e:\FLESH_ContinuousBodilyEffort\07_TS_featureExtraction\..\05_finalMerge\TS_final\merged_anno_0_2_57_p1.csv
-No vocalization in the trial
-No f1, f2 in the dataframe
-working on file:  e:\FLESH_ContinuousBodilyEffort\07_TS_featureExtraction\..\05_finalMerge\TS_final\merged_anno_0_2_58_p1.csv
-No vocalization in the trial
-No f1, f2 in the dataframe
-working on file:  e:\FLESH_ContinuousBodilyEffort\07_TS_featureExtraction\..\05_finalMerge\TS_final\merged_anno_0_2_59_p1.csv
-No vocalization in the trial
-No f1, f2 in the dataframe
-working on file:  e:\FLESH_ContinuousBodilyEffort\07_TS_featureExtraction\..\05_finalMerge\TS_final\merged_anno_0_2_5_p0.csv
-working on file:  e:\FLESH_ContinuousBodilyEffort\07_TS_featureExtraction\..\05_finalMerge\TS_final\merged_anno_0_2_60_p1.csv
-No vocalization in the trial
-No f1, f2 in the dataframe
-working on file:  e:\FLESH_ContinuousBodilyEffort\07_TS_featureExtraction\..\05_finalMerge\TS_final\merged_anno_0_2_61_p1.csv
-No vocalization in the trial
-No f1, f2 in the dataframe
-working on file:  e:\FLESH_ContinuousBodilyEffort\07_TS_featureExtraction\..\05_finalMerge\TS_final\merged_anno_0_2_62_p1.csv
-No vocalization in the trial
-No f1, f2 in the dataframe
-working on file:  e:\FLESH_ContinuousBodilyEffort\07_TS_featureExtraction\..\05_finalMerge\TS_final\merged_anno_0_2_63_p1.csv
-No vocalization in the trial
-No f1, f2 in the dataframe
-working on file:  e:\FLESH_ContinuousBodilyEffort\07_TS_featureExtraction\..\05_finalMerge\TS_final\merged_anno_0_2_64_p1.csv
-No vocalization in the trial
-No f1, f2 in the dataframe
-working on file:  e:\FLESH_ContinuousBodilyEffort\07_TS_featureExtraction\..\05_finalMerge\TS_final\merged_anno_0_2_65_p1.csv
-No vocalization in the trial
-No f1, f2 in the dataframe
-working on file:  e:\FLESH_ContinuousBodilyEffort\07_TS_featureExtraction\..\05_finalMerge\TS_final\merged_anno_0_2_6_p0.csv
-working on file:  e:\FLESH_ContinuousBodilyEffort\07_TS_featureExtraction\..\05_finalMerge\TS_final\merged_anno_0_2_73_p0.csv
-No movement in arms
-working on file:  e:\FLESH_ContinuousBodilyEffort\07_TS_featureExtraction\..\05_finalMerge\TS_final\merged_anno_0_2_74_p0.csv
-No movement in arms
-working on file:  e:\FLESH_ContinuousBodilyEffort\07_TS_featureExtraction\..\05_finalMerge\TS_final\merged_anno_0_2_75_p0.csv
-working on file:  e:\FLESH_ContinuousBodilyEffort\07_TS_featureExtraction\..\05_finalMerge\TS_final\merged_anno_0_2_76_p0.csv
-No movement in arms
-working on file:  e:\FLESH_ContinuousBodilyEffort\07_TS_featureExtraction\..\05_finalMerge\TS_final\merged_anno_0_2_77_p0.csv
-No movement in arms
-working on file:  e:\FLESH_ContinuousBodilyEffort\07_TS_featureExtraction\..\05_finalMerge\TS_final\merged_anno_0_2_78_p0.csv
-No movement in arms
-working on file:  e:\FLESH_ContinuousBodilyEffort\07_TS_featureExtraction\..\05_finalMerge\TS_final\merged_anno_0_2_79_p0.csv
-working on file:  e:\FLESH_ContinuousBodilyEffort\07_TS_featureExtraction\..\05_finalMerge\TS_final\merged_anno_0_2_7_p0.csv
-working on file:  e:\FLESH_ContinuousBodilyEffort\07_TS_featureExtraction\..\05_finalMerge\TS_final\merged_anno_0_2_80_p0.csv
-No movement in arms
-working on file:  e:\FLESH_ContinuousBodilyEffort\07_TS_featureExtraction\..\05_finalMerge\TS_final\merged_anno_0_2_81_p0.csv
-working on file:  e:\FLESH_ContinuousBodilyEffort\07_TS_featureExtraction\..\05_finalMerge\TS_final\merged_anno_0_2_82_p0.csv
-working on file:  e:\FLESH_ContinuousBodilyEffort\07_TS_featureExtraction\..\05_finalMerge\TS_final\merged_anno_0_2_83_p0.csv
-working on file:  e:\FLESH_ContinuousBodilyEffort\07_TS_featureExtraction\..\05_finalMerge\TS_final\merged_anno_0_2_84_p0.csv
-No f1, f2 in the dataframe
-working on file:  e:\FLESH_ContinuousBodilyEffort\07_TS_featureExtraction\..\05_finalMerge\TS_final\merged_anno_0_2_85_p0.csv
-No vocalization in the trial
-No f1, f2 in the dataframe
-No movement in arms
-working on file:  e:\FLESH_ContinuousBodilyEffort\07_TS_featureExtraction\..\05_finalMerge\TS_final\merged_anno_0_2_86_p0.csv
-No movement in arms
-working on file:  e:\FLESH_ContinuousBodilyEffort\07_TS_featureExtraction\..\05_finalMerge\TS_final\merged_anno_0_2_87_p0.csv
-No movement in arms
-working on file:  e:\FLESH_ContinuousBodilyEffort\07_TS_featureExtraction\..\05_finalMerge\TS_final\merged_anno_0_2_88_p0.csv
-No movement in arms
-working on file:  e:\FLESH_ContinuousBodilyEffort\07_TS_featureExtraction\..\05_finalMerge\TS_final\merged_anno_0_2_89_p0.csv
-working on file:  e:\FLESH_ContinuousBodilyEffort\07_TS_featureExtraction\..\05_finalMerge\TS_final\merged_anno_0_2_8_p0.csv
-No vocalization in the trial
-No f1, f2 in the dataframe
-working on file:  e:\FLESH_ContinuousBodilyEffort\07_TS_featureExtraction\..\05_finalMerge\TS_final\merged_anno_0_2_90_p0.csv
-working on file:  e:\FLESH_ContinuousBodilyEffort\07_TS_featureExtraction\..\05_finalMerge\TS_final\merged_anno_0_2_91_p0.csv
-working on file:  e:\FLESH_ContinuousBodilyEffort\07_TS_featureExtraction\..\05_finalMerge\TS_final\merged_anno_0_2_98_p1.csv
-No movement in arms
-working on file:  e:\FLESH_ContinuousBodilyEffort\07_TS_featureExtraction\..\05_finalMerge\TS_final\merged_anno_0_2_99_p1.csv
-No movement in arms
-working on file:  e:\FLESH_ContinuousBodilyEffort\07_TS_featureExtraction\..\05_finalMerge\TS_final\merged_anno_0_2_9_p0.csv
-No vocalization in the trial
-No f1, f2 in the dataframe
-No movement in arms</code></pre>
-</div>
 </div>
 <p>This is how the dataframe looks like:</p>
 <div id="cell-46" class="cell" data-execution_count="67">
@@ -4152,39 +3990,42 @@ No movement in arms</code></pre>
 </div>
 </div>
 </div>
+</section>
+<section id="post-extraction-data-wrangling" class="level1">
+<h1>Post-extraction data wrangling</h1>
 <p>Before saving it, we also want to see which trials underwent which corrections. Some trials were guessed on first try (only_c0), some after first correction (c0_c1) and some only after second correction or not at all (all_c).</p>
-<div id="cell-48" class="cell" data-execution_count="68">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Identify how are which trials corrected</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>c0 <span class="op">=</span> features_df[features_df[<span class="st">"correction"</span>] <span class="op">==</span> <span class="st">"c0"</span>][<span class="st">"concept_id"</span>].unique()</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>c1 <span class="op">=</span> features_df[features_df[<span class="st">"correction"</span>] <span class="op">==</span> <span class="st">"c1"</span>][<span class="st">"concept_id"</span>].unique()</span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>c2 <span class="op">=</span> features_df[features_df[<span class="st">"correction"</span>] <span class="op">==</span> <span class="st">"c2"</span>][<span class="st">"concept_id"</span>].unique()</span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>only_c0 <span class="op">=</span> [x <span class="cf">for</span> x <span class="kw">in</span> c0 <span class="cf">if</span> x <span class="kw">not</span> <span class="kw">in</span> c1 <span class="kw">and</span> x <span class="kw">not</span> <span class="kw">in</span> c2] <span class="co"># Guessed on first try</span></span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>c0_c1 <span class="op">=</span> [x <span class="cf">for</span> x <span class="kw">in</span> c0 <span class="cf">if</span> x <span class="kw">in</span> c1 <span class="kw">and</span> x <span class="kw">not</span> <span class="kw">in</span> c2] <span class="co"># Guessed on second try</span></span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>all_c <span class="op">=</span> [x <span class="cf">for</span> x <span class="kw">in</span> c0 <span class="cf">if</span> x <span class="kw">in</span> c1 <span class="kw">and</span> x <span class="kw">in</span> c2] <span class="co"># Guessed on third try or never</span></span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Check whether we have some data that are outside of these three categories (could be that we lost some trials in the processing pipeline)</span></span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="bu">all</span> <span class="op">=</span> features_df[<span class="st">"concept_id"</span>].unique()</span>
-<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>missing <span class="op">=</span> [x <span class="cf">for</span> x <span class="kw">in</span> <span class="bu">all</span> <span class="cf">if</span> x <span class="kw">not</span> <span class="kw">in</span> only_c0 <span class="kw">and</span> x <span class="kw">not</span> <span class="kw">in</span> c0_c1 <span class="kw">and</span> x <span class="kw">not</span> <span class="kw">in</span> all_c]</span>
-<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">len</span>(missing) <span class="op">&gt;</span> <span class="dv">0</span>:</span>
-<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Missing: "</span>, missing) <span class="co"># Currently we miss no trials</span></span>
-<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:   </span>
-<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"No missing trials"</span>)</span>
-<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Add column correction_info to features_df</span></span>
-<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>features_df[<span class="st">"correction_info"</span>] <span class="op">=</span> features_df[<span class="st">"correction"</span>]</span>
-<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a><span class="co"># If the concept_id is in only_c0, then correction_info is c0_only</span></span>
-<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a>features_df.loc[features_df[<span class="st">"concept_id"</span>].isin(only_c0), <span class="st">"correction_info"</span>] <span class="op">=</span> <span class="st">"c0_only"</span></span>
-<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Save it</span></span>
-<span id="cb18-25"><a href="#cb18-25" aria-hidden="true" tabindex="-1"></a>features_df.to_csv(datafolder <span class="op">+</span> <span class="st">"features_df_final.csv"</span>, index<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-49" class="cell" data-execution_count="68">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Identify how are which trials corrected</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>c0 <span class="op">=</span> features_df[features_df[<span class="st">"correction"</span>] <span class="op">==</span> <span class="st">"c0"</span>][<span class="st">"concept_id"</span>].unique()</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>c1 <span class="op">=</span> features_df[features_df[<span class="st">"correction"</span>] <span class="op">==</span> <span class="st">"c1"</span>][<span class="st">"concept_id"</span>].unique()</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>c2 <span class="op">=</span> features_df[features_df[<span class="st">"correction"</span>] <span class="op">==</span> <span class="st">"c2"</span>][<span class="st">"concept_id"</span>].unique()</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>only_c0 <span class="op">=</span> [x <span class="cf">for</span> x <span class="kw">in</span> c0 <span class="cf">if</span> x <span class="kw">not</span> <span class="kw">in</span> c1 <span class="kw">and</span> x <span class="kw">not</span> <span class="kw">in</span> c2] <span class="co"># Guessed on first try</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>c0_c1 <span class="op">=</span> [x <span class="cf">for</span> x <span class="kw">in</span> c0 <span class="cf">if</span> x <span class="kw">in</span> c1 <span class="kw">and</span> x <span class="kw">not</span> <span class="kw">in</span> c2] <span class="co"># Guessed on second try</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>all_c <span class="op">=</span> [x <span class="cf">for</span> x <span class="kw">in</span> c0 <span class="cf">if</span> x <span class="kw">in</span> c1 <span class="kw">and</span> x <span class="kw">in</span> c2] <span class="co"># Guessed on third try or never</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Check whether we have some data that are outside of these three categories (could be that we lost some trials in the processing pipeline)</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="bu">all</span> <span class="op">=</span> features_df[<span class="st">"concept_id"</span>].unique()</span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>missing <span class="op">=</span> [x <span class="cf">for</span> x <span class="kw">in</span> <span class="bu">all</span> <span class="cf">if</span> x <span class="kw">not</span> <span class="kw">in</span> only_c0 <span class="kw">and</span> x <span class="kw">not</span> <span class="kw">in</span> c0_c1 <span class="kw">and</span> x <span class="kw">not</span> <span class="kw">in</span> all_c]</span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">len</span>(missing) <span class="op">&gt;</span> <span class="dv">0</span>:</span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Missing: "</span>, missing) <span class="co"># Currently we miss no trials</span></span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:   </span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"No missing trials"</span>)</span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Add column correction_info to features_df</span></span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>features_df[<span class="st">"correction_info"</span>] <span class="op">=</span> features_df[<span class="st">"correction"</span>]</span>
+<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a><span class="co"># If the concept_id is in only_c0, then correction_info is c0_only</span></span>
+<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a>features_df.loc[features_df[<span class="st">"concept_id"</span>].isin(only_c0), <span class="st">"correction_info"</span>] <span class="op">=</span> <span class="st">"c0_only"</span></span>
+<span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Save it</span></span>
+<span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a>features_df.to_csv(datafolder <span class="op">+</span> <span class="st">"features_df_final.csv"</span>, index<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>No missing trials</code></pre>
 </div>
 </div>
 <p>We will be also dealing with some loss of the data because some features was not possible to extract. Let’s see for which features it’s the most of the data</p>
-<div id="cell-50" class="cell" data-execution_count="69">
+<div id="cell-51" class="cell" data-execution_count="69">
 <div class="cell-output cell-output-stdout">
 <pre><code>lowerbody_power_pospeak_mean                0.523077
 lowerbody_moment_sum_change_pospeak_mean    0.584615
@@ -4239,7 +4080,7 @@ dtype: float64</code></pre>
 </div>
 <p>Let’s also have a first look on the distribution of our three measures of interest - arm moment (torque), COPc, and envelope.</p>
 <p>These are for the features in cummulative form (integral)</p>
-<div id="cell-53" class="cell" data-execution_count="76">
+<div id="cell-54" class="cell" data-execution_count="76">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -4248,7 +4089,7 @@ dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div id="cell-54" class="cell" data-execution_count="78">
+<div id="cell-55" class="cell" data-execution_count="78">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -4257,7 +4098,7 @@ dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div id="cell-55" class="cell" data-execution_count="79">
+<div id="cell-56" class="cell" data-execution_count="79">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -4267,7 +4108,7 @@ dtype: float64</code></pre>
 </div>
 </div>
 <p>These are for the features in instantaneous form (peak mean)</p>
-<div id="cell-57" class="cell" data-execution_count="80">
+<div id="cell-58" class="cell" data-execution_count="80">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -4276,7 +4117,7 @@ dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div id="cell-58" class="cell" data-execution_count="81">
+<div id="cell-59" class="cell" data-execution_count="81">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -4285,7 +4126,7 @@ dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div id="cell-59" class="cell" data-execution_count="82">
+<div id="cell-60" class="cell" data-execution_count="82">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -4295,7 +4136,7 @@ dtype: float64</code></pre>
 </div>
 </div>
 <p>Lastly, let’s also look how are these three measures correlated with each other</p>
-<div id="cell-61" class="cell" data-execution_count="85">
+<div id="cell-62" class="cell" data-execution_count="85">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -4304,7 +4145,7 @@ dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div id="cell-62" class="cell" data-execution_count="86">
+<div id="cell-63" class="cell" data-execution_count="86">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -4313,7 +4154,7 @@ dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div id="cell-63" class="cell" data-execution_count="87">
+<div id="cell-64" class="cell" data-execution_count="87">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -4322,18 +4163,21 @@ dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<p>Because we will proceed with XGBoost per modality (see <strong>?@sec-xgboost</strong>), we will also save the data separately for each modality.</p>
-<div id="cell-65" class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Separate data into three dfs based on modality</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>features_df_gesture <span class="op">=</span> features_df[features_df[<span class="st">"modality"</span>] <span class="op">==</span> <span class="st">"gebaren"</span>]</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>features_df_combination <span class="op">=</span> features_df[features_df[<span class="st">"modality"</span>] <span class="op">==</span> <span class="st">"combinatie"</span>]</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>features_df_vocal <span class="op">=</span> features_df[features_df[<span class="st">"modality"</span>] <span class="op">==</span> <span class="st">"geluiden"</span>]</span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Save them</span></span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>features_df_gesture.to_csv(datafolder <span class="op">+</span> <span class="st">"features_df_gesture.csv"</span>, index<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>features_df_combination.to_csv(datafolder <span class="op">+</span> <span class="st">"features_df_combination.csv"</span>, index<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>features_df_vocal.to_csv(datafolder <span class="op">+</span> <span class="st">"features_df_vocal.csv"</span>, index<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Finally, because we will proceed with <a href="../08_Analysis_XGBoost/02_XGBoost_effortIndicators.html#sec-xgboost">eXtreme Gradient Boosting</a> per modality, we will also save the data separately for each modality.</p>
+<div id="cell-66" class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Separate data into three dfs based on modality</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>features_df_gesture <span class="op">=</span> features_df[features_df[<span class="st">"modality"</span>] <span class="op">==</span> <span class="st">"gebaren"</span>]</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>features_df_combination <span class="op">=</span> features_df[features_df[<span class="st">"modality"</span>] <span class="op">==</span> <span class="st">"combinatie"</span>]</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>features_df_vocal <span class="op">=</span> features_df[features_df[<span class="st">"modality"</span>] <span class="op">==</span> <span class="st">"geluiden"</span>]</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Save them</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>features_df_gesture.to_csv(datafolder <span class="op">+</span> <span class="st">"features_df_gesture.csv"</span>, index<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>features_df_combination.to_csv(datafolder <span class="op">+</span> <span class="st">"features_df_combination.csv"</span>, index<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>features_df_vocal.to_csv(datafolder <span class="op">+</span> <span class="st">"features_df_vocal.csv"</span>, index<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</section>
+<section id="references" class="level1">
+<h1>References</h1>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
@@ -4341,7 +4185,7 @@ dtype: float64</code></pre>
 Berisha, Visar, Steven Sandoval, Rene Utianski, Julie Liss, and Andreas Spanias. 2014. <span>“Characterizing the Distribution of the Quadrilateral Vowel Space Area.”</span> <em>The Journal of the Acoustical Society of America</em> 135 (1): 421–27. <a href="https://doi.org/10.1121/1.4829528">https://doi.org/10.1121/1.4829528</a>.
 </div>
 <div id="ref-cwiek_etal_inprep" class="csl-entry" role="listitem">
-Ćwiek, Fuchs, A., and Š. Kadavá. n.d. <span>“<a href="">The Relationship Between Expectation and Performance: Methodological Evaluation</a>.”</span> Accessed.
+Ćwiek, Aleksandra, Susanne Fuchs, Wim Pouw, and Šárka Kadavá. n.d. <span>“<a href="">The Relationship Between Expectation and Performance: Methodological Evaluation</a>.”</span> Accessed.
 </div>
 <div id="ref-daffertshofer_etal04" class="csl-entry" role="listitem">
 Daffertshofer, Andreas, Claudine J. C. Lamoth, Onno G. Meijer, and Peter J. Beek. 2004. <span>“<span>PCA</span> in Studying Coordination and Variability: A Tutorial.”</span> <em>Clinical Biomechanics (Bristol, Avon)</em> 19 (4): 415–28. <a href="https://doi.org/10.1016/j.clinbiomech.2004.01.005">https://doi.org/10.1016/j.clinbiomech.2004.01.005</a>.
@@ -4360,6 +4204,9 @@ Seth, Ajay, Jennifer L. Hicks, Thomas K. Uchida, Ayman Habib, Christopher L. Dem
 </div>
 <div id="ref-trujillo_etal18" class="csl-entry" role="listitem">
 Trujillo, J. P., Irina Simanova, Harold Bekkering, and Asli Özyürek. 2018. <span>“Communicative Intent Modulates Production and Comprehension of Actions and Gestures: <span>A Kinect</span> Study.”</span> <em>Cognition</em> 180 (November): 38–51. <a href="https://doi.org/10.1016/j.cognition.2018.04.003">https://doi.org/10.1016/j.cognition.2018.04.003</a>.
+</div>
+<div id="ref-xiongetal2002" class="csl-entry" role="listitem">
+Xiong, Yingen, Francis Quek, and David Mcneill. 2002. <span>“Hand Gesture Symmetric Behavior Detection and Analysis in Natural Conversation.”</span> In, 179–84. <a href="https://doi.org/10.1109/ICMI.2002.1166989">https://doi.org/10.1109/ICMI.2002.1166989</a>.
 </div>
 <div id="ref-yan_etal20" class="csl-entry" role="listitem">
 Yan, Yuke, James M. Goodman, Dalton D. Moore, Sara A. Solla, and Sliman J. Bensmaia. 2020. <span>“Unexpected Complexity of Everyday Manual Behaviors.”</span> <em>Nature Communications</em> 11 (1): 3564. <a href="https://doi.org/10.1038/s41467-020-17404-0">https://doi.org/10.1038/s41467-020-17404-0</a>.

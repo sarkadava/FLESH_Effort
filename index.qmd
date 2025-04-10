@@ -1,4 +1,4 @@
-# [Preregistration] Putting in the Effort: Modulation of Multimodal Effort in Communicative Breakdowns during a Gestural-Vocal Referential Game
+# Putting in the Effort: Modulation of Multimodal Effort in Communicative Breakdowns during a Gestural-Vocal Referential Game
 
 Authors: Šárka Kadavá, Wim Pouw, Susanne Fuchs, Judith Holler, Aleksandra Ćwiek
 
@@ -6,55 +6,82 @@ This is a material to a study associated with ViCom project **On the FLExibility
 
 This website documents data processing pipeline developed for the project **Modulation of Multimodal Effort in Communicative Breakdowns during a Gestural-Vocal Referential Game**. The pipeline covers every step from raw data ingestion to feature extraction and analysis, focusing on synchronizing and processing motion, audio, and derived signal data.
 
-Below you'll find an overview of the steps in this workflow. Each step builds on the previous one, enabling modular processing and transparent documentation.
+The repository associated with this project can be found [at Github](LINK).
 
-### HERE IMAGE FROM DATA
+![Multimodal animation](multimodal_anim.gif)
 
+## This study
+
+This study investigates whether (and how) people become more effortful when they attempt to resolve misunderstanding in a novel-communication gestural-vocal task. 
+
+In the task, people are asked to .....
+
+We recorded ....
+
+You can read more about the theoretical reasonings in the [introduction](LINK).
+
+## Two-phase preregistration
+
+This study has been preregistered in two phases.
+
+In phase I, we preregistered the experimental design, laboratory setup and power analysis. The preregistration is available at the [OSF Registries](LINK)
+
+In phase II, we preregister the research questions and hypothesis, together with code pipeline covering pre-processing, processing and the analysis itself. The preregistration is available at the [OSF Registries](LINK)
 
 
 ---
 
-## Workflow Overview
+## Pipeline Overview
 
-### 1. Introduction
-- [`intro.qmd`](intro.qmd): Overview of the project goals, data types, and guiding research questions.
+This study builds on multi-step pipeline that serves to
+- extract the raw data
+- process them
+- extract relevant features
+- analyze with regards to research questions
 
-### 2. XDF Processing
-- [`xdf_workflow.ipynb`](01_XDF_processing/xdf_workflow.ipynb): Load and clean raw XDF data, align streams, and prepare for downstream processing.
+In this workflow, each step builds on the previous one. However, it is possible to use parts of the workflow for different purposes.
 
-### 3. Motion Tracking Processing
-- [`01_Video_preparation.ipynb`](02_MotionTracking_processing/01_Video_preparation.ipynb): Prepare and crop video recordings.
-- [`02_Track_OpenPose.ipynb`](02_MotionTracking_processing/02_Track_OpenPose.ipynb): Use OpenPose for 2D pose estimation.
-- [`03_Track_pose2sim.ipynb`](02_MotionTracking_processing/03_Track_pose2sim.ipynb): Convert 2D coordinates to 3D using pose2sim.
-- [`04_Track_InverseKinDyn.ipynb`](02_MotionTracking_processing/04_Track_InverseKinDyn.ipynb): Compute inverse kinematics and dynamics.
+### Preprocessing of the raw data
+- In [Pre-Processing I: from XDF to raw files](01_XDF_processing/xdf_workflow.ipynb) we load and clean raw XDF data, align streams, and prepare for downstream processing.
 
-### 4. Time Series Processing
-- [`01_TS_processing_motion.ipynb`](03_TS_processing/01_TS_processing_motion.ipynb): Clean and interpolate motion signals, extract features.
-- [`02_TS_processing_acoustics.ipynb`](03_TS_processing/02_TS_processing_acoustics.ipynb): Extract acoustic features.
-- [`03_TS_merging.ipynb`](03_TS_processing/03_TS_merging.ipynb): Merge motion and acoustic time series.
+### Motion Tracking Processing
+- In [Motion tracking I: Preparation of videos](02_MotionTracking_processing/01_Video_preparation.ipynb) we crop video recordings and prepare them for motion capture.
+- In [Motion tracking II: 2D pose estimation via OpenPose](02_MotionTracking_processing/02_Track_OpenPose.ipynb) we use OpenPose for 2D pose estimation.
+- [Motion tracking III: Triangulation via Pose2sim](02_MotionTracking_processing/03_Track_pose2sim.ipynb) we convert 2D coordinates to 3D using pose2sim.
+- [Motion tracking IV: Modeling inverse kinematics and dynamics](02_MotionTracking_processing/04_Track_InverseKinDyn.ipynb) we compute inverse kinematics and dynamics using OpenSim
 
-### 5. Movement Annotation
-- [`01_Classify_preparation.ipynb`](04_TS_movementAnnotation/01_Classify_preparation.ipynb): Segment time windows and prepare labels for training classifier.
-- [`02_MovementClassifier.ipynb`](04_TS_movementAnnotation/02_MovementClassifier.ipynb): Train and evaluate classifiers for movement detection.
-- [`03_InterAgreement.ipynb`](04_TS_movementAnnotation/03_InterAgreement.ipynb): Evaluate inter-annotator agreement.
+### Signal Processing
+- In [Processing I: Motion tracking and balance](03_TS_processing/01_TS_processing_motion.ipynb) we clean and interpolate motion signals, and extract derivatives such as speed, acceleration and jerk.
+- [Processing II: Acoustics](03_TS_processing/02_TS_processing_acoustics.ipynb) we extract relevant acoustic features.
+- [Processing III: Merging multimodal data](03_TS_processing/03_TS_merging.ipynb) we merge motion and acoustic time series.
 
-### 6. Final Merge
-- [`TS_mergeAnnotations.ipynb`](05_finalMerge/TS_mergeAnnotations.ipynb): Merge annotations with timeseries.
+### Movement Annotation
+- In [Movement annotation I: Preparing training data and data for classifier](04_TS_movementAnnotation/01_Classify_preparation.ipynb) we prepare our multimodal time series for training purposes.
+- In [Movement annotation II: Training movement classifier, and annotating timeseries data](04_TS_movementAnnotation/02_MovementClassifier.ipynb) we train and evaluate classifiers for movement detection.
+- In [Movement annotation III: Computing interrater agreement between manual and automatic annotation](04_TS_movementAnnotation/03_InterAgreement.ipynb) we evaluate inter-annotator agreement.
 
-### 7. Concept Similarity
-- [`ConceptNet_similarity.ipynb`](06_ConceptSimilarity/ConceptNet_similarity.ipynb): Assess semantic similarity between concepts using ConceptNet.
+### Final Merge
+- In [Final merge](05_finalMerge/TS_mergeAnnotations.ipynb) we merge annotations with timeseries.
 
-### 8. Feature Extraction
-- [`TS_extraction.ipynb`](07_TS_featureExtraction/TS_extraction.ipynb): Extract final time series features for modeling.
+### Concept Similarity
+- In [Computing concept similarity using ConceptNet word embeddings](06_ConceptSimilarity/ConceptNet_similarity.ipynb): we assess semantic similarity between concepts using ConceptNet.
 
-### 9. Analysis (exploratory)
-- [`01_PCA_featureDimensions.ipynb`](08_Analysis_XGBoost/01_PCA_featureDimensions.ipynb): Explore dimensionality of extracted features using PCA.
-- [`02_XGBoost_effortIndicators.qmd`](08_Analysis_XGBoost/02_XGBoost_effortIndicators.qmd): Assess feature importance using XGBoost.
+### Feature Extraction
+- In [Extraction of effort-related features](07_TS_featureExtraction/TS_extraction.ipynb) we extract features from the multimodal time series for modelling purposes.
 
-### 10. Analysis: statistical modelling
-- [`Modelling_syntheticData.qmd`](09_Analysis_Modeling/Modelling_syntheticData.qmd)
+### Exploratory analysis: Most predictive features of effort
+- In [Exploratory Analysis I: Using PCA to identify effort dimensions](08_Analysis_XGBoost/01_PCA_featureDimensions.ipynb) we explore dimensionality of extracted features using Principal Component Analysis.
+- [Exploratory Analysis II: Identifying effort-related features contributing to misunderstanding resolution](08_Analysis_XGBoost/02_XGBoost_effortIndicators.qmd) we assess feature importance using eXtreme Gradient Boosting.
+
+### Confirmatory nalysis: statistical modelling
+- [Statistical Analysis: Modelling the Effect of Communicative Attempt (H1) and Answer Similarity (H2) on Effort](09_Analysis_Modeling/Modelling_syntheticData.qmd) we build causal and statistical models testing our hypothesis.
 ---
 
+## Contact
+
+add contact
+
+## Funding
 
 
-
+add logos

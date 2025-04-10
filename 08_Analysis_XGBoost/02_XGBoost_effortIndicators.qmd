@@ -8,15 +8,15 @@ execute:
    warning: false 
 ---
 
-## Overview {#sec-xgboost}
+# Overview {#sec-xgboost}
 
 This script is an adaption of pipeline by @cwiek_etal_inprep2.
 
 In this script, we are going to use eXtreme Gradient Boosting (XGBoost, @chen_guestrin16) to identify effort-related features beyond those investigated within our confirmatory analysis, i.e., torque change, amplitude envelope, and change in center of pressure.
 
-XGBoost is a machine learning algorithm that builds an ensemble of decision trees to predict an outcome based on input features. For us, outcome refers to *communicative attempt* (baseline, first correction, second correction) and input features refer to all *features of effort* collected in [Feature extraction](TS_extraction.ipynb#sec-features).
+XGBoost is a machine learning algorithm that builds an ensemble of decision trees to predict an outcome based on input features. For us, outcome refers to *communicative attempt* (baseline, first correction, second correction) and input features refer to all *features of effort* collected in [Feature extraction script](../07_TS_featureExtraction/TS_extraction.ipynb#sec-features).
 
-We are going to use separate models for each modality, as we expect differences in how (significantly) features contribute to resolving misunderstanding in first and second correction. Finally, when having list of features ordered by their importance in predicting communicative attempt, we will combine the XGBoost-computed importance with PCA analysis we have performed in script @sec-pca. This is to ensure we pick features from uncorrelated dimensions and thus cover more explanatory planes of effort.
+We are going to use separate models for each modality, as we expect differences in how (significantly) features contribute to resolving misunderstanding in first and second correction. Finally, when having list of features ordered by their importance in predicting communicative attempt, we will combine the XGBoost-computed importance with PCA analysis we have performed in [this script](../08_Analysis_XGBoost/01_PCA_featureDimensions.ipynb#sec-pca). This is to ensure we pick features from uncorrelated dimensions and thus cover more explanatory planes of effort.
 
 Note that the current version of the script is used with data only from dyad 0. Since this is not sufficient amount of data for any meaningful conclusions, this script serves for building the workflow. We will use identical pipeline with the full dataset, and any deviations from this script will be reported.
 
@@ -60,7 +60,7 @@ colorBlindBlack8  <- c("#000000", "#E69F00", "#56B4E9", "#009E73",
 
 # Gesture
 
-In the previous script (@sec-pca), we have already separated trials into modalities and clean the resulting dataframes of superfluous columns so now we can directly load them and continue modelling.
+In the [previous script](../08_Analysis_XGBoost/01_PCA_featureDimensions.ipynb#sec-pca), we have already separated trials into modalities and clean the resulting dataframes of superfluous columns so now we can directly load them and continue modelling.
 
 ```{r gesture data}
 
@@ -676,7 +676,7 @@ head(gesCumulativeImportance, n=10)
 
 #### PCA
 
-Now, to select features along different (uncorrelated) dimensions, we want to connect these results with the results of PCA we performed in script @sec-pca.
+Now, to select features along different (uncorrelated) dimensions, we want to connect these results with the results of PCA we performed in [this script](../08_Analysis_XGBoost/01_PCA_featureDimensions.ipynb#sec-pca).
 
 ```{r ges pca function}
 #| code-fold: true
@@ -2093,6 +2093,8 @@ for (pc in c("PC1", "PC2", "PC3")) {
 }
 
 ```
+
+Now we are ready to model the most predictive features to get deeper understanding of their causal relationship with our predictive variable, i.e., communicative attempt. 
 
 # Session info
 
