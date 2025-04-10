@@ -9,6 +9,12 @@ conda create --name FLESH_TSPROCESS python=3.12.2
 
 conda activate FLESH_TSPROCESS
 
-2) install necessary packages
+2) Add Conda Environment to Jupyter Notebook
+
+pip install ipykernel
+python -m ipykernel install --user --name=FLESH_TSPROCESS --display-name "Python (FLESH_TSPROCESS)"
+
+
+3) install necessary packages
 
 pip install -r requirements_general.txt

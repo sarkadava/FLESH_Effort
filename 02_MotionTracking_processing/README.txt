@@ -1,6 +1,6 @@
 SETUP
 
-If you continue from 01_XDF_processing, you can skip steps 1) and 2)
+If you continue from 01_XDF_processing, you can skip steps 1-3
 
 1) create virtual environment FLESH_TSPROCESS (we will use this environment for most of the processing steps)
 
@@ -8,24 +8,33 @@ conda create --name FLESH_TSPROCESS python=3.12.2
 
 conda activate FLESH_TSPROCESS
 
-2) install necessary packages
+2) - Add Conda Environment to Jupyter Notebook
+pip install ipykernel
+python -m ipykernel install --user --name=FLESH_TSPROCESS --display-name "Python (FLESH_TSPROCESS)"
+
+3) install necessary packages
 
 pip install -r requirements_general.txt
 
-3) in folder \openpose follow the STEP1 and STEP2 urls to download necessary files
+4) in folder \openpose follow the STEP1 and STEP2 urls to download necessary files
 
 * STEP1: place bin folder which would be in the openpose folder
 * STEP2: place the 'pose_iter_XXXXXX.caffemodel' in the models/pose/body_135/ folder.
 
 (Now you are ready to run scripts 01_Video_preparation and 02_Track_OpenPose)
 
-4) create virtual environment FLESH_pose2sim
+5) create virtual environment FLESH_pose2sim
 
 conda create --name FLESH_pose2sim python=3.10 -y
 
 conda activate FLESH_pose2sim
 
-5) install necessary packages
+6) Add Conda Environment to Jupyter Notebook
+
+pip install ipykernel
+python -m ipykernel install --user --name=FLESH_pose2sim --display-name "Python (FLESH_pose2sim)"
+
+7) install necessary packages
 
 cd '\xxx\02_MotionTracking_processing'
 
@@ -33,13 +42,18 @@ pip install -r requirements_pose2sim.txt
 
 (Now you are ready to run script 03_Track_pose2sim.ipynb)
 
-4) create virtual environment FLESH_opensim
+8) create virtual environment FLESH_opensim
 
 conda create --name FLESH_opensim python=3.8.19
 
 conda activate FLESH_opensim
 
-5) install necessary packages
+9) Add Conda Environment to Jupyter Notebook
+
+pip install ipykernel
+python -m ipykernel install --user --name=FLESH_opensim --display-name "Python (FLESH_opensim)"
+
+10) install necessary packages
 
 cd '\xxx\02_MotionTracking_processing'
 
