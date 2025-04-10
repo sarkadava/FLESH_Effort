@@ -12,7 +12,7 @@ conda activate FLESH_TSPROCESS
 
 cd '\xxx\02_MotionTracking_processing'
 
-pip install -r requirements.txt
+pip install -r requirements_general.txt
 
 3) You will also need Praat for extracting formants (download link here: https://www.fon.hum.uva.nl/praat/)
 

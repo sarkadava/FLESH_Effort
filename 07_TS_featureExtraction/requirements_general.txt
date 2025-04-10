@@ -1,8 +1,7 @@
 antropy==0.1.6
 matplotlib==3.8.4
-numpy==2.2.1
+numpy==1.26.4
 pandas==2.2.3
 scikit_learn==1.4.1.post1
 scipy==1.15.0
 seaborn==0.13.2
-umap_learn==0.5.6

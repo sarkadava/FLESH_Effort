@@ -1,2 +1,0 @@
-opensim==3.3
-Pose2Sim==0.10.6

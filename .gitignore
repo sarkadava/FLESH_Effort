@@ -6,6 +6,11 @@
 *.wav
 *.xdf
 
+
+/00_RAWDATA/0_1
+/00_RAWDATA/0_2
+
+
 01_XDF_processing/data/Data_processed/CsvDataTS_raw
 
 /02_MotionTracking_processing/openpose/bin

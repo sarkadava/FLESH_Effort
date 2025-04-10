@@ -1,38 +1,77 @@
-# FLESH_ContinuousBodilyEffort
+# Github repository to project Putting in the Effort: Modulation of Multimodal Effort in Communicative Breakdowns during a Gestural-Vocal Referential Game
+
+## Overview
+
+This repository stores coding pipeline to process and analyze data associated with project "Putting in the Effort: Modulation of Multimodal Effort in Communicative Breakdowns during a Gestural-Vocal Referential Game" (FLESH). This project investigates how people modulate their effort when they encounter communicative breakdowns in a referential game. The project is part of the FLESH project (ViCom, DFG).
+
+This project has been preregistered as a two-phase preregistration. In [Phase I](), we preregistered the data collection. In [Phase II](), we have preregistered the analysis plan, including the processing steps.
+
+![Multimodal animation](multimodal_anim.gif)
+
+--- 
+
+The pipeline consists of several processing and analysis steps, whereby each step works on the output of the previous step. However, they are build in modular way such that one can implement individual scripts for their own purposes.
+
+You can browse through the pipeline as a [website](https://sarkadava.github.io/FLESH_ContinuousBodilyEffort/).
 
 
-TODO:
-- have one META.txt with pcnID, sex, weight and height in RAWDATA
-- req + installation for movement annnotation
-- req + installation for final merge
-- req + installation for feature extraction
-- req + installation for xgboost
-- req + installation for modelling
+The pipeline is divided into the following steps:
 
-- check if sound annotation based on envelope would suffice
-- check training vs classifying dataset for different number of columns
-- check if three main vars are correlated
+- Pre-processing I: From XDF to raw files
 
+- Motion tracking I: Preparation of videos
+- Motion tracking II: 2D pose estimation via OpenPose
+- Motion tracking III: Triangulation via Pose2sim
+- Motion tracking IV: Modeling inverse kinematics and dynamics
 
-NOTES FOR 03
+- Processing I: Motion tracking and balance
+- Processing II: Acoustics
+- Processing III: Merging multimodal data
 
-Notes 01
+- Movement annotation I: Preparing training data and data for classifier
+- Movement annotation II: Training movement classifier, and annotating timeseries data
+- Movement annotation III: Computing interrater agreement between manual and automatic annotation
 
-01 - You dont say what the aggregated kinematic measures actually are
-01 - are you taking euclidean sum from speed of connected joints?
-01 - just curious, "get sampling rate 1/np.mean(np.diff(mot_df['time']))" -> so maybe we can discuss whether super variable frame rates will be problematic here (otherwise we pre-regularize perhaps)
-01 - lets discuss some smoothing at some point, why smooth more or less, would love to hear your reasoning
-01 - not needed, but nice to know: so scipy.signal.savgol_filter is also used sometimes to take better estimates of derivatives, could be an option instead of differencing and then smoothing https://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.savgol_filter.html (you just set deriv = 1 or 2 (1st, 2nd derivative).
-Notes 02
+- Final merge: Merging timeseries with annotations
 
-missed intro's, but looks fine to me
-Notes 03
+- Computing concept similarity using ConceptNet word embeddings
+- Extraction of effort-related features
 
-do we really need soundgen? same for praat. I dont think we should change it, but it would be great to hear your thinking on this
-not necessary, but to consider: https://www.freecodecamp.org/news/how-to-run-r-programs-directly-in-jupyter-notebook-locally/
-notes 04
+- Exploratory Analysis I: Using PCA to identify effort dimensions
+- Exploratory Analysis II: Identifying effort-related features contributing to misunderstanding resolution
 
-lacks intros, and explanations of what exactly were checking for
-Envelope peaks as a reference point for formants -> cool!
-peaks, _ = find_peaks(env_trial['envelope'], height=np.mean(env_trial['envelope'])) -> we need to be careful here. maybe we can discuss (would you not set this the same for all paricipants?)
-Notes general At the top we could write a method like section that overviews the whole procedure (which then can serve as input for a more abbreviated method in the paper). This way people can connect code with conceptual level steps. For some scripts I lose the concepts with the script (because no data, no method, and no intro to the code chunk).
+- Statistical analysis: Modelling the effect of communicative attempt (H1) and answer similarity (H2) on effort
+
+-- 
+
+## Prerequisites
+
+If you wish to use only some steps of the pipeline, you will find the prerequisites and installation guide in the respective folder.
+
+If you wish to run the entire pipeline, you can follow the steps below. Note that this project mostly in Python, but implements also some steps in R. Note that, for example, Visual Studio Code allows one to run both Python and R scripts. Additionally, the workflow also depends on some external softwares such as [Praat](https://www.fon.hum.uva.nl/praat/), [ELAN](https://archive.mpi.nl/tla/elan) and [EasyDIAG](https://sourceforge.net/projects/easydiag/). Refer to the softwares' documentations for installation.
+
+To prevent any conflicts in dependencies, we recommend to follow our workflow of creating three virtual environments, one for general processing steps, one for pose2sim and one for OpenSim scripting. In the following installation, we will setup environment for general processing steps, but you can find the installation instructions for the other two environments in their respective folders (02_MotionTracking_processing).
+
+```bash
+# 1 - Clone the Repository
+git clone https://github.com/sarkadava/FLESH_ContinuousBodilyEffort.git
+cd FLESH_ContinuousBodilyEffort
+
+# 2 - Create a FLESH_TSPROCESS Conda Environment (Recommended)
+conda create --name FLESH_TSPROCESS python=3.12.2
+conda activate FLESH_TSPROCESS
+
+# 3 - Install Dependencies
+pip install -r requirements_tsprocess.txt
+
+# 4 - Add Conda Environment to Jupyter Notebook
+pip install ipykernel
+python -m ipykernel install --user --name=FLESH_TSPROCESS --display-name "Python (FLESH_TSPROCESS)"
+
+# 5 - Run the Jupyter Notebook (Optional - You can also open the scripts in Visual Studio Code)
+jupyter notebook
+```
+
+## How to cite
+
+## Contact

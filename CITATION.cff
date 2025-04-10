@@ -1,0 +1,18 @@
+cff-version: 1.0.0
+message: "If you use any step of this pipeline, please cite it as below."
+authors:
+- family-names: "Kadavá"
+  given-names: "Šárka"
+  orcid: "https://orcid.org/0009-0007-4001-6831"
+- family-names: "Pouw"
+  given-names: "Wim"
+- family-names: "Fuchs"
+  given-names: "Susanne"
+- family-names: "Holler"
+  given-names: "Judith"
+- family-names: "Aleksandra "
+  given-names: "Ćwiek"
+title: "Putting in the Effort: Modulation of Multimodal Effort in Communicative Breakdowns during a Gestural-Vocal Referential Game"
+version: 1.0.0
+date-released: 11-4-2025
+url: "https://github.com/sarkadava/FLESH_ContinuousBodilyEffort"
