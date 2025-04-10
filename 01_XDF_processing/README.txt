@@ -12,9 +12,8 @@ cd '\xxx\01_XDF_PROCESSING'
 
 pip install -r requirements_general.txt
 
-3) We need to also install package `shign`, but directly from the source
+3) We need to also install package `shign`. The source is already in the repository so we can just go to the folder and install it from there
 
-git clone https://github.com/KnurpsBram/shign
 cd shign
 pip install .
 
