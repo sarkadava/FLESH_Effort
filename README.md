@@ -1,19 +1,27 @@
 # Github repository to project Putting in the Effort: Modulation of Multimodal Effort in Communicative Breakdowns during a Gestural-Vocal Referential Game
 
+![Multimodal animation](multimodal_anim.gif)
+
 ## Overview
 
 This repository stores coding pipeline to process and analyze data associated with project "Putting in the Effort: Modulation of Multimodal Effort in Communicative Breakdowns during a Gestural-Vocal Referential Game" (FLESH). This project investigates how people modulate their effort when they encounter communicative breakdowns in a referential game. The project is part of the FLESH project (ViCom, DFG).
 
 This project has been preregistered as a two-phase preregistration. In [Phase I](), we preregistered the data collection. In [Phase II](), we have preregistered the analysis plan, including the processing steps.
 
-![Multimodal animation](multimodal_anim.gif)
+### Updates
 
---- 
+[✅] Preregistration of data collection
+[✅] Data collection completed
+[] Preregistration of analysis and processing steps
+[] Preprint published
+[] Manuscript published
+[] Data available at open access repository
+
+---
 
 The pipeline consists of several processing and analysis steps, whereby each step works on the output of the previous step. However, they are build in modular way such that one can implement individual scripts for their own purposes.
 
 You can browse through the pipeline as a [website](https://sarkadava.github.io/FLESH_ContinuousBodilyEffort/).
-
 
 The pipeline is divided into the following steps:
 
@@ -41,8 +49,6 @@ The pipeline is divided into the following steps:
 - Exploratory Analysis II: Identifying effort-related features contributing to misunderstanding resolution
 
 - Statistical analysis: Modelling the effect of communicative attempt (H1) and answer similarity (H2) on effort
-
--- 
 
 ## Prerequisites
 
@@ -74,4 +80,8 @@ jupyter notebook
 
 ## How to cite
 
+Kadavá, Š., Pouw, W., Fuchs, S., Holler, J., & Aleksandra , Ć. (2025). Putting in the Effort: Modulation of Multimodal Effort in Communicative Breakdowns during a Gestural-Vocal Referential Game (Version 1.0.0) [Computer software]. https://github.com/sarkadava/FLESH_ContinuousBodilyEffort
+
 ## Contact
+
+kadava@leibniz-zas.de (Šárka Kadavá)
