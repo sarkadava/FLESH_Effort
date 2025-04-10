@@ -10,12 +10,12 @@ This project has been preregistered as a two-phase preregistration. In [Phase I]
 
 ### Updates
 
-[✅] Preregistration of data collection
-[✅] Data collection completed
-[] Preregistration of analysis and processing steps
-[] Preprint published
-[] Manuscript published
-[] Data available at open access repository
+[✅] Preregistration of data collection  <br>
+[✅] Data collection completed  <br>
+[] Preregistration of analysis and processing steps  <br>
+[] Preprint published  <br>
+[] Manuscript published  <br>
+[] Data available at open access repository  <br>
 
 ---
 
