@@ -6,6 +6,7 @@ project:
     - "*.ipynb"
     - "!/00_RAWDATA"
     - "!/Miscellaneous"
+    - "!/shign"
 
 website:
   sidebar:
@@ -42,19 +43,15 @@ website:
           - 08_Analysis_XGBoost/01_PCA_featureDimensions.ipynb
           - 08_Analysis_XGBoost/02_XGBoost_effortIndicators.qmd
           - 09_Analysis_Modeling/Modelling_syntheticData.qmd
-      - text: "References"
-        href: references.qmd
 
   navbar:
     tools:
-      - icon: butterfly
-        href: https://bsky.app/profile/sarkadava.bsky.social
       - icon: github
         menu:
           - text: Source Code
-            href:  https://code.com
+            href:  https://github.com/sarkadava/FLESH_Effort
           - text: Report a Bug
-            href:  https://bugs.com
+            href:  https://github.com/sarkadava/FLESH_Effort/issues
 
 metadata:
   crossref:
@@ -84,10 +81,7 @@ book:
     - 08_Analysis_XGBoost/01_PCA_featureDimensions.ipynb
     - 08_Analysis_XGBoost/02_XGBoost_effortIndicators.qmd
     - 09_Analysis_Modeling/Modelling_syntheticData.qmd
-    - references.qmd
     
-
-
 bibliography: references.bib
 
 format:
