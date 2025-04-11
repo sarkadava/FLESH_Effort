@@ -1,0 +1,33 @@
+
+/* General code block style */
+pre code {
+    background-color: #f8f9fa;  /* soft off-white background */
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    padding: 1em;
+    display: block;
+    overflow-x: auto;
+    color: #212529; /* dark gray/black text for better contrast */
+}
+  
+/* Inline code */
+code {
+    background-color: #f1f1f1;
+    padding: 0.2em 0.4em;
+    border-radius: 4px;
+    font-size: 0.95em;
+}
+  
+/* Optional: Slightly different background per language */
+pre code.language-r {
+    font-family: 'Menlo', 'Courier', monospace;
+    font-size: 0.9em;
+    background-color: #eef6ff; /* soft blue tint */
+}
+  
+pre code.language-python {
+    font-family: 'IBM Plex Mono', 'Source Code Pro', monospace;
+    font-size: 0.9em;       
+    background-color: #fef7ed; /* soft orange tint */
+}
+  

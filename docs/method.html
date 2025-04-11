@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Overview of methodology</title>
+<title>Overview of Methodology</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -68,6 +68,7 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 
 
+<link rel="stylesheet" href="styles.css">
 </head>
 
 <body class="nav-sidebar floating nav-fixed">
@@ -274,28 +275,14 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#preprocessing-of-the-raw-data" id="toc-preprocessing-of-the-raw-data" class="nav-link active" data-scroll-target="#preprocessing-of-the-raw-data">Preprocessing of the raw data</a></li>
-  <li><a href="#motion-tracking-processing" id="toc-motion-tracking-processing" class="nav-link" data-scroll-target="#motion-tracking-processing">Motion Tracking Processing</a></li>
-  <li><a href="#signal-processing" id="toc-signal-processing" class="nav-link" data-scroll-target="#signal-processing">Signal Processing</a></li>
-  <li><a href="#movement-annotation" id="toc-movement-annotation" class="nav-link" data-scroll-target="#movement-annotation">Movement Annotation</a></li>
-  <li><a href="#final-merge" id="toc-final-merge" class="nav-link" data-scroll-target="#final-merge">Final Merge</a></li>
-  <li><a href="#concept-similarity" id="toc-concept-similarity" class="nav-link" data-scroll-target="#concept-similarity">Concept Similarity</a></li>
-  <li><a href="#feature-extraction" id="toc-feature-extraction" class="nav-link" data-scroll-target="#feature-extraction">Feature Extraction</a></li>
-  <li><a href="#exploratory-analysis-most-predictive-features-of-effort" id="toc-exploratory-analysis-most-predictive-features-of-effort" class="nav-link" data-scroll-target="#exploratory-analysis-most-predictive-features-of-effort">Exploratory analysis: Most predictive features of effort</a></li>
-  <li><a href="#confirmatory-nalysis-statistical-modelling" id="toc-confirmatory-nalysis-statistical-modelling" class="nav-link" data-scroll-target="#confirmatory-nalysis-statistical-modelling">Confirmatory nalysis: statistical modelling</a></li>
-  </ul>
-</nav>
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Overview of methodology</h1>
+<h1 class="title">Overview of Methodology</h1>
 </div>
 
 
@@ -312,71 +299,28 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Here is text of the methodology from preregistration with links to spceific scripts</p>
-<section id="preprocessing-of-the-raw-data" class="level3">
-<h3 class="anchored" data-anchor-id="preprocessing-of-the-raw-data">Preprocessing of the raw data</h3>
+<p>ADD TEXT of the methodology from preregistration with links to spceific scripts</p>
 <ul>
-<li>In <a href="./01_XDF_processing/xdf_workflow.html">Pre-Processing I: from XDF to raw files</a> we load and clean raw XDF data, align streams, and prepare for downstream processing.</li>
-</ul>
-</section>
-<section id="motion-tracking-processing" class="level3">
-<h3 class="anchored" data-anchor-id="motion-tracking-processing">Motion Tracking Processing</h3>
-<ul>
-<li>In <a href="./02_MotionTracking_processing/01_Video_preparation.html">Motion tracking I: Preparation of videos</a> we crop video recordings and prepare them for motion capture.</li>
-<li>In <a href="./02_MotionTracking_processing/02_Track_OpenPose.html">Motion tracking II: 2D pose estimation via OpenPose</a> we use OpenPose for 2D pose estimation.</li>
-<li>In <a href="./02_MotionTracking_processing/03_Track_pose2sim.html">Motion tracking III: Triangulation via Pose2sim</a> we convert 2D coordinates to 3D using pose2sim.</li>
-<li>In <a href="./02_MotionTracking_processing/04_Track_InverseKinDyn.html">Motion tracking IV: Modeling inverse kinematics and dynamics</a> we compute inverse kinematics and dynamics using OpenSim</li>
-</ul>
-</section>
-<section id="signal-processing" class="level3">
-<h3 class="anchored" data-anchor-id="signal-processing">Signal Processing</h3>
-<ul>
-<li>In <a href="./03_TS_processing/01_TS_processing_motion.html">Processing I: Motion tracking and balance</a> we clean and interpolate motion signals, and extract derivatives such as speed, acceleration and jerk.</li>
-<li>In <a href="./03_TS_processing/02_TS_processing_acoustics.html">Processing II: Acoustics</a> we extract relevant acoustic features.</li>
-<li>In <a href="./03_TS_processing/03_TS_merging.html">Processing III: Merging multimodal data</a> we merge motion and acoustic time series.</li>
-</ul>
-</section>
-<section id="movement-annotation" class="level3">
-<h3 class="anchored" data-anchor-id="movement-annotation">Movement Annotation</h3>
-<ul>
-<li>In <a href="./04_TS_movementAnnotation/01_Classify_preparation.html">Movement annotation I: Preparing training data and data for classifier</a> we prepare our multimodal time series for training purposes.</li>
-<li>In <a href="./04_TS_movementAnnotation/02_MovementClassifier.html">Movement annotation II: Training movement classifier, and annotating timeseries data</a> we train and evaluate classifiers for movement detection.</li>
-<li>In <a href="./04_TS_movementAnnotation/03_InterAgreement.html">Movement annotation III: Computing interrater agreement between manual and automatic annotation</a> we evaluate inter-annotator agreement.</li>
-</ul>
-</section>
-<section id="final-merge" class="level3">
-<h3 class="anchored" data-anchor-id="final-merge">Final Merge</h3>
-<ul>
-<li>In <a href="./05_finalMerge/TS_mergeAnnotations.html">Final merge</a> we merge annotations with timeseries.</li>
-</ul>
-</section>
-<section id="concept-similarity" class="level3">
-<h3 class="anchored" data-anchor-id="concept-similarity">Concept Similarity</h3>
-<ul>
-<li>In <a href="./06_ConceptSimilarity/ConceptNet_similarity.html">Computing concept similarity using ConceptNet word embeddings</a>: we assess semantic similarity between concepts using ConceptNet.</li>
-</ul>
-</section>
-<section id="feature-extraction" class="level3">
-<h3 class="anchored" data-anchor-id="feature-extraction">Feature Extraction</h3>
-<ul>
-<li>In <a href="./07_TS_featureExtraction/TS_extraction.html">Extraction of effort-related features</a> we extract features from the multimodal time series for modelling purposes.</li>
-</ul>
-</section>
-<section id="exploratory-analysis-most-predictive-features-of-effort" class="level3">
-<h3 class="anchored" data-anchor-id="exploratory-analysis-most-predictive-features-of-effort">Exploratory analysis: Most predictive features of effort</h3>
-<ul>
-<li>In <a href="./08_Analysis_XGBoost/01_PCA_featureDimensions.html">Exploratory Analysis I: Using PCA to identify effort dimensions</a> we explore dimensionality of extracted features using Principal Component Analysis.</li>
-<li>In <a href="./08_Analysis_XGBoost/02_XGBoost_effortIndicators.html">Exploratory Analysis II: Identifying effort-related features contributing to misunderstanding resolution</a> we assess feature importance using eXtreme Gradient Boosting.</li>
-</ul>
-</section>
-<section id="confirmatory-nalysis-statistical-modelling" class="level3">
-<h3 class="anchored" data-anchor-id="confirmatory-nalysis-statistical-modelling">Confirmatory nalysis: statistical modelling</h3>
-<ul>
-<li>In <a href="./09_Analysis_Modeling/Modelling_syntheticData.html">Statistical Analysis: Modelling the Effect of Communicative Attempt (H1) and Answer Similarity (H2) on Effort</a> we build causal and statistical models testing our hypothesis.</li>
+<li><p><a href="./01_XDF_processing/xdf_workflow.html">Pre-Processing I: from XDF to raw files</a></p></li>
+<li><p><a href="./02_MotionTracking_processing/01_Video_preparation.html">Motion tracking I: Preparation of videos</a></p></li>
+<li><p><a href="./02_MotionTracking_processing/02_Track_OpenPose.html">Motion tracking II: 2D pose estimation via OpenPose</a></p></li>
+<li><p><a href="./02_MotionTracking_processing/03_Track_pose2sim.html">Motion tracking III: Triangulation via Pose2sim</a></p></li>
+<li><p><a href="./02_MotionTracking_processing/04_Track_InverseKinDyn.html">Motion tracking IV: Modeling inverse kinematics and dynamics</a></p></li>
+<li><p><a href="./03_TS_processing/01_TS_processing_motion.html">Processing I: Motion tracking and balance</a></p></li>
+<li><p><a href="./03_TS_processing/02_TS_processing_acoustics.html">Processing II: Acoustics</a></p></li>
+<li><p><a href="./03_TS_processing/03_TS_merging.html">Processing III: Merging multimodal data</a></p></li>
+<li><p><a href="./04_TS_movementAnnotation/01_Classify_preparation.html">Movement annotation I: Preparing training data and data for classifier</a></p></li>
+<li><p><a href="./04_TS_movementAnnotation/02_MovementClassifier.html">Movement annotation II: Training movement classifier, and annotating timeseries data</a> w</p></li>
+<li><p><a href="./04_TS_movementAnnotation/03_InterAgreement.html">Movement annotation III: Computing interrater agreement between manual and automatic annotation</a></p></li>
+<li><p><a href="./05_finalMerge/TS_mergeAnnotations.html">Final merge</a></p></li>
+<li><p><a href="./06_ConceptSimilarity/ConceptNet_similarity.html">Computing concept similarity using ConceptNet word embeddings</a></p></li>
+<li><p><a href="./07_TS_featureExtraction/TS_extraction.html">Extraction of effort-related features</a></p></li>
+<li><p><a href="./08_Analysis_XGBoost/01_PCA_featureDimensions.html">Exploratory Analysis I: Using PCA to identify effort dimensions</a></p></li>
+<li><p><a href="./08_Analysis_XGBoost/02_XGBoost_effortIndicators.html">Exploratory Analysis II: Identifying effort-related features contributing to misunderstanding resolution</a></p></li>
+<li><p><a href="./09_Analysis_Modeling/Modelling_syntheticData.html">Statistical Analysis: Modelling the Effect of Communicative Attempt (H1) and Answer Similarity (H2) on Effort</a></p></li>
 </ul>
 
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

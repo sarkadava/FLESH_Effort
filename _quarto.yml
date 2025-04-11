@@ -87,6 +87,8 @@ bibliography: references.bib
 format:
   html:
     theme: cosmo
+    highlight-style: github
+    css: styles.css
 
 
 

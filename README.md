@@ -20,7 +20,7 @@ This project has been preregistered as a two-phase preregistration. In [Phase I]
 
 The pipeline consists of several processing and analysis steps, whereby each step works on the output of the previous step. However, they are build in modular way such that one can implement individual scripts for their own purposes.
 
-You can browse through the pipeline as a [website](https://sarkadava.github.io/FLESH_ContinuousBodilyEffort/).
+You can browse through the pipeline as a [website](https://sarkadava.github.io/FLESH_Effort/).
 
 The pipeline is divided into the following steps:
 
@@ -59,7 +59,7 @@ To prevent any conflicts in dependencies, we recommend to follow our workflow of
 
 ```bash
 # 1 - Clone the Repository
-git clone https://github.com/sarkadava/FLESH_ContinuousBodilyEffort.git
+git clone https://github.com/sarkadava/FLESH_Effort.git
 cd FLESH_ContinuousBodilyEffort
 
 # 2 - Create a FLESH_TSPROCESS Conda Environment (Recommended)
@@ -79,8 +79,14 @@ jupyter notebook
 
 ## How to cite
 
-Kadavá, Š., Pouw, W., Fuchs, S., Holler, J., & Aleksandra , Ć. (2025). Putting in the Effort: Modulation of Multimodal Effort in Communicative Breakdowns during a Gestural-Vocal Referential Game (Version 1.0.0) [Computer software]. https://github.com/sarkadava/FLESH_ContinuousBodilyEffort
+If you want to use and cite and part of the **coding pipeline**, cite:
+
+Kadavá, Š., Ćwiek, A., & Pouw, W.. (2025). Coding pipeline to the project Putting in the Effort: Modulation of Multimodal Effort in Communicative Breakdowns during a Gestural-Vocal Referential Game (Version 1.0.0) [Computer software]. https://github.com/sarkadava/FLESH_Effort
+
+If you want to cite the **project**, cite
+
+Kadavá, Š., Pouw, W., Fuchs, S., Holler, J., & Aleksandra , Ć. (2025). Putting in the Effort: Modulation of Multimodal Effort in Communicative Breakdowns during a Gestural-Vocal Referential Game. OSF Registries. **LINK**
 
 ## Contact
 
-kadava@leibniz-zas.de (Šárka Kadavá)
+kadava[at]leibniz-zas[dot]de (Šárka Kadavá)

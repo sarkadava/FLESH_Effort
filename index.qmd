@@ -9,13 +9,13 @@ format:
 toc: true
 ---
 
-This website documents data processing pipeline developed for the study **Putting in the Effort: Modulation of Multimodal Effort in Communicative Breakdowns during a Gestural-Vocal Referential Game**. The study is investigated as a part of the project tudy associated with ViCom project [**On the FLExibility and Stability of Gesture-speecH Coordination (FLESH)**](https://vicom.info/projects/on-the-flexibility-and-stability-of-gesture-speech-coordination-flesh-evidence-from-production-comprehension-and-imitation/). The pipeline covers every step from raw data ingestion to feature extraction and analysis, focusing on synchronizing and processing motion, audio, and derived signal data.
+This website documents data processing pipeline developed for the study **Putting in the Effort: Modulation of Multimodal Effort in Communicative Breakdowns during a Gestural-Vocal Referential Game**. The study is a part of the project associated with ViCom project [**On the FLExibility and Stability of Gesture-speecH Coordination (FLESH)**](https://vicom.info/projects/on-the-flexibility-and-stability-of-gesture-speech-coordination-flesh-evidence-from-production-comprehension-and-imitation/). The pipeline covers every step from raw data processing to feature extraction and analysis, focusing on extraction of motion and acoustic signals, cleaning and preparation of relevant analyses.
 
 ![Example of multimodal signals from FLESH data](assets/multimodal_anim.gif)
 
 The repository associated with this project can be found on [Github](LINK).
 
-## This study
+## Current study
 
 We recruited 60 Dutch dyads (i.e., 120 individuals) ti participate in a gestural-vocal referential game. One person of the dyad acts as a performer, and one as a guesser. The performer’s role is to express meaning in one of the three conditions: using only voice, only gesture, or both. The guesser’s role is to guess the meaning. If the answer is not correct, the performer has two more chances to repair themselves. In total, each dyad performs 42 different concepts in three modality conditions, and partners swap roles within each condition. We recorded performers' movement, vocalizations, and postural sway. 
 
@@ -60,7 +60,7 @@ Note that in this workflow, each step builds on the previous one. However, it is
 - In [Motion tracking I: Preparation of videos](02_MotionTracking_processing/01_Video_preparation.ipynb) we crop video recordings and prepare them for motion capture.
 - In [Motion tracking II: 2D pose estimation via OpenPose](02_MotionTracking_processing/02_Track_OpenPose.ipynb) we use OpenPose for 2D pose estimation.
 - In [Motion tracking III: Triangulation via Pose2sim](02_MotionTracking_processing/03_Track_pose2sim.ipynb) we convert 2D coordinates to 3D using pose2sim.
-- In [Motion tracking IV: Modeling inverse kinematics and dynamics](02_MotionTracking_processing/04_Track_InverseKinDyn.ipynb) we compute inverse kinematics and dynamics using OpenSim
+- In [Motion tracking IV: Modeling inverse kinematics and dynamics](02_MotionTracking_processing/04_Track_InverseKinDyn.ipynb) we compute inverse kinematics and dynamics using OpenSim.
 
 #### Signal Processing
 - In [Processing I: Motion tracking and balance](03_TS_processing/01_TS_processing_motion.ipynb) we clean and interpolate motion signals, and extract derivatives such as speed, acceleration and jerk.
@@ -90,11 +90,21 @@ Note that in this workflow, each step builds on the previous one. However, it is
 
 ## Acknowledgements
 
-We would like to thank to all participants of this study. Special thanks belong also to the Donders lab coordinator Jiska Koemans and the Donders research integrity officer Miriam Kos. Lastly, we thank to members of Donders Technical Support Group, namely Erik van den Berge, Norbert Hermesdorf, Gerard van Oijen, Maarten Snellen and Pascal de Water, for helping with the technical setup.
+We would like to thank to all participants of this study. Special thanks also go to the Donders lab coordinator Jiska Koemans and the Donders research integrity officer Miriam Kos. We are especially grateful to the members of Donders Technical Support Group, namely Erik van den Berge, Norbert Hermesdorf, Gerard van Oijen, Maarten Snellen and Pascal de Water, for their invaluable help with the technical setup. Finally, we thank the student assistants and interns in project FLESH - Jet Lambers, Justin Snelders, Gillian Rosenberg, Hamza Nalbantoğlu - who supported this project through their efforts in participant recruitment, data collection, data processing, and annotation.
 
 ## Contact
 
-Corresponding author: kadava[et]leibniz-zas[dot]de 
+Corresponding author: kadava[at]leibniz-zas[dot]de 
+
+## How to cite
+
+If you want to use and cite and part of the **coding pipeline**, cite:
+
+Kadavá, Š., Ćwiek, A., & Pouw, W.. (2025). Coding pipeline to the project Putting in the Effort: Modulation of Multimodal Effort in Communicative Breakdowns during a Gestural-Vocal Referential Game (Version 1.0.0) [Computer software]. https://github.com/sarkadava/FLESH_Effort
+
+If you want to cite the **project**, cite
+
+Kadavá, Š., Pouw, W., Fuchs, S., Holler, J., & Aleksandra , Ć. (2025). Putting in the Effort: Modulation of Multimodal Effort in Communicative Breakdowns during a Gestural-Vocal Referential Game. OSF Registries. **LINK**
 
 ## Funding and support
 

@@ -68,6 +68,7 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 
 
+<link rel="stylesheet" href="styles.css">
 </head>
 
 <body class="nav-sidebar floating nav-fixed">
@@ -278,12 +279,13 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#this-study" id="toc-this-study" class="nav-link active" data-scroll-target="#this-study">This study</a></li>
+  <li><a href="#current-study" id="toc-current-study" class="nav-link active" data-scroll-target="#current-study">Current study</a></li>
   <li><a href="#two-phase-preregistration" id="toc-two-phase-preregistration" class="nav-link" data-scroll-target="#two-phase-preregistration">Two-phase preregistration</a></li>
   <li><a href="#updates" id="toc-updates" class="nav-link" data-scroll-target="#updates">Updates</a></li>
   <li><a href="#pipeline-overview" id="toc-pipeline-overview" class="nav-link" data-scroll-target="#pipeline-overview">Pipeline Overview</a></li>
   <li><a href="#acknowledgements" id="toc-acknowledgements" class="nav-link" data-scroll-target="#acknowledgements">Acknowledgements</a></li>
   <li><a href="#contact" id="toc-contact" class="nav-link" data-scroll-target="#contact">Contact</a></li>
+  <li><a href="#how-to-cite" id="toc-how-to-cite" class="nav-link" data-scroll-target="#how-to-cite">How to cite</a></li>
   <li><a href="#funding-and-support" id="toc-funding-and-support" class="nav-link" data-scroll-target="#funding-and-support">Funding and support</a></li>
   </ul>
 </nav>
@@ -322,7 +324,7 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>This website documents data processing pipeline developed for the study <strong>Putting in the Effort: Modulation of Multimodal Effort in Communicative Breakdowns during a Gestural-Vocal Referential Game</strong>. The study is investigated as a part of the project tudy associated with ViCom project <a href="https://vicom.info/projects/on-the-flexibility-and-stability-of-gesture-speech-coordination-flesh-evidence-from-production-comprehension-and-imitation/"><strong>On the FLExibility and Stability of Gesture-speecH Coordination (FLESH)</strong></a>. The pipeline covers every step from raw data ingestion to feature extraction and analysis, focusing on synchronizing and processing motion, audio, and derived signal data.</p>
+<p>This website documents data processing pipeline developed for the study <strong>Putting in the Effort: Modulation of Multimodal Effort in Communicative Breakdowns during a Gestural-Vocal Referential Game</strong>. The study is a part of the project associated with ViCom project <a href="https://vicom.info/projects/on-the-flexibility-and-stability-of-gesture-speech-coordination-flesh-evidence-from-production-comprehension-and-imitation/"><strong>On the FLExibility and Stability of Gesture-speecH Coordination (FLESH)</strong></a>. The pipeline covers every step from raw data processing to feature extraction and analysis, focusing on extraction of motion and acoustic signals, cleaning and preparation of relevant analyses.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="assets/multimodal_anim.gif" class="img-fluid figure-img"></p>
@@ -330,8 +332,8 @@ ul.task-list li input[type="checkbox"] {
 </figure>
 </div>
 <p>The repository associated with this project can be found on <a href="LINK">Github</a>.</p>
-<section id="this-study" class="level2">
-<h2 class="anchored" data-anchor-id="this-study">This study</h2>
+<section id="current-study" class="level2">
+<h2 class="anchored" data-anchor-id="current-study">Current study</h2>
 <p>We recruited 60 Dutch dyads (i.e., 120 individuals) ti participate in a gestural-vocal referential game. One person of the dyad acts as a performer, and one as a guesser. The performer’s role is to express meaning in one of the three conditions: using only voice, only gesture, or both. The guesser’s role is to guess the meaning. If the answer is not correct, the performer has two more chances to repair themselves. In total, each dyad performs 42 different concepts in three modality conditions, and partners swap roles within each condition. We recorded performers’ movement, vocalizations, and postural sway.</p>
 <p>Our main research question addressess whether (and how) people become more effortful when they attempt to resolve misunderstanding in a novel-communication gestural-vocal task. Effort-related features of interest include upper limb torque, acoustic amplitude envelope, and center of pressure.</p>
 <p>You can read more about the theoretical reasonings in the <a href="LINK">prereregistration’s introduction</a>.</p>
@@ -363,7 +365,7 @@ ul.task-list li input[type="checkbox"] {
 <li>In <a href="./02_MotionTracking_processing/01_Video_preparation.html">Motion tracking I: Preparation of videos</a> we crop video recordings and prepare them for motion capture.</li>
 <li>In <a href="./02_MotionTracking_processing/02_Track_OpenPose.html">Motion tracking II: 2D pose estimation via OpenPose</a> we use OpenPose for 2D pose estimation.</li>
 <li>In <a href="./02_MotionTracking_processing/03_Track_pose2sim.html">Motion tracking III: Triangulation via Pose2sim</a> we convert 2D coordinates to 3D using pose2sim.</li>
-<li>In <a href="./02_MotionTracking_processing/04_Track_InverseKinDyn.html">Motion tracking IV: Modeling inverse kinematics and dynamics</a> we compute inverse kinematics and dynamics using OpenSim</li>
+<li>In <a href="./02_MotionTracking_processing/04_Track_InverseKinDyn.html">Motion tracking IV: Modeling inverse kinematics and dynamics</a> we compute inverse kinematics and dynamics using OpenSim.</li>
 </ul>
 </section>
 <section id="signal-processing" class="level4">
@@ -416,11 +418,18 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="acknowledgements" class="level2">
 <h2 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h2>
-<p>We would like to thank to all participants of this study. Special thanks belong also to the Donders lab coordinator Jiska Koemans and the Donders research integrity officer Miriam Kos. Lastly, we thank to members of Donders Technical Support Group, namely Erik van den Berge, Norbert Hermesdorf, Gerard van Oijen, Maarten Snellen and Pascal de Water, for helping with the technical setup.</p>
+<p>We would like to thank to all participants of this study. Special thanks also go to the Donders lab coordinator Jiska Koemans and the Donders research integrity officer Miriam Kos. We are especially grateful to the members of Donders Technical Support Group, namely Erik van den Berge, Norbert Hermesdorf, Gerard van Oijen, Maarten Snellen and Pascal de Water, for their invaluable help with the technical setup. Finally, we thank the student assistants and interns in project FLESH - Jet Lambers, Justin Snelders, Gillian Rosenberg, Hamza Nalbantoğlu - who supported this project through their efforts in participant recruitment, data collection, data processing, and annotation.</p>
 </section>
 <section id="contact" class="level2">
 <h2 class="anchored" data-anchor-id="contact">Contact</h2>
-<p>Corresponding author: kadava[et]leibniz-zas[dot]de</p>
+<p>Corresponding author: kadava[at]leibniz-zas[dot]de</p>
+</section>
+<section id="how-to-cite" class="level2">
+<h2 class="anchored" data-anchor-id="how-to-cite">How to cite</h2>
+<p>If you want to use and cite and part of the <strong>coding pipeline</strong>, cite:</p>
+<p>Kadavá, Š., Ćwiek, A., &amp; Pouw, W.. (2025). Coding pipeline to the project Putting in the Effort: Modulation of Multimodal Effort in Communicative Breakdowns during a Gestural-Vocal Referential Game (Version 1.0.0) [Computer software]. https://github.com/sarkadava/FLESH_Effort</p>
+<p>If you want to cite the <strong>project</strong>, cite</p>
+<p>Kadavá, Š., Pouw, W., Fuchs, S., Holler, J., &amp; Aleksandra , Ć. (2025). Putting in the Effort: Modulation of Multimodal Effort in Communicative Breakdowns during a Gestural-Vocal Referential Game. OSF Registries. <strong>LINK</strong></p>
 </section>
 <section id="funding-and-support" class="level2">
 <h2 class="anchored" data-anchor-id="funding-and-support">Funding and support</h2>
