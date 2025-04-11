@@ -68,7 +68,7 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 
 
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body class="nav-sidebar floating nav-fixed">
@@ -331,18 +331,18 @@ ul.task-list li input[type="checkbox"] {
 <figcaption>Example of multimodal signals from FLESH data</figcaption>
 </figure>
 </div>
-<p>The repository associated with this project can be found on <a href="LINK">Github</a>.</p>
+<p>The repository associated with this project can be found on <a href="https://github.com/sarkadava/FLESH_Effort">Github</a>.</p>
 <section id="current-study" class="level2">
 <h2 class="anchored" data-anchor-id="current-study">Current study</h2>
 <p>We recruited 60 Dutch dyads (i.e., 120 individuals) ti participate in a gestural-vocal referential game. One person of the dyad acts as a performer, and one as a guesser. The performer’s role is to express meaning in one of the three conditions: using only voice, only gesture, or both. The guesser’s role is to guess the meaning. If the answer is not correct, the performer has two more chances to repair themselves. In total, each dyad performs 42 different concepts in three modality conditions, and partners swap roles within each condition. We recorded performers’ movement, vocalizations, and postural sway.</p>
 <p>Our main research question addressess whether (and how) people become more effortful when they attempt to resolve misunderstanding in a novel-communication gestural-vocal task. Effort-related features of interest include upper limb torque, acoustic amplitude envelope, and center of pressure.</p>
-<p>You can read more about the theoretical reasonings in the <a href="LINK">prereregistration’s introduction</a>.</p>
+<p>You can read more about the theoretical reasonings in the <a href="https://osf.io/6vx28/">prereregistration’s introduction</a>.</p>
 </section>
 <section id="two-phase-preregistration" class="level2">
 <h2 class="anchored" data-anchor-id="two-phase-preregistration">Two-phase preregistration</h2>
 <p>This study has been preregistered in two phases.</p>
-<p>In phase I, we preregistered the experimental design, laboratory setup and power analysis. The preregistration is available at the <a href="https://osf.io/m9xep">OSF Registries</a></p>
-<p>In phase II, we preregistered the research questions and hypothesis, together with code pipeline covering pre-processing, processing and the analysis itself. The preregistration is available at the <a href="LINK">OSF Registries</a></p>
+<p>In phase I, we preregistered the experimental design, laboratory setup and power analysis. The preregistration is available at the <a href="https://osf.io/3nygq">OSF Registries</a>.</p>
+<p>In phase II, we preregistered the research questions and hypothesis, together with code pipeline covering pre-processing, processing and the analysis itself. The preregistration is available at the <a href="https://osf.io/8ajsg">OSF Registries</a>.</p>
 </section>
 <section id="updates" class="level2">
 <h2 class="anchored" data-anchor-id="updates">Updates</h2>
@@ -427,9 +427,9 @@ ul.task-list li input[type="checkbox"] {
 <section id="how-to-cite" class="level2">
 <h2 class="anchored" data-anchor-id="how-to-cite">How to cite</h2>
 <p>If you want to use and cite and part of the <strong>coding pipeline</strong>, cite:</p>
-<p>Kadavá, Š., Ćwiek, A., &amp; Pouw, W.. (2025). Coding pipeline to the project Putting in the Effort: Modulation of Multimodal Effort in Communicative Breakdowns during a Gestural-Vocal Referential Game (Version 1.0.0) [Computer software]. https://github.com/sarkadava/FLESH_Effort</p>
+<p>Kadavá, Š., Ćwiek, A., &amp; Pouw, W.. (2025). Coding pipeline to the project Putting in the Effort: Modulation of Multimodal Effort in Communicative Breakdowns during a Gestural-Vocal Referential Game (Version 1.0.0) [Computer software]. <a href="https://github.com/sarkadava/FLESH_Effort">https://github.com/sarkadava/FLESH_Effort</a></p>
 <p>If you want to cite the <strong>project</strong>, cite</p>
-<p>Kadavá, Š., Pouw, W., Fuchs, S., Holler, J., &amp; Aleksandra , Ć. (2025). Putting in the Effort: Modulation of Multimodal Effort in Communicative Breakdowns during a Gestural-Vocal Referential Game. OSF Registries. <strong>LINK</strong></p>
+<p>Kadavá, Š., Pouw, W., Fuchs, S., Holler, J., &amp; Aleksandra , Ć. (2025). Putting in the Effort: Modulation of Multimodal Effort in Communicative Breakdowns during a Gestural-Vocal Referential Game. OSF Registries. <a href="https://osf.io/8ajsg">https://osf.io/8ajsg</a></p>
 </section>
 <section id="funding-and-support" class="level2">
 <h2 class="anchored" data-anchor-id="funding-and-support">Funding and support</h2>
@@ -439,6 +439,25 @@ ul.task-list li input[type="checkbox"] {
 </section>
 
 </main> <!-- /main -->
+document.addEventListener("DOMContentLoaded", function () {
+
+  const links = document.querySelectorAll("a[href^='http']");
+
+  links.forEach(function (link) {
+
+    // Only apply to external links
+
+    if (link.hostname !== window.location.hostname) {
+
+      link.setAttribute("target", "_blank");
+
+      link.setAttribute("rel", "noopener noreferrer");
+
+    }
+
+  });
+
+});
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

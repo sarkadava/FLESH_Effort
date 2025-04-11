@@ -4,7 +4,7 @@
 
 This repository stores coding pipeline to process and analyze data associated with project "Putting in the Effort: Modulation of Multimodal Effort in Communicative Breakdowns during a Gestural-Vocal Referential Game". This project investigates how people modulate their effort when they encounter communicative breakdowns in a referential game. The project is part of the [FLESH project](https://vicom.info/projects/on-the-flexibility-and-stability-of-gesture-speech-coordination-flesh-evidence-from-production-comprehension-and-imitation/).
 
-This project has been preregistered as a two-phase preregistration. In [Phase I](https://osf.io/3nygq), we preregistered the data collection. In [Phase II](link), we have preregistered the analysis plan, including the processing steps.
+This project has been preregistered as a two-phase preregistration. In [Phase I](https://osf.io/3nygq), we preregistered the data collection. In [Phase II](https://osf.io/8ajsg), we have preregistered the analysis plan, including the processing steps.
 
 ## Updates
 
@@ -83,9 +83,9 @@ If you want to use and cite and part of the **coding pipeline**, cite:
 
 Kadavá, Š., Ćwiek, A., & Pouw, W.. (2025). Coding pipeline to the project Putting in the Effort: Modulation of Multimodal Effort in Communicative Breakdowns during a Gestural-Vocal Referential Game (Version 1.0.0) [Computer software]. https://github.com/sarkadava/FLESH_Effort
 
-If you want to cite the **project**, cite
+If you want to cite the **project**, cite:
 
-Kadavá, Š., Pouw, W., Fuchs, S., Holler, J., & Aleksandra , Ć. (2025). Putting in the Effort: Modulation of Multimodal Effort in Communicative Breakdowns during a Gestural-Vocal Referential Game. OSF Registries. **LINK**
+Kadavá, Š., Pouw, W., Fuchs, S., Holler, J., & Aleksandra , Ć. (2025). Putting in the Effort: Modulation of Multimodal Effort in Communicative Breakdowns during a Gestural-Vocal Referential Game. OSF Registries. https://osf.io/8ajsg
 
 ## Contact
 

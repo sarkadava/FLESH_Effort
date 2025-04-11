@@ -125,7 +125,7 @@ div.csl-indent {
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="../style.css">
 </head>
 
 <body class="nav-sidebar floating nav-fixed">
@@ -4205,7 +4205,7 @@ Daffertshofer, Andreas, Claudine J. C. Lamoth, Onno G. Meijer, and Peter J. Beek
 Hogan, Neville, and Dagmar Sternad. 2009. <span>“Sensitivity of <span>Smoothness Measures</span> to <span>Movement Duration</span>, <span>Amplitude</span>, and <span>Arrests</span>.”</span> <em>Journal of Motor Behavior</em> 41 (6): 529–34. <a href="https://doi.org/10.3200/35-09-004-RC">https://doi.org/10.3200/35-09-004-RC</a>.
 </div>
 <div id="ref-kadava_etal24" class="csl-entry" role="listitem">
-Kadavá, ≈†àrka, Aleksandra Cwiek, Susanne Fuchs, and Wim Pouw. 2024. <span>“What Do We Mean When We Say Gestures Are More Expressive Than Vocalizations? <span>An</span> Experimental and Simulation Study.”</span> <em>Proceedings of the Annual Meeting of the Cognitive Science Society</em> 46 (0). <a href="https://escholarship.org/uc/item/2mp1v3v5">https://escholarship.org/uc/item/2mp1v3v5</a>.
+Kadavá, Šárka, Aleksandra Ćwiek, Susanne Fuchs, and Wim Pouw. 2024. <span>“What Do We Mean When We Say Gestures Are More Expressive Than Vocalizations? <span>An</span> Experimental and Simulation Study.”</span> <em>Proceedings of the Annual Meeting of the Cognitive Science Society</em> 46 (0). <a href="https://escholarship.org/uc/item/2mp1v3v5">https://escholarship.org/uc/item/2mp1v3v5</a>.
 </div>
 <div id="ref-pouw_etal21" class="csl-entry" role="listitem">
 Pouw, Wim, Mark Dingemanse, Yasamin Motamedi, and Aslı Özyürek. 2021. <span>“A <span>Systematic Investigation</span> of <span>Gesture Kinematics</span> in <span>Evolving Manual Languages</span> in the <span>Lab</span>.”</span> <em>Cognitive Science</em> 45 (7): e13014. <a href="https://doi.org/10.1111/cogs.13014">https://doi.org/10.1111/cogs.13014</a>.
@@ -4214,7 +4214,7 @@ Pouw, Wim, Mark Dingemanse, Yasamin Motamedi, and Aslı Özyürek. 2021. <span>�
 Seth, Ajay, Jennifer L. Hicks, Thomas K. Uchida, Ayman Habib, Christopher L. Dembia, James J. Dunne, Carmichael F. Ong, et al. 2018. <span>“<span>OpenSim</span>: <span>Simulating</span> Musculoskeletal Dynamics and Neuromuscular Control to Study Human and Animal Movement.”</span> <em>PLOS Computational Biology</em> 14 (7): e1006223. <a href="https://doi.org/10.1371/journal.pcbi.1006223">https://doi.org/10.1371/journal.pcbi.1006223</a>.
 </div>
 <div id="ref-trujillo_etal18" class="csl-entry" role="listitem">
-Trujillo, J. P., Irina Simanova, Harold Bekkering, and Asli Özyürek. 2018. <span>“Communicative Intent Modulates Production and Comprehension of Actions and Gestures: <span>A Kinect</span> Study.”</span> <em>Cognition</em> 180: 38–51. <a href="https://doi.org/10.1016/j.cognition.2018.04.003">https://doi.org/10.1016/j.cognition.2018.04.003</a>.
+Trujillo, James, Irina Simanova, Harold Bekkering, and Asli Özyürek. 2018. <span>“Communicative Intent Modulates Production and Comprehension of Actions and Gestures: <span>A Kinect</span> Study.”</span> <em>Cognition</em> 180: 38–51. <a href="https://doi.org/10.1016/j.cognition.2018.04.003">https://doi.org/10.1016/j.cognition.2018.04.003</a>.
 </div>
 <div id="ref-xiongetal2002" class="csl-entry" role="listitem">
 Xiong, Yingen, Francis Quek, and David Mcneill. 2002. <span>“Hand Gesture Symmetric Behavior Detection and Analysis in Natural Conversation.”</span> In, 179–84. <a href="https://doi.org/10.1109/ICMI.2002.1166989">https://doi.org/10.1109/ICMI.2002.1166989</a>.
@@ -4229,6 +4229,25 @@ Yan, Yuke, James M. Goodman, Dalton D. Moore, Sara A. Solla, and Sliman J. Bensm
 </section>
 
 </main> <!-- /main -->
+document.addEventListener("DOMContentLoaded", function () {
+
+  const links = document.querySelectorAll("a[href^='http']");
+
+  links.forEach(function (link) {
+
+    // Only apply to external links
+
+    if (link.hostname !== window.location.hostname) {
+
+      link.setAttribute("target", "_blank");
+
+      link.setAttribute("rel", "noopener noreferrer");
+
+    }
+
+  });
+
+});
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

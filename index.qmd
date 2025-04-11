@@ -13,7 +13,7 @@ This website documents data processing pipeline developed for the study **Puttin
 
 ![Example of multimodal signals from FLESH data](assets/multimodal_anim.gif)
 
-The repository associated with this project can be found on [Github](LINK).
+The repository associated with this project can be found on [Github](https://github.com/sarkadava/FLESH_Effort).
 
 ## Current study
 
@@ -21,15 +21,15 @@ We recruited 60 Dutch dyads (i.e., 120 individuals) ti participate in a gestural
 
 Our main research question addressess whether (and how) people become more effortful when they attempt to resolve misunderstanding in a novel-communication gestural-vocal task. Effort-related features of interest include upper limb torque, acoustic amplitude envelope, and center of pressure.
 
-You can read more about the theoretical reasonings in the [prereregistration's introduction](LINK).
+You can read more about the theoretical reasonings in the [prereregistration's introduction](https://osf.io/6vx28/).
 
 ## Two-phase preregistration
 
 This study has been preregistered in two phases.
 
-In phase I, we preregistered the experimental design, laboratory setup and power analysis. The preregistration is available at the [OSF Registries](https://osf.io/m9xep)
+In phase I, we preregistered the experimental design, laboratory setup and power analysis. The preregistration is available at the [OSF Registries](https://osf.io/3nygq).
 
-In phase II, we preregistered the research questions and hypothesis, together with code pipeline covering pre-processing, processing and the analysis itself. The preregistration is available at the [OSF Registries](LINK)
+In phase II, we preregistered the research questions and hypothesis, together with code pipeline covering pre-processing, processing and the analysis itself. The preregistration is available at the [OSF Registries](https://osf.io/8ajsg).
 
 ## Updates
 
@@ -100,11 +100,11 @@ Corresponding author: kadava[at]leibniz-zas[dot]de
 
 If you want to use and cite and part of the **coding pipeline**, cite:
 
-Kadavá, Š., Ćwiek, A., & Pouw, W.. (2025). Coding pipeline to the project Putting in the Effort: Modulation of Multimodal Effort in Communicative Breakdowns during a Gestural-Vocal Referential Game (Version 1.0.0) [Computer software]. https://github.com/sarkadava/FLESH_Effort
+Kadavá, Š., Ćwiek, A., & Pouw, W.. (2025). Coding pipeline to the project Putting in the Effort: Modulation of Multimodal Effort in Communicative Breakdowns during a Gestural-Vocal Referential Game (Version 1.0.0) [Computer software]. [https://github.com/sarkadava/FLESH_Effort](https://github.com/sarkadava/FLESH_Effort)
 
 If you want to cite the **project**, cite
 
-Kadavá, Š., Pouw, W., Fuchs, S., Holler, J., & Aleksandra , Ć. (2025). Putting in the Effort: Modulation of Multimodal Effort in Communicative Breakdowns during a Gestural-Vocal Referential Game. OSF Registries. **LINK**
+Kadavá, Š., Pouw, W., Fuchs, S., Holler, J., & Aleksandra , Ć. (2025). Putting in the Effort: Modulation of Multimodal Effort in Communicative Breakdowns during a Gestural-Vocal Referential Game. OSF Registries. [https://osf.io/8ajsg](https://osf.io/8ajsg)
 
 ## Funding and support
 

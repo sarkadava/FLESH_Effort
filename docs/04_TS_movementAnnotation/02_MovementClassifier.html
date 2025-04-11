@@ -102,7 +102,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 
 
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="../style.css">
 </head>
 
 <body class="nav-sidebar floating nav-fixed">
@@ -994,6 +994,25 @@ weighted avg       0.89      0.89      0.89       552
 </section>
 
 </main> <!-- /main -->
+document.addEventListener("DOMContentLoaded", function () {
+
+  const links = document.querySelectorAll("a[href^='http']");
+
+  links.forEach(function (link) {
+
+    // Only apply to external links
+
+    if (link.hostname !== window.location.hostname) {
+
+      link.setAttribute("target", "_blank");
+
+      link.setAttribute("rel", "noopener noreferrer");
+
+    }
+
+  });
+
+});
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

@@ -125,7 +125,7 @@ div.csl-indent {
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="../style.css">
 </head>
 
 <body class="nav-sidebar floating nav-fixed">
@@ -511,6 +511,25 @@ Pagnon, David, Mathieu Domalain, and Lionel Reveret. 2022. <span>“<span>Pose2S
 </section>
 
 </main> <!-- /main -->
+document.addEventListener("DOMContentLoaded", function () {
+
+  const links = document.querySelectorAll("a[href^='http']");
+
+  links.forEach(function (link) {
+
+    // Only apply to external links
+
+    if (link.hostname !== window.location.hostname) {
+
+      link.setAttribute("target", "_blank");
+
+      link.setAttribute("rel", "noopener noreferrer");
+
+    }
+
+  });
+
+});
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
