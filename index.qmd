@@ -21,7 +21,7 @@ We recruited 60 Dutch dyads (i.e., 120 individuals) ti participate in a gestural
 
 Our main research question addressess whether (and how) people become more effortful when they attempt to resolve misunderstanding in a novel-communication gestural-vocal task. Effort-related features of interest include upper limb torque, acoustic amplitude envelope, and center of pressure.
 
-You can read more about the theoretical reasonings in the [prereregistration's introduction](https://osf.io/6vx28/).
+You can read more about the theoretical reasonings in the [prereregistration's introduction](https://osf.io/kyzn9).
 
 ## Two-phase preregistration
 

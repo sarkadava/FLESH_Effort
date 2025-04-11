@@ -89,8 +89,6 @@ format:
     theme: cosmo
     highlight-style: github
     css: style.css
-    include-after-body: open-links.js
-
 
 
 

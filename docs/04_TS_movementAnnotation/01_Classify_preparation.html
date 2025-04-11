@@ -1865,25 +1865,6 @@ Wittenburg, Peter, Hennie Brugman, Albert Russel, Alex Klassmann, and Han Sloetj
 </section>
 
 </main> <!-- /main -->
-document.addEventListener("DOMContentLoaded", function () {
-
-  const links = document.querySelectorAll("a[href^='http']");
-
-  links.forEach(function (link) {
-
-    // Only apply to external links
-
-    if (link.hostname !== window.location.hostname) {
-
-      link.setAttribute("target", "_blank");
-
-      link.setAttribute("rel", "noopener noreferrer");
-
-    }
-
-  });
-
-});
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
