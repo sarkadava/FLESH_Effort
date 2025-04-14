@@ -17,7 +17,7 @@ The repository associated with this project can be found on [Github](https://git
 
 ## Current study
 
-We recruited 60 Dutch dyads (i.e., 120 individuals) ti participate in a gestural-vocal referential game. One person of the dyad acts as a performer, and one as a guesser. The performer’s role is to express meaning in one of the three conditions: using only voice, only gesture, or both. The guesser’s role is to guess the meaning. If the answer is not correct, the performer has two more chances to repair themselves. In total, each dyad performs 42 different concepts in three modality conditions, and partners swap roles within each condition. We recorded performers' movement, vocalizations, and postural sway. 
+We recruited 60 Dutch dyads (i.e., 120 individuals) to participate in a gestural-vocal referential game. One person of the dyad acts as a performer, and one as a guesser. The performer’s role is to express meaning in one of the three conditions: using only voice, only gesture, or both. The guesser’s role is to guess the meaning. If the answer is not correct, the performer has two more chances to repair themselves. In total, each dyad performs 42 different concepts in three modality conditions, and partners swap roles within each condition. We recorded performers' movement, vocalizations, and postural sway. 
 
 Our main research question addressess whether (and how) people become more effortful when they attempt to resolve misunderstanding in a novel-communication gestural-vocal task. Effort-related features of interest include upper limb torque, acoustic amplitude envelope, and center of pressure.
 
@@ -43,11 +43,12 @@ In phase II, we preregistered the research questions and hypothesis, together wi
 
 ## Pipeline Overview
 
-This study builds on multi-step pipeline that serves to
-- extract the raw data
-- process them
-- extract relevant features
-- analyze with regards to research questions
+This study builds on multistep pipeline that serves to:
+
+- extract the raw data<br>
+- process them<br>
+- extract relevant features<br>
+- analyze with regards to research questions<br>
 
 See [Methods section](method.qmd) for conceptual overview of the processing and analysis steps.
 
@@ -76,7 +77,7 @@ Note that in this workflow, each step builds on the previous one. However, it is
 - In [Final merge](05_finalMerge/TS_mergeAnnotations.ipynb) we merge annotations with timeseries.
 
 #### Concept Similarity
-- In [Computing concept similarity using ConceptNet word embeddings](06_ConceptSimilarity/ConceptNet_similarity.ipynb): we assess semantic similarity between concepts using ConceptNet.
+- In [Computing concept similarity using ConceptNet word embeddings](06_ConceptSimilarity/ConceptNet_similarity.ipynb) we assess semantic similarity between concepts using ConceptNet.
 
 #### Feature Extraction
 - In [Extraction of effort-related features](07_TS_featureExtraction/TS_extraction.ipynb) we extract features from the multimodal time series for modelling purposes.

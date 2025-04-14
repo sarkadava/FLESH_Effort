@@ -245,22 +245,22 @@ To answer our two main research questions, we collect features related to change
 #### Bottom-up analysis features
 We further utilize an extended list of time-varying signals related to our exploratory analysis of other potential measures of effort. These signals include:
 
-- 3D kinematics of arms, legs, and head (positions, speed, acceleration, jerk)
-- Joint angle kinematics of arms, legs, and head (positions, velocity)
-- Joint angle dynamics of arms, legs, and head (torque, torque change)
-- Power of arms, legs, head (angular velocity × torque)
-- Spectral center of gravity
-- Fundamental frequency
-- The first three formants, F1-F3, and their rate of change (i.e., velocity)
-- Change in amplitude envelope
-- Centre of pressure and its change
+- 3D kinematics of arms, legs, and head (positions, speed, acceleration, jerk);
+- Joint angle kinematics of arms, legs, and head (positions, velocity);
+- Joint angle dynamics of arms, legs, and head (torque, torque change);
+- Power of arms, legs, head (angular velocity × torque);
+- Spectral center of gravity;
+- Fundamental frequency;
+- The first three formants, F1-F3, and their rate of change (i.e., velocity);
+- Change in amplitude envelope;
+- Centre of pressure and its change.
 
 For each time-varying signal in our dataset relating to acoustics, kinematics, and joint dynamics, we extract a number of statistics that characterize the global, local (instantaneous), and cumulative nature of the signal in terms of effort. These are:
 
-- Global mean and standard deviation
-- Amount of peaks, and their mean value and standard deviation
-- Range of values
-- Integral 
+- Global mean and standard deviation;
+- Amount of peaks, and their mean value and standard deviation;
+- Range of values;
+- Integral.
 
 Further, we utilize measurements that characterize the trials beyond these statistics. These include:
 
@@ -269,7 +269,7 @@ Further, we utilize measurements that characterize the trials beyond these stati
 - Vowel space area (VSA), used in @berisha_etal14;
 - Motor complexity (computed as the slope of PCA), similar to @yan_etal20;
 - Number of submovements, used in @pouw_etal21; @trujillo_etal18;
-- Number of moving articulators
+- Number of moving articulators;
 - Coupling and movement symmetry of two arms (computed as a correlation between both arms’ trajectories, and as a difference in distance traveled by every joint of each arm), similar to @xiongetal2002.
 
 **Go to script:** [Extraction of effort-related features](07_TS_featureExtraction/TS_extraction.ipynb)
