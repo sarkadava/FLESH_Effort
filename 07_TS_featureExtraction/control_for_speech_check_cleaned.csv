@@ -1,0 +1,55 @@
+filename,check,start_time,end_time,has_speech,whisper_text
+19_1_trial_21_Mic_nominal_srate48000_p0_vrouw_combinatie.wav,speech but condition broken,0.0,5.6999375,True,Uw vrouw.
+20_1_trial_16_Mic_nominal_srate48000_p1_kauwen_combinatie.wav,no speech,0.0,9.825875,True,Ik heb het gevoel dat ik een vrouw ben.
+20_1_trial_17_Mic_nominal_srate48000_p1_slaan_combinatie.wav,no speech,0.0,5.242625,True,Kut.
+20_2_trial_42_Mic_nominal_srate48000_p1_springen_geluiden_c0.wav,can be cut,0.0,10.1735625,True,Wat is dat? ***
+20_2_trial_66_Mic_nominal_srate48000_p1_blij_combinatie_c0.wav,no speech,0.0,8.8461875,True,Ik ga even kijken.
+24_1_trial_40_Mic_nominal_srate48000_p0_scherp_combinatie.wav,can be cut,0.0,5.60625,True,Wat is dat?
+24_2_trial_27_Mic_nominal_srate48000_p1_bitter_geluiden_c1.wav,no speech,0.0,2.255375,True,Doe het goed.
+26_2_trial_55_Mic_nominal_srate48000_p0_verbranden_combinatie_c2_cut3.wav,can be cut,0.0,9.6459375,True,Oud.
+26_2_trial_6_Mic_nominal_srate48000_p0_kind_geluiden_c0.wav,"speech (papa, mama)",0.0,6.5386875,True,Dank je wel voor het kijken.
+27_1_trial_11_Mic_nominal_srate48000_p1_ik_combinatie_cut18.wav,speech,0.0,21.121625,True,Dank u wel. *** ***
+27_2_trial_95_Mic_nominal_srate48000_p1_stil_geluiden_c1.wav,no speech,0.0,13.0390625,True,Mooi. ***
+28_2_trial_33_Mic_nominal_srate48000_p0_bang_geluiden_c1.wav,can be probably cut,0.0,3.0373125,True,"Oh, oh, oh."
+30_2_trial_103_Mic_nominal_srate48000_p1_staart_combinatie_c0.wav,interrupted in the middle,0.0,13.7630625,True,Dank u wel. Yes. Yes. Yes.
+30_2_trial_30_Mic_nominal_srate48000_p1_kind_geluiden_c0_cut1.wav,"speech (papa, mama)",0.0,4.20975,True,Mama. Papa.
+30_2_trial_31_Mic_nominal_srate48000_p1_kind_geluiden_c1_cut6.wav,"speech (papa, mama)",0.0,7.9814375,True,Moema. Moema.
+30_2_trial_47_Mic_nominal_srate48000_p0_hoorn_gebaren_c0.wav,can be cut,0.0,8.1088125,True,Sssst.
+30_2_trial_83_Mic_nominal_srate48000_p0_vlieg_combinatie_c1_cut15.wav,can be cut,0.0,10.696875,True,Ja. ***
+30_2_trial_98_Mic_nominal_srate48000_p1_geur_combinatie_c2_cut1.wav,can be probably cut,0.0,20.732125,True,Ik ben een vrouw. ZANG EN MUZIEK ZANG EN MUZIEK
+37_1_trial_14_Mic_nominal_srate48000_p1_oud_gebaren.wav,can be cut,0.0,12.010625,True,Ik ben er. Ah.
+37_1_trial_21_Mic_nominal_srate48000_p0_kind_geluiden.wav,speech,0.0,3.7913125,True,Naar de schoen.
+37_2_trial_27_Mic_nominal_srate48000_p1_scherp_gebaren_c0_cut1.wav,condition broke,0.0,10.8860625,True,Dank u wel. ***
+39_2_trial_31_Mic_nominal_srate48000_p1_kind_geluiden_c1_cut6.wav,can be cut,0.0,14.951625,True,Ah. Ah. Ah. Ah. Ah. Ah.
+46_2_trial_55_Mic_nominal_srate48000_p1_bitter_geluiden_c0.wav,no speech,0.0,6.40275,True,Dank u wel.
+4_1_trial_47_Mic_nominal_srate48000_p1_boos_gebaren.wav,no speech,0.0,2.66725,True,Dank u wel.
+51_2_trial_30_Mic_nominal_srate48000_p1_ik_geluiden_c1.wav,no speech,0.0,7.7156875,True,Mooi. Mooi.
+55_2_trial_92_Mic_nominal_srate48000_p0_blij_combinatie_c0_cut1.wav,no speech,0.0,3.8561875,True,Oeh.
+55_2_trial_93_Mic_nominal_srate48000_p0_blij_combinatie_c1_cut2.wav,no speech,0.0,5.2948125,True,Hmmmmmmmmmmmmmmmm.
+56_2_trial_32_Mic_nominal_srate48000_p1_luidruchtig_geluiden_c2.wav,no speech,0.0,5.7216875,True,Deze film is geïnteresseerd door het Oude Westen.
+56_2_trial_61_Mic_nominal_srate48000_p0_jagen_gebaren_c0.wav,condition broke,0.0,5.014375,True,Daag.
+57_2_trial_9_Mic_nominal_srate48000_p0_blij_combinatie_c1_cut2.wav,no speech,0.0,3.12525,True,Hmm.
+59_2_trial_15_Mic_nominal_srate48000_p1_vogel_combinatie_c0.wav,no speech,0.0,4.2405,True,"Klaar, klaar, klaar, klaar, klaar, klaar."
+59_2_trial_67_Mic_nominal_srate48000_p1_water_geluiden_c2.wav,no speech,0.0,16.2618125,True,Dank u wel. ***
+5_2_trial_74_Mic_nominal_srate48000_p0_man_geluiden_c2.wav,no speech,0.0,4.5955625,True,Deze is de eerste.
+61_1_trial_16_Mic_nominal_srate48000_p1_lachen_combinatie.wav,no speech,0.0,3.1936875,True,Dank u wel.
+61_2_trial_14_Mic_nominal_srate48000_p0_jagen_combinatie_c2_cut4.wav,speech (okay okay),0.0,20.5961875,True,Ja. Ja. Ja.
+61_2_trial_84_Mic_nominal_srate48000_p0_sterk_geluiden_c2.wav,condition broke,0.0,14.8545,True,Oefen. Oefen.
+63_1_trial_38_Mic_nominal_srate48000_p0_kind_geluiden.wav,can be cut,0.0,6.9920625,True,"Wauw, wauw."
+64_1_trial_20_Mic_nominal_srate48000_p0_kat_combinatie_cut3.wav,can be cut,0.0,4.5233125,True,Ja.
+64_1_trial_4_Mic_nominal_srate48000_p0_ei_geluiden_cut7.wav,condition broke,0.0,13129.0,True,Oké. Oké.
+66_2_trial_104_Mic_nominal_srate48000_p1_jagen_geluiden_c2_cut1.wav,condition broke? (walking?),0.0,9.9849375,True,Hmm.
+67_2_trial_44_Mic_nominal_srate48000_p1_jagen_geluiden_c2_cut1.wav,condition broke?,0.0,4444.0,True,Oké. Kats.
+6_2_trial_103_Mic_nominal_srate48000_p1_zoet_gebaren_c0_cut1.wav,condition broke,0.0,5.4710625,True,Ik ga even kijken.
+6_2_trial_96_Mic_nominal_srate48000_p0_gooien_gebaren_c0.wav,no speech,0.0,4.6215,True,Ik weet niet waarom ik hier ben.
+70_2_trial_79_Mic_nominal_srate48000_p0_hoorn_geluiden_c2_cut1.wav,condition broke,0.0,11.4828125,True,Ik ben er. Dank u wel.
+71_2_trial_47_Mic_nominal_srate48000_p0_bang_geluiden_c0_cut1.wav,no speech,0.0,3.573375,True,Goed.
+71_2_trial_60_Mic_nominal_srate48000_p1_bitter_geluiden_c0.wav,no speech,0.0,3.2715,True,En...
+72_2_trial_78_Mic_nominal_srate48000_p1_staart_geluiden_c2.wav,can be cut,0.0,5.7405,True,"Wouf, wouf."
+7_1_trial_15_Mic_nominal_srate48000_p1_langzaam_combinatie.wav,condition broke,0.0,9.79925,True,Wat is dat?
+9_1_trial_43_Mic_nominal_srate48000_p0_staan_combinatie_cut3.wav,no speech,0.0,5.1991875,True,Dank u wel.
+9_2_trial_56_Mic_nominal_srate48000_p0_gooien_combinatie_c0_cut1.wav,speech? Yes,0.0,3.4776875,True,Vans.
+9_2_trial_63_Mic_nominal_srate48000_p1_ik_combinatie_c0.wav,speech,0.0,1.9958125,True,Dank u wel.
+7_1_trial_40_Mic_nominal_srate48000_p0_goed_geluiden_cut1.wav,speech,,,,
+26_1_trial_16_Mic_nominal_srate48000_p1_staan_combinatie_cut1.wav,speech,,,,
+72_2_trial_24_Mic_nominal_srate48000_p1_kind_gebaren_c2_cut6.wav,speech,,,,
