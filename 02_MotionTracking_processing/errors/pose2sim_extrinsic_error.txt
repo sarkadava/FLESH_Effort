@@ -1,0 +1,280 @@
+1 
+--> Residual (RMS) calibration errors for each camera are respectively [2.014, 1.583, 2.273] px, 
+which corresponds to [9.293, 6.099, 9.092] mm.
+
+2
+--> Residual (RMS) calibration errors for each camera are respectively [0.819, 2.099, 0.776] px, 
+which corresponds to [3.699, 7.852, 3.041] mm.
+
+3
+--> Residual (RMS) calibration errors for each camera are respectively [3.011, 2.98, 3.064] px, 
+which corresponds to [12.898, 10.593, 11.604] mm.
+
+4
+--> Residual (RMS) calibration errors for each camera are respectively [2.288, 1.349, 2.382] px, 
+which corresponds to [9.603, 4.6, 8.552] mm.
+
+5
+--> Residual (RMS) calibration errors for each camera are respectively [2.712, 2.358, 2.493] px, 
+which corresponds to [11.82, 8.372, 9.281] mm.
+
+6
+--> Residual (RMS) calibration errors for each camera are respectively [2.9, 2.283, 2.271] px, 
+which corresponds to [12.096, 7.869, 8.448] mm.
+
+7
+--> Residual (RMS) calibration errors for each camera are respectively [1.527, 4.085, 1.455] px, 
+which corresponds to [6.248, 13.599, 5.179] mm.
+
+8
+--> Residual (RMS) calibration errors for each camera are respectively [3.437, 2.486, 3.22] px, 
+which corresponds to [14.702, 8.692, 11.978] mm.
+
+9
+--> Residual (RMS) calibration errors for each camera are respectively [3.388, 1.931, 2.345] px, 
+which corresponds to [14.494, 6.727, 8.659] mm.
+
+10 
+--> Residual (RMS) calibration errors for each camera are respectively [3.255, 2.389, 2.441] px, 
+which corresponds to [14.312, 8.66, 9.359] mm.
+
+11 
+--> Residual (RMS) calibration errors for each camera are respectively [3.436, 2.768, 3.034] px, 
+which corresponds to [14.421, 9.249, 10.565] mm.
+
+12
+--> Residual (RMS) calibration errors for each camera are respectively [2.752, 3.101, 2.204] px, 
+which corresponds to [11.209, 10.073, 7.634] mm.
+
+13
+--> Residual (RMS) calibration errors for each camera are respectively [1.079, 2.214, 2.555] px, 
+which corresponds to [4.401, 7.237, 9.007] mm.
+
+14 
+--> Residual (RMS) calibration errors for each camera are respectively [3.663, 2.063, 4.938] px, 
+which corresponds to [15.095, 6.937, 17.849] mm.
+
+15
+--> Residual (RMS) calibration errors for each camera are respectively [2.195, 3.364, 2.728] px, 
+which corresponds to [8.516, 10.762, 9.527] mm.
+
+16
+--> Residual (RMS) calibration errors for each camera are respectively [3.778, 2.65, 4.217] px, 
+which corresponds to [15.749, 9.141, 15.551] mm.
+
+17 
+--> Residual (RMS) calibration errors for each camera are respectively [4.103, 3.589, 3.201] px, 
+which corresponds to [17.436, 12.434, 11.715] mm.
+
+18
+--> Residual (RMS) calibration errors for each camera are respectively [2.8, 2.697, 3.516] px, 
+which corresponds to [12.519, 10.004, 13.834] mm.
+
+19 ----
+--> Residual (RMS) calibration errors for each camera are respectively [5.123, 3.848, 4.44] px, 
+which corresponds to [21.116, 12.673, 15.405] mm.
+
+20
+--> Residual (RMS) calibration errors for each camera are respectively [2.952, 2.676, 3.63] px, 
+which corresponds to [12.87, 9.509, 13.6] mm.
+
+21
+--> Residual (RMS) calibration errors for each camera are respectively [1.712, 2.152, 2.795] px, 
+which corresponds to [7.239, 7.306, 9.941] mm.
+
+22
+--> Residual (RMS) calibration errors for each camera are respectively [0.845, 1.581, 2.437] px, 
+which corresponds to [3.519, 5.478, 9.347] mm.
+
+23
+--> Residual (RMS) calibration errors for each camera are respectively [2.595, 3.359, 3.114] px, 
+which corresponds to [10.41, 11.262, 11.6] mm.
+
+24
+--> Residual (RMS) calibration errors for each camera are respectively [1.578, 2.093, 2.281] px, 
+which corresponds to [7.027, 7.473, 8.289] mm.
+
+26
+--> Residual (RMS) calibration errors for each camera are respectively [1.482, 2.429, 1.793] px, 
+which corresponds to [6.432, 8.616, 6.812] mm.
+
+27
+--> Residual (RMS) calibration errors for each camera are respectively [1.049, 2.48, 1.928] px, 
+which corresponds to [4.035, 7.913, 7.052] mm.
+
+28
+--> Residual (RMS) calibration errors for each camera are respectively [1.107, 2.452, 1.688] px, 
+which corresponds to [4.729, 8.808, 6.679] mm.
+
+29
+--> Residual (RMS) calibration errors for each camera are respectively [1.942, 1.323, 2.335] px, 
+which corresponds to [8.471, 4.641, 8.447] mm.
+
+30
+--> Residual (RMS) calibration errors for each camera are respectively [2.444, 2.792, 3.28] px, 
+which corresponds to [9.872, 9.2, 11.667] mm.
+
+31
+--> Residual (RMS) calibration errors for each camera are respectively [2.602, 2.478, 2.391] px, 
+which corresponds to [10.837, 8.626, 9.136] mm.
+
+32
+--> Residual (RMS) calibration errors for each camera are respectively [2.287, 3.318, 2.901] px, 
+which corresponds to [9.433, 10.928, 10.065] mm.
+
+33
+--> Residual (RMS) calibration errors for each camera are respectively [2.527, 2.553, 2.322] px, 
+which corresponds to [11.726, 9.981, 9.48] mm.
+
+34
+--> Residual (RMS) calibration errors for each camera are respectively [1.267, 2.163, 2.486] px, 
+which corresponds to [5.677, 7.94, 9.431] mm.
+
+35
+--> Residual (RMS) calibration errors for each camera are respectively [2.567, 2.221, 2.556] px, 
+which corresponds to [11.255, 7.934, 9.552] mm.
+
+36
+--> Residual (RMS) calibration errors for each camera are respectively [2.84, 3.087, 3.118] px, 
+which corresponds to [12.355, 11.096, 11.876] mm.
+
+37
+--> Residual (RMS) calibration errors for each camera are respectively [2.7, 2.436, 3.01] px, 
+which corresponds to [10.913, 7.859, 10.417] mm.
+
+38
+--> Residual (RMS) calibration errors for each camera are respectively [2.663, 1.997, 2.758] px, 
+which corresponds to [10.77, 6.45, 9.554] mm.
+
+39
+--> Residual (RMS) calibration errors for each camera are respectively [3.17, 2.329, 3.494] px, 
+which corresponds to [13.105, 7.702, 12.167] mm.
+
+40
+--> Residual (RMS) calibration errors for each camera are respectively [1.969, 1.573, 1.726] px, 
+which corresponds to [8.574, 5.556, 6.298] mm.
+
+41
+--> Residual (RMS) calibration errors for each camera are respectively [3.675, 3.002, 3.736] px, 
+which corresponds to [16.002, 10.707, 14.087] mm.
+
+43 
+--> Residual (RMS) calibration errors for each camera are respectively [3.673, 3.443, 4.595] px, 
+which corresponds to [15.484, 11.649, 16.147] mm.
+
+44
+--> Residual (RMS) calibration errors for each camera are respectively [2.507, 3.07, 2.619] px, 
+which corresponds to [10.816, 10.885, 9.798] mm.
+
+45
+--> Residual (RMS) calibration errors for each camera are respectively [2.143, 1.899, 2.124] px, 
+which corresponds to [10.223, 7.514, 8.49] mm.n
+
+46
+--> Residual (RMS) calibration errors for each camera are respectively [2.006, 2.487, 2.341] px, 
+which corresponds to [8.952, 9.01, 8.672] mm.
+
+47
+--> Residual (RMS) calibration errors for each camera are respectively [2.674, 3.4, 2.606] px, 
+which corresponds to [12.69, 13.25, 10.389] mm.
+
+48
+--> Residual (RMS) calibration errors for each camera are respectively [1.79, 2.758, 3.52] px, 
+which corresponds to [7.327, 9.43, 13.139] mm.
+
+49
+--> Residual (RMS) calibration errors for each camera are respectively [3.152, 2.816, 3.216] px, 
+which corresponds to [13.823, 10.087, 12.06] mm.
+
+50
+--> Residual (RMS) calibration errors for each camera are respectively [2.722, 2.563, 3.045] px, 
+which corresponds to [11.158, 8.479, 10.831] mm.
+
+51
+--> Residual (RMS) calibration errors for each camera are respectively [2.215, 2.178, 2.282] px, 
+which corresponds to [9.053, 7.487, 8.638] mm.
+
+52
+--> Residual (RMS) calibration errors for each camera are respectively [2.397, 2.455, 2.734] px, 
+which corresponds to [10.359, 8.689, 10.09] mm.
+
+53
+--> Residual (RMS) calibration errors for each camera are respectively [2.539, 1.349, 2.94] px, 
+which corresponds to [10.728, 4.556, 10.316] mm.
+
+54
+--> Residual (RMS) calibration errors for each camera are respectively [2.233, 3.892, 1.966] px, 
+which corresponds to [8.959, 12.553, 6.761] mm.
+
+55
+--> Residual (RMS) calibration errors for each camera are respectively [1.367, 2.517, 2.705] px, 
+which corresponds to [5.433, 8.043, 9.244] mm.
+
+56
+--> Residual (RMS) calibration errors for each camera are respectively [2.046, 2.881, 2.421] px, 
+which corresponds to [8.109, 9.227, 8.494] mm.
+
+57
+--> Residual (RMS) calibration errors for each camera are respectively [0.782, 2.326, 2.37] px, 
+which corresponds to [3.431, 8.586, 9.446] mm.
+
+58
+--> Residual (RMS) calibration errors for each camera are respectively [1.004, 1.913, 1.076] px, 
+which corresponds to [4.389, 6.843, 4.086] mm.
+
+59
+--> Residual (RMS) calibration errors for each camera are respectively [1.004, 2.197, 1.076] px, 
+which corresponds to [4.389, 7.859, 4.086] mm.
+
+60
+--> Residual (RMS) calibration errors for each camera are respectively [1.922, 0.83, 2.182] px, 
+which corresponds to [8.442, 3.037, 8.384] mm.
+
+61
+--> Residual (RMS) calibration errors for each camera are respectively [2.484, 2.419, 2.155] px, 
+which corresponds to [10.741, 8.534, 8.064] mm.
+
+62
+--> Residual (RMS) calibration errors for each camera are respectively [2.314, 2.774, 2.728] px, 
+which corresponds to [10.191, 10.255, 10.736] mm.
+
+63
+--> Residual (RMS) calibration errors for each camera are respectively [1.978, 2.12, 2.326] px, 
+which corresponds to [8.484, 7.537, 8.911] mm.
+
+64
+--> Residual (RMS) calibration errors for each camera are respectively [2.359, 1.059, 2.113] px, 
+which corresponds to [11.002, 4.074, 8.314] mm.
+
+65
+--> Residual (RMS) calibration errors for each camera are respectively [2.0, 2.293, 2.595] px, 
+which corresponds to [8.459, 7.667, 9.014] mm.
+
+66
+--> Residual (RMS) calibration errors for each camera are respectively [2.684, 2.851, 3.155] px, 
+which corresponds to [11.074, 8.908, 10.021] mm.
+
+67
+--> Residual (RMS) calibration errors for each camera are respectively [2.023, 2.154, 2.066] px, 
+which corresponds to [8.96, 7.8, 7.742] mm.
+
+69
+--> Residual (RMS) calibration errors for each camera are respectively [2.293, 2.698, 1.999] px, 
+which corresponds to [10.258, 9.773, 7.345] mm.
+
+70
+--> Residual (RMS) calibration errors for each camera are respectively [2.42, 2.616, 3.532] px, 
+which corresponds to [10.127, 8.988, 13.074] mm.
+
+71
+--> Residual (RMS) calibration errors for each camera are respectively [3.131, 2.82, 3.125] px, 
+which corresponds to [14.377, 10.748, 12.318] mm.
+
+72
+--> Residual (RMS) calibration errors for each camera are respectively [2.834, 1.379, 4.122] px, 
+which corresponds to [11.154, 4.497, 14.912] mm.
+
+
+
+
+

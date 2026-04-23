@@ -1,0 +1,2023 @@
+Kinematics failed for session 9 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata_test\Session_9_1
+Traceback (most recent call last):
+  File "Pose2sim_script.py", line 283, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 396, in kinematics
+    pipeline = Pose2SimPipeline(config)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 163, in __init__
+    self.level, self.config_dicts = read_config_files(config)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 159, in read_config_files
+    return level, config_dicts
+UnboundLocalError: local variable 'config_dicts' referenced before assignment
+Triangulation failed for session 9 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata_test\Session_9_1
+Traceback (most recent call last):
+  File "Pose2sim_script.py", line 263, in <module>
+    Pose2Sim.triangulation()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 384, in triangulation
+    pipeline = Pose2SimPipeline(config)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 163, in __init__
+    self.level, self.config_dicts = read_config_files(config)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 159, in read_config_files
+    return level, config_dicts
+UnboundLocalError: local variable 'config_dicts' referenced before assignment
+Triangulation failed for session 9 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata_test\Session_9_1
+Traceback (most recent call last):
+  File "Pose2sim_script.py", line 263, in <module>
+    Pose2Sim.triangulation()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 384, in triangulation
+    pipeline = Pose2SimPipeline(config)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 163, in __init__
+    self.level, self.config_dicts = read_config_files(config)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 159, in read_config_files
+    return level, config_dicts
+UnboundLocalError: local variable 'config_dicts' referenced before assignment
+Triangulation failed for session 9 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata_test\Session_9_1
+Traceback (most recent call last):
+  File "Pose2sim_script.py", line 263, in <module>
+    Pose2Sim.triangulation()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 384, in triangulation
+    pipeline = Pose2SimPipeline(config)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 163, in __init__
+    self.level, self.config_dicts = read_config_files(config)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 159, in read_config_files
+    return level, config_dicts
+UnboundLocalError: local variable 'config_dicts' referenced before assignment
+Triangulation failed for session 9 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata_test\Session_9_1
+Traceback (most recent call last):
+  File "Pose2sim_script.py", line 263, in <module>
+    Pose2Sim.triangulation()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 384, in triangulation
+    pipeline = Pose2SimPipeline(config)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 163, in __init__
+    self.level, self.config_dicts = read_config_files(config)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 159, in read_config_files
+    return level, config_dicts
+UnboundLocalError: local variable 'config_dicts' referenced before assignment
+Kinematics failed for session 9 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata_test\Session_9_1
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 284, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 658, in kinematics_all
+    perform_scaling(trc_file, pose_model, kinematics_dir, osim_setup_dir, use_simple_model, right_left_symmetry=right_left_symmetry, subject_height=subject_height[p], subject_mass=subject_mass[p],
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 443, in perform_scaling
+    segment_ratio_dict = dict_segment_ratio(scaling_root, unscaled_model, Q_coords_low_speeds_low_angles, markers,
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 300, in dict_segment_ratio
+    Q_coords_scaling.iloc[:,markers.index(pt2)*3:markers.index(pt2)*3+3])
+                           ^^^^^^^^^^^^^^^^^^
+ValueError: 'REye' is not in list
+Kinematics failed for session 9 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata_test\Session_9_1
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 284, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 658, in kinematics_all
+    perform_scaling(trc_file, pose_model, kinematics_dir, osim_setup_dir, use_simple_model, right_left_symmetry=right_left_symmetry, subject_height=subject_height[p], subject_mass=subject_mass[p],
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 443, in perform_scaling
+    segment_ratio_dict = dict_segment_ratio(scaling_root, unscaled_model, Q_coords_low_speeds_low_angles, markers,
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 300, in dict_segment_ratio
+    Q_coords_scaling.iloc[:,markers.index(pt2)*3:markers.index(pt2)*3+3])
+                           ^^^^^^^^^^^^^^^^^^
+ValueError: 'REye' is not in list
+Kinematics failed for session 9 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata_test\Session_9_1
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 284, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 659, in kinematics_all
+    perform_scaling(trc_file, pose_model, kinematics_dir, osim_setup_dir, use_simple_model, right_left_symmetry=right_left_symmetry, subject_height=subject_height[p], subject_mass=subject_mass[p],
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 443, in perform_scaling
+    segment_ratio_dict = dict_segment_ratio(scaling_root, unscaled_model, Q_coords_low_speeds_low_angles, markers,
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 300, in dict_segment_ratio
+    Q_coords_scaling.iloc[:,markers.index(pt2)*3:markers.index(pt2)*3+3])
+                           ^^^^^^^^^^^^^^^^^^
+ValueError: 'REye' is not in list
+Kinematics failed for session 9 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata_test\Session_9_1
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 284, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 266, in kinematics
+    from Pose2Sim.kinematics import kinematics_all
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 47, in <module>
+    from Pose2Sim.common import natural_sort_key, euclidean_distance, trimmed_mean, read_trc, \
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\common.py", line 19, in <module>
+    from scipy import interpolate
+  File "<frozen importlib._bootstrap>", line 1412, in _handle_fromlist
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\site-packages\scipy\__init__.py", line 143, in __getattr__
+    return _importlib.import_module(f'scipy.{name}')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\importlib\__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\site-packages\scipy\interpolate\__init__.py", line 192, in <module>
+    from ._interpolate import *
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\site-packages\scipy\interpolate\_interpolate.py", line 12, in <module>
+    from . import _fitpack_py
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\site-packages\scipy\interpolate\_fitpack_py.py", line 10, in <module>
+    from ._bsplines import BSpline
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\site-packages\scipy\interpolate\_bsplines.py", line 9, in <module>
+    from scipy.optimize import minimize_scalar
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\site-packages\scipy\optimize\__init__.py", line 435, in <module>
+    from ._linprog import linprog, linprog_verbose_callback
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\site-packages\scipy\optimize\_linprog.py", line 22, in <module>
+    from ._linprog_ip import _linprog_ip
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\site-packages\scipy\optimize\_linprog_ip.py", line 27, in <module>
+    from ._linprog_util import _postsolve
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\site-packages\scipy\optimize\_linprog_util.py", line 9, in <module>
+    from scipy.optimize._remove_redundancy import (
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\site-packages\scipy\optimize\_remove_redundancy.py", line 9, in <module>
+    from scipy.linalg.interpolative import interp_decomp
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\site-packages\scipy\linalg\interpolative.py", line 368, in <module>
+    import scipy.linalg._decomp_interpolative as _backend
+  File "scipy/linalg/_decomp_interpolative.pyx", line 116, in init scipy.linalg._decomp_interpolative
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\site-packages\scipy\fft\__init__.py", line 86, in <module>
+    from ._basic import (
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\site-packages\scipy\fft\_basic.py", line 1291, in <module>
+    @_dispatch
+     ^^^^^^^^^
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\site-packages\scipy\fft\_basic.py", line 20, in _dispatch
+    return generate_multimethod(func, _x_replacer, domain="numpy.scipy.fft")
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\site-packages\scipy\_lib\_uarray\_backend.py", line 239, in generate_multimethod
+    kw_defaults, arg_defaults, opts = get_defaults(argument_extractor)
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\site-packages\scipy\_lib\_uarray\_backend.py", line 313, in get_defaults
+    sig = inspect.signature(f)
+          ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\inspect.py", line 3348, in signature
+    return Signature.from_callable(obj, follow_wrapped=follow_wrapped,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\inspect.py", line 3085, in from_callable
+    return _signature_from_callable(obj, sigcls=cls,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\inspect.py", line 2597, in _signature_from_callable
+    return _signature_from_function(sigcls, obj,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\inspect.py", line 2442, in _signature_from_function
+    parameters.append(Parameter(name, annotation=annotation,
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\inspect.py", line 2745, in __init__
+    self._kind = _ParameterKind(kind)
+                 ^^^^^^^^^^^^^^^^^^^^
+MemoryError
+Kinematics failed for session 9 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata_test\Session_9_1
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\common.py", line 166, in read_trc
+    trc_df = pd.read_csv(trc_path, sep="\t", skiprows=4, encoding='utf-8')
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\site-packages\pandas\io\parsers\readers.py", line 1026, in read_csv
+    return _read(filepath_or_buffer, kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\site-packages\pandas\io\parsers\readers.py", line 620, in _read
+    parser = TextFileReader(filepath_or_buffer, **kwds)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\site-packages\pandas\io\parsers\readers.py", line 1620, in __init__
+    self._engine = self._make_engine(f, self.engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\site-packages\pandas\io\parsers\readers.py", line 1898, in _make_engine
+    return mapping[engine](f, **self.options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\site-packages\pandas\io\parsers\c_parser_wrapper.py", line 93, in __init__
+    self._reader = parsers.TextReader(src, **kwds)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "pandas/_libs/parsers.pyx", line 574, in pandas._libs.parsers.TextReader.__cinit__
+  File "pandas/_libs/parsers.pyx", line 663, in pandas._libs.parsers.TextReader._get_header
+  File "pandas/_libs/parsers.pyx", line 874, in pandas._libs.parsers.TextReader._tokenize_rows
+  File "pandas/_libs/parsers.pyx", line 891, in pandas._libs.parsers.TextReader._check_tokenize_status
+  File "pandas/_libs/parsers.pyx", line 2061, in pandas._libs.parsers.raise_parser_error
+pandas.errors.ParserError: Error tokenizing data. C error: out of memory
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 284, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 659, in kinematics_all
+    perform_scaling(trc_file, pose_model, kinematics_dir, osim_setup_dir, use_simple_model, right_left_symmetry=right_left_symmetry, subject_height=subject_height[p], subject_mass=subject_mass[p],
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 434, in perform_scaling
+    Q_coords, _, _, markers, _ = read_trc(trc_file)
+                                 ^^^^^^^^^^^^^^^^^^
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\common.py", line 175, in read_trc
+    raise ValueError(f"Error reading TRC file at {trc_path}: {e}")
+ValueError: Error reading TRC file at 9_1_20_p0\pose-3d\9_1_20_p0_0-234_filt_butterworth_invertZ_flipYZ_smooth.trc: Error tokenizing data. C error: out of memory
+Kinematics failed for session 9 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata_test\Session_9_1
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 157, in get_scaling_setup
+    scaling_setup_path = [
+                         ^
+IndexError: list index out of range
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 284, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 659, in kinematics_all
+    perform_scaling(trc_file, pose_model, kinematics_dir, osim_setup_dir, use_simple_model, right_left_symmetry=right_left_symmetry, subject_height=subject_height[p], subject_mass=subject_mass[p],
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 428, in perform_scaling
+    scaling_path = get_scaling_setup(pose_model, osim_setup_dir)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 162, in get_scaling_setup
+    raise ValueError(f"Pose model '{pose_model}' not supported yet.")
+ValueError: Pose model 'body135' not supported yet.
+Kinematics failed for session 9 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata_test\Session_9_1
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 190, in get_IK_Setup
+    ik_setup_path = [
+                    ^
+IndexError: list index out of range
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 284, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 490, in perform_IK
+    ik_path = get_IK_Setup(pose_model, osim_setup_dir)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 195, in get_IK_Setup
+    raise ValueError(f"Pose model '{pose_model}' not supported yet.")
+ValueError: Pose model 'body135' not supported yet.
+Kinematics failed for session 9 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata_test\Session_9_1
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 126, in get_markers_path
+    markers_path = [
+                   ^
+IndexError: list index out of range
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 284, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 659, in kinematics_all
+    perform_scaling(trc_file, pose_model, kinematics_dir, osim_setup_dir, use_simple_model, right_left_symmetry=right_left_symmetry, subject_height=subject_height[p], subject_mass=subject_mass[p],
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 419, in perform_scaling
+    markers_path = get_markers_path(pose_model, osim_setup_dir)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 131, in get_markers_path
+    raise ValueError(f"Pose model '{pose_model}' not supported yet.")
+ValueError: Pose model 'body135' not supported yet.
+Kinematics failed for session 9 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata_test\Session_9_1
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 284, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 399, in kinematics
+    pipeline = Pose2SimPipeline(config)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 164, in __init__
+    self.level, self.config_dicts = read_config_files(config)
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 160, in read_config_files
+    return level, config_dicts
+                  ^^^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'config_dicts' where it is not associated with a value
+Kinematics failed for session 9 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata_test\Session_9_1
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 284, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 399, in kinematics
+    pipeline = Pose2SimPipeline(config)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 164, in __init__
+    self.level, self.config_dicts = read_config_files(config)
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 147, in read_config_files
+    session_config_dict = toml.load(os.path.join(config_dir, 'Config.toml'))
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\site-packages\toml\decoder.py", line 133, in load
+    with io.open(_getpath(f), encoding='utf-8') as ffile:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '.\\Config.toml'
+Kinematics failed for session 9 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata_test\Session_9_1
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 284, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 399, in kinematics
+    pipeline = Pose2SimPipeline(config)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 164, in __init__
+    self.level, self.config_dicts = read_config_files(config)
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 160, in read_config_files
+    return level, config_dicts
+                  ^^^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'config_dicts' where it is not associated with a value
+Kinematics failed for session 9 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata_test\Session_9_1
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 284, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 593, in kinematics_all
+    raise ValueError(f'No trc files found in {pose3d_dir}.')
+ValueError: No trc files found in P0\pose-3d.
+Kinematics failed for session 9 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata_test\Session_9_1
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 284, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 399, in kinematics
+    pipeline = Pose2SimPipeline(config)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 164, in __init__
+    self.level, self.config_dicts = read_config_files(config)
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 160, in read_config_files
+    return level, config_dicts
+                  ^^^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'config_dicts' where it is not associated with a value
+Kinematics failed for session 9 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata_test\Session_9_1
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 284, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 659, in kinematics_all
+    perform_scaling(trc_file, pose_model, kinematics_dir, osim_setup_dir, use_simple_model, right_left_symmetry=right_left_symmetry, subject_height=subject_height[p], subject_mass=subject_mass[p],
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 460, in perform_scaling
+    opensim.ScaleTool(scaling_path_temp).run()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 2103, in __init__
+    _tools.ScaleTool_swiginit(self, _tools.new_ScaleTool(*args))
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'OpenSim::ScaleTool::ScaleTool(std::string const &)': SimTK Exception thrown at String.h:490:
+  Error detected by Simbody method String::convertTo(): Couldn't interpret string 'np.float64(71.0)' as type T=double.
+  (Required condition 'convertOK' was not met.)
+
+Kinematics failed for session 10 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_10_1
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 10 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_10_2
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 11 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_11_1
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 11 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_11_2
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 12 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_12_2
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 13 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_13_1
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 13 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_13_2
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 15 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_15_2
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 16 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_16_2
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 17 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_17_1
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 18 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_18_1
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 18 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_18_2
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 19 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_19_1
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 19 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_19_2
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 1 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_1_2
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 20 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_20_1
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 20 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_20_2
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 23 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_23_1
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 24 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_24_1
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 24 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_24_2
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 26 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_26_1
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 26 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_26_2
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 10 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_10_1
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 10 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_10_2
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 11 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_11_1
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 11 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_11_2
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 12 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_12_2
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 13 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_13_1
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 13 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_13_2
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 15 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_15_2
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 16 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_16_2
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 17 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_17_1
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 18 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_18_1
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 18 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_18_2
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 19 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_19_1
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 19 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_19_2
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 1 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_1_2
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 20 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_20_1
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 20 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_20_2
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 23 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_23_1
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 24 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_24_1
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 24 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_24_2
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 26 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_26_1
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 26 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_26_2
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 28 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_28_2
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 29 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_29_1
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 29 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_29_2
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 2 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_2_2
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 30 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_30_2
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 31 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_31_1
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 33 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_33_2
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 34 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_34_1
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 34 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_34_2
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 35 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_35_2
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 36 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_36_2
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 37 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_37_1
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 37 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_37_2
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 3 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_3_1
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 3 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_3_2
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 40 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_40_1
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 40 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_40_2
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 41 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_41_1
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 45 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_45_1
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 46 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_46_1
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 46 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_46_2
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 47 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_47_1
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 50 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_50_2
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 51 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_51_1
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 51 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_51_2
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 52 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_52_1
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 53 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_53_1
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 54 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_54_2
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 56 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_56_2
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 57 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_57_1
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 57 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_57_2
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 59 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_59_2
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 5 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_5_2
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 61 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_61_1
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 61 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_61_2
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 62 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 62 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_2
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 63 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_63_1
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 63 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_63_2
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 64 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_64_1
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 64 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_64_2
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 65 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_65_2
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 66 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_66_1
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 66 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_66_2
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 67 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_67_2
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 69 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_69_2
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 6 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_6_1
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 70 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_70_1
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 70 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_70_2
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 71 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_71_2
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 72 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_72_2
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 8 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_8_1
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 9 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_9_2
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 271, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Triangulation failed for session 55 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 256, in <module>
+    Pose2Sim.triangulation()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 388, in triangulation
+    pipeline.triangulation()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 245, in triangulation
+    triangulate_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\triangulation.py", line 954, in triangulate_all
+    raise Exception('No persons have been triangulated. Please check your calibration and your synchronization, or the triangulation parameters in Config.toml.')
+Exception: No persons have been triangulated. Please check your calibration and your synchronization, or the triangulation parameters in Config.toml.
+Triangulation failed for session 55 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 267, in <module>
+    Pose2Sim.triangulation()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 388, in triangulation
+    pipeline.triangulation()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 245, in triangulation
+    triangulate_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\triangulation.py", line 954, in triangulate_all
+    raise Exception('No persons have been triangulated. Please check your calibration and your synchronization, or the triangulation parameters in Config.toml.')
+Exception: No persons have been triangulated. Please check your calibration and your synchronization, or the triangulation parameters in Config.toml.
+Kinematics failed for session 55 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 282, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 659, in kinematics_all
+    perform_scaling(trc_file, pose_model, kinematics_dir, osim_setup_dir, use_simple_model, right_left_symmetry=right_left_symmetry, subject_height=subject_height[p], subject_mass=subject_mass[p],
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 443, in perform_scaling
+    segment_ratio_dict = dict_segment_ratio(scaling_root, unscaled_model, Q_coords_low_speeds_low_angles, markers,
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 299, in dict_segment_ratio
+    trc_segment_lengths = np.array([euclidean_distance(Q_coords_scaling.iloc[:,markers.index(pt1)*3:markers.index(pt1)*3+3],
+                                                                              ^^^^^^^^^^^^^^^^^^
+ValueError: 'Head' is not in list
+Kinematics failed for session 62 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 282, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 62 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_2
+Traceback (most recent call last):
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2sim_script.py", line 282, in <module>
+    Pose2Sim.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 400, in kinematics
+    pipeline.kinematics()
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 270, in kinematics
+    kinematics_all(config_dict)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 667, in kinematics_all
+    perform_IK(trc_file, kinematics_dir, osim_setup_dir, pose_model, remove_IK_setup=remove_IK_setup)
+  File "F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\kinematics.py", line 510, in perform_IK
+    opensim.InverseKinematicsTool(str(ik_path_temp)).run()
+  File "C:\Users\kadava\AppData\Local\anaconda3\envs\Pose2sim_new\Lib\opensim\tools.py", line 3975, in run
+    return _tools.InverseKinematicsTool_run(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Triangulation failed for session 10 in folder f:\flesh_data_processed\02_MotionTracking_processing\projectdata\Session_10_1
+Traceback (most recent call last):
+  File "C:\Users\kadava\AppData\Local\Temp\ipykernel_19948\4055053437.py", line 83, in <module>
+    Pose2Sim.triangulation()
+  File "f:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 387, in triangulation
+    pipeline = Pose2SimPipeline(config)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "f:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 164, in __init__
+    self.level, self.config_dicts = read_config_files(config)
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "f:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 130, in read_config_files
+    level = determine_level(config_dir)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "f:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\Pose2Sim.py", line 107, in determine_level
+    len_paths = [len(root.split(os.sep)) for root,dirs,files in os.walk(config_dir) if 'Config.toml' in files]
+                                                                ^^^^^^^^^^^^^^^^^^^
+  File "<frozen os>", line 366, in walk
+KeyboardInterrupt
