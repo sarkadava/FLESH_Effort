@@ -6,15 +6,7 @@
 *.wav
 *.xdf
 
-/To
-/00_raw
-/02_MotionTracking_processing
-/03_TS_processing
-/04_TS_movementAnnotation
-/04_TS_soundAnnotation
-/06_ConceptSimilarity
-/Misc
-/To_discuss
+
 /00_RAWDATA/0_1
 /00_RAWDATA/0_2
 /00_RAWDATA/Process_demographics.ipynb
@@ -22,28 +14,30 @@
 
 01_XDF_processing/data/Data_processed/CsvDataTS_raw
 
-/02_MotionTracking_processing/openpose/bin
-/02_MotionTracking_processing/projectdata
+02_MotionTracking_processing/openpose/bin
+02_MotionTracking_processing/projectdata
+02_MotionTracking_processing/Pose2Sim
 *.caffemodel
 
-04_TS_movementAnnotation/Models
-04_TS_movementAnnotation/TS_forClassifying
-
 06_ConceptSimilarity/numberbatch
-
-08_Analysis_XGBoost/models
 
 09_Analysis_Modeling/models
 
 /Miscellaneous
 /.quarto/
+/shign
+/To_discuss
 
+/03_TS_processing
+/05_finalMerge
 
-
-/01_XDF_processing/data
-/02_MotionTracking_processing/Pose2Sim
-/02_MotionTracking_processing/Pose2Sim
+/08_Analysis_Modeling
+/00_raw
+/01_XDF_processing/data/Data_processed/Data_trials
+01_XDF_processing/data/Data_processed
+02_MotionTracking_processing/misc
+02_MotionTracking_processing/.vscode/settings.json
+04_TS_movementAnnotation/TS_annotated_logreg
+04_TS_movementAnnotation/TS_predicted_workingfiles
+02_MotionTracking_processing/Pose2Sim
 /04_TS_movementAnnotation
-/04_TS_movementAnnotation
-/04_TS_movementAnnotation
-/02_MotionTracking_processing/Pose2Sim

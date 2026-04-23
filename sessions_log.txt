@@ -1,0 +1,171 @@
+
+
+1_1 OK
+1_2 OK (rein)
+first has geluiden, rein has gebaren + combinatie - JUST RENUMBER REIN
+2_1 OK
+2_2 OK
+3_1 OK
+3_2 OK (possible little hiss residuals)
+4_1 OK (possible little hiss residuals)
+4_2 --- (labrecorded only first block, problem to associate it with correct performance)
+5_1 OK (but camera not reinitiated)
+5_2 OK (possible little hiss residuals) + nonreinitiated camera
+6_1 OK
+6_2 OK
+7_1 OK 
+7_2 OK
+8_1 rein ok, nonrein missing (hiss)
+just renumber, rein should start with 18
+8_2 OK
+9_1 OK (possible little hiss residuals)
+9_2 OK (possible little hiss residuals)
+10_1 OK
+10_2 OK
+11_1 OK
+11_2 OK
+12_1 OK
+12_2 OK
+13_1 OK (possible little hiss residuals)
+13_2 OK (possible little hiss residuals)
+14_1 OK
+14_2 OK (possible little hiss residuals)
+15_1 OK but with 16 audio (48 not fitting)
+15_2 OK
+16_1 OK
+16_2 OK but with 16 audio (48 not fitting)
+17_1 OK
+17_2 OK
+18_1 OK
+18_2 OK (rein)
+first gebaren, geluiden, rein geluiden, gebaren (but skipped), combinatie 
+19_1 OK
+19_2 OK
+20_1 OK
+20_2 OK
+21_1 OK
+21_2 ---- (no video)
+22_1 OK
+22_2 OK
+23_1 OK
+23_2 ----- (wrongl xdf)
+24_1 OK
+24_2 OK
+25_1 --- (no video)
+25_2 ---- (no video)
+26_1 OK (but pr_0 seems weird)
+26_2 OK
+27_1 OK
+27_2 OK
+28_1 OK
+28_2 OK
+29_1 OK
+29_2 OK
+30_1 OK
+30_2 OK
+31_1 OK
+31_2 OK (rein)
+first gebaren p0, rein gebaren p1, geluiden, combinatie
+32_1 OK
+32_2 OK
+33_1 OK
+33_2 OK
+34_1 OK
+34_2 OK
+35_1 ---- (faulty video)
+35_2 OK
+36_1 OK (rein)
+36_2 OK (rein) 
+37_1 OK
+37_2 OK
+38_1 OK 
+38_2 OK 
+39_1 OK
+39_2 OK
+40_1 OK
+40_2 OK
+41_1 OK
+41_2 OK
+42_1 (rein) ---- (bb missing)
+42_2 ---- (bb problem)
+43_1 OK (rein, but in first file only tpose)
+43_2 (rein) ---- (bb missing)
+44_1 OK
+44_2 ----------missing markers in the end
+45_1 OK
+45_2 OK
+46_1 OK
+46_2 OK
+47_1 OK
+47_2 --------- faulty video
+48_1 OK - but from trial 36 missing rows in results.csv so concepts are not correctly associated (must be done manually, but we don't have answers), for now trials 36+ deleted
+48_2 OK
+49_1 OK (rein) 
+first combinatie, rein geluiden, gebaren 
+49_2 rein ok, but non-rein missing (1 pcn of 1 block)
+50_1 OK (rein)
+first gebaren, geluiden p0; rein geluiden p1, combinatie
+50_2 OK
+51_1 OK
+51_2 OK 
+52_1 OK
+52_2 OK
+53_1 OK
+53_2 OK
+54_1 OK
+54_2 OK (rein)
+first gebaren; combinatie p0, rein combinatie p1, geluiden
+55_1 OK
+55_2 OK
+56_1 OK
+56_2 OK
+57_1 OK
+57_2 OK 
+58_1 OK
+58_2 OK
+59_1 OK
+59_2 OK
+60_1 OK
+60_2 OK 
+61_1 OK
+61_2 OK
+62_1 OK
+62_2 OK
+63_1 OK 
+63_2 OK
+64_1 OK
+64_2 OK
+65_1 OK
+65_2 OK 
+66_1 OK
+66_2 OK
+67_1 OK
+67_2 OK
+68_1 ------ (no data)
+68_2 ------ (no data)
+69_1 OK
+69_2 OK 
+70_1 OK 
+70_2 OK 
+71_1 ---- (bb missing)
+71_2 OK 
+72_1 OK
+72_2 OK 
+
+TRIALS
+50_1_pr_27 faulty
+49_2_rein_pr_31 f
+49_2_rein_pr_33 faulty
+49_2_rein_pr_34 faulty
+49_2_rein_pr_35 faulty
+49_2_rein_pr_37 faulty
+49_2_rein_pr_38 f
+49_2_rein_pr_39 f
+
+
+Renamed f:\flesh_data_processed\01_XDF_processing\data\Data_processed\Data_trials\49_2_rein_pr_43_BalanceBoard_stream_nominal_srate100_p0_telefoon_gebaren_c0.csv to f:\flesh_data_processed\01_XDF_processing\data\Data_processed\Data_trials\49_2_rein_pr_96_BalanceBoard_stream_nominal_srate100_p0_telefoon_gebaren_c0.csv
+Renamed f:\flesh_data_processed\01_XDF_processing\data\Data_processed\Data_trials\49_2_rein_pr_43_Mic_nominal_srate16000_p0_telefoon_gebaren_c0.csv to f:\flesh_data_processed\01_XDF_processing\data\Data_processed\Data_trials\49_2_rein_pr_96_Mic_nominal_srate16000_p0_telefoon_gebaren_c0.csv
+Renamed f:\flesh_data_processed\01_XDF_processing\data\Data_processed\Data_trials\49_2_rein_pr_43_MyWebcamFrameStream_nominal_srate500_p0_telefoon_gebaren_c0.csv to f:\flesh_data_processed\01_XDF_processing\data\Data_processed\Data_trials\49_2_rein_pr_96_MyWebcamFrameStream_nominal_srate500_p0_telefoon_gebaren_c0.csv
+Renamed f:\flesh_data_processed\01_XDF_processing\data\Data_processed\Data_trials\49_2_rein_pr_44_BalanceBoard_stream_nominal_srate100_p0_zwaaien_gebaren_c0.csv to f:\flesh_data_processed\01_XDF_processing\data\Data_processed\Data_trials\49_2_rein_pr_96_BalanceBoard_stream_nominal_srate100_p0_zwaaien_gebaren_c0.csv
+Renamed f:\flesh_data_processed\01_XDF_processing\data\Data_processed\Data_trials\49_2_rein_pr_44_Mic_nominal_srate16000_p0_zwaaien_gebaren_c0.csv to f:\flesh_data_processed\01_XDF_processing\data\Data_processed\Data_trials\49_2_rein_pr_96_Mic_nominal_srate16000_p0_zwaaien_gebaren_c0.csv
+Renamed f:\flesh_data_processed\01_XDF_processing\data\Data_processed\Data_trials\49_2_rein_pr_44_MyWebcamFrameStream_nominal_srate500_p0_zwaaien_gebaren_c0.csv to f:\flesh_data_processed\01_XDF_processing\data\Data_processed\Data_trials\49_2_rein_pr_96_MyWebcamFrameStream_nominal_srate500_p0_zwaaien_gebaren_c0.csv
