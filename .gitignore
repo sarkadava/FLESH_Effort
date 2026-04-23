@@ -37,7 +37,8 @@
 01_XDF_processing/data/Data_processed
 02_MotionTracking_processing/misc
 02_MotionTracking_processing/.vscode/settings.json
-04_TS_movementAnnotation/TS_annotated_logreg
-04_TS_movementAnnotation/TS_predicted_workingfiles
+
 02_MotionTracking_processing/Pose2Sim
 /04_TS_movementAnnotation
+/04_TS_soundAnnotation
+/08_Analysis_XGBoost
