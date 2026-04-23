@@ -6,7 +6,15 @@
 *.wav
 *.xdf
 
-
+/To
+/00_raw
+/02_MotionTracking_processing
+/03_TS_processing
+/04_TS_movementAnnotation
+/04_TS_soundAnnotation
+/06_ConceptSimilarity
+/Misc
+/To_discuss
 /00_RAWDATA/0_1
 /00_RAWDATA/0_2
 /00_RAWDATA/Process_demographics.ipynb
@@ -32,3 +40,10 @@
 
 
 
+/01_XDF_processing/data
+/02_MotionTracking_processing/Pose2Sim
+/02_MotionTracking_processing/Pose2Sim
+/04_TS_movementAnnotation
+/04_TS_movementAnnotation
+/04_TS_movementAnnotation
+/02_MotionTracking_processing/Pose2Sim
