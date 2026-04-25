@@ -152,6 +152,11 @@ first gebaren; combinatie p0, rein combinatie p1, geluiden
 72_1 OK
 72_2 OK 
 
+3-16 HISS
+17-26 SOMEWHAT DENOISED; BUT BIT HEARD
+70_1 combinatie weird sound
+70_2 gebaren weird
+
 TRIALS
 50_1_pr_27 faulty
 49_2_rein_pr_31 f
