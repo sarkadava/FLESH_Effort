@@ -3,3 +3,4 @@ opencv_python==4.10.0.82
 pandas==2.2.3
 Pose2Sim==0.10.6
 toml==0.10.2
+opensim==3.3

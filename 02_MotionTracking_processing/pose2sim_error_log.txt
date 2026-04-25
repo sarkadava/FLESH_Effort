@@ -1,3 +1,0 @@
-Pose2Sim processing error log
-============================
-

@@ -78,6 +78,26 @@ data_feat <- data_feat %>% select(all_of(featstokeep))
 head(data_feat)
 ```
 
+# Basic statistics
+
+```{r}
+
+
+# TODO:
+## how many participants
+## gender
+## age
+## handedness
+## how many trials per condition
+## how many trials per correction level
+## distribution of extroverts
+## distribution of familiarity
+## how many succesful vs unsuccesful trials
+
+
+```
+
+
 # H1: Stating causal model
 
 Before simulating synthetic data, we will first formulate our causal model to explicitly identify common causes, and hence prevent (or rather minimize) confounding in our statistical model. Note that while we are interested in causal relationship between effort (outcome) and communicative attempt (predictor for H1) and answer similarity (predictor for H2), we need to acknowledge that there are other factors possibly contributing to the outcome variable, despite the experiment beling relatively controlled. These relate, for instance, to the participants (e.g., personality traits) or stimuli (i.e., concepts). Our causal model therefore includes more variables that are identified as potentially sharing causal path with our primary predictor - communicative attempt. They are not of primary interest, they ensure we can isolate the causal effect of the main predictor on the outcome variable - effort.
@@ -1141,6 +1161,7 @@ print(l, simplify = F)
 
 
 ```
+
 Loo evaluates as best the model with maximal random structure, but eff for this model have some low-performing parameters. Given that m3 is in loo tightly behind, we will use m3 for interactions too.
 
 #### Model 4 - Adding interactions 
@@ -1231,7 +1252,7 @@ h1.m4_torq_cum_R2
 ```
 
 
-#### RRUN Full comparison
+#### Full comparison
 
 
 ```{r}
@@ -3668,7 +3689,7 @@ Again, given that m2 and m3 perform similarly but m2 has better results, we will
 if (file.exists(here(models, "h1.m4_env_in.rds"))){
   
   h1.m4_env_in <- readRDS(here(models, "h1.m4_env_in.rds"))
-  h1.m4_env_in_R2 <- readRDS(here(models, "h1.m4_env_inR2.rds"))
+  h1.m4_env_in_R2 <- readRDS(here(models, "h1.m4_env_in_R2.rds"))
   
 } else {
   
@@ -4739,7 +4760,7 @@ priors_h1m3_cop_in <- c(
 )
   
 
-if (file.exists(here(models, "h1.m3_cop_in10.rds"))){
+if (file.exists(here(models, "h1.m3_cop_in.rds"))){
   
   h1.m3_cop_in <- readRDS(here(models, "h1.m3_cop_in.rds"))
   h1.m3_cop_in_R2 <- readRDS(here(models, "h1.m3_cop_in_R2.rds"))
@@ -4846,13 +4867,13 @@ print(l, simplify = F)
 
 ```
 
-#### RERUN Model 4 - Interactions
+#### Model 4 - Interactions
 
 
 ```{r}
 
 
-if (file.exists(here(models, "h1.m4_cop_in10.rds"))){
+if (file.exists(here(models, "h1.m4_cop_in.rds"))){
   
   h1.m4_cop_in <- readRDS(here(models, "h1.m4_cop_in.rds"))
   h1.m4_cop_in_R2 <- readRDS(here(models, "h1.m4_cop_in_R2.rds"))
@@ -4884,7 +4905,6 @@ if (file.exists(here(models, "h1.m4_cop_in10.rds"))){
 
 # Summary
 summary(h1.m4_cop_in)
-
 
 
 ```
