@@ -1,0 +1,121 @@
+# 2.1. Experimental setup and procedure
+
+## Procedure
+
+Participants, in alternating roles of performer and guesser, engage in a referential, charade-like game wherein they have to express a concept without using language. The performer expresses a concept, while the guesser attempts to identify it. After every performance-guess pair, both participants see whether the guesser’s answer was correct. Additionally, the performer sees the exact response, and if it does not match the target concept, they must repair their original performance. Each participant performs novel expressions of 21 concepts, totaling 42 concepts per dyad, across three within-subject modality conditions: vocal, gesture, and combined. The order of modality conditions is randomized, and each is introduced with instructions, followed by two practice concepts and seven trials. After each performance, the guesser types their answer. If correct, they proceed to the next concept. If incorrect, both see the incorrect response, and the performer repeats the concept while the guesser makes another attempt. Up to two repair attempts are allowed before moving on. Correctness is judged by the experimenter, who checks only for typos; synonyms are not accepted to ensure consistency across sessions. 
+
+Here I am testing what happens if I write something off. And again now
+
+## Stimuli
+
+The stimuli were selected from a list of 206 concepts. This list included 100 Leipzig-Jakarta List concepts [@tadmorBorrowabilityNotionBasic2010] and 100 concepts varying in sensory expressibility [@lynottLancasterSensorimotorNorms2020; @lynottModalityExclusivityNorms2009]. In a previous experiment (Cwiek et al., under review), 227 native Dutch participants rated the current concepts on a continuous scale for how well they could be communicated without language across three modalities: gesture, vocal, and combined. From the 206-item list, we excluded concepts with any expressibility value below a threshold (mean minus one standard deviation) to avoid low-expressible concepts. Using a custom Python script, we constructed three modality-specific 28-item lists of top-ranked expressible concepts, ensuring no overlaps between them. Body-related concepts (e.g., ‘tooth,’ ‘ear,’ ‘tongue’) were excluded to prevent indexical resolution and replaced with taste-related concepts of generally low expressibility, aligning with secondary research interests. The final 84-item list maintains expressibility statistics comparable to the original list. Each participant performs seven concepts per modality condition. Stimuli lists were pre-randomized and controlled for balanced occurrences across sessions (each concept appears at least 10 times, or 12 if additional dyads are included). Finally, each list was again checked for mean expressibility values to prevent clustering of low-expressible concepts. Write the exact distribution because there was a mistake
+
+::: {.content-visible when-format="html"}
+Distribution picture from prereg
+:::
+
+Lab equipment Motion Tracking & Video Recording: The recording setup consists of three Elgato Facecam cameras on a movable arch that record at 60 fps with a 1/200s shutter speed to reduce motion blur (ISO 354). A custom Python script (using OpenCV and ffmpegcv) captures and writes videos [@kadavaRecordingMultipleWebcams2024]. A fourth Logitech webcam (1960x1080, 60 fps) records a high-quality frontal view for general observation. Balance Board: Designed by the Donders Institute, it incorporates modified Wii Balance Board sensors, synchronized to 1 ms temporal and submillimeter spatial accuracy. Data is collected at 400 Hz via a National Instruments USB-62221 A/D card. Audio Recording: A C520 head-mounted condenser mic records via a DAP PRE-202 amplifier (gain: 25%). The signal is split: 16 kHz LSL stream is recorded via a Linux-based Minux system and 48 kHz via another PC (using Audacity). The 48 kHz signal is used for acoustic feature extraction. A second split feeds Sony WH-1000XM5 noise-canceling headphones to ensure that the guesser hears the performer clearly despite the separating curtain. One-Way Screen: One-way screen that has been designed by the Technical Support Group at the Max Planck Institute for Psycholinguistics [similar to @trujilloSpeakersExhibitMultimodal2021]. It serves to minimize nonverbal feedback while maintaining co-presence. Experiment Software: The experiment runs via a custom Python script (PsychoPy, RuSocSci), controlling a buttonbox and logging trial accuracy in CSV format. Data Synchronization: LabStreamLayer (LSL) synchronizes the microphone, cameras, balance board, and buttonbox markers (e.g., role changes, trial start). Data is stored in XDF format. Concrete specifics for all equipment can be found in the method preregistration. 2.2. Participants We recruited 60 dyads (i.e., 120 participants) with an additional 12 dyads to cover for unexpected post-hoc exclusions of the data. Participants are native Dutch speakers (mostly bilingual) recruited from Dutch university for course credit or monetary reward. They were able to sign up as a team or alone through the university recruitment system. We collected data about their personality traits (Denissen et al., 2008), handedness (Oldfield, 1971), and demographics. Additionally, we asked to assess how familiar and comfortable they feel with their game/experimental partner. Post-hoc exclusions Before data processing, we excluded one dyad due to consent withdrawal. During processing we excluded X dyads because of unknown errors in data collection, 1 dyad due to persistent high (larger than 25 mm) residual error for pose estimation and X dyads due XY. We also excluded trials in which participants violate the condition rule (e.g., not using both modalities in the combined condition, using sound in gesture condition, etc.) which counted to XY percent of the data.
+
+::: {.content-visible when-format="html"}
+See script on exclusion
+:::
+
+## 2.3. Data processing
+
+In this preregistration, we preregister processing and analysis pipeline that has been developed using the pilot data which we call dyad 0\. The actual data is not disclosed before preregistering. Here, we map the conceptual overview of methodological steps. The reproducible code associated with each step is documented on our Github website. 2.3.1. Processing XDF file to trial-sized data streams Each session resulted in one XDF file containing all recorded streams (i.e., video frame stream, balance board stream, audio stream), which was read and processed via custom Python scripts.
+
+To cut the stream-specific post-processed (e.g., smoothed) time series into trials, we used the buttonbox timestamps to isolate trial segments in each stream. Since the buttonbox timestamps correspond with inputs to our PsychoPy experiment script, we were able to automatically retrieve metadata for each trial segment (e.g., condition, participant number, etc.).
+
+The audio stream was converted into a sound file. The video frame stream is matched with the recorded video by the range of frames of each trial and cut accordingly. However, since the buttonbox events are administered manually by the experimenter, video trials need to be visually inspected and, if needed, adjusted to correct for late starts or early ends.
+
+::: {.content-visible when-format="html"}
+xdf script
+:::
+
+Lastly, we align the externally recorded 48 kHz audio to the 16 kHz audio, which is synchronized to the rest of the LSL data using cross-correlation and then cut again to the individual trials [@nalbantogluMultiScenarioVideoAudio2025]. By doing that, we can use the high-quality audio for further analysis, while still having all streams synchronized.
+
+::: {.content-visible when-format="html"}
+chunk for alignment
+:::
+
+### 2.3.2. Motion tracking
+
+#### OpenPose
+
+First, we cut each trial video into three individual videos per camera. Each video is then processed with motion capture using OpenPose [@caoOpenPoseRealtimeMultiPerson2019]. Using the 135 marker model, we obtain a skeleton with 135 body keypoints, including hands and face, with a sampling rate of 60 Hz.
+
+::: {.content-visible when-format="html"}
+Openpose script
+:::
+
+#### Pose2sim
+
+OpenPose retrieves 2D skeleton data for each camera. To transfer multiple 2D data streams to 3D position data we use a method called triangulation based on calibrated cameras. Triangulation is performed using Pose2sim [@pagnonPose2SimOpensourcePython2022]. To be able to triangulate all 2D skeleton data, we first calibrate the cameras based on intrinsic and extrinsic angles with a checkerboard, with which short recordings were made for each session. For intrinsic calibration, we obtain an error of 0.24 pixels for each camera (recommended below 0.5 pixels). Residual calibration errors XXXX for each camera, respectively. The mean reprojection error for all points on all frames across all trials is XX (below 1 cm recommended, but acceptable until 2.5 cm). The triangulated data are directly smoothed with a built-in function by 4th-order, 10Hz low-pass, zero-phase Butterworth filter. Write about further preprocessing and inverse kinematics. irst, we scale the 135 model using the static T-pose of a participant and information about their body mass (i.e., height and weight) to create a body model for each individual. The weights are kept at the default values for this model. The scaled model is then used to calculate joint angles for each trial (represented by the coordinates obtained in the previous step).
+
+::: {.content-visible when-format="html"}
+Pose2sim script
+:::
+
+#### OpenSim
+
+To obtain inverse dynamics, we use the OpenSim package [@sethOpenSimSimulatingMusculoskeletal26.7.2018]. First, we scale the 135 model using the static T-pose of a participant and information about their body mass (i.e., height and weight) to create a body model for each individual. The weights are kept at the default values for this model. The scaled model is then used to calculate joint angles for each trial (represented by the coordinates obtained in the previous step). Joint angles are then used to obtain joint moments/torques. To prevent amplification of noise in solving inverse dynamics, we first smooth the joint-angle data using a Savitzky-Golay 3rd-order polynomial filter with a span of 560 ms.
+
+During motion feature extraction, we keep the sampling rate of all motion data at the original values (i.e., 60 Hz), upsampling to 500 Hz only at a later stage when merging all multimodal signals (see section 2.2.4.).
+
+### 2.3.3. Extraction of acoustic features
+
+We use the high-sampling 48 kHz audio data to extract acoustic features. These include fundamental frequency, amplitude envelope, voice quality measurements, and formants.
+
+To extract the amplitude envelope of the acoustic signal, we follow a method by [@tilsenSpeechRhythmAnalysis2013], implemented in Python by @pouwWimPouwsEnvisionBOX2024. We use a bandpass and 2nd-order, 10Hz low-pass, zero-phase Butterworth filter. Normalization
+
+::: {.content-visible when-format="html"}
+Env chunk
+:::
+
+Fundamental frequency was extracted using the Python package parselmouth [@jadoulIntroducingParselmouthPython2018]. Based on sex, the F0 range was limited to 186-381 Hz (female) or 75-300 Hz (male). The resulting f0 contours were smoothed with a Savitzky-Golay 3rd-order polynomial filter with a span of 50 ms applied to continuous runs of phonated speech to maintain discontinuities typical of the f0 signal.
+
+::: {.content-visible when-format="html"}
+f0 chunk
+:::
+
+To account for the spectral properties of the acoustic signal, we calculated the center of gravity using Python package parselmouth, filtering out the fundamental frequency using a notch filter.
+
+::: {.content-visible when-format="html"}
+cog chunk
+:::
+
+Formants were extracted in Praat [@boersmaPraatDoingPhonetics2025], using Chris Carignan’s optimization method (see Github). To increase the reliability, we have kept formants only in those formant segments that contain fundamental frequency or happen within a peak of a vocalic energy amplitude..
+
+Note that we keep the sampling rate of all acoustic feature time series data at the original values. We do, however, downsample all of them to 500 Hz at a later stage when merging all signals into a single dataframe per trial (see section 2.2.4.).
+
+### 2.3.4. Derivatives and aggregation of all data
+
+#### Kinematics
+
+Coordinates from 3D skeleton data were interpolated and smoothed with a Savitzky-Golay 3rd-polynomial filter with a span of 400 ms for positional data of upper-body keypoints, and with a 1st-polynomial filter with a span of ca. 800 ms for positional data of lower-body keypoints. The difference in filter settings was chosen after inspection of the video data alongside the coordinates. This revealed more severe error measurement on the lower-body keypoints, mainly due to their occlusion by clothes. Additionally, as lower body key points tend to stay relatively motionless, they are more prone to noise. We then differentiate all signals with respect to time to retrieve the 3D speed (in cm/s), 2D vertical velocity (cm/s), 3D acceleration (cm/s^2), and 3D jerk (cm/s^3). The derivatives are further smoothed with a Savitzky-Golay 3rd-order polynomial filter with a span of 400 ms.
+
+::: {.content-visible when-format="html"}
+motion chunk
+:::
+
+To create aggregated groups of derivatives for body segments (e.g., speed of whole arm), we compute an Euclidean sum over a derivative of all key points belonging to a group. Inverse kinematics and dynamics Joint angle data and moment data were smoothed with a Savitzky-Golay 1st-order polynomial filter with a span of 560 ms. Further, we obtained derivatives of the joint angular data, namely joint angle speed (in rad/s), joint angle acceleration (in rad/s^2), joint angle jerk (in rad/s^3), and moment change (in Nm/s). We smoothed all derivatives with a Savitzky-Golay 1st-order polynomial filter with a span of 560 ms. Similar to the kinematic measures, we have created aggregated measures for the same groups of keypoints.
+
+::: {.content-visible when-format="html"}
+ik & id chunk
+:::
+
+#### Acoustics
+
+We differentiated the amplitude envelope of the acoustic signal to obtain the first derivative, the change in amplitude. Balance We computed the change in 2D magnitude in the center of pressure and smoothed it using the Savitzky-Golay 5th-order polynomial filter with a span of 102 ms.
+
+::: {.content-visible when-format="html"}
+bb chunk
+:::
+
+## Merging & resampling
+
+All time series were merged on a common sampling rate of 500 Hz.
+
+::: {.content-visible when-format="html"}
+script
+:::  

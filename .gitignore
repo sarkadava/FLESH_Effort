@@ -31,7 +31,6 @@
 /03_TS_processing
 /05_finalMerge
 
-/08_Analysis_Modeling
 /00_raw
 /01_XDF_processing/data/Data_processed/Data_trials
 01_XDF_processing/data/Data_processed
@@ -42,3 +41,7 @@
 /04_TS_movementAnnotation
 /04_TS_soundAnnotation
 /08_Analysis_XGBoost
+/08_Analysis_Modeling/Effort_Bayesian_files
+/08_Analysis_Modeling/models
+/01_XDF_processing/xdf_workflow_final_files - Copy
+/Doc_tracking
