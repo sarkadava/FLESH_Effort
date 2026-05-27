@@ -45,3 +45,6 @@
 /08_Analysis_Modeling/models
 /01_XDF_processing/xdf_workflow_final_files - Copy
 /Doc_tracking
+
+**/*.quarto_ipynb
+/Manuscript

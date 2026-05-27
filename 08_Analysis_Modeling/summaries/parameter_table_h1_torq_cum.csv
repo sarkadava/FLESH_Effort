@@ -1,0 +1,55 @@
+term_type,parameter,m0,m1,m2,m3,m4
+model_info,R2,"0.026 [0.016, 0.039]","0.5 [0.463, 0.536]","0.537 [0.499, 0.573]","0.533 [0.496, 0.568]","0.53 [0.495, 0.565]"
+model_info,formula,arm_moment_sum_change_integral ~ 1 + correction,arm_moment_sum_change_integral ~ 1 + correction + modality + BFI_extra + Familiarity + expressibility_z + TrialNumber_c + (1 + correction | pcn_ID) + (1 | SessionID) + (1 + correction | concept),arm_moment_sum_change_integral ~ 1 + correction + modality + BFI_extra + Familiarity + expressibility_z + TrialNumber_c + (1 + correction + modality + expressibility_z | pcn_ID) + (1 + Familiarity + BFI_extra | SessionID) + (1 + correction + modality | concept),arm_moment_sum_change_integral ~ 1 + correction + modality + BFI_extra + Familiarity + expressibility_z + TrialNumber_c + (1 + expressibility_z + correction + modality || pcn_ID) + (1 + Familiarity + BFI_extra || SessionID) + (1 + correction + modality || concept),arm_moment_sum_change_integral ~ 1 + correction + modality + expressibility_z + BFI_extra + Familiarity + TrialNumber_c + correction:modality + correction:expressibility_z + modality:expressibility_z + correction:BFI_extra + correction:Familiarity + (1 + correction + modality + correction:modality || pcn_ID) + (1 + Familiarity + BFI_extra || SessionID) + (1 + correction + modality || concept)
+model_info,n_obs,2495,2495,2495,2495,2495
+fixed,Intercept,"11.27 [11.238, 11.302] *","11.329 [11.206, 11.454] *","11.327 [11.203, 11.454] *","11.326 [11.201, 11.451] *","11.328 [11.202, 11.453] *"
+fixed,BFI_extra,—,"0.018 [-0.04, 0.077]","0.028 [-0.037, 0.096]","0.028 [-0.039, 0.097]","0.027 [-0.039, 0.097]"
+fixed,Familiarity,—,"-0.017 [-0.1, 0.063]","-0.019 [-0.109, 0.068]","-0.017 [-0.104, 0.07]","-0.018 [-0.107, 0.069]"
+fixed,TrialNumber_c,—,"0.001 [0, 0.002] *","0.001 [0, 0.002]","0.001 [0, 0.002]","0.001 [0, 0.002]"
+fixed,correction2M1,"0.2 [0.134, 0.265] *","0.188 [0.134, 0.242] *","0.188 [0.136, 0.24] *","0.187 [0.135, 0.24] *","0.189 [0.135, 0.241] *"
+fixed,correction2M1:BFI_extra,—,—,—,—,"0.001 [-0.049, 0.053]"
+fixed,correction2M1:Familiarity,—,—,—,—,"0.001 [-0.051, 0.052]"
+fixed,correction2M1:expressibility_z,—,—,—,—,"0.014 [-0.034, 0.062]"
+fixed,correction2M1:modality1,—,—,—,—,"-0.011 [-0.103, 0.082]"
+fixed,correction3M2,"0.137 [0.048, 0.228] *","0.145 [0.081, 0.211] *","0.139 [0.075, 0.204] *","0.141 [0.078, 0.204] *","0.134 [0.066, 0.201] *"
+fixed,correction3M2:BFI_extra,—,—,—,—,"-0.003 [-0.063, 0.057]"
+fixed,correction3M2:Familiarity,—,—,—,—,"-0.006 [-0.067, 0.055]"
+fixed,correction3M2:expressibility_z,—,—,—,—,"-0.02 [-0.085, 0.044]"
+fixed,correction3M2:modality1,—,—,—,—,"0.017 [-0.106, 0.141]"
+fixed,expressibility_z,—,"-0.104 [-0.171, -0.036] *","-0.083 [-0.156, -0.01] *","-0.083 [-0.158, -0.009] *","-0.09 [-0.169, -0.011] *"
+fixed,modality1,—,"0.057 [0.015, 0.1] *","0.054 [-0.017, 0.125]","0.054 [-0.017, 0.126]","0.054 [-0.022, 0.13]"
+fixed,modality1:expressibility_z,—,—,—,—,"0.016 [-0.046, 0.077]"
+random_sd,sd() | residual__,"0.72 [0.7, 0.74]","0.491 [0.476, 0.506]","0.468 [0.453, 0.483]","0.468 [0.454, 0.484]","0.47 [0.455, 0.485]"
+random_sd,sd(BFI_extra) | SessionID,—,—,"0.101 [0.006, 0.215]","0.098 [0.006, 0.212]","0.098 [0.006, 0.211]"
+random_sd,sd(Familiarity) | SessionID,—,—,"0.092 [0.005, 0.216]","0.088 [0.005, 0.208]","0.09 [0.005, 0.21]"
+random_sd,sd(Intercept) | SessionID,—,"0.308 [0.227, 0.399]","0.305 [0.214, 0.397]","0.31 [0.223, 0.401]","0.31 [0.225, 0.401]"
+random_sd,sd(Intercept) | concept,—,"0.369 [0.312, 0.439]","0.367 [0.309, 0.434]","0.37 [0.313, 0.438]","0.371 [0.314, 0.437]"
+random_sd,sd(Intercept) | pcn_ID,—,"0.256 [0.201, 0.322]","0.231 [0.161, 0.308]","0.224 [0.159, 0.293]","0.223 [0.159, 0.293]"
+random_sd,sd(correction2M1) | concept,—,"0.033 [0.001, 0.088]","0.035 [0.002, 0.092]","0.032 [0.001, 0.089]","0.033 [0.001, 0.091]"
+random_sd,sd(correction2M1) | pcn_ID,—,"0.127 [0.036, 0.195]","0.127 [0.039, 0.198]","0.132 [0.053, 0.197]","0.139 [0.063, 0.202]"
+random_sd,sd(correction2M1:modality1) | pcn_ID,—,—,—,—,"0.066 [0.003, 0.177]"
+random_sd,sd(correction3M2) | concept,—,"0.061 [0.003, 0.146]","0.065 [0.003, 0.15]","0.06 [0.003, 0.149]","0.059 [0.003, 0.15]"
+random_sd,sd(correction3M2) | pcn_ID,—,"0.043 [0.002, 0.118]","0.043 [0.002, 0.118]","0.043 [0.002, 0.118]","0.045 [0.002, 0.123]"
+random_sd,sd(correction3M2:modality1) | pcn_ID,—,—,—,—,"0.09 [0.004, 0.24]"
+random_sd,sd(expressibility_z) | pcn_ID,—,—,"0.05 [0.005, 0.091]","0.041 [0.002, 0.084]",—
+random_sd,sd(modality1) | concept,—,—,"0.162 [0.097, 0.228]","0.162 [0.097, 0.227]","0.162 [0.097, 0.226]"
+random_sd,sd(modality1) | pcn_ID,—,—,"0.237 [0.183, 0.297]","0.238 [0.183, 0.296]","0.238 [0.183, 0.296]"
+random_cor,cor(Familiarity x BFI_extra) | SessionID,—,—,"-0.068 [-0.641, 0.553]",—,—
+random_cor,cor(Intercept x BFI_extra) | SessionID,—,—,"0.190 [-0.377, 0.643]",—,—
+random_cor,cor(Intercept x Familiarity) | SessionID,—,—,"-0.127 [-0.646, 0.448]",—,—
+random_cor,cor(Intercept x correction2M1) | concept,—,"-0.141 [-0.681, 0.495]","-0.134 [-0.644, 0.450]",—,—
+random_cor,cor(Intercept x correction2M1) | pcn_ID,—,"0.192 [-0.266, 0.583]","0.139 [-0.316, 0.532]",—,—
+random_cor,cor(Intercept x correction3M2) | concept,—,"-0.197 [-0.687, 0.399]","-0.215 [-0.681, 0.368]",—,—
+random_cor,cor(Intercept x correction3M2) | pcn_ID,—,"-0.044 [-0.618, 0.554]","-0.036 [-0.562, 0.507]",—,—
+random_cor,cor(Intercept x expressibility_z) | pcn_ID,—,—,"-0.293 [-0.708, 0.250]",—,—
+random_cor,cor(Intercept x modality1) | concept,—,—,"-0.062 [-0.374, 0.252]",—,—
+random_cor,cor(Intercept x modality1) | pcn_ID,—,—,"-0.172 [-0.484, 0.170]",—,—
+random_cor,cor(correction2M1 x correction3M2) | concept,—,"0.007 [-0.584, 0.603]","0.014 [-0.564, 0.586]",—,—
+random_cor,cor(correction2M1 x correction3M2) | pcn_ID,—,"0.043 [-0.554, 0.628]","0.034 [-0.513, 0.573]",—,—
+random_cor,cor(correction2M1 x expressibility_z) | pcn_ID,—,—,"-0.033 [-0.529, 0.461]",—,—
+random_cor,cor(correction2M1 x modality1) | concept,—,—,"0.125 [-0.474, 0.658]",—,—
+random_cor,cor(correction2M1 x modality1) | pcn_ID,—,—,"0.011 [-0.380, 0.401]",—,—
+random_cor,cor(correction3M2 x expressibility_z) | pcn_ID,—,—,"0.027 [-0.528, 0.564]",—,—
+random_cor,cor(correction3M2 x modality1) | concept,—,—,"0.110 [-0.469, 0.621]",—,—
+random_cor,cor(correction3M2 x modality1) | pcn_ID,—,—,"-0.065 [-0.566, 0.479]",—,—
+random_cor,cor(modality1 x expressibility_z) | pcn_ID,—,—,"0.228 [-0.253, 0.620]",—,—
