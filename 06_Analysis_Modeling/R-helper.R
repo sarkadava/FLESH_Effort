@@ -1,10 +1,19 @@
-
 modality_colors <- c(
   "gesture"    = "#2196F3",
   "vocal"      = "#FF9800",
   "multimodal" = "#4CAF50"
 )
 
+# ══════════════════════════════════════════════════════════════════════════════
+#  theme_effort_plot()
+#
+#  Custom ggplot2 theme used across all effort plots. Minimal base with clean
+#  horizontal grid lines, styled axis text/titles, and a top-positioned legend.
+#
+#  Arguments
+#  ─────────────────────────────────────────────────────────────────────────────
+#  base_size   Base font size (default 16).
+# ══════════════════════════════════════════════════════════════════════════════
 theme_effort_plot <- function(base_size = 16) {
   theme_minimal(base_size = base_size) +
     theme(
@@ -29,6 +38,19 @@ theme_effort_plot <- function(base_size = 16) {
 }
 
 
+# ══════════════════════════════════════════════════════════════════════════════
+#  .make_noise_flag()  [internal helper]
+#
+#  Returns a logical vector indicating which channel × modality combinations
+#  are designated as noise (i.e. the channel is uninformative for that
+#  modality, e.g. vocal envelope in a gesture-only condition).
+#
+#  Arguments
+#  ─────────────────────────────────────────────────────────────────────────────
+#  channel_vec    Character/factor vector of channel labels (one per row).
+#  modality_vec   Character/factor vector of modality labels (one per row).
+#  noise_channels Named list: list("Channel Label" = "modality_value").
+# ══════════════════════════════════════════════════════════════════════════════
 .make_noise_flag <- function(channel_vec, modality_vec, noise_channels) {
   purrr::map2_lgl(
     as.character(channel_vec),
@@ -40,6 +62,19 @@ theme_effort_plot <- function(base_size = 16) {
   )
 }
 
+# ══════════════════════════════════════════════════════════════════════════════
+#  .make_colour_scale()  [internal helper]
+#
+#  Builds a ggplot2 scale_colour_manual() that pairs each modality level with
+#  its canonical colour and appends greyed-out "_nc" variants for noise /
+#  non-credible combinations.
+#
+#  Arguments
+#  ─────────────────────────────────────────────────────────────────────────────
+#  modality_lvls  Character vector of modality levels to include.
+#  nc_colour      Colour used for noise/non-credible variants (default "grey70").
+#  ...            Further arguments forwarded to scale_colour_manual().
+# ══════════════════════════════════════════════════════════════════════════════
 .make_colour_scale <- function(modality_lvls, nc_colour = "grey70", ...) {
   vals <- c(
     setNames(purrr::map_chr(modality_lvls, ~ modality_colors[[.x]]),
@@ -50,6 +85,19 @@ theme_effort_plot <- function(base_size = 16) {
   scale_colour_manual(values = vals, ...)
 }
 
+# ══════════════════════════════════════════════════════════════════════════════
+#  .make_fill_scale()  [internal helper]
+#
+#  Same as .make_colour_scale() but returns scale_fill_manual(). Used wherever
+#  filled geoms (bars, ribbons, halfeye slabs) need the same noise-aware
+#  colour mapping.
+#
+#  Arguments
+#  ─────────────────────────────────────────────────────────────────────────────
+#  modality_lvls  Character vector of modality levels.
+#  nc_colour      Fill for noise/non-credible variants (default "grey70").
+#  ...            Further arguments forwarded to scale_fill_manual().
+# ══════════════════════════════════════════════════════════════════════════════
 .make_fill_scale <- function(modality_lvls, nc_colour = "grey70", ...) {
   vals <- c(
     setNames(purrr::map_chr(modality_lvls, ~ modality_colors[[.x]]),
@@ -116,7 +164,7 @@ report_effort_success <- function(
       "Arm Torque" = "vocal"
     ),
     model_label = deparse(substitute(model)),
-    output_file = paste0("effort_success_", model_label, ".png")
+    output_file = paste0("plots/effort_success_", model_label, ".png")
 ) {
   
   channel_cols   <- purrr::map_chr(channels, "col")
@@ -427,28 +475,6 @@ report_effort_success <- function(
 }
 
 
-# ══════════════════════════════════════════════════════════════════════════════
-#  Usage
-# ══════════════════════════════════════════════════════════════════════════════
-
-# report_effort_success(
-#   model       = e3.m1,
-#   data        = trials_c0,
-#   model_label = "e3.m1"
-# )
-
-# ── With different effort columns (e.g. peak-mean variants) ──────────────────
-# report_effort_success(
-#   model = e3.m1b,
-#   data  = trials_c0,
-#   channels = list(
-#     arm = list(col = "arm_torque_peak_c", label = "Arm Torque"),
-#     env = list(col = "envelope_peak_c",   label = "Envelope"),
-#     cop = list(col = "copc_peak_c",       label = "COP")
-#   ),
-#   model_label = "e3.m1b"
-# )
-
 
 # ══════════════════════════════════════════════════════════════════════════════
 #  report_effort_similarity()
@@ -510,7 +536,7 @@ report_effort_similarity <- function(
       "Arm Torque" = "vocal"
     ),
     model_label = deparse(substitute(model)),
-    output_file = paste0("effort_similarity_", model_label, ".png")
+    output_file = paste0("plots/effort_similarity_", model_label, ".png")
 ) {
   
   channel_cols   <- purrr::map_chr(channels, "col")
@@ -723,43 +749,6 @@ report_effort_similarity <- function(
 }
 
 
-# ══════════════════════════════════════════════════════════════════════════════
-#  Usage
-# ══════════════════════════════════════════════════════════════════════════════
-
-# report_effort_similarity(
-#   model       = e4.m4_att,
-#   data        = df_eff_rep,
-#   model_label = "e4.m4_att"
-# )
-
-# ── With different column names ───────────────────────────────────────────────
-# report_effort_similarity(
-#   model = e4.m4_att,
-#   data  = df_eff_rep,
-#   channels = list(
-#     arm = list(col = "arm_torque_in_log_c", label = "Arm Torque"),
-#     env = list(col = "envelope_log_c",      label = "Envelope"),
-#     cop = list(col = "copc_log_c",          label = "COP")
-#   ),
-#   model_label = "e4.m4_att"
-# )
-
-# ── With extra covariates held at non-zero values ─────────────────────────────
-# report_effort_similarity(
-#   model = e4.m4_att,
-#   data  = df_eff_rep,
-#   covariates = list(
-#     answer_prev_dist_z = 0,
-#     correction         = "c1",
-#     expressibility_z   = 0,
-#     Familiarity        = 0,
-#     BFI_extra          = 0,
-#     TrialNumber_c      = 0
-#   ),
-#   model_label = "e4.m4_att"
-# )
-
 
 # ══════════════════════════════════════════════════════════════════════════════
 #  report_resolution_by_effort()
@@ -810,7 +799,7 @@ report_resolution_by_effort <- function(
       "Arm Torque" = "vocal"
     ),
     model_label = deparse(substitute(model)),
-    output_file = paste0("resolution_by_effort_", model_label, ".png")
+    output_file = paste0("plots/resolution_by_effort_", model_label, ".png")
 ) {
   
   channel_cols   <- purrr::map_chr(channels, "col")
@@ -1146,44 +1135,21 @@ report_resolution_by_effort <- function(
 }
 
 
-# ══════════════════════════════════════════════════════════════════════════════
-#  Usage
-# ══════════════════════════════════════════════════════════════════════════════
-
-# Default (matches e3.m4_att / e4.m5_att):
-# report_resolution_by_effort(
-#   model       = e3.m4_att,
-#   data        = df_ordinal,
-#   model_label = "e3.m4_att"
-# )
-
-# With different effort column names:
-# report_resolution_by_effort(
-#   model = e3.m4b_att,
-#   data  = df_ordinal,
-#   channels = list(
-#     arm = list(col = "arm_torque_in_log_c", label = "Arm Torque"),
-#     env = list(col = "envelope_in_log_c",   label = "Envelope"),
-#     cop = list(col = "copc_in_log_c",       label = "COP")
-#   ),
-#   model_label = "e3.m4b_att"
-# )
-
-# c0-only model:
-# report_resolution_by_effort(
-#   model       = e4.m5_att,
-#   data        = df_ordinal_c0,
-#   model_label = "e4.m5_att"
-# )
-
-# Weighted mean model:
-# report_resolution_by_effort(
-#   model       = e4.m6_att,
-#   data        = df_ordinal_weighted,
-#   model_label = "e4.m6_att"
-# )
-
 #######
+# ══════════════════════════════════════════════════════════════════════════════
+#  compare_convergence()
+#
+#  Compares MCMC convergence diagnostics across a named list of brms models.
+#  Reports Rhat, neff ratio, and bulk/tail ESS for each model, applies hard
+#  pass/fail criteria (Rhat < 1.01 and min ESS ≥ 400), and identifies the
+#  best-converging model via a weighted composite score.
+#
+#  Arguments
+#  ─────────────────────────────────────────────────────────────────────────────
+#  model_list   Named list of fitted brmsfit objects.
+#
+#  Returns invisibly: data frame with one row per model and all diagnostics.
+# ══════════════════════════════════════════════════════════════════════════════
 compare_convergence <- function(model_list) {
   
   # ── Per-model convergence metrics ───────────────────────────────────────────
@@ -1338,6 +1304,21 @@ compare_convergence <- function(model_list) {
 }
 
 ######
+# ══════════════════════════════════════════════════════════════════════════════
+#  create_parameter_table()
+#
+#  Assembles a wide-format parameter table from a named list of brms models.
+#  Each column is one model; rows are model info, fixed effects, random-effect
+#  SDs, and random-effect correlations. Estimates are formatted as
+#  "median [Q2.5, Q97.5]" with a "*" flag for credible effects.
+#
+#  Arguments
+#  ─────────────────────────────────────────────────────────────────────────────
+#  model_list   Named list of fitted brmsfit objects.
+#  r2_list      Optional named list of bayes_R2() results (matching names).
+#
+#  Returns: a tibble suitable for knitr::kable() or gt::gt().
+# ══════════════════════════════════════════════════════════════════════════════
 create_parameter_table <- function(model_list, r2_list = NULL) {
   
   # ── Model info ──────────────────────────────────────────────────────────────
@@ -1488,6 +1469,30 @@ create_parameter_table <- function(model_list, r2_list = NULL) {
 
 
 ###############
+# ══════════════════════════════════════════════════════════════════════════════
+#  targeted_comparisons()
+#
+#  Runs five targeted posterior analyses on a single brms log-normal effort
+#  model and assembles a 3-row × 2-column patchwork figure:
+#
+#  1. Modality main-effect comparisons (pairwise % differences).
+#  2. Predicted effort trajectories by modality across corrections (c0–c2).
+#  3. Expressibility effect: effort trajectories at ±1 SD and ±2 SD.
+#  4. Performer-level trajectories: effort at ±1 SD and ±2 SD of the
+#     participant random intercept.
+#  5. Variance decomposition: % variance by participant / concept / dyad /
+#     residual.
+#
+#  Prints numerical summaries to console and saves the grid as a PNG.
+#
+#  Arguments
+#  ─────────────────────────────────────────────────────────────────────────────
+#  model     Fitted brmsfit (log-normal, sum-coded modality).
+#  type      "two_modality" (gesture vs multimodal) or "three_modality".
+#  dv_label  String used in plot titles and the saved filename.
+#
+#  Returns invisibly: named list of ggplot objects.
+# ══════════════════════════════════════════════════════════════════════════════
 targeted_comparisons <- function(model, type = c("two_modality", "three_modality"),
                                  dv_label = "Effort") {
   
@@ -2037,7 +2042,7 @@ targeted_comparisons <- function(model, type = c("two_modality", "three_modality
   
   print(final)
   
-  ggsave(paste0("targeted_comparisons_",
+  ggsave(paste0("plots/targeted_comparisons_",
                 gsub("[^a-zA-Z0-9]", "_", dv_label), ".png"),
          final, width = 14, height = 12, dpi = 300, bg = "white")
   
@@ -2047,6 +2052,22 @@ targeted_comparisons <- function(model, type = c("two_modality", "three_modality
 
 ##########
 
+# ══════════════════════════════════════════════════════════════════════════════
+#  targeted_comparisons_bfi()
+#
+#  Identical structure to targeted_comparisons() but uses BFI Extraversion
+#  (b_BFI_extra) instead of Expressibility as the individual-difference
+#  moderator in panel 3. Produces the same five-section console output and
+#  saves a 3-row × 2-column patchwork PNG.
+#
+#  Arguments
+#  ─────────────────────────────────────────────────────────────────────────────
+#  model     Fitted brmsfit (log-normal, sum-coded modality + BFI_extra).
+#  type      "two_modality" or "three_modality".
+#  dv_label  String used in plot titles and the saved filename.
+#
+#  Returns invisibly: named list of ggplot objects.
+# ══════════════════════════════════════════════════════════════════════════════
 targeted_comparisons_bfi <- function(model, type = c("two_modality", "three_modality"),
                                      dv_label = "Effort") {
   
@@ -2596,14 +2617,27 @@ targeted_comparisons_bfi <- function(model, type = c("two_modality", "three_moda
   
   print(final)
   
-  ggsave(paste0("targeted_comparisons_bfi_",
+  ggsave(paste0("plots/targeted_comparisons_bfi_",
                 gsub("[^a-zA-Z0-9]", "_", dv_label), ".png"),
          final, width = 14, height = 12, dpi = 300, bg = "white")
   
   invisible(plots)
 }
 
-# Function to get % from log estimates
+# ══════════════════════════════════════════════════════════════════════════════
+#  log_to_pct()
+#
+#  Converts a log-scale coefficient (and optional 95 % CI bounds) to a
+#  percentage change via (exp(x) - 1) × 100. Prints the result and returns
+#  it invisibly.
+#
+#  Arguments
+#  ─────────────────────────────────────────────────────────────────────────────
+#  estimate   Log-scale point estimate.
+#  ci_low     Lower CI bound (optional).
+#  ci_high    Upper CI bound (optional).
+#  digits     Decimal places (default 1).
+# ══════════════════════════════════════════════════════════════════════════════
 log_to_pct <- function(estimate, ci_low = NULL, ci_high = NULL, digits = 1) {
   pct      <- round((exp(estimate) - 1) * 100, digits)
   
@@ -2618,7 +2652,22 @@ log_to_pct <- function(estimate, ci_low = NULL, ci_high = NULL, digits = 1) {
   }
 }
 
-# Function to get implied modality
+# ══════════════════════════════════════════════════════════════════════════════
+#  get_implied_estimate()
+#
+#  Recovers the implicit (omitted) modality coefficient from a sum-coded brms
+#  model. With two modalities the implied = -b_modality1; with three it is
+#  -(b_modality1 + b_modality2). Prints log-scale and % estimates with the
+#  95 % HDI.
+#
+#  Arguments
+#  ─────────────────────────────────────────────────────────────────────────────
+#  model   Fitted brmsfit with sum-coded modality.
+#  type    "two_modality" or "three_modality".
+#  digits  Decimal places in printed output (default 3).
+#
+#  Returns invisibly: median_hdi tibble for the implied coefficient.
+# ══════════════════════════════════════════════════════════════════════════════
 get_implied_estimate <- function(model, type = c("two_modality", "three_modality"),
                                  digits = 3) {
   # type = "two_modality"   → implied = -modality1
@@ -2667,6 +2716,23 @@ get_implied_estimate <- function(model, type = c("two_modality", "three_modality
 }
 
 ####
+# ══════════════════════════════════════════════════════════════════════════════
+#  create_paper_table()
+#
+#  Extended version of create_parameter_table() designed for manuscript tables.
+#  Adds back-transformation of log-scale estimates to % change (non-intercept
+#  fixed effects) and to geometric means (intercepts), section-separator rows,
+#  and optional readable DV column headers.
+#
+#  Arguments
+#  ─────────────────────────────────────────────────────────────────────────────
+#  model_list       Named list of fitted brmsfit objects.
+#  r2_list          Optional named list of bayes_R2() results.
+#  dv_labels        Named character vector mapping model names → readable labels.
+#  log_transformed  Named logical vector indicating which DVs are log-scale.
+#
+#  Returns: a wide tibble with section separators, ready for knitr::kable().
+# ══════════════════════════════════════════════════════════════════════════════
 create_paper_table <- function(model_list, r2_list = NULL, 
                                dv_labels = NULL,
                                log_transformed = NULL) {
@@ -2894,6 +2960,23 @@ create_paper_table <- function(model_list, r2_list = NULL,
 
 ####
 
+# ══════════════════════════════════════════════════════════════════════════════
+#  plot_correction_grid()
+#
+#  Produces a 2 × 3 patchwork of raw-data + posterior panels, one per DV,
+#  showing predicted effort (log scale) at each correction phase (c0–c2) by
+#  modality. Each panel overlays jittered raw data, posterior half-eye
+#  distributions, point-interval summaries, and a dashed c0 reference line.
+#
+#  Arguments
+#  ─────────────────────────────────────────────────────────────────────────────
+#  model_grid   List of entries; each with $model, $label, $row,
+#               $data_modalities, and $modality_map.
+#  data         Full data frame (subsetted per panel by modality).
+#  dv_vars      Named list mapping DV labels to column names in data.
+#
+#  Returns: a patchwork object (not saved; caller must ggsave if needed).
+# ══════════════════════════════════════════════════════════════════════════════
 plot_correction_grid <- function(model_grid, data, dv_vars) {
   
   modality_colors <- c(
@@ -3050,6 +3133,20 @@ plot_correction_grid <- function(model_grid, data, dv_vars) {
     )
 }
 
+# ══════════════════════════════════════════════════════════════════════════════
+#  plot_correction_posteriors_grid()
+#
+#  Produces a 2 × 3 patchwork of posterior half-eye panels, one per DV,
+#  showing the two correction contrast coefficients (c0→c1 and c1→c2) on a
+#  shared x-axis. Panels share axis labels across rows/columns to reduce
+#  clutter.
+#
+#  Arguments
+#  ─────────────────────────────────────────────────────────────────────────────
+#  model_grid   Same list structure as plot_correction_grid().
+#
+#  Returns: a patchwork object (not saved; caller must ggsave if needed).
+# ══════════════════════════════════════════════════════════════════════════════
 plot_correction_posteriors_grid <- function(model_grid) {
   
   # ── Extract draws ───────────────────────────────────────────────────────────
@@ -3128,6 +3225,23 @@ plot_correction_posteriors_grid <- function(model_grid) {
     theme(plot.caption = element_text(hjust = 0.5, size = 11))
 }
 
+# ══════════════════════════════════════════════════════════════════════════════
+#  plot_fixed_effects_grid()
+#
+#  Produces a 2 × 3 patchwork of fixed-effects posterior panels, one per DV,
+#  showing all non-intercept / non-correction parameters (modality contrasts +
+#  covariates). Modality coefficients use sum-coding reconstruction; the
+#  implied (omitted) level is shown with a dashed slab. X-axis limits are
+#  shared within columns.
+#
+#  Arguments
+#  ─────────────────────────────────────────────────────────────────────────────
+#  model_grid   Same list structure as plot_correction_grid(); each entry
+#               must also include $modality_map (list mapping "modality1",
+#               "modality2", "implied" to readable labels).
+#
+#  Returns: a patchwork object (not saved; caller must ggsave if needed).
+# ══════════════════════════════════════════════════════════════════════════════
 plot_fixed_effects_grid <- function(model_grid) {
   
   # ── Fixed parameter map (non-modality) ──────────────────────────────────────
@@ -3343,265 +3457,9 @@ plot_fixed_effects_grid <- function(model_grid) {
 
 
 
-# ============================================================
-# plot_posterior_channel_correlations()
-# FLESH project helper — Sarka Kadava
-# ============================================================
-# Computes posterior predictive correlations between effort
-# channels (arm, envelope, COP) split by modality condition,
-# and returns a patchwork plot with interval + half-eye panels.
-#
-# Dependencies: brms, tidybayes, dplyr, tidyr,
-#               ggplot2, ggdist, patchwork
-# ============================================================
-
-plot_posterior_channel_correlations <- function(
-    fit,
-    data,
-    resp_arm      = "logarm",
-    resp_env      = "logenv",
-    resp_cop      = "logcop",
-    modality_var  = "modality",
-    modality_labels = c("1" = "Gesture only",
-                        "2" = "Vocal only",
-                        "3" = "Multimodal"),
-    ndraws        = 500,
-    seed          = 42,
-    ci_widths     = c(0.89, 0.95),
-    colors        = c("Gesture only" = "#1D9E75",
-                      "Vocal only"   = "#378ADD",
-                      "Multimodal"   = "#7F77DD"),
-    save_path     = NULL,
-    width         = 8,
-    height        = 12
-) {
-  
-  # ── 0. Packages ─────────────────────────────────────────
-  requireNamespace("brms",      quietly = TRUE)
-  requireNamespace("tidybayes", quietly = TRUE)
-  requireNamespace("dplyr",     quietly = TRUE)
-  requireNamespace("tidyr",     quietly = TRUE)
-  requireNamespace("ggplot2",   quietly = TRUE)
-  requireNamespace("ggdist",    quietly = TRUE)
-  requireNamespace("patchwork", quietly = TRUE)
-  
-  library(dplyr); library(tidyr); library(ggplot2)
-  library(tidybayes); library(ggdist); library(patchwork)
-  
-  # ── 1. Column names for the three response predictions ──
-  col_arm <- paste0(".prediction_", resp_arm)
-  col_env <- paste0(".prediction_", resp_env)
-  col_cop <- paste0(".prediction_", resp_cop)
-  
-  # ── 2. Draw posterior predictions ───────────────────────
-  set.seed(seed)
-  
-  pred_draws_long <- data |>
-    tidybayes::add_predicted_draws(fit, ndraws = ndraws, seed = seed)
-  
-  # Multivariate brms models return a single .prediction column in long
-  # format, with .category identifying the response. Pivot to wide so
-  # each response gets its own column before computing correlations.
-  if (".category" %in% names(pred_draws_long)) {
-    pred_draws <- pred_draws_long |>
-      tidyr::pivot_wider(
-        names_from   = .category,
-        values_from  = .prediction,
-        names_prefix = ".prediction_"
-      )
-  } else {
-    pred_draws <- pred_draws_long
-  }
-  
-  # Validate column names
-  missing_cols <- setdiff(c(col_arm, col_env, col_cop), names(pred_draws))
-  if (length(missing_cols) > 0) {
-    available <- grep("^\\.prediction", names(pred_draws), value = TRUE)
-    stop(
-      "Response columns not found: ", paste(missing_cols, collapse = ", "),
-      "\nAvailable prediction columns: ", paste(available, collapse = ", "),
-      "\nAdjust resp_arm / resp_env / resp_cop arguments."
-    )
-  }
-  
-  # ── 3. Compute pairwise correlations per draw x modality ─
-  corr_draws <- pred_draws |>
-    group_by(.data[[modality_var]], .draw) |>
-    summarise(
-      `Arm <-> Envelope` = cor(.data[[col_arm]], .data[[col_env]], use = "complete.obs"),
-      `Arm <-> COP`      = cor(.data[[col_arm]], .data[[col_cop]], use = "complete.obs"),
-      `Envelope <-> COP` = cor(.data[[col_env]], .data[[col_cop]], use = "complete.obs"),
-      .groups = "drop"
-    ) |>
-    pivot_longer(
-      cols      = c(`Arm <-> Envelope`, `Arm <-> COP`, `Envelope <-> COP`),
-      names_to  = "pair",
-      values_to = "r"
-    ) |>
-    mutate(
-      pair     = factor(pair, levels = c("Arm <-> Envelope",
-                                         "Arm <-> COP",
-                                         "Envelope <-> COP")),
-      modality = dplyr::recode(
-        as.character(.data[[modality_var]]),
-        !!!modality_labels
-      ),
-      modality = factor(modality, levels = modality_labels)
-    )
-  
-  # ── 4. Summarise ─────────────────────────────────────────
-  corr_summary <- corr_draws |>
-    group_by(modality, pair) |>
-    tidybayes::median_qi(r, .width = ci_widths)
-  
-  # ── 5. Panel A: dot + interval overview ──────────────────
-  p_intervals <- ggplot(
-    corr_summary,
-    aes(x = r, xmin = .lower, xmax = .upper,
-        y = pair, colour = modality, group = modality)
-  ) +
-    ggdist::geom_pointinterval(
-      position            = position_dodge(width = 0.55),
-      interval_size_range = c(0.6, 1.4),
-      fatten_point        = 2.5
-    ) +
-    geom_vline(
-      xintercept = 0, linetype = "dashed",
-      colour = "grey60", linewidth = 0.35
-    ) +
-    scale_colour_manual(values = colors, name = NULL) +
-    scale_x_continuous(
-      limits = c(-1, 1),
-      breaks = seq(-0.75, 1, 0.25),
-      labels = function(x) sprintf("%.2f", x)
-    ) +
-    labs(
-      x        = "Pearson r",
-      y        = NULL,
-      title    = "Posterior channel correlations by modality",
-      subtitle = paste0(
-        "Median + ",
-        paste(ci_widths * 100, collapse = "% / "),
-        "% credible intervals"
-      )
-    ) +
-    theme_minimal(base_size = 12) +
-    theme(
-      plot.title         = element_text(size = 13, face = "bold"),
-      plot.subtitle      = element_text(size = 10, colour = "grey40"),
-      legend.position    = "bottom",
-      legend.key.size    = unit(0.5, "lines"),
-      panel.grid.major.y = element_blank(),
-      panel.grid.minor   = element_blank(),
-      panel.grid.major.x = element_line(colour = "grey92", linewidth = 0.3)
-    )
-  
-  # ── 6. Panel B: half-eye per channel pair ────────────────
-  p_halfeye <- ggplot(
-    corr_draws,
-    aes(x = r, y = modality, fill = modality, colour = modality)
-  ) +
-    ggdist::stat_halfeye(
-      aes(slab_alpha = after_stat(f)),
-      point_interval = median_qi,
-      .width         = ci_widths,
-      normalize      = "panels",
-      scale          = 0.7,
-      slab_colour    = NA
-    ) +
-    geom_vline(
-      xintercept = 0, linetype = "dashed",
-      colour = "grey50", linewidth = 0.35
-    ) +
-    facet_wrap(~pair, ncol = 1, scales = "free_y") +
-    scale_fill_manual(values   = colors, guide = "none") +
-    scale_colour_manual(values = colors, guide = "none") +
-    scale_x_continuous(
-      limits = c(-1, 1),
-      breaks = seq(-0.75, 1, 0.25),
-      labels = function(x) sprintf("%.2f", x)
-    ) +
-    labs(
-      x        = "Pearson r (posterior predictive)",
-      y        = NULL,
-      subtitle = "Full posterior distributions per channel pair"
-    ) +
-    theme_minimal(base_size = 12) +
-    theme(
-      plot.subtitle      = element_text(size = 10, colour = "grey40"),
-      strip.text         = element_text(size = 11, face = "bold"),
-      panel.grid.major.y = element_blank(),
-      panel.grid.minor   = element_blank(),
-      panel.grid.major.x = element_line(colour = "grey92", linewidth = 0.3),
-      panel.spacing      = unit(1.2, "lines"),
-      axis.text.y        = element_text(
-        colour = colors[levels(corr_draws$modality)]
-      )
-    )
-  
-  # ── 7. Combine ───────────────────────────────────────────
-  combined <- p_intervals / p_halfeye +
-    plot_layout(heights = c(1, 2.5)) +
-    plot_annotation(
-      caption = paste0(
-        "brms multivariate model · ", ndraws, " posterior draws"
-      ),
-      theme = theme(
-        plot.caption = element_text(size = 9, colour = "grey50")
-      )
-    )
-  
-  # ── 8. Optionally save ───────────────────────────────────
-  if (!is.null(save_path)) {
-    ext <- tools::file_ext(save_path)
-    if (ext == "pdf") {
-      ggsave(save_path, combined, width = width, height = height,
-             device = cairo_pdf)
-    } else {
-      ggsave(save_path, combined, width = width, height = height, dpi = 300)
-    }
-    message("Saved to: ", save_path)
-  }
-  
-  # ── 9. Return invisibly so assignment is optional ────────
-  invisible(list(
-    plot          = combined,
-    corr_draws    = corr_draws,
-    corr_summary  = corr_summary
-  ))
-}
-
-
-# ── Example usage ────────────────────────────────────────────
-#
-# result <- plot_posterior_channel_correlations(
-#   fit    = fit,
-#   data   = df_all,
-#   ndraws = 500
-# )
-# result$plot                # view
-# result$corr_summary        # inspect posterior summaries
-#
-# # Save as PDF:
-# plot_posterior_channel_correlations(
-#   fit       = fit,
-#   data      = df_all,
-#   save_path = "figures/channel_correlations_by_modality.pdf"
-# )
-#
-# # Override response names if brms named them differently:
-# plot_posterior_channel_correlations(
-#   fit      = fit,
-#   data     = df_all,
-#   resp_arm = "log_arm",   # check with: grep(".prediction", names(pred), value=TRUE)
-#   resp_env = "log_env",
-#   resp_cop = "log_cop"
-# )
-
 
 # ============================================================
 # get_modality_contrasts()
-# FLESH project helper — Sarka Kadava
 # ============================================================
 # Extracts pairwise modality contrasts from a brms model using
 # posterior draws. Handles sum coding (default in brms contr.sum)
@@ -3753,29 +3611,27 @@ get_modality_contrasts <- function(
 }
 
 
-# ── Example usage ─────────────────────────────────────────────
-#
-# result <- get_modality_contrasts(
-#   model  = e3.m1,
-#   labels = c("1" = "Gesture only", "2" = "Vocal only", "3" = "Multimodal")
-# )
-# result$summary   # table
-# result$plot      # ggplot object for ggsave
-#
-# # Two-modality model (only gesture vs vocal):
-# get_modality_contrasts(
-#   model  = e2.m1,
-#   labels = c("1" = "Gesture only", "2" = "Vocal only")
-# )
-#
-# # Treatment (dummy) coding:
-# get_modality_contrasts(
-#   model  = e3.m1,
-#   labels = c("1" = "Gesture only", "2" = "Vocal only", "3" = "Multimodal"),
-#   coding = "treatment"
-# )
 
-
+# ══════════════════════════════════════════════════════════════════════════════
+#  plot_correction_by_effort()
+#
+#  For each model in models_e1, computes predicted effort trajectories across
+#  corrections (c0–c2) stratified by first-trial / baseline effort level
+#  (±1 SD and ±2 SD of the participant-level predictor). Produces two panels
+#  per DV: (1) effort trajectory lines and (2) posterior of the c0→c1
+#  correction effect as % change, assembled into a single patchwork and saved.
+#
+#  Arguments
+#  ─────────────────────────────────────────────────────────────────────────────
+#  models_e1   Named list of fitted brmsfit objects, each with an interaction
+#              between correction phase and a first-trial / baseline effort
+#              predictor (auto-detected by regex).
+#  dv_labels   Optional named vector of readable labels (falls back to names).
+#  type        "two_modality" or "three_modality" (currently unused internally
+#              but forwarded for consistency).
+#
+#  Returns invisibly: named list of plot pairs (traj / corr) per model.
+# ══════════════════════════════════════════════════════════════════════════════
 plot_correction_by_effort <- function(models_e1, dv_labels = NULL,
                                       type = c("two_modality", "three_modality")) {
   
@@ -4007,509 +3863,29 @@ plot_correction_by_effort <- function(models_e1, dv_labels = NULL,
   
   print(final)
   
-  ggsave("correction_by_effort_interaction.png", final,
+  ggsave("plots/correction_by_effort_interaction.png", final,
          width = 20, height = 10, dpi = 300, bg = "white")
   
   invisible(plot_list)
 }
 
 
-## Model 8
 
-plot_effort_by_concept <- function(model_list, dv_labels = NULL) {
-  
-  effort_palette <- c(
-    "−2 SD"   = "#37474F",
-    "−1 SD"   = "#607D8B",
-    "Average" = "#000000",
-    "+1 SD"   = "#E53935",
-    "+2 SD"   = "#B71C1C"
-  )
-  
-  print_result <- function(draws, var, label) {
-    res  <- draws |> median_hdi(!!sym(var))
-    est  <- res[[var]]; lo <- res$.lower; hi <- res$.upper
-    cred <- lo > 0 | hi < 0
-    cat(sprintf("  %-50s %.3f [%.3f, %.3f]%s\n",
-                label, est, lo, hi, ifelse(cred, "  *", "")))
-  }
-  
-  plot_list <- list()
-  
-  purrr::imap(model_list, function(mod, model_nm) {
-    
-    coef_names <- rownames(fixef(mod))
-    fe_draws   <- fixef(mod, summary = FALSE) |> as.data.frame()
-    
-    # All effort main terms in this model
-    all_effort_mains <- grep(
-      "arm_torque.*total|envelope.*total|copc.*total",
-      coef_names, value = TRUE
-    ) |> grep("concept_number", x = _, invert = TRUE, value = TRUE)
-    
-    if (length(all_effort_mains) == 0) {
-      message("No effort coefficients found in: ", model_nm)
-      return(NULL)
-    }
-    
-    concept_sd <- sd(mod$data$concept_number_c, na.rm = TRUE)
-    b_intercept <- fe_draws[["Intercept"]]
-    b_concept   <- fe_draws[["concept_number_c"]]
-    
-    # ── Inner loop: one panel set per channel ──────────────────────────────────
-    purrr::walk(all_effort_mains, function(effort_nm) {
-      
-      # Label: look up by effort variable name, fall back to variable name itself
-      label <- if (!is.null(dv_labels) && effort_nm %in% names(dv_labels))
-        dv_labels[[effort_nm]]
-      else effort_nm
-      
-      plot_key <- paste0(model_nm, "__", effort_nm)
-      
-      cat("═══════════════════════════════════════════════\n")
-      cat(sprintf("  %s\n", label))
-      cat("═══════════════════════════════════════════════\n\n")
-      
-      # Interaction term (may be named either way round)
-      effort_x_concept_name <- grep(
-        paste0("(", effort_nm, ").*concept_number|concept_number.*(", effort_nm, ")"),
-        coef_names, value = TRUE, perl = TRUE
-      )
-      has_interaction <- length(effort_x_concept_name) > 0
-      
-      cat(sprintf("  Effort term:      %s\n", effort_nm))
-      if (has_interaction)
-        cat(sprintf("  Interaction term: %s\n", effort_x_concept_name))
-      cat("\n")
-      
-      b_effort  <- fe_draws[[effort_nm]]
-      b_ex_con  <- if (has_interaction) fe_draws[[effort_x_concept_name]] else rep(0, nrow(fe_draws))
-      effort_sd <- sd(mod$data[[effort_nm]], na.rm = TRUE)
-      
-      draws <- tibble::tibble(
-        .draw       = seq_len(nrow(fe_draws)),
-        b_intercept = b_intercept,
-        b_effort    = b_effort,
-        b_concept   = b_concept,
-        b_ex_con    = b_ex_con
-      ) |>
-        mutate(
-          vlow_avg     = b_intercept + (-2) * effort_sd * b_effort,
-          low_avg      = b_intercept + (-1) * effort_sd * b_effort,
-          avg_avg      = b_intercept,
-          high_avg     = b_intercept +   1  * effort_sd * b_effort,
-          vhigh_avg    = b_intercept +   2  * effort_sd * b_effort,
-          productivity = 2 * effort_sd * b_effort,
-          slope_early  = b_effort + (-1) * concept_sd * b_ex_con,
-          slope_late   = b_effort +   1  * concept_sd * b_ex_con,
-          delta_slope  = slope_late - slope_early
-        )
-      
-      cat("  Predicted similarity at average concept number:\n")
-      print_result(draws, "vlow_avg",  "  Very low effort (-2SD):")
-      print_result(draws, "low_avg",   "  Low effort (-1SD):")
-      print_result(draws, "avg_avg",   "  Average effort:")
-      print_result(draws, "high_avg",  "  High effort (+1SD):")
-      print_result(draws, "vhigh_avg", "  Very high effort (+2SD):")
-      cat("\n  Effort productivity (Δ similarity, -1SD to +1SD):\n")
-      print_result(draws, "productivity", "  Overall productivity:")
-      cat("\n  Effort slope by concept number:\n")
-      print_result(draws, "slope_early", "  Effort slope at early concepts (-1SD):")
-      print_result(draws, "slope_late",  "  Effort slope at late concepts (+1SD):")
-      print_result(draws, "delta_slope", "  Change in slope (late - early):")
-      cat("\n")
-      
-      # ── Trajectory ────────────────────────────────────────────────────────────
-      concept_seq <- seq(-2, 2, by = 0.5) * concept_sd
-      sd_levels   <- c(vlow = -2, low = -1, avg = 0, high = 1, vhigh = 2)
-      
-      traj_draws <- purrr::map_dfr(names(sd_levels), function(grp) {
-        sd_val <- sd_levels[[grp]]
-        purrr::map_dfr(concept_seq, function(con_val) {
-          sim <- draws$b_intercept +
-            sd_val * effort_sd * draws$b_effort +
-            con_val * draws$b_concept +
-            sd_val * effort_sd * con_val * draws$b_ex_con
-          q <- quantile(sim, c(.025, .5, .975))
-          tibble::tibble(group = grp, concept_val = con_val,
-                         lo = q[1], med = q[2], hi = q[3])
-        })
-      }) |>
-        mutate(group = factor(group,
-                              levels = c("vlow","low","avg","high","vhigh"),
-                              labels = c("−2 SD","−1 SD","Average","+1 SD","+2 SD")))
-      
-      p_traj <- traj_draws |>
-        ggplot(aes(x = concept_val, y = med,
-                   colour = group, fill = group, group = group)) +
-        geom_ribbon(aes(ymin = lo, ymax = hi), alpha = 0.12, colour = NA) +
-        geom_line(linewidth = 1.2) +
-        scale_colour_manual(values = effort_palette, name = "Total effort level") +
-        scale_fill_manual(values = effort_palette, guide = "none") +
-        theme_effort_plot() +
-        labs(title = label,
-             subtitle = "Predicted final similarity across concept number by effort level",
-             x = "Concept number (centred)", y = "Predicted cosine similarity")
-      
-      p_prod <- draws |>
-        ggplot(aes(x = productivity, y = "Productivity")) +
-        stat_halfeye(fill = "#1565C0", .width = c(0.89, 0.95),
-                     point_interval = median_hdi, scale = 0.5, alpha = 0.85) +
-        geom_vline(xintercept = 0, linetype = "dashed",
-                   colour = "grey20", linewidth = 0.8) +
-        theme_effort_plot() +
-        labs(title = label, subtitle = "Effort productivity",
-             x = "Δ cosine similarity (−1SD to +1SD effort)", y = NULL)
-      
-      p_slope <- draws |>
-        select(.draw, slope_early, slope_late) |>
-        tidyr::pivot_longer(c(slope_early, slope_late),
-                            names_to = "phase", values_to = "slope") |>
-        mutate(phase = factor(phase,
-                              levels = c("slope_early","slope_late"),
-                              labels = c("Early (−1 SD)","Late (+1 SD)"))) |>
-        ggplot(aes(x = slope, y = phase, fill = phase)) +
-        stat_halfeye(.width = c(0.89, 0.95), point_interval = median_hdi,
-                     normalize = "groups", scale = 0.5, alpha = 0.85) +
-        geom_vline(xintercept = 0, linetype = "dashed",
-                   colour = "grey20", linewidth = 0.8) +
-        scale_fill_manual(values = c("Early (−1 SD)" = "#607D8B",
-                                     "Late (+1 SD)"  = "#E53935"),
-                          guide = "none") +
-        theme_effort_plot() +
-        labs(title = label, subtitle = "Effort slope at early vs late concepts",
-             x = "Effort slope", y = NULL)
-      
-      plot_list[[plot_key]] <<- list(traj = p_traj, prod = p_prod, slope = p_slope)
-    })
-  })
-  
-  # ── Assemble: one row per channel across models ────────────────────────────────
-  nms_available <- names(Filter(Negate(is.null), plot_list))
-  
-  if (length(nms_available) == 0) {
-    message("No plots to assemble.")
-    return(invisible(plot_list))
-  }
-  
-  traj_row  <- purrr::map(nms_available, ~ plot_list[[.x]]$traj) |>
-    patchwork::wrap_plots(nrow = 1) +
-    patchwork::plot_layout(guides = "collect") &
-    theme(legend.position = "bottom")
-  
-  prod_row  <- purrr::map(nms_available, ~ plot_list[[.x]]$prod) |>
-    patchwork::wrap_plots(nrow = 1)
-  
-  slope_row <- purrr::map(nms_available, ~ plot_list[[.x]]$slope) |>
-    patchwork::wrap_plots(nrow = 1) +
-    patchwork::plot_layout(guides = "collect") &
-    theme(legend.position = "bottom")
-  
-  final <- (traj_row / (prod_row | slope_row)) +
-    patchwork::plot_annotation(
-      title    = "Total episode effort and final semantic similarity",
-      subtitle = "Top: effort × concept number | Bottom left: productivity | Bottom right: slope change",
-      theme    = theme(plot.title    = element_text(size = 14, face = "bold"),
-                       plot.subtitle = element_text(size = 11, colour = "grey40"))
-    )
-  
-  print(final)
-  ggsave("effort_by_concept_interaction.png", final,
-         width = 20, height = 12, dpi = 300, bg = "white")
-  
-  invisible(plot_list)
-}
-
-diagnose_random_structure <- function(model, data, threshold_rhat = 1.01, 
-                                      threshold_neff = 0.1,
-                                      threshold_est_ratio = 0.30) {
-  
-  # Helper to safely extract a scalar value
-  safe_val <- function(x) {
-    if (length(x) == 0 || all(is.na(x))) return(NA)
-    x[1]
-  }
-  
-  cat("═══════════════════════════════════════════════════════\n")
-  cat("  RANDOM STRUCTURE DIAGNOSTICS\n")
-  cat("═══════════════════════════════════════════════════════\n\n")
-  
-  vc        <- VarCorr(model)
-  rhat_vals <- brms::rhat(model)
-  neff_vals <- brms::neff_ratio(model)
-  
-  # ── 1. Convergence overview ─────────────────────────────────────────────────
-  cat("── 1. CONVERGENCE OVERVIEW ────────────────────────────\n")
-  cat(sprintf("  max Rhat:        %.4f  %s\n", max(rhat_vals, na.rm=TRUE),
-              ifelse(max(rhat_vals, na.rm=TRUE) > 1.05, "⚠ CRITICAL", 
-                     ifelse(max(rhat_vals, na.rm=TRUE) > 1.01, "⚠ WARNING", "✓ OK"))))
-  cat(sprintf("  min neff ratio:  %.4f  %s\n", min(neff_vals, na.rm=TRUE),
-              ifelse(min(neff_vals, na.rm=TRUE) < 0.05, "⚠ CRITICAL",
-                     ifelse(min(neff_vals, na.rm=TRUE) < 0.1, "⚠ WARNING", "✓ OK"))))
-  cat(sprintf("  n Rhat > 1.01:   %d\n",   sum(rhat_vals > 1.01, na.rm=TRUE)))
-  cat(sprintf("  n neff < 0.1:    %d\n\n", sum(neff_vals < 0.1,  na.rm=TRUE)))
-  
-  # ── 2. Random SD diagnostics ────────────────────────────────────────────────
-  cat("── 2. RANDOM EFFECT SDs ───────────────────────────────\n")
-  cat(sprintf("  %-55s %8s %8s %8s %8s %s\n",
-              "Parameter", "Est", "CI_low", "CI_high", "neff", "Verdict"))
-  cat(paste(rep("─", 105), collapse=""), "\n")
-  
-  sd_remove <- c()
-  
-  for (group_name in names(vc)) {
-    sd_df <- as.data.frame(vc[[group_name]]$sd)
-    
-    for (i in seq_len(nrow(sd_df))) {
-      param   <- rownames(sd_df)[i]
-      est     <- safe_val(sd_df[i, "Estimate"])
-      ci_low  <- safe_val(sd_df[i, "Q2.5"])
-      ci_high <- safe_val(sd_df[i, "Q97.5"])
-      
-      # Match neff
-      neff_match <- neff_vals[grepl(
-        paste0("sd_", group_name, ".*", gsub("[():]", ".", param)), 
-        names(neff_vals)
-      )]
-      neff_val <- if (length(neff_match) > 0) min(neff_match, na.rm=TRUE) else NA
-      
-      # Match rhat
-      rhat_match <- rhat_vals[grepl(
-        paste0("sd_", group_name, ".*", gsub("[():]", ".", param)),
-        names(rhat_vals)
-      )]
-      rhat_val <- if (length(rhat_match) > 0) max(rhat_match, na.rm=TRUE) else NA
-      
-      # Criteria
-      ci_touches_zero <- length(ci_low)  > 0 && !is.na(ci_low)  && ci_low < 0.001
-      
-      estimate_small  <- length(est)     > 0 && !is.na(est) &&
-        length(ci_high) > 0 && !is.na(ci_high) &&
-        ci_high > 0 &&
-        (est / ci_high) < threshold_est_ratio
-      
-      neff_bad        <- length(neff_val) > 0 && !is.na(neff_val) && 
-        neff_val < threshold_neff
-      rhat_bad        <- length(rhat_val) > 0 && !is.na(rhat_val) && 
-        rhat_val > threshold_rhat
-      
-      ci_width <- if (length(ci_low) > 0 && length(ci_high) > 0 &&
-                      !is.na(ci_low) && !is.na(ci_high)) {
-        ci_high - ci_low
-      } else NA
-      
-      relative_width <- if (!is.na(ci_width) && length(est) > 0 && !is.na(est)) {
-        ci_width / (est + 0.001)
-      } else NA
-      
-      reasons <- c()
-      if (isTRUE(ci_touches_zero))                              reasons <- c(reasons, "CI->0")
-      if (isTRUE(estimate_small))                               reasons <- c(reasons, "est<30%_upper_CI")
-      if (isTRUE(neff_bad))                                     reasons <- c(reasons, "low_neff")
-      if (isTRUE(rhat_bad))                                     reasons <- c(reasons, "bad_Rhat")
-      if (!is.na(relative_width) && isTRUE(relative_width > 3)) reasons <- c(reasons, "wide_CI")
-      
-      verdict <- if (length(reasons) > 0) {
-        paste("⚠ CONSIDER REMOVING:", paste(reasons, collapse="+"))
-      } else "✓ keep"
-      
-      cat(sprintf("  %-55s %8s %8s %8s %8s %s\n",
-                  paste0(group_name, ": ", param),
-                  ifelse(is.na(est),     "NA", sprintf("%.3f", est)),
-                  ifelse(is.na(ci_low),  "NA", sprintf("%.3f", ci_low)),
-                  ifelse(is.na(ci_high), "NA", sprintf("%.3f", ci_high)),
-                  ifelse(is.na(neff_val),"NA", sprintf("%.3f", neff_val)),
-                  verdict))
-      
-      if (length(reasons) > 0) {
-        sd_remove <- c(sd_remove, paste0("sd(", param, ") | ", group_name))
-      }
-    }
-  }
-  
-  # ── 3. Correlation diagnostics ──────────────────────────────────────────────
-  cat("\n── 3. RANDOM EFFECT CORRELATIONS ─────────────────────\n")
-  cat(sprintf("  %-65s %8s %8s %8s %8s %s\n",
-              "Parameter", "Est", "CI_low", "CI_high", "neff", "Verdict"))
-  cat(paste(rep("─", 115), collapse=""), "\n")
-  
-  cor_remove_groups <- c()
-  
-  for (group_name in names(vc)) {
-    cor_array <- vc[[group_name]]$cor
-    if (is.null(cor_array)) next
-    
-    param_names <- dimnames(cor_array)[[1]]
-    
-    for (i in seq_along(param_names)) {
-      for (j in seq_along(param_names)) {
-        if (j <= i) next  # upper triangle only
-        
-        p1  <- param_names[i]
-        p2  <- param_names[j]
-        
-        est     <- safe_val(cor_array[p1, "Estimate", p2])
-        ci_low  <- safe_val(cor_array[p1, "Q2.5",     p2])
-        ci_high <- safe_val(cor_array[p1, "Q97.5",    p2])
-        param   <- paste0(p1, " x ", p2)
-        
-        # Match neff
-        neff_match <- neff_vals[grepl(
-          paste0("cor_", group_name, ".*",
-                 gsub("[()[:space:]:]", ".", p1)),
-          names(neff_vals)
-        )]
-        neff_val <- if (length(neff_match) > 0) min(neff_match, na.rm=TRUE) else NA
-        
-        # Criteria
-        ci_excludes_zero <- length(ci_low) > 0 && length(ci_high) > 0 &&
-          !is.na(ci_low) && !is.na(ci_high) &&
-          (ci_low > 0 | ci_high < 0)
-        
-        ci_spans_zero    <- length(ci_low) > 0 && length(ci_high) > 0 &&
-          !is.na(ci_low) && !is.na(ci_high) &&
-          ci_low < 0 && ci_high > 0
-        
-        ci_width <- if (length(ci_low) > 0 && length(ci_high) > 0 &&
-                        !is.na(ci_low) && !is.na(ci_high)) {
-          ci_high - ci_low
-        } else NA
-        
-        very_wide_ci <- !is.na(ci_width) && isTRUE(ci_width > 1.2)
-        
-        neff_bad <- length(neff_val) > 0 && !is.na(neff_val) &&
-          neff_val < threshold_neff
-        
-        reasons <- c()
-        
-        if (isTRUE(ci_excludes_zero)) {
-          # CI excludes zero — credible correlation, always keep
-          # Only note if neff is low (needs more iterations, not removal)
-          verdict <- "✓ keep (credible)"
-          if (isTRUE(neff_bad))
-            verdict <- "✓ keep (credible) — low neff: consider more iterations"
-        } else {
-          # CI spans zero
-          if (isTRUE(ci_spans_zero))
-            reasons <- c(reasons, "CI_spans_zero")
-          if (isTRUE(ci_spans_zero) && isTRUE(very_wide_ci))
-            reasons <- c(reasons, "uninformative")
-          # Low neff only flagged when CI also spans zero
-          if (isTRUE(neff_bad) && isTRUE(ci_spans_zero))
-            reasons <- c(reasons, "low_neff")
-          
-          verdict <- if (length(reasons) > 0) {
-            paste("⚠ CONSIDER ||:", paste(reasons, collapse="+"))
-          } else "✓ keep"
-        }
-        
-        cat(sprintf("  %-65s %8s %8s %8s %8s %s\n",
-                    paste0(group_name, ": ", param),
-                    ifelse(is.na(est),     "NA", sprintf("%.3f", est)),
-                    ifelse(is.na(ci_low),  "NA", sprintf("%.3f", ci_low)),
-                    ifelse(is.na(ci_high), "NA", sprintf("%.3f", ci_high)),
-                    ifelse(is.na(neff_val),"NA", sprintf("%.3f", neff_val)),
-                    verdict))
-        
-        if (length(reasons) > 0) {
-          cor_remove_groups <- c(cor_remove_groups, group_name)
-        }
-      }
-    }
-  }
-  cor_remove_groups <- unique(cor_remove_groups)
-  
-  # ── 4. Data sparsity check ──────────────────────────────────────────────────
-  cat("\n── 4. DATA SPARSITY PER RANDOM SLOPE ─────────────────\n")
-  
-  sparse_slopes <- c()
-  
-  for (group_name in names(vc)) {
-    sd_df  <- as.data.frame(vc[[group_name]]$sd)
-    slopes <- rownames(sd_df)[rownames(sd_df) != "Intercept"]
-    
-    if (length(slopes) == 0) next
-    
-    group_col <- tryCatch({
-      group_vars <- names(data)[names(data) %in% 
-                                  c(group_name, tolower(group_name),
-                                    gsub("_ID$", "", group_name),
-                                    gsub("_id$", "", group_name))]
-      if (length(group_vars) == 0) NULL else group_vars[1]
-    }, error = function(e) NULL)
-    
-    if (is.null(group_col) || is.na(group_col)) {
-      cat(sprintf("  [%s]: could not match to data column — check manually\n",
-                  group_name))
-      next
-    }
-    
-    n_units <- length(unique(data[[group_col]]))
-    cat(sprintf("  %s (%d units):\n", group_name, n_units))
-    
-    for (slope in slopes) {
-      slope_clean <- gsub("correction(\\d+M\\d+)", "correction", slope)
-      slope_col   <- names(data)[names(data) %in% 
-                                   c(slope, slope_clean, gsub(":", "_", slope))]
-      
-      if (length(slope_col) > 0) {
-        obs_per_unit <- data |>
-          dplyr::group_by(.data[[group_col]]) |>
-          dplyr::summarise(n = sum(!is.na(.data[[slope_col[1]]])),
-                           .groups = "drop")
-        pct_sufficient <- mean(obs_per_unit$n >= 3) * 100
-        cat(sprintf("    slope %-35s: median obs/unit = %5.1f  pct >= 3 obs = %5.1f%%  %s\n",
-                    slope,
-                    median(obs_per_unit$n),
-                    pct_sufficient,
-                    ifelse(pct_sufficient < 50, "⚠ SPARSE", "✓ ok")))
-        if (pct_sufficient < 50)
-          sparse_slopes <- c(sparse_slopes, paste0(slope, " | ", group_name))
-      } else {
-        cat(sprintf("    slope %-35s: [could not check sparsity]\n", slope))
-      }
-    }
-  }
-  
-  # ── 5. Summary of recommendations ──────────────────────────────────────────
-  cat("\n═══════════════════════════════════════════════════════\n")
-  cat("  RECOMMENDATIONS\n")
-  cat("═══════════════════════════════════════════════════════\n\n")
-  
-  if (length(sd_remove) > 0) {
-    cat("  Remove these random slopes (near-zero SD / small est / low neff / bad Rhat):\n")
-    for (r in unique(sd_remove)) cat(sprintf("    - %s\n", r))
-    cat("\n")
-  }
-  
-  if (length(cor_remove_groups) > 0) {
-    cat("  Switch from | to || for these grouping factors\n")
-    cat("  (correlations span zero — uninformative or poorly estimated):\n")
-    for (g in cor_remove_groups) cat(sprintf("    - %s\n", g))
-    cat("\n")
-  }
-  
-  if (length(sparse_slopes) > 0) {
-    cat("  These slopes may be unestimable due to data sparsity:\n")
-    for (s in sparse_slopes) cat(sprintf("    - %s\n", s))
-    cat("\n")
-  }
-  
-  if (length(c(sd_remove, cor_remove_groups, sparse_slopes)) == 0) {
-    cat("  No issues detected — random structure looks appropriate.\n\n")
-  }
-  
-  # ── 6. Current formula ──────────────────────────────────────────────────────
-  cat("  Current formula:\n")
-  cat(sprintf("  %s\n\n", as.character(formula(model))[1]))
-  
-  invisible(list(
-    sd_remove         = unique(sd_remove),
-    cor_remove_groups = cor_remove_groups,
-    sparse_slopes     = sparse_slopes
-  ))
-}
-
+# ══════════════════════════════════════════════════════════════════════════════
+#  plot_h2_prev_answer()
+#
+#  Reports and plots the effect of previous-answer cosine similarity
+#  (answer_prev_dist_z) on current effort across multiple brms models (H2).
+#  Prints % change per SD and HDI to console; produces a single halfeye panel
+#  with one row per DV, coloured by credibility, and saves it as a PNG.
+#
+#  Arguments
+#  ─────────────────────────────────────────────────────────────────────────────
+#  models_h2   Named list of fitted brmsfit objects (one per DV).
+#  dv_labels   Optional named vector of readable DV labels.
+#
+#  Returns invisibly: the ggplot object.
+# ══════════════════════════════════════════════════════════════════════════════
 plot_h2_prev_answer <- function(models_h2, dv_labels = NULL) {
   
   # ── Default DV labels ───────────────────────────────────────────────────────
@@ -4596,7 +3972,7 @@ plot_h2_prev_answer <- function(models_h2, dv_labels = NULL) {
   
   print(p)
   
-  ggsave("h2_prev_answer_effect.png", p,
+  ggsave("plots/h2_prev_answer_effect.png", p,
          width = 9, height = 6, dpi = 300, bg = "white")
   
   invisible(p)
