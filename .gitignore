@@ -19,10 +19,6 @@
 02_MotionTracking_processing/Pose2Sim
 *.caffemodel
 
-06_ConceptSimilarity/numberbatch
-
-09_Analysis_Modeling/models
-
 /Miscellaneous
 /.quarto/
 /shign
@@ -49,3 +45,4 @@
 **/*.quarto_ipynb
 /Manuscript
 04_ConceptSimilarity/numberbatch/numberbatch.txt
+/06_Analysis_Modeling/models
