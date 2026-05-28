@@ -24,7 +24,6 @@
 /shign
 /To_discuss
 
-/03_TS_processing
 /05_finalMerge
 
 /00_raw
@@ -45,3 +44,6 @@
 /Manuscript
 04_ConceptSimilarity/numberbatch/numberbatch.txt
 /06_Analysis_Modeling/models
+/03_TS_processing/TS_acoustics
+/03_TS_processing/TS_merged
+/03_TS_processing/TS_motiontracking
