@@ -38,11 +38,9 @@
 /04_TS_soundAnnotation
 /08_Analysis_XGBoost
 /08_Analysis_Modeling/Effort_Bayesian_files
-/08_Analysis_Modeling/models
 /01_XDF_processing/xdf_workflow_final_files - Copy
 /Doc_tracking
 
 **/*.quarto_ipynb
 /Manuscript
 04_ConceptSimilarity/numberbatch/numberbatch.txt
-/06_Analysis_Modeling/models
