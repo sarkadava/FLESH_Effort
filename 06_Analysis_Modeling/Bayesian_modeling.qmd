@@ -3081,23 +3081,23 @@ write.csv(paper_table,
 
 model_grid <- list(
   list(model = h1.m3_torq_cum, label = "Arm Torque\n(integral)",  row = 1,
-       data_modalities = c("gesture", "multimodal"),
-       implied_coef    = "multimodal"),
+       dv_col = "arm_moment_sum_change_integral",
+       data_modalities = c("gesture", "multimodal"), implied_coef = "multimodal"),
   list(model = h1.m3_env_cum,  label = "Envelope\n(integral)",    row = 1,
-       data_modalities = c("vocal", "multimodal"),
-       implied_coef    = "multimodal"),
+       dv_col = "envelope_norm_integral",
+       data_modalities = c("vocal", "multimodal"), implied_coef = "multimodal"),
   list(model = h1.m3_cop_cum,  label = "COP\n(integral)",         row = 1,
-       data_modalities = c("gesture", "multimodal", "vocal"),
-       implied_coef    = "vocal"),
+       dv_col = "COPc_integral",
+       data_modalities = c("gesture", "multimodal", "vocal"), implied_coef = "vocal"),
   list(model = h1.m3_torq_in,  label = "Arm Torque\n(peak mean)", row = 2,
-       data_modalities = c("gesture", "multimodal"),
-       implied_coef    = "multimodal"),
+       dv_col = "arm_moment_sum_change_peak_mean",
+       data_modalities = c("gesture", "multimodal"), implied_coef = "multimodal"),
   list(model = h1.m3_env_in,   label = "Envelope\n(peak mean)",   row = 2,
-       data_modalities = c("vocal", "multimodal"),
-       implied_coef    = "multimodal"),
+       dv_col = "envelope_norm_peak_mean",
+       data_modalities = c("vocal", "multimodal"), implied_coef = "multimodal"),
   list(model = h1.m3_cop_in,   label = "COP\n(peak mean)",        row = 2,
-       data_modalities = c("gesture", "multimodal", "vocal"),
-       implied_coef    = "vocal")
+       dv_col = "COPc_peak_mean",
+       data_modalities = c("gesture", "multimodal", "vocal"), implied_coef = "vocal")
 )
 
 dv_vars <- c(
@@ -3112,7 +3112,7 @@ dv_vars <- c(
 correction_grid <- plot_correction_grid(model_grid, df_all, dv_vars)
 print(correction_grid)
 
-ggsave("correction_raincloud_grid.png",
+ggsave(here(plots, "correction_raincloud_grid.png"),
        correction_grid,
        width = 16, height = 10,
        dpi = 300, bg = "white")
@@ -3124,23 +3124,61 @@ ggsave("correction_raincloud_grid.png",
 ```{r}
 
 model_grid <- list(
-  list(model = h1.m3_torq_cum, label = "Arm Torque\n(integral)",  row = 1),
-  list(model = h1.m3_env_cum,  label = "Envelope\n(integral)",    row = 1),
-  list(model = h1.m3_cop_cum,  label = "COPc\n(integral)",        row = 1),
-  list(model = h1.m3_torq_in,  label = "Arm Torque\n(peak mean)", row = 2),
-  list(model = h1.m3_env_in,   label = "Envelope\n(peak mean)",   row = 2),
-  list(model = h1.m3_cop_in,   label = "COPc\n(peak mean)",       row = 2)
+  list(model = h1.m3_torq_cum, label = "Arm Torque\n(integral)",  row = 1,
+       dv_col = "arm_moment_sum_change_integral"),
+  list(model = h1.m3_env_cum,  label = "Envelope\n(integral)",    row = 1,
+       dv_col = "envelope_norm_integral"),
+  list(model = h1.m3_cop_cum,  label = "COPc\n(integral)",        row = 1,
+       dv_col = "COPc_integral"),
+  list(model = h1.m3_torq_in,  label = "Arm Torque\n(peak mean)", row = 2,
+       dv_col = "arm_moment_sum_change_peak_mean"),
+  list(model = h1.m3_env_in,   label = "Envelope\n(peak mean)",   row = 2,
+       dv_col = "envelope_norm_peak_mean"),
+  list(model = h1.m3_cop_in,   label = "COPc\n(peak mean)",       row = 2,
+       dv_col = "COPc_peak_mean")
 )
 
 correction_grid <- plot_correction_posteriors_grid(model_grid)
 print(correction_grid)
 
-ggsave("correction_posteriors_grid.png",
+ggsave(here(plots,"correction_posteriors_grid.png"),
        correction_grid,
-       width = 12, height = 7,
+       width = 8, height = 5,
        dpi = 300, bg = "white")
 
 ```
+
+Alternative for publication
+```{r}
+
+model_grid <- list(
+  list(model = h1.m3_torq_cum, label = "Arm Torque\n(integral)",  row = 1,
+       dv_col = "arm_moment_sum_change_integral"),
+  list(model = h1.m3_env_cum,  label = "Envelope\n(integral)",    row = 1,
+       dv_col = "envelope_norm_integral"),
+  list(model = h1.m3_cop_cum,  label = "COPc\n(integral)",        row = 1,
+       dv_col = "COPc_integral"),
+  list(model = h1.m3_torq_in,  label = "Arm Torque\n(peak mean)", row = 2,
+       dv_col = "arm_moment_sum_change_peak_mean"),
+  list(model = h1.m3_env_in,   label = "Envelope\n(peak mean)",   row = 2,
+       dv_col = "envelope_norm_peak_mean"),
+  list(model = h1.m3_cop_in,   label = "COPc\n(peak mean)",       row = 2,
+       dv_col = "COPc_peak_mean")
+)
+
+correction_grid_side <- plot_correction_posteriors_grid2(model_grid, layout = "side")
+print(correction_grid_side)
+
+ggsave(here(plots,"correction_posteriors_grid_side.png"),
+       correction_grid_side,
+       width = 6, height = 4,
+       dpi = 300, bg = "white")
+
+
+
+
+```
+
 
 #### Other fixed effects
 
@@ -3164,8 +3202,8 @@ model_grid <- list(
 fe_grid <- plot_fixed_effects_grid(model_grid)
 print(fe_grid)
 
-ggsave("fixed_effects_posteriors_grid.png",
-       fe_grid, width = 14, height = 8,
+ggsave(here(plots, "fixed_effects_posteriors_grid.png"),
+       fe_grid, width = 10, height = 6,
        dpi = 300, bg = "white")
 
 ```
@@ -4536,6 +4574,15 @@ log_transformed <- c(
   cop_in   = TRUE
 )
 
+dv_col_map <- c(
+  torq_cum = "arm_moment_sum_change_integral",
+  torq_in  = "arm_moment_sum_change_peak_mean",
+  env_cum  = "envelope_norm_integral",
+  env_in   = "envelope_norm_peak_mean",
+  cop_cum  = "COPc_integral",
+  cop_in   = "COPc_peak_mean"
+)
+
 # Table
 paper_table_h2 <- create_paper_table(
   model_list     = model_list_paper_h2,
@@ -4551,7 +4598,7 @@ write.csv(paper_table_h2,
           fileEncoding = "UTF-8")
 
 # Plot
-plot_h2_prev_answer(models_h2, dv_labels)
+plot_h2_prev_answer(model_list_paper_h2, dv_col_map = dv_col_map)
 
 
 ```
@@ -5790,7 +5837,7 @@ result <- get_modality_contrasts(
 result$summary   # table
 result$plot      # ggplot object for ggsave
 
-ggsave("e4m1_channel_correlations_by_modality.png",
+ggsave(here(plots, "e4m1_channel_correlations_by_modality.png"),
        result$plot, width = 12, height = 8, dpi = 300)
 
 ```
@@ -6263,7 +6310,7 @@ result <- get_modality_contrasts(
   model  = e3.m3_att,
   labels = c("1" = "Gesture only", "2" = "Multimodal", "3" = "Vocal only"), coding = "treatment")
 
-ggsave("e3.m3_att_channel_correlations_by_modality.png",
+ggsave(here(plots, "e3.m3_att_channel_correlations_by_modality.png"),
        result$plot, width = 12, height = 8, dpi = 300)
 
 ```
@@ -7122,7 +7169,7 @@ result <- get_modality_contrasts(
   model  = e3.m5_att,
   labels = c("1" = "Gesture only", "2" = "Multimodal", "3" = "Vocal only"), coding = "treatment")
 
-ggsave("e3m5_channel_correlations_by_modality.png",
+ggsave(here(plots, "e3m5_channel_correlations_by_modality.png"),
        result$plot, width = 12, height = 8, dpi = 300)
 
 # Instant
@@ -7257,7 +7304,7 @@ result <- get_modality_contrasts(
   model  = e3.m6_att,
   labels = c("1" = "Gesture only", "2" = "Multimodal", "3" = "Vocal only"), coding = "treatment")
 
-ggsave("e3m6_channel_correlations_by_modality.png",
+ggsave(here(plots, "e3m6_channel_correlations_by_modality.png"),
        result$plot, width = 12, height = 8, dpi = 300)
 
 
@@ -7287,6 +7334,31 @@ result <- get_modality_contrasts(
 
 ```
 
+### Final plot
+
+```{r}
+
+effort_success_plot <- plot_effort_success_summary(
+  models_cum  = list(m1 = e3.m1,       m3 = e3.m3_att,
+                     m5 = e3.m5_att,   m6 = e3.m6_att),
+  models_inst = list(m1 = e3.m1b,      m3 = e3.m3b_att,
+                     m5 = e3.m5b_att,  m6 = e3.m6b_att),
+  coef_map = list(
+    arm = list(cum  = "b_arm_torque_log_c",
+               inst = "b_arm_torque_in_log_c"),
+    env = list(cum  = "b_envelope_log_c",
+               inst = "b_envelope_in_log_c"),
+    cop = list(cum  = "b_copc_log_c",
+               inst = "b_copc_in_log_c")
+  )
+)
+
+print(effort_success_plot)
+ggsave(here(plots, "effort_success_summary.png"),
+       effort_success_plot,
+       width = 7, height = 4, dpi = 300, bg = "white")
+
+```
 
 # Session info
 

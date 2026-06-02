@@ -47,3 +47,13 @@
 /03_TS_processing/TS_acoustics
 /03_TS_processing/TS_merged
 /03_TS_processing/TS_motiontracking
+/02_MotionTracking_processing/03_Track_pose2sim_OpenSim_files
+/03_TS_processing/01_TS_processing_motion_files
+/03_TS_processing/02_TS_processing_acoustics_files
+/03_TS_processing/03_TS_merging_files
+/04_ConceptSimilarity/ConceptNet_similarity_files
+/05_TS_featureExtraction/00_Condition_adherence_files
+/05_TS_featureExtraction/01_TS_extraction_files
+/05_TS_featureExtraction/02_Explorations_and_viz_files
+/docs
+/site_libs

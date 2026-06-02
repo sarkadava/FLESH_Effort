@@ -1,8 +1,128 @@
+
+# ══════════════════════════════════════════════════════════════════════════════
+#  COLOR SYSTEM
+#
+#  Six DVs, three features, two variants each.
+#  Palette: Okabe-Ito based, all six distinguishable under
+#  deuteranopia, protanopia, and tritanopia.
+#  Darker shade = cumulative (integral), lighter = instantaneous (peak_mean).
+#
+#  Feature → hue family:
+#    Arm torque  → Blue  (#0072B2 / #56B4E9)
+#    Envelope    → Vermillion/Orange (#D55E00 / #E69F00)
+#    COP         → Green (#009E73 / #6ECFA4)
+# ══════════════════════════════════════════════════════════════════════════════
+
+dv_colors <- c(
+  "arm_moment_sum_change_integral" = "#0072B2",   # Blue, dark (cumulative)
+  "arm_moment_sum_change_peak_mean" = "#56B4E9",  # Blue, light (instantaneous)
+  "envelope_norm_integral"          = "#D55E00",  # Vermillion, dark (cumulative)
+  "envelope_norm_peak_mean"         = "#E69F00",  # Orange, light (instantaneous)
+  "COPc_integral"                   = "#009E73",  # Green, dark (cumulative)
+  "COPc_peak_mean"                  = "#6ECFA4"   # Teal-green, light (instantaneous)
+)
+
+# Paired light colors (for instantaneous / secondary contrast within a panel)
+dv_colors_light <- dv_colors  # same hue, alpha handles the distinction
+
+# Human-readable labels (for plot axes / legends)
+dv_labels_map <- c(
+  "arm_moment_sum_change_integral"  = "Arm torque\n(cumulative)",
+  "arm_moment_sum_change_peak_mean" = "Arm torque\n(instantaneous)",
+  "envelope_norm_integral"          = "Envelope\n(cumulative)",
+  "envelope_norm_peak_mean"         = "Envelope\n(instantaneous)",
+  "COPc_integral"                   = "COP\n(cumulative)",
+  "COPc_peak_mean"                  = "COP\n(instantaneous)"
+)
+
+# Linetype: cumulative = solid, instantaneous = dashed
+# (secondary cue for people with monochrome prints)
+dv_linetypes <- c(
+  "arm_moment_sum_change_integral"  = "solid",
+  "arm_moment_sum_change_peak_mean" = "dashed",
+  "envelope_norm_integral"          = "solid",
+  "envelope_norm_peak_mean"         = "dashed",
+  "COPc_integral"                   = "solid",
+  "COPc_peak_mean"                  = "dashed"
+)
+
+# Point shapes: cumulative = filled circle (16), instantaneous = open circle (1)
+dv_shapes <- c(
+  "arm_moment_sum_change_integral"  = 16,
+  "arm_moment_sum_change_peak_mean" = 1,
+  "envelope_norm_integral"          = 16,
+  "envelope_norm_peak_mean"         = 1,
+  "COPc_integral"                   = 16,
+  "COPc_peak_mean"                  = 1
+)
+
+
 modality_colors <- c(
   "gesture"    = "#2196F3",
   "vocal"      = "#FF9800",
   "multimodal" = "#4CAF50"
 )
+
+# ── Helper: build ggplot2 color + fill + linetype scales in one call ──────────
+#
+#  Use inside any plot that maps a DV column name to colour/fill.
+#  Pass the DVs present in that plot via `dvs` to suppress unused-level warnings.
+#
+#  Usage:
+#    p + dv_colour_scale() + dv_fill_scale() + dv_linetype_scale()
+#
+dv_colour_scale <- function(dvs = names(dv_colors), ...) {
+  scale_colour_manual(
+    values = dv_colors[dvs],
+    labels = dv_labels_map[dvs],
+    name   = "DV",
+    ...
+  )
+}
+
+dv_fill_scale <- function(dvs = names(dv_colors), ...) {
+  scale_fill_manual(
+    values = dv_colors[dvs],
+    labels = dv_labels_map[dvs],
+    name   = "DV",
+    ...
+  )
+}
+
+dv_linetype_scale <- function(dvs = names(dv_colors), ...) {
+  scale_linetype_manual(
+    values = dv_linetypes[dvs],
+    labels = dv_labels_map[dvs],
+    name   = "DV",
+    ...
+  )
+}
+
+dv_shape_scale <- function(dvs = names(dv_colors), ...) {
+  scale_shape_manual(
+    values = dv_shapes[dvs],
+    labels = dv_labels_map[dvs],
+    name   = "DV",
+    ...
+  )
+}
+
+# ── Legend guide: paired legend with cumulative/instantaneous groups ──────────
+#
+#  Produces a custom legend that visually groups pairs under a feature header.
+#  Requires `ggh4x` or manual override; this helper returns a guide_legend()
+#  with the pairs ordered correctly so the feature grouping is obvious.
+#
+dv_legend_guide <- function() {
+  guide_legend(
+    title          = NULL,
+    override.aes   = list(linewidth = 1.5, size = 3),
+    nrow           = 3,        # 3 rows × 2 cols: each row = one feature
+    byrow          = FALSE,    # fill by column: col1 = cumulative, col2 = instant.
+    label.position = "right"
+  )
+}
+
 
 # ══════════════════════════════════════════════════════════════════════════════
 #  theme_effort_plot()
@@ -14,29 +134,69 @@ modality_colors <- c(
 #  ─────────────────────────────────────────────────────────────────────────────
 #  base_size   Base font size (default 16).
 # ══════════════════════════════════════════════════════════════════════════════
-theme_effort_plot <- function(base_size = 16) {
-  theme_minimal(base_size = base_size) +
+theme_effort_plot <- function(base_size = 16, base_family = "Helvetica") {
+  theme_minimal(base_size = base_size, base_family = base_family) +
     theme(
-      panel.grid.minor = element_blank(),
+      # Grid: keep horizontal reference lines, remove vertical clutter
+      panel.grid.minor   = element_blank(),
       panel.grid.major.x = element_blank(),
-      panel.grid.major.y = element_line(colour = "grey90", linewidth = 0.4),
-      axis.ticks = element_line(colour = "grey40", linewidth = 0.5),
-      axis.ticks.length = unit(4, "pt"),
-      axis.text.x = element_text(size = 15, face = "bold", colour = "grey20"),
-      axis.text.y = element_text(size = 13, colour = "grey20"),
-      axis.title.x = element_text(size = 15, margin = margin(t = 8)),
-      axis.title.y = element_text(size = 15, margin = margin(r = 8)),
-      legend.position = "top",
-      legend.title = element_blank(),
-      legend.text = element_text(size = 14),
-      legend.key.size = unit(12, "pt"),
-      legend.margin = margin(b = 2),
-      plot.margin = margin(8, 12, 8, 8),
-      plot.title = element_text(size = 16, face = "bold"),
+      panel.grid.major.y = element_line(colour = "grey85", linewidth = 0.35),
+      
+      # Axes: prominent ticks and labels
+      axis.line         = element_line(colour = "grey30", linewidth = 0.6),
+      axis.ticks        = element_line(colour = "grey30", linewidth = 0.5),
+      axis.ticks.length = unit(5, "pt"),
+      
+      axis.text.x  = element_text(size = 13, face = "bold", colour = "grey15"),
+      axis.text.y  = element_text(size = 12, colour = "grey15"),
+      axis.title.x = element_text(size = 14, face = "bold",
+                                  margin = margin(t = 10)),
+      axis.title.y = element_text(size = 14, face = "bold",
+                                  margin = margin(r = 10)),
+      
+      # Legend
+      legend.position  = "top",
+      legend.title     = element_blank(),
+      legend.text      = element_text(size = 12),
+      legend.key.size  = unit(14, "pt"),
+      legend.key.width = unit(28, "pt"),   # wider key shows linetype clearly
+      legend.margin    = margin(b = 4),
+      legend.spacing.x = unit(8, "pt"),
+      
+      # Strips (facet labels)
+      strip.text       = element_text(size = 12, face = "bold", colour = "grey10"),
+      strip.background = element_rect(fill = "grey96", colour = NA),
+      
+      # Panel border (subtle box around each panel)
+      panel.border = element_rect(colour = "grey70", fill = NA, linewidth = 0.4),
+      
+      # Margins and titles
+      plot.margin   = margin(10, 14, 10, 10),
+      plot.title    = element_text(size = 16, face = "bold"),
       plot.subtitle = element_text(size = 12, colour = "grey40")
     )
 }
 
+# ══════════════════════════════════════════════════════════════════════════════
+#  model_grid helper — attach colors to model_grid entries
+#
+#  Each entry in model_grid should have a $dv_col field matching a key in
+#  dv_colors. This helper stamps $color, $linetype, and $shape onto each entry.
+#
+#  Usage:
+#    model_grid <- stamp_dv_aesthetics(model_grid)
+#    # then inside plot loops: entry$color, entry$linetype, entry$shape
+# ══════════════════════════════════════════════════════════════════════════════
+stamp_dv_aesthetics <- function(model_grid) {
+  purrr::map(model_grid, function(entry) {
+    col <- entry$dv_col   # must match a key in dv_colors
+    entry$color    <- dv_colors[col]
+    entry$linetype <- dv_linetypes[col]
+    entry$shape    <- dv_shapes[col]
+    entry$label    <- dv_labels_map[col]
+    entry
+  })
+}
 
 # ══════════════════════════════════════════════════════════════════════════════
 #  .make_noise_flag()  [internal helper]
@@ -2979,39 +3139,29 @@ create_paper_table <- function(model_list, r2_list = NULL,
 # ══════════════════════════════════════════════════════════════════════════════
 plot_correction_grid <- function(model_grid, data, dv_vars) {
   
-  modality_colors <- c(
-    "gesture"    = "#2196F3",
-    "vocal"      = "#FF9800",
-    "multimodal" = "#4CAF50"
-  )
-  
   plots <- purrr::imap(model_grid, function(entry, i) {
     
     mod      <- entry$model
-    dv_label <- entry$label
-    dv_col   <- dv_vars[[dv_label]]
+    dv_label <- entry$label          # readable label (can include \n)
+    dv_col   <- entry$dv_col         # column name in data
     col      <- ((i - 1) %% 3) + 1
     show_y   <- col == 1
     show_x   <- entry$row == 2
     show_leg <- i == 3
     
-    # ── Modalities in this model's data ──────────────────────────────────────
-    mod_names <- entry$data_modalities
+    mod_names  <- entry$data_modalities
+    mod_colors <- c(
+      "gesture"    = "#2196F3",
+      "vocal"      = "#FF9800",
+      "multimodal" = "#4CAF50"
+    )
     
-    cat(sprintf("Panel %d (%s): data modalities = %s\n",
-                i, gsub("\n", " ", dv_label),
-                paste(mod_names, collapse = ", ")))
-    
-    # ── Filter data ───────────────────────────────────────────────────────────
+    # ── Filter data ────────────────────────────────────────────────────────
     model_data <- data |>
-      filter(as.character(modality) %in% mod_names) |>
-      mutate(modality = factor(as.character(modality), levels = mod_names))
+      dplyr::filter(as.character(modality) %in% mod_names) |>
+      dplyr::mutate(modality = factor(as.character(modality), levels = mod_names))
     
-    cat(sprintf("  n rows: %d | levels: %s\n",
-                nrow(model_data),
-                paste(levels(model_data$modality), collapse = ", ")))
-    
-    # ── Grid for predictions ──────────────────────────────────────────────────
+    # ── Prediction grid ────────────────────────────────────────────────────
     pred_data <- model_data |>
       modelr::data_grid(
         correction,
@@ -3021,24 +3171,26 @@ plot_correction_grid <- function(model_grid, data, dv_vars) {
         expressibility_z = 0,
         TrialNumber_c    = 0
       ) |>
-      mutate(modality = factor(as.character(modality), levels = mod_names))
+      dplyr::mutate(modality = factor(as.character(modality), levels = mod_names))
     
     pred_draws <- pred_data |>
-      add_epred_draws(mod, re_formula = NA)
+      tidybayes::add_epred_draws(mod, re_formula = NA)
     
-    # ── c0 reference lines ────────────────────────────────────────────────────
+    # ── c0 reference ───────────────────────────────────────────────────────
     c0_means <- pred_draws |>
-      filter(correction == "c0") |>
-      group_by(modality) |>
-      summarise(mean_val = mean(log(.epred)), .groups = "drop")
+      dplyr::filter(correction == "c0") |>
+      dplyr::group_by(modality) |>
+      dplyr::summarise(mean_val = mean(log(.epred)), .groups = "drop")
     
-    # ── Raw data ──────────────────────────────────────────────────────────────
     raw_data <- model_data |>
-      mutate(dv_log = log(.data[[dv_col]]))
+      dplyr::mutate(dv_log = log(.data[[dv_col]]))
     
-    # ── Plot ──────────────────────────────────────────────────────────────────
+    # ── DV-specific color for panel border accent ──────────────────────────
+    panel_color <- dv_colors[dv_col]
+    
     p <- ggplot() +
       
+      # c0 reference line per modality
       geom_hline(
         data      = c0_means,
         aes(yintercept = mean_val, colour = modality),
@@ -3047,33 +3199,36 @@ plot_correction_grid <- function(model_grid, data, dv_vars) {
         alpha     = 0.8
       ) +
       
-      stat_halfeye(
+      # Posterior half-eye
+      ggdist::stat_halfeye(
         data           = pred_draws,
         aes(x = correction, y = log(.epred), fill = modality),
-        side            = "right",
-        .width          = c(0.89, 0.95),
-        point_interval  = median_hdi,
-        scale           = 1.2,
-        alpha           = 0.7,
-        normalize       = "groups",
-        position        = position_dodge(width = 0.8),
-        point_colour    = NA,
+        side           = "right",
+        .width         = c(0.89, 0.95),
+        point_interval = tidybayes::median_hdi,
+        scale          = 1.2,
+        alpha          = 0.7,
+        normalize      = "groups",
+        position       = position_dodge(width = 0.8),
+        point_colour   = NA,
         interval_colour = NA
       ) +
       
+      # Raw data jitter
       geom_jitter(
         data     = raw_data,
         aes(x = correction, y = dv_log, colour = modality),
-        alpha    = 0.2,
-        size     = 0.8,
+        alpha    = 0.18,
+        size     = 0.7,
         position = position_jitterdodge(jitter.width = 0.05, dodge.width = 0.8)
       ) +
       
-      stat_pointinterval(
+      # Point-interval summary (black, on top)
+      ggdist::stat_pointinterval(
         data           = pred_draws,
         aes(x = correction, y = log(.epred), group = modality),
         .width         = c(0.89, 0.95),
-        point_interval = median_hdi,
+        point_interval = tidybayes::median_hdi,
         position       = position_dodge(width = 0.8),
         colour         = "black",
         linewidth      = 1.0,
@@ -3081,48 +3236,53 @@ plot_correction_grid <- function(model_grid, data, dv_vars) {
       ) +
       
       scale_fill_manual(
-        values = modality_colors,
+        values = mod_colors,
         guide  = if (show_leg) guide_legend(title = "Modality") else "none"
       ) +
       scale_colour_manual(
-        values = modality_colors,
+        values = mod_colors,
         guide  = if (show_leg) guide_legend(title = "Modality") else "none"
       ) +
       scale_x_discrete(
-        labels = c("c0_only" = "c0 only", "c0" = "c0",
-                   "c1" = "c1", "c2" = "c2"),
+        labels = c("c0_only" = "c0 only", "c0" = "c0", "c1" = "c1", "c2" = "c2"),
         expand = c(0.1, 0.1)
       ) +
       scale_y_continuous(
-        breaks = scales::pretty_breaks(n = 5),
+        breaks = scales::pretty_breaks(n = 6),
         expand = expansion(mult = c(0.02, 0.05))
       ) +
+      
       theme_effort_plot(base_size = 11) +
       theme(
-        axis.text.x     = if (show_x) element_text(size = 9) else element_blank(),
-        axis.ticks.x    = if (show_x) element_line() else element_blank(),
-        axis.text.y     = if (show_y) element_text(size = 9) else element_blank(),
-        axis.title.y    = if (show_y) element_text(size = 9) else element_blank(),
-        plot.title      = element_text(size = 10, face = "bold", hjust = 0.5),
+        axis.text.x  = if (show_x) element_text(size = 10, face = "bold") else element_blank(),
+        axis.ticks.x = if (show_x) element_line() else element_blank(),
+        axis.text.y  = if (show_y) element_text(size = 10) else element_blank(),
+        axis.title.y = if (show_y) element_text(size = 10) else element_blank(),
+        # Color-coded top border to identify the DV at a glance
+        plot.title      = element_text(size = 10, face = "bold", hjust = 0.5,
+                                       colour = panel_color),
         legend.position = if (show_leg) "right" else "none"
       ) +
       labs(
         title = dv_label,
-        x     = NULL,
+        x     = if (show_x) "Correction phase" else NULL,
         y     = if (show_y) "log(effort)" else NULL
       )
     
     return(p)
   })
   
-  # ── Assemble ─────────────────────────────────────────────────────────────────
+  # ── Assemble ────────────────────────────────────────────────────────────────
   row1 <- plots[[1]] | plots[[2]] | plots[[3]]
   row2 <- plots[[4]] | plots[[5]] | plots[[6]]
   
   (row1 / row2) +
-    plot_annotation(
+    patchwork::plot_annotation(
       title    = "Predicted effort by correction phase",
-      subtitle = "Posterior mean ± 89% and 95% HDI | raw data overlaid | log y-axis | dashed = c0 reference",
+      subtitle = paste(
+        "Posterior mean \u00b1 89% and 95% HDI | raw data overlaid | log y-axis",
+        "| dashed = c0 reference | title color = DV identity"
+      ),
       caption  = "Correction phase",
       theme    = theme(
         plot.title    = element_text(size = 14, face = "bold"),
@@ -3132,6 +3292,7 @@ plot_correction_grid <- function(model_grid, data, dv_vars) {
       )
     )
 }
+
 
 # ══════════════════════════════════════════════════════════════════════════════
 #  plot_correction_posteriors_grid()
@@ -3147,36 +3308,60 @@ plot_correction_grid <- function(model_grid, data, dv_vars) {
 #
 #  Returns: a patchwork object (not saved; caller must ggsave if needed).
 # ══════════════════════════════════════════════════════════════════════════════
+
 plot_correction_posteriors_grid <- function(model_grid) {
-  
-  # ── Extract draws ───────────────────────────────────────────────────────────
+
   all_draws <- purrr::imap_dfr(model_grid, function(entry, i) {
     entry$model |>
-      gather_draws(`b_correction.*`, regex = TRUE) |>
-      mutate(
+      tidybayes::gather_draws(`b_correction.*`, regex = TRUE) |>
+      dplyr::mutate(
         .variable = factor(.variable,
-                           levels = c("b_correction3M2", "b_correction2M1"),  # 3M2 bottom, 2M1 top
-                           labels = c("c1 → c2", "c0 → c1")
-        ),
-        dv  = entry$label,
-        row = entry$row,
-        col = ((i - 1) %% 3) + 1
+                           levels = c("b_correction3M2", "b_correction2M1"),
+                           labels = c("c1 -> c2", "c0 -> c1")),
+        dv     = entry$label,
+        dv_col = entry$dv_col,
+        row    = entry$row,
+        col    = ((i - 1) %% 3) + 1
       )
   })
-  
-  # ── Shared x axis range ─────────────────────────────────────────────────────
-  x_range  <- range(all_draws$.value)
-  x_limits <- c(floor(x_range[1]   * 10) / 10,
-                ceiling(x_range[2] * 10) / 10)
-  
-  # ── Panel builder ───────────────────────────────────────────────────────────
-  make_panel <- function(draws_sub, title, show_y = TRUE, show_x = TRUE) {
-    
-    draws_sub |>
-      ggplot(aes(x = .value, y = .variable, fill = .variable)) +
-      stat_halfeye(
+
+  x_q      <- quantile(all_draws$.value, c(0.001, 0.999))
+  x_limits <- c(floor(x_q[1] * 10) / 10, ceiling(x_q[2] * 10) / 10)
+
+  # y-axis order: all 6 DVs stacked, grouped by feature
+  y_order <- c(
+    "arm_moment_sum_change_peak_mean",
+    "arm_moment_sum_change_integral",
+    "envelope_norm_peak_mean",
+    "envelope_norm_integral",
+    "COPc_peak_mean",
+    "COPc_integral"
+  )
+
+  y_labels <- c(
+    "arm_moment_sum_change_peak_mean" = "Arm torque\n(instantaneous)",
+    "arm_moment_sum_change_integral"  = "Arm torque\n(cumulative)",
+    "envelope_norm_peak_mean"         = "Envelope\n(instantaneous)",
+    "envelope_norm_integral"          = "Envelope\n(cumulative)",
+    "COPc_peak_mean"                  = "COP\n(instantaneous)",
+    "COPc_integral"                   = "COP\n(cumulative)"
+  )
+
+  make_panel <- function(contrast, show_x = TRUE) {
+
+    panel_draws <- all_draws |>
+      dplyr::filter(.variable == contrast) |>
+      dplyr::mutate(
+        dv_col = factor(dv_col, levels = rev(y_order))
+      )
+
+    fill_vals <- dv_colors[y_order]
+
+    panel_draws |>
+      ggplot(aes(x = .value, y = dv_col, fill = dv_col)) +
+      ggdist::stat_halfeye(
         .width         = c(0.89, 0.95),
-        point_interval = median_hdi,
+        point_interval = tidybayes::median_hdi,
         normalize      = "groups",
         scale          = 0.7,
         alpha          = 0.85
@@ -3185,32 +3370,33 @@ plot_correction_posteriors_grid <- function(model_grid) {
                  colour = "grey20", linewidth = 0.8) +
       scale_x_continuous(limits = x_limits,
                          breaks = scales::pretty_breaks(n = 4)) +
-      scale_fill_brewer(palette = "Set1", guide = "none") +
+      scale_fill_manual(
+        values = fill_vals,
+        labels = y_labels,
+        guide  = "none"
+      ) +
+      scale_y_discrete(labels = y_labels) +
       theme_effort_plot(base_size = 12) +
       theme(
-        axis.text.y  = if (show_y) element_text(size = 11) else element_blank(),
-        axis.ticks.y = if (show_y) element_line() else element_blank(),
-        axis.text.x  = if (show_x) element_text(size = 10) else element_blank(),
-        plot.title   = element_text(size = 11, face = "bold", hjust = 0.5)
+        axis.text.y = element_text(size = 10),
+        axis.text.x = if (show_x) element_text(size = 9, face = "bold")
+                      else element_blank(),
+        axis.ticks.x = if (show_x) element_line() else element_blank(),
+        plot.title  = element_text(size = 11, face = "bold", hjust = 0.5)
       ) +
-      labs(title = title, x = NULL, y = NULL)
+      labs(
+        title = contrast,
+        x     = if (show_x) "Estimate of effort increase (log scale)" else NULL,
+        y     = NULL
+      )
   }
-  
-  # ── Build all panels ────────────────────────────────────────────────────────
-  plots <- purrr::imap(model_grid, function(entry, i) {
-    draws_sub <- all_draws |> filter(dv == entry$label)
-    col       <- ((i - 1) %% 3) + 1
-    show_y    <- col == 1
-    show_x    <- entry$row == 2
-    make_panel(draws_sub, entry$label, show_y, show_x)
-  })
-  
-  # ── Assemble grid ───────────────────────────────────────────────────────────
-  row1 <- plots[[1]] | plots[[2]] | plots[[3]]
-  row2 <- plots[[4]] | plots[[5]] | plots[[6]]
-  
-  final_plot <- (row1 / row2) +
-    plot_annotation(
+
+  p1 <- make_panel("c0 -> c1", show_x = FALSE)
+  p2 <- make_panel("c1 -> c2", show_x = TRUE)
+
+  final <- (p1 / p2) +
+    patchwork::plot_layout(heights = c(1, 1)) +
+    patchwork::plot_annotation(
       title    = "Posterior distributions — correction contrasts",
       subtitle = "Median ± 89% and 95% HDI | dashed line = 0",
       theme    = theme(
@@ -3218,13 +3404,126 @@ plot_correction_posteriors_grid <- function(model_grid) {
         plot.subtitle = element_text(size = 11, colour = "grey40")
       )
     )
-  
-  # Shared x axis label
-  wrap_elements(final_plot) +
-    labs(caption = "Estimate (log scale)") +
-    theme(plot.caption = element_text(hjust = 0.5, size = 11))
+
+  final & theme(plot.margin = margin(2, 4, 2, 4))
 }
 
+
+#### Alternative #####
+
+plot_correction_posteriors_grid2 <- function(model_grid, layout = c("side", "stack")) {
+  
+  layout <- match.arg(layout)
+  
+  all_draws <- purrr::imap_dfr(model_grid, function(entry, i) {
+    entry$model |>
+      tidybayes::gather_draws(`b_correction.*`, regex = TRUE) |>
+      dplyr::mutate(
+        .variable = factor(.variable,
+                           levels = c("b_correction3M2", "b_correction2M1"),
+                           labels = c("second correction", "first correction")),
+        dv     = entry$label,
+        dv_col = entry$dv_col,
+        row    = entry$row,
+        col    = ((i - 1) %% 3) + 1
+      )
+  })
+  
+  x_q      <- quantile(all_draws$.value, c(0.001, 0.999))
+  x_limits <- c(floor(x_q[1] * 10) / 10, ceiling(x_q[2] * 10) / 10)
+  
+  y_order <- c(
+    "arm_moment_sum_change_integral",
+    "arm_moment_sum_change_peak_mean",
+    "envelope_norm_integral",
+    "envelope_norm_peak_mean",
+    "COPc_integral",
+    "COPc_peak_mean"
+  )
+  
+  y_labels <- c(
+    "arm_moment_sum_change_integral"  = "Arm torque\n(cumulative)",
+    "arm_moment_sum_change_peak_mean" = "Arm torque\n(instantaneous)",
+    "envelope_norm_integral"          = "Envelope\n(cumulative)",
+    "envelope_norm_peak_mean"         = "Envelope\n(instantaneous)",
+    "COPc_integral"                   = "COP\n(cumulative)",
+    "COPc_peak_mean"                  = "COP\n(instantaneous)"
+  )
+  
+  make_panel <- function(contrast, show_x = TRUE, show_y = TRUE) {
+    
+    panel_draws <- all_draws |>
+      dplyr::filter(.variable == contrast) |>
+      dplyr::mutate(
+        dv_col = factor(dv_col, levels = rev(y_order))
+      )
+    
+    fill_vals <- dv_colors[y_order]
+    
+    panel_draws |>
+      ggplot(aes(x = .value, y = dv_col, fill = dv_col)) +
+      ggdist::stat_halfeye(
+        .width         = c(0.89, 0.95),
+        point_interval = tidybayes::median_hdi,
+        normalize      = "groups",
+        scale          = 0.7,
+        alpha          = 0.85
+      ) +
+      geom_vline(xintercept = 0, linetype = "dashed",
+                 colour = "grey20", linewidth = 0.8) +
+      scale_x_continuous(limits = x_limits,
+                         breaks = scales::pretty_breaks(n = 4)) +
+      scale_fill_manual(
+        values = fill_vals,
+        labels = y_labels,
+        guide  = "none"
+      ) +
+      scale_y_discrete(labels = y_labels) +
+      theme_effort_plot(base_size = 12) +
+      theme(
+        axis.text.y   = element_blank(),
+        axis.ticks.y  = element_blank(),
+        axis.title.y  = element_blank(),
+        axis.text.x   = element_text(size = 13, face = "bold"),
+        axis.ticks.x  = element_line(colour = "grey30", linewidth = 0.5),
+        axis.title.x  = element_blank(),
+        plot.title    = element_text(size = 13, face = "bold", hjust = 0.5)
+      ) +
+      labs(
+        title = contrast,
+        x     = NULL,
+        y     = NULL
+      )
+  }
+  
+  if (layout == "side") {
+    p1 <- make_panel("first correction", show_x = TRUE, show_y = TRUE)
+    p2 <- make_panel("second correction", show_x = TRUE, show_y = FALSE)
+    assembled <- (p1 | p2) +
+      patchwork::plot_layout(widths = c(1, 1))
+  } else {
+    p1 <- make_panel("first correction", show_x = FALSE, show_y = TRUE)
+    p2 <- make_panel("second correction", show_x = TRUE,  show_y = TRUE)
+    assembled <- (p1 / p2) +
+      patchwork::plot_layout(heights = c(1, 1))
+  }
+  
+  final <- assembled +
+    patchwork::plot_annotation(
+      title    = "Posterior distributions — correction contrasts",
+      subtitle = "Median ± 89% and 95% HDI | dashed line = 0",
+      caption  = "Estimate of effort increase (log scale)",
+      theme    = theme(
+        plot.title    = element_text(size = 14, face = "bold"),
+        plot.subtitle = element_text(size = 11, colour = "grey40"),
+        plot.caption  = element_text(size = 13, hjust = 0.5,
+                                     face = "bold", colour = "grey15",
+                                     margin = margin(t = 6))
+      )
+    )
+  
+  final & theme(plot.margin = margin(2, 4, 2, 4))
+}
 # ══════════════════════════════════════════════════════════════════════════════
 #  plot_fixed_effects_grid()
 #
@@ -3244,8 +3543,7 @@ plot_correction_posteriors_grid <- function(model_grid) {
 # ══════════════════════════════════════════════════════════════════════════════
 plot_fixed_effects_grid <- function(model_grid) {
   
-  # ── Fixed parameter map (non-modality) ──────────────────────────────────────
-  nonmod_map <- tribble(
+  nonmod_map <- tibble::tribble(
     ~raw,                 ~label,
     "b_BFI_extra",        "BFI Extraversion",
     "b_Familiarity",      "Familiarity",
@@ -3263,191 +3561,152 @@ plot_fixed_effects_grid <- function(model_grid) {
     "Trial Number"     = "#607D8B"
   )
   
-  # All possible rows in fixed order
   all_labels <- c("Gesture", "Multimodal", "Vocal",
                   "BFI Extraversion", "Familiarity",
                   "Expressibility", "Trial Number")
   
-  # ── Extract draws ───────────────────────────────────────────────────────────
   all_draws_fe <- purrr::imap_dfr(model_grid, function(entry, i) {
     
     raw_draws <- entry$model |>
-      gather_draws(`b_.*`, regex = TRUE) |>
-      filter(!grepl("Intercept|correction", .variable))
+      tidybayes::gather_draws(`b_.*`, regex = TRUE) |>
+      dplyr::filter(!grepl("Intercept|correction", .variable))
     
-    mod_map   <- entry$modality_map
-    has_two   <- "modality2" %in% names(mod_map)
+    mod_map  <- entry$modality_map
+    has_two  <- "modality2" %in% names(mod_map)
     
-    # Rename modality1
     mod1_label <- mod_map[["modality1"]]
-    raw_draws <- raw_draws |>
-      mutate(.variable = ifelse(.variable == "b_modality1",
-                                paste0("b_mod_", mod1_label), .variable))
-    
-    # Rename modality2 if present
+    raw_draws  <- raw_draws |>
+      dplyr::mutate(.variable = ifelse(.variable == "b_modality1",
+                                       paste0("b_mod_", mod1_label), .variable))
     if (has_two) {
       mod2_label <- mod_map[["modality2"]]
-      raw_draws <- raw_draws |>
-        mutate(.variable = ifelse(.variable == "b_modality2",
-                                  paste0("b_mod_", mod2_label), .variable))
+      raw_draws  <- raw_draws |>
+        dplyr::mutate(.variable = ifelse(.variable == "b_modality2",
+                                         paste0("b_mod_", mod2_label), .variable))
     }
     
-    # Compute implied modality
     impl_label <- mod_map[["implied"]]
-    
     if (has_two) {
-      # implied = -(modality1 + modality2)
       implied_draws <- raw_draws |>
-        filter(.variable %in% paste0("b_mod_", c(mod1_label, mod2_label))) |>
-        select(.chain, .iteration, .draw, .variable, .value) |>
-        tidyr::pivot_wider(
-          id_cols     = c(.chain, .iteration, .draw),
-          names_from  = .variable,
-          values_from = .value
-        ) |>
-        mutate(
-          .value    = -(!!sym(paste0("b_mod_", mod1_label)) + 
-                          !!sym(paste0("b_mod_", mod2_label))),
+        dplyr::filter(.variable %in% paste0("b_mod_", c(mod1_label, mod2_label))) |>
+        dplyr::select(.chain, .iteration, .draw, .variable, .value) |>
+        tidyr::pivot_wider(id_cols = c(.chain, .iteration, .draw),
+                           names_from = .variable, values_from = .value) |>
+        dplyr::mutate(
+          .value    = -(!!rlang::sym(paste0("b_mod_", mod1_label)) +
+                          !!rlang::sym(paste0("b_mod_", mod2_label))),
           .variable = paste0("b_mod_implied_", impl_label)
         ) |>
-        select(.chain, .iteration, .draw, .variable, .value)
+        dplyr::select(.chain, .iteration, .draw, .variable, .value)
     } else {
-      # implied = -modality1
       implied_draws <- raw_draws |>
-        filter(.variable == paste0("b_mod_", mod1_label)) |>
-        mutate(
-          .value    = -.value,
-          .variable = paste0("b_mod_implied_", impl_label)
-        )
+        dplyr::filter(.variable == paste0("b_mod_", mod1_label)) |>
+        dplyr::mutate(.value = -.value,
+                      .variable = paste0("b_mod_implied_", impl_label))
     }
     
-    raw_draws <- bind_rows(raw_draws, implied_draws)
-    
-    # Map non-modality parameters
-    raw_draws <- raw_draws |>
-      left_join(nonmod_map, by = c(".variable" = "raw"))
-    
-    # Map modality parameters
-    raw_draws <- raw_draws |>
-      mutate(
-        label = case_when(
-          !is.na(label) ~ label,
-          grepl("^b_mod_implied_", .variable) ~
-            sub("^b_mod_implied_", "", .variable),
-          grepl("^b_mod_", .variable) ~
-            sub("^b_mod_", "", .variable),
+    raw_draws <- dplyr::bind_rows(raw_draws, implied_draws) |>
+      dplyr::left_join(nonmod_map, by = c(".variable" = "raw")) |>
+      dplyr::mutate(
+        label = dplyr::case_when(
+          !is.na(label)                        ~ label,
+          grepl("^b_mod_implied_", .variable)  ~ sub("^b_mod_implied_", "", .variable),
+          grepl("^b_mod_", .variable)          ~ sub("^b_mod_", "", .variable),
           TRUE ~ NA_character_
         ),
         implied = grepl("implied", .variable)
       ) |>
-      filter(!is.na(label))
+      dplyr::filter(!is.na(label))
     
     raw_draws |>
-      mutate(
-        dv  = entry$label,
-        row = entry$row,
-        col = ((i - 1) %% 3) + 1
-      )
+      dplyr::mutate(dv     = entry$label,
+                    dv_col = entry$dv_col,
+                    row    = entry$row,
+                    col    = ((i - 1) %% 3) + 1)
   })
   
-  # ── X limits per column ──────────────────────────────────────────────────────
   x_limits_by_col <- all_draws_fe |>
-    group_by(col) |>
-    summarise(
-      x_min = floor(min(.value)   * 10) / 10,
-      x_max = ceiling(max(.value) * 10) / 10,
-      .groups = "drop"
-    )
+    dplyr::group_by(col) |>
+    dplyr::summarise(x_min = floor(min(.value) * 10) / 10,
+                     x_max = ceiling(max(.value) * 10) / 10,
+                     .groups = "drop")
   
-  # ── Panel builder ───────────────────────────────────────────────────────────
-  make_panel_fe <- function(draws_sub, title, show_y = TRUE,
+  make_panel_fe <- function(draws_sub, dv_col, show_y = TRUE,
                             show_x = TRUE, x_limits = NULL) {
     
-    # All labels in fixed order, present or not
-    present   <- unique(draws_sub$label)
-    available <- intersect(all_labels, present)
-    missing   <- setdiff(all_labels, present)
+    accent <- dv_colors[dv_col]
+    dv_lab <- dv_labels_map[dv_col]
     
-    draws_sub     <- draws_sub |>
-      mutate(label = factor(label, levels = rev(all_labels)))
-    draws_implied <- draws_sub |> filter(isTRUE(implied))
-    draws_direct  <- draws_sub |> filter(!isTRUE(implied))
+    draws_implied <- draws_sub |> dplyr::filter(isTRUE(implied))
+    draws_direct  <- draws_sub |> dplyr::filter(!isTRUE(implied))
     
     p <- ggplot(mapping = aes(x = .value, y = label, fill = label)) +
-      
-      # Direct estimates
-      stat_halfeye(
-        data = draws_direct,
-        .width = c(0.89, 0.95),
-        point_interval = median_hdi,
-        normalize = "groups",
-        scale = 0.7,
-        alpha = 0.85
+      ggdist::stat_halfeye(
+        data           = draws_direct,
+        .width         = c(0.89, 0.95),
+        point_interval = tidybayes::median_hdi,
+        normalize      = "groups",
+        scale          = 0.7,
+        alpha          = 0.85
       )
     
-    # Implied estimates — same colour, dashed slab
     if (nrow(draws_implied) > 0) {
       p <- p +
-        stat_halfeye(
-          data = draws_implied,
-          .width = c(0.89, 0.95),
-          point_interval = median_hdi,
-          normalize = "groups",
-          scale = 0.7,
+        ggdist::stat_halfeye(
+          data           = draws_implied,
+          .width         = c(0.89, 0.95),
+          point_interval = tidybayes::median_hdi,
+          normalize      = "groups",
+          scale          = 0.7,
           slab_alpha     = 0.35,
           slab_linetype  = "dashed",
           slab_linewidth = 0.6,
-          alpha = 0.85
+          alpha          = 0.85
         )
     }
     
     p +
-      # Empty lines for missing modalities
-      scale_y_discrete(
-        limits = rev(all_labels),
-        drop   = FALSE   # keeps all levels even if no data
-      ) +
+      scale_y_discrete(limits = rev(all_labels), drop = FALSE) +
       geom_vline(xintercept = 0, linetype = "dashed",
                  colour = "grey20", linewidth = 0.8) +
-      scale_x_continuous(
-        limits = x_limits,
-        breaks = scales::pretty_breaks(n = 4)
-      ) +
+      scale_x_continuous(limits = x_limits,
+                         breaks = scales::pretty_breaks(n = 4)) +
       scale_fill_manual(values = param_colours, guide = "none",
                         na.value = "grey80") +
       theme_effort_plot(base_size = 12) +
       theme(
         axis.text.y  = if (show_y) element_text(size = 10) else element_blank(),
         axis.ticks.y = if (show_y) element_line() else element_blank(),
-        axis.text.x  = if (show_x) element_text(size = 10) else element_blank(),
-        plot.title   = element_text(size = 11, face = "bold", hjust = 0.5)
+        axis.text.x  = if (show_x) element_text(size = 9, face = "bold") else element_blank(),
+        plot.title   = element_text(size = 10, face = "bold", hjust = 0.5,
+                                    colour = accent)
       ) +
-      labs(title = title, x = NULL, y = NULL)
+      labs(title = dv_lab,
+           x     = if (show_x) "Estimate (log scale)" else NULL,
+           y     = NULL)
   }
   
-  # ── Build all panels ────────────────────────────────────────────────────────
   plots_fe <- purrr::imap(model_grid, function(entry, i) {
-    draws_sub <- all_draws_fe |> filter(dv == entry$label)
-    col       <- ((i - 1) %% 3) + 1
-    show_y    <- col == 1
-    show_x    <- entry$row == 2
-    
+    draws_sub <- all_draws_fe |> dplyr::filter(dv == entry$label)
+    col_idx   <- ((i - 1) %% 3) + 1
     x_lim <- x_limits_by_col |>
-      filter(col == !!col) |>
-      reframe(lims = c(x_min, x_max)) |>
-      pull(lims)
-    
-    make_panel_fe(draws_sub, entry$label, show_y, show_x, x_lim)
+      dplyr::filter(col == col_idx) |>
+      dplyr::reframe(lims = c(x_min, x_max)) |>
+      dplyr::pull(lims)
+    make_panel_fe(draws_sub, entry$dv_col,
+                  show_y = col_idx == 1,
+                  show_x = entry$row == 2,
+                  x_limits = x_lim)
   })
   
-  # ── Assemble ────────────────────────────────────────────────────────────────
   row1_fe <- plots_fe[[1]] | plots_fe[[2]] | plots_fe[[3]]
   row2_fe <- plots_fe[[4]] | plots_fe[[5]] | plots_fe[[6]]
   
   (row1_fe / row2_fe) +
-    plot_annotation(
-      title    = "Posterior distributions — fixed effects",
-      subtitle = "Median ± 89% and 95% HDI | dashed line = 0 | empty row = not in model",
+    patchwork::plot_annotation(
+      title    = "Posterior distributions \u2014 fixed effects",
+      subtitle = paste("Median \u00b1 89% and 95% HDI | dashed = 0 | empty row = not in model",
+                       "| title color = DV identity"),
       theme    = theme(
         plot.title    = element_text(size = 14, face = "bold"),
         plot.subtitle = element_text(size = 11, colour = "grey40")
@@ -3886,94 +4145,237 @@ plot_correction_by_effort <- function(models_e1, dv_labels = NULL,
 #
 #  Returns invisibly: the ggplot object.
 # ══════════════════════════════════════════════════════════════════════════════
-plot_h2_prev_answer <- function(models_h2, dv_labels = NULL) {
+
+plot_h2_prev_answer <- function(models_h2, dv_col_map = NULL) {
   
-  # ── Default DV labels ───────────────────────────────────────────────────────
-  if (is.null(dv_labels)) {
-    dv_labels <- names(models_h2)
-  }
+  if (is.null(dv_col_map)) dv_col_map <- setNames(names(models_h2), names(models_h2))
   
-  # ── Helper ──────────────────────────────────────────────────────────────────
   print_result <- function(draws, var, label, pct = FALSE) {
-    res  <- draws |> median_hdi(!!sym(var))
-    est  <- res[[var]]
-    lo   <- res$.lower
-    hi   <- res$.upper
+    res  <- draws |> tidybayes::median_hdi(!!sym(var))
+    est  <- res[[var]]; lo <- res$.lower; hi <- res$.upper
     cred <- lo > 0 | hi < 0
-    if (pct) {
-      cat(sprintf("  %-45s %+.1f%% [%+.1f%%, %+.1f%%]%s\n",
-                  label, est, lo, hi, ifelse(cred, "  *", "")))
-    } else {
-      cat(sprintf("  %-45s %.3f [%.3f, %.3f]%s\n",
-                  label, est, lo, hi, ifelse(cred, "  *", "")))
-    }
+    if (pct) cat(sprintf("  %-45s %+.1f%% [%+.1f%%, %+.1f%%]%s\n",
+                         label, est, lo, hi, ifelse(cred, "  *", "")))
+    else     cat(sprintf("  %-45s %.3f [%.3f, %.3f]%s\n",
+                         label, est, lo, hi, ifelse(cred, "  *", "")))
   }
   
   cat("═══════════════════════════════════════════════\n")
   cat("  H2: EFFECT OF PREVIOUS ANSWER SIMILARITY\n")
-  cat("  (answer_prev_dist_z: higher = closer)\n")
   cat("═══════════════════════════════════════════════\n\n")
   
-  # ── Extract posteriors for all models ──────────────────────────────────────
+  dv_order <- names(dv_colors)
+  
   posterior_list <- purrr::imap(models_h2, function(mod, nm) {
-    
-    label <- dv_labels[[nm]]
-    
-    cat(sprintf("  %s\n", label))
-    cat(sprintf("  %s\n", strrep("─", nchar(label))))
-    
+    dv_col <- dv_col_map[[nm]]
+    label  <- dv_labels_map[dv_col]
+    cat(sprintf("  %s\n  %s\n", label,
+                strrep("\u2500", nchar(gsub("\n", " ", label)))))
     draws <- mod |>
-      spread_draws(b_answer_prev_dist_z) |>
-      mutate(pct = (exp(b_answer_prev_dist_z) - 1) * 100)
-    
+      tidybayes::spread_draws(b_answer_prev_dist_z) |>
+      dplyr::mutate(pct = (exp(b_answer_prev_dist_z) - 1) * 100)
     print_result(draws, "b_answer_prev_dist_z", "  Log scale:")
     print_result(draws, "pct",                  "  % change per SD:", pct = TRUE)
     cat("\n")
-    
-    draws |> mutate(dv = label)
+    draws |> dplyr::mutate(dv_col = dv_col, dv = label)
   })
   
-  # ── Combine and plot ────────────────────────────────────────────────────────
-  all_draws <- bind_rows(posterior_list) |>
-    mutate(dv = factor(dv, levels = rev(unlist(dv_labels))))
-  
-  # Compute summaries for credibility colouring
-  summary_df <- all_draws |>
-    group_by(dv) |>
-    median_hdi(pct) |>
-    mutate(credible = .lower > 0 | .upper < 0)
+  all_draws <- dplyr::bind_rows(posterior_list) |>
+    dplyr::mutate(
+      dv_col = factor(dv_col, levels = rev(dv_order)),
+      dv     = factor(dv, levels = rev(dv_labels_map[dv_order]))
+    )
   
   p <- all_draws |>
-    left_join(summary_df |> select(dv, credible), by = "dv") |>
-    ggplot(aes(x = pct, y = dv, fill = credible)) +
-    stat_halfeye(
-      .width = c(0.89, 0.95),
-      point_interval = median_hdi,
-      normalize = "groups",
-      scale = 0.7,
-      alpha = 0.85
+    ggplot(aes(x = pct, y = dv_col, fill = dv_col)) +
+    ggdist::stat_halfeye(
+      .width         = c(0.89, 0.95),
+      point_interval = tidybayes::median_hdi,
+      normalize      = "groups",
+      scale          = 0.7,
+      alpha          = 0.85
     ) +
     geom_vline(xintercept = 0, linetype = "dashed",
                colour = "grey20", linewidth = 0.8) +
     scale_fill_manual(
-      values = c("TRUE" = "#2196F3", "FALSE" = "#B0BEC5"),
+      values = dv_colors,
       guide  = "none"
     ) +
+    scale_y_discrete(labels = rev(dv_labels_map[dv_order])) +
     scale_x_continuous(
-      labels = function(x) paste0(ifelse(x > 0, "+", ""), round(x, 0), "%")
+      labels = function(x) paste0(ifelse(x > 0, "+", ""), round(x, 0), "%"),
+      breaks = scales::pretty_breaks(n = 6)
     ) +
     theme_effort_plot() +
+    theme(
+      axis.text.y  = element_blank(),
+      axis.ticks.y = element_blank(),
+      axis.title.y = element_blank(),
+      axis.text.x  = element_text(size = 13, face = "bold"),
+      axis.title.x = element_text(size = 13, face = "bold",
+                                  margin = margin(t = 8))
+    ) +
     labs(
       title    = "Effect of previous answer similarity on current effort",
-      subtitle = "% change per 1 SD increase in cosine similarity | Median ± 89% and 95% HDI\nBlue = credible effect (95% CI excludes zero)",
-      x = "% change in effort per SD of answer similarity",
-      y = NULL
+      subtitle = "% change per 1 SD increase in cosine similarity | Median \u00b1 89% and 95% HDI",
+      x        = "% change in effort per SD of cosine similarity",
+      y        = NULL
     )
   
   print(p)
-  
-  ggsave("plots/h2_prev_answer_effect.png", p,
-         width = 9, height = 6, dpi = 300, bg = "white")
-  
+  ggsave(file.path(plots, "h2_prev_answer_effect.png"), p,
+         width = 5, height = 5, dpi = 300, bg = "white")
   invisible(p)
+}
+
+# ══════════════════════════════════════════════════════════════════════════════
+#  LEGEND PANEL — standalone reference legend
+#
+#  Call add_dv_legend() to append a standalone legend patchwork below any
+#  multi-panel figure so the color-coding is always explained.
+#
+#  Usage (with patchwork):
+#    (row1 / row2 / add_dv_legend()) + plot_layout(heights = c(1, 1, 0.12))
+# ══════════════════════════════════════════════════════════════════════════════
+add_dv_legend <- function() {
+  legend_data <- tibble::tibble(
+    dv_col = names(dv_colors),
+    label  = unname(dv_labels_map[names(dv_colors)]),
+    x      = 1,
+    y      = 1
+  )
+  ggplot(legend_data, aes(x = x, y = y, colour = dv_col,
+                          shape = dv_col, linetype = dv_col)) +
+    geom_point(size = 4) +
+    geom_line(linewidth = 1.2) +
+    dv_colour_scale() +
+    dv_shape_scale() +
+    dv_linetype_scale() +
+    guides(
+      colour   = dv_legend_guide(),
+      shape    = dv_legend_guide(),
+      linetype = dv_legend_guide()
+    ) +
+    theme_void() +
+    theme(
+      legend.position  = "bottom",
+      legend.text      = element_text(size = 11),
+      legend.key.width = unit(32, "pt"),
+      legend.key.size  = unit(14, "pt")
+    )
+}
+
+plot_effort_success_summary <- function(models_cum, models_inst, coef_map) {
+  
+  outcomes <- list(
+    list(key = "m1", label = "P(resolved\nat first attempt)",         x_label = "Slope (log-odds)"),
+    list(key = "m3", label = "Answer\nsimilarity",          x_label = "Slope (Beta scale)"),
+    list(key = "m5", label = "Resolution\nspeed (ordinal)", x_label = "Slope (log-odds)"),
+    list(key = "m6", label = "Ever\nresolved",              x_label = "Slope (log-odds)")
+  )
+  
+  y_order <- c(
+    "arm_cum", "arm_inst",
+    "env_cum", "env_inst",
+    "cop_cum", "cop_inst"
+  )
+  
+  # Use exactly the same dv_colors keys as everywhere else
+  fill_vals <- c(
+    "arm_cum"  = unname(dv_colors["arm_moment_sum_change_integral"]),
+    "arm_inst" = unname(dv_colors_light["arm_moment_sum_change_peak_mean"]),
+    "env_cum"  = unname(dv_colors["envelope_norm_integral"]),
+    "env_inst" = unname(dv_colors_light["envelope_norm_peak_mean"]),
+    "cop_cum"  = unname(dv_colors["COPc_integral"]),
+    "cop_inst" = unname(dv_colors_light["COPc_peak_mean"])
+  )
+  
+  alpha_vals <- c(
+    "arm_cum"  = 0.9, "arm_inst" = 0.9,
+    "env_cum"  = 0.9, "env_inst" = 0.9,
+    "cop_cum"  = 0.9, "cop_inst" = 0.9
+  )
+  
+  all_draws <- purrr::map_dfr(outcomes, function(oc) {
+    mod_cum  <- models_cum[[oc$key]]
+    mod_inst <- models_inst[[oc$key]]
+    
+    purrr::map_dfr(c("arm", "env", "cop"), function(feat) {
+      coef_cum  <- coef_map[[feat]]$cum
+      coef_inst <- coef_map[[feat]]$inst
+      
+      draws_cum <- brms::as_draws_df(mod_cum) |>
+        dplyr::select(dplyr::all_of(coef_cum)) |>
+        dplyr::rename(.value = 1) |>
+        dplyr::mutate(dv = paste0(feat, "_cum"))
+      
+      draws_inst <- brms::as_draws_df(mod_inst) |>
+        dplyr::select(dplyr::all_of(coef_inst)) |>
+        dplyr::rename(.value = 1) |>
+        dplyr::mutate(dv = paste0(feat, "_inst"))
+      
+      dplyr::bind_rows(draws_cum, draws_inst) |>
+        dplyr::mutate(outcome = oc$key, outcome_label = oc$label)
+    })
+  }) |>
+    dplyr::mutate(dv = factor(dv, levels = rev(y_order)))
+  
+  make_panel <- function(oc) {
+    
+    panel_draws <- all_draws |>
+      dplyr::filter(outcome == oc$key)
+    
+    x_range  <- range(panel_draws$.value)
+    x_pad    <- diff(x_range) * 0.05
+    x_limits <- c(x_range[1] - x_pad, x_range[2] + x_pad)
+    
+    panel_draws |>
+      ggplot(aes(x = .value, y = dv,
+                 fill = dv, alpha = dv)) +
+      ggdist::stat_halfeye(
+        .width         = c(0.89, 0.95),
+        point_interval = tidybayes::median_hdi,
+        normalize      = "groups",
+        scale          = 0.7
+      ) +
+      geom_vline(xintercept = 0, linetype = "dashed",
+                 colour = "grey20", linewidth = 0.8) +
+      scale_x_continuous(
+        limits = x_limits,
+        breaks = scales::pretty_breaks(n = 3)
+      ) +
+      scale_fill_manual(values = fill_vals,   guide = "none") +
+      scale_alpha_manual(values = alpha_vals, guide = "none") +
+      theme_effort_plot(base_size = 11) +
+      theme(
+        axis.text.y   = element_blank(),
+        axis.ticks.y  = element_blank(),
+        axis.title.y  = element_blank(),
+        axis.text.x   = element_text(size = 10, face = "bold"),
+        axis.ticks.x  = element_line(colour = "grey30", linewidth = 0.5),
+        axis.title.x  = element_text(size = 13, face = "bold",
+                                     margin = margin(t = 8)),
+        plot.title    = element_text(size = 12, face = "bold", hjust = 0.5,
+                                     colour = "grey15")
+      ) +
+      labs(
+        title = oc$label,
+        x     = oc$x_label,
+        y     = NULL
+      )
+  }
+  
+  plots <- purrr::map(outcomes, make_panel)
+  
+  final <- purrr::reduce(plots, `|`) +
+    patchwork::plot_annotation(
+      title    = "Does effort predict communicative success?",
+      subtitle = "Posterior slopes | Median \u00b1 89% and 95% HDI | dashed = 0 | darker = cumulative, lighter = instantaneous",
+      theme    = theme(
+        plot.title    = element_text(size = 14, face = "bold"),
+        plot.subtitle = element_text(size = 11, colour = "grey40")
+      )
+    )
+  
+  final & theme(plot.margin = margin(2, 6, 2, 4))
 }
