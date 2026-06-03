@@ -1,0 +1,3145 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.552">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Computing concept similarity using ConceptNet word embeddings</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+<link rel="stylesheet" href="../style.css">
+</head>
+
+<body class="nav-sidebar floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+        <div class="quarto-navbar-tools tools-end">
+    <div class="dropdown">
+      <a href="" title="" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" aria-label=""><i class="bi bi-github"></i></a>
+      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item quarto-navbar-tools-item" href="https://github.com/sarkadava/FLESH_Effort">
+            Source Code
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item quarto-navbar-tools-item" href="https://github.com/sarkadava/FLESH_Effort/issues">
+            Report a Bug
+            </a>
+          </li>
+      </ul>
+    </div>
+</div>
+          <div id="quarto-search" class="" title="Search"></div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../04_ConceptSimilarity/ConceptNet_similarity.html">D. Analysis</a></li><li class="breadcrumb-item"><a href="../04_ConceptSimilarity/ConceptNet_similarity.html">Computing concept similarity using ConceptNet word embeddings</a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Home</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../methods.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Overview of Methods</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">A. Pre-processing</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../01_XDF_processing/01_Process_XDF.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Processing I: from XDF to raw files</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../01_XDF_processing/02_Audiosync.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Processing II: Aligning 16 kHz audio (from XDF) with 48 khZ audio from a second source (via Audacity)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../01_XDF_processing/03_Correct_cuts.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Processing III: Correcting trials</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../01_XDF_processing/04_Final_wrangle.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Processing IV: Final checks</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text">B. Motion tracking</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../02_MotionTracking_processing/01_Video_preparation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Motion tracking I: Preparation of videos</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../02_MotionTracking_processing/02_Track_OpenPose.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Motion tracking II: 2D pose estimation via OpenPose</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../02_MotionTracking_processing/03_Track_pose2sim_OpenSim.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Motion tracking III: Triangulation via Pose2sim, Inverse kinematics &amp; dynamics via OpenSim</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+ <span class="menu-text">C. Data processing</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../03_TS_processing/01_TS_processing_motion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Processing I: Motion tracking and balance</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../03_TS_processing/02_TS_processing_acoustics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Processing II: Acoustics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../03_TS_processing/03_TS_merging.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Processing III: Merging multimodal data</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+ <span class="menu-text">D. Analysis</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../04_ConceptSimilarity/ConceptNet_similarity.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Computing concept similarity using ConceptNet word embeddings</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../05_TS_featureExtraction/00_Condition_adherence.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Exclusion I: adherence to modality</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../05_TS_featureExtraction/00_Speech_check.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Exclusion I: speech presence</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../05_TS_featureExtraction/01_TS_extraction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Extraction of effort-related features</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../05_TS_featureExtraction/02_Explorations_and_viz.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Visual explorations</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#sec-conceptnet" id="toc-sec-conceptnet" class="nav-link active" data-scroll-target="#sec-conceptnet">Overview</a></li>
+  <li><a href="#calculating-cosine-similarity" id="toc-calculating-cosine-similarity" class="nav-link" data-scroll-target="#calculating-cosine-similarity">Calculating cosine similarity</a></li>
+  <li><a href="#adding-data-from-perceived-similarity" id="toc-adding-data-from-perceived-similarity" class="nav-link" data-scroll-target="#adding-data-from-perceived-similarity">Adding data from perceived similarity</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../04_ConceptSimilarity/ConceptNet_similarity.html">D. Analysis</a></li><li class="breadcrumb-item"><a href="../04_ConceptSimilarity/ConceptNet_similarity.html">Computing concept similarity using ConceptNet word embeddings</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Computing concept similarity using ConceptNet word embeddings</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="sec-conceptnet" class="level1">
+<h1>Overview</h1>
+<p>Our second hypothesis tests the effect of degree of misunderstanding on the magnitude of effort.</p>
+<p>We operationalize degree of misunderstanding as a conceptual similarity between target concept and answer offered by a guesser.</p>
+<p>To have a reproducible measure of conceptual similarity, we use the ConceptNet <span class="citation" data-cites="speer_etal18">(<a href="#ref-speer_etal18" role="doc-biblioref">Speer et al., 2018</a>)</span> to extract embeddings for concepts used in our study, and calculate cosine similarity between the target concept and guessed answer.</p>
+<p>To verify the utility of the cosine similarity, we have collected data from 14 Dutch-native people who were asked to rate the similarity between each pair of words in online anonymous rating study. We then compared the ‘perceived similarity’ with cosine similarity computed from ConceptNet embeddings, to validate the use of ConceptNet embeddings as a measure of conceptual similarity. This analysis is available in the <a href="https://github.com/sarkadava/FLESH_Effort/blob/preregistered/06_ConceptSimilarity/ConceptNet_similarity.ipynb" target="_blank">preregistered script</a>.</p>
+<div id="ffe81d02" class="cell">
+<details class="code-fold">
+<summary>Code to load packages and prepare environment</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> glob</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> openpyxl</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> math <span class="im">import</span> nan</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>curfolder <span class="op">=</span> os.getcwd()</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>rawdata <span class="op">=</span> os.path.join(curfolder, <span class="st">'..'</span>, <span class="st">'00_raw'</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>answerfiles <span class="op">=</span> glob.glob(os.path.join(rawdata, <span class="st">'*'</span>, <span class="st">'*results_part2.csv'</span>), recursive<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>datafolder <span class="op">=</span> os.path.join(curfolder, <span class="st">'data'</span>)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Loop over list and add it into one big df</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>df_all <span class="op">=</span> pd.DataFrame()</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="bu">file</span> <span class="kw">in</span> answerfiles:</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> pd.read_csv(<span class="bu">file</span>)</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># create column trial_order which will be the index/row number</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">'trial_order'</span>] <span class="op">=</span> df.index</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    df_all <span class="op">=</span> pd.concat([df_all, df], ignore_index<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>df_all[<span class="st">'exp'</span>] <span class="op">=</span> <span class="dv">2</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Keep only columns word and answer</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df_all[[<span class="st">'ID'</span>, <span class="st">'trial_order'</span>, <span class="st">'word'</span>, <span class="st">'answer'</span>, <span class="st">'exp'</span>]]</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>df.head(<span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="73">
+<div>
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">ID</th>
+<th data-quarto-table-cell-role="th">trial_order</th>
+<th data-quarto-table-cell-role="th">word</th>
+<th data-quarto-table-cell-role="th">answer</th>
+<th data-quarto-table-cell-role="th">exp</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>10</td>
+<td>0</td>
+<td>zwaaien</td>
+<td>zwaaien</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>10</td>
+<td>1</td>
+<td>juichen</td>
+<td>dansen</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>10</td>
+<td>2</td>
+<td>juichen</td>
+<td>juichen</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>10</td>
+<td>3</td>
+<td>vis</td>
+<td>vis</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>10</td>
+<td>4</td>
+<td>hoog</td>
+<td>groot</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>10</td>
+<td>5</td>
+<td>hoog</td>
+<td>rijken</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
+<td>10</td>
+<td>6</td>
+<td>hoog</td>
+<td>hoog</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">7</td>
+<td>10</td>
+<td>7</td>
+<td>regen</td>
+<td>regen</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8</td>
+<td>10</td>
+<td>8</td>
+<td>verdrietig</td>
+<td>huilen</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">9</td>
+<td>10</td>
+<td>9</td>
+<td>verdrietig</td>
+<td>verdrietig</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">10</td>
+<td>10</td>
+<td>10</td>
+<td>langzaam</td>
+<td>slowmotion</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">11</td>
+<td>10</td>
+<td>11</td>
+<td>langzaam</td>
+<td>joggen</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">12</td>
+<td>10</td>
+<td>12</td>
+<td>langzaam</td>
+<td>langsaam</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">13</td>
+<td>10</td>
+<td>13</td>
+<td>weten</td>
+<td>denken</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">14</td>
+<td>10</td>
+<td>14</td>
+<td>weten</td>
+<td>idee</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">15</td>
+<td>10</td>
+<td>15</td>
+<td>weten</td>
+<td>bedenken</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">16</td>
+<td>10</td>
+<td>16</td>
+<td>rennen</td>
+<td>rennen</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">17</td>
+<td>10</td>
+<td>17</td>
+<td>vliegtuig</td>
+<td>vliegtuig</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">18</td>
+<td>10</td>
+<td>18</td>
+<td>bal</td>
+<td>gooien</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">19</td>
+<td>10</td>
+<td>19</td>
+<td>bal</td>
+<td>werpen</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</div>
+<p>First we need to do some data-wrangling to get all in the right format for the embedding extraction and comparison</p>
+<div id="dbf07829" class="cell" data-execution_count="74">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># concept list</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>df_concepts <span class="op">=</span> pd.read_excel(os.path.join(rawdata, <span class="st">'conceptlist_info.xlsx'</span>))</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># in df_concepts, keep only English and Dutch</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>df_concepts <span class="op">=</span> df_concepts[[<span class="st">'English'</span>, <span class="st">'Dutch'</span>]]</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># rename Dutch to word</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>df_concepts <span class="op">=</span> df_concepts.rename(columns<span class="op">=</span>{<span class="st">'Dutch'</span>: <span class="st">'word'</span>})</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co"># merge df and df_concepts on word</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.merge(df, df_concepts, on<span class="op">=</span><span class="st">'word'</span>, how<span class="op">=</span><span class="st">'left'</span>)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co"># show rows where English is NaN</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>df[df[<span class="st">'English'</span>].isnull()]</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co"># add translations manually for each (these are practice trials)</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>df.loc[df[<span class="st">'word'</span>] <span class="op">==</span> <span class="st">'bloem'</span>, <span class="st">'English'</span>] <span class="op">=</span> <span class="st">'flower'</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>df.loc[df[<span class="st">'word'</span>] <span class="op">==</span> <span class="st">'dansen'</span>, <span class="st">'English'</span>] <span class="op">=</span> <span class="st">'to dance'</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>df.loc[df[<span class="st">'word'</span>] <span class="op">==</span> <span class="st">'auto'</span>, <span class="st">'English'</span>] <span class="op">=</span> <span class="st">'car'</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>df.loc[df[<span class="st">'word'</span>] <span class="op">==</span> <span class="st">'olifant'</span>, <span class="st">'English'</span>] <span class="op">=</span> <span class="st">'elephant'</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>df.loc[df[<span class="st">'word'</span>] <span class="op">==</span> <span class="st">'comfortabel'</span>, <span class="st">'English'</span>] <span class="op">=</span> <span class="st">'comfortable'</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>df.loc[df[<span class="st">'word'</span>] <span class="op">==</span> <span class="st">'bal'</span>, <span class="st">'English'</span>] <span class="op">=</span> <span class="st">'ball'</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>df.loc[df[<span class="st">'word'</span>] <span class="op">==</span> <span class="st">'haasten'</span>, <span class="st">'English'</span>] <span class="op">=</span> <span class="st">'to hurry'</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>df.loc[df[<span class="st">'word'</span>] <span class="op">==</span> <span class="st">'gek'</span>, <span class="st">'English'</span>] <span class="op">=</span> <span class="st">'crazy'</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>df.loc[df[<span class="st">'word'</span>] <span class="op">==</span> <span class="st">'snijden'</span>, <span class="st">'English'</span>] <span class="op">=</span> <span class="st">'to cut'</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>df.loc[df[<span class="st">'word'</span>] <span class="op">==</span> <span class="st">'koken'</span>, <span class="st">'English'</span>] <span class="op">=</span> <span class="st">'to cook'</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>df.loc[df[<span class="st">'word'</span>] <span class="op">==</span> <span class="st">'juichen'</span>, <span class="st">'English'</span>] <span class="op">=</span> <span class="st">'to cheer'</span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>df.loc[df[<span class="st">'word'</span>] <span class="op">==</span> <span class="st">'zingen'</span>, <span class="st">'English'</span>] <span class="op">=</span> <span class="st">'to sing'</span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>df.loc[df[<span class="st">'word'</span>] <span class="op">==</span> <span class="st">'glimlach'</span>, <span class="st">'English'</span>] <span class="op">=</span> <span class="st">'smile'</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>df.loc[df[<span class="st">'word'</span>] <span class="op">==</span> <span class="st">'klok'</span>, <span class="st">'English'</span>] <span class="op">=</span> <span class="st">'clock'</span></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>df.loc[df[<span class="st">'word'</span>] <span class="op">==</span> <span class="st">'fiets'</span>, <span class="st">'English'</span>] <span class="op">=</span> <span class="st">'bicycle'</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>df.loc[df[<span class="st">'word'</span>] <span class="op">==</span> <span class="st">'vliegtuig'</span>, <span class="st">'English'</span>] <span class="op">=</span> <span class="st">'airplane'</span></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>df.loc[df[<span class="st">'word'</span>] <span class="op">==</span> <span class="st">'geheim'</span>, <span class="st">'English'</span>] <span class="op">=</span> <span class="st">'secret'</span></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>df.loc[df[<span class="st">'word'</span>] <span class="op">==</span> <span class="st">'telefoon'</span>, <span class="st">'English'</span>] <span class="op">=</span> <span class="st">'telephone'</span></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>df.loc[df[<span class="st">'word'</span>] <span class="op">==</span> <span class="st">'zwaaien'</span>, <span class="st">'English'</span>] <span class="op">=</span> <span class="st">'to wave'</span></span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>df.loc[df[<span class="st">'word'</span>] <span class="op">==</span> <span class="st">'sneeuw'</span>, <span class="st">'English'</span>] <span class="op">=</span> <span class="st">'snow'</span></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>df.loc[df[<span class="st">'word'</span>] <span class="op">==</span> <span class="st">'rijk'</span>, <span class="st">'English'</span>] <span class="op">=</span> <span class="st">'rich'</span></span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>df.loc[df[<span class="st">'word'</span>] <span class="op">==</span> <span class="st">'leeg'</span>, <span class="st">'English'</span>] <span class="op">=</span> <span class="st">'empty'</span></span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>df.loc[df[<span class="st">'word'</span>] <span class="op">==</span> <span class="st">'hond'</span>, <span class="st">'English'</span>] <span class="op">=</span> <span class="st">'dog'</span></span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>df.loc[df[<span class="st">'word'</span>] <span class="op">==</span> <span class="st">'knippen'</span>, <span class="st">'English'</span>] <span class="op">=</span> <span class="st">'to cut'</span></span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>df.loc[df[<span class="st">'word'</span>] <span class="op">==</span> <span class="st">'eend'</span>, <span class="st">'English'</span>] <span class="op">=</span> <span class="st">'duck'</span></span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a><span class="co"># get rid of English 'to beat'</span></span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>df_final <span class="op">=</span> df[df[<span class="st">'English'</span>] <span class="op">!=</span> <span class="st">'to beat'</span>]</span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a><span class="co"># and to weep</span></span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>df_final <span class="op">=</span> df[df[<span class="st">'English'</span>] <span class="op">!=</span> <span class="st">'to weep'</span>]</span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a><span class="co"># and noisy</span></span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>df_final <span class="op">=</span> df[df[<span class="st">'English'</span>] <span class="op">!=</span> <span class="st">'noisy'</span>]</span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a><span class="co"># keep only rows where word is not NaN</span></span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df[df[<span class="st">'word'</span>].notnull()]</span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a><span class="co"># save it</span></span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a>df.to_csv(os.path.join(datafolder, <span class="st">'concept_answer_withoutcossim.csv'</span>), index<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a>df.head(<span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="74">
+<div>
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">ID</th>
+<th data-quarto-table-cell-role="th">trial_order</th>
+<th data-quarto-table-cell-role="th">word</th>
+<th data-quarto-table-cell-role="th">answer</th>
+<th data-quarto-table-cell-role="th">exp</th>
+<th data-quarto-table-cell-role="th">English</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>10</td>
+<td>0</td>
+<td>zwaaien</td>
+<td>zwaaien</td>
+<td>2</td>
+<td>to wave</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>10</td>
+<td>1</td>
+<td>juichen</td>
+<td>dansen</td>
+<td>2</td>
+<td>to cheer</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>10</td>
+<td>2</td>
+<td>juichen</td>
+<td>juichen</td>
+<td>2</td>
+<td>to cheer</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>10</td>
+<td>3</td>
+<td>vis</td>
+<td>vis</td>
+<td>2</td>
+<td>fish</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>10</td>
+<td>4</td>
+<td>hoog</td>
+<td>groot</td>
+<td>2</td>
+<td>high</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>10</td>
+<td>5</td>
+<td>hoog</td>
+<td>rijken</td>
+<td>2</td>
+<td>high</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
+<td>10</td>
+<td>6</td>
+<td>hoog</td>
+<td>hoog</td>
+<td>2</td>
+<td>high</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">7</td>
+<td>10</td>
+<td>7</td>
+<td>regen</td>
+<td>regen</td>
+<td>2</td>
+<td>rain</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8</td>
+<td>10</td>
+<td>8</td>
+<td>verdrietig</td>
+<td>huilen</td>
+<td>2</td>
+<td>sad</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">9</td>
+<td>10</td>
+<td>9</td>
+<td>verdrietig</td>
+<td>verdrietig</td>
+<td>2</td>
+<td>sad</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">10</td>
+<td>10</td>
+<td>10</td>
+<td>langzaam</td>
+<td>slowmotion</td>
+<td>2</td>
+<td>slow</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">11</td>
+<td>10</td>
+<td>11</td>
+<td>langzaam</td>
+<td>joggen</td>
+<td>2</td>
+<td>slow</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">12</td>
+<td>10</td>
+<td>12</td>
+<td>langzaam</td>
+<td>langsaam</td>
+<td>2</td>
+<td>slow</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">13</td>
+<td>10</td>
+<td>13</td>
+<td>weten</td>
+<td>denken</td>
+<td>2</td>
+<td>to know</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">14</td>
+<td>10</td>
+<td>14</td>
+<td>weten</td>
+<td>idee</td>
+<td>2</td>
+<td>to know</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">15</td>
+<td>10</td>
+<td>15</td>
+<td>weten</td>
+<td>bedenken</td>
+<td>2</td>
+<td>to know</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">16</td>
+<td>10</td>
+<td>16</td>
+<td>rennen</td>
+<td>rennen</td>
+<td>2</td>
+<td>to run</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">17</td>
+<td>10</td>
+<td>17</td>
+<td>vliegtuig</td>
+<td>vliegtuig</td>
+<td>2</td>
+<td>airplane</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">18</td>
+<td>10</td>
+<td>18</td>
+<td>bal</td>
+<td>gooien</td>
+<td>2</td>
+<td>ball</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">19</td>
+<td>10</td>
+<td>19</td>
+<td>bal</td>
+<td>werpen</td>
+<td>2</td>
+<td>ball</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</div>
+<p>This is how the dataframe looks like</p>
+<div id="1e16ea1d" class="cell" data-execution_count="75">
+<div class="cell-output cell-output-display" data-execution_count="75">
+<div>
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">ID</th>
+<th data-quarto-table-cell-role="th">trial_order</th>
+<th data-quarto-table-cell-role="th">word</th>
+<th data-quarto-table-cell-role="th">answer</th>
+<th data-quarto-table-cell-role="th">exp</th>
+<th data-quarto-table-cell-role="th">English</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>10</td>
+<td>0</td>
+<td>zwaaien</td>
+<td>zwaaien</td>
+<td>2</td>
+<td>to wave</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>10</td>
+<td>1</td>
+<td>juichen</td>
+<td>dansen</td>
+<td>2</td>
+<td>to cheer</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>10</td>
+<td>2</td>
+<td>juichen</td>
+<td>juichen</td>
+<td>2</td>
+<td>to cheer</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>10</td>
+<td>3</td>
+<td>vis</td>
+<td>vis</td>
+<td>2</td>
+<td>fish</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>10</td>
+<td>4</td>
+<td>hoog</td>
+<td>groot</td>
+<td>2</td>
+<td>high</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>10</td>
+<td>5</td>
+<td>hoog</td>
+<td>rijken</td>
+<td>2</td>
+<td>high</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
+<td>10</td>
+<td>6</td>
+<td>hoog</td>
+<td>hoog</td>
+<td>2</td>
+<td>high</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">7</td>
+<td>10</td>
+<td>7</td>
+<td>regen</td>
+<td>regen</td>
+<td>2</td>
+<td>rain</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8</td>
+<td>10</td>
+<td>8</td>
+<td>verdrietig</td>
+<td>huilen</td>
+<td>2</td>
+<td>sad</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">9</td>
+<td>10</td>
+<td>9</td>
+<td>verdrietig</td>
+<td>verdrietig</td>
+<td>2</td>
+<td>sad</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">10</td>
+<td>10</td>
+<td>10</td>
+<td>langzaam</td>
+<td>slowmotion</td>
+<td>2</td>
+<td>slow</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">11</td>
+<td>10</td>
+<td>11</td>
+<td>langzaam</td>
+<td>joggen</td>
+<td>2</td>
+<td>slow</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">12</td>
+<td>10</td>
+<td>12</td>
+<td>langzaam</td>
+<td>langsaam</td>
+<td>2</td>
+<td>slow</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">13</td>
+<td>10</td>
+<td>13</td>
+<td>weten</td>
+<td>denken</td>
+<td>2</td>
+<td>to know</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">14</td>
+<td>10</td>
+<td>14</td>
+<td>weten</td>
+<td>idee</td>
+<td>2</td>
+<td>to know</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</div>
+<p>Now we need to correct answers because they contain typos</p>
+<div id="1a98b5d3" class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># in answer, replace langaam by langzaam</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'langaam'</span>, <span class="st">'langzaam'</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'langsaam'</span>, <span class="st">'langzaam'</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'comfortable'</span>, <span class="st">'comfortabel'</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'neurien'</span>, <span class="st">'neuriën'</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'neurieen'</span>, <span class="st">'neuriën'</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'verdietig'</span>, <span class="st">'verdrietig'</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'skien'</span>, <span class="st">'skiën'</span>)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'skieen'</span>, <span class="st">'skiën'</span>)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'geirriteerd'</span>, <span class="st">'geïrriteerd'</span>)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'vliegtug'</span>, <span class="st">'vliegtuig'</span>)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'basketba'</span>, <span class="st">'basketbal'</span>)</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'basketball'</span>, <span class="st">'basketbal'</span>)</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'geirriteerd'</span>, <span class="st">'geïrriteerd'</span>)</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'shift'</span>, <span class="st">''</span>)</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'svhieten'</span>, <span class="st">'schieten'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'scrheeuwen'</span>, <span class="st">'schreeuwen'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'neerkomem'</span>, <span class="st">'neerkomen'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'watet'</span>, <span class="st">'water'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'mastuberen'</span>, <span class="st">'masturberen'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'shrikken'</span>, <span class="st">'schrikken'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'grafiti'</span>, <span class="st">'graffiti'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'vliegtuid'</span>, <span class="st">'vliegtuig'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'grinikken'</span>, <span class="st">'grinniken'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'nurien'</span>, <span class="st">'neuriën'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'optijd'</span>, <span class="st">'op tijd'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'ontwetend'</span>, <span class="st">'onwetend'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'verluisteren'</span>, <span class="st">'fluisteren'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'luchtballin'</span>, <span class="st">'luchtballon'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'omhooh'</span>, <span class="st">'omhoog'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'rodellen'</span>, <span class="st">'roddelen'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'snappem'</span>, <span class="st">'snappen'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'indrukwekkebd'</span>, <span class="st">'indrukwekkend'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'zwaairn'</span>, <span class="st">'zwaaien'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'heigen'</span>, <span class="st">'hijgen'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'gestressd'</span>, <span class="st">'gestrest'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'kouwen'</span>, <span class="st">'kauwen'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'shouders'</span>, <span class="st">'schouders'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'ballom'</span>, <span class="st">'ballon'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'autocoereur'</span>, <span class="st">'autocoureur'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'lachrn'</span>, <span class="st">'lachen'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'fitesen'</span>, <span class="st">'fietsen'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'scieten'</span>, <span class="st">'schieten'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'stamoen'</span>, <span class="st">'stamperen'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'blixem'</span>, <span class="st">'bliksem'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'proefen'</span>, <span class="st">'proeven'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'blokfuit'</span>, <span class="st">'blokfluit'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'verdrietig '</span>, <span class="st">'verdrietig'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'galloperen'</span>, <span class="st">'galopperen'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'leegl'</span>, <span class="st">'leeg'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'kinker'</span>, <span class="st">'klinker'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'gehiem'</span>, <span class="st">'geheim'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'voge'</span>, <span class="st">'vogel'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'vogell'</span>, <span class="st">'vogel'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'grinnikken'</span>, <span class="st">'grinniken'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'drinken '</span>, <span class="st">'drinken'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'gieberen'</span>, <span class="st">'gibberen'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'juichenl'</span>, <span class="st">'juichen'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'juigen'</span>, <span class="st">'juichen'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'backlash'</span>, <span class="st">''</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'backslash'</span>, <span class="st">''</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'vlief'</span>, <span class="st">'vlieg'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'leegopen'</span>, <span class="st">'leeglopen'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'sprinkelen'</span>, <span class="st">'sprenkelen'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'fohn'</span>, <span class="st">'föhn'</span>, regex<span class="op">=</span><span class="va">False</span>) </span>
+<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'busstop'</span>, <span class="st">'bushalte'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'buitenadem'</span>, <span class="st">'buiten adem'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'slowmoting'</span>, <span class="st">'slowmotion'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-69"><a href="#cb3-69" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'olifcapslockn'</span>, <span class="st">'olifant'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-70"><a href="#cb3-70" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'ski vakante'</span>, <span class="st">'skivakantie'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-71"><a href="#cb3-71" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'verbeisterd'</span>, <span class="st">'verbijsterd'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-72"><a href="#cb3-72" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'fles ontpoppen'</span>, <span class="st">'fles ontkurken'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-73"><a href="#cb3-73" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'margeren'</span>, <span class="st">'marcheren'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-74"><a href="#cb3-74" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'knock out'</span>, <span class="st">'knockout'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-75"><a href="#cb3-75" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'knarzen'</span>, <span class="st">'knarsen'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-76"><a href="#cb3-76" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'ping pong'</span>, <span class="st">'pingpong'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-77"><a href="#cb3-77" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'typgeluid'</span>, <span class="st">'typegeluid'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-78"><a href="#cb3-78" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'typgeluid'</span>, <span class="st">'typegeluid'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-79"><a href="#cb3-79" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'oorkest'</span>, <span class="st">'orkest'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-80"><a href="#cb3-80" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'ruizen'</span>, <span class="st">'ruisen'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-81"><a href="#cb3-81" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'skydiving'</span>, <span class="st">'skydiven'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-82"><a href="#cb3-82" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'lslash'</span>, <span class="st">''</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-83"><a href="#cb3-83" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'auto rijden'</span>, <span class="st">'autorijden'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-84"><a href="#cb3-84" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'disgust'</span>, <span class="st">'walging'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-85"><a href="#cb3-85" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'elektrisiteit'</span>, <span class="st">'elektriciteit'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-86"><a href="#cb3-86" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'sleeen'</span>, <span class="st">'sleeën'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-87"><a href="#cb3-87" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'reaching'</span>, <span class="st">'reiken'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-88"><a href="#cb3-88" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'skippiebal'</span>, <span class="st">'skippybal'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-89"><a href="#cb3-89" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'kokhalsen'</span>, <span class="st">'kokhalzen'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-90"><a href="#cb3-90" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'grinnik'</span>, <span class="st">'grinniken'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-91"><a href="#cb3-91" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'pinguin'</span>, <span class="st">'pinguïn'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-92"><a href="#cb3-92" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'discodisco'</span>, <span class="st">'disco'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-93"><a href="#cb3-93" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'oudpersoon'</span>, <span class="st">'oud persoon'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-94"><a href="#cb3-94" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'griniken'</span>, <span class="st">'grinniken'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-95"><a href="#cb3-95" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'ping pongen'</span>, <span class="st">'pingpongen'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-96"><a href="#cb3-96" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'boederij'</span>, <span class="st">'boerderij'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-97"><a href="#cb3-97" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'paardijden'</span>, <span class="st">'paardrijden'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-98"><a href="#cb3-98" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'neuril'</span>, <span class="st">''</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-99"><a href="#cb3-99" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'f1'</span>, <span class="st">'formula 1'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-100"><a href="#cb3-100" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'stamperen'</span>, <span class="st">'stampen'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-101"><a href="#cb3-101" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'stilzijn'</span>, <span class="st">'stil zijn'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-102"><a href="#cb3-102" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'bbq'</span>, <span class="st">'barbecue'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-103"><a href="#cb3-103" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'zur'</span>, <span class="st">'zuur'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-104"><a href="#cb3-104" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'hgvlgi'</span>, <span class="st">''</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-105"><a href="#cb3-105" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'awkward'</span>, <span class="st">'ongemakkelijk'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-106"><a href="#cb3-106" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'typem'</span>, <span class="st">'typen'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-107"><a href="#cb3-107" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'goedzo'</span>, <span class="st">'goed zo'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-108"><a href="#cb3-108" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'chirpen'</span>, <span class="st">'tjirpen'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-109"><a href="#cb3-109" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'onwetenheid'</span>, <span class="st">'onwetendheid'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-110"><a href="#cb3-110" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'verweg'</span>, <span class="st">'ver weg'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-111"><a href="#cb3-111" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'kotsem'</span>, <span class="st">'kotsen'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-112"><a href="#cb3-112" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'afgrijzing'</span>, <span class="st">'afgrijzen'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-113"><a href="#cb3-113" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'kostem'</span>, <span class="st">'kotsen'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-114"><a href="#cb3-114" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'boxen'</span>, <span class="st">'boksen'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-115"><a href="#cb3-115" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'blasen'</span>, <span class="st">'blazen'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-116"><a href="#cb3-116" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'telefooneren'</span>, <span class="st">'telefoneren'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-117"><a href="#cb3-117" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'motor rijden'</span>, <span class="st">'motorrijden'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-118"><a href="#cb3-118" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'ademenen'</span>, <span class="st">'ademen'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-119"><a href="#cb3-119" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'lrijden'</span>, <span class="st">'rijden'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-120"><a href="#cb3-120" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'pijlenboog'</span>, <span class="st">'pijl-en-boog'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-121"><a href="#cb3-121" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'giegelen'</span>, <span class="st">'giechelen'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-122"><a href="#cb3-122" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'nijdi'</span>, <span class="st">'nijdig'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-123"><a href="#cb3-123" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'banden oppompe'</span>, <span class="st">'banden oppompen'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-124"><a href="#cb3-124" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'giegelen'</span>, <span class="st">'giechelen'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-125"><a href="#cb3-125" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'iets pakken'</span>, <span class="st">'pakken'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-126"><a href="#cb3-126" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'iets geven'</span>, <span class="st">'geven'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-127"><a href="#cb3-127" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'grinnikenen'</span>, <span class="st">'grinniken'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-128"><a href="#cb3-128" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'grinneken'</span>, <span class="st">'grinniken'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-129"><a href="#cb3-129" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'over weging'</span>, <span class="st">'over wegen'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-130"><a href="#cb3-130" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'grinneken'</span>, <span class="st">'grinniken'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-131"><a href="#cb3-131" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'feluisteren'</span>, <span class="st">'fluisteren'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-132"><a href="#cb3-132" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'openhaart'</span>, <span class="st">'open haard'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-133"><a href="#cb3-133" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'silte vragen'</span>, <span class="st">'stilte vragen'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-134"><a href="#cb3-134" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'stewardes'</span>, <span class="st">'stewardess'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-135"><a href="#cb3-135" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'diamand'</span>, <span class="st">'diamant'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-136"><a href="#cb3-136" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'volzitten'</span>, <span class="st">'vol zitten'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-137"><a href="#cb3-137" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'bergklimmen'</span>, <span class="st">'bergbeklimmen'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-138"><a href="#cb3-138" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'uitgleiden'</span>, <span class="st">'uitglijden'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-139"><a href="#cb3-139" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'formula 1'</span>, <span class="st">'formule 1'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-140"><a href="#cb3-140" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'openhaard'</span>, <span class="st">'open haard'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-141"><a href="#cb3-141" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'over wegen'</span>, <span class="st">'overwegen'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-142"><a href="#cb3-142" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'doodslikken'</span>, <span class="st">'doorslikken'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-143"><a href="#cb3-143" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'kukkelen'</span>, <span class="st">'kukelen'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-144"><a href="#cb3-144" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'slow motion'</span>, <span class="st">'slowmotion'</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-145"><a href="#cb3-145" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-146"><a href="#cb3-146" aria-hidden="true" tabindex="-1"></a><span class="co"># sometimes people directly answered they don't know </span></span>
+<span id="cb3-147"><a href="#cb3-147" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'geen idee'</span>, <span class="st">''</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-148"><a href="#cb3-148" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'ik weet het niet'</span>, <span class="st">''</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-149"><a href="#cb3-149" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'wtf'</span>, <span class="st">''</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-150"><a href="#cb3-150" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-151"><a href="#cb3-151" aria-hidden="true" tabindex="-1"></a><span class="co"># if there is any string that has space in the beginning or the end, remove it</span></span>
+<span id="cb3-152"><a href="#cb3-152" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.strip()</span>
+<span id="cb3-153"><a href="#cb3-153" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-154"><a href="#cb3-154" aria-hidden="true" tabindex="-1"></a><span class="co"># where word comfortabel and answer illen, change answer to chillen</span></span>
+<span id="cb3-155"><a href="#cb3-155" aria-hidden="true" tabindex="-1"></a>df.loc[(df[<span class="st">'word'</span>] <span class="op">==</span> <span class="st">'comfortabel'</span>) <span class="op">&amp;</span> (df[<span class="st">'answer'</span>] <span class="op">==</span> <span class="st">'illen'</span>), <span class="st">'answer'</span>] <span class="op">=</span> <span class="st">'chillen'</span></span>
+<span id="cb3-156"><a href="#cb3-156" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-157"><a href="#cb3-157" aria-hidden="true" tabindex="-1"></a><span class="co"># where word is gek and answer llen, change answer to ''</span></span>
+<span id="cb3-158"><a href="#cb3-158" aria-hidden="true" tabindex="-1"></a>df.loc[(df[<span class="st">'word'</span>] <span class="op">==</span> <span class="st">'gek'</span>) <span class="op">&amp;</span> (df[<span class="st">'answer'</span>] <span class="op">==</span> <span class="st">'llen'</span>), <span class="st">'answer'</span>] <span class="op">=</span> <span class="st">''</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="e5fb52a0" class="cell" data-execution_count="78">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Sanity check: print rows that have any NA</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>df[df.isna().<span class="bu">any</span>(axis<span class="op">=</span><span class="dv">1</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="78">
+<div>
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">ID</th>
+<th data-quarto-table-cell-role="th">trial_order</th>
+<th data-quarto-table-cell-role="th">word</th>
+<th data-quarto-table-cell-role="th">answer</th>
+<th data-quarto-table-cell-role="th">exp</th>
+<th data-quarto-table-cell-role="th">English</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2894</td>
+<td>35</td>
+<td>75</td>
+<td>klein</td>
+<td>NaN</td>
+<td>2</td>
+<td>small</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2898</td>
+<td>35</td>
+<td>79</td>
+<td>kruipen</td>
+<td>NaN</td>
+<td>2</td>
+<td>to crawl</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4064</td>
+<td>45</td>
+<td>26</td>
+<td>hoorn</td>
+<td>NaN</td>
+<td>2</td>
+<td>horn</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">4526</td>
+<td>49</td>
+<td>43</td>
+<td>telefoon</td>
+<td>NaN</td>
+<td>2</td>
+<td>telephone</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4527</td>
+<td>49</td>
+<td>44</td>
+<td>zwaaien</td>
+<td>NaN</td>
+<td>2</td>
+<td>to wave</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">7650</td>
+<td>9</td>
+<td>81</td>
+<td>glimlach</td>
+<td>NaN</td>
+<td>2</td>
+<td>smile</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</div>
+<p>In these trials, the answer have been either not intelligible or just something like ‘geen idee’ or ‘ik weet het niet’. Therefore we will put 0 cosine similarity for these trials.</p>
+</section>
+<section id="calculating-cosine-similarity" class="level1">
+<h1>Calculating cosine similarity</h1>
+<p>Now we will load in <a href="https://github.com/commonsense/conceptnet-numberbatch" target="_blank">ConceptNet numberbatch (version 19.08)</a> and compute cosine similarity for each pair</p>
+<div id="e4e4ce86" class="cell">
+<details class="code-fold">
+<summary>Custom functions</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load embeddings from a file</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> load_embeddings(file_path):</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Load word embeddings from a text file where each line contains a word followed by its vector components.</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">    Args:</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">        file_path (str): Path to the file containing word embeddings.</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns:</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co">        dict: A dictionary mapping words to their corresponding embedding vectors as numpy arrays.</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    embeddings <span class="op">=</span> {}</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(file_path, <span class="st">'r'</span>, encoding<span class="op">=</span><span class="st">'utf-8'</span>) <span class="im">as</span> f:</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> line <span class="kw">in</span> f:</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>            values <span class="op">=</span> line.split()</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>            word <span class="op">=</span> values[<span class="dv">0</span>]</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>            vector <span class="op">=</span> np.array(values[<span class="dv">1</span>:], dtype<span class="op">=</span><span class="st">'float32'</span>)</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>            embeddings[word] <span class="op">=</span> vector</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> embeddings</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Cosine similarity</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> cosine_similarity(vec1, vec2):</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Calculate the cosine similarity between two vectors.</span></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a><span class="co">    Args:</span></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a><span class="co">        vec1 (numpy.ndarray): First vector.</span></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a><span class="co">        vec2 (numpy.ndarray): Second vector.</span></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns:</span></span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a><span class="co">        float: Cosine similarity between the two vectors.</span></span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>    dot_product <span class="op">=</span> np.dot(vec1, vec2)</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>    norm_vec1 <span class="op">=</span> np.linalg.norm(vec1)</span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>    norm_vec2 <span class="op">=</span> np.linalg.norm(vec2)</span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> dot_product <span class="op">/</span> (norm_vec1 <span class="op">*</span> norm_vec2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>We will use multilingual numberbatch to extract words in the original language of experiment - Dutch. While English has better representation in ConceptNet, the English numberbatch does not make distinction between nouns and verbs (so ‘a drink’ and ‘to drink’ have common representation - drink). Because this is important distinction for us, we opt for Dutch embeddings to avoid this problem</p>
+<div id="fd091309" class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load embeddings</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>embeddings <span class="op">=</span> load_embeddings(os.path.join(<span class="st">'numberbatch'</span>, <span class="st">'numberbatch.txt'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This is how a single concept is represented (here skiën, engl. skiing)</p>
+<div id="6fe988f9" class="cell" data-execution_count="80">
+<div class="cell-output cell-output-stdout">
+<pre><code>[ 3.410e-02 -4.640e-02  5.490e-02  1.544e-01  1.800e-02 -5.050e-02
+ -6.660e-02 -2.300e-02  5.320e-02  1.104e-01  2.770e-02  5.040e-02
+ -2.010e-02  5.900e-03 -1.133e-01 -9.370e-02 -7.890e-02  3.540e-02
+  3.780e-02  8.400e-02 -3.880e-02  7.680e-02 -8.010e-02  6.540e-02
+ -1.493e-01 -1.036e-01  8.490e-02  1.040e-02 -6.890e-02  6.890e-02
+  1.226e-01 -1.850e-02  1.520e-02  2.810e-02 -5.660e-02 -2.670e-02
+ -5.700e-02 -4.480e-02  1.924e-01  5.800e-02 -7.800e-02 -7.700e-03
+  1.132e-01  6.350e-02 -4.310e-02  1.900e-03 -4.820e-02  1.047e-01
+  6.900e-02  7.150e-02  1.660e-02  2.730e-02  4.340e-02  1.130e-02
+ -1.427e-01 -9.200e-03 -8.000e-04  2.310e-02  1.234e-01 -1.452e-01
+ -1.710e-02 -1.094e-01 -1.518e-01  4.820e-02  1.400e-02 -1.460e-02
+  1.023e-01  5.220e-02  1.362e-01  3.190e-02 -2.590e-02  1.220e-01
+  1.750e-02  8.810e-02 -9.200e-02 -1.226e-01 -5.560e-02 -6.600e-03
+  3.180e-02 -1.113e-01  6.130e-02 -1.202e-01 -2.480e-02 -8.300e-03
+ -1.710e-02  3.410e-02  1.550e-02 -8.000e-02 -6.390e-02  1.170e-01
+ -1.578e-01  2.660e-02 -1.360e-02 -6.790e-02 -1.030e-02 -3.320e-02
+  1.040e-02  1.600e-03 -1.300e-03 -4.420e-02  4.060e-02 -7.470e-02
+ -2.800e-03  1.900e-02  1.098e-01 -6.180e-02 -5.690e-02  7.700e-02
+ -2.000e-03 -1.050e-02 -9.610e-02  7.000e-03  5.310e-02  2.720e-02
+  5.850e-02  5.000e-02  4.400e-03 -3.210e-02  3.000e-02 -6.020e-02
+  1.190e-02  3.760e-02  3.650e-02  1.452e-01  1.900e-03  3.870e-02
+  5.210e-02  4.470e-02  5.570e-02  1.460e-02 -8.330e-02 -3.660e-02
+ -8.020e-02 -6.520e-02  3.660e-02  2.260e-02 -7.050e-02 -9.100e-03
+  2.190e-02 -2.630e-02 -1.410e-02  6.200e-03 -2.130e-02 -3.750e-02
+  1.960e-02 -1.250e-02  2.740e-02  8.450e-02 -8.750e-02 -2.700e-02
+  8.500e-03  1.260e-02 -2.550e-02  1.640e-02  2.850e-02 -5.570e-02
+ -1.110e-02  9.400e-02  3.280e-02 -4.830e-02  1.080e-02  1.170e-02
+  8.600e-03  6.620e-02  1.151e-01  2.960e-02  1.670e-02  1.180e-02
+ -1.101e-01 -5.720e-02 -2.910e-02 -2.450e-02 -3.700e-03 -4.650e-02
+  7.500e-03 -4.350e-02 -3.150e-02 -4.980e-02 -3.750e-02  6.250e-02
+  6.600e-03 -9.910e-02  3.180e-02 -4.350e-02 -2.830e-02 -9.260e-02
+ -6.110e-02 -1.280e-02 -7.960e-02  3.280e-02  8.670e-02 -1.080e-02
+ -1.430e-02  1.350e-02 -6.210e-02 -2.220e-02 -6.010e-02 -4.440e-02
+  5.820e-02  9.090e-02  9.300e-03 -4.130e-02 -3.040e-02 -6.410e-02
+  4.760e-02 -6.620e-02 -1.000e-04  5.300e-02 -3.650e-02  7.500e-03
+  3.460e-02 -5.350e-02  8.900e-03 -9.140e-02 -2.830e-02 -4.290e-02
+  9.000e-03 -7.400e-02  1.014e-01 -8.760e-02  3.200e-03 -4.420e-02
+ -2.990e-02  1.000e-04  3.900e-02 -6.200e-03  7.740e-02  2.840e-02
+  1.170e-02 -3.680e-02  2.790e-02  6.890e-02  1.800e-03  3.000e-03
+ -3.070e-02 -5.000e-04  1.000e-03 -2.200e-03 -2.480e-02  1.117e-01
+ -2.340e-02  3.780e-02  3.350e-02 -4.950e-02  9.500e-03  1.720e-02
+  4.720e-02 -6.040e-02 -3.220e-02 -1.570e-02 -3.860e-02  1.140e-02
+ -4.240e-02 -1.710e-02 -8.000e-04  3.900e-02  1.410e-02 -8.580e-02
+ -3.250e-02 -1.650e-02 -2.520e-02  1.140e-02  7.050e-02  6.000e-04
+  3.570e-02  4.750e-02 -7.050e-02  2.500e-02 -2.940e-02  1.830e-02
+  9.600e-03  1.600e-02  3.910e-02  3.970e-02 -1.540e-02  8.070e-02
+ -1.000e-02 -6.400e-03 -4.050e-02  3.030e-02 -6.060e-02  1.690e-02
+  4.370e-02 -6.500e-03  2.920e-02 -2.900e-03 -1.017e-01  7.060e-02
+ -1.053e-01 -1.500e-03  9.000e-03  9.500e-03  4.020e-02  2.420e-02
+  1.800e-03  4.270e-02  3.140e-02 -2.540e-02  2.780e-02 -6.000e-03]</code></pre>
+</div>
+</div>
+<p>Now we take the list of target-answer pairs, transform them into embedding format and perform cosine similarity.</p>
+<div id="88a88d6b" class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Dutch targets</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>meanings_nl <span class="op">=</span> <span class="bu">list</span>(df[<span class="st">'word'</span>])</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Dutch answers</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>answers_nl <span class="op">=</span> <span class="bu">list</span>(df[<span class="st">'answer'</span>])</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>word_embeddings_t <span class="op">=</span> {}</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> word <span class="kw">in</span> meanings_nl:</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    <span class="co">#print(f"Processing word: {word}")</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    word_embed <span class="op">=</span> <span class="st">'/c/nl/'</span> <span class="op">+</span> word</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> word_embed <span class="kw">in</span> embeddings:</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>        word_embeddings_t[word] <span class="op">=</span> embeddings[word_embed]</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="co"># get the embeddings for the words in the list answers_en</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>word_embeddings_ans <span class="op">=</span> {}</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> word <span class="kw">in</span> answers_nl:</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># if the word is not nan, process, if it's nan, just put nan embedding</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> pd.isna(word):</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>        word_embeddings_ans[word] <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>        word_embed <span class="op">=</span> <span class="st">'/c/nl/'</span> <span class="op">+</span> word</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> word_embed <span class="kw">in</span> embeddings:</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>            word_embeddings_ans[word] <span class="op">=</span> embeddings[word_embed]</span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate the similarity between the first word in the list meanings_en and first word in answers_en, second word in meanings_en and second word in answers_en, etc.</span></span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>cosine_similarities <span class="op">=</span> []</span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(meanings_nl)):</span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>    word1 <span class="op">=</span> meanings_nl[i]</span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>    word2 <span class="op">=</span> answers_nl[i]</span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>    vec1 <span class="op">=</span> word_embeddings_t.get(word1)</span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>    vec2 <span class="op">=</span> word_embeddings_ans.get(word2)</span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> vec1 <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span> <span class="kw">and</span> vec2 <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>        cosine_sim <span class="op">=</span> cosine_similarity(vec1, vec2)</span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a>        <span class="co"># if cosine similarity is negative, set it to 0.</span></span>
+<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a>        cosine_similarities.append(cosine_sim)</span>
+<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a>        <span class="co"># print which concepts could not be found</span></span>
+<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> vec1 <span class="kw">is</span> <span class="va">None</span>:</span>
+<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="ss">f"Concept not found: </span><span class="sc">{</span>word1<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> vec2 <span class="kw">is</span> <span class="va">None</span>:</span>
+<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="ss">f"Concept not found: </span><span class="sc">{</span>word2<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a>            <span class="co"># if the word is empty string or nan, put cosine_sim as 0</span></span>
+<span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> pd.isna(word2) <span class="kw">or</span> word2 <span class="op">==</span> <span class="st">''</span>:</span>
+<span id="cb8-47"><a href="#cb8-47" aria-hidden="true" tabindex="-1"></a>                cosine_sim <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb8-48"><a href="#cb8-48" aria-hidden="true" tabindex="-1"></a>            <span class="cf">else</span>:</span>
+<span id="cb8-49"><a href="#cb8-49" aria-hidden="true" tabindex="-1"></a>                cosine_sim <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb8-50"><a href="#cb8-50" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb8-51"><a href="#cb8-51" aria-hidden="true" tabindex="-1"></a>        cosine_similarities.append(cosine_sim)</span>
+<span id="cb8-52"><a href="#cb8-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-53"><a href="#cb8-53" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'cosine_similarity'</span>] <span class="op">=</span> cosine_similarities</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Concept not found: slowmotion
+Concept not found: catcallen
+Concept not found: sniffen
+Concept not found: bergwandeling
+Concept not found: ver weg
+Concept not found: 
+Concept not found: wakker worden
+Concept not found: ringtoon
+Concept not found: moedergans
+Concept not found: föhnen
+Concept not found: vies eten
+Concept not found: ver weg
+Concept not found: kuikelen
+Concept not found: highfive
+Concept not found: kukelen
+Concept not found: huh
+Concept not found: ssst
+Concept not found: startsignaal
+Concept not found: ringtoon
+Concept not found: fietsbel
+Concept not found: oud en nieuw
+Concept not found: open haard
+Concept not found: 
+Concept not found: zachtjes lopen
+Concept not found: wc rol
+Concept not found: stilte vragen
+Concept not found: regendrank
+Concept not found: hoge toon
+Concept not found: vies eten
+Concept not found: fietsbel
+Concept not found: shotje
+Concept not found: meteor
+Concept not found: niet willen
+Concept not found: hardcore
+Concept not found: lekker vinden
+Concept not found: keuze maken
+Concept not found: motorrijden
+Concept not found: 
+Concept not found: op tijd
+Concept not found: stil zijn
+Concept not found: slowmotion
+Concept not found: hoge toon
+Concept not found: niet lekker
+Concept not found: fles ontkurken
+Concept not found: vissenkom
+Concept not found: knockout
+Concept not found: blub
+Concept not found: zonuren
+Concept not found: blauwe plek
+Concept not found: niet praten
+Concept not found: 
+Concept not found: klingen
+Concept not found: nan
+Concept not found: nan
+Concept not found: smiespelen
+Concept not found: horror
+Concept not found: op tijd
+Concept not found: trappers
+Concept not found: oordopjes
+Concept not found: spritzen
+Concept not found: skippyballen
+Concept not found: slowmotion
+Concept not found: traplopen
+Concept not found: giebelen
+Concept not found: bellenblazen
+Concept not found: open haard
+Concept not found: traplopen
+Concept not found: slowmotion
+Concept not found: mondhoek
+Concept not found: 
+Concept not found: nan
+Concept not found: achteruit rijden
+Concept not found: slowmotion
+Concept not found: buiten adem
+Concept not found: nan
+Concept not found: nan
+Concept not found: fietsbel
+Concept not found: pingpongen
+Concept not found: sniffen
+Concept not found: supporten
+Concept not found: 
+Concept not found: formule 1
+Concept not found: ohja
+Concept not found: stil zijn
+Concept not found: hogedrukspuit
+Concept not found: bellenblaas
+Concept not found: 
+Concept not found: 
+Concept not found: stil zijn
+Concept not found: vliegtuigcrash
+Concept not found: goed zo
+Concept not found: chippen
+Concept not found: tongzuur
+Concept not found: 
+Concept not found: ver weg
+Concept not found: skispringen
+Concept not found: open haard
+Concept not found: mondhoek
+Concept not found: sniffen
+Concept not found: slowmotion
+Concept not found: hondenstaart
+Concept not found: geldmunt
+Concept not found: doodvallen
+Concept not found: fietsbel
+Concept not found: gestommel
+Concept not found: gedag zeggen
+Concept not found: motorrijden
+Concept not found: hummen
+Concept not found: hummen
+Concept not found: vol zitten
+Concept not found: griezelen
+Concept not found: fietsbel
+Concept not found: duimzuigen
+Concept not found: hmmpf
+Concept not found: ringtoon
+Concept not found: pijl-en-boog
+Concept not found: luchtverfrisser
+Concept not found: pakketbezorger
+Concept not found: stemmingswisseling
+Concept not found: pakketbezorger
+Concept not found: tour de france
+Concept not found: magnetronmaaltijd
+Concept not found: hondenshow
+Concept not found: lightsaber
+Concept not found: buiten adem
+Concept not found: niet goed
+Concept not found: nan</code></pre>
+</div>
+</div>
+<p>On the plot below, we can see the distribution of cosine similarity values. We see that very small portion of the values falls below zero. Negative cosine similarity usually indicates opposite meaning, but this is not case here, given that the largest negative value is -0.1 and most of the values are very close to 0.</p>
+<div id="af147f1e" class="cell" data-execution_count="82">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>vals <span class="op">=</span> [c <span class="cf">for</span> c <span class="kw">in</span> cosine_similarities <span class="cf">if</span> c <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>]</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>plt.hist(vals, bins<span class="op">=</span><span class="dv">50</span>)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>plt.axvline(<span class="dv">0</span>, color<span class="op">=</span><span class="st">'red'</span>)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ConceptNet_similarity_files/figure-html/cell-11-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Instead of normalizing - which would distort the scale - we will set all negative cosine similarity values above 0 (to distinguish them from the ‘no-idea’ answers which we set to 0) and somewhere below the smallest positive cosine similarity.</p>
+<div id="bf5479f0" class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>min_cosine <span class="op">=</span> <span class="bu">min</span>([c <span class="cf">for</span> c <span class="kw">in</span> cosine_similarities <span class="cf">if</span> c <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span> <span class="kw">and</span> c <span class="op">&gt;</span> <span class="dv">0</span>])</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Smallest positive cosine similarity: </span><span class="sc">{</span>min_cosine<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Smallest positive cosine similarity: 0.00043843052117154</code></pre>
+</div>
+</div>
+<p>We will therefore set all negative cosine similarity values to 0.0001. We will also set all values larger than 1 to 1, this is again non-meaningful distortion due to the embedding space.</p>
+<div id="bb3c0abc" class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># set all negative cosine similarity values to 0.0001</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> index, row <span class="kw">in</span> df.iterrows():</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> row[<span class="st">'cosine_similarity'</span>] <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> row[<span class="st">'cosine_similarity'</span>] <span class="op">&lt;</span> <span class="dv">0</span>:</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>            df.at[index, <span class="st">'cosine_similarity'</span>] <span class="op">=</span> <span class="fl">0.0001</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">elif</span> row[<span class="st">'cosine_similarity'</span>] <span class="op">&gt;</span> <span class="dv">1</span>:</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>            df.at[index, <span class="st">'cosine_similarity'</span>] <span class="op">=</span> <span class="fl">1.0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Just to be sure that we are not skewing the data, let’s check descriptive of the original list and the df</p>
+<div id="f973831d" class="cell" data-execution_count="85">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>mean_orig <span class="op">=</span> np.mean([c <span class="cf">for</span> c <span class="kw">in</span> cosine_similarities <span class="cf">if</span> c <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>])</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>std_orig <span class="op">=</span> np.std([c <span class="cf">for</span> c <span class="kw">in</span> cosine_similarities <span class="cf">if</span> c <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>])</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>median_orig <span class="op">=</span> np.median([c <span class="cf">for</span> c <span class="kw">in</span> cosine_similarities <span class="cf">if</span> c <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>])</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>mean_new <span class="op">=</span> df[<span class="st">'cosine_similarity'</span>].mean()</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>std_new <span class="op">=</span> df[<span class="st">'cosine_similarity'</span>].std()</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>median_new <span class="op">=</span> df[<span class="st">'cosine_similarity'</span>].median()</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Original - Mean: </span><span class="sc">{</span>mean_orig<span class="sc">}</span><span class="ss">, Std: </span><span class="sc">{</span>std_orig<span class="sc">}</span><span class="ss">, Median: </span><span class="sc">{</span>median_orig<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"New - Mean: </span><span class="sc">{</span>mean_new<span class="sc">}</span><span class="ss">, Std: </span><span class="sc">{</span>std_new<span class="sc">}</span><span class="ss">, Median: </span><span class="sc">{</span>median_new<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Original - Mean: 0.529121605897391, Std: 0.38258987750786466, Median: 0.4233475923538208
+New - Mean: 0.5296676727170462, Std: 0.38182959338171735, Median: 0.4233475923538208</code></pre>
+</div>
+</div>
+<div id="96ea5de6" class="cell" data-execution_count="86">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Save it</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>df.to_csv(os.path.join(datafolder, <span class="st">'conceptnet_clean.csv'</span>), index<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This is how the resulting df looks like</p>
+<div id="2cd17578" class="cell" data-execution_count="87">
+<div class="cell-output cell-output-display" data-execution_count="87">
+<div>
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">ID</th>
+<th data-quarto-table-cell-role="th">trial_order</th>
+<th data-quarto-table-cell-role="th">word</th>
+<th data-quarto-table-cell-role="th">answer</th>
+<th data-quarto-table-cell-role="th">exp</th>
+<th data-quarto-table-cell-role="th">English</th>
+<th data-quarto-table-cell-role="th">cosine_similarity</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>10</td>
+<td>0</td>
+<td>zwaaien</td>
+<td>zwaaien</td>
+<td>2</td>
+<td>to wave</td>
+<td>1.000000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>10</td>
+<td>1</td>
+<td>juichen</td>
+<td>dansen</td>
+<td>2</td>
+<td>to cheer</td>
+<td>0.177888</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>10</td>
+<td>2</td>
+<td>juichen</td>
+<td>juichen</td>
+<td>2</td>
+<td>to cheer</td>
+<td>1.000000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>10</td>
+<td>3</td>
+<td>vis</td>
+<td>vis</td>
+<td>2</td>
+<td>fish</td>
+<td>1.000000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>10</td>
+<td>4</td>
+<td>hoog</td>
+<td>groot</td>
+<td>2</td>
+<td>high</td>
+<td>0.448479</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>10</td>
+<td>5</td>
+<td>hoog</td>
+<td>rijken</td>
+<td>2</td>
+<td>high</td>
+<td>0.233006</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
+<td>10</td>
+<td>6</td>
+<td>hoog</td>
+<td>hoog</td>
+<td>2</td>
+<td>high</td>
+<td>1.000000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">7</td>
+<td>10</td>
+<td>7</td>
+<td>regen</td>
+<td>regen</td>
+<td>2</td>
+<td>rain</td>
+<td>1.000000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8</td>
+<td>10</td>
+<td>8</td>
+<td>verdrietig</td>
+<td>huilen</td>
+<td>2</td>
+<td>sad</td>
+<td>0.389033</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">9</td>
+<td>10</td>
+<td>9</td>
+<td>verdrietig</td>
+<td>verdrietig</td>
+<td>2</td>
+<td>sad</td>
+<td>1.000000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">10</td>
+<td>10</td>
+<td>10</td>
+<td>langzaam</td>
+<td>slowmotion</td>
+<td>2</td>
+<td>slow</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">11</td>
+<td>10</td>
+<td>11</td>
+<td>langzaam</td>
+<td>joggen</td>
+<td>2</td>
+<td>slow</td>
+<td>0.224116</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">12</td>
+<td>10</td>
+<td>12</td>
+<td>langzaam</td>
+<td>langzaam</td>
+<td>2</td>
+<td>slow</td>
+<td>1.000000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">13</td>
+<td>10</td>
+<td>13</td>
+<td>weten</td>
+<td>denken</td>
+<td>2</td>
+<td>to know</td>
+<td>0.631044</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">14</td>
+<td>10</td>
+<td>14</td>
+<td>weten</td>
+<td>idee</td>
+<td>2</td>
+<td>to know</td>
+<td>0.291819</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">15</td>
+<td>10</td>
+<td>15</td>
+<td>weten</td>
+<td>bedenken</td>
+<td>2</td>
+<td>to know</td>
+<td>0.513044</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">16</td>
+<td>10</td>
+<td>16</td>
+<td>rennen</td>
+<td>rennen</td>
+<td>2</td>
+<td>to run</td>
+<td>1.000000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">17</td>
+<td>10</td>
+<td>17</td>
+<td>vliegtuig</td>
+<td>vliegtuig</td>
+<td>2</td>
+<td>airplane</td>
+<td>1.000000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">18</td>
+<td>10</td>
+<td>18</td>
+<td>bal</td>
+<td>gooien</td>
+<td>2</td>
+<td>ball</td>
+<td>0.312721</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">19</td>
+<td>10</td>
+<td>19</td>
+<td>bal</td>
+<td>werpen</td>
+<td>2</td>
+<td>ball</td>
+<td>0.337474</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</div>
+<p>When running the code, we will see that some target or answered concepts are not represented in numberbatch (e.g., if the answer has more than one word).</p>
+<p>Because we verified that cosine similarity and perceived similarity are highly correlated (see <a href="https://osf.io/8ajsg/overview" target="_blank">preregistration</a>), we collected the missing data through new online rating study.</p>
+</section>
+<section id="adding-data-from-perceived-similarity" class="level1">
+<h1>Adding data from perceived similarity</h1>
+<div id="029942ae" class="cell" data-execution_count="88">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>survey <span class="op">=</span> pd.read_csv(os.path.join(datafolder, <span class="st">'similarity_nl_responses_GForms.csv'</span>), sep<span class="op">=</span><span class="st">','</span>)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>survey.head(<span class="dv">15</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="88">
+<div>
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Timestamp</th>
+<th data-quarto-table-cell-role="th">langzaam - slowmotion</th>
+<th data-quarto-table-cell-role="th">glimlach - catcallen</th>
+<th data-quarto-table-cell-role="th">slaan - highfive</th>
+<th data-quarto-table-cell-role="th">verdrietig - sniffen</th>
+<th data-quarto-table-cell-role="th">berg - bergwandeling</th>
+<th data-quarto-table-cell-role="th">ver - ver weg</th>
+<th data-quarto-table-cell-role="th">ademen - buiten adem</th>
+<th data-quarto-table-cell-role="th">oud - wakker worden</th>
+<th data-quarto-table-cell-role="th">telefoon - ringtoon</th>
+<th data-quarto-table-cell-role="th">...</th>
+<th data-quarto-table-cell-role="th">telefoon - pakketbezorger</th>
+<th data-quarto-table-cell-role="th">telefoon - tour de france</th>
+<th data-quarto-table-cell-role="th">bitter - magnetronmaaltijd</th>
+<th data-quarto-table-cell-role="th">staart - hondenshow</th>
+<th data-quarto-table-cell-role="th">onweer - lightsaber</th>
+<th data-quarto-table-cell-role="th">bloem - bloemen ruiken</th>
+<th data-quarto-table-cell-role="th">goed - duim omhoog</th>
+<th data-quarto-table-cell-role="th">bliksem - appels plukken</th>
+<th data-quarto-table-cell-role="th">niet - niet goed</th>
+<th data-quarto-table-cell-role="th">If there were words you were not sure what they refer to, please note them down here</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>11/12/2024 14:22:20</td>
+<td>8</td>
+<td>0</td>
+<td>1</td>
+<td>2</td>
+<td>2</td>
+<td>9</td>
+<td>3</td>
+<td>0</td>
+<td>6</td>
+<td>...</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>4</td>
+<td>6</td>
+<td>9</td>
+<td>0</td>
+<td>2</td>
+<td>griezelen, catcallen, kukkelen, tongzuur, klin...</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>11/12/2024 15:41:15</td>
+<td>9</td>
+<td>5</td>
+<td>6</td>
+<td>7</td>
+<td>8</td>
+<td>9</td>
+<td>8</td>
+<td>2</td>
+<td>7</td>
+<td>...</td>
+<td>2</td>
+<td>7</td>
+<td>3</td>
+<td>4</td>
+<td>3</td>
+<td>8</td>
+<td>8</td>
+<td>2</td>
+<td>7</td>
+<td>chippen</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>12/12/2024 14:16:50</td>
+<td>8</td>
+<td>0</td>
+<td>6</td>
+<td>8</td>
+<td>9</td>
+<td>9</td>
+<td>9</td>
+<td>3</td>
+<td>8</td>
+<td>...</td>
+<td>4</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+<td>6</td>
+<td>9</td>
+<td>8</td>
+<td>0</td>
+<td>9</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>12/12/2024 14:18:04</td>
+<td>10</td>
+<td>0</td>
+<td>7</td>
+<td>7</td>
+<td>6</td>
+<td>7</td>
+<td>9</td>
+<td>0</td>
+<td>5</td>
+<td>...</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>6</td>
+<td>0</td>
+<td>6</td>
+<td>8</td>
+<td>0</td>
+<td>5</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>16/12/2024 15:05:32</td>
+<td>8</td>
+<td>1</td>
+<td>7</td>
+<td>6</td>
+<td>7</td>
+<td>9</td>
+<td>9</td>
+<td>0</td>
+<td>8</td>
+<td>...</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>3</td>
+<td>2</td>
+<td>8</td>
+<td>8</td>
+<td>0</td>
+<td>9</td>
+<td>Smiespelen, Ohja, tongzuur, spritzen, klingen,...</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>16/12/2024 18:31:01</td>
+<td>9</td>
+<td>1</td>
+<td>6</td>
+<td>7</td>
+<td>8</td>
+<td>9</td>
+<td>6</td>
+<td>2</td>
+<td>8</td>
+<td>...</td>
+<td>0</td>
+<td>0</td>
+<td>2</td>
+<td>5</td>
+<td>5</td>
+<td>7</td>
+<td>8</td>
+<td>0</td>
+<td>1</td>
+<td>Tongzuur, kuikelen, klingen, regendrank</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
+<td>17/12/2024 10:33:23</td>
+<td>6</td>
+<td>0</td>
+<td>4</td>
+<td>3</td>
+<td>7</td>
+<td>8</td>
+<td>0</td>
+<td>0</td>
+<td>2</td>
+<td>...</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>5</td>
+<td>6</td>
+<td>0</td>
+<td>7</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">7</td>
+<td>18/12/2024 11:06:33</td>
+<td>7</td>
+<td>4</td>
+<td>3</td>
+<td>2</td>
+<td>5</td>
+<td>7</td>
+<td>2</td>
+<td>1</td>
+<td>7</td>
+<td>...</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>6</td>
+<td>2</td>
+<td>6</td>
+<td>10</td>
+<td>0</td>
+<td>7</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8</td>
+<td>18/12/2024 11:12:45</td>
+<td>7</td>
+<td>0</td>
+<td>8</td>
+<td>5</td>
+<td>9</td>
+<td>8</td>
+<td>3</td>
+<td>1</td>
+<td>8</td>
+<td>...</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>5</td>
+<td>5</td>
+<td>9</td>
+<td>8</td>
+<td>0</td>
+<td>7</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">9</td>
+<td>19/12/2024 10:56:40</td>
+<td>9</td>
+<td>3</td>
+<td>6</td>
+<td>6</td>
+<td>8</td>
+<td>9</td>
+<td>6</td>
+<td>3</td>
+<td>8</td>
+<td>...</td>
+<td>4</td>
+<td>1</td>
+<td>3</td>
+<td>5</td>
+<td>0</td>
+<td>8</td>
+<td>7</td>
+<td>0</td>
+<td>7</td>
+<td>kuikelen, trompetteren</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">10</td>
+<td>23/12/2024 22:27:50</td>
+<td>9</td>
+<td>4</td>
+<td>6</td>
+<td>4</td>
+<td>8</td>
+<td>9</td>
+<td>4</td>
+<td>0</td>
+<td>7</td>
+<td>...</td>
+<td>2</td>
+<td>0</td>
+<td>5</td>
+<td>2</td>
+<td>3</td>
+<td>8</td>
+<td>7</td>
+<td>0</td>
+<td>7</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">11</td>
+<td>18/02/2025 09:27:02</td>
+<td>9</td>
+<td>0</td>
+<td>6</td>
+<td>7</td>
+<td>8</td>
+<td>9</td>
+<td>8</td>
+<td>0</td>
+<td>3</td>
+<td>...</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>9</td>
+<td>8</td>
+<td>0</td>
+<td>9</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">12</td>
+<td>18/02/2025 09:48:46</td>
+<td>7</td>
+<td>2</td>
+<td>6</td>
+<td>5</td>
+<td>5</td>
+<td>5</td>
+<td>6</td>
+<td>0</td>
+<td>7</td>
+<td>...</td>
+<td>0</td>
+<td>3</td>
+<td>2</td>
+<td>2</td>
+<td>3</td>
+<td>5</td>
+<td>7</td>
+<td>0</td>
+<td>5</td>
+<td>Spritzen</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">13</td>
+<td>18/02/2025 13:09:14</td>
+<td>9</td>
+<td>0</td>
+<td>4</td>
+<td>6</td>
+<td>5</td>
+<td>5</td>
+<td>3</td>
+<td>0</td>
+<td>3</td>
+<td>...</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>2</td>
+<td>0</td>
+<td>1</td>
+<td>7</td>
+<td>0</td>
+<td>0</td>
+<td>Kukelen</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">14</td>
+<td>20/02/2025 16:16:55</td>
+<td>6</td>
+<td>0</td>
+<td>2</td>
+<td>3</td>
+<td>3</td>
+<td>3</td>
+<td>2</td>
+<td>0</td>
+<td>2</td>
+<td>...</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>3</td>
+<td>6</td>
+<td>0</td>
+<td>1</td>
+<td>NaN</td>
+</tr>
+</tbody>
+</table>
+
+<p>15 rows × 143 columns</p>
+</div>
+</div>
+</div>
+</div>
+<div id="ddb6795c" class="cell" data-execution_count="89">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract the header row (the first row)</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>header <span class="op">=</span> survey.iloc[<span class="dv">0</span>]</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter out the 'Timestamp' and the last row with comments if they exist</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>header <span class="op">=</span> header[<span class="dv">1</span>:<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract the words separated by ' - ' from each column name</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>word_pairs <span class="op">=</span> header.index.<span class="bu">str</span>.split(<span class="st">' - '</span>, expand<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Flatten the resulting DataFrame and create a new DataFrame with the word pairs</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>concepts_df <span class="op">=</span> pd.DataFrame(word_pairs.values.flatten(), columns<span class="op">=</span>[<span class="st">'concept'</span>])</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Now, `concepts_df` contains the word pairs in the 'concept' column</span></span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(concepts_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                       concept
+0      (langzaam, slowmotion )
+1     (glimlach ,  catcallen )
+2           (slaan, highfive )
+3        (verdrietig, sniffen)
+4        (berg, bergwandeling)
+..                         ...
+136       (onweer, lightsaber)
+137    (bloem, bloemen ruiken)
+138        (goed, duim omhoog)
+139  (bliksem, appels plukken)
+140          (niet, niet goed)
+
+[141 rows x 1 columns]</code></pre>
+</div>
+</div>
+<div id="0bee5f9d" class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Now, we'll calculate the mean value for each concept based on the column index</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>means <span class="op">=</span> []</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, concept <span class="kw">in</span> <span class="bu">enumerate</span>(concepts_df[<span class="st">'concept'</span>]):</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Use the column index from the original 'survey' DataFrame</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    column_name <span class="op">=</span> survey.columns[i<span class="op">+</span><span class="dv">1</span>]  <span class="co"># Add 1 to skip the 'Timestamp' column</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Calculate the mean for the remaining rows (excluding the header row)</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>    mean_value <span class="op">=</span> survey[column_name][:].mean()  <span class="co"># Exclude the first row (index 0)</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>    means.append(mean_value)</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Add the means to the concepts DataFrame</span></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>concepts_df[<span class="st">'mean_rating'</span>] <span class="op">=</span> means</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a><span class="co"># round to 2 decimals</span></span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>concepts_df[<span class="st">'mean_rating'</span>] <span class="op">=</span> concepts_df[<span class="st">'mean_rating'</span>].<span class="bu">round</span>(<span class="dv">3</span>)</span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Now `concepts_df` contains the word pairs and their corresponding mean ratings</span></span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(concepts_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                       concept  mean_rating
+0      (langzaam, slowmotion )        8.067
+1     (glimlach ,  catcallen )        1.333
+2           (slaan, highfive )        5.200
+3        (verdrietig, sniffen)        5.200
+4        (berg, bergwandeling)        6.533
+..                         ...          ...
+136       (onweer, lightsaber)        2.267
+137    (bloem, bloemen ruiken)        6.533
+138        (goed, duim omhoog)        7.667
+139  (bliksem, appels plukken)        0.133
+140          (niet, niet goed)        5.533
+
+[141 rows x 2 columns]</code></pre>
+</div>
+</div>
+<div id="ae32f9a6" class="cell" data-execution_count="91">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># normalize the mean ratings to range [0, 1], simply by dividing by 10</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>concepts_df[<span class="st">'mean_rating'</span>] <span class="op">=</span> concepts_df[<span class="st">'mean_rating'</span>] <span class="op">/</span> <span class="dv">10</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="co"># display</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>concepts_df.head(<span class="dv">15</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="91">
+<div>
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">concept</th>
+<th data-quarto-table-cell-role="th">mean_rating</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>(langzaam, slowmotion )</td>
+<td>0.8067</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>(glimlach , catcallen )</td>
+<td>0.1333</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>(slaan, highfive )</td>
+<td>0.5200</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>(verdrietig, sniffen)</td>
+<td>0.5200</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>(berg, bergwandeling)</td>
+<td>0.6533</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>(ver, ver weg)</td>
+<td>0.7667</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
+<td>(ademen, buiten adem)</td>
+<td>0.5200</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">7</td>
+<td>(oud, wakker worden)</td>
+<td>0.0800</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8</td>
+<td>(telefoon, ringtoon)</td>
+<td>0.5933</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">9</td>
+<td>(horen, huh)</td>
+<td>0.2933</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">10</td>
+<td>(kind, moedergans)</td>
+<td>0.2667</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">11</td>
+<td>(wind, föhnen)</td>
+<td>0.5400</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">12</td>
+<td>(bitter, vies eten)</td>
+<td>0.4533</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">13</td>
+<td>(stil, ssst)</td>
+<td>0.7533</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">14</td>
+<td>(misschien, overwegen)</td>
+<td>0.7000</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</div>
+<div id="79536a2a" class="cell" data-execution_count="92">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># make concept a string</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>concepts_df[<span class="st">'concept'</span>] <span class="op">=</span> concepts_df[<span class="st">'concept'</span>].astype(<span class="bu">str</span>)</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="co"># separate concept to word and answer</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>concepts_df[[<span class="st">'word'</span>, <span class="st">'answer'</span>]] <span class="op">=</span> concepts_df[<span class="st">'concept'</span>].<span class="bu">str</span>.split(<span class="st">','</span>, expand<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="co"># now get rid of ( ) and '</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>concepts_df[<span class="st">'word'</span>] <span class="op">=</span> concepts_df[<span class="st">'word'</span>].<span class="bu">str</span>.replace(<span class="st">'</span><span class="ch">\'</span><span class="st">'</span>, <span class="st">''</span>)</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>concepts_df[<span class="st">'word'</span>] <span class="op">=</span> concepts_df[<span class="st">'word'</span>].<span class="bu">str</span>.replace(<span class="st">'('</span>, <span class="st">''</span>)</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>concepts_df[<span class="st">'word'</span>] <span class="op">=</span> concepts_df[<span class="st">'word'</span>].<span class="bu">str</span>.replace(<span class="st">')'</span>, <span class="st">''</span>)</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>concepts_df[<span class="st">'answer'</span>] <span class="op">=</span> concepts_df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'</span><span class="ch">\'</span><span class="st">'</span>, <span class="st">''</span>)</span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>concepts_df[<span class="st">'answer'</span>] <span class="op">=</span> concepts_df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'('</span>, <span class="st">''</span>)</span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>concepts_df[<span class="st">'answer'</span>] <span class="op">=</span> concepts_df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">')'</span>, <span class="st">''</span>)</span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a><span class="co"># get rid of superfluous spaces</span></span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>concepts_df[<span class="st">'word'</span>] <span class="op">=</span> concepts_df[<span class="st">'word'</span>].<span class="bu">str</span>.strip()</span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>concepts_df[<span class="st">'answer'</span>] <span class="op">=</span> concepts_df[<span class="st">'answer'</span>].<span class="bu">str</span>.strip()</span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a><span class="co">#in df, replace answer slow motion to slowmotion</span></span>
+<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'answer'</span>] <span class="op">=</span> df[<span class="st">'answer'</span>].<span class="bu">str</span>.replace(<span class="st">'slow motion'</span>, <span class="st">'slowmotion'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>And now we replace mean where cosine similarity is missing</p>
+<div id="8480132d" class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> replace_rawmean(df_final, df_rawmean, word, answer):</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Replace NaN cosine similarity values with mean ratings for specific word-answer pairs.</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="co">    Args:</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="co">        df_final (pd.DataFrame): DataFrame containing cosine similarity values to be updated</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="co">        df_rawmean (pd.DataFrame): DataFrame containing mean ratings to use as replacements</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="co">        word (str): The word to match in the DataFrames</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a><span class="co">        answer (str): The answer to match in the DataFrames</span></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># if cosine_similarity is NaN at all, add the mean rating</span></span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> df_final.loc[(df_final[<span class="st">'word'</span>] <span class="op">==</span> word) <span class="op">&amp;</span> (df_final[<span class="st">'answer'</span>] <span class="op">==</span> answer)][<span class="st">'cosine_similarity'</span>].isnull().<span class="bu">all</span>():</span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>        df_final.loc[(df_final[<span class="st">'word'</span>] <span class="op">==</span> word) <span class="op">&amp;</span> (df_final[<span class="st">'answer'</span>] <span class="op">==</span> answer), <span class="st">'cosine_similarity'</span>] <span class="op">=</span> df_rawmean.loc[(df_rawmean[<span class="st">'word'</span>] <span class="op">==</span> word) <span class="op">&amp;</span> (df_rawmean[<span class="st">'answer'</span>] <span class="op">==</span> answer)][<span class="st">'mean_rating'</span>].values[<span class="dv">0</span>]</span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">'cosine_similarity is not NaN for '</span> <span class="op">+</span> word <span class="op">+</span> <span class="st">' '</span> <span class="op">+</span> answer)</span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a><span class="co"># apply on all pairs from concepts_df</span></span>
+<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> index, row <span class="kw">in</span> concepts_df.iterrows():</span>
+<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a>    replace_rawmean(df, concepts_df, row[<span class="st">'word'</span>], row[<span class="st">'answer'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>cosine_similarity is not NaN for misschien overwegen
+cosine_similarity is not NaN for dood uitglijden
+cosine_similarity is not NaN for dood doorslikken
+cosine_similarity is not NaN for vliegtuig stewardess</code></pre>
+</div>
+</div>
+<p>This is how the final df looks like</p>
+<div id="8156ddf4" class="cell">
+<div class="cell-output cell-output-display" data-execution_count="94">
+<div>
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">ID</th>
+<th data-quarto-table-cell-role="th">trial_order</th>
+<th data-quarto-table-cell-role="th">word</th>
+<th data-quarto-table-cell-role="th">answer</th>
+<th data-quarto-table-cell-role="th">exp</th>
+<th data-quarto-table-cell-role="th">English</th>
+<th data-quarto-table-cell-role="th">cosine_similarity</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>10</td>
+<td>0</td>
+<td>zwaaien</td>
+<td>zwaaien</td>
+<td>2</td>
+<td>to wave</td>
+<td>1.000000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>10</td>
+<td>1</td>
+<td>juichen</td>
+<td>dansen</td>
+<td>2</td>
+<td>to cheer</td>
+<td>0.177888</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>10</td>
+<td>2</td>
+<td>juichen</td>
+<td>juichen</td>
+<td>2</td>
+<td>to cheer</td>
+<td>1.000000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>10</td>
+<td>3</td>
+<td>vis</td>
+<td>vis</td>
+<td>2</td>
+<td>fish</td>
+<td>1.000000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>10</td>
+<td>4</td>
+<td>hoog</td>
+<td>groot</td>
+<td>2</td>
+<td>high</td>
+<td>0.448479</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>10</td>
+<td>5</td>
+<td>hoog</td>
+<td>rijken</td>
+<td>2</td>
+<td>high</td>
+<td>0.233006</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
+<td>10</td>
+<td>6</td>
+<td>hoog</td>
+<td>hoog</td>
+<td>2</td>
+<td>high</td>
+<td>1.000000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">7</td>
+<td>10</td>
+<td>7</td>
+<td>regen</td>
+<td>regen</td>
+<td>2</td>
+<td>rain</td>
+<td>1.000000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8</td>
+<td>10</td>
+<td>8</td>
+<td>verdrietig</td>
+<td>huilen</td>
+<td>2</td>
+<td>sad</td>
+<td>0.389033</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">9</td>
+<td>10</td>
+<td>9</td>
+<td>verdrietig</td>
+<td>verdrietig</td>
+<td>2</td>
+<td>sad</td>
+<td>1.000000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">10</td>
+<td>10</td>
+<td>10</td>
+<td>langzaam</td>
+<td>slowmotion</td>
+<td>2</td>
+<td>slow</td>
+<td>0.806700</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">11</td>
+<td>10</td>
+<td>11</td>
+<td>langzaam</td>
+<td>joggen</td>
+<td>2</td>
+<td>slow</td>
+<td>0.224116</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">12</td>
+<td>10</td>
+<td>12</td>
+<td>langzaam</td>
+<td>langzaam</td>
+<td>2</td>
+<td>slow</td>
+<td>1.000000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">13</td>
+<td>10</td>
+<td>13</td>
+<td>weten</td>
+<td>denken</td>
+<td>2</td>
+<td>to know</td>
+<td>0.631044</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">14</td>
+<td>10</td>
+<td>14</td>
+<td>weten</td>
+<td>idee</td>
+<td>2</td>
+<td>to know</td>
+<td>0.291819</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">15</td>
+<td>10</td>
+<td>15</td>
+<td>weten</td>
+<td>bedenken</td>
+<td>2</td>
+<td>to know</td>
+<td>0.513044</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">16</td>
+<td>10</td>
+<td>16</td>
+<td>rennen</td>
+<td>rennen</td>
+<td>2</td>
+<td>to run</td>
+<td>1.000000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">17</td>
+<td>10</td>
+<td>17</td>
+<td>vliegtuig</td>
+<td>vliegtuig</td>
+<td>2</td>
+<td>airplane</td>
+<td>1.000000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">18</td>
+<td>10</td>
+<td>18</td>
+<td>bal</td>
+<td>gooien</td>
+<td>2</td>
+<td>ball</td>
+<td>0.312721</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">19</td>
+<td>10</td>
+<td>19</td>
+<td>bal</td>
+<td>werpen</td>
+<td>2</td>
+<td>ball</td>
+<td>0.337474</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</div>
+<div id="988fb14a" class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># check whether there is still some NAN</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>df[df[<span class="st">'cosine_similarity'</span>].isnull()]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="95">
+<div>
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">ID</th>
+<th data-quarto-table-cell-role="th">trial_order</th>
+<th data-quarto-table-cell-role="th">word</th>
+<th data-quarto-table-cell-role="th">answer</th>
+<th data-quarto-table-cell-role="th">exp</th>
+<th data-quarto-table-cell-role="th">English</th>
+<th data-quarto-table-cell-role="th">cosine_similarity</th>
+</tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</div>
+<div id="ce6b1222" class="cell" data-execution_count="96">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># save it</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>df.to_csv(os.path.join(datafolder, <span class="st">'similarity_df_final.csv'</span>), index<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="references" class="level1">
+
+
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list">
+<div id="ref-speer_etal18" class="csl-entry" role="listitem">
+Speer, R., Chin, J., &amp; Havasi, C. (2018). <em><span>ConceptNet</span> 5.5: <span>An Open Multilingual Graph</span> of <span>General Knowledge</span></em>. <a href="https://doi.org/10.48550/arXiv.1612.03975">https://doi.org/10.48550/arXiv.1612.03975</a>
+</div>
+</div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
