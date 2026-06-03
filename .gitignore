@@ -57,3 +57,7 @@
 /05_TS_featureExtraction/02_Explorations_and_viz_files
 /docs
 /site_libs
+*.ttf
+05_TS_featureExtraction/helvetica-compressed-5871d14b6903a.otf
+05_TS_featureExtraction/helvetica-rounded-bold-5871d05ead8de.otf
+05_TS_featureExtraction/Plot_for_multiplot.ipynb
