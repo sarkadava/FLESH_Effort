@@ -9,6 +9,8 @@ execute:
 toc: true
 ---
 
+# Overview {#sec-modeling}
+
 In this script, we are going to follow the pre-registered pipeline for modelling the relationship of effort and corrections. to confirm/reject our hypothesis.
 
 These are:
