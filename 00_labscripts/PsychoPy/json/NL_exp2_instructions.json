@@ -1,0 +1,80 @@
+{
+    "gebaren": {
+        "instructions_g1": {
+            "text": "Je partner zal opnieuw concepten uitdrukken door slechts gebruik te maken van gebaren of andere bewegingen van het bovenlichaam.\n\nJouw taak is om de betekenis van deze uitgevoerde beweging te raden en dit antwoord in te voeren.\n\nLet op: Als je antwoord niet juist is, heeft je partner nog een kans om de correcte betekenis over te brengen. In totaal heeft je team drie kansen om het juiste concept te communiceren.\n\nHet antwoord bestaat wederom uit slechts één woord, wat wel ieder type woord kan zijn (zelfstandig naamwoord, bijvoeglijk naamwoord, werkwoord etc.)\n\nTijdens het spelen mag je op geen enkele manier praten of communiceren met je partner.",    
+            "height": 40,
+            "color": "black",
+            "wrapWidth": 1600
+        },
+        "instructions_g2": {
+            "text": "Nu wordt jij de rader. Je partner moet nu concepten uitdrukken door slechts gebruik te maken van gebaren of andere bewegingen van het bovenlichaam.\n\nJouw taak is om de betekenis van deze uitgevoerde beweging te raden en dit antwoord in te voeren.\n\nLet op: Als je antwoord niet juist is, heeft je partner nog een kans om het de correcte betekenis over te brengen. In totaal heeft je team drie kansen om het juiste concept te communiceren.\n\nHet antwoord bestaat uit slechts één woord, wat wel ieder type woord kan zijn (zelfstandig naamwoord, bijvoeglijk naamwoord, werkwoord etc.).\n\nTijdens het spelen mag je op geen enkele manier praten of communiceren met je partner.",                 
+            "height": 40,
+            "color": "black",
+            "wrapWidth": 1600
+        },
+        "instructions_p1": {
+            "text": "Tijdens dit blok is het opnieuw jouw taak om de concepten op het scherm uit te drukken door slechts gebruik te maken van gebaren of andere bewegingen van het bovenlichaam.\n\nDe regels hiervoor blijven hetzelfde:\n\nJe moet gebaren of bewegingen maken met je handen of lichaam.\nJe mag niet wijzen naar objecten op jezelf of in je omgeving.\nJe mag hierbij geen geluiden maken.\n\nAls je partner het concept direct raadt, kun je verdergaan met het volgende concept. Als je partners antwoord onjuist is, zal dit op het scherm worden getoond en heb je nog een kans om de juiste betekenis over te brengen. Als je het antwoord leest, probeer dan je gezicht zo neutraal mogelijk te houden.\n\nIn totaal heeft je team drie kansen om het juiste concept te communiceren.\n\nTijdens het spelen mag je op geen enkele manier praten of communiceren met je partner.",
+            "height": 45,
+            "color": "black",
+            "wrapWidth": 1600
+        },
+        "instructions_p2": {
+            "text": "Nu zul jij weer de performer worden en concepten op het scherm uitdrukken door slechts gebruik te maken van gebaren of andere bewegingen van het bovenlichaam.\n\nDe regels hiervoor blijven hetzelfde:\n\nJe moet gebaren of bewegingen maken met je handen of lichaam.\nJe mag niet wijzen naar objecten op jezelf of in je omgeving.\nJe mag hierbij geen geluiden maken.\n\nAls je partner het concept direct raadt, kun je verdergaan met het volgende concept. Als je partners antwoord onjuist is, zal dit op het scherm worden getoond en heb je nog een kans om de juiste betekenis over te brengen. Als je het antwoord leest, probeer dan je gezicht zo neutraal mogelijk te houden.\n\nIn totaal heeft je team drie kansen om het juiste concept te communiceren.\n\nTijdens het spelen mag je op geen enkele manier praten of communiceren met je partner.",
+            "height": 45,
+            "color": "black",
+            "wrapWidth": 1600
+        }
+    },
+    "combinatie": {
+        "instructions_g1": {
+            "text": "Tijdens dit blok zal je partner concepten uitdrukken door gebruik te maken van zowel gebaren als (mondelinge) geluiden.\n\nJouw taak is om de betekenis van deze uitvoering te raden en dit antwoord in te voeren. \n\nLet op: Als je antwoord niet juist is, heeft je partner nog een kans om de correcte betekenis over te brengen. In totaal heeft je team drie kansen om het juiste concept te communiceren. \n\nHet antwoord bestaat uit slechts één woord, wat wel ieder type woord kan zijn (zelfstandig naamwoord, bijvoeglijk naamwoord, werkwoord etc.). \n\nTijdens het spelen mag je op geen enkele manier praten of communiceren met je partner.",      
+            "height": 40,
+            "color": "black",
+            "wrapWidth": 1600
+        },
+        "instructions_g2": {
+            "text": "Je partner moet nu concepten uitdrukken van door gebruik te maken van zowel gebaren als (mondelinge) geluiden.\n\nJouw taak is om de betekenis van deze uitvoering te raden en dit antwoord in te voeren.\n\nLet op: Als je antwoord nu niet juist is, heeft je partner nog een kans om de correcte betekenis over te brengen.In totaal heeft je team drie kansen om het juiste concept te communiceren. \n\nHet antwoord bestaat uit slechts één woord, wat wel ieder type woord kan zijn (zelfstandig naamwoord, bijvoeglijk naamwoord, werkwoord etc.). \n\nTijdens het spelen mag je op geen enkele manier praten of communiceren met je partner.",                      
+            "height": 40,
+            "color": "black",
+            "wrapWidth": 1600
+        },
+        "instructions_p1": {
+            "text": "Tijdens dit blok is het opnieuw jouw taak om de concepten op het scherm uit te drukken door gebruik te maken van zowel gebaren als (mondelinge) geluiden.\n\nDe regels hiervoor blijven hetzelfde:\n\nJe moet bij je uitvoering zowel gebaren of bewegingen van je handen en bovenlichaam als (mondelinge) geluiden gebruiken.\nJe mag hierbij niet wijzen naar objecten op jezelf of in je omgeving.\n\nAls je partner het concept direct raadt, kun je verdergaan met het volgende concept. Als je partners antwoord onjuist is, zal dit op het scherm worden getoond en heb je nog een kans om de juiste betekenis over te brengen. Als je het antwoord leest, probeer dan je gezicht zo neutraal mogelijk te houden.\n\nIn totaal heeft je team drie kansen om het juiste concept te communiceren.\n\nTijdens het spelen mag je op geen enkele manier praten of communiceren met je partner.",
+            "height": 45,
+            "color": "black",
+            "wrapWidth": 1600
+        },
+        "instructions_p2": {
+            "text": "Nu zul jij weer de performer worden en concepten op het scherm uitdrukken door gebruik te maken van zowel gebaren als (mondelinge) geluiden \n\nDe regels hiervoor blijven hetzelfde:\n\nJe moet bij je uitvoering zowel gebaren of bewegingen van je handen en bovenlichaam als (mondelinge) geluiden gebruiken.\nJe mag hierbij niet wijzen naar objecten op jezelf of in je omgeving.\n\nAls je partner het concept direct raadt, kun je verdergaan met het volgende concept. Als je partners antwoord onjuist is, zal dit op het scherm worden getoond en heb je nog een kans om de juiste betekenis over te brengen. Als je het antwoord leest, probeer dan je gezicht zo neutraal mogelijk te houden.\n\nIn totaal heeft je team drie kansen om het juiste concept te communiceren.\n\nTijdens het spelen mag je op geen enkele manier praten of communiceren met je partner.",
+            "height": 45,
+            "color": "black",
+            "wrapWidth": 1600
+        }
+    },
+    "geluiden": {
+        "instructions_g1": {
+            "text": "Je partner zal opnieuw concepten uitdrukken door slechts gebruik te maken van (mondelinge) geluiden.\n\n Jouw taak is om de betekenis van deze uitvoering te raden en dit antwoord in te voeren.\n\nLet op: Als je antwoord nu niet juist is, heeft je partner nog een kans om de correcte betekenis over te brengen. In totaal heeft je team drie kansen om het juiste concept te communiceren.\n\nHet antwoord bestaat uit slechts één woord, wat wel ieder type woord kan zijn (zelfstandig naamwoord, bijvoeglijk naamwoord, werkwoord etc.).\n\nTijdens het spelen mag je op geen enkele manier praten of communiceren met je partner.",         
+            "height": 40,
+            "color": "black",
+            "wrapWidth": 1600
+        },
+        "instructions_g2": {
+            "text": "Nu wordt jij weer de rader. Je partner moet nu concepten uitdrukken door slechts gebruik te maken van (mondelinge) geluiden.\n\nJouw taak is om de betekenis van deze uitvoering te raden en dit antwoord in te voeren.\n\nLet op: Als je antwoord niet juist is, heeft je partner nog een kans om het de correcte betekenis over te brengen. In totaal heeft je team drie kansen om het juiste concept te communiceren.\n\nHet antwoord bestaat uit slechts één woord, wat wel ieder type woord kan zijn (zelfstandig naamwoord, bijvoeglijk naamwoord, werkwoord etc.). \n\nTijdens het spelen mag je op geen enkele manier praten of communiceren met je partner.",          
+            "height": 40,
+            "color": "black",
+            "wrapWidth": 1600
+        },
+        "instructions_p1": {
+            "text": "Tijdens dit blok is het opnieuw jouw taak om de concepten op het scherm uit te drukken door slechts gebruik te maken van (mondelinge) geluiden.\n\nDe regels hiervoor blijven hetzelfde: Je moet geluiden maken met je mond en/of stem.\nJe mag geen woorden uitspreken.\nJe mag ook geen lichaamsbewegingen maken – houd je armen daarom het liefst naast je lichaam.\n\nAls je partner het concept direct raadt, kun je verdergaan met het volgende concept. Als je partners antwoord onjuist is, zal dit op het scherm worden getoond en heb je nog een kans om de juiste betekenis over te brengen. Als je het antwoord leest, probeer dan je gezicht zo neutraal mogelijk te houden.\n\nIn totaal heeft je team drie kansen om het juiste concept te communiceren.\n\nTijdens het spelen mag je op geen enkele manier praten of communiceren met je partner.",
+            "height": 45, 
+            "color": "black",
+            "wrapWidth": 1600
+        },
+        "instructions_p2": {
+            "text": "Nu zul jij weer de performer worden en concepten op het scherm uitdrukken door slechts gebruik te maken van (mondelinge) geluiden. \n\nDe regels hiervoor blijven hetzelfde: Je moet geluiden maken met je mond en/of stem.\nJe mag geen woorden uitspreken.\nJe mag ook geen lichaamsbewegingen maken – houd je armen daarom het liefst naast je lichaam.\n\nAls je partner het concept direct raadt, kun je verdergaan met het volgende concept. Als je partners antwoord onjuist is, zal dit op het scherm worden getoond en heb je nog een kans om de juiste betekenis over te brengen. Als je het antwoord leest, probeer dan je gezicht zo neutraal mogelijk te houden.\n\nIn totaal heeft je team drie kansen om het juiste concept te communiceren.\n\nTijdens het spelen mag je op geen enkele manier praten of communiceren met je partner.",
+            "height": 45,
+            "color": "black",
+            "wrapWidth": 1600
+        }
+    }
+}

@@ -1,0 +1,80 @@
+{
+    "gesture": {
+        "instructions_g1": {
+            "text": "In this block, your partner will be expressing concepts by only using gestures and movements of their upper body.\n\nYour task is to guess the meaning of the performance by typing the answer on the keyboard. You will be asked to type the answer only after your partner finished their performance.\n\nIf your guess is not correct, your partner will have another chance to perform the intended meaning. Try to not think about the correct answer too much and go with your intuition. You have 3 chances to guess the correct meaning.\n\n It can be any type of word (noun, verb, adjective etc.), but it is always only one word.\n\nDuring the game, do not talk or interact with your partner.",            
+            "height": 40,
+            "color": "black",
+            "wrapWidth": 1200
+        },
+        "instructions_g2": {
+            "text": "Your roles now change, and you become the guesser. Your partner becomes the performer and their task is to express concepts by only using gestures and movements of their upper body.\n\n Your task is to guess the meaning of the performance by typing the answer on the keyboard. You will be asked to type the answer only after your partner finished their performance.\n\nIf your guess is not correct, your partner will have another chance to perform the intended meaning. Try to not think about the correct answer too much and go with your intuition. You have 3 chances to guess the correct meaning.\n\n It can be any type of word (noun, verb, adjective etc.), but it is always only one word.\n\nDuring the game, do not talk or interact with your partner.",            
+            "height": 40,
+            "color": "black",
+            "wrapWidth": 1200
+        },
+        "instructions_p1": {
+            "text": "In this block, your task is to perform the meanings you will see on the screen in front of you, only by using gestures and movements of your upper body. \n\nThe rules are: \n\nYou can make movements with your hands and upper body\nYou cannot point to objects on you and in your environment \u2013 imagine you are naked and have no objects around you. You can only point to parts of your body.\nYou must not make any sounds\n\nAfter you finish your initial performance, your partner will be asked to type in their guess. If it is correct, you can proceed to next word. If the guess is not correct, the wrong answer will be displayed on the screen in front of you and you will be given another chance to perform the intended meaning. In total, you have 3 chances to perform the meaning.\n\nDuring the game, do not talk or interact with your partner.",            
+            "height": 47,
+            "color": "black",
+            "wrapWidth": 1200
+        },
+        "instructions_p2": {
+            "text": "Your roles now change, and you become the performer. Your task is thus to perform the meanings you will see on the screen in front of you, only by using gestures and movements of your upper body.\n\nThe rules are: \n\nYou can make movements with your hands and upper body\nYou cannot point to objects on you and in your environment \u2013 imagine you are naked and have no objects around you. You can only point to parts of your body.\nYou must not make any sounds\n\nAfter you finish your initial performance, your partner will be asked to type in their guess. If it is correct, you can proceed to another word. If the guess is not correct, the wrong answer will be displayed on the screen in front of you and you will be given another chance to perform the intended meaning. In total, you have 3 chances to perform the meaning. \n\nDuring the game, do not talk or interact with your partner.",             
+            "height": 47,
+            "color": "black",
+            "wrapWidth": 1200
+        }
+    },
+    "multimodal": {
+        "instructions_g1": {
+            "text": "In this block, your partner will be expressing concepts by using both gestures and sounds of their mouth.\n\nYour task is to guess the meaning of the performance by typing the answer on the keyboard. You will be asked to type the answer only after your partner finished their performance.\n\nIf your guess is not correct, your partner will have another chance to perform the intended meaning. Try to not think about the correct answer too much and go with your intuition. You have 3 chances to guess the correct meaning.\n\n It can be any type of word (noun, verb, adjective etc.), but it is always only one word.\n\nDuring the game, do not talk or interact with your partner.",            
+            "height": 40,
+            "color": "black",
+            "wrapWidth": 1200
+        },
+        "instructions_g2": {
+            "text": "Your roles now change, and you become the guesser. Your partner becomes the performer and their task is to express concepts by using both gestures and sounds of their mouth.\n\nYour task is to guess the meaning of the performance by typing the answer on the keyboard. You will be asked to type the answer only after your partner finished their performance.\n\nIf your guess is not correct, your partner will have another chance to perform the intended meaning. Try to not think about the correct answer too much and go with your intuition. You have 3 chances to guess the correct meaning.\n\n It can be any type of word (noun, verb, adjective etc.), but it is always only one word.\n\nDuring the game, do not talk or interact with your partner.",            
+            "height": 40,
+            "color": "black",
+            "wrapWidth": 1200
+        },
+        "instructions_p1": {
+            "text": "In this block, your task is to perform the meanings you will see on the screen in front of you, using both gestures and sounds of your mouth and your voice.\n\nThe rules are: \n\nIn your performance, you must include both movements with your hands and upper body and sounds of your mouth or your voice\nYou cannot point to objects on you and in your environment \u2013 imagine you are naked and have no objects around you. You can only point to parts of your body.\n\nAfter you finish your initial performance, your partner will be asked to type in their guess. If it is correct, you can proceed to another word. If the guess is not correct, the wrong answer will be displayed on the screen in front of you and you will be given another chance to perform the intended meaning. In total, you have 3 chances to perform the meaning.\n\nDuring the game, do not talk or interact with your partner.",             
+            "height": 47,
+            "color": "black",
+            "wrapWidth": 1200
+        },
+        "instructions_p2": {
+            "text": "Your roles now change, and you become the performer. Your task is thus to perform the meanings you will see on the screen in front of you, using both gestures and sounds of your mouth and your voice.\n\nThe rules are: \n\nIn your performance, you must include both movements with your hands and upper body and sounds of your mouth or your voice\nYou cannot point to objects on you and in your environment \u2013 imagine you are naked and have no objects around you. You can only point to parts of your body.\n\nAfter you finish your initial performance, your partner will be asked to type in their guess. If it is correct, you can proceed to another word. If the guess is not correct, the wrong answer will be displayed on the screen in front of you and you will be given another chance to perform the intended meaning. In total, you have 3 chances to perform the meaning.\n\nDuring the game, do not talk or interact with your partner.",            
+            "height": 47,
+            "color": "black",
+            "wrapWidth": 1200
+        }
+    },
+    "vocal": {
+        "instructions_g1": {
+            "text": "In this block, your partner will be expressing concepts by using only sounds of their mouth.\n\nYour task is to guess the meaning of the performance by typing the answer on the keyboard. You will be asked type the answer only after your partner finished their performance.\n\nIf your guess is not correct, your partner will have another chance to perform the intended meaning. Try to not think about the correct answer too much and go with your intuition. You have 3 chances to guess the correct meaning.\n\n It can be any type of word (noun, verb, adjective etc.), but it is always only one word.\n\nDuring the game, do not talk or interact with your partner.",            
+            "height": 40,
+            "color": "black",
+            "wrapWidth": 1200
+        },
+        "instructions_g2": {
+            "text": "Your roles now change, and you become the guesser. Your partner becomes the performer and their task is to express concepts by using only sounds of their mouth.\n\nYour task is to guess the meaning of the performance by typing the answer on the keyboard. You will be asked type the answer only after your partner finished their performance.\n\nIf your guess is not correct, your partner will have another chance to perform the intended meaning. Try to not think about the correct answer too much and go with your intuition. You have 3 chances to guess the correct meaning.\n\n It can be any type of word (noun, verb, adjective etc.), but it is always only one word.\n\nDuring the game, do not talk or interact with your partner.",            
+            "height": 40,
+            "color": "black",
+            "wrapWidth": 1200
+        },
+        "instructions_p1": {
+            "text": "In this block, your task is to perform the meanings you will see on the screen in front of you, using only sounds of your mouth and your voice.\n\nThe rules are: \n\nYou can make sounds with your mouth and your voice\nYou cannot use any words\nYou cannot make any movements with your body - the best will be if you keep your arms along your body. \n\nAfter you finish your initial performance, your partner will be asked to type in their guess. If it is correct, you can proceed to another word. If the guess is not correct, the wrong answer will be displayed on the screen in front of you and you will be given another chance to perform the intended meaning. In total, you have 3 chances to perform the meaning.\n\nDuring the game, do not talk or interact with your partner.",
+            "height": 47, 
+            "color": "black",
+            "wrapWidth": 1200
+        },
+        "instructions_p2": {
+            "text": "Your roles now change, and you become the performer. Your task is thus to perform the meanings you will see on the screen in front of you, using only sounds of your mouth and your voice.\n\nThe rules are: \n\nYou can make sounds with your mouth and your voice\nYou cannot use any words\nYou cannot make any movements with your body - the best will be if you keep your arms along your body. \n\nAfter you finish your initial performance, your partner will be asked to type in their guess. If it is correct, you can proceed to another word. If the guess is not correct, the wrong answer will be displayed on the screen in front of you and you will be given another chance to perform the intended meaning. In total, you have 3 chances to perform the meaning.\n\nDuring the game, do not talk or interact with your partner.",   
+            "height": 47,
+            "color": "black",
+            "wrapWidth": 1200
+        }
+    }
+}
