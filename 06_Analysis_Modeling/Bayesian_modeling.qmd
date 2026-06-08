@@ -21,7 +21,7 @@ H2: The enhancement depends on similarity of the guesser's answer and the origin
 
 The confirmatory analysis concerns six outcome variables, namely integral of torque change, integral of amplitude envelope, integral of change in center of pressure, and mean peak value of torque change, mean peak value of amplitude envelope, and mean peak value of change in center of pressure.
 
-```{r setup environment, echo=TRUE, message=FALSE, warning=FALSE}
+```{r, echo=TRUE, message=FALSE, warning=FALSE}
 
 #| code-fold: true
 #| code-summary: Code to prepare the environment
@@ -628,7 +628,7 @@ Before running interactions, let's look at the 4 models so far
 
 We now have several models that we can test for predictive performance.
 
-```{r h1 diagnostics}
+```{r}
 
 model_list <- list(m0 = h1.m0_torq_cum, 
                    m1 = h1.m1_torq_cum, 
@@ -641,7 +641,7 @@ model_list <- list(m0 = h1.m0_torq_cum,
 
 Rhat tells us whether the model’s Markov chains have converged—values close to 1 mean the model has likely converged well.
 
-```{r h1 rhat}
+```{r}
 
 # Extract R-hat values for each model
 rhat_list <- lapply(model_list, function(model) {
@@ -662,7 +662,7 @@ They all converge well (note that m1 has 4k iterations)
 
 Effective sample size tells how many independent samples the model has effectively drawn from the PD. Low ESS suggests autocorrelation (i.e., sample explores one part of posterior), while high ESS means good mix
 
-```{r h1 ess}
+```{r}
 
 # Extract n_eff values for each model
 neff_ratio_list <- lapply(model_list, function(model) {
@@ -685,7 +685,7 @@ We can see that no correlations helped
 
 Leave-One-Out (LOO) validation is a technique where, for each iteration, one data point is left out as the test set, and the model is trained on the remaining data points; this process is repeated for each data point, and the model’s overall performance is averaged over all iterations.
 
-```{r h1 loo list}
+```{r}
 
 l <- loo_compare(h1.m0_torq_cum, h1.m1_torq_cum, h1.m2_torq_cum, h1.m3_torq_cum, criterion = "loo")
 
@@ -763,7 +763,7 @@ summary(h1.m4_torq_cum)
 
 ##### Convergence
 
-```{r h1 diagnostics}
+```{r}
 
 model_list_torq_cum <- list(m0 = h1.m0_torq_cum, 
                    m1 = h1.m1_torq_cum, 
@@ -784,7 +784,7 @@ write.csv(convergence_results_tc,
 
 ##### LOO (Predictability)
 
-```{r h1 loo list}
+```{r}
 
 l <- loo_compare(h1.m0_torq_cum, h1.m1_torq_cum, h1.m2_torq_cum, h1.m3_torq_cum, h1.m4_torq_cum, criterion = "loo")
 
@@ -1079,7 +1079,7 @@ summary(h1.m3_torq_in)
 
 Diagnostics before interactions
 
-```{r h1 diagnostics}
+```{r}
 
 model_list <- list(m0 = h1.m0_torq_in, 
                    m1 = h1.m1_torq_in, 
@@ -1092,7 +1092,7 @@ model_list <- list(m0 = h1.m0_torq_in,
 
 Rhat tells us whether the model’s Markov chains have converged—values close to 1 mean the model has likely converged well.
 
-```{r h1 rhat}
+```{r}
 
 # Extract R-hat values for each model
 rhat_list <- lapply(model_list, function(model) {
@@ -1113,7 +1113,7 @@ They all converge well (note that m1 has 4k iterations)
 
 Effective sample size tells how many independent samples the model has effectively drawn from the PD. Low ESS suggests autocorrelation (i.e., sample explores one part of posterior), while high ESS means good mix
 
-```{r h1 ess}
+```{r}
 
 # Extract n_eff values for each model
 neff_ratio_list <- lapply(model_list, function(model) {
@@ -1136,7 +1136,7 @@ We can see that no correlations helped
 
 Leave-One-Out (LOO) validation is a technique where, for each iteration, one data point is left out as the test set, and the model is trained on the remaining data points; this process is repeated for each data point, and the model’s overall performance is averaged over all iterations.
 
-```{r h1 loo list}
+```{r}
 
 l <- loo_compare(h1.m0_torq_in, h1.m1_torq_in, h1.m2_torq_in, h1.m3_torq_in, criterion = "loo")
 
@@ -1196,7 +1196,7 @@ summary(h1.m4_torq_in)
 #### Diagnostics II
 ##### Convergence
 
-```{r h1 diagnostics}
+```{r}
 
 model_list_torq_in <- list(
   m0  = h1.m0_torq_in,
@@ -1219,7 +1219,7 @@ write.csv(convergence_results_ti,
 
 ##### LOO
 
-```{r h1 loo list}
+```{r}
 
 l <- loo_compare(h1.m0_torq_in, h1.m1_torq_in, h1.m2_torq_in, h1.m3_torq_in, h1.m4_torq_in, criterion = "loo")
 
@@ -1382,7 +1382,7 @@ summary(h1.m0_env_cum)
 ```
 #### Model 1 - Varying slopes and intercept
 
-```{r h1.m1 env run, eval=TRUE, message=FALSE, warning=FALSE}
+```{r, eval=TRUE, message=FALSE, warning=FALSE}
 
 # Priors
 priors_h1m1_env_cum <- c(
@@ -1531,7 +1531,7 @@ summary(h1.m3_env_cum)
 
 We now have several models that we can test for predictive performance before fitting interactional models.
 
-```{r h1 diagnostics}
+```{r}
 
 model_list <- list(m0 = h1.m0_env_cum, 
                    m1 = h1.m1_env_cum, 
@@ -1544,7 +1544,7 @@ model_list <- list(m0 = h1.m0_env_cum,
 
 Rhat tells us whether the model’s Markov chains have converged—values close to 1 mean the model has likely converged well.
 
-```{r h1 rhat}
+```{r}
 
 # Extract R-hat values for each model
 rhat_list <- lapply(model_list, function(model) {
@@ -1565,7 +1565,7 @@ They all converge well
 
 Effective sample size tells how many independent samples the model has effectively drawn from the PD. Low ESS suggests autocorrelation (i.e., sample explores one part of posterior), while high ESS means good mix
 
-```{r h1 ess}
+```{r}
 
 # Extract n_eff values for each model
 neff_ratio_list <- lapply(model_list, function(model) {
@@ -1588,7 +1588,7 @@ Even without correlations, we see that the m3 still has low ESS for SessionID
 
 Leave-One-Out (LOO) validation is a technique where, for each iteration, one data point is left out as the test set, and the model is trained on the remaining data points; this process is repeated for each data point, and the model’s overall performance is averaged over all iterations.
 
-```{r h1 loo list}
+```{r}
 
 l <- loo_compare(h1.m0_env_cum, h1.m1_env_cum, h1.m2_env_cum, h1.m3_env_cum, criterion = "loo")
 
@@ -1650,7 +1650,7 @@ summary(h1.m4_env_cum)
 #### Diagnostics II
 ##### Convergence
 
-```{r h1 diagnostics}
+```{r}
 
 model_list_env_cum <- list(
   m0  = h1.m0_env_cum,
@@ -1671,7 +1671,7 @@ write.csv(convergence_results_ec,
 
 ##### LOO
 
-```{r h1 loo list}
+```{r}
 
 l <- loo_compare(h1.m0_env_cum, h1.m1_env_cum, h1.m2_env_cum, h1.m3_env_cum, h1.m4_env_cum, criterion = "loo")
 
@@ -1790,7 +1790,7 @@ summary(h1.m0_env_in)
 #### Model 1 - Varying slopes and intercepts
 
 
-```{r h1.m1 env run, eval=TRUE, message=FALSE, warning=FALSE}
+```{r, eval=TRUE, message=FALSE, warning=FALSE}
 
 priors_h1m1_env_in <- c(
   set_prior("normal(-2, 0.5)", class = "Intercept"),
@@ -1846,7 +1846,7 @@ summary(h1.m1_env_in)
 
 #### Model 2 - Maximal random structure
 
-```{r h1.m1 env run, eval=TRUE, message=FALSE, warning=FALSE}
+```{r, eval=TRUE, message=FALSE, warning=FALSE}
 
 if (file.exists(here(models, "h1.m2_env_in.rds"))){
   
@@ -1945,7 +1945,7 @@ summary(h1.m3_env_in)
 
 We now have several models that we can test for predictive performance.
 
-```{r h1 diagnostics}
+```{r}
 
 model_list <- list(m0 = h1.m0_env_in, 
                    m1 = h1.m1_env_in, 
@@ -1958,7 +1958,7 @@ model_list <- list(m0 = h1.m0_env_in,
 
 Rhat tells us whether the model’s Markov chains have converged—values close to 1 mean the model has likely converged well.
 
-```{r h1 rhat}
+```{r}
 
 # Extract R-hat values for each model
 rhat_list <- lapply(model_list, function(model) {
@@ -1979,7 +1979,7 @@ They all converge well (note that m1 has 4k iterations)
 
 Effective sample size tells how many independent samples the model has effectively drawn from the PD. Low ESS suggests autocorrelation (i.e., sample explores one part of posterior), while high ESS means good mix
 
-```{r h1 ess}
+```{r}
 
 # Extract n_eff values for each model
 neff_ratio_list <- lapply(model_list, function(model) {
@@ -2002,7 +2002,7 @@ We can see that here actually m2 (max random structure) has better neff/ESS
 
 Leave-One-Out (LOO) validation is a technique where, for each iteration, one data point is left out as the test set, and the model is trained on the remaining data points; this process is repeated for each data point, and the model’s overall performance is averaged over all iterations.
 
-```{r h1 loo list}
+```{r}
 
 l <- loo_compare(h1.m0_env_in, h1.m1_env_in, h1.m2_env_in, h1.m3_env_in, criterion = "loo")
 
@@ -2062,7 +2062,7 @@ summary(h1.m4_env_in)
 #### Diagnostics II
 ##### Convergence
 
-```{r h1 diagnostics}
+```{r}
 
 model_list_env_in <- list(
   m0  = h1.m0_env_in,
@@ -2083,7 +2083,7 @@ write.csv(convergence_results_ei,
 
 ##### LOO
 
-```{r h1 loo list}
+```{r}
 
 l <- loo_compare(h1.m0_env_in, h1.m1_env_in, h1.m2_env_in, h1.m3_env_in, h1.m4_env_in, criterion = "loo")
 
@@ -2199,7 +2199,7 @@ p1 / p2 + plot_layout(guides = "collect")
 
 #### Model 0 - Intercept only
 
-```{r h1.m1 env run, eval=TRUE, message=FALSE, warning=FALSE}
+```{r, eval=TRUE, message=FALSE, warning=FALSE}
 
 priors_h1m0_cop_cum <- c(
   set_prior("normal(8, 2)", class = "Intercept"),
@@ -2244,7 +2244,7 @@ summary(h1.m0_cop_cum)
 
 #### Model 1 - Varying slope and intercept
 
-```{r h1.m1 env run, eval=TRUE, message=FALSE, warning=FALSE}
+```{r, eval=TRUE, message=FALSE, warning=FALSE}
 
 priors_h1m1_cop_cum <- c(
   set_prior("normal(8, 2)", class = "Intercept"),
@@ -2297,7 +2297,7 @@ summary(h1.m1_cop_cum)
 
 #### Model 2 - Maximal random structure
 
-```{r h1.m1 env run, eval=TRUE, message=FALSE, warning=FALSE}
+```{r, eval=TRUE, message=FALSE, warning=FALSE}
 
 if (file.exists(here(models, "h1.m2_cop_cum.rds"))){
   
@@ -2393,7 +2393,7 @@ summary(h1.m3_cop_cum)
 
 We now have several models that we can test for predictive performance.
 
-```{r h1 diagnostics}
+```{r}
 
 model_list <- list(m0 = h1.m0_cop_cum, 
                    m1 = h1.m1_cop_cum, 
@@ -2406,7 +2406,7 @@ model_list <- list(m0 = h1.m0_cop_cum,
 
 Rhat tells us whether the model’s Markov chains have converged—values close to 1 mean the model has likely converged well.
 
-```{r h1 rhat}
+```{r}
 
 # Extract R-hat values for each model
 rhat_list <- lapply(model_list, function(model) {
@@ -2427,7 +2427,7 @@ They all converge well
 
 Effective sample size tells how many independent samples the model has effectively drawn from the PD. Low ESS suggests autocorrelation (i.e., sample explores one part of posterior), while high ESS means good mix
 
-```{r h1 ess}
+```{r}
 
 # Extract n_eff values for each model
 neff_ratio_list <- lapply(model_list, function(model) {
@@ -2450,7 +2450,7 @@ We can see that no correlations helped again
 
 Leave-One-Out (LOO) validation is a technique where, for each iteration, one data point is left out as the test set, and the model is trained on the remaining data points; this process is repeated for each data point, and the model’s overall performance is averaged over all iterations.
 
-```{r h1 loo list}
+```{r}
 
 l <- loo_compare(h1.m0_cop_cum, h1.m1_cop_cum, h1.m2_cop_cum, h1.m3_cop_cum, criterion = "loo")
 
@@ -2512,7 +2512,7 @@ summary(h1.m4_cop_cum)
 
 ##### Convergence
 
-```{r h1 diagnostics}
+```{r}
 
 
 model_list_cop_cum <- list(
@@ -2534,7 +2534,7 @@ write.csv(convergence_results_cc,
 
 ##### LOO
 
-```{r h1 loo list}
+```{r}
 
 l <- loo_compare(h1.m0_cop_cum, h1.m1_cop_cum, h1.m2_cop_cum, h1.m3_cop_cum, h1.m4_cop_cum, criterion = "loo")
 
@@ -2649,7 +2649,7 @@ summary(h1.m0_cop_in)
 
 #### Model 1 
 
-```{r h1.m1 env run, eval=TRUE, message=FALSE, warning=FALSE}
+```{r, eval=TRUE, message=FALSE, warning=FALSE}
 
 priors_h1m1_cop_in <- c(
   set_prior("normal(0, 0.5)", class = "Intercept"),
@@ -2798,7 +2798,7 @@ summary(h1.m3_cop_in)
 
 We now have several models that we can test for predictive performance.
 
-```{r h1 diagnostics}
+```{r}
 
 model_list <- list(m0 = h1.m0_cop_in, 
                    m1 = h1.m1_cop_in, 
@@ -2811,7 +2811,7 @@ model_list <- list(m0 = h1.m0_cop_in,
 
 Rhat tells us whether the model’s Markov chains have converged—values close to 1 mean the model has likely converged well.
 
-```{r h1 rhat}
+```{r}
 
 # Extract R-hat values for each model
 rhat_list <- lapply(model_list, function(model) {
@@ -2832,7 +2832,7 @@ They all converge well (note that m1 has 4k iterations)
 
 Effective sample size tells how many independent samples the model has effectively drawn from the PD. Low ESS suggests autocorrelation (i.e., sample explores one part of posterior), while high ESS means good mix
 
-```{r h1 ess}
+```{r}
 
 # Extract n_eff values for each model
 neff_ratio_list <- lapply(model_list, function(model) {
@@ -2855,7 +2855,7 @@ We can see that no correlations helped
 
 Leave-One-Out (LOO) validation is a technique where, for each iteration, one data point is left out as the test set, and the model is trained on the remaining data points; this process is repeated for each data point, and the model’s overall performance is averaged over all iterations.
 
-```{r h1 loo list}
+```{r h1}
 
 l <- loo_compare(h1.m0_cop_in, h1.m1_cop_in, h1.m2_cop_in, h1.m3_cop_in, criterion = "loo")
 
@@ -2916,7 +2916,7 @@ summary(h1.m4_cop_in)
 
 ##### Convergence
 
-```{r h1 diagnostics}
+```{r}
 
 model_list_cop_in <- list(
   m0  = h1.m0_cop_in,
@@ -2938,7 +2938,7 @@ write.csv(convergence_results_ci,
 
 ##### LOO
 
-```{r h1 loo list}
+```{r}
 
 l <- loo_compare(h1.m0_cop_in, h1.m1_cop_in, h1.m2_cop_in, h1.m3_cop_in, h1.m4_cop_in, criterion = "loo")
 
@@ -3280,7 +3280,7 @@ PrevAn -> CommAtt
 
 ```
 
-```{r dag h2 adjustset, message=FALSE, warning=FALSE, echo=TRUE}
+```{r, message=FALSE, warning=FALSE, echo=TRUE}
 # Use ggdag for a cleaner visualization
 d2 <- ggdag(daggy_h2, text = TRUE, use_labels = "name") +
   theme_dag() +
@@ -3290,7 +3290,7 @@ d2 <- ggdag(daggy_h2, text = TRUE, use_labels = "name") +
 d2
 ```
 
-```{r dag h2 adjustset, message=FALSE, warning=FALSE, echo=TRUE}
+```{r, message=FALSE, warning=FALSE, echo=TRUE}
 
 dagitty::adjustmentSets(daggy_h2, exposure = "PrevAn", outcome = "EffChange")
 

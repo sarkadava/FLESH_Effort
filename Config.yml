@@ -1,7 +1,0 @@
-# ── Preprocessing ──────────────────────────────────────────────
-
-denoising:
-  threshold: 1.5
-
-audio-writing:
-  sampling-rate: 16000
