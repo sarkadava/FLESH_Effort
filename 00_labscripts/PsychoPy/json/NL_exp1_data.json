@@ -1,0 +1,182 @@
+{
+    "text_stimuli": {
+        "text": "",
+        "height": 120,
+        "color": "black"
+    },
+    "watch_stimuli": {
+        "text": "Kijk/luister naar de performance.",
+        "height": 90,
+        "color": "black"
+    },
+    "get_ready": {
+        "text": "Maak je klaar...",
+        "height": 90,
+        "color": "black"
+    },
+    "marker_start": {
+        "text": "Vouw je handen voor je lichaam om de opname te starten.",
+        "height": 45,
+        "pos": [
+            0,
+            -200
+        ],
+        "color": "black"
+    },
+    "marker_end": {
+        "text": "Aan het opnemen. Vouw je handen opnieuw voor je lichaam om de opname te beëindigen.",
+        "height": 45,
+        "pos": [
+            0,
+            -200
+        ],
+        "color": "red"
+    },
+    "progress_bar": {
+        "text": "",
+        "height": 40,
+        "pos": [
+            0,
+            400
+        ],
+        "color": "black"
+    },
+    "signal_text": {
+        "text": "Probeer tijdens je performance altijd met je voeten te staan op de zwarte voeten die zijn aangegeven op het bord.\n\nNadat er een concept op het scherm wordt getoond, heb je een momentje om te bedenken wat je wil doen. Probeer hier alleen niet te veel over na te denken, en vertrouw op je intuïtie.\n\nAls je klaar bent voor je uitvoering, moet je eerst signaleren dat de opname kan starten. Dit doe je door je handen voor je lichaam te vouwen. Als je vervolgens rode tekst op het scherm ziet verschijnen, betekent dit dat de opname is gestart.",
+        "height": 47,
+        "wrapWidth": 1500,
+        "pos": [0, 120],
+        "color": "black"
+    },
+    "signal_guesser": {
+        "text": "Je teamgenoot zal eerst een momentje te hebben om te bedenken wat deze wil doen.\n\nAls je partner vervolgens diens handen voor diens lichaam vouwt, betekent het dat deze klaar is voor de uitvoering. Als je teamgenoot klaar is met de performance, zal deze wederom diens handen voor diens lichaam vouwen.",
+        "height": 45,
+        "wrapWidth": 1500,
+        "color": "black"
+    },
+    "marker_demo": {
+        "text": "Aan het opnemen. Vouw je handen opnieuw voor je lichaam om de opname te beëindigen.",
+        "height": 45,
+        "pos": [
+            200,
+            -400
+        ],
+        "color": "red"
+    },
+    "arrow": {
+        "image": "./icons/arrow.png",
+        "size": [
+            120,
+            120
+        ],
+        "pos": [
+            100,
+            -260
+        ],
+        "opacity": 0.5,
+        "ori": 90
+    },
+    "proceed_enter": {
+        "text": "Bevestig je input door op de enter-knop te drukken.",
+        "height": 25,
+        "pos": [0, -200],
+        "color": "black"
+    },
+    "welcome_text_g": {
+        "text": "Zoals bij iedere vorm van communicatie bestaan er twee rollen, performer en rader. De taak van de performer\u2019 is om een betekenis over te brengen. De rader moet deze betekenis zo accuraat mogelijk raden. Jij begint als rader.\n\nEr zijn in totaal drie condities voor de performer:\n\n1) In de conditie Gebaren mag je alleen gebruik maken van uitdrukkingen en bewegingen van je bovenlichaam\n2) In de conditie Vocaal mag de performer alleen gebruik maken van geluiden van diens mond of stem\n3) In de conditie Combinatie gebruikt de performer zowel gebaren als geluiden.\n\nBij iedere conditie zullen eerst de regels worden verteld, waarna één teamlid begint als performer en de andere als rader. Hierna wissel je van rol.\nIn totaal zal ieder teamlid 21 betekenissen overbrengen.\n\nMocht je nu nog vragen hebben, stel ze dan aan de experimentleider.",
+        "height": 40,
+        "color": "black",
+        "wrapWidth": 1600
+    },
+    "welcome_text_p": {
+        "text": "Zoals bij iedere vorm van communicatie bestaan er twee rollen, performer en rader. De taak van de performer\u2019 is om een betekenis over te brengen. De rader moet deze betekenis zo accuraat mogelijk raden. Jij begint als performer.\n\nEr zijn in totaal drie condities voor de performer:\n\n1) In de conditie Gebaren mag je alleen gebruik maken van uitdrukkingen en bewegingen van je bovenlichaam\n2) In de conditie Vocaal mag de performer alleen gebruik maken van geluiden van diens mond of stem\n3) In de conditie Combinatie gebruikt de performer zowel gebaren als geluiden.\n\nBij iedere conditie zullen eerst de regels worden verteld, waarna één teamlid begint als performer en de andere als rader. Hierna wissel je van rol.\nIn totaal zal ieder teamlid 21 betekenissen overbrengen.\n\nMocht je nu nog vragen hebben, stel ze dan aan de experimentleider.",
+        "height": 47,
+        "color": "black",
+        "wrapWidth": 1600
+    },
+    "practice_text": {
+        "text": "Nu zullen eerst twee oefenrondes volgen",
+        "height": 90,
+        "color": "black",
+        "wrapWidth": 800
+    },
+    "prompt_answer": {
+        "text": "Wat denk je dat je teamgenoot probeerde uit te drukken?",
+        "height": 50,
+        "color": "black"
+    },
+    "response": {
+        "size": [
+            0.8,
+            0.2
+        ],
+        "pos": [
+            0,
+            -0.2
+        ],
+        "font": "Arial",
+        "text": "",
+        "color": "black"
+    },
+    "new_round": {
+        "text": "Goed gedaan! Nu zullen jullie van rol wisselen.",
+        "height": 60,
+        "color": "black"
+    },
+    "block_end": {
+        "text": "Goed gedaan! Je bent nu klaar met dit blok. Nu zullen jullie van rol wisselen en doorgaan met het volgende blok.",
+        "height": 60,
+        "color": "black",
+        "wrapWidth": 800
+    },
+    "start_text": {
+        "text": "Heb je nog vragen?\n\nZo niet, maak je klaar om te beginnen met het experiment!",
+        "height": 60,
+        "color": "black",
+        "wrapWidth": 800
+    },
+    "end": {
+        "text": "Wat een teamwork! Het eerste deel van het experiment zit er nu op.\n\nJullie kunnen nu een korte pauze nemen, dan gaan we over een paar minuten verder met het tweede deel. Dankjewel!",
+        "height": 60,
+        "color": "black"
+    },
+
+    "combinatie": {
+        "image": "./icons/im_combination.png",
+        "size": [350,300],
+        "pos": [
+            -620,
+            0
+        ],
+        "opacity": 0.5
+    }, 
+    "gebaren": {
+        "image": "./icons/im_hand.png",
+        "size": [300,300],
+        "pos": [
+            -620,
+            0
+        ],
+        "opacity": 0.5
+    },
+    "geluiden": {
+        "image": "./icons/im_mouth.png",
+        "size": [300,300],
+        "pos": [ 
+            -620,
+            0
+        ],
+        "opacity": 0.5
+    },
+    "start": {
+        "text": "Start",
+        "height": 30,
+        "color": "black",
+        "wrapWidth": 1200
+    },
+    "tpose": {
+        "text": "Ga op de twee zwarte voetmarkeringen staan en doe een paar seconden een T-pose.",
+        "height": 90,
+        "color": "black"
+    }
+}

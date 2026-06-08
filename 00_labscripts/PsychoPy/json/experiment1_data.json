@@ -1,0 +1,240 @@
+{
+    "text_stimuli": {
+        "text": "",
+        "height": 90,
+        "color": "black"
+    },
+    "watch_stimuli": {
+        "text": "Watch/listen to the performance.",
+        "height": 90,
+        "color": "black"
+    },
+    "tpose": {
+        "text": "Please stand on the two black feet marks and make a t-pose for few seconds.",
+        "height": 90,
+        "color": "black"
+    },
+    "get_ready": {
+        "text": "Get ready...",
+        "height": 90,
+        "color": "black"
+    },
+    "marker_start": {
+        "text": "Lock your hands in front of your body to start recording.",
+        "height": 30,
+        "pos": [
+            0,
+            -200
+        ],
+        "color": "black"
+    },
+    "marker_end": {
+        "text": "Recording. Lock your hands in front of your body to stop recording",
+        "height": 30,
+        "pos": [
+            0,
+            -200
+        ],
+        "color": "red"
+    },
+    "progress_bar": {
+        "text": "",
+        "height": 30,
+        "pos": [
+            0,
+            400
+        ],
+        "color": "black"
+    },
+    "user_answer_text": {
+        "text": "",
+        "height": 40,
+        "pos": [
+            0,
+            -0.5
+        ]
+    },
+    "feedback_text": {
+        "text": "",
+        "height": 40,
+        "pos": [
+            0,
+            -0.7
+        ]
+    },
+    "proceed_space": {
+        "text": "Continue by pressing space",
+        "height": 15,
+        "pos": [
+            0,
+            -400
+        ],
+        "color": "black"
+    },
+    "signal_text": {
+        "text": "During your performances, try to always stay with your feet on the two black feet indicated on the board.\n\nAfter a meaning is displayed, you will have time to think about what you're gonna do. However, do not think about it too much and go with your intuition.\n\nWhen you are ready, you need to make a signal in order to start the recording. To do so, lock your hands in front of your body. You will see red text on the screen when the recording starts.",
+        "height": 40,
+        "wrapWidth": 1000,
+        "color": "black"
+    },
+
+    "signal_guesser": {
+        "text": "Your partner have some time to think about what they will do. When they lock their hands in front of their body, it means that they are ready to start to perform. When they are done, they lock their hands again.",
+        "height": 40,
+        "wrapWidth": 1000,
+        "color": "black"
+    },
+    "signal_image": {
+        "image": "./icons/signal_hands.jpg",
+        "pos": [
+            -600,
+            -250
+        ],
+        "opacity": 0.5
+    },
+    "marker_demo": {
+        "text": "Recording. Lock your hands in front of your body to stop recording.",
+        "height": 30,
+        "pos": [
+            200,
+            -400
+        ],
+        "color": "red"
+    },
+    "arrow": {
+        "image": "./icons/arrow.png",
+        "size": [
+            120,
+            120
+        ],
+        "pos": [
+            100,
+            -325
+        ],
+        "opacity": 0.5,
+        "ori": 90
+    },
+    "prompt_participant_id": {
+        "text": "Enter Participant ID:",
+        "height": 40,
+        "pos": [
+            0,
+            0
+        ],
+        "color": "black"
+    },
+    "participant_id_input": {
+        "size": [
+            0.4,
+            0.1
+        ],
+        "pos": [
+            0,
+            -0.2
+        ],
+        "font": "Arial",
+        "text": "",
+        "color": "black"
+    },
+    "proceed_enter": {
+        "text": "Confirm your input by pressing enter",
+        "height": 15,
+        "pos": [
+            0,
+            -200
+        ],
+        "color": "black"
+    },
+    "start": {
+        "text": "Start",
+        "height": 30,
+        "color": "black",
+        "wrapWidth": 1200
+    },
+    "welcome_text_g": {
+        "text": "Welcome in the experiment that investigates how well you can communicate without a language. This is part one.\n\nAs in any communication, there are two roles: performer and guesser. Performer\u2019s task is to express a meaning. The guesser has to guess the meaning as accurate as possible. You now start as a guesser.\n\nIn total, there will be three conditions for the performer:\n\n 1) In condition \u2018Gesture\u2019 - you can only use gestures of your upper body\n2) In condition \u2018Vocal\u2019 - you can only use sounds of your mouth and voice\n3) In condition \u2018Multimodal\u2019, you must use both gestures and sounds.\n\nIn each condition, you will be introduced to the rules, then one of you starts as a performer and the other as a guesser, and then you turn your roles.\nIn total, each of you will express 30 meanings.\n\nIf you have any questions now, do not hesitate to ask the experimenter in the room.",
+        "height": 30,
+        "color": "black",
+        "wrapWidth": 1200
+    },
+    "welcome_text_p": {
+        "text": "Welcome in the experiment that investigates how well you can communicate without a language. This is part one.\n\nAs in any communication, there are two roles: performer and guesser. Performer\u2019s task is to express a meaning. The guesser has to guess the meaning as accurate as possible. You now start as a performer.\n\nIn total, there will be three conditions for the performer:\n\n 1) In condition \u2018Gesture\u2019 - you can only use gestures of your upper body\n2) In condition \u2018Vocal\u2019 - you can only use sounds of your mouth and voice\n3) In condition \u2018Multimodal\u2019, you must use both gestures and sounds.\n\nIn each condition, you will be introduced to the rules, then one of you starts as a performer and the other as a guesser, and then you turn your roles.\nIn total, each of you will express 30 meanings.\n\nIf you have any questions now, do not hesitate to ask the experimenter in the room.",
+        "height": 30,
+        "color": "black",
+        "wrapWidth": 1200
+    },
+    "practice_text": {
+        "text": "You will have now two practice rounds.",
+        "height": 90,
+        "color": "black",
+        "wrapWidth": 800
+    },
+    "prompt_answer": {
+        "text": "What do you think your partner performed?",
+        "height": 50,
+        "color": "black"
+    },
+    "response": {
+        "size": [
+            0.8,
+            0.2
+        ],
+        "pos": [
+            0,
+            -0.2
+        ],
+        "font": "Arial",
+        "text": "",
+        "color": "black"
+    },
+    "new_round": {
+        "text": "Great job! Now it's time to change roles.",
+        "height": 60,
+        "color": "black"
+    },
+    "block_end": {
+        "text": "You did great! This is the end of this block. Change roles and let's proceed to next block.",
+        "height": 60,
+        "color": "black",
+        "wrapWidth": 800
+    },
+    "start_text": {
+        "text": "Do you have any questions?\n\nIf not, get ready and let's start the experiment!",
+        "height": 40,
+        "color": "black",
+        "wrapWidth": 800
+    },
+    "end": {
+        "text": "You were amazing! The first part of the experiment is now over. Take a short break and we will continue in few minutes with the second part. Thank you!",
+        "height": 60,
+        "color": "black"
+    },
+
+    "multimodal": {
+        "image": "./icons/im_combination.png",
+        "size": [350,300],
+        "pos": [
+            -500,
+            0
+        ],
+        "opacity": 0.5
+    }, 
+    "gesture": {
+        "image": "./icons/im_hand.png",
+        "size": [300,300],
+        "pos": [
+            -500,
+            0
+        ],
+        "opacity": 0.5
+    },
+    "vocal": {
+        "image": "./icons/im_mouth.png",
+        "size": [300,300],
+        "pos": [ 
+            -500,
+            0
+        ],
+        "opacity": 0.5
+    }
+}
