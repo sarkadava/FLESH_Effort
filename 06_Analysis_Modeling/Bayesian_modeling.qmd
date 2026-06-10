@@ -1,11 +1,13 @@
 ---
-title: "Untitled"
+title: "Analysis: Modeling the effect of correction on physical effort"
 format:
   html:
     code-overflow: wrap
     code-width: 1200  # Adjust the width in pixels
 execute:
-   warning: false 
+  echo: true
+  warning: false
+  message: false
 toc: true
 ---
 
@@ -21,31 +23,41 @@ H2: The enhancement depends on similarity of the guesser's answer and the origin
 
 The confirmatory analysis concerns six outcome variables, namely integral of torque change, integral of amplitude envelope, integral of change in center of pressure, and mean peak value of torque change, mean peak value of amplitude envelope, and mean peak value of change in center of pressure.
 
-```{r, echo=TRUE, message=FALSE, warning=FALSE}
-
+```{r}
 #| code-fold: true
 #| code-summary: Code to prepare the environment
 
-library(here)
-library(dplyr) # for data-wrangling
-library(tidyr)  # for reshaping data (if needed)
-library(ggplot2)
-library(tidybayes)
-library(tibble)
-library(rcartocolor)
-library(patchwork)
-library(rstan)
-library(ggdag) # for dag
-library(dagitty)
-library(bayesplot) # bayesian stuff
-library(brms)
+required_packages <- c("here",
+                       "dplyr",
+                       "tidyr",
+                       "ggplot2",
+                       "tidybayes",
+                       "tibble",
+                       "rcartocolor",
+                       "patchwork",
+                       "rstan",
+                       "ggdag",
+                       "dagitty",
+                       "bayesplot",
+                       "brms",
+                       "bayestestR",
+                       "tidyverse",
+                       "emmeans",
+                       "gt")
+                       
+# Loop over the packages and check if they are installed
+for (package in required_packages) {
+  if (!require(package, character.only = TRUE)) {
+    # If the package is not installed, install it
+    install.packages(package)
+    # Load the package
+    library(package, character.only = TRUE)
+  }
+}
+
+
+# brms setting
 options(mc.cores = 4, brms.backend = 'cmdstanr', brms.file_refit = 'on_change')
-
-library(bayestestR)
-library(tidyverse)
-library(splines) # for bsplines
-library(emmeans) # for lognormal transformations
-
 
 # current folder (first go to session -> set working directory -> to source file location)
 curfolder     <- getwd()
@@ -67,7 +79,7 @@ source(here(curfolder, "R-helper.R"))
 
 This is the feature dataframe we will be using. It contains all features colected in @sec-features, together with demographic information about the participants. For confirmatory analysis, we will need only 6 features - arm torque integral, arm torque peak mean, COPc integral, COPc peak mean, envelope integral and envelope peak mean from the data_feat. From demographics, we will need only BFI and Familiarity
 
-```{r loading data, echo=TRUE, message=FALSE, warning=FALSE}
+```{r}
 
 # This is the relevant df
 data_feat <- read_csv(paste0(featurefolder, "features_df_nonzscored_final_with_demo.csv"))
@@ -89,12 +101,15 @@ data_feat$TrialNumber <- sapply(strsplit(data_feat$TrialID, "_"), function(x) x[
 # Create column SessionID to track dyad
 data_feat$SessionID <- sapply(strsplit(data_feat$TrialID, "_"), function(x) x[1])
 
-head(data_feat)
+knitr::kable(head(data_feat, 15))
 ```
 
 # Basic statistics
 
-```{r basic statistics, echo=TRUE, message=FALSE, warning=FALSE}
+These are some basic statistics regarding our participant pool
+
+```{r}
+#| echo: false
 
 # How many participants
 pcn_count <- length(unique(data_feat$pcn_ID))
@@ -168,7 +183,6 @@ hist(data_feat$answer_prev_dist, breaks = 30)
 hist(data_feat$answer_fol_dist, breaks = 30) 
 ```
 
-
 # H1: Stating causal model
 
 Before simulating synthetic data, we will first formulate our causal model to explicitly identify common causes, and hence prevent (or rather minimize) confounding in our statistical model. Note that while we are interested in causal relationship between effort (outcome) and communicative attempt (predictor for H1) and answer similarity (predictor for H2), we need to acknowledge that there are other factors possibly contributing to the outcome variable, despite the experiment beling relatively controlled. These relate, for instance, to the participants (e.g., personality traits) or stimuli (i.e., concepts). Our causal model therefore includes more variables that are identified as potentially sharing causal path with our primary predictor - communicative attempt. They are not of primary interest, they ensure we can isolate the causal effect of the main predictor on the outcome variable - effort.
@@ -197,7 +211,13 @@ The relationship of interest is the causal effect of *communicative attempt* on 
 
 Note that we are aware that some of the parameters might be correlated and we might run into issues with collinearity. While DAG does not help to solve it, it does help in detecting whether the two potentially highly correlated variables have separate causal effect or share a common cause. If they share common cause, there might be a problem in distinguishing their effects from each other. We will report inter-variable correlations when analyzing the actual data.
 
-```{r dag h1, echo=FALSE, message=FALSE, warning=FALSE}
+```{r}
+#| echo: false
+#| fig-cap: "Causal DAG for H1"
+#| label: dag-h1
+#| fig-width: 12.5   # inches → ~1200px at 96dpi
+#| fig-height: 10
+#| out-width: "100%"
 
 daggy_h1 <- dagitty('dag {
 Big5 [adjusted,pos="-1.5,1"]
@@ -242,7 +262,8 @@ d1
 
 These are the implied conditional independencies
 
-```{r dag h1 independencies, echo=FALSE, message=FALSE, warning=FALSE}
+```{r}
+#| echo: false
 
 impliedConditionalIndependencies(daggy_h1)
 
@@ -250,7 +271,8 @@ impliedConditionalIndependencies(daggy_h1)
 
 This is the adjustment set that needs to be included in the model to make sure we are not confounding
 
-```{r dag h1 adjustset, echo=FALSE, message=FALSE, warning=FALSE}
+```{r}
+#| echo: false
 
 dagitty::adjustmentSets(daggy_h1, exposure = "CommAtt", outcome = "Eff")
 
@@ -270,7 +292,7 @@ We will fit Bayesian mixed effect models using `brms` package [@burkner17].
 
 To be able to interpret the data, we will first need to do some data wrangling
 
-```{r h1 factorizing, message=FALSE, warning=FALSE}
+```{r}
 
 # Get rid of vocal modality (torque is relevant only for gesture-only and multimodal condition)
 df_ges <- data_feat |> filter(modality != 'vocal')
@@ -332,6 +354,12 @@ multimodal -0.5
 
 This is how cumulative torque is distributed (raw values and log-transformed)
 ```{r}
+#| echo: false
+#| fig-cap: "Distribution of cumulative torque"
+#| label: cum-torq-dis
+#| fig-width: 12.5   # inches → ~1200px at 96dpi
+#| fig-height: 10
+#| out-width: "100%"
 
 p1 <- ggplot(df_ges, aes(x = arm_moment_sum_change_integral)) +
   geom_density(alpha = 0.4) +
@@ -361,7 +389,7 @@ We will also add weakly informative priors based on reasonable ranges that limit
 - **correction**: We have no prior expectation of whether corrections increase or decrease effort. But we allow each correction step to plausibly up to nearly triple (×2.7) or halve (×0.37) arm moment. Effects larger than that are considered implausible.
 
 
-```{r h1m0 torq cum, echo=TRUE, message=FALSE, warning=FALSE}
+```{r}
 
 priors_h1m0_torq_cum <- c(
   set_prior("normal(11, 2)", class = "Intercept"),
@@ -401,19 +429,26 @@ if (file.exists(here(models, "h1.m0_torq_cum.rds"))){
 summary(h1.m0_torq_cum)
 
 ```
-Check the diagnostics
+First let's check whether all chains are healthy
 
-```{r h1m0 diagnostics, echo=TRUE, message=FALSE, warning=FALSE}
+```{r}
+#| echo: false
 
 plot(h1.m0_torq_cum)
-# all look ok
+```
+
+... whether predicted values are close to the raw distribution
+```{r}
+#| echo: false
 
 pp_check(h1.m0_torq_cum, type = "dens_overlay")
-# Very good
+```
+
+... and what is the residual error
+```{r}
+#| echo: false
 
 pp_check(h1.m0_torq_cum, type = "error_scatter_avg")
-# The bigger the value, the bigger the residual error
-
 
 ```
 The posterior distribution fits well the predicted data, but the residual error plot points to strong correlation between values and residual. 
@@ -437,7 +472,7 @@ We will need to add some extra priors now.
 
 Now we do prior predictive check
 
-```{r h1 prior check}
+```{r}
 
 priors_h1m1_torq_cum <- c(
   set_prior("normal(11, 2)", class = "Intercept"),
@@ -475,7 +510,6 @@ if (file.exists(here(models, "m_prior_check.rds"))){
 
 }
 
-
 # Check prior distribution
 pp_check(m_prior_check, type = "dens_overlay", ndraws = 100) +
   scale_x_log10()
@@ -484,7 +518,7 @@ pp_check(m_prior_check, type = "dens_overlay", ndraws = 100) +
 
 This looks okay. Given that we want to use weakly informative priors, we will not further limit them to avoid the few extreme predictions. Our data should be strong enough to guide the posterior from extremely implausible values with no issues.
 
-```{r h1.m2 run, eval=TRUE, message=FALSE, warning=FALSE}
+```{r}
 
 
 if (file.exists(here(models, "h1.m1_torq_cum.rds"))){
@@ -691,7 +725,6 @@ l <- loo_compare(h1.m0_torq_cum, h1.m1_torq_cum, h1.m2_torq_cum, h1.m3_torq_cum,
 
 print(l, simplify = F)
 
-
 ```
 Loo evaluates as best the model with maximal random structure, but eff for this model have some low-performing parameters. Given that m3 is in loo tightly behind, we will use m3 for interactions too.
 
@@ -711,7 +744,6 @@ Possible interactions include:
 
 
 ```{r}
-
 
 if (file.exists(here(models, "h1.m4_torq_cum.rds"))){
   
@@ -764,6 +796,9 @@ summary(h1.m4_torq_cum)
 ##### Convergence
 
 ```{r}
+#| code-fold: true
+#| code-summary: Code to generate convergence metrics
+#| eval: false
 
 model_list_torq_cum <- list(m0 = h1.m0_torq_cum, 
                    m1 = h1.m1_torq_cum, 
@@ -773,16 +808,27 @@ model_list_torq_cum <- list(m0 = h1.m0_torq_cum,
                    )
 
 convergence_results_tc <- compare_convergence(model_list_torq_cum)
-print(convergence_results_tc)
 
-# Save
 write.csv(convergence_results_tc,
           here(summaries, "convergence_comparison_torq_cum.csv"),
           row.names = FALSE, fileEncoding = "UTF-8")
 ```
 
+This is how the models look like, compared on several diagnostics measures
+
+```{r}
+#| echo: false
+#| tbl-cap: "Cumulative torque: convergence metrics"
+#| label: tbl-conv-cum-torq
+
+convergence_results_tc <- read_csv(paste0(summaries, "convergence_comparison_torq_cum.csv"))
+knitr::kable(convergence_results_tc, format = "pipe")
+
+```
 
 ##### LOO (Predictability)
+
+And this is comparison for Leave-One-Out criteria, assessing the predictive power
 
 ```{r}
 
@@ -793,17 +839,26 @@ print(l, simplify = F)
 ```
 For final report, we will use **m3** but because they all converged well, we will report differences where relevant. While m2 has better LOO (predictive power), m3 has better ESS which is more important for healthy model
 
-Let's also check the model visually
+Let's also check the model visually. Here to see whether all chains converged well
 
 ```{r}
+#| echo: false
 
-# Convergence plots
 plot(h1.m3_torq_cum)
+```
 
-# Pp check
+... the relation between predicted and raw data
+```{r}
+#| echo: false
+
 pp_check(h1.m3_torq_cum, type = "dens_overlay", ndraws = 500)
+```
 
-# Residual error
+... residual error
+
+```{r}
+#| echo: false
+
 pp_check(h1.m3_torq_cum, type = "error_scatter_avg")
 
 ```
@@ -813,7 +868,12 @@ pp_check(h1.m3_torq_cum, type = "error_scatter_avg")
 
 ##### Full comparison
 
+To see whether models drastically differs in estimates, here is a table summary for all available estimates across all five models
+
 ```{r}
+#| code-fold: true
+#| code-summary: Code to generate table summary
+#| eval: false
 
 model_list_torq_cum <- list(m0 = h1.m0_torq_cum, 
                    m1 = h1.m1_torq_cum, 
@@ -831,19 +891,35 @@ r2_list_torq_cum <- list(m0 = h1.m0_torq_cum_R2,
 
 # Parameter table
 param_table_torq_cum <- create_parameter_table(model_list_torq_cum, r2_list_torq_cum)
-print(param_table_torq_cum)
 write.csv(param_table_torq_cum,
           here(summaries, "parameter_table_h1_torq_cum.csv"),
           row.names = FALSE, fileEncoding = "UTF-8")
 
 ```
 
+```{r}
+#| tbl-cap: "Cumulative torque: summary for all models"
+#| label: tbl-cum-torq-all
+#| echo: false
+
+param_table_torq_cum <- read_csv(paste0(summaries, "parameter_table_h1_torq_cum.csv"))
+knitr::kable(param_table_torq_cum, format = "pipe")
+
+```
+
+
 ##### Final model report
 
+And here we report relevant comparisons for selected models, together with visualization
 
 ```{r}
+#| fig-cap: "Cumulative torque: report and visualization for selected model"
+#| label: fig-cum-torq
+#| echo: false
+#| fig-width: 12.5   # inches → ~1200px at 96dpi
+#| fig-height: 10
+#| out-width: "100%"
 
-# Create prose-like report for relevant comparisons
 targeted_comparisons(h1.m3_torq_cum, type = "two_modality",   dv_label = "Arm Torque (integral)")
 
 ```
@@ -853,6 +929,12 @@ targeted_comparisons(h1.m3_torq_cum, type = "two_modality",   dv_label = "Arm To
 This is how instant torque is distributed
 
 ```{r}
+#| echo: false
+#| fig-cap: "Distribution of instantenous torque"
+#| label: inst-torq-distr
+#| fig-width: 12.5   # inches → ~1200px at 96dpi
+#| fig-height: 10
+#| out-width: "100%"
 
 p1 <- ggplot(df_ges, aes(x = arm_moment_sum_change_peak_mean)) +
   geom_density(alpha = 0.4) +
@@ -872,8 +954,7 @@ p1 / p2 + plot_layout(guides = "collect")
 
 #### Model 0 - Intercept only
 
-```{r h1m0 torq in run}
-
+```{r}
 
 priors_h1m0_torq_cum <- c(
   set_prior("normal(3, 0.5)", class = "Intercept"),
@@ -914,25 +995,36 @@ summary(h1.m0_torq_in)
 
 ```
 
-Check the diagnostics
+Now we check whether all chains converged...
 
-```{r h1m0 torq in check}
+```{r}
+#| echo: false
 
 plot(h1.m0_torq_in)
 # all look ok
+```
+
+... what is the relationship between predicted and raw values
+
+```{r}
+#| echo: false
 
 pp_check(h1.m0_torq_in, type = "dens_overlay")
 # Very good
+```
+
+... and residual error
+```{r}
+#| echo: false
 
 pp_check(h1.m0_torq_in, type = "error_scatter_avg")
 # The bigger the value, the bigger the residual error
-
 
 ```
 
 #### Model 1 - Varying slopes and intercepts
 
-```{r h1.m1 torq in run, eval=TRUE, message=FALSE, warning=FALSE}
+```{r}
 
 # Set priors (kept same, except Intercept)
 priors_h1m1_torq_in <- c(
@@ -1146,7 +1238,7 @@ print(l, simplify = F)
 
 #### Model 4 - Adding interactions
 
-```{r h1m4 torq in run}
+```{r}
 
 if (file.exists(here(models, "h1.m4_torq_in.rds"))){
   
@@ -1194,9 +1286,15 @@ summary(h1.m4_torq_in)
 ```
 
 #### Diagnostics II
+
 ##### Convergence
 
+These are relevant converge metrics for all models
+
 ```{r}
+#| code-fold: true
+#| code-summary: Code to generate convergence metrics
+#| eval: false
 
 model_list_torq_in <- list(
   m0  = h1.m0_torq_in,
@@ -1208,16 +1306,24 @@ model_list_torq_in <- list(
 
 convergence_results_ti <- compare_convergence(model_list_torq_in)
 
-# Access the full results dataframe
-print(convergence_results_ti)
-
-# Save
 write.csv(convergence_results_ti,
           here(summaries, "convergence_comparison_torq_in.csv"),
           row.names = FALSE, fileEncoding = "UTF-8")
 ```
 
+```{r}
+#| echo: false
+#| tbl-cap: "Instant torque: convergence metrics"
+#| label: tbl-inst-torq-conv
+
+convergence_results_ti <- read_csv(paste0(summaries, "convergence_comparison_torq_in.csv"))
+knitr::kable(convergence_results_ti, format = "pipe")
+
+```
+
 ##### LOO
+
+This is comparison of the models based on LOO criteria
 
 ```{r}
 
@@ -1234,6 +1340,9 @@ Here again the same applies, we will process to reporting with **m3**
 
 
 ```{r}
+#| code-fold: true
+#| code-summary: Code to generate table summary
+#| eval: false
 
 model_list_torq_in <- list(
   m0  = h1.m0_torq_in,
@@ -1254,18 +1363,33 @@ r2_list_torq_in <- list(
 
 # Parameter table
 param_table_torq_in <- create_parameter_table(model_list_torq_in, r2_list_torq_in)
-print(param_table_torq_in)
-
 write.csv(param_table_torq_in,
           here(summaries, "parameter_table_h1_torq_in.csv"),
           row.names = FALSE, fileEncoding = "UTF-8")
 
 ```
 
+```{r}
+#| tbl-cap: "Instant torque: summary for all models"
+#| label: tbl-inst-torq-all
+#| echo: false
+
+param_table_torq_in <- read_csv(paste0(summaries, "parameter_table_h1_torq_in.csv"))
+knitr::kable(param_table_torq_in, format = "pipe")
+```
+
+
 ##### Final model report
 
+This is the report for selected model
 
 ```{r}
+#| fig-cap: "Instantenous torque: report and visualization for selected model"
+#| label: fig-inst-torq
+#| echo: false
+#| fig-width: 12.5   # inches → ~1200px at 96dpi
+#| fig-height: 10
+#| out-width: "100%"
 
 # Prose-like comparison with plot
 targeted_comparisons(h1.m3_torq_in, type = "two_modality",   dv_label = "Arm Torque (peak mean)")
@@ -1278,7 +1402,7 @@ targeted_comparisons(h1.m3_torq_in, type = "two_modality",   dv_label = "Arm Tor
 
 First we again prepare the data
 
-```{r h1 factorizing env, message=FALSE, warning=FALSE}
+```{r}
 
 # Get rid of vocal modality (torque is relevant only for gesture-only and multimodal condition)
 df_voc <- data_feat |> filter(modality != 'gesture')
@@ -1318,6 +1442,12 @@ df_voc <-
 
 This is how cumulative envelope is distributed (raw values and log-transformed)
 ```{r}
+#| echo: false
+#| fig-cap: "Distribution of cumulative envelope"
+#| label: cum-env-distr
+#| fig-width: 12.5   # inches → ~1200px at 96dpi
+#| fig-height: 10
+#| out-width: "100%"
 
 p1 <- ggplot(df_voc, aes(x = envelope_norm_integral)) +
   geom_density(alpha = 0.4) +
@@ -1382,7 +1512,7 @@ summary(h1.m0_env_cum)
 ```
 #### Model 1 - Varying slopes and intercept
 
-```{r, eval=TRUE, message=FALSE, warning=FALSE}
+```{r}
 
 # Priors
 priors_h1m1_env_cum <- c(
@@ -1558,7 +1688,6 @@ rhat_list <- lapply(model_list, function(model) {
 do.call(rbind, rhat_list)
 
 ```
-
 They all converge well
 
 ##### ESS
@@ -1648,9 +1777,15 @@ summary(h1.m4_env_cum)
 ```
 
 #### Diagnostics II
+
 ##### Convergence
 
+Here is comparison of models in terms of convergence metrics
+
 ```{r}
+#| code-fold: true
+#| code-summary: Code to generate convergence metrics
+#| eval: false
 
 model_list_env_cum <- list(
   m0  = h1.m0_env_cum,
@@ -1669,6 +1804,16 @@ write.csv(convergence_results_ec,
           row.names = FALSE, fileEncoding = "UTF-8")
 ```
 
+```{r}
+#| echo: false
+#| tbl-cap: "Cumulative envelope: convergence metrics"
+#| label: tbl-cum-env-conv
+
+convergence_results_ec <- read_csv(paste0(summaries, "convergence_comparison_env_cum.csv"))
+knitr::kable(convergence_results_ec, format = "pipe")
+
+```
+
 ##### LOO
 
 ```{r}
@@ -1678,13 +1823,19 @@ l <- loo_compare(h1.m0_env_cum, h1.m1_env_cum, h1.m2_env_cum, h1.m3_env_cum, h1.
 print(l, simplify = F)
 
 ```
+
 Again, we choose **m3** as a trade-off between highest *min_neff* possible (indicating healthy model) and good predictability.
 
 #### Report
 
 ##### Full comparison
 
+Here is parameter comparison for all five models
+
 ```{r}
+#| code-fold: true
+#| code-summary: Code to generate table summary
+#| eval: false
 
 model_list_env_cum <- list(
   m0  = h1.m0_env_cum,
@@ -1705,16 +1856,33 @@ r2_list_env_cum <- list(
 
 # Parameter table
 param_table_env_cum <- create_parameter_table(model_list_env_cum, r2_list_env_cum)
-print(param_table_env_cum)
 write.csv(param_table_env_cum,
           here(summaries, "parameter_table_h1_env_cum.csv"),
           row.names = FALSE, fileEncoding = "UTF-8")
 
 ```
 
+```{r}
+#| tbl-cap: "Cumulative envelope: summary for all models"
+#| label: tbl-cum-env-all
+#| echo: false
+
+param_table_env_cum <- read_csv(paste0(summaries, "parameter_table_h1_env_cum.csv"))
+knitr::kable(param_table_env_cum, format = "pipe")
+```
+
+
 ##### Final model report
 
+This is report for the selected model
+
 ```{r}
+#| echo: false
+#| fig-cap: "Cumulative envelope: report and visualization for selected model"
+#| label: fig-cum-env
+#| fig-width: 12.5   # inches → ~1200px at 96dpi
+#| fig-height: 10
+#| out-width: "100%"
 
 targeted_comparisons(h1.m3_env_cum, type = "two_modality",   dv_label = "Amplitude envelope (integral)")
 
@@ -1724,6 +1892,12 @@ targeted_comparisons(h1.m3_env_cum, type = "two_modality",   dv_label = "Amplitu
 
 This is how instant envelope is distributed (raw values and log-transformed)
 ```{r}
+#| echo: false
+#| fig-cap: "Distribution of instantenous envelope"
+#| label: env-inst-distr
+#| fig-width: 12.5   # inches → ~1200px at 96dpi
+#| fig-height: 10
+#| out-width: "100%"
 
 p1 <- ggplot(df_voc, aes(x = envelope_norm_peak_mean)) +
   geom_density(alpha = 0.4) +
@@ -1790,7 +1964,7 @@ summary(h1.m0_env_in)
 #### Model 1 - Varying slopes and intercepts
 
 
-```{r, eval=TRUE, message=FALSE, warning=FALSE}
+```{r}
 
 priors_h1m1_env_in <- c(
   set_prior("normal(-2, 0.5)", class = "Intercept"),
@@ -1846,7 +2020,7 @@ summary(h1.m1_env_in)
 
 #### Model 2 - Maximal random structure
 
-```{r, eval=TRUE, message=FALSE, warning=FALSE}
+```{r}
 
 if (file.exists(here(models, "h1.m2_env_in.rds"))){
   
@@ -1950,8 +2124,7 @@ We now have several models that we can test for predictive performance.
 model_list <- list(m0 = h1.m0_env_in, 
                    m1 = h1.m1_env_in, 
                    m2 = h1.m2_env_in, 
-                   m3 = h1.m3_env_in 
-                   )
+                   m3 = h1.m3_env_in)
 ```
 
 ##### Rhat
@@ -2060,9 +2233,15 @@ summary(h1.m4_env_in)
 
 ```
 #### Diagnostics II
+
 ##### Convergence
 
+Here is comparison of all models in terms of convergence metrics
+
 ```{r}
+#| code-fold: true
+#| code-summary: Code to generate convergence metrics
+#| eval: false
 
 model_list_env_in <- list(
   m0  = h1.m0_env_in,
@@ -2073,12 +2252,19 @@ model_list_env_in <- list(
 )
 
 convergence_results_ei <- compare_convergence(model_list_env_in)
-print(convergence_results_ei)
-
-# Save
 write.csv(convergence_results_ei,
           here(summaries, "convergence_comparison_env_in.csv"),
           row.names = FALSE, fileEncoding = "UTF-8")
+```
+
+```{r}
+#| echo: false
+#| tbl-cap: "Instantenous envelope: convergence metrics"
+#| label: tbl-inst-env-conv
+
+convergence_results_ei <- read_csv(paste0(summaries, "convergence_comparison_env_in.csv"))
+knitr::kable(convergence_results_ei, format = "pipe")
+
 ```
 
 ##### LOO
@@ -2089,7 +2275,6 @@ l <- loo_compare(h1.m0_env_in, h1.m1_env_in, h1.m2_env_in, h1.m3_env_in, h1.m4_e
 
 print(l, simplify = F)
 
-
 ```
 Here, **m2** (random + corrs) and **m3** (random w/ corrs) perform similarly. We will again choose the 'simpler' model and in final table report **m3**
 
@@ -2097,7 +2282,12 @@ Here, **m2** (random + corrs) and **m3** (random w/ corrs) perform similarly. We
 
 ##### Full comparison
 
+Here is full comparison of estimated parameters for all five models
+
 ```{r}
+#| code-fold: true
+#| code-summary: Code to generate table summary
+#| eval: false
 
 model_list_env_in <- list(
   m0  = h1.m0_env_in,
@@ -2115,9 +2305,7 @@ r2_list_env_in <- list(
   m4 = h1.m4_env_in_R2
 )
 
-# Parameter table
 param_table_env_in <- create_parameter_table(model_list_env_in, r2_list_env_in)
-print(param_table_env_in)
 write.csv(param_table_env_in,
           here(summaries, "parameter_table_h1_env_in.csv"),
           row.names = FALSE, fileEncoding = "UTF-8")
@@ -2126,9 +2314,26 @@ write.csv(param_table_env_in,
 
 ```
 
+```{r}
+#| tbl-cap: "Instantenous envelope: summary for all models"
+#| label: tbl-inst-env-all
+#| echo: false
+
+param_table_env_in <- read_csv(paste0(summaries, "parameter_table_h1_env_in.csv"))
+knitr::kable(param_table_env_in, format = "pipe")
+```
+
 ##### Final model report
 
+Here report and visualizations for selected model
+
 ```{r}
+#| fig-cap: "Instantenous envelope: selected model report and visualization"
+#| label: fig-inst-env
+#| echo: false
+#| fig-width: 12.5   # inches → ~1200px at 96dpi
+#| fig-height: 10
+#| out-width: "100%"
 
 targeted_comparisons(h1.m3_env_in, type = "two_modality",   dv_label = "Amplitude envelope (peak mean)")
 
@@ -2180,6 +2385,12 @@ df_all <-
 
 This is how cummulative COPc is distributed (raw values and log-transformed)
 ```{r}
+#| echo: false
+#| fig-cap: "Distribution of cumulative COPc"
+#| label: copc-cum-distr
+#| fig-width: 12.5   # inches → ~1200px at 96dpi
+#| fig-height: 10
+#| out-width: "100%"
 
 p1 <- ggplot(df_all, aes(x = COPc_integral)) +
   geom_density(alpha = 0.4) +
@@ -2199,7 +2410,7 @@ p1 / p2 + plot_layout(guides = "collect")
 
 #### Model 0 - Intercept only
 
-```{r, eval=TRUE, message=FALSE, warning=FALSE}
+```{r}
 
 priors_h1m0_cop_cum <- c(
   set_prior("normal(8, 2)", class = "Intercept"),
@@ -2244,7 +2455,7 @@ summary(h1.m0_cop_cum)
 
 #### Model 1 - Varying slope and intercept
 
-```{r, eval=TRUE, message=FALSE, warning=FALSE}
+```{r}
 
 priors_h1m1_cop_cum <- c(
   set_prior("normal(8, 2)", class = "Intercept"),
@@ -2297,7 +2508,7 @@ summary(h1.m1_cop_cum)
 
 #### Model 2 - Maximal random structure
 
-```{r, eval=TRUE, message=FALSE, warning=FALSE}
+```{r}
 
 if (file.exists(here(models, "h1.m2_cop_cum.rds"))){
   
@@ -2512,8 +2723,12 @@ summary(h1.m4_cop_cum)
 
 ##### Convergence
 
-```{r}
+Here is a summary of convergence metrics for all five models
 
+```{r}
+#| code-fold: true
+#| code-summary: Code to generate convergence metrics
+#| eval: false
 
 model_list_cop_cum <- list(
   m0  = h1.m0_cop_cum,
@@ -2524,12 +2739,20 @@ model_list_cop_cum <- list(
 )
 
 convergence_results_cc <- compare_convergence(model_list_cop_cum)
-print(convergence_results_cc)
-
-# Save
 write.csv(convergence_results_cc,
           here(summaries, "convergence_comparison_cop_cum.csv"),
           row.names = FALSE, fileEncoding = "UTF-8")
+```
+
+
+```{r}
+#| echo: false
+#| tbl-cap: "Cumulative COPc: convergence metrics"
+#| label: tbl-inst-env
+
+convergence_results_cc <- read_csv(paste0(summaries, "convergence_comparison_cop_cum.csv"))
+knitr::kable(convergence_results_cc, format = "pipe")
+
 ```
 
 ##### LOO
@@ -2541,13 +2764,19 @@ l <- loo_compare(h1.m0_cop_cum, h1.m1_cop_cum, h1.m2_cop_cum, h1.m3_cop_cum, h1.
 print(l, simplify = F)
 
 ```
+
 Again, we will choose **m3** due to having higher *min_neff* than **m2**, and comparable predictability.
 
 #### Report
 
 ##### Full comparison
 
+Here is a full summary of estimated parameters for all five models
+
 ```{r}
+#| code-fold: true
+#| code-summary: Code to generate table summary
+#| eval: false
 
 model_list_cop_cum <- list(
   m0  = h1.m0_cop_cum,
@@ -2567,17 +2796,32 @@ r2_list_cop_cum <- list(
 
 # Parameter table
 param_table_cop_cum <- create_parameter_table(model_list_cop_cum, r2_list_cop_cum)
-print(param_table_cop_cum)
 write.csv(param_table_cop_cum,
           here(summaries, "parameter_table_h1_cop_cum.csv"),
           row.names = FALSE, fileEncoding = "UTF-8")
 
 ```
 
+```{r}
+#| tbl-cap: "Cumulative COPc: summary for all models"
+#| label: tbl-cum-cop
+#| echo: false
+
+param_table_cop_cum <- read_csv(paste0(summaries, "parameter_table_h1_cop_cum.csv"))
+knitr::kable(param_table_cop_cum, format = "pipe")
+```
+
 ##### Final model report
 
+And here report and visualization for selected model
 
 ```{r}
+#| echo: false
+#| fig-cap: "Cumulative COPc: selected model report and visualization"
+#| label: fig-cum-cop
+#| fig-width: 12.5   # inches → ~1200px at 96dpi
+#| fig-height: 10
+#| out-width: "100%"
 
 targeted_comparisons_bfi(h1.m3_cop_cum,  type = "three_modality", dv_label = "COPc (integral)")
 
@@ -2587,6 +2831,12 @@ targeted_comparisons_bfi(h1.m3_cop_cum,  type = "three_modality", dv_label = "CO
 
 This is how instant COPc is distributed (raw values and log-transformed)
 ```{r}
+#| echo: false
+#| fig-cap: "Distribution of instantenous COPc"
+#| label: inst-cop-distr
+#| fig-width: 12.5   # inches → ~1200px at 96dpi
+#| fig-height: 10
+#| out-width: "100%"
 
 p1 <- ggplot(df_all, aes(x = COPc_peak_mean)) +
   geom_density(alpha = 0.4) +
@@ -2649,7 +2899,7 @@ summary(h1.m0_cop_in)
 
 #### Model 1 
 
-```{r, eval=TRUE, message=FALSE, warning=FALSE}
+```{r}
 
 priors_h1m1_cop_in <- c(
   set_prior("normal(0, 0.5)", class = "Intercept"),
@@ -2916,7 +3166,12 @@ summary(h1.m4_cop_in)
 
 ##### Convergence
 
+Here is a summary of convergence metrics for all five models
+
 ```{r}
+#| code-fold: true
+#| code-summary: Code to generate convergence metrics
+#| eval: false
 
 model_list_cop_in <- list(
   m0  = h1.m0_cop_in,
@@ -2927,14 +3182,20 @@ model_list_cop_in <- list(
 )
 
 convergence_results_ci <- compare_convergence(model_list_cop_in)
-print(convergence_results_ci)
-
-# Save
 write.csv(convergence_results_ci,
           here(summaries, "convergence_comparison_cop_in.csv"),
           row.names = FALSE, fileEncoding = "UTF-8")
 ```
 
+```{r}
+#| echo: false
+#| tbl-cap: "Instantenous COPc: convergence metrics"
+#| label: tbl-inst-cop-conv
+
+convergence_results_ci <- read_csv(paste0(summaries, "convergence_comparison_cop_in.csv"))
+knitr::kable(convergence_results_ci, format = "pipe")
+
+```
 
 ##### LOO
 
@@ -2945,13 +3206,19 @@ l <- loo_compare(h1.m0_cop_in, h1.m1_cop_in, h1.m2_cop_in, h1.m3_cop_in, h1.m4_c
 print(l, simplify = F)
 
 ```
+
 Here we again choose **m3**. It does have slightly better *min_neff* and *mean_neff* and is the second best performing model in terms of predictability.
 
 #### Report
 
 ##### Full comparison
 
+Here is a full summary of all estimated parameters for all models
+
 ```{r}
+#| code-fold: true
+#| code-summary: Code to generate table summary
+#| eval: false
 
 model_list_cop_in <- list(
   m0  = h1.m0_cop_in,
@@ -2972,16 +3239,32 @@ r2_list_cop_in <- list(
 
 # Parameter table
 param_table_cop_in <- create_parameter_table(model_list_cop_in, r2_list_cop_in)
-print(param_table_cop_in)
 write.csv(param_table_cop_in,
           here(summaries, "parameter_table_h1_cop_in.csv"),
           row.names = FALSE, fileEncoding = "UTF-8")
 
 ```
 
+```{r}
+#| tbl-cap: "Instantenous COPc: summary for all models"
+#| label: tbl-inst-cop-all
+#| echo: false
+
+param_table_cop_in <- read_csv(paste0(summaries, "parameter_table_h1_cop_in.csv"))
+knitr::kable(param_table_cop_in, format = "pipe")
+```
+
 ##### Final model report
 
+Here is report and visualization for selected model
+
 ```{r}
+#| fig-cap: "Instantenous COPc: selected model report and visualization"
+#| label: fig-inst-cop
+#| echo: false
+#| fig-width: 12.5   # inches → ~1200px at 96dpi
+#| fig-height: 10
+#| out-width: "100%"
 
 targeted_comparisons_bfi(h1.m3_cop_in,  type = "three_modality", dv_label = "COPc (peak mean)")
 
@@ -2992,6 +3275,7 @@ targeted_comparisons_bfi(h1.m3_cop_in,  type = "three_modality", dv_label = "COP
 Get the missing modalities for each model
 
 ```{r}
+#| echo: false
 
 # Torque cum
 print('Torque cummulative')
@@ -3020,7 +3304,12 @@ get_implied_estimate(h1.m3_cop_in, type = "three_modality")
 
 ```
 
+This is a summary table of estimated parameters for selected models across all 6 variables
+
 ```{r}
+#| code-fold: true
+#| code-summary: Code to generate table summary
+#| eval: false
 
 model_list_paper <- list(
   torq_cum  = h1.m3_torq_cum,
@@ -3064,7 +3353,6 @@ paper_table <- create_paper_table(
   dv_labels      = dv_labels,
   log_transformed = log_transformed
 )
-print(paper_table)
 
 write.csv(paper_table,
           here(summaries, "paper_table_H1.csv"),
@@ -3072,14 +3360,33 @@ write.csv(paper_table,
           fileEncoding = "UTF-8")
 
 
+```
+
+```{r}
+#| tbl-cap: "Model summary for all six variables"
+#| label: tbl-all
+#| echo: false
+
+paper_table <- read_csv(paste0(summaries, "paper_table_H1.csv"))
+
+paper_table |>
+  gt() |>
+  tab_caption("Model summary for all six variables")
 
 ```
+
 
 ### Final plots
 
 ##### Correction raincloud with raw data overlaid
 
 ```{r}
+#| fig-cap: "Correction effect on effort (posterior distributions with raw scatter)"
+#| label: fig-raincloud
+#| echo: false
+#| fig-width: 12.5   # inches → ~1200px at 96dpi
+#| fig-height: 10
+#| out-width: "100%"
 
 model_grid <- list(
   list(model = h1.m3_torq_cum, label = "Arm Torque\n(integral)",  row = 1,
@@ -3124,34 +3431,12 @@ ggsave(here(plots, "correction_raincloud_grid.png"),
 ##### Main effect
 
 ```{r}
-
-model_grid <- list(
-  list(model = h1.m3_torq_cum, label = "Arm Torque\n(integral)",  row = 1,
-       dv_col = "arm_moment_sum_change_integral"),
-  list(model = h1.m3_env_cum,  label = "Envelope\n(integral)",    row = 1,
-       dv_col = "envelope_norm_integral"),
-  list(model = h1.m3_cop_cum,  label = "COPc\n(integral)",        row = 1,
-       dv_col = "COPc_integral"),
-  list(model = h1.m3_torq_in,  label = "Arm Torque\n(peak mean)", row = 2,
-       dv_col = "arm_moment_sum_change_peak_mean"),
-  list(model = h1.m3_env_in,   label = "Envelope\n(peak mean)",   row = 2,
-       dv_col = "envelope_norm_peak_mean"),
-  list(model = h1.m3_cop_in,   label = "COPc\n(peak mean)",       row = 2,
-       dv_col = "COPc_peak_mean")
-)
-
-correction_grid <- plot_correction_posteriors_grid(model_grid)
-print(correction_grid)
-
-ggsave(here(plots,"correction_posteriors_grid.png"),
-       correction_grid,
-       width = 8, height = 5,
-       dpi = 300, bg = "white")
-
-```
-
-Alternative for publication
-```{r}
+#| fig-cap: "Posterior distribution of main effect (effort ~ correction)"
+#| label: fig-main
+#| echo: false
+#| fig-width: 12.5   # inches → ~1200px at 96dpi
+#| fig-height: 10
+#| out-width: "100%"
 
 model_grid <- list(
   list(model = h1.m3_torq_cum, label = "Arm Torque\n(integral)",  row = 1,
@@ -3176,15 +3461,18 @@ ggsave(here(plots,"correction_posteriors_grid_side.png"),
        width = 6, height = 4,
        dpi = 300, bg = "white")
 
-
-
-
 ```
 
 
 #### Other fixed effects
 
 ```{r}
+#| fig-cap: "Posterior distribution of remaining fixed effects"
+#| label: fig-fixed-eff
+#| echo: false
+#| fig-width: 12.5   # inches → ~1200px at 96dpi
+#| fig-height: 10
+#| out-width: "100%"
 
 model_grid <- list(
   list(model = h1.m3_torq_cum, label = "Arm Torque\n(integral)",  row = 1,
@@ -3215,6 +3503,12 @@ ggsave(here(plots, "fixed_effects_posteriors_grid.png"),
 Does duration differ by correction and modality
 
 ```{r}
+#| fig-cap: "Duration distribution per correction & modality"
+#| label: fig-time
+#| echo: false
+#| fig-width: 12.5   # inches → ~1200px at 96dpi
+#| fig-height: 10
+#| out-width: "100%"
 
 ggplot(df_all, aes(x = duration_trial)) +
   geom_histogram(bins = 30) +
@@ -3242,7 +3536,13 @@ We operationalize degree of misunderstanding as a cosine similarity of performer
 
 We also need a new DAG. Essentially, what we said will influence CommAtt in H1, will now also influence PrevAn because they are tightly related. For instance, more extroverted people can be expected to be better guessers, therefore the similarity of the previous answer will be higher.
 
-```{r dag h2, message=FALSE, warning=FALSE, echo=FALSE}
+```{r}
+#| echo: false
+#| fig-cap: "Causal DAG for H2"
+#| label: dag-h2
+#| fig-width: 12.5   # inches → ~1200px at 96dpi
+#| fig-height: 10
+#| out-width: "100%"
 
 daggy_h2 <- dagitty('dag {
 EffChange [outcome,pos="0,0"]
@@ -3278,9 +3578,6 @@ PrevAn -> EffChange
 PrevAn -> CommAtt
 }')
 
-```
-
-```{r, message=FALSE, warning=FALSE, echo=TRUE}
 # Use ggdag for a cleaner visualization
 d2 <- ggdag(daggy_h2, text = TRUE, use_labels = "name") +
   theme_dag() +
@@ -3288,9 +3585,11 @@ d2 <- ggdag(daggy_h2, text = TRUE, use_labels = "name") +
   theme(plot.title = element_text(hjust = 0.5))
 
 d2
+
 ```
 
-```{r, message=FALSE, warning=FALSE, echo=TRUE}
+```{r}
+#| echo: false
 
 dagitty::adjustmentSets(daggy_h2, exposure = "PrevAn", outcome = "EffChange")
 
@@ -3306,7 +3605,7 @@ The adjustment set is identical to the one of H1. Note that we are here omitting
 
 We need to create variable that captures change in effort from one performance to another (c0 -> c1 -> c2)
 
-```{r effort change ratio, message=FALSE, warning=FALSE}
+```{r}
 
 # Load back data
 df_ges2 <- data_feat
@@ -3371,7 +3670,7 @@ df_ges2_final <- df_ges2_final %>%
 df_ges2_final <- subset(df_ges2_final, select = -c(Effort_1, Effort_2, Effort_3, Effort_Change_1_to_2, Effort_Change_2_to_3)) 
 
 # View the result
-head(df_ges2_final, n=15)
+knitr::kable(head(df_ges2_final, 15))
 
 ```
 
@@ -3435,7 +3734,8 @@ df_ges2_final$Effort_Change_arm_moment_peak_mean_z <-
 
 This is how effort change is distributed
 
-```{r h2 hist, message=FALSE, warning=FALSE, echo=FALSE}
+```{r}
+#| echo: false
 
 hist(df_ges2_final$Effort_Change_arm_moment_integral, breaks=100)
 
@@ -3797,7 +4097,7 @@ df_voc2_final <- df_voc2_final %>%
 df_voc2_final <- subset(df_voc2_final, select = -c(Effort_1, Effort_2, Effort_3, Effort_Change_1_to_2, Effort_Change_2_to_3)) 
 
 # View the result
-head(df_voc2_final, n=15)
+knitr::kable(head(df_voc2_final, 15))
 
 ```
 
@@ -4196,7 +4496,7 @@ df_cop2_final <- df_cop2_final %>%
 df_cop2_final <- subset(df_cop2_final, select = -c(Effort_1, Effort_2, Effort_3, Effort_Change_1_to_2, Effort_Change_2_to_3)) 
 
 # View the result
-head(df_cop2_final, n=15)
+knitr::kable(head(df_cop2_final, 15))
 
 
 ```
@@ -4537,8 +4837,12 @@ summary(h2.m1b_cop_in)
 
 ## Final report of all models 1b
 
-```{r}
+Here is a table and visualization of model estimates for H2
 
+```{r}
+#| code-fold: true
+#| code-summary: Code to generate table summary
+#| eval: false
 
 model_list_paper_h2 <- list(
   torq_cum  = h2.m1b_torq_cum,
@@ -4576,6 +4880,53 @@ log_transformed <- c(
   cop_in   = TRUE
 )
 
+# Table
+paper_table_h2 <- create_paper_table(
+  model_list     = model_list_paper_h2,
+  r2_list        = r2_list_paper_h2,
+  dv_labels      = dv_labels,
+  log_transformed = log_transformed
+)
+
+write.csv(paper_table_h2,
+          here(summaries, "paper_table_H2.csv"),
+          row.names = FALSE,
+          fileEncoding = "UTF-8")
+
+```
+
+
+```{r}
+#| tbl-cap: "H2 summary for all effort variables"
+#| label: tbl-cos-sim
+#| echo: false
+
+paper_table_h2 <- read_csv(paste0(summaries, "paper_table_H2.csv"))
+
+
+paper_table_h2 |>
+  gt() |>
+  tab_caption("Model summary for all six variables")
+
+```
+
+```{r}
+#| fig-cap: "H2 visualization for all effort variables"
+#| label: fig-cos-sim
+#| echo: false
+#| fig-width: 12.5   # inches → ~1200px at 96dpi
+#| fig-height: 10
+#| out-width: "100%"
+
+model_list_paper_h2 <- list(
+  torq_cum  = h2.m1b_torq_cum,
+  torq_in   = h2.m1b_torq_in,
+  env_cum   = h2.m1b_env_cum,
+  env_in    = h2.m1b_env_in,
+  cop_cum   = h2.m1b_cop_cum,
+  cop_in    = h2.m1b_cop_in
+)
+
 dv_col_map <- c(
   torq_cum = "arm_moment_sum_change_integral",
   torq_in  = "arm_moment_sum_change_peak_mean",
@@ -4585,25 +4936,10 @@ dv_col_map <- c(
   cop_in   = "COPc_peak_mean"
 )
 
-# Table
-paper_table_h2 <- create_paper_table(
-  model_list     = model_list_paper_h2,
-  r2_list        = r2_list_paper_h2,
-  dv_labels      = dv_labels,
-  log_transformed = log_transformed
-)
-print(paper_table_h2)
-
-write.csv(paper_table_h2,
-          here(summaries, "paper_table_H2.csv"),
-          row.names = FALSE,
-          fileEncoding = "UTF-8")
-
-# Plot
 plot_h2_prev_answer(model_list_paper_h2, dv_col_map = dv_col_map)
 
-
 ```
+
 
 # Exploratory analysis
 
@@ -5197,7 +5533,12 @@ summary(e1.m1_cop_in)
 
 ### E1 Report
 
+Here is table summary and visualizations
+
 ```{r}
+#| code-fold: true
+#| code-summary: Code to generate table summary
+#| eval: false
 
 model_list_paper_e1 <- list(
   torq_cum  = e1.m1_torq_cum,
@@ -5248,11 +5589,52 @@ write.csv(paper_table_e1,
           row.names = FALSE,
           fileEncoding = "UTF-8")
 
-# Plot
-plot_correction_by_effort(models_e1, dv_labels_e1)
+```
 
+```{r}
+#| tbl-cap: "E1 summary for all effort variables"
+#| label: tbl-effcat
+#| echo: false
+
+paper_table_e1 <- read_csv(paste0(summaries, "paper_table_E1.csv"))
+
+
+paper_table_e1 |>
+  gt() |>
+  tab_caption("Model summary for all six variables")
 
 ```
+
+```{r}
+#| fig-cap: "E1 visualization for all effort variables"
+#| label: fig-effcat
+#| echo: false
+#| fig-width: 12.5   # inches → ~1200px at 96dpi
+#| fig-height: 10
+#| out-width: "100%"
+
+model_list_paper_e1 <- list(
+  torq_cum  = e1.m1_torq_cum,
+  torq_in   = e1.m1_torq_in,
+  env_cum   = e1.m1_env_cum,
+  env_in    = e1.m1_env_in,
+  cop_cum   = e1.m1_cop_cum,
+  cop_in    = e1.m1_cop_in
+)
+
+dv_labels <- c(
+  torq_cum = "Arm Torque\n(integral)",
+  torq_in  = "Arm Torque\n(peak mean)",
+  env_cum  = "Envelope\n(integral)",
+  env_in   = "Envelope\n(peak mean)",
+  cop_cum  = "COP\n(integral)",
+  cop_in   = "COP\n(peak mean)"
+)
+
+plot_correction_by_effort(model_list_paper_e1, dv_labels)
+
+```
+
 
 ## E2: time vs integral
 
@@ -5447,7 +5829,9 @@ summary(e2.m1_cop_cum)
 ### E2 report
 
 ```{r}
-
+#| code-fold: true
+#| code-summary: Code to generate table summary
+#| eval: false
 
 model_list_paper_e2 <- list(
   torq_cum  = e2.m1_torq_cum,
@@ -5485,6 +5869,20 @@ write.csv(paper_table_e2,
           here(summaries, "paper_table_E2.csv"),
           row.names = FALSE,
           fileEncoding = "UTF-8")
+
+```
+
+```{r}
+#| tbl-cap: "E2 summary for all effort variables"
+#| label: tbl-time
+#| echo: false
+
+paper_table_e2 <- read_csv(paste0(summaries, "paper_table_E2.csv"))
+
+
+paper_table_e2 |>
+  gt() |>
+  tab_caption("Model summary for all six variables")
 
 ```
 
@@ -5585,9 +5983,10 @@ trials_c0 |>
 
 ```
 
-Now we can see some plots
+Now we can see some plots. Let's start with resolution at c0 per modality
 
 ```{r}
+#| echo: false
 
 # Resolution at c0 per modality
 trials_c0 %>%
@@ -5602,6 +6001,7 @@ trials_c0 %>%
 For each cumulative effort variable, bin effort and plot resolution proportion within each bin, faceted by modality.
 
 ```{r}
+#| echo: false
 
 # Torque
 trials_c0 %>%
@@ -5638,6 +6038,7 @@ trials_c0 %>%
 For each instantenous effort variable, bin effort and plot resolution proportion within each bin, faceted by modality.
 
 ```{r}
+#| echo: false
 
 # Torque
 trials_c0 %>%
@@ -5803,6 +6204,7 @@ summary(e3.m1b)
 #### PP Check
 
 ```{r}
+#| echo: false
 
 pp_check(e3.m1, ndraws = 100)
 
@@ -5817,7 +6219,10 @@ Now we want to extract key contrasts:
 
 Also, we want to extract predicted probabilities at each anchor, by modality, and compute slope contrasts
 
+##### Cumulative
+
 ```{r}
+#| echo: false
 
 # cummulative
 report_effort_success(
@@ -5830,21 +6235,22 @@ report_effort_success(
 
 
 ```{r}
+#| echo: false
 
 # modality difference 
 result <- get_modality_contrasts(
   model  = e3.m1,
   labels = c("1" = "Gesture only", "2" = "Multimodal", "3" = "Vocal only"))
 
-result$summary   # table
-result$plot      # ggplot object for ggsave
-
-ggsave(here(plots, "e4m1_channel_correlations_by_modality.png"),
+ggsave(here(plots, "e3m1_channel_correlations_by_modality.png"),
        result$plot, width = 12, height = 8, dpi = 300)
 
 ```
 
+##### Instantenous
+
 ```{r}
+#| echo: false
 
 # instant
 report_effort_success(
@@ -5861,13 +6267,14 @@ report_effort_success(
 ```
 
 ```{r}
+#| echo: false
 
 result <- get_modality_contrasts(
   model  = e3.m1b,
   labels = c("1" = "Gesture only", "2" = "Multimodal", "3" = "Vocal only"))
 
-result$summary   # table
-result$plot      # ggplot object for ggsave
+ggsave(here(plots, "e3m1b_channel_correlations_by_modality.png"),
+       result$plot, width = 12, height = 8, dpi = 300)
 ```
 
 
@@ -5997,6 +6404,7 @@ df_eff_rep <- df_eff_rep |>
 Check sample size
 
 ```{r}
+#| echo: false
 
 df_eff_rep %>%
   count(correction, modality)
@@ -6005,6 +6413,7 @@ df_eff_rep %>%
 
 This is distribution of similarity gain
 ```{r}
+#| echo: false
 
 # overal
 ggplot(df_eff_rep, aes(x = similarity_gain)) +
@@ -6018,6 +6427,7 @@ ggplot(df_eff_rep, aes(x = similarity_gain)) +
 ```
 
 ```{r}
+#| echo: false
 
 ggplot(df_eff_rep, aes(x = arm_torque_log_c, y = similarity_gain, color = modality)) +
   geom_point(alpha = 0.3) +
@@ -6043,6 +6453,7 @@ ggplot(df_eff_rep, aes(x = copc_log_c, y = similarity_gain, color = modality)) +
 Does previous similarity provide more space for gain?
 
 ```{r}
+#| echo: false
 
 ggplot(df_eff_rep, aes(x = answer_prev_dist, y = similarity_gain)) +
   geom_point(alpha = 0.3) +
@@ -6101,6 +6512,15 @@ summary(e4.m3_att)
 
 ```
 
+#### PP Check
+
+```{r}
+#| echo: false
+
+pp_check(e4.m3_att, ndraws = 100) # Okay this might be the reason, the posterior distribution is missing the raw data
+
+```
+
 ### Model 2b - efficiency during repair (instant)
 
 ```{r}
@@ -6155,8 +6575,8 @@ summary(e4.m3b_att)
 #### PP Check
 
 ```{r}
-
-pp_check(e4.m3_att, ndraws = 100) # Okay this might be the reason, the posterior distribution is missing the raw data
+#| echo: false
+#| 
 pp_check(e4.m3b_att, ndraws = 100) 
 
 ```
@@ -6164,6 +6584,7 @@ pp_check(e4.m3b_att, ndraws = 100)
 Let's see what is the distribution of the current similarity, perhaps we can use that if the distribution is easier to model
 
 ```{r}
+#| echo: false
 
 # overal
 ggplot(df_eff_rep, aes(x = answer_fol_dist)) +
@@ -6230,6 +6651,15 @@ summary(e3.m3_att)
 
 ```
 
+```{r}
+#| echo: false
+
+pp_check(e3.m3_att, ndraws = 100)
+
+# Not perfect but much better
+
+```
+
 ### Model 3b -  following success (instant)
 
 ```{r}
@@ -6284,18 +6714,22 @@ summary(e3.m3b_att)
 
 
 ```{r}
+#| echo: false
 
-pp_check(e3.m3_att, ndraws = 100)
 pp_check(e3.m3b_att, ndraws = 100)
 
 # Not perfect but much better
 
 ```
 
+It's not perfect but much better than the gain
+
 #### Report
 
+##### Cumulative
 
 ```{r}
+#| echo: false
 
 # cumulative
 report_effort_similarity(
@@ -6305,8 +6739,8 @@ report_effort_similarity(
 )
 ```
 
-
 ```{r}
+#| echo: false
 
 result <- get_modality_contrasts(
   model  = e3.m3_att,
@@ -6317,7 +6751,10 @@ ggsave(here(plots, "e3.m3_att_channel_correlations_by_modality.png"),
 
 ```
 
+##### Instantenous
+
 ```{r}
+#| echo: false
 
 # instant
 report_effort_similarity(
@@ -6334,15 +6771,20 @@ report_effort_similarity(
 ```
 
 ```{r}
+#| echo: false
 
 result <- get_modality_contrasts(
   model  = e3.m3b_att,
   labels = c("1" = "Gesture only", "2" = "Multimodal", "3" = "Vocal only"), coding = "treatment")
+
+ggsave(here(plots, "e3.m3b_att_channel_correlations_by_modality.png"),
+       result$plot, width = 12, height = 8, dpi = 300)
 ```
 
 ### Model 3c - does success-effort coupling differ by dyad?
 
 ```{r}
+#| echo: false
 
 # by dyad
 ggplot(df_eff_rep, aes(x = answer_fol_dist)) +
@@ -6353,6 +6795,7 @@ ggplot(df_eff_rep, aes(x = answer_fol_dist)) +
 
 
 ```{r}
+#| echo: false
 
 # torque
 ggplot(df_eff_rep, aes(x = arm_torque_log_c, y = answer_fol_dist, 
@@ -6432,7 +6875,7 @@ summary(e3.m3c_att)
 Distribution per dyad
 
 ```{r}
-
+#| echo: false
 
 spread_draws(e3.m3c_att, r_SessionID[SessionID, term]) |>
   filter(term %in% c("arm_torque_log_c", "envelope_log_c", "copc_log_c")) |>
@@ -6503,8 +6946,6 @@ left_join(dyad_slopes, dyad_success, by = "SessionID") |>
   geom_point() +
   geom_smooth(method = "lm", se = TRUE) +
   theme_effort_plot()
-
-
 
 ```
 
@@ -6842,6 +7283,13 @@ summary(e3.m4_att)
 
 ```
 
+```{r}
+#| echo: false
+
+pp_check(e3.m4_att,ndraws=100)
+
+```
+
 ### Model 4b - instant
 
 ```{r}
@@ -6895,13 +7343,16 @@ summary(e3.m4b_att)
 #### Report 
 
 ```{r}
+#| echo: false
 
-pp_check(e3.m4_att,ndraws=100)
 pp_check(e3.m4b_att,ndraws=100)
 
 ```
 
+##### Cumulative
+
 ```{r}
+#| echo: false
 
 # cumulative
 report_resolution_by_effort(
@@ -6909,6 +7360,12 @@ report_resolution_by_effort(
   data        = df_ordinal,
   model_label = "e3.m4_att"
 )
+```
+
+##### Instantenous
+
+```{r}
+#| echo: false
 
 # instant
 report_resolution_by_effort(
@@ -6922,7 +7379,6 @@ report_resolution_by_effort(
   model_label = "e3.m4b_att"
 )
 
-
 ```
 
 
@@ -6935,8 +7391,6 @@ We therefore fit one more model, with effort at c0 instead: initial-attempt effo
 Here we ask, does **initial** communicative investment predict how quickly the sequence resolves?
 
 ```{r}
-
-
 # create column to track when was meaning guessed correctly
 df_eff_rep <- df_eff |>
   group_by(pcn_ID, concept) |>
@@ -7042,7 +7496,6 @@ contrasts(df_ordinal_c0$modality) <- contr.treatment(3, base = 2)
 
 ```{r}
 
-
 if (file.exists(here(models, "e3.m5_att.rds"))){
   
   e3.m5_att <- readRDS(here(models, "e3.m5_att.rds"))
@@ -7136,10 +7589,12 @@ summary(e3.m5b_att)
 
 ```
 
-
 #### Report
 
+#####  Cumulative
+
 ```{r}
+#| echo: false
 
 # cumulative
 report_resolution_by_effort(
@@ -7147,6 +7602,25 @@ report_resolution_by_effort(
   data        = df_ordinal_c0,
   model_label = "e3.m5_att"
 )
+```
+
+
+```{r}
+#| echo: false
+
+# Cumulative
+result <- get_modality_contrasts(
+  model  = e3.m5_att,
+  labels = c("1" = "Gesture only", "2" = "Multimodal", "3" = "Vocal only"), coding = "treatment")
+
+ggsave(here(plots, "e3m5_channel_correlations_by_modality.png"),
+       result$plot, width = 12, height = 8, dpi = 300)
+```
+
+##### Instantenous
+
+```{r}
+#| echo: false
 
 # instant
 report_resolution_by_effort(
@@ -7162,29 +7636,22 @@ report_resolution_by_effort(
 
 ```
 
+
 ```{r}
-
-# Modality contrast
-
-# Cumulative
-result <- get_modality_contrasts(
-  model  = e3.m5_att,
-  labels = c("1" = "Gesture only", "2" = "Multimodal", "3" = "Vocal only"), coding = "treatment")
-
-ggsave(here(plots, "e3m5_channel_correlations_by_modality.png"),
-       result$plot, width = 12, height = 8, dpi = 300)
+#| echo: false
 
 # Instant
 result <- get_modality_contrasts(
   model  = e3.m5b_att,
   labels = c("1" = "Gesture only", "2" = "Multimodal", "3" = "Vocal only"), coding = "treatment")
 
+ggsave(here(plots, "e3m5b_channel_correlations_by_modality.png"),
+       result$plot, width = 12, height = 8, dpi = 300)
 
 # Positive contrast (A - B > 0) → A tends toward higher resolution categories than B (worse resolution, more repairs)
 #Negative contrast (A - B < 0) → A tends toward lower categories than B (better resolution, fewer repairs)
 
 ```
-
 
 ### Model 6 - resolved yes/no (cumulative)
 
@@ -7288,8 +7755,10 @@ summary(e3.m6b_att)
 ```
 
 #### Report
+##### Cumulative
 
 ```{r}
+#| echo: false
 
 # Cumulative
 
@@ -7297,8 +7766,7 @@ report_effort_success(
   model       = e3.m6_att,
   data        = df_ordinal_c0,
   model_label = "e3.m6_att",
-  output_file = "effort_ever_resolved_e3m6.png"
-  
+  output_file = "plots\effort_ever_resolved_e3m6.png"
   
 )
 
@@ -7312,8 +7780,10 @@ ggsave(here(plots, "e3m6_channel_correlations_by_modality.png"),
 
 ```
 
+##### Instantenous
 
 ```{r}
+#| echo: false
 
 # Instant
 
@@ -7326,7 +7796,7 @@ report_effort_success(
     cop = list(col = "copc_in_log_c",          label = "COP")
   ),
   model_label = "e3.m6b_att",
-  output_file = "effort_ever_resolved_e3m6b.png"
+  output_file = "plots\effort_ever_resolved_e3m6b.png"
 )
 
 result <- get_modality_contrasts(
@@ -7339,6 +7809,12 @@ result <- get_modality_contrasts(
 ### Final plot
 
 ```{r}
+#| echo: false
+#| fig-cap: "Relationship between effort and communicative success: summary of four models"
+#| label: fig-eff-success-all
+#| fig-width: 12.5   # inches → ~1200px at 96dpi
+#| fig-height: 10
+#| out-width: "100%"
 
 effort_success_plot <- plot_effort_success_summary(
   models_cum  = list(m1 = e3.m1,       m3 = e3.m3_att,
@@ -7366,7 +7842,8 @@ ggsave(here(plots, "effort_success_summary.png"),
 
 Here is session information for reproducibility: 
 
-```{r session info print, echo=FALSE, message=FALSE, warning=FALSE}
+```{r}
+#| echo: false
 
 sessionInfo()
 

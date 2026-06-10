@@ -1629,41 +1629,23 @@ create_parameter_table <- function(model_list, r2_list = NULL) {
 
 
 ###############
+###############
 # ══════════════════════════════════════════════════════════════════════════════
 #  targeted_comparisons()
-#
-#  Runs five targeted posterior analyses on a single brms log-normal effort
-#  model and assembles a 3-row × 2-column patchwork figure:
-#
-#  1. Modality main-effect comparisons (pairwise % differences).
-#  2. Predicted effort trajectories by modality across corrections (c0–c2).
-#  3. Expressibility effect: effort trajectories at ±1 SD and ±2 SD.
-#  4. Performer-level trajectories: effort at ±1 SD and ±2 SD of the
-#     participant random intercept.
-#  5. Variance decomposition: % variance by participant / concept / dyad /
-#     residual.
-#
-#  Prints numerical summaries to console and saves the grid as a PNG.
-#
-#  Arguments
-#  ─────────────────────────────────────────────────────────────────────────────
-#  model     Fitted brmsfit (log-normal, sum-coded modality).
-#  type      "two_modality" (gesture vs multimodal) or "three_modality".
-#  dv_label  String used in plot titles and the saved filename.
-#
-#  Returns invisibly: named list of ggplot objects.
 # ══════════════════════════════════════════════════════════════════════════════
-targeted_comparisons <- function(model, type = c("two_modality", "three_modality"),
+targeted_comparisons <- function(model,
+                                 type = c("two_modality", "three_modality"),
+                                 modalities = c("gesture", "multimodal"),
                                  dv_label = "Effort") {
   
   type <- match.arg(type)
   
   # ── Helper: print formatted result ─────────────────────────────────────────
   print_result <- function(draws, var, label, pct = FALSE, digits = 1) {
-    res <- draws |> median_hdi(!!sym(var))
-    est <- res[[var]]
-    lo  <- res$.lower
-    hi  <- res$.upper
+    res  <- draws |> median_hdi(!!sym(var))
+    est  <- res[[var]]
+    lo   <- res$.lower
+    hi   <- res$.upper
     cred <- lo > 0 | hi < 0
     if (pct) {
       cat(sprintf("  %-45s %+.1f%% [%+.1f%%, %+.1f%%]%s\n",
@@ -1674,11 +1656,12 @@ targeted_comparisons <- function(model, type = c("two_modality", "three_modality
     }
   }
   
-  modality_colors <- c(
+  all_modality_colors <- c(
     "gesture"    = "#2196F3",
     "vocal"      = "#FF9800",
     "multimodal" = "#4CAF50"
   )
+  modality_colors <- all_modality_colors[modalities]
   
   expr_palette <- c(
     "−2 SD"   = "#C2185B",
@@ -1712,8 +1695,11 @@ targeted_comparisons <- function(model, type = c("two_modality", "three_modality
         diff_pct = (exp(diff) - 1) * 100
       )
     
-    print_result(diff_draws, "diff",     "Gesture vs Multimodal (log scale):")
-    print_result(diff_draws, "diff_pct", "Gesture vs Multimodal (%):", pct = TRUE)
+    label_a <- modalities[1]
+    label_b <- modalities[2]
+    
+    print_result(diff_draws, "diff",     paste0(label_a, " vs ", label_b, " (log scale):"))
+    print_result(diff_draws, "diff_pct", paste0(label_a, " vs ", label_b, " (%):"), pct = TRUE)
     
     plots$modality_diff <- diff_draws |>
       ggplot(aes(x = diff_pct, fill = after_stat(x > 0))) +
@@ -1724,11 +1710,12 @@ targeted_comparisons <- function(model, type = c("two_modality", "three_modality
       geom_vline(xintercept = 0, linetype = "dashed",
                  colour = "grey20", linewidth = 0.8) +
       scale_fill_manual(
-        values = c("FALSE" = "#4CAF50", "TRUE" = "#2196F3"),
+        values = c("FALSE" = modality_colors[label_b],
+                   "TRUE"  = modality_colors[label_a]),
         guide  = "none"
       ) +
       theme_effort_plot() +
-      labs(title    = "Gesture vs Multimodal",
+      labs(title    = paste0(label_a, " vs ", label_b),
            subtitle = "Posterior of % difference",
            x = "% difference", y = NULL)
     
@@ -1783,52 +1770,57 @@ targeted_comparisons <- function(model, type = c("two_modality", "three_modality
   
   if (type == "two_modality") {
     
+    mod_a <- modalities[1]  # e.g. "gesture" or "vocal"
+    mod_b <- modalities[2]  # e.g. "multimodal"
+    
     mod_corr <- model |>
       spread_draws(b_Intercept, b_correction2M1, b_correction3M2, b_modality1) |>
       mutate(
-        gesture_c0      = exp(b_Intercept + 0.5 * b_modality1),
-        gesture_c1      = exp(b_Intercept + 0.5 * b_modality1 + b_correction2M1),
-        gesture_c2      = exp(b_Intercept + 0.5 * b_modality1 + b_correction2M1 + b_correction3M2),
-        multi_c0        = exp(b_Intercept - 0.5 * b_modality1),
-        multi_c1        = exp(b_Intercept - 0.5 * b_modality1 + b_correction2M1),
-        multi_c2        = exp(b_Intercept - 0.5 * b_modality1 + b_correction2M1 + b_correction3M2),
-        gest_abs_c0_c1  = gesture_c1 - gesture_c0,
-        gest_abs_c1_c2  = gesture_c2 - gesture_c1,
-        multi_abs_c0_c1 = multi_c1   - multi_c0,
-        multi_abs_c1_c2 = multi_c2   - multi_c1,
-        diff_c0_pct     = (gesture_c0 / multi_c0 - 1) * 100,
-        diff_c1_pct     = (gesture_c1 / multi_c1 - 1) * 100,
-        diff_c2_pct     = (gesture_c2 / multi_c2 - 1) * 100
+        a_c0 = exp(b_Intercept + 0.5 * b_modality1),
+        a_c1 = exp(b_Intercept + 0.5 * b_modality1 + b_correction2M1),
+        a_c2 = exp(b_Intercept + 0.5 * b_modality1 + b_correction2M1 + b_correction3M2),
+        b_c0 = exp(b_Intercept - 0.5 * b_modality1),
+        b_c1 = exp(b_Intercept - 0.5 * b_modality1 + b_correction2M1),
+        b_c2 = exp(b_Intercept - 0.5 * b_modality1 + b_correction2M1 + b_correction3M2),
+        a_abs_c0_c1  = a_c1 - a_c0,
+        a_abs_c1_c2  = a_c2 - a_c1,
+        b_abs_c0_c1  = b_c1 - b_c0,
+        b_abs_c1_c2  = b_c2 - b_c1,
+        diff_c0_pct  = (a_c0 / b_c0 - 1) * 100,
+        diff_c1_pct  = (a_c1 / b_c1 - 1) * 100,
+        diff_c2_pct  = (a_c2 / b_c2 - 1) * 100
       )
     
     cat("  Predicted effort (median [95% HDI]):\n")
-    print_result(mod_corr, "gesture_c0", "  Gesture c0:")
-    print_result(mod_corr, "gesture_c1", "  Gesture c1:")
-    print_result(mod_corr, "gesture_c2", "  Gesture c2:")
-    print_result(mod_corr, "multi_c0",   "  Multimodal c0:")
-    print_result(mod_corr, "multi_c1",   "  Multimodal c1:")
-    print_result(mod_corr, "multi_c2",   "  Multimodal c2:")
+    print_result(mod_corr, "a_c0", paste0("  ", mod_a, " c0:"))
+    print_result(mod_corr, "a_c1", paste0("  ", mod_a, " c1:"))
+    print_result(mod_corr, "a_c2", paste0("  ", mod_a, " c2:"))
+    print_result(mod_corr, "b_c0", paste0("  ", mod_b, " c0:"))
+    print_result(mod_corr, "b_c1", paste0("  ", mod_b, " c1:"))
+    print_result(mod_corr, "b_c2", paste0("  ", mod_b, " c2:"))
     cat("\n  Absolute increase per step:\n")
-    print_result(mod_corr, "gest_abs_c0_c1",  "  Gesture c0→c1:")
-    print_result(mod_corr, "gest_abs_c1_c2",  "  Gesture c1→c2:")
-    print_result(mod_corr, "multi_abs_c0_c1", "  Multimodal c0→c1:")
-    print_result(mod_corr, "multi_abs_c1_c2", "  Multimodal c1→c2:")
-    cat("\n  Gesture vs multimodal at each step (%):\n")
+    print_result(mod_corr, "a_abs_c0_c1", paste0("  ", mod_a, " c0→c1:"))
+    print_result(mod_corr, "a_abs_c1_c2", paste0("  ", mod_a, " c1→c2:"))
+    print_result(mod_corr, "b_abs_c0_c1", paste0("  ", mod_b, " c0→c1:"))
+    print_result(mod_corr, "b_abs_c1_c2", paste0("  ", mod_b, " c1→c2:"))
+    cat(paste0("\n  ", mod_a, " vs ", mod_b, " at each step (%):\n"))
     print_result(mod_corr, "diff_c0_pct", "  c0:", pct = TRUE)
     print_result(mod_corr, "diff_c1_pct", "  c1:", pct = TRUE)
     print_result(mod_corr, "diff_c2_pct", "  c2:", pct = TRUE)
     
     traj_long <- mod_corr |>
-      select(.draw, gesture_c0:multi_c2) |>
+      select(.draw, a_c0, a_c1, a_c2, b_c0, b_c1, b_c2) |>
       tidyr::pivot_longer(
-        cols     = gesture_c0:multi_c2,
-        names_to = c("modality", "correction"), names_sep = "_",
+        cols      = a_c0:b_c2,
+        names_to  = c("mod_key", "correction"),
+        names_sep = "_",
         values_to = "effort"
       ) |>
       mutate(
         correction = factor(correction, levels = c("c0", "c1", "c2")),
-        modality   = factor(modality, levels = c("gesture", "multi"),
-                            labels = c("gesture", "multimodal"))
+        modality   = factor(mod_key,
+                            levels = c("a", "b"),
+                            labels = modalities)
       )
     
   } else {
@@ -2185,18 +2177,30 @@ targeted_comparisons <- function(model, type = c("two_modality", "three_modality
          x = "% of total variance", y = NULL)
   
   # ── Assemble grid ───────────────────────────────────────────────────────────
+  
+  quarto_theme <- theme(
+    plot.title    = element_text(size = 11, face = "bold"),
+    plot.subtitle = element_text(size = 9,  colour = "grey40"),
+    axis.title    = element_text(size = 9),
+    axis.text     = element_text(size = 8),
+    legend.title  = element_text(size = 9),
+    legend.text   = element_text(size = 8)
+  )
+  
+  plots <- lapply(plots, function(p) p + quarto_theme)
+  
   top_row    <- plots$modality_diff             | plots$modality_trajectory
   middle_row <- plots$expressibility_trajectory | plots$effort_group_trajectory
-  bottom_row <- plot_spacer() | wrap_elements(plots$variance_decomp) | plot_spacer()
+  bottom_row <- plot_spacer() | plots$variance_decomp | plot_spacer()
   
   final <- (top_row / middle_row / bottom_row) +
-    plot_layout(heights = c(0.8, 0.8, 1)) +
+    plot_layout(heights = c(1, 1, 0.8)) +
     plot_annotation(
       title    = paste0("Targeted comparisons — ", dv_label),
       subtitle = "Median ± 89% and 95% HDI",
       theme    = theme(
-        plot.title    = element_text(size = 14, face = "bold"),
-        plot.subtitle = element_text(size = 11, colour = "grey40")
+        plot.title    = element_text(size = 13, face = "bold"),
+        plot.subtitle = element_text(size = 10, colour = "grey40")
       )
     )
   
@@ -2214,21 +2218,10 @@ targeted_comparisons <- function(model, type = c("two_modality", "three_modality
 
 # ══════════════════════════════════════════════════════════════════════════════
 #  targeted_comparisons_bfi()
-#
-#  Identical structure to targeted_comparisons() but uses BFI Extraversion
-#  (b_BFI_extra) instead of Expressibility as the individual-difference
-#  moderator in panel 3. Produces the same five-section console output and
-#  saves a 3-row × 2-column patchwork PNG.
-#
-#  Arguments
-#  ─────────────────────────────────────────────────────────────────────────────
-#  model     Fitted brmsfit (log-normal, sum-coded modality + BFI_extra).
-#  type      "two_modality" or "three_modality".
-#  dv_label  String used in plot titles and the saved filename.
-#
-#  Returns invisibly: named list of ggplot objects.
 # ══════════════════════════════════════════════════════════════════════════════
-targeted_comparisons_bfi <- function(model, type = c("two_modality", "three_modality"),
+targeted_comparisons_bfi <- function(model,
+                                     type = c("two_modality", "three_modality"),
+                                     modalities = c("gesture", "multimodal"),
                                      dv_label = "Effort") {
   
   type <- match.arg(type)
@@ -2249,11 +2242,12 @@ targeted_comparisons_bfi <- function(model, type = c("two_modality", "three_moda
     }
   }
   
-  modality_colors <- c(
+  all_modality_colors <- c(
     "gesture"    = "#2196F3",
     "vocal"      = "#FF9800",
     "multimodal" = "#4CAF50"
   )
+  modality_colors <- all_modality_colors[modalities]
   
   bfi_palette <- c(
     "−2 SD"   = "#1A237E",
@@ -2287,8 +2281,11 @@ targeted_comparisons_bfi <- function(model, type = c("two_modality", "three_moda
         diff_pct = (exp(diff) - 1) * 100
       )
     
-    print_result(diff_draws, "diff",     "Gesture vs Multimodal (log scale):")
-    print_result(diff_draws, "diff_pct", "Gesture vs Multimodal (%):", pct = TRUE)
+    label_a <- modalities[1]
+    label_b <- modalities[2]
+    
+    print_result(diff_draws, "diff",     paste0(label_a, " vs ", label_b, " (log scale):"))
+    print_result(diff_draws, "diff_pct", paste0(label_a, " vs ", label_b, " (%):"), pct = TRUE)
     
     plots$modality_diff <- diff_draws |>
       ggplot(aes(x = diff_pct, fill = after_stat(x > 0))) +
@@ -2299,11 +2296,12 @@ targeted_comparisons_bfi <- function(model, type = c("two_modality", "three_moda
       geom_vline(xintercept = 0, linetype = "dashed",
                  colour = "grey20", linewidth = 0.8) +
       scale_fill_manual(
-        values = c("FALSE" = "#4CAF50", "TRUE" = "#2196F3"),
+        values = c("FALSE" = modality_colors[label_b],
+                   "TRUE"  = modality_colors[label_a]),
         guide  = "none"
       ) +
       theme_effort_plot() +
-      labs(title    = "Gesture vs Multimodal",
+      labs(title    = paste0(label_a, " vs ", label_b),
            subtitle = "Posterior of % difference",
            x = "% difference", y = NULL)
     
@@ -2358,52 +2356,57 @@ targeted_comparisons_bfi <- function(model, type = c("two_modality", "three_moda
   
   if (type == "two_modality") {
     
+    mod_a <- modalities[1]
+    mod_b <- modalities[2]
+    
     mod_corr <- model |>
       spread_draws(b_Intercept, b_correction2M1, b_correction3M2, b_modality1) |>
       mutate(
-        gesture_c0      = exp(b_Intercept + 0.5 * b_modality1),
-        gesture_c1      = exp(b_Intercept + 0.5 * b_modality1 + b_correction2M1),
-        gesture_c2      = exp(b_Intercept + 0.5 * b_modality1 + b_correction2M1 + b_correction3M2),
-        multi_c0        = exp(b_Intercept - 0.5 * b_modality1),
-        multi_c1        = exp(b_Intercept - 0.5 * b_modality1 + b_correction2M1),
-        multi_c2        = exp(b_Intercept - 0.5 * b_modality1 + b_correction2M1 + b_correction3M2),
-        gest_abs_c0_c1  = gesture_c1 - gesture_c0,
-        gest_abs_c1_c2  = gesture_c2 - gesture_c1,
-        multi_abs_c0_c1 = multi_c1   - multi_c0,
-        multi_abs_c1_c2 = multi_c2   - multi_c1,
-        diff_c0_pct     = (gesture_c0 / multi_c0 - 1) * 100,
-        diff_c1_pct     = (gesture_c1 / multi_c1 - 1) * 100,
-        diff_c2_pct     = (gesture_c2 / multi_c2 - 1) * 100
+        a_c0 = exp(b_Intercept + 0.5 * b_modality1),
+        a_c1 = exp(b_Intercept + 0.5 * b_modality1 + b_correction2M1),
+        a_c2 = exp(b_Intercept + 0.5 * b_modality1 + b_correction2M1 + b_correction3M2),
+        b_c0 = exp(b_Intercept - 0.5 * b_modality1),
+        b_c1 = exp(b_Intercept - 0.5 * b_modality1 + b_correction2M1),
+        b_c2 = exp(b_Intercept - 0.5 * b_modality1 + b_correction2M1 + b_correction3M2),
+        a_abs_c0_c1 = a_c1 - a_c0,
+        a_abs_c1_c2 = a_c2 - a_c1,
+        b_abs_c0_c1 = b_c1 - b_c0,
+        b_abs_c1_c2 = b_c2 - b_c1,
+        diff_c0_pct = (a_c0 / b_c0 - 1) * 100,
+        diff_c1_pct = (a_c1 / b_c1 - 1) * 100,
+        diff_c2_pct = (a_c2 / b_c2 - 1) * 100
       )
     
     cat("  Predicted effort (median [95% HDI]):\n")
-    print_result(mod_corr, "gesture_c0", "  Gesture c0:")
-    print_result(mod_corr, "gesture_c1", "  Gesture c1:")
-    print_result(mod_corr, "gesture_c2", "  Gesture c2:")
-    print_result(mod_corr, "multi_c0",   "  Multimodal c0:")
-    print_result(mod_corr, "multi_c1",   "  Multimodal c1:")
-    print_result(mod_corr, "multi_c2",   "  Multimodal c2:")
+    print_result(mod_corr, "a_c0", paste0("  ", mod_a, " c0:"))
+    print_result(mod_corr, "a_c1", paste0("  ", mod_a, " c1:"))
+    print_result(mod_corr, "a_c2", paste0("  ", mod_a, " c2:"))
+    print_result(mod_corr, "b_c0", paste0("  ", mod_b, " c0:"))
+    print_result(mod_corr, "b_c1", paste0("  ", mod_b, " c1:"))
+    print_result(mod_corr, "b_c2", paste0("  ", mod_b, " c2:"))
     cat("\n  Absolute increase per step:\n")
-    print_result(mod_corr, "gest_abs_c0_c1",  "  Gesture c0→c1:")
-    print_result(mod_corr, "gest_abs_c1_c2",  "  Gesture c1→c2:")
-    print_result(mod_corr, "multi_abs_c0_c1", "  Multimodal c0→c1:")
-    print_result(mod_corr, "multi_abs_c1_c2", "  Multimodal c1→c2:")
-    cat("\n  Gesture vs multimodal at each step (%):\n")
+    print_result(mod_corr, "a_abs_c0_c1", paste0("  ", mod_a, " c0→c1:"))
+    print_result(mod_corr, "a_abs_c1_c2", paste0("  ", mod_a, " c1→c2:"))
+    print_result(mod_corr, "b_abs_c0_c1", paste0("  ", mod_b, " c0→c1:"))
+    print_result(mod_corr, "b_abs_c1_c2", paste0("  ", mod_b, " c1→c2:"))
+    cat(paste0("\n  ", mod_a, " vs ", mod_b, " at each step (%):\n"))
     print_result(mod_corr, "diff_c0_pct", "  c0:", pct = TRUE)
     print_result(mod_corr, "diff_c1_pct", "  c1:", pct = TRUE)
     print_result(mod_corr, "diff_c2_pct", "  c2:", pct = TRUE)
     
     traj_long <- mod_corr |>
-      select(.draw, gesture_c0:multi_c2) |>
+      select(.draw, a_c0, a_c1, a_c2, b_c0, b_c1, b_c2) |>
       tidyr::pivot_longer(
-        cols     = gesture_c0:multi_c2,
-        names_to = c("modality", "correction"), names_sep = "_",
+        cols      = a_c0:b_c2,
+        names_to  = c("mod_key", "correction"),
+        names_sep = "_",
         values_to = "effort"
       ) |>
       mutate(
         correction = factor(correction, levels = c("c0", "c1", "c2")),
-        modality   = factor(modality, levels = c("gesture", "multi"),
-                            labels = c("gesture", "multimodal"))
+        modality   = factor(mod_key,
+                            levels = c("a", "b"),
+                            labels = modalities)
       )
     
   } else {
@@ -2760,18 +2763,30 @@ targeted_comparisons_bfi <- function(model, type = c("two_modality", "three_moda
          x = "% of total variance", y = NULL)
   
   # ── Assemble grid ───────────────────────────────────────────────────────────
-  top_row    <- plots$modality_diff        | plots$modality_trajectory
-  middle_row <- plots$bfi_trajectory       | plots$effort_group_trajectory
-  bottom_row <- plot_spacer() | wrap_elements(plots$variance_decomp) | plot_spacer()
+  
+  quarto_theme <- theme(
+    plot.title    = element_text(size = 11, face = "bold"),
+    plot.subtitle = element_text(size = 9,  colour = "grey40"),
+    axis.title    = element_text(size = 9),
+    axis.text     = element_text(size = 8),
+    legend.title  = element_text(size = 9),
+    legend.text   = element_text(size = 8)
+  )
+  
+  plots <- lapply(plots, function(p) p + quarto_theme)
+  
+  top_row    <- plots$modality_diff    | plots$modality_trajectory
+  middle_row <- plots$bfi_trajectory   | plots$effort_group_trajectory
+  bottom_row <- plot_spacer() | plots$variance_decomp | plot_spacer()
   
   final <- (top_row / middle_row / bottom_row) +
-    plot_layout(heights = c(1, 1, 0.7)) +
+    plot_layout(heights = c(1, 1, 0.8)) +
     plot_annotation(
       title    = paste0("Targeted comparisons (BFI) — ", dv_label),
       subtitle = "Median ± 89% and 95% HDI",
       theme    = theme(
-        plot.title    = element_text(size = 14, face = "bold"),
-        plot.subtitle = element_text(size = 11, colour = "grey40")
+        plot.title    = element_text(size = 13, face = "bold"),
+        plot.subtitle = element_text(size = 10, colour = "grey40")
       )
     )
   
