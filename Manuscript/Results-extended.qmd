@@ -1,0 +1,575 @@
+---
+title: "..."
+engine: knitr
+standalone: true
+execute:
+  enabled: true
+---
+
+# 3\. Results
+
+```{r}
+
+#| label: setup-general
+#| include: false
+#| echo: false
+#| warning: false
+#| message: false
+
+library(here)
+library(gt)
+library(dplyr)
+
+source(here::here("helper.R"))
+
+```
+
+## 3.1 Hypothesis 1
+
+For each of the six dependent variables, we report estimates from Model 3, which offered the best balance between convergence diagnostics (Rhat \< 1.01, bulk ESS \> 1000\) and out-of-sample predictive performance (ELPD-LOO) among Models 1–3. Table X summarizes the key parameters from Model 3 across all six dependent variables, and Figure 1 shows posterior predictions of effort across correction phases by modality. Following a model-comparison rather than model-selection logic (McElreath, 2020), we additionally draw on Model 2 for correlations between random intercepts and slopes, and on Model 4 for pre-registered interactions; both are not estimated in Model 3 by design. Estimates of the primary effects remained stable across Models 1–4, indicating that our findings are robust to random effects specification. As expected, Model 0 showed notably larger correction-effect estimates, since with only the primary predictor in the model, correction absorbs variance that Models 1–4 partition into covariates and random slopes. Full outputs for all models are reported in the Supplementary Material; substantive between-model differences are flagged in the main text as they arise 
+
+### 3.1.1 Cumulative effort
+
+#### Arm torque change (integral)
+
+```{r}
+#| label: setup-torque-cum
+#| include: false
+
+m1_tc <- readRDS(here::here("06_Analysis_Modeling/models/h1.m1_torq_cum.rds"))
+m3_tc <- readRDS(here::here("06_Analysis_Modeling/models/h1.m3_torq_cum.rds"))
+
+c1_tc      <- fe(m3_tc, "correction2M1")
+c2_tc      <- fe(m3_tc, "correction3M2")
+xpr_tc     <- fe(m3_tc, "expressibility_z")
+xpr_2sd_tc <- fe_2sd(m3_tc, "expressibility_z")
+
+# modality1 raw coefficient (gesture vs grand mean)
+mod_tc          <- fe(m3_tc, "modality1")
+# gesture vs multimodal full contrast (deviation coding × 2)
+mod_ges_mm_tc   <- fe_contrast(m3_tc, "modality1", multiplier = 2)
+# same from m1 for precision-artefact comparison
+mod_m1_tc       <- fe_contrast(m1_tc, "modality1", multiplier = 2)
+
+vpc_tc        <- vpc(m3_tc, c(concept = "concept", dyad = "SessionID", ppt = "pcn_ID"))
+re_concept_tc <- re_sd(m3_tc, "concept")
+re_dyad_tc    <- re_sd(m3_tc, "SessionID")
+re_ppt_tc     <- re_sd(m3_tc, "pcn_ID")
+re_ppt_c1_tc  <- re_sd(m3_tc, "pcn_ID", "correction2M1")
+re_ppt_mod_tc <- re_sd(m3_tc, "pcn_ID", "modality1")
+re_con_mod_tc <- re_sd(m3_tc, "concept", "modality1")
+
+```
+
+Cumulative upper-limb effort, measured as an integral of arm net torque change, reliably increased across both corrections. The first correction (c1) elicited ~`r pct(c1_tc$pct)` more effort than baseline (95% CrI: `r cri_pct(c1_tc$pct_lo, c1_tc$pct_hi)`), and the second correction (c2) elicited a further ~`r pct(c2_tc$pct)` more effort than the first (95% CrI: `r cri_pct(c2_tc$pct_lo, c2_tc$pct_hi)`). In other words, when participants had to repair their original message, they exerted more sustained upper-limb effort than at baseline and more again on the second attempt, though the second escalation was smaller than the first. Notably, despite the population-level effect, participants did vary in how strongly they responded to the first correction (SD = `r fmt_sd(re_ppt_c1_tc["med"])` `r cri_sd(re_ppt_c1_tc["lo"], re_ppt_c1_tc["hi"])`). All estimates are averaged across modalities and reported at mean values of all continuous predictors.
+
+Additional predictor also showed credible negative effect: concept expressibility. More expressible concepts required less effort: a 1 SD increase in expressibility predicted ~`r pct(xpr_tc$pct)` less cumulative arm torque change (95% CrI: `r cri_pct(xpr_tc$pct_lo, xpr_tc$pct_hi)`), averaged across
+modalities and at mean covariate values. Across the range of our stimulus set, this means that producing a low-expressibility concept (2 SD below the mean) required ~`r pct(xpr_2sd_tc)` more cumulative upper-limb effort than producing a high-expressibility concept (2 SD above the mean). 
+
+The fixed effect of modality on cumulative arm torque was positive in direction but not credible in Model 3 (`r pct(mod_tc$pct)`, 95% CRI `r cri_pct(mod_tc$pct_lo, mod_tc$pct_hi)`), indicating no reliable average difference in effort between gestural and multimodal communication attempts (gesture vs. multimodal contrast: ~`r pct(mod_ges_mm_tc$pct)`, 95% CRI `r cri_pct(mod_ges_mm_tc$pct_lo, mod_ges_mm_tc$pct_hi)`). Notably, a simpler model without random slopes for modality (Model 1) did yield a credible positive effect (`r pct(mod_m1_tc$pct)`, 95% CRI `r cri_pct(mod_m1_tc$pct_lo, mod_m1_tc$pct_hi)`); however, this appears to reflect spurious precision rather than a genuine signal. Once by-participant and by-concept variation in the modality effect was modelled explicitly, the random slope SDs for modality were themselves substantial - `r fmt_sd(re_ppt_mod_tc["med"])` `r cri_sd(re_ppt_mod_tc["lo"], re_ppt_mod_tc["hi"])` across participants and `r fmt_sd(re_con_mod_tc["med"])` `r cri_sd(re_con_mod_tc["lo"], re_con_mod_tc["hi"])` across concepts. This suggests that while there may be a weak average tendency toward greater effort in gesture, the modality effect is highly heterogeneous: it varies considerably depending on who is communicating and what concept is being conveyed.
+
+Substantial variance in cumulative upper-limb effort was distributed across all three grouping levels. Concepts differed most in their baseline effort (SD = `r fmt_sd(re_concept_tc["med"])` `r cri_sd(re_concept_tc["lo"], re_concept_tc["hi"])`, accounting for ~`r pct(vpc_tc["concept"])` total variance), followed by dyads (SD = `r fmt_sd(re_dyad_tc["med"])` `r cri_sd(re_dyad_tc["lo"], re_dyad_tc["hi"])`, ~`r pct(vpc_tc["dyad"])`), and participants (SD = `r fmt_sd(re_ppt_tc["med"])` `r cri_sd(re_ppt_tc["lo"], re_ppt_tc["hi"])`, ~`r pct(vpc_tc["ppt"])`). Notably, ~`r pct(vpc_tc["resid"])` of the total variance remained unexplained by the Model's predictors and grouping structure, suggesting that additional sources of variation in upper-limb effort are not captured by our measured variables.
+
+#### Amplitude envelope (integral)
+
+```{r}
+#| label: setup-envelope-cum
+#| include: false
+
+m2_ec <- readRDS(here::here("06_Analysis_Modeling/models/h1.m2_env_cum.rds"))
+m3_ec <- readRDS(here::here("06_Analysis_Modeling/models/h1.m3_env_cum.rds"))
+m4_ec <- readRDS(here::here("06_Analysis_Modeling/models/h1.m4_env_cum.rds"))
+
+c1_ec      <- fe(m3_ec, "correction2M1")
+c2_ec      <- fe(m3_ec, "correction3M2")
+xpr_ec     <- fe(m3_ec, "expressibility_z")
+xpr_2sd_ec <- fe_2sd(m3_ec, "expressibility_z")
+# modality1 = vocal-only vs grand mean; ×2 gives full vocal-only vs multimodal contrast
+mod_ec     <- fe_contrast(m3_ec, "modality1", multiplier = 2)
+
+# verify param names with: fixef(m4_ec)
+fam_c1_ec <- fe(m4_ec, "correction2M1:Familiarity")
+fam_c2_ec <- fe(m4_ec, "correction3M2:Familiarity")
+
+vpc_ec        <- vpc(m3_ec, c(ppt = "pcn_ID", concept = "concept", dyad = "SessionID"))
+re_concept_ec <- re_sd(m3_ec, "concept")
+re_dyad_ec    <- re_sd(m3_ec, "SessionID")
+re_ppt_ec     <- re_sd(m3_ec, "pcn_ID")
+re_ppt_xpr_ec <- re_sd(m3_ec, "pcn_ID", "expressibility_z")
+re_ppt_mod_ec <- re_sd(m3_ec, "pcn_ID", "modality1")
+re_con_mod_ec <- re_sd(m3_ec, "concept", "modality1")
+mod_xpr_m4_ec <- fe(m4_ec, "modality1:expressibility_z")
+
+# verify param names with: VarCorr(m2_ec)$pcn_ID$cor
+cor_ppt_xpr_ec <- re_cor(m2_ec, "pcn_ID", param1 = "Intercept", param2 = "expressibility_z")
+```
+
+Cumulative vocal effort, measured as an integral of acoustic amplitude envelope, increased across both corrections. The first correction (c1) elicited ~`r pct(c1_ec$pct)` more effort than baseline (95% CrI: `r cri_pct(c1_ec$pct_lo, c1_ec$pct_hi)`), and the second correction (c2) elicited a further ~`r pct(c2_ec$pct)` increase over the first (95% CrI: `r cri_pct(c2_ec$pct_lo, c2_ec$pct_hi)`). In other words, when participants had to repair their original message, they produced louder vocalizations than at baseline and louder again on the second attempt, though the second escalation was smaller than the first.
+
+Two predictors also showed credible effects on cumulative vocal effort: concept expressibility and modality. More expressible concepts required less effort: a 1 SD increase in expressibility predicted ~`r pct(xpr_ec$pct)` less effort (95% CrI: `r cri_pct(xpr_ec$pct_lo, xpr_ec$pct_hi)`), averaged across modalities and at mean covariate values. Across the range of our stimulus set, this translates to ~`r pct(xpr_2sd_ec)` difference between low-expressibility concepts (2 SD below the mean) and high-expressibility concepts (2 SD above the mean). Second, modality was also meaningful, with participants investing ~`r pct(mod_ec$pct)` more vocal effort in the vocal-only condition than in the multimodal condition (95% CrI: `r cri_pct(mod_ec$pct_lo, mod_ec$pct_hi)`). In other words, when participants could not use gestures alongside vocalizations, they their vocal effort was more pronounced. Familiarity, extraversion, and trial number did not show credible effects. 
+
+Model 4 further revealed a credible interaction between modality and concept expressibility (`r fmt_fe(m4_ec, "modality1:expressibility_z")`): the negative relationship between expressibility and effort was attenuated in vocal-only trials relative to multimodal trials, suggesting that when participants engage in vocalizations without movement, the effort exerted is more independent of how easy a concept is to express. Additionaly, there was a small but credible interaction between familiarity and correction, with effects in opposite directions across two corrections. Familiar dyads showed a larger increase in vocal effort at the first correction (c0→c1: +`r pct(fam_c1_ec$pct)`, 95% CrI `r cri_pct(fam_c1_ec$pct_lo, fam_c1_ec$pct_hi)`), but a smaller increase at the second correction (c1→c2: -`r pct(fam_c2_ec$pct)`, 95% CrI `r cri_pct(fam_c2_ec$pct_lo, fam_c2_ec$pct_hi)`). Importantly, the negative coefficient at the second correction reflects a reduction in the size of the increase rather than a reversal: familiar dyads still produce more vocal effort at the second correction than at the first, just less so than non-familiar dyads. This pattern suggests that familiar dyads invest more vocal effort in the first correction and tone down the effort at the second correction, possibly because the first increase payed off as a better guessing score that does not necessitate so strong escalation. 
+
+The largest contribution to variance in cumulative vocal effort came from participants, who differed substantially in their baseline vocal effort (SD = `r fmt_sd(re_ppt_ec["med"])` `r cri_sd(re_ppt_ec["lo"], re_ppt_ec["hi"])`, ~`r pct(vpc_ec["ppt"])` of total variance), and concepts (SD = `r fmt_sd(re_concept_ec["med"])` `r cri_sd(re_concept_ec["lo"], re_concept_ec["hi"])`, ~`r pct(vpc_ec["concept"])`). Dyad-level variance was both smaller and more uncertain (SD = `r fmt_sd(re_dyad_ec["med"])` `r cri_sd(re_dyad_ec["lo"], re_dyad_ec["hi"])`, ~`r pct(vpc_ec["dyad"])`). Random slopes indicated that participants varied in their sensitivity to expressibility (SD = `r fmt_sd(re_ppt_xpr_ec["med"])` `r cri_sd(re_ppt_xpr_ec["lo"], re_ppt_xpr_ec["hi"])`) and to modality (SD = `r fmt_sd(re_ppt_mod_ec["med"])` `r cri_sd(re_ppt_mod_ec["lo"], re_ppt_mod_ec["hi"])`), and concepts varied in their sensitivity to modality (SD = `r fmt_sd(re_con_mod_ec["med"])` `r cri_sd(re_con_mod_ec["lo"], re_con_mod_ec["hi"])`).
+Importantly, Model 2 revealed a credible negative correlation between participant-level baseline effort and expressibility sensitivity (r = `r fmt_cor(cor_ppt_xpr_ec["med"])`, 95% CrI `r cri_cor(cor_ppt_xpr_ec["lo"], cor_ppt_xpr_ec["hi"])`): participants who exerted more vocal effort overall showed smaller modulation of effort by concept expressibility. No other correlations between random intercepts and slopes reached credibility. Taken together, however, ~`r pct(vpc_ec["resid"])` of the total variance in cumulative vocal effort remains unexplained by the model's predictors and grouping structure, suggesting that further sources of variation are not captured by the variables.
+
+```{r}
+
+#| label: my-plot
+#| echo: false
+#| fig.cap: Figure 1. Posterior predictions of effort across correction phases by modality. Predicted effort is shown for the six dependent variables: cumulative measures (top row, integrals) and instantaneous measures (bottom row, peak means) of arm torque, amplitude envelope, and centre of pressure (COP). Distributions show posterior means with 89% and 95% highest density intervals (HDIs) from Model 3, with raw trial-level values overlaid as jittered points. Dashed lines mark the baseline (c0) posterior mean for each modality as a reference. c0 = baseline performance, c1 = first correction, c2 = second correction.
+
+knitr::include_graphics(here::here("06_Analysis_Modeling/plots/correction_raincloud_grid.png"))
+```
+
+#### Change in center of pressure (integral)
+
+```{r}
+#| label: setup-cop-cum
+#| include: false
+
+m2_cc <- readRDS(here::here("06_Analysis_Modeling/models/h1.m2_cop_cum.rds"))
+m3_cc <- readRDS(here::here("06_Analysis_Modeling/models/h1.m3_cop_cum.rds"))
+m4_cc <- readRDS(here::here("06_Analysis_Modeling/models/h1.m4_cop_cum.rds"))
+
+c1_cc      <- fe(m3_cc, "correction2M1")
+c2_cc      <- fe(m3_cc, "correction3M2")
+ext_cc     <- fe(m3_cc, "BFI_extra")
+ext_2sd_cc <- fe_2sd(m3_cc, "BFI_extra")
+
+# modality1 = gesture vs grand mean, modality2 = multimodal vs grand mean
+# vocal-only implied as -(modality1 + modality2)
+# go vs vo = 2*go + mm; mm vs vo = go + 2*mm
+go_vs_vo_cc <- fe_derived_contrast(m3_cc, "modality1", "modality2", w1 = 2,  w2 = 1)
+mm_vs_vo_cc <- fe_derived_contrast(m3_cc, "modality1", "modality2", w1 = 1,  w2 = 2)
+
+# verify param name with: fixef(m4_cc)
+fam_c2_cc <- fe(m4_cc, "correction3M2:Familiarity")
+
+vpc_cc           <- vpc(m3_cc, c(concept = "concept", dyad = "SessionID", ppt = "pcn_ID"))
+re_concept_cc    <- re_sd(m3_cc, "concept")
+re_dyad_cc       <- re_sd(m3_cc, "SessionID")
+re_ppt_cc        <- re_sd(m3_cc, "pcn_ID")
+re_ppt_mod_go_cc  <- re_sd(m3_cc, "pcn_ID",  "modality1")
+re_ppt_mod_mm_cc  <- re_sd(m3_cc, "pcn_ID",  "modality2")
+re_ppt_mod_voc_cc <- re_sd_implicit_sum(m3_cc, "pcn_ID")
+re_con_mod_go_cc  <- re_sd(m3_cc, "concept", "modality1")
+re_con_mod_mm_cc  <- re_sd(m3_cc, "concept", "modality2")
+re_con_mod_voc_cc <- re_sd_implicit_sum(m3_cc, "concept")
+
+# verify param names with: VarCorr(m2_cc)$concept$cor
+cor_con_go_cc  <- re_cor(m2_cc, "concept", param1 = "Intercept", param2 = "modality1")
+cor_con_mm_cc  <- re_cor(m2_cc, "concept", param1 = "Intercept", param2 = "modality2")
+cor_con_voc_cc <- re_cor_implicit_sum(m2_cc, "concept", param1 = "Intercept")
+```
+
+Cumulative postural effort, measured as the integral of center of pressure change (COPc) across the trial, increased reliably across both corrections. The first correction (c1) elicited ~`r pct(c1_cc$pct)` more effort than baseline (95% CrI: `r cri_pct(c1_cc$pct_lo, c1_cc$pct_hi)`), and the second correction (c2) elicited a further ~`r pct(c2_cc$pct)` increase over the first (95% CrI: `r cri_pct(c2_cc$pct_lo, c2_cc$pct_hi)`). Similar to upper-limb and vocal effort, the magnitude of the increase slowed down across two corrections, indicating that postural effort continued to increase  across both correction attempts but at slightly slower rate at the second attempt. All estimates are averaged across modalities and reported at mean values of all continuous predictors.
+
+Two further predictors showed reliable effects on cumulative postural effort: extraversion and modality. More extroverted participants engaged in more cumulative postural effort: a 1-SD increase in extraversion predicted ~`r pct(ext_cc$pct)` more COPc (95% CrI: `r cri_pct(ext_cc$pct_lo, ext_cc$pct_hi)`). Across the range of our sample, this means that a highly introverted person (2 SD below the mean) engaged in ~`r pct(ext_2sd_cc)` less cumulative postural effort than a highly extroverted person (2 SD above the mean). Modality had a particularly strong effect: direct contrasts confirm that conditions involving bodily movement elicited substantially more postural effort than the vocal-only condition (gesture-only vs. vocal-only: ~`r pct(go_vs_vo_cc$pct)` more, 95% CrI: `r cri_pct(go_vs_vo_cc$pct_lo, go_vs_vo_cc$pct_hi)`; multimodal vs. vocal-only: ~`r pct(mm_vs_vo_cc$pct)`, 95% CrI: `r cri_pct(mm_vs_vo_cc$pct_lo, mm_vs_vo_cc$pct_hi)`), while the gesture-only and multimodal conditions did not differ credibly from each other. This pattern reflects the simple fact that arm movements increase demands on posture-related effort. Familiarity and trial number did not show credible effects.
+
+Model 4 additionally showed a small but credible negative interaction between familiarity and the second correction (c1→c2: -`r pct(fam_c2_cc$pct)` relative to the average correction effect, 95% CrI: `r cri_pct(fam_c2_cc$pct_lo, fam_c2_cc$pct_hi)`). As with the envelope finding, the negative coefficient reflects the reduction in the size of the increase rather than a reversal: familiar dyads still showed more cumulative postural effort in the second correction compared to the first correction, but their escalation was attenuated relative to non-familiar dyads. This pattern echoes the vocal-effort interaction in suggesting that familiar dyads may reach a plateau sooner across correction attempts.
+
+The contribution to variance in cumulative postural effort was equally distributed between concepts (SD = `r fmt_sd(re_concept_cc["med"])` `r cri_sd(re_concept_cc["lo"], re_concept_cc["hi"])`, ~`r pct(vpc_cc["concept"])` of total variance), dyads (SD = `r fmt_sd(re_dyad_cc["med"])` `r cri_sd(re_dyad_cc["lo"], re_dyad_cc["hi"])`, ~`r pct(vpc_cc["dyad"])`), and participants (SD = `r fmt_sd(re_ppt_cc["med"])` `r cri_sd(re_ppt_cc["lo"], re_ppt_cc["hi"])`, ~`r pct(vpc_cc["ppt"])`). Random slopes indicated that participants varied substantially in their sensitivity to modality (gesture-only: SD = `r fmt_sd(re_ppt_mod_go_cc["med"])` `r cri_sd(re_ppt_mod_go_cc["lo"], re_ppt_mod_go_cc["hi"])`; vocal: SD = `r fmt_sd(re_ppt_mod_voc_cc["med"])` `r cri_sd(re_ppt_mod_voc_cc["lo"], re_ppt_mod_voc_cc["hi"])`; multimodal: SD = `r fmt_sd(re_ppt_mod_mm_cc["med"])` `r cri_sd(re_ppt_mod_mm_cc["lo"], re_ppt_mod_mm_cc["hi"])`), and concepts varied to a smaller extent (gesture-only: SD = `r fmt_sd(re_con_mod_go_cc["med"])` `r cri_sd(re_con_mod_go_cc["lo"], re_con_mod_go_cc["hi"])`; vocal-only: SD = `r fmt_sd(re_con_mod_voc_cc["med"])` `r cri_sd(re_con_mod_voc_cc["lo"], re_con_mod_voc_cc["hi"])`; multimodal: SD = `r fmt_sd(re_con_mod_mm_cc["med"])` `r cri_sd(re_con_mod_mm_cc["lo"], re_con_mod_mm_cc["hi"])`). Importantly, Model 2 revealed credible positive correlations between concept-level baseline effort and modality sensitivity (gesture-only: r = `r fmt_cor(cor_con_go_cc["med"])`, 95% CrI: `r cri_cor(cor_con_go_cc["lo"], cor_con_go_cc["hi"])`; vocal-only: r = `r fmt_cor(cor_con_voc_cc["med"])`, 95% CrI: `r cri_cor(cor_con_voc_cc["lo"], cor_con_voc_cc["hi"])`; multimodal: r = `r fmt_cor(cor_con_mm_cc["med"])`, 95% CrI: `r cri_cor(cor_con_mm_cc["lo"], cor_con_mm_cc["hi"])`), indicating that concepts associated with more postural effort overall also showed larger modality-driven differences in postural effort. No other correlations between random intercepts and slopes reached credibility. Finally, ~`r pct(vpc_cc["resid"])` of the total variance in cumulative postural effort remained unexplained by the model's predictors and grouping structure, suggesting that further sources of variation are not captured by the variables.
+
+Taken together, the three cumulative measures consistently support H1 for cumulative effort: arm torque, amplitude envelope, and COP change all increased reliably from baseline to the first correction (between ~`r pct(min(c1_tc$pct, c1_ec$pct, c1_cc$pct))` and ~`r pct(max(c1_tc$pct, c1_ec$pct, c1_cc$pct))`) and from the first to the second correction (between ~`r pct(min(c2_tc$pct, c2_ec$pct, c2_cc$pct))` and ~`r pct(max(c2_tc$pct, c2_ec$pct, c2_cc$pct))`). The increase was largest for upper-limb effort, indicating that arms are the most flexibly recruited modality during repair. The consistency of these increases across three independent measures
+of bodily effort indicates that repair imposes a substantive physical cost on interlocutors who are responsible for resolving misunderstanding (in this case performers), supporting the hypothesis that misunderstanding recruit more physical effort investment.
+
+```{r}
+
+#| label: my-plot
+#| echo: false
+#| fig.cap: Figure 2. Posterior distribution of correction contrast
+
+knitr::include_graphics(here::here("06_Analysis_Modeling/plots/correction_posteriors_grid.png"))
+```
+
+---
+
+### 3.1.2 Instantenous effort
+#### Arm torque change (peak mean)
+
+```{r}
+#| label: setup-torque-ins
+#| include: false
+
+m2_ti <- readRDS(here::here("06_Analysis_Modeling/models/h1.m2_torq_in.rds"))
+m3_ti <- readRDS(here::here("06_Analysis_Modeling/models/h1.m3_torq_in.rds"))
+
+vpc_ti        <- vpc(m3_ti, c(ppt = "pcn_ID", concept = "concept", dyad = "SessionID"))
+re_ppt_ti     <- re_sd(m3_ti, "pcn_ID")
+re_concept_ti <- re_sd(m3_ti, "concept")
+
+c1_ti      <- fe(m3_ti, "correction2M1")
+# modality1 = gesture vs grand mean; ×2 gives full gesture vs multimodal contrast
+re_ppt_mod_ti <- re_sd(m3_ti, "pcn_ID", "modality1")
+
+```
+
+None of the predictors showed reliable effects on instantaneous upper-limb effort. Neither the correction phase nor any of the covariates (modality, expressibility, familiarity, extraversion, trial number) produced effects whose 95% credible intervals excluded zero. The trend for first correction is positive but includes zero (`r fmt_fe_pct(c1_ti)`). This null finding is itself informative: while cumulative upper-limb effort increased substantially across corrections (Section 3.1.1 above), the *peak* magnitude of torque change per movement event remained stable. The positive trend might point to opportunistic use of magnitude in cases where magnitude is relevant for resolving misunderstanding.
+
+Variance was distributed between participants (SD = `r fmt_sd(re_ppt_ti["med"])` `r cri_sd(re_ppt_ti["lo"], re_ppt_ti["hi"])`, ~`r pct(vpc_ti["ppt"])` of total variance) and concepts (SD = `r fmt_sd(re_concept_ti["med"])` `r cri_sd(re_concept_ti["lo"], re_concept_ti["hi"])`, ~`r pct(vpc_ti["concept"])`), though to a lesser extent than for cumulative measures. Participants also varied in modality sensitivity (SD = `r fmt_sd(re_ppt_mod_ti["med"])` `r cri_sd(re_ppt_mod_ti["lo"], re_ppt_mod_ti["hi"])`), but baseline effort did not correlate credibly with modality sensitivity in Model 2. Crucially, ~`r pct(vpc_ti["resid"])` of the total variance in instantaneous upper-limb effort remains unexplained by the model's predictors and grouping structure, the largest residual share of any measure we examined.
+
+#### Amplitude envelope (peak mean)
+
+```{r}
+#| label: setup-envelope-ins
+#| include: false
+
+m2_ei <- readRDS(here::here("06_Analysis_Modeling/models/h1.m2_env_in.rds"))
+m3_ei <- readRDS(here::here("06_Analysis_Modeling/models/h1.m3_env_in.rds"))
+m4_ei <- readRDS(here::here("06_Analysis_Modeling/models/h1.m4_env_in.rds"))
+
+c1_ei      <- fe(m3_ei, "correction2M1")
+c2_ei      <- fe(m3_ei, "correction3M2")
+xpr_ei     <- fe(m3_ei, "expressibility_z")
+xpr_2sd_ei <- fe_2sd(m3_ei, "expressibility_z")
+# modality1 = vocal-only vs grand mean; ×2 gives full vocal-only vs multimodal contrast
+mod_ei     <- fe_contrast(m3_ei, "modality1", multiplier = 2)
+
+# verify param name with: fixef(m4_ei)
+fam_c1_ei <- fe(m4_ei, "correction2M1:Familiarity")
+
+vpc_ei        <- vpc(m3_ei, c(concept = "concept", ppt = "pcn_ID", dyad = "SessionID"))
+re_concept_ei <- re_sd(m3_ei, "concept")
+re_ppt_ei     <- re_sd(m3_ei, "pcn_ID")
+re_dya_ei     <- re_sd(m3_ei, "SessionID")
+re_ppt_xpr_ei <- re_sd(m3_ei, "pcn_ID", "expressibility_z")
+re_ppt_mod_ei <- re_sd(m3_ei, "pcn_ID", "modality1")
+re_con_mod_ei <- re_sd(m3_ei, "concept", "modality1")
+```
+
+Instantaneous vocal effort showed a small trend of *decrease* in the first correction, although with credible interval including zero. Compared to baseline, peak vocal effort decreased by ~`r pct(c1_ei$pct)` at the first correction (95% CrI: `r cri_pct(c1_ei$pct_lo, c1_ei$pct_hi)`). The second correction showed no further credible change. In other words, when participants repaired their original message for the first time, they produced quieter vocalizations than at baseline. This pattern runs counter to H1 and contrasts with the cumulative envelope findings (Section 3.1.1): although participants produced more *total* vocal effort during repair, the *peak* loudness of their vocalizations did not increase.
+
+Notably, Model 4 suggests that the effect of first attempt is connected to familiarity, indicated by a small but credible positive interaction (c0→c1: +`r pct(fam_c1_ei$pct)` relative to the average correction effect, 95% CrI: `r cri_pct(fam_c1_ei$pct_lo, fam_c1_ei$pct_hi)`). The positive coefficient indicates that familiar dyads showed less of a decrease in peak vocal effort at the first correction than non-familiar dyads. This pattern suggests that familiar dyads may not down-regulate peak vocal effort as steeply during early repair, perhaps because they are more open to maintaining effort levels with someone they know.
+
+Two predictors showed reliable effects on instantaneous vocal effort: expressibility and modality. More expressible concepts were associated with less peak vocal effort: a 1 SD increase in expressibility predicted ~`r pct(xpr_ei$pct)` less peak envelope (95% CrI: `r cri_pct(xpr_ei$pct_lo, xpr_ei$pct_hi)`). Across the range of our stimulus set, this means that producing a low-expressibility concept (2 SD below the mean) required ~`r pct(xpr_2sd_ei)` more peak vocal effort than producing a high-expressibility concept (2 SD above the mean). In terms of modality, participants invested ~`r pct(mod_ei$pct)` more peak vocal effort in the vocal-only condition than in the multimodal condition (95% CrI: `r cri_pct(mod_ei$pct_lo, mod_ei$pct_hi)`) — when participants could not use gesture, their peak vocal magnitude was higher. Familiarity, extraversion, and trial number did not show credible effects.
+
+Variance in peak vocal effort was distributed across all three grouping levels, with the largest contribution from concepts (SD = `r fmt_sd(re_concept_ei["med"])` `r cri_sd(re_concept_ei["lo"], re_concept_ei["hi"])`, `r pct(vpc_ei["concept"])` of total variance), followed by participants (SD = `r fmt_sd(re_ppt_ei["med"])` `r cri_sd(re_ppt_ei["lo"], re_ppt_ei["hi"])`, `r pct(vpc_ei["ppt"])`) and dyads (SD = `r fmt_sd(re_dya_ei["med"])` `r cri_sd(re_dya_ei["lo"], re_dya_ei["hi"])`, ~`r pct(re_dya_ei["ppt"])`). Random slopes also revealed that participants varied in their sensitivity to expressibility of concepts (SD = `r fmt_sd(re_ppt_xpr_ei["med"])` `r cri_sd(re_ppt_xpr_ei["lo"], re_ppt_xpr_ei["hi"])`) and modality (SD = `r fmt_sd(re_ppt_mod_ei["med"])` `r cri_sd(re_ppt_mod_ei["lo"], re_ppt_mod_ei["hi"])`), and concepts varied in their sensitivity to modality (SD = `r fmt_sd(re_con_mod_ei["med"])` `r cri_sd(re_con_mod_ei["lo"], re_con_mod_ei["hi"])`). No correlations between random intercepts and slopes reached credibility in Model 2. Notably, ~`r pct(vpc_ei["resid"])` of the total variance remained unexplained by the
+model.
+
+#### Change in center of pressure (peak mean)
+
+```{r}
+#| label: setup-cop-ins
+#| include: false
+
+m2_ci <- readRDS(here::here("06_Analysis_Modeling/models/h1.m2_cop_in.rds"))
+m3_ci <- readRDS(here::here("06_Analysis_Modeling/models/h1.m3_cop_in.rds"))
+m4_ci <- readRDS(here::here("06_Analysis_Modeling/models/h1.m4_cop_in.rds"))
+
+c1_ci      <- fe(m3_ci, "correction2M1")
+ext_ci     <- fe(m3_ci, "BFI_extra")
+ext_2sd_ci <- fe_2sd(m3_ci, "BFI_extra")
+
+# modality1 = gesture vs grand mean, modality2 = multimodal vs grand mean
+# vocal-only implied as -(modality1 + modality2)
+go_vs_vo_ci <- fe_derived_contrast(m3_ci, "modality1", "modality2", w1 = 2,  w2 = 1)
+mm_vs_vo_ci <- fe_derived_contrast(m3_ci, "modality1", "modality2", w1 = 1,  w2 = 2)
+mm_vs_go_ci <- fe_derived_contrast(m3_ci, "modality1", "modality2", w1 = -1, w2 = 1)
+
+# verify param name with: fixef(m4_ci)
+int_mm_xpr_ci <- fe(m4_ci, "modality2:expressibility_z")
+
+vpc_ci           <- vpc(m3_ci, c(concept = "concept", ppt = "pcn_ID", dyad = "SessionID"))
+re_concept_ci    <- re_sd(m3_ci, "concept")
+re_ppt_ci        <- re_sd(m3_ci, "pcn_ID")
+re_dyad_ci       <- re_sd(m3_ci, "SessionID")
+re_ppt_mod_go_ci  <- re_sd(m3_ci, "pcn_ID",  "modality1")
+re_ppt_mod_mm_ci  <- re_sd(m3_ci, "pcn_ID",  "modality2")
+re_ppt_mod_voc_ci <- re_sd_implicit_sum(m3_ci, "pcn_ID")
+
+re_con_mod_go_ci  <- re_sd(m3_ci, "concept", "modality1")
+re_con_mod_mm_ci  <- re_sd(m3_ci, "concept", "modality2")
+re_con_mod_voc_ci <- re_sd_implicit_sum(m3_ci, "concept")
+
+# verify param names with: VarCorr(m2_ci)$concept$cor
+cor_con_go_ci  <- re_cor(m2_ci, "concept", param1 = "Intercept", param2 = "modality1")
+cor_con_mm_ci  <- re_cor(m2_ci, "concept", param1 = "Intercept", param2 = "modality2")
+cor_con_voc_ci <- re_cor_implicit_sum(m2_ci, "concept", param1 = "Intercept")
+```
+
+Similarly to instantaneous vocal effort, instantaneous postural effort showed a small trend of *decrease* in the first correction, but with credible interval including zero (`r fmt_fe_pct(c1_ci)`). The second correction showed no further credible change. This pattern runs counter to H1 for instantaneous effort and contrasts with the cumulative postural finding: though *total* postural effort increased during repair, the average *peak* of postural shifts remains unaltered.
+
+Two predictors also showed credible effects on instantaneous postural effort: extraversion and modality. More extroverted participants showed greater peak COP change: a 1-SD increase in extraversion was associated with ~`r pct(ext_ci$pct)` higher peak postural effort (95% CrI: `r cri_pct(ext_ci$pct_lo, ext_ci$pct_hi)`). Across our sample, this means that a highly introverted person (2 SD below the mean) engaged in ~`r pct(ext_2sd_ci)` less effort than a highly extroverted person (2 SD above the mean). Modality had a strong effect, similar in pattern to the cumulative finding. Direct contrasts revealed substantial differences between conditions involving bodily movement and the vocal condition (gesture-only vs. vocal-only: ~`r pct(go_vs_vo_ci$pct)`, 95% CrI: `r cri_pct(go_vs_vo_ci$pct_lo, go_vs_vo_ci$pct_hi)`; multimodal vs. vocal-only: ~`r pct(mm_vs_vo_ci$pct)`,
+95% CrI: `r cri_pct(mm_vs_vo_ci$pct_lo, mm_vs_vo_ci$pct_hi)`), and the multimodal condition elicited `r pct(mm_vs_go_ci$pct)` more peak postural effort than gesture-only (95% CrI: `r cri_pct(mm_vs_go_ci$pct_lo, mm_vs_go_ci$pct_hi)`). The fact that multimodal exceeds gesture-only here, despite producing similar cumulative effort, suggests that combining modalities recruits bursts of postural effort even though it does not increase total postural adaptation. Familiarity and trial number did not show credible effects.
+
+Model 4 additionally revealed a small but credible positive interaction between multimodal condition and expressibility (`r fmt_fe_pct(int_mm_xpr_ci)`), suggesting that more expressible concepts drove more instantaneous postural effort specifically in the multimodal condition. This pattern suggests that the multimodal condition may amplify expressibility-driven differences in postural adjustments, perhaps because participants engaged in more decisive, high-magnitude movements when they have multiple modalities to coordinate.
+
+Variance was distributed across concepts and participants, with smaller dyad-level contributions. Concepts differed most in their baseline postural effort (SD = `r fmt_sd(re_concept_ci["med"])` `r cri_sd(re_concept_ci["lo"], re_concept_ci["hi"])`, ~`r pct(vpc_ci["concept"])` of total variance), followed by participants (SD = `r fmt_sd(re_ppt_ci["med"])` `r cri_sd(re_ppt_ci["lo"], re_ppt_ci["hi"])`, ~`r pct(vpc_ci["ppt"])`); dyad-level variance was small but present (SD = `r fmt_sd(re_dyad_ci["med"])` `r cri_sd(re_dyad_ci["lo"], re_dyad_ci["hi"])`, ~`r pct(vpc_ci["dyad"])`). Random slopes showed that participants also varied in their sensitivity to modality (gesture-only: SD = `r fmt_sd(re_ppt_mod_go_ci["med"])` `r cri_sd(re_ppt_mod_go_ci["lo"], re_ppt_mod_go_ci["hi"])`; vocal-only: SD = `r fmt_sd(re_ppt_mod_voc_ci["med"])` `r cri_sd(re_ppt_mod_voc_ci["lo"], re_ppt_mod_voc_ci["hi"])` ; multimodal: SD = `r fmt_sd(re_ppt_mod_mm_ci["med"])` `r cri_sd(re_ppt_mod_mm_ci["lo"], re_ppt_mod_mm_ci["hi"])`), and concepts varied to a lesser extent (gesture-only: SD = `r fmt_sd(re_con_mod_go_ci["med"])` `r cri_sd(re_con_mod_go_ci["lo"], re_con_mod_go_ci["hi"])`; vocal-only: r = `r fmt_cor(cor_con_voc_ci["med"])`, 95% CrI: `r cri_cor(cor_con_voc_ci["lo"], cor_con_voc_ci["hi"])`; multimodal: SD = `r fmt_sd(re_con_mod_mm_ci["med"])` `r cri_sd(re_con_mod_mm_ci["lo"], re_con_mod_mm_ci["hi"])`). Importantly, Model 2 showed credible positive correlations between concept-level baseline effort and modality sensitivity (gesture-only: r = `r fmt_cor(cor_con_go_ci["med"])`, 95% CrI: `r cri_cor(cor_con_go_ci["lo"], cor_con_go_ci["hi"])`; vocal-only: r = `r fmt_cor(cor_con_voc_ci["med"])`, 95% CrI: `r cri_cor(cor_con_voc_ci["lo"], cor_con_voc_ci["hi"])`; multimodal: r = `r fmt_cor(cor_con_mm_ci["med"])`, 95% CrI: `r cri_cor(cor_con_mm_ci["lo"], cor_con_mm_ci["hi"])`), indicating that concepts associated with more peak postural effort also showed larger modality-driven differences. No other correlations between random intercepts and slopes reached credibility. `r pct(vpc_ci["resid"])` of the total variance remained unexplained by the model's parameters.
+
+```{r}
+
+#| label: my-plot
+#| echo: false
+#| fig.cap: Figure 3. Posterior distribution of covariates
+
+knitr::include_graphics(here::here("06_Analysis_Modeling/plots/fixed_effects_posteriors_grid.png"))
+```
+
+Taken together, the three instantaneous measures present a strikingly different picture from the cumulative ones. While cumulative effort increased reliably across corrections for all three measures (Section 3.1.1), instantaneous effort in first attempt trended in both directions but did not reach credibility for any of the three measures: arm torque change trended positively, while envelope and COPc trended towards a decrease in effort. Effort was not reliably predicted by the second attempt in any direction. This dissociation does not support H1 for instantaneous effort. Although correction imposes a clear cumulative cost on speakers, it does not appear to recruit greater peak intensity per movement or per vocalization. Instead, the pattern is consistent with a redistribution of effort across more time and more movement units rather than a concentrated scaling-up of force or amplitude — we explore this further in the Discussion.
+
+```{r paper-table-h1}
+#| echo: false
+#| message: false
+#| warning: false
+
+# Define summaries path 
+summaries <- here("06_Analysis_Modeling", "summaries")
+
+paper_table <- read.csv(
+  here(summaries, "paper_table_H1.csv"),
+  fileEncoding = "UTF-8"
+)
+
+paper_table |>
+  gt(rowname_col = "parameter", groupname_col = "term_type") |>
+  tab_header(title = "Table 1. Model estimates for H1") |>
+  cols_hide("term_type")
+
+```
+
+------ 
+
+## 3.2 Hypothesis 2
+
+```{r}
+#| label: setup-prev-answer
+#| include: false
+
+
+h2m_ct <- readRDS(here::here("06_Analysis_Modeling/models/h2.m1b_torq_cum.rds"))
+h2m_it <- readRDS(here::here("06_Analysis_Modeling/models/h2.m1b_torq_in.rds"))
+
+prev_an_ct_ci <- fe(h2m_ct, "answer_prev_dist_z")
+prev_an_it_ci <- fe(h2m_it, "answer_prev_dist_z")
+
+```
+
+H2 predicted that a higher degree of misunderstanding would require a performer to engage in more effortful correction. We operationalized the degree of misunderstanding as the cosine similarity between the guesser’s previous answer and the target meaning (lower similarity \= more misunderstanding), and tested this prediction across six dependent variables (like H1, Section 3.1). 
+
+The data partially support H2: the effect of cosine similarity on effort is restricted to the cummulative upper-limb effort which decreased credibly as the previous answer became more similar to the target. For each 1-SD increase in cosine similarity, cumulative upper-limb effort decreased by ~`r pct(prev_an_ct_ci$pct)` (95% CrI: `r cri_pct(prev_an_ct_ci$pct_lo, prev_an_ct_ci$pct_hi)`). Instantaneous upper-limb effort trended in similar manner, but the estimated interval included 0 (`r fmt_fe_pct(prev_an_it_ci)`). Neither cumulative nor instantaneous vocal effort showed a credible relationship with cosine similarity, and the same was true for both postural measures (see Figure 2). 
+
+```{r}
+
+#| label: my-plot
+#| echo: false
+#| fig.cap: Figure 4. Posterior distribution of the effect of previous cosine similarity on current effort
+
+knitr::include_graphics(here::here("06_Analysis_Modeling/plots/h2_prev_answer_effect.png"))
+```
+
+Vocal and postural effort thus appear to be insensitive to the degree of misunderstanding the performer is responding to, whereas sustained upper-limb effort adapts reliably to the amount of repair work the previous answer requires. That instantenous upper-limb effort does not seemed to be coupled to common ground on population level in a similar manner can be possibly attributed to the fact that peak magnitude serves a specific function: while in some cases answer may facilitate the performer to engage in more bursty movement, it is not a one-fits-all solution. 
+
+Importantly, the upper-limb cosine similarity effect was uniformly distributed across the sample: variance in random slopes for cosine similarity was negligible across all three grouping levels (concepts, participants, and dyads), indicating that the effect did not vary systematically by performer, dyad, or concept. This consistency suggests that arm movement responds to common ground in a relatively automatic way, rather than reflecting strategic adaptation by particular individuals or for particular concepts. Full model output for all six dependent variables is reported in Table X.
+
+```{r paper-table-h2}
+#| echo: false
+#| message: false
+#| warning: false
+
+# Define summaries path 
+summaries <- here("06_Analysis_Modeling", "summaries")
+
+paper_table <- read.csv(
+  here(summaries, "paper_table_H2.csv"),
+  fileEncoding = "UTF-8"
+)
+
+paper_table |>
+  gt(rowname_col = "parameter", groupname_col = "term_type") |>
+  tab_header(title = "Table 1. Model estimates for H2") |>
+  cols_hide("term_type")
+
+```
+
+## 3.3 Exploratory analysis
+
+### 3.3.1 Baseline trial effort
+
+```{r}
+#| label: baseline-effort
+#| include: false
+
+# ── Load models ────────────────────────────────────────────────────────────────
+e2_cum_torq <- readRDS(here::here("06_Analysis_Modeling/models/e1.m1_torq_cum.rds"))
+e2_cum_env  <- readRDS(here::here("06_Analysis_Modeling/models/e1.m1_env_cum.rds"))
+e2_cum_cop  <- readRDS(here::here("06_Analysis_Modeling/models/e1.m1_cop_cum.rds"))
+e2_in_torq  <- readRDS(here::here("06_Analysis_Modeling/models/e1.m1_torq_in.rds"))
+e2_in_env   <- readRDS(here::here("06_Analysis_Modeling/models/e1.m1_env_in.rds"))
+e2_in_cop   <- readRDS(here::here("06_Analysis_Modeling/models/e1.m1_cop_in.rds"))
+
+# ── Helper: predicted % change at ±N SD of baseline ───────────────────────────
+# Assumes model has: correction2M1 + baseline_z + correction2M1:baseline_z
+fe_at_baseline <- function(model, correction_param, interaction_param, sd_val) {
+  fe  <- fixef(model, summary = FALSE)
+  log_change <- fe[, correction_param] + sd_val * fe[, interaction_param]
+  x   <- ci(log_change)
+  list(
+    pct    = (exp(x["med"]) - 1) * 100,
+    pct_lo = (exp(x["lo"])  - 1) * 100,
+    pct_hi = (exp(x["hi"])  - 1) * 100
+  )
+}
+
+# ── Correction main effects ────────────────────────────────────────────────────
+c1_cum_torq <- fe(e2_cum_torq, "correction2M1")
+c1_cum_env  <- fe(e2_cum_env,  "correction2M1")
+c1_cum_cop  <- fe(e2_cum_cop,  "correction2M1")
+c1_in_torq  <- fe(e2_in_torq,  "correction2M1")
+c1_in_env   <- fe(e2_in_env,   "correction2M1")
+c1_in_cop   <- fe(e2_in_cop,   "correction2M1")
+
+# ── Interaction at ±2SD of baseline ───────────────────────────────────────────
+# Check exact param names with: rownames(fixef(e2_in_torq))
+# Adjust interaction_param strings below to match
+
+# Instantaneous torque × baseline
+int_in_torq_lo <- fe_at_baseline(e2_in_torq, "correction2M1",
+                                  "correction2M1:baseline_torque_in_z", -2)
+int_in_torq_hi <- fe_at_baseline(e2_in_torq, "correction2M1",
+                                  "correction2M1:baseline_torque_in_z",  2)
+
+# Instantaneous envelope × baseline
+int_in_env_lo  <- fe_at_baseline(e2_in_env, "correction2M1",
+                                  "correction2M1:baseline_env_in_z",  -2)
+int_in_env_hi  <- fe_at_baseline(e2_in_env, "correction2M1",
+                                  "correction2M1:baseline_env_in_z",   2)
+
+# Instantaneous COP × baseline
+int_in_cop_lo  <- fe_at_baseline(e2_in_cop, "correction2M1",
+                                  "correction2M1:baseline_cop_in_z",  -2)
+int_in_cop_hi  <- fe_at_baseline(e2_in_cop, "correction2M1",
+                                  "correction2M1:baseline_cop_in_z",   2)
+```
+
+A model with interaction between correction and average participant baseline (c0) effort further enlightens the relationship between effort and correction. While for cumulative effort measures for vocalisations, upper-limb movement and posture, effort at correction does not interact with average baseline effort of a participant; the instantaneous effort measures draw a different picture.
+
+For peak torque change, there is a strong negative interaction between first correction and baseline average effort. Participants who tend to start with performance that is much less effortful (−2 SD from the mean) escalate on correction by `r fmt_fe_pct(int_in_torq_lo)`, while those who start with very effortful performance continue with correction that is `r fmt_fe_pct(int_in_torq_hi)` less effortful. Similarly, the direction of instantaneous vocal effort in first correction depends on average baseline vocal effort. Participants who tend to start with much less effortful performance (−2 SD) escalate on correction by `r fmt_fe_pct(int_in_env_lo)`, while those who start with very effortful performance continue with correction that is `r fmt_fe_pct(int_in_env_hi)` less effortful. For postural effort, the effect is similar but to a lesser degree: participants who start on average with high effort performance (+2 SD above the mean) decrease their postural effort by `r fmt_fe_pct(int_in_cop_hi)` in the first correction, while participants starting with low effort performance (−2 SD from the mean) engage in corrections that are unaltered, indicated by the interval including zero (`r fmt_fe_pct(int_in_cop_lo)`). Second correction remains unaltered, indicated by the estimated interval including zero.
+
+```{r}
+
+#| label: my-plot
+#| echo: false
+#| fig.cap: Figure 5. Correction effect differences by average baseline effort
+
+knitr::include_graphics(here::here("06_Analysis_Modeling/plots/correction_by_avg_baseline_interaction.png"))
+```
+
+### 3.3.2 Time as covariate
+
+```{r}
+#| label: setup-model-with-time
+#| include: false
+
+e2_m <- readRDS(here::here("06_Analysis_Modeling/models/e2.m1_torq_cum.rds"))
+
+c1_tc_wt      <- fe(e2_m, "correction2M1")
+
+```
+
+Additional models for cumulative dependent variables with trial duration as a predictor revealed substantial attenuation of the main effect of correction on the effort. The effect of first correction (c0 → c1) on the upper-limb effort remains credibly positive, but decreased from ~`r pct(c1_tc$pct)` to ~`r pct(c1_tc_wt$pct)` (95% CrI: `r cri_pct(c1_tc_wt$pct_lo, c1_tc_wt$pct_hi)`), suggesting that almost two thirds of the increase in upper-limb effort can be attributed to accumulation of more - but not larger - arm movement over time. Second correction (c1 → c2) of upper-limb effort and both corrections for vocal and postural effort are driven purely by duration, as neither of the predictors is now reliably different from zero. Additionally, expressibility across all three variables, and modality effect for upper-limb effort, too, can be attributed to duration, as in these cases, the predictors do not yield credible estimates. 
+
+### 3.3.3 Communicative gain
+
+```{r extract-all, include=FALSE}
+
+# ── Models ────────────────────────────────────────────────────────────────────
+e3_m1        <- readRDS(here::here("06_Analysis_Modeling/models/e3.m1.rds"))
+e3_m1b       <- readRDS(here::here("06_Analysis_Modeling/models/e3.m1b.rds"))
+fit_sim      <- readRDS(here::here("06_Analysis_Modeling/models/e3.m3_att.rds"))
+fit_sim_inst <- readRDS(here::here("06_Analysis_Modeling/models/e3.m3b_att.rds"))
+fit_ord      <- readRDS(here::here("06_Analysis_Modeling/models/e3.m4_att.rds"))
+fit_ord_inst <- readRDS(here::here("06_Analysis_Modeling/models/e3.m4b_att.rds"))
+fit_ever     <- readRDS(here::here("06_Analysis_Modeling/models/e3.m6_att.rds"))
+fit_ever_inst <- readRDS(here::here("06_Analysis_Modeling/models/e3.m6b_att.rds"))
+
+
+CAT_C0    <- 1
+CAT_NEVER <- 4
+
+# ── First-attempt resolution (cumulative) ─────────────────────────────────────
+nd_base      <- make_nd_base(e3_m1)
+epred_base   <- posterior_epred(e3_m1, newdata = nd_base, re_formula = NA)
+idx          <- setNames(seq_along(nd_base$modality), nd_base$modality)
+
+p_gest_base  <- ci(epred_base[, idx["gesture"]])
+p_mm_base    <- ci(epred_base[, idx["multimodal"]])
+p_voc_base   <- ci(epred_base[, idx["vocal"]])
+
+dp_gest_vs_mm <- ci(epred_base[, idx["gesture"]]    - epred_base[, idx["multimodal"]])
+dp_voc_vs_mm  <- ci(epred_base[, idx["vocal"]]      - epred_base[, idx["multimodal"]])
+
+# ── Answer similarity (cumulative) ────────────────────────────────────────────
+nd_base_sim <- make_nd_base(
+  fit_sim,
+  extra_zero_vars   = "answer_prev_dist_z",
+  extra_factor_refs = list(correction = levels(fit_sim$data$correction)[1])
+)
+epred_base_sim <- posterior_epred(fit_sim, newdata = nd_base_sim, re_formula = NA)
+idx_sim        <- setNames(seq_along(nd_base_sim$modality), nd_base_sim$modality)
+
+p_gest_sim_base <- ci(epred_base_sim[, idx_sim["gesture"]])
+p_mm_sim_base   <- ci(epred_base_sim[, idx_sim["multimodal"]])
+p_voc_sim_base  <- ci(epred_base_sim[, idx_sim["vocal"]])
+
+dp_gest_vs_mm_sim <- ci(epred_base_sim[, idx_sim["gesture"]]    - epred_base_sim[, idx_sim["multimodal"]])
+dp_voc_vs_mm_sim  <- ci(epred_base_sim[, idx_sim["vocal"]]      - epred_base_sim[, idx_sim["multimodal"]])
+
+# ── Resolution speed / ordinal (cumulative) ───────────────────────────────────
+nd_base_ord <- make_nd_base(fit_ord)
+epred_ord   <- posterior_epred(fit_ord, newdata = nd_base_ord, re_formula = NA)
+idx_ord     <- setNames(seq_along(nd_base_ord$modality), nd_base_ord$modality)
+
+pc0_gest_ord  <- ci(ord_cat(epred_ord, idx_ord["gesture"],    CAT_C0))
+pc0_mm_ord    <- ci(ord_cat(epred_ord, idx_ord["multimodal"], CAT_C0))
+pc0_voc_ord   <- ci(ord_cat(epred_ord, idx_ord["vocal"],      CAT_C0))
+pnev_mm_ord   <- ci(ord_cat(epred_ord, idx_ord["multimodal"], CAT_NEVER))
+pnev_voc_ord  <- ci(ord_cat(epred_ord, idx_ord["vocal"],      CAT_NEVER))
+
+dp_c0_gest_vs_mm_ord <- ci(ord_cat(epred_ord, idx_ord["gesture"],    CAT_C0) -
+                            ord_cat(epred_ord, idx_ord["multimodal"], CAT_C0))
+dp_c0_voc_vs_mm_ord  <- ci(ord_cat(epred_ord, idx_ord["vocal"],      CAT_C0) -
+                            ord_cat(epred_ord, idx_ord["multimodal"], CAT_C0))
+
+# Credible interaction: envelope × vocal (instantaneous ordinal)
+fe_ord_inst          <- fixef(fit_ord_inst, summary = FALSE)
+nd_base_ord_inst     <- make_nd_base_in(fit_ord_inst)
+epred_ord_inst       <- posterior_epred(fit_ord_inst, newdata = nd_base_ord_inst, re_formula = NA)
+
+b_env_x_voc_ord_inst      <- ci(fe_ord_inst[, "modality3:envelope_in_log_c"])
+prod_c0_env_voc_ord_inst  <- productivity_ord(fit_ord_inst, nd_base_ord_inst, "vocal", "envelope_in_log_c", CAT_C0)
+prod_nev_env_voc_ord_inst <- productivity_ord(fit_ord_inst, nd_base_ord_inst, "vocal", "envelope_in_log_c", CAT_NEVER)
+
+# ── Ever resolved ─────────────────────────────────────────────────────────────
+nd_base_ever <- make_nd_base(fit_ever)
+epred_ever   <- posterior_epred(fit_ever, newdata = nd_base_ever, re_formula = NA)
+idx_ever     <- setNames(seq_along(nd_base_ever$modality), nd_base_ever$modality)
+
+p_gest_ever <- ci(epred_ever[, idx_ever["gesture"]])
+p_mm_ever   <- ci(epred_ever[, idx_ever["multimodal"]])
+p_voc_ever  <- ci(epred_ever[, idx_ever["vocal"]])
+
+dp_gest_vs_mm_ever <- ci(epred_ever[, idx_ever["gesture"]]    - epred_ever[, idx_ever["multimodal"]])
+dp_voc_vs_mm_ever  <- ci(epred_ever[, idx_ever["vocal"]]      - epred_ever[, idx_ever["multimodal"]])
+
+# Credible interactions (instantaneous ever-resolved)
+nd_base_ever_inst  <- make_nd_base_in(fit_ever_inst)
+epred_ever_inst    <- posterior_epred(fit_ever_inst, newdata = nd_base_ever_inst, re_formula = NA)
+idx_ever_inst      <- setNames(seq_along(nd_base_ever_inst$modality), nd_base_ever_inst$modality)
+
+fe_ever_inst           <- fixef(fit_ever_inst, summary = FALSE)
+b_env_x_mm_ever_inst   <- ci(fe_ever_inst[, "modality1:envelope_in_log_c"])
+b_copc_x_voc_ever_inst <- ci(fe_ever_inst[, "modality3:copc_in_log_c"])
+
+prod_ever_inst_env_mm   <- productivity(fit_ever_inst, nd_base_ever_inst, "multimodal", "envelope_in_log_c")
+prod_ever_inst_copc_voc <- productivity(fit_ever_inst, nd_base_ever_inst, "vocal",      "copc_in_log_c")
+
+p_voc_ever_inst_copc_lo <- ci(pred_at(fit_ever_inst, nd_base_ever_inst, "vocal", "copc_in_log_c", -1))
+p_voc_ever_inst_copc_hi <- ci(pred_at(fit_ever_inst, nd_base_ever_inst, "vocal", "copc_in_log_c",  1))
+
+```
+
+Across all outcomes, modality was the dominant predictor of communicative success, with multimodal trials consistently outperforming unimodal ones. For first-attempt resolution, predicted P(resolved) was `r fmt_p(p_mm_base["med"], p_mm_base["lo"], p_mm_base["hi"])` for multimodal, `r fmt_p(p_gest_base["med"], p_gest_base["lo"], p_gest_base["hi"])` for gesture-only, and `r fmt_p(p_voc_base["med"], p_voc_base["lo"], p_voc_base["hi"])` for vocal-only trials; the vocal vs. multimodal contrast was credible (ΔP = `r fmt_dp(dp_voc_vs_mm["med"])` [`r fmt_dp(dp_voc_vs_mm["lo"])`, `r fmt_dp(dp_voc_vs_mm["hi"])`]), while gesture vs. multimodal was not (ΔP = `r fmt_dp(dp_gest_vs_mm["med"])` [`r fmt_dp(dp_gest_vs_mm["lo"])`, `r fmt_dp(dp_gest_vs_mm["hi"])`]). A similar pattern held for answer similarity, where predicted cosine similarity was `r fmt_p(p_mm_sim_base["med"], p_mm_sim_base["lo"], p_mm_sim_base["hi"])` for multimodal, `r fmt_p(p_gest_sim_base["med"], p_gest_sim_base["lo"], p_gest_sim_base["hi"])` for gesture-only, and `r fmt_p(p_voc_sim_base["med"], p_voc_sim_base["lo"], p_voc_sim_base["hi"])` for vocal-only (gesture vs. multimodal: `r fmt_dp(dp_gest_vs_mm_sim["med"])` [`r fmt_dp(dp_gest_vs_mm_sim["lo"])`, `r fmt_dp(dp_gest_vs_mm_sim["hi"])`]; vocal vs. multimodal: `r fmt_dp(dp_voc_vs_mm_sim["med"])` [`r fmt_dp(dp_voc_vs_mm_sim["lo"])`, `r fmt_dp(dp_voc_vs_mm_sim["hi"])`]). For resolution speed, multimodal trials had the highest predicted probability of first-attempt resolution (P(c0) = `r fmt_p(pc0_mm_ord["med"], pc0_mm_ord["lo"], pc0_mm_ord["hi"])`) and the lowest probability of never resolving (P(never) = `r fmt_p(pnev_mm_ord["med"], pnev_mm_ord["lo"], pnev_mm_ord["hi"])`), compared to gesture (P(c0) = `r fmt_p(pc0_gest_ord["med"], pc0_gest_ord["lo"], pc0_gest_ord["hi"])`) and vocal (P(c0) = `r fmt_p(pc0_voc_ord["med"], pc0_voc_ord["lo"], pc0_voc_ord["hi"])`; P(never) = `r fmt_p(pnev_voc_ord["med"], pnev_voc_ord["lo"], pnev_voc_ord["hi"])`); notably, both unimodal conditions were similarly and credibly disadvantaged relative to multimodal (gesture: ΔP(c0) = `r fmt_dp(dp_c0_gest_vs_mm_ord["med"])` [`r fmt_dp(dp_c0_gest_vs_mm_ord["lo"])`, `r fmt_dp(dp_c0_gest_vs_mm_ord["hi"])`]; vocal: ΔP(c0) = `r fmt_dp(dp_c0_voc_vs_mm_ord["med"])` [`r fmt_dp(dp_c0_voc_vs_mm_ord["lo"])`, `r fmt_dp(dp_c0_voc_vs_mm_ord["hi"])`]). For eventual resolution, P(ever resolved) was `r fmt_p(p_mm_ever["med"], p_mm_ever["lo"], p_mm_ever["hi"])` for multimodal, `r fmt_p(p_gest_ever["med"], p_gest_ever["lo"], p_gest_ever["hi"])` for gesture-only, and `r fmt_p(p_voc_ever["med"], p_voc_ever["lo"], p_voc_ever["hi"])` for vocal-only (gesture vs. multimodal: ΔP = `r fmt_dp(dp_gest_vs_mm_ever["med"])` [`r fmt_dp(dp_gest_vs_mm_ever["lo"])`, `r fmt_dp(dp_gest_vs_mm_ever["hi"])`]; vocal vs. multimodal: ΔP = `r fmt_dp(dp_voc_vs_mm_ever["med"])` [`r fmt_dp(dp_voc_vs_mm_ever["lo"])`, `r fmt_dp(dp_voc_vs_mm_ever["hi"])`]). Across outcomes, the gesture vs. multimodal contrast was consistently non-credible — with the notable exception of resolution speed, where both unimodal conditions were similarly disadvantaged — while the vocal vs. multimodal contrast was credible or near-credible throughout.
+
+Effort, by contrast, did not systematically predict communicative success. The large majority of effort × modality slopes were not credible, and productivity gradients were small and inconsistent in direction across channels and modalities. A small number of exceptions emerged. Higher instantaneous vocal amplitude at first attempt was associated with faster resolution in vocal-only trials (ΔP(c0) = `r fmt_dp(prod_c0_env_voc_ord_inst["med"])`; ΔP(never) = `r fmt_dp(prod_nev_env_voc_ord_inst["med"])`; β = `r fmt_b(b_env_x_voc_ord_inst["med"], b_env_x_voc_ord_inst["lo"], b_env_x_voc_ord_inst["hi"])`). Greater postural displacement at first attempt predicted higher P(ever resolved) in vocal-only trials (β = `r fmt_b(b_copc_x_voc_ever_inst["med"], b_copc_x_voc_ever_inst["lo"], b_copc_x_voc_ever_inst["hi"])`; ΔP = `r fmt_dp(prod_ever_inst_copc_voc["med"])`; from P = `r fmt_p(p_voc_ever_inst_copc_lo["med"], p_voc_ever_inst_copc_lo["lo"], p_voc_ever_inst_copc_lo["hi"])` at −1 SD to `r fmt_p(p_voc_ever_inst_copc_hi["med"], p_voc_ever_inst_copc_hi["lo"], p_voc_ever_inst_copc_hi["hi"])` at +1 SD), suggesting that postural effort may index speaker commitment in a way that carries communicative consequence even when gesture is unavailable. In the opposite direction, higher peak vocal amplitude in multimodal trials was associated with lower P(ever resolved) (β = `r fmt_b(b_env_x_mm_ever_inst["med"], b_env_x_mm_ever_inst["lo"], b_env_x_mm_ever_inst["hi"])`; ΔP = `r fmt_dp(prod_ever_inst_env_mm["med"])`), consistent with louder vocalisation marking communicative difficulty when gesture is already available. Total effort — summed across all correction attempts — did not predict final semantic similarity in either the cumulative or instantaneous model, and the effort × concept number interactions were uniformly non-credible, indicating that this null relationship did not change as dyads gained experience with the task.
+

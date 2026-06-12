@@ -1,0 +1,2519 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.26">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>…</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-597958c53c93a607afca12fd375c57ed.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-60d4398d82fec002ccec76571ed06d15.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../style.css">
+</head>
+
+<body class="nav-sidebar floating nav-fixed fullcontent quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+        <div class="quarto-navbar-tools tools-end">
+    <div class="dropdown">
+      <a href="" title="" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label=""><i class="bi bi-github"></i></a>
+      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item quarto-navbar-tools-item" href="https://github.com/sarkadava/FLESH_Effort">
+            Source Code
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item quarto-navbar-tools-item" href="https://github.com/sarkadava/FLESH_Effort/issues">
+            Report a Bug
+            </a>
+          </li>
+      </ul>
+    </div>
+</div>
+          <div id="quarto-search" class="" title="Search"></div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">…</li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../online_index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Home</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Manuscript/Methods.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Overview of Methods</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">A. Pre-processing</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../01_XDF_processing/01_Process_XDF.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Pre-Processing I: from XDF to raw files</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../01_XDF_processing/02_Audiosync.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Pre-Processing II: Aligning 16 kHz audio with 48 khZ audio from a second source</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../01_XDF_processing/03_Correct_cuts.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Pre-Processing III: Correcting trials</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../01_XDF_processing/04_Final_wrangle.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Pre-Processing IV: Final checks</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">B. Motion tracking</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../02_MotionTracking_processing/01_Video_preparation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Motion tracking I: Preparation of videos</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../02_MotionTracking_processing/02_Track_OpenPose.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Motion tracking II: 2D pose estimation via OpenPose</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../02_MotionTracking_processing/03_Track_pose2sim_OpenSim.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Motion tracking III: Triangulation via Pose2sim, Inverse kinematics &amp; dynamics via OpenSim</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">C. Data processing</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../03_TS_processing/01_TS_processing_motion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Processing I: Motion tracking and balance</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../03_TS_processing/02_TS_processing_acoustics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Processing II: Acoustics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../03_TS_processing/03_TS_merging.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Processing III: Merging multimodal data</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">D. Feature extraction</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../04_ConceptSimilarity/ConceptNet_similarity.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Computing concept similarity using ConceptNet word embeddings</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../05_TS_featureExtraction/00_Condition_adherence.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Exclusion I: adherence to modality</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../05_TS_featureExtraction/00_Speech_check.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Exclusion I: speech presence</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../05_TS_featureExtraction/01_TS_extraction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Extraction of effort-related features</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../05_TS_featureExtraction/02_Explorations_and_viz.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Visual explorations</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">E. Analysis</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../06_Analysis_Modeling/Bayesian_modeling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Analysis: Modeling the effect of correction on physical effort</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">…</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="results" class="level1">
+<h1>3. Results</h1>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: setup-general</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| include: false</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gt)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"helper.R"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<section id="hypothesis-1" class="level2">
+<h2 class="anchored" data-anchor-id="hypothesis-1">3.1 Hypothesis 1</h2>
+<p>For each of the six dependent variables, we report estimates from Model 3, which offered the best balance between convergence diagnostics (Rhat &lt; 1.01, bulk ESS &gt; 1000) and out-of-sample predictive performance (ELPD-LOO) among Models 1–3. Table X summarizes the key parameters from Model 3 across all six dependent variables, and Figure 1 shows posterior predictions of effort across correction phases by modality. Following a model-comparison rather than model-selection logic (McElreath, 2020), we additionally draw on Model 2 for correlations between random intercepts and slopes, and on Model 4 for pre-registered interactions; both are not estimated in Model 3 by design. Estimates of the primary effects remained stable across Models 1–4, indicating that our findings are robust to random effects specification. As expected, Model 0 showed notably larger correction-effect estimates, since with only the primary predictor in the model, correction absorbs variance that Models 1–4 partition into covariates and random slopes. Full outputs for all models are reported in the Supplementary Material; substantive between-model differences are flagged in the main text as they arise</p>
+<section id="cumulative-effort" class="level3">
+<h3 class="anchored" data-anchor-id="cumulative-effort">3.1.1 Cumulative effort</h3>
+<section id="arm-torque-change-integral" class="level4">
+<h4 class="anchored" data-anchor-id="arm-torque-change-integral">Arm torque change (integral)</h4>
+<p>Cumulative upper-limb effort, measured as an integral of arm net torque change, reliably increased across both corrections. The first correction (c1) elicited ~20.6% more effort than baseline (95% CrI: [14.5%, 27.1%]), and the second correction (c2) elicited a further ~15.2% more effort than the first (95% CrI: [8.1%, 22.6%]). In other words, when participants had to repair their original message, they exerted more sustained upper-limb effort than at baseline and more again on the second attempt, though the second escalation was smaller than the first. Notably, despite the population-level effect, participants did vary in how strongly they responded to the first correction (SD = 0.1 [0.1, 0.2]). All estimates are averaged across modalities and reported at mean values of all continuous predictors.</p>
+<p>Additional predictor also showed credible negative effect: concept expressibility. More expressible concepts required less effort: a 1 SD increase in expressibility predicted ~8.0% less cumulative arm torque change (95% CrI: [-14.6%, -0.9%]), averaged across modalities and at mean covariate values. Across the range of our stimulus set, this means that producing a low-expressibility concept (2 SD below the mean) required ~39.6% more cumulative upper-limb effort than producing a high-expressibility concept (2 SD above the mean).</p>
+<p>The fixed effect of modality on cumulative arm torque was positive in direction but not credible in Model 3 (5.6%, 95% CRI [-1.7%, 13.5%]), indicating no reliable average difference in effort between gestural and multimodal communication attempts (gesture vs.&nbsp;multimodal contrast: ~11.4%, 95% CRI [-3.4%, 28.7%]). Notably, a simpler model without random slopes for modality (Model 1) did yield a credible positive effect (12.2%, 95% CRI [3.0%, 22.2%]); however, this appears to reflect spurious precision rather than a genuine signal. Once by-participant and by-concept variation in the modality effect was modelled explicitly, the random slope SDs for modality were themselves substantial - 0.2 [0.2, 0.3] across participants and 0.2 [0.1, 0.2] across concepts. This suggests that while there may be a weak average tendency toward greater effort in gesture, the modality effect is highly heterogeneous: it varies considerably depending on who is communicating and what concept is being conveyed.</p>
+<p>Substantial variance in cumulative upper-limb effort was distributed across all three grouping levels. Concepts differed most in their baseline effort (SD = 0.4 [0.3, 0.4], accounting for ~27.1% total variance), followed by dyads (SD = 0.3 [0.2, 0.4], ~19.1%), and participants (SD = 0.2 [0.2, 0.3], ~10.0%). Notably, ~43.9% of the total variance remained unexplained by the Model’s predictors and grouping structure, suggesting that additional sources of variation in upper-limb effort are not captured by our measured variables.</p>
+</section>
+<section id="amplitude-envelope-integral" class="level4">
+<h4 class="anchored" data-anchor-id="amplitude-envelope-integral">Amplitude envelope (integral)</h4>
+<p>Cumulative vocal effort, measured as an integral of acoustic amplitude envelope, increased across both corrections. The first correction (c1) elicited ~11.6% more effort than baseline (95% CrI: [7.4%, 16.0%]), and the second correction (c2) elicited a further ~7.3% increase over the first (95% CrI: [2.8%, 12.0%]). In other words, when participants had to repair their original message, they produced louder vocalizations than at baseline and louder again on the second attempt, though the second escalation was smaller than the first.</p>
+<p>Two predictors also showed credible effects on cumulative vocal effort: concept expressibility and modality. More expressible concepts required less effort: a 1 SD increase in expressibility predicted ~8.8% less effort (95% CrI: [-13.5%, -4.0%]), averaged across modalities and at mean covariate values. Across the range of our stimulus set, this translates to ~44.6% difference between low-expressibility concepts (2 SD below the mean) and high-expressibility concepts (2 SD above the mean). Second, modality was also meaningful, with participants investing ~36.0% more vocal effort in the vocal-only condition than in the multimodal condition (95% CrI: [19.6%, 54.6%]). In other words, when participants could not use gestures alongside vocalizations, they their vocal effort was more pronounced. Familiarity, extraversion, and trial number did not show credible effects.</p>
+<p>Model 4 further revealed a credible interaction between modality and concept expressibility (β = +0.09 (95% CrI: [+0.02, +0.17])): the negative relationship between expressibility and effort was attenuated in vocal-only trials relative to multimodal trials, suggesting that when participants engage in vocalizations without movement, the effort exerted is more independent of how easy a concept is to express. Additionaly, there was a small but credible interaction between familiarity and correction, with effects in opposite directions across two corrections. Familiar dyads showed a larger increase in vocal effort at the first correction (c0→c1: +4.4%, 95% CrI [0.6%, 8.4%]), but a smaller increase at the second correction (c1→c2: -5.0%, 95% CrI [-9.0%, -0.9%]). Importantly, the negative coefficient at the second correction reflects a reduction in the size of the increase rather than a reversal: familiar dyads still produce more vocal effort at the second correction than at the first, just less so than non-familiar dyads. This pattern suggests that familiar dyads invest more vocal effort in the first correction and tone down the effort at the second correction, possibly because the first increase payed off as a better guessing score that does not necessitate so strong escalation.</p>
+<p>The largest contribution to variance in cumulative vocal effort came from participants, who differed substantially in their baseline vocal effort (SD = 0.3 [0.3, 0.4], ~26.4% of total variance), and concepts (SD = 0.3 [0.2, 0.3], ~21.1%). Dyad-level variance was both smaller and more uncertain (SD = 0.2 [0.0, 0.3], ~9.2%). Random slopes indicated that participants varied in their sensitivity to expressibility (SD = 0.1 [0.1, 0.1]) and to modality (SD = 0.2 [0.2, 0.3]), and concepts varied in their sensitivity to modality (SD = 0.2 [0.1, 0.2]). Importantly, Model 2 revealed a credible negative correlation between participant-level baseline effort and expressibility sensitivity (r = -0.3, 95% CrI [-0.5, -0.0]): participants who exerted more vocal effort overall showed smaller modulation of effort by concept expressibility. No other correlations between random intercepts and slopes reached credibility. Taken together, however, ~43.2% of the total variance in cumulative vocal effort remains unexplained by the model’s predictors and grouping structure, suggesting that further sources of variation are not captured by the variables.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: my-plot</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig.cap: Figure 1. Posterior predictions of effort across correction phases by modality. Predicted effort is shown for the six dependent variables: cumulative measures (top row, integrals) and instantaneous measures (bottom row, peak means) of arm torque, amplitude envelope, and centre of pressure (COP). Distributions show posterior means with 89% and 95% highest density intervals (HDIs) from Model 3, with raw trial-level values overlaid as jittered points. Dashed lines mark the baseline (c0) posterior mean for each modality as a reference. c0 = baseline performance, c1 = first correction, c2 = second correction.</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"06_Analysis_Modeling/plots/correction_raincloud_grid.png"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="../06_Analysis_Modeling/plots/correction_raincloud_grid.png" class="img-fluid figure-img" width="2400"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="change-in-center-of-pressure-integral" class="level4">
+<h4 class="anchored" data-anchor-id="change-in-center-of-pressure-integral">Change in center of pressure (integral)</h4>
+<p>Cumulative postural effort, measured as the integral of center of pressure change (COPc) across the trial, increased reliably across both corrections. The first correction (c1) elicited ~12.9% more effort than baseline (95% CrI: [8.5%, 17.4%]), and the second correction (c2) elicited a further ~10.0% increase over the first (95% CrI: [5.0%, 15.2%]). Similar to upper-limb and vocal effort, the magnitude of the increase slowed down across two corrections, indicating that postural effort continued to increase across both correction attempts but at slightly slower rate at the second attempt. All estimates are averaged across modalities and reported at mean values of all continuous predictors.</p>
+<p>Two further predictors showed reliable effects on cumulative postural effort: extraversion and modality. More extroverted participants engaged in more cumulative postural effort: a 1-SD increase in extraversion predicted ~9.1% more COPc (95% CrI: [1.5%, 17.0%]). Across the range of our sample, this means that a highly introverted person (2 SD below the mean) engaged in ~29.3% less cumulative postural effort than a highly extroverted person (2 SD above the mean). Modality had a particularly strong effect: direct contrasts confirm that conditions involving bodily movement elicited substantially more postural effort than the vocal-only condition (gesture-only vs.&nbsp;vocal-only: ~313.3% more, 95% CrI: [212.8%, 444.2%]; multimodal vs.&nbsp;vocal-only: ~344.3%, 95% CrI: [235.4%, 486.9%]), while the gesture-only and multimodal conditions did not differ credibly from each other. This pattern reflects the simple fact that arm movements increase demands on posture-related effort. Familiarity and trial number did not show credible effects.</p>
+<p>Model 4 additionally showed a small but credible negative interaction between familiarity and the second correction (c1→c2: -5.0% relative to the average correction effect, 95% CrI: [-9.3%, -0.6%]). As with the envelope finding, the negative coefficient reflects the reduction in the size of the increase rather than a reversal: familiar dyads still showed more cumulative postural effort in the second correction compared to the first correction, but their escalation was attenuated relative to non-familiar dyads. This pattern echoes the vocal-effort interaction in suggesting that familiar dyads may reach a plateau sooner across correction attempts.</p>
+<p>The contribution to variance in cumulative postural effort was equally distributed between concepts (SD = 0.4 [0.3, 0.4], ~23.0% of total variance), dyads (SD = 0.3 [0.2, 0.4], ~18.4%), and participants (SD = 0.3 [0.2, 0.4], ~15.4%). Random slopes indicated that participants varied substantially in their sensitivity to modality (gesture-only: SD = 0.3 [0.2, 0.4]; vocal: SD = 0.5 [0.4, 0.5]; multimodal: SD = 0.4 [0.3, 0.4]), and concepts varied to a smaller extent (gesture-only: SD = 0.3 [0.2, 0.3]; vocal-only: SD = 0.3 [0.3, 0.4]; multimodal: SD = 0.2 [0.1, 0.3]). Importantly, Model 2 revealed credible positive correlations between concept-level baseline effort and modality sensitivity (gesture-only: r = 0.5, 95% CrI: [0.2, 0.7]; vocal-only: r = -0.6, 95% CrI: [-0.7, -0.5]; multimodal: r = 0.3, 95% CrI: [0.0, 0.6]), indicating that concepts associated with more postural effort overall also showed larger modality-driven differences in postural effort. No other correlations between random intercepts and slopes reached credibility. Finally, ~43.1% of the total variance in cumulative postural effort remained unexplained by the model’s predictors and grouping structure, suggesting that further sources of variation are not captured by the variables.</p>
+<p>Taken together, the three cumulative measures consistently support H1 for cumulative effort: arm torque, amplitude envelope, and COP change all increased reliably from baseline to the first correction (between ~11.6% and ~20.6%) and from the first to the second correction (between ~7.3% and ~15.2%). The increase was largest for upper-limb effort, indicating that arms are the most flexibly recruited modality during repair. The consistency of these increases across three independent measures of bodily effort indicates that repair imposes a substantive physical cost on interlocutors who are responsible for resolving misunderstanding (in this case performers), supporting the hypothesis that misunderstanding recruit more physical effort investment.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: my-plot</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig.cap: Figure 2. Posterior distribution of correction contrast</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"06_Analysis_Modeling/plots/correction_posteriors_grid.png"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="../06_Analysis_Modeling/plots/correction_posteriors_grid.png" class="img-fluid figure-img" width="1200"></p>
+</figure>
+</div>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="instantenous-effort" class="level3">
+<h3 class="anchored" data-anchor-id="instantenous-effort">3.1.2 Instantenous effort</h3>
+<section id="arm-torque-change-peak-mean" class="level4">
+<h4 class="anchored" data-anchor-id="arm-torque-change-peak-mean">Arm torque change (peak mean)</h4>
+<p>None of the predictors showed reliable effects on instantaneous upper-limb effort. Neither the correction phase nor any of the covariates (modality, expressibility, familiarity, extraversion, trial number) produced effects whose 95% credible intervals excluded zero. The trend for first correction is positive but includes zero (β = 3.8% (95% CrI: [-0.0%, 7.7%])). This null finding is itself informative: while cumulative upper-limb effort increased substantially across corrections (Section 3.1.1 above), the <em>peak</em> magnitude of torque change per movement event remained stable. The positive trend might point to opportunistic use of magnitude in cases where magnitude is relevant for resolving misunderstanding.</p>
+<p>Variance was distributed between participants (SD = 0.1 [0.1, 0.2], ~8.4% of total variance) and concepts (SD = 0.1 [0.1, 0.2], ~10.9%), though to a lesser extent than for cumulative measures. Participants also varied in modality sensitivity (SD = 0.2 [0.1, 0.2]), but baseline effort did not correlate credibly with modality sensitivity in Model 2. Crucially, ~75.7% of the total variance in instantaneous upper-limb effort remains unexplained by the model’s predictors and grouping structure, the largest residual share of any measure we examined.</p>
+</section>
+<section id="amplitude-envelope-peak-mean" class="level4">
+<h4 class="anchored" data-anchor-id="amplitude-envelope-peak-mean">Amplitude envelope (peak mean)</h4>
+<p>Instantaneous vocal effort showed a small trend of <em>decrease</em> in the first correction, although with credible interval including zero. Compared to baseline, peak vocal effort decreased by ~5.2% at the first correction (95% CrI: [-10.1%, -0.0%]). The second correction showed no further credible change. In other words, when participants repaired their original message for the first time, they produced quieter vocalizations than at baseline. This pattern runs counter to H1 and contrasts with the cumulative envelope findings (Section 3.1.1): although participants produced more <em>total</em> vocal effort during repair, the <em>peak</em> loudness of their vocalizations did not increase.</p>
+<p>Notably, Model 4 suggests that the effect of first attempt is connected to familiarity, indicated by a small but credible positive interaction (c0→c1: +6.3% relative to the average correction effect, 95% CrI: [1.4%, 11.4%]). The positive coefficient indicates that familiar dyads showed less of a decrease in peak vocal effort at the first correction than non-familiar dyads. This pattern suggests that familiar dyads may not down-regulate peak vocal effort as steeply during early repair, perhaps because they are more open to maintaining effort levels with someone they know.</p>
+<p>Two predictors showed reliable effects on instantaneous vocal effort: expressibility and modality. More expressible concepts were associated with less peak vocal effort: a 1 SD increase in expressibility predicted ~13.2% less peak envelope (95% CrI: [-19.4%, -6.5%]). Across the range of our stimulus set, this means that producing a low-expressibility concept (2 SD below the mean) required ~76.2% more peak vocal effort than producing a high-expressibility concept (2 SD above the mean). In terms of modality, participants invested ~58.5% more peak vocal effort in the vocal-only condition than in the multimodal condition (95% CrI: [34.0%, 87.4%]) — when participants could not use gesture, their peak vocal magnitude was higher. Familiarity, extraversion, and trial number did not show credible effects.</p>
+<p>Variance in peak vocal effort was distributed across all three grouping levels, with the largest contribution from concepts (SD = 0.5 [0.4, 0.6], 35.4% of total variance), followed by participants (SD = 0.3 [0.2, 0.3], 12.2%) and dyads (SD = 0.2 [0.0, 0.2], ~NA%). Random slopes also revealed that participants varied in their sensitivity to expressibility of concepts (SD = 0.1 [0.1, 0.1]) and modality (SD = 0.3 [0.2, 0.3]), and concepts varied in their sensitivity to modality (SD = 0.2 [0.2, 0.3]). No correlations between random intercepts and slopes reached credibility in Model 2. Notably, ~48.7% of the total variance remained unexplained by the model.</p>
+</section>
+<section id="change-in-center-of-pressure-peak-mean" class="level4">
+<h4 class="anchored" data-anchor-id="change-in-center-of-pressure-peak-mean">Change in center of pressure (peak mean)</h4>
+<p>Similarly to instantaneous vocal effort, instantaneous postural effort showed a small trend of <em>decrease</em> in the first correction, but with credible interval including zero (β = -2.8% (95% CrI: [-5.7%, 0.2%])). The second correction showed no further credible change. This pattern runs counter to H1 for instantaneous effort and contrasts with the cumulative postural finding: though <em>total</em> postural effort increased during repair, the average <em>peak</em> of postural shifts remains unaltered.</p>
+<p>Two predictors also showed credible effects on instantaneous postural effort: extraversion and modality. More extroverted participants showed greater peak COP change: a 1-SD increase in extraversion was associated with ~6.3% higher peak postural effort (95% CrI: [1.1%, 11.7%]). Across our sample, this means that a highly introverted person (2 SD below the mean) engaged in ~21.6% less effort than a highly extroverted person (2 SD above the mean). Modality had a strong effect, similar in pattern to the cumulative finding. Direct contrasts revealed substantial differences between conditions involving bodily movement and the vocal condition (gesture-only vs.&nbsp;vocal-only: ~147.9%, 95% CrI: [103.3%, 203.3%]; multimodal vs.&nbsp;vocal-only: ~188.7%, 95% CrI: [135.7%, 254.4%]), and the multimodal condition elicited 16.5% more peak postural effort than gesture-only (95% CrI: [15.9%, 16.9%]). The fact that multimodal exceeds gesture-only here, despite producing similar cumulative effort, suggests that combining modalities recruits bursts of postural effort even though it does not increase total postural adaptation. Familiarity and trial number did not show credible effects.</p>
+<p>Model 4 additionally revealed a small but credible positive interaction between multimodal condition and expressibility (β = 9.3% (95% CrI: [1.1%, 18.2%])), suggesting that more expressible concepts drove more instantaneous postural effort specifically in the multimodal condition. This pattern suggests that the multimodal condition may amplify expressibility-driven differences in postural adjustments, perhaps because participants engaged in more decisive, high-magnitude movements when they have multiple modalities to coordinate.</p>
+<p>Variance was distributed across concepts and participants, with smaller dyad-level contributions. Concepts differed most in their baseline postural effort (SD = 0.3 [0.2, 0.3], ~29.6% of total variance), followed by participants (SD = 0.2 [0.2, 0.3], ~16.9%); dyad-level variance was small but present (SD = 0.1 [0.0, 0.2], ~2.9%). Random slopes showed that participants also varied in their sensitivity to modality (gesture-only: SD = 0.2 [0.2, 0.3]; vocal-only: SD = 0.3 [0.3, 0.4] ; multimodal: SD = 0.2 [0.2, 0.3]), and concepts varied to a lesser extent (gesture-only: SD = 0.2 [0.1, 0.2]; vocal-only: r = -0.8, 95% CrI: [-0.9, -0.7]; multimodal: SD = 0.2 [0.1, 0.2]). Importantly, Model 2 showed credible positive correlations between concept-level baseline effort and modality sensitivity (gesture-only: r = 0.7, 95% CrI: [0.4, 0.9]; vocal-only: r = -0.8, 95% CrI: [-0.9, -0.7]; multimodal: r = 0.5, 95% CrI: [0.3, 0.7]), indicating that concepts associated with more peak postural effort also showed larger modality-driven differences. No other correlations between random intercepts and slopes reached credibility. 50.6% of the total variance remained unexplained by the model’s parameters.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: my-plot</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig.cap: Figure 3. Posterior distribution of covariates</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"06_Analysis_Modeling/plots/fixed_effects_posteriors_grid.png"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="../06_Analysis_Modeling/plots/fixed_effects_posteriors_grid.png" class="img-fluid figure-img" width="1500"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Taken together, the three instantaneous measures present a strikingly different picture from the cumulative ones. While cumulative effort increased reliably across corrections for all three measures (Section 3.1.1), instantaneous effort in first attempt trended in both directions but did not reach credibility for any of the three measures: arm torque change trended positively, while envelope and COPc trended towards a decrease in effort. Effort was not reliably predicted by the second attempt in any direction. This dissociation does not support H1 for instantaneous effort. Although correction imposes a clear cumulative cost on speakers, it does not appear to recruit greater peak intensity per movement or per vocalization. Instead, the pattern is consistent with a redistribution of effort across more time and more movement units rather than a concentrated scaling-up of force or amplitude — we explore this further in the Discussion.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="vedfqaiftk" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#vedfqaiftk table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#vedfqaiftk thead, #vedfqaiftk tbody, #vedfqaiftk tfoot, #vedfqaiftk tr, #vedfqaiftk td, #vedfqaiftk th {
+  border-style: none;
+}
+
+#vedfqaiftk p {
+  margin: 0;
+  padding: 0;
+}
+
+#vedfqaiftk .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#vedfqaiftk .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#vedfqaiftk .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#vedfqaiftk .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#vedfqaiftk .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#vedfqaiftk .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#vedfqaiftk .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#vedfqaiftk .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#vedfqaiftk .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#vedfqaiftk .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#vedfqaiftk .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#vedfqaiftk .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#vedfqaiftk .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#vedfqaiftk .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#vedfqaiftk .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#vedfqaiftk .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#vedfqaiftk .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#vedfqaiftk .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#vedfqaiftk .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#vedfqaiftk .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#vedfqaiftk .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#vedfqaiftk .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#vedfqaiftk .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#vedfqaiftk .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#vedfqaiftk .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#vedfqaiftk .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#vedfqaiftk .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#vedfqaiftk .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#vedfqaiftk .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#vedfqaiftk .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#vedfqaiftk .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#vedfqaiftk .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#vedfqaiftk .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#vedfqaiftk .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#vedfqaiftk .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#vedfqaiftk .gt_left {
+  text-align: left;
+}
+
+#vedfqaiftk .gt_center {
+  text-align: center;
+}
+
+#vedfqaiftk .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#vedfqaiftk .gt_font_normal {
+  font-weight: normal;
+}
+
+#vedfqaiftk .gt_font_bold {
+  font-weight: bold;
+}
+
+#vedfqaiftk .gt_font_italic {
+  font-style: italic;
+}
+
+#vedfqaiftk .gt_super {
+  font-size: 65%;
+}
+
+#vedfqaiftk .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#vedfqaiftk .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#vedfqaiftk .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#vedfqaiftk .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#vedfqaiftk .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#vedfqaiftk .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#vedfqaiftk .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#vedfqaiftk .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#vedfqaiftk div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+
+<table class="gt_table caption-top table table-sm table-striped small" data-quarto-bootstrap="false">
+<thead>
+<tr class="gt_heading header">
+<td colspan="7" class="gt_heading gt_title gt_font_normal gt_bottom_border">Table 1. Model estimates for H1</td>
+</tr>
+<tr class="gt_col_headings even">
+<th id="a::stub" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col"></th>
+<th id="Arm.Torque..integral." class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Arm.Torque..integral.</th>
+<th id="Arm.Torque..peak.mean." class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Arm.Torque..peak.mean.</th>
+<th id="Envelope..integral." class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Envelope..integral.</th>
+<th id="Envelope..peak.mean." class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Envelope..peak.mean.</th>
+<th id="COP..integral." class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">COP..integral.</th>
+<th id="COP..peak.mean." class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">COP..peak.mean.</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="gt_group_heading_row odd">
+<th colspan="7" id="model_info" class="gt_group_heading" data-quarto-table-cell-role="th" scope="colgroup">model_info</th>
+</tr>
+<tr class="gt_row_group_first even">
+<th id="stub_1_1" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">— Model Information —</th>
+<td class="gt_row gt_left" headers="model_info stub_1_1 Arm.Torque..integral."></td>
+<td class="gt_row gt_left" headers="model_info stub_1_1 Arm.Torque..peak.mean."></td>
+<td class="gt_row gt_left" headers="model_info stub_1_1 Envelope..integral."></td>
+<td class="gt_row gt_left" headers="model_info stub_1_1 Envelope..peak.mean."></td>
+<td class="gt_row gt_left" headers="model_info stub_1_1 COP..integral."></td>
+<td class="gt_row gt_left" headers="model_info stub_1_1 COP..peak.mean."></td>
+</tr>
+<tr class="odd">
+<th id="stub_1_2" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">R²</th>
+<td class="gt_row gt_left" headers="model_info stub_1_2 Arm.Torque..integral.">0.533 [0.496, 0.568]</td>
+<td class="gt_row gt_left" headers="model_info stub_1_2 Arm.Torque..peak.mean.">0.253 [0.222, 0.284]</td>
+<td class="gt_row gt_left" headers="model_info stub_1_2 Envelope..integral.">0.569 [0.536, 0.6]</td>
+<td class="gt_row gt_left" headers="model_info stub_1_2 Envelope..peak.mean.">0.497 [0.466, 0.526]</td>
+<td class="gt_row gt_left" headers="model_info stub_1_2 COP..integral.">0.524 [0.475, 0.574]</td>
+<td class="gt_row gt_left" headers="model_info stub_1_2 COP..peak.mean.">0.442 [0.407, 0.476]</td>
+</tr>
+<tr class="even">
+<th id="stub_1_3" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">formula</th>
+<td class="gt_row gt_left" headers="model_info stub_1_3 Arm.Torque..integral.">arm_moment_sum_change_integral ~ 1 + correction + modality + BFI_extra + Familiarity + expressibility_z + TrialNumber_c + (1 + expressibility_z + correction + modality || pcn_ID) + (1 + Familiarity + BFI_extra || SessionID) + (1 + correction + modality || concept)</td>
+<td class="gt_row gt_left" headers="model_info stub_1_3 Arm.Torque..peak.mean.">arm_moment_sum_change_peak_mean ~ 1 + correction + modality + BFI_extra + Familiarity + expressibility_z + TrialNumber_c + (1 + correction + modality + expressibility_z || pcn_ID) + (1 + BFI_extra + Familiarity || SessionID) + (1 + correction + modality || concept)</td>
+<td class="gt_row gt_left" headers="model_info stub_1_3 Envelope..integral.">envelope_norm_integral ~ 1 + correction + modality + BFI_extra + Familiarity + expressibility_z + TrialNumber_c + (1 + correction + modality + expressibility_z || pcn_ID) + (1 + Familiarity + BFI_extra || SessionID) + (1 + correction + modality || concept)</td>
+<td class="gt_row gt_left" headers="model_info stub_1_3 Envelope..peak.mean.">envelope_norm_peak_mean ~ 1 + correction + modality + expressibility_z + BFI_extra + Familiarity + TrialNumber_c + (1 + correction + modality + expressibility_z || pcn_ID) + (1 + Familiarity + BFI_extra || SessionID) + (1 + correction + modality || concept)</td>
+<td class="gt_row gt_left" headers="model_info stub_1_3 COP..integral.">COPc_integral ~ 1 + correction + modality + expressibility_z + BFI_extra + Familiarity + TrialNumber_c + (1 + correction + modality + expressibility_z || pcn_ID) + (1 + Familiarity + BFI_extra || SessionID) + (1 + correction + modality || concept)</td>
+<td class="gt_row gt_left" headers="model_info stub_1_3 COP..peak.mean.">COPc_peak_mean ~ 1 + correction + modality + expressibility_z + BFI_extra + Familiarity + TrialNumber_c + (1 + correction + modality + expressibility_z || pcn_ID) + (1 + Familiarity + BFI_extra || SessionID) + (1 + correction + modality || concept)</td>
+</tr>
+<tr class="odd">
+<th id="stub_1_4" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">n_obs</th>
+<td class="gt_row gt_left" headers="model_info stub_1_4 Arm.Torque..integral.">2495</td>
+<td class="gt_row gt_left" headers="model_info stub_1_4 Arm.Torque..peak.mean.">2495</td>
+<td class="gt_row gt_left" headers="model_info stub_1_4 Envelope..integral.">3184</td>
+<td class="gt_row gt_left" headers="model_info stub_1_4 Envelope..peak.mean.">3184</td>
+<td class="gt_row gt_left" headers="model_info stub_1_4 COP..integral.">4428</td>
+<td class="gt_row gt_left" headers="model_info stub_1_4 COP..peak.mean.">4428</td>
+</tr>
+<tr class="gt_group_heading_row even">
+<th colspan="7" id="fixed" class="gt_group_heading" data-quarto-table-cell-role="th" scope="colgroup">fixed</th>
+</tr>
+<tr class="gt_row_group_first odd">
+<th id="stub_1_5" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">— Fixed Effects —</th>
+<td class="gt_row gt_left" headers="fixed stub_1_5 Arm.Torque..integral."></td>
+<td class="gt_row gt_left" headers="fixed stub_1_5 Arm.Torque..peak.mean."></td>
+<td class="gt_row gt_left" headers="fixed stub_1_5 Envelope..integral."></td>
+<td class="gt_row gt_left" headers="fixed stub_1_5 Envelope..peak.mean."></td>
+<td class="gt_row gt_left" headers="fixed stub_1_5 COP..integral."></td>
+<td class="gt_row gt_left" headers="fixed stub_1_5 COP..peak.mean."></td>
+</tr>
+<tr class="even">
+<th id="stub_1_6" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">BFI_extra</th>
+<td class="gt_row gt_left" headers="fixed stub_1_6 Arm.Torque..integral.">2.9% [-3.8%, 10.2%] (β = 0.028 [-0.039, 0.097])</td>
+<td class="gt_row gt_left" headers="fixed stub_1_6 Arm.Torque..peak.mean.">-1.4% [-5.2%, 2.7%] (β = -0.014 [-0.053, 0.027])</td>
+<td class="gt_row gt_left" headers="fixed stub_1_6 Envelope..integral.">6.1% [-1.1%, 13.9%] (β = 0.059 [-0.011, 0.13])</td>
+<td class="gt_row gt_left" headers="fixed stub_1_6 Envelope..peak.mean.">3.4% [-2.9%, 10.1%] (β = 0.034 [-0.029, 0.096])</td>
+<td class="gt_row gt_left" headers="fixed stub_1_6 COP..integral.">9.1% [1.5%, 17%] (β = 0.087 [0.015, 0.157]) *</td>
+<td class="gt_row gt_left" headers="fixed stub_1_6 COP..peak.mean.">6.3% [1.1%, 11.7%] (β = 0.061 [0.011, 0.11]) *</td>
+</tr>
+<tr class="odd">
+<th id="stub_1_7" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">Familiarity</th>
+<td class="gt_row gt_left" headers="fixed stub_1_7 Arm.Torque..integral.">-1.7% [-9.9%, 7.2%] (β = -0.017 [-0.104, 0.07])</td>
+<td class="gt_row gt_left" headers="fixed stub_1_7 Arm.Torque..peak.mean.">-2.8% [-6.5%, 1%] (β = -0.028 [-0.067, 0.01])</td>
+<td class="gt_row gt_left" headers="fixed stub_1_7 Envelope..integral.">-4.8% [-12.4%, 3.4%] (β = -0.049 [-0.132, 0.034])</td>
+<td class="gt_row gt_left" headers="fixed stub_1_7 Envelope..peak.mean.">-6.6% [-12.8%, 0.2%] (β = -0.068 [-0.137, 0.002])</td>
+<td class="gt_row gt_left" headers="fixed stub_1_7 COP..integral.">1.5% [-8.2%, 12.1%] (β = 0.015 [-0.085, 0.114])</td>
+<td class="gt_row gt_left" headers="fixed stub_1_7 COP..peak.mean.">0.7% [-5.6%, 7.5%] (β = 0.006 [-0.057, 0.073])</td>
+</tr>
+<tr class="even">
+<th id="stub_1_8" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">TrialNumber_c</th>
+<td class="gt_row gt_left" headers="fixed stub_1_8 Arm.Torque..integral.">0.1% [0%, 0.2%] (β = 0.001 [0, 0.002])</td>
+<td class="gt_row gt_left" headers="fixed stub_1_8 Arm.Torque..peak.mean.">0% [-0.1%, 0%] (β = 0 [-0.001, 0])</td>
+<td class="gt_row gt_left" headers="fixed stub_1_8 Envelope..integral.">0.1% [0%, 0.2%] (β = 0.001 [0, 0.002]) *</td>
+<td class="gt_row gt_left" headers="fixed stub_1_8 Envelope..peak.mean.">0.2% [0.1%, 0.3%] (β = 0.002 [0.001, 0.003]) *</td>
+<td class="gt_row gt_left" headers="fixed stub_1_8 COP..integral.">0.1% [0%, 0.2%] (β = 0.001 [0, 0.002]) *</td>
+<td class="gt_row gt_left" headers="fixed stub_1_8 COP..peak.mean.">0.1% [0%, 0.1%] (β = 0.001 [0, 0.001])</td>
+</tr>
+<tr class="odd">
+<th id="stub_1_9" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">correction2M1</th>
+<td class="gt_row gt_left" headers="fixed stub_1_9 Arm.Torque..integral.">20.6% [14.5%, 27.1%] (β = 0.187 [0.135, 0.24]) *</td>
+<td class="gt_row gt_left" headers="fixed stub_1_9 Arm.Torque..peak.mean.">3.8% [0%, 7.7%] (β = 0.037 [0, 0.074])</td>
+<td class="gt_row gt_left" headers="fixed stub_1_9 Envelope..integral.">11.6% [7.4%, 16%] (β = 0.11 [0.071, 0.148]) *</td>
+<td class="gt_row gt_left" headers="fixed stub_1_9 Envelope..peak.mean.">-5.2% [-10.1%, 0%] (β = -0.053 [-0.106, 0]) *</td>
+<td class="gt_row gt_left" headers="fixed stub_1_9 COP..integral.">12.9% [8.5%, 17.4%] (β = 0.121 [0.082, 0.16]) *</td>
+<td class="gt_row gt_left" headers="fixed stub_1_9 COP..peak.mean.">-2.8% [-5.7%, 0.2%] (β = -0.028 [-0.058, 0.002])</td>
+</tr>
+<tr class="even">
+<th id="stub_1_10" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">correction3M2</th>
+<td class="gt_row gt_left" headers="fixed stub_1_10 Arm.Torque..integral.">15.2% [8.1%, 22.6%] (β = 0.141 [0.078, 0.204]) *</td>
+<td class="gt_row gt_left" headers="fixed stub_1_10 Arm.Torque..peak.mean.">1.6% [-3.2%, 6.7%] (β = 0.016 [-0.033, 0.065])</td>
+<td class="gt_row gt_left" headers="fixed stub_1_10 Envelope..integral.">7.3% [2.8%, 12%] (β = 0.07 [0.028, 0.113]) *</td>
+<td class="gt_row gt_left" headers="fixed stub_1_10 Envelope..peak.mean.">-1.8% [-7.2%, 3.9%] (β = -0.018 [-0.074, 0.038])</td>
+<td class="gt_row gt_left" headers="fixed stub_1_10 COP..integral.">10% [5%, 15.2%] (β = 0.096 [0.049, 0.142]) *</td>
+<td class="gt_row gt_left" headers="fixed stub_1_10 COP..peak.mean.">1.9% [-1.6%, 5.5%] (β = 0.019 [-0.016, 0.054])</td>
+</tr>
+<tr class="odd">
+<th id="stub_1_11" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">expressibility_z</th>
+<td class="gt_row gt_left" headers="fixed stub_1_11 Arm.Torque..integral.">-8% [-14.6%, -0.9%] (β = -0.083 [-0.158, -0.009]) *</td>
+<td class="gt_row gt_left" headers="fixed stub_1_11 Arm.Torque..peak.mean.">2% [-1.4%, 5.5%] (β = 0.02 [-0.014, 0.054])</td>
+<td class="gt_row gt_left" headers="fixed stub_1_11 Envelope..integral.">-8.8% [-13.5%, -4%] (β = -0.092 [-0.145, -0.041]) *</td>
+<td class="gt_row gt_left" headers="fixed stub_1_11 Envelope..peak.mean.">-13.2% [-19.4%, -6.5%] (β = -0.142 [-0.215, -0.067]) *</td>
+<td class="gt_row gt_left" headers="fixed stub_1_11 COP..integral.">-4.6% [-10.1%, 1.4%] (β = -0.047 [-0.107, 0.014])</td>
+<td class="gt_row gt_left" headers="fixed stub_1_11 COP..peak.mean.">3.5% [-0.8%, 8%] (β = 0.034 [-0.008, 0.077])</td>
+</tr>
+<tr class="even">
+<th id="stub_1_12" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">modality1</th>
+<td class="gt_row gt_left" headers="fixed stub_1_12 Arm.Torque..integral.">5.6% [-1.7%, 13.5%] (β = 0.054 [-0.017, 0.126])</td>
+<td class="gt_row gt_left" headers="fixed stub_1_12 Arm.Torque..peak.mean.">-1.1% [-5.7%, 3.8%] (β = -0.011 [-0.059, 0.038])</td>
+<td class="gt_row gt_left" headers="fixed stub_1_12 Envelope..integral.">16.6% [9.4%, 24.3%] (β = 0.154 [0.09, 0.218]) *</td>
+<td class="gt_row gt_left" headers="fixed stub_1_12 Envelope..peak.mean.">25.9% [15.7%, 36.9%] (β = 0.23 [0.146, 0.314]) *</td>
+<td class="gt_row gt_left" headers="fixed stub_1_12 COP..integral.">56.7% [42.9%, 71.5%] (β = 0.449 [0.357, 0.54]) *</td>
+<td class="gt_row gt_left" headers="fixed stub_1_12 COP..peak.mean.">28.6% [20.6%, 37.4%] (β = 0.252 [0.187, 0.318]) *</td>
+</tr>
+<tr class="odd">
+<th id="stub_1_13" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">modality2</th>
+<td class="gt_row gt_left" headers="fixed stub_1_13 Arm.Torque..integral.">—</td>
+<td class="gt_row gt_left" headers="fixed stub_1_13 Arm.Torque..peak.mean.">—</td>
+<td class="gt_row gt_left" headers="fixed stub_1_13 Envelope..integral.">—</td>
+<td class="gt_row gt_left" headers="fixed stub_1_13 Envelope..peak.mean.">—</td>
+<td class="gt_row gt_left" headers="fixed stub_1_13 COP..integral.">68.4% [53.2%, 85%] (β = 0.521 [0.427, 0.615]) *</td>
+<td class="gt_row gt_left" headers="fixed stub_1_13 COP..peak.mean.">49.8% [39.8%, 60.6%] (β = 0.404 [0.335, 0.474]) *</td>
+</tr>
+<tr class="even">
+<th id="stub_1_14" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">Intercept</th>
+<td class="gt_row gt_left" headers="fixed stub_1_14 Arm.Torque..integral.">82959.4 [73173.2, 94028.9] (β = 11.326 [11.201, 11.451]) *</td>
+<td class="gt_row gt_left" headers="fixed stub_1_14 Arm.Torque..peak.mean.">22.8 [21.7, 24] (β = 3.126 [3.076, 3.176]) *</td>
+<td class="gt_row gt_left" headers="fixed stub_1_14 Envelope..integral.">236.5 [213, 262.3] (β = 5.466 [5.361, 5.569]) *</td>
+<td class="gt_row gt_left" headers="fixed stub_1_14 Envelope..peak.mean.">0.1 [0.1, 0.2] (β = -2.004 [-2.128, -1.881]) *</td>
+<td class="gt_row gt_left" headers="fixed stub_1_14 COP..integral.">2957.3 [2591.1, 3388.1] (β = 7.992 [7.86, 8.128]) *</td>
+<td class="gt_row gt_left" headers="fixed stub_1_14 COP..peak.mean.">1.2 [1.1, 1.3] (β = 0.183 [0.097, 0.269]) *</td>
+</tr>
+<tr class="gt_group_heading_row odd">
+<th colspan="7" id="random_sd" class="gt_group_heading" data-quarto-table-cell-role="th" scope="colgroup">random_sd</th>
+</tr>
+<tr class="gt_row_group_first even">
+<th id="stub_1_15" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">— Random Effect SDs —</th>
+<td class="gt_row gt_left" headers="random_sd stub_1_15 Arm.Torque..integral."></td>
+<td class="gt_row gt_left" headers="random_sd stub_1_15 Arm.Torque..peak.mean."></td>
+<td class="gt_row gt_left" headers="random_sd stub_1_15 Envelope..integral."></td>
+<td class="gt_row gt_left" headers="random_sd stub_1_15 Envelope..peak.mean."></td>
+<td class="gt_row gt_left" headers="random_sd stub_1_15 COP..integral."></td>
+<td class="gt_row gt_left" headers="random_sd stub_1_15 COP..peak.mean."></td>
+</tr>
+<tr class="odd">
+<th id="stub_1_16" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">sd() | residual__</th>
+<td class="gt_row gt_left" headers="random_sd stub_1_16 Arm.Torque..integral.">0.468 [0.454, 0.484]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_16 Arm.Torque..peak.mean.">0.362 [0.351, 0.374]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_16 Envelope..integral.">0.407 [0.396, 0.418]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_16 Envelope..peak.mean.">0.548 [0.532, 0.563]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_16 COP..integral.">0.5 [0.488, 0.511]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_16 COP..peak.mean.">0.383 [0.374, 0.391]</td>
+</tr>
+<tr class="even">
+<th id="stub_1_17" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">sd(BFI_extra) | SessionID</th>
+<td class="gt_row gt_left" headers="random_sd stub_1_17 Arm.Torque..integral.">0.098 [0.006, 0.212]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_17 Arm.Torque..peak.mean.">0.082 [0.011, 0.145]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_17 Envelope..integral.">0.061 [0.002, 0.165]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_17 Envelope..peak.mean.">0.048 [0.002, 0.136]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_17 COP..integral.">0.059 [0.002, 0.163]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_17 COP..peak.mean.">0.039 [0.002, 0.109]</td>
+</tr>
+<tr class="odd">
+<th id="stub_1_18" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">sd(Familiarity) | SessionID</th>
+<td class="gt_row gt_left" headers="random_sd stub_1_18 Arm.Torque..integral.">0.088 [0.005, 0.208]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_18 Arm.Torque..peak.mean.">0.032 [0.001, 0.09]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_18 Envelope..integral.">0.1 [0.005, 0.22]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_18 Envelope..peak.mean.">0.063 [0.003, 0.175]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_18 COP..integral.">0.127 [0.007, 0.281]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_18 COP..peak.mean.">0.127 [0.018, 0.215]</td>
+</tr>
+<tr class="even">
+<th id="stub_1_19" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">sd(Intercept) | SessionID</th>
+<td class="gt_row gt_left" headers="random_sd stub_1_19 Arm.Torque..integral.">0.31 [0.223, 0.401]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_19 Arm.Torque..peak.mean.">0.089 [0.016, 0.144]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_19 Envelope..integral.">0.18 [0.024, 0.3]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_19 Envelope..peak.mean.">0.144 [0.016, 0.248]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_19 COP..integral.">0.325 [0.213, 0.436]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_19 COP..peak.mean.">0.092 [0.006, 0.191]</td>
+</tr>
+<tr class="odd">
+<th id="stub_1_20" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">sd(Intercept) | concept</th>
+<td class="gt_row gt_left" headers="random_sd stub_1_20 Arm.Torque..integral.">0.37 [0.313, 0.438]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_20 Arm.Torque..peak.mean.">0.138 [0.111, 0.169]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_20 Envelope..integral.">0.286 [0.243, 0.338]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_20 Envelope..peak.mean.">0.469 [0.4, 0.55]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_20 COP..integral.">0.367 [0.312, 0.432]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_20 COP..peak.mean.">0.294 [0.249, 0.346]</td>
+</tr>
+<tr class="even">
+<th id="stub_1_21" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">sd(Intercept) | pcn_ID</th>
+<td class="gt_row gt_left" headers="random_sd stub_1_21 Arm.Torque..integral.">0.224 [0.159, 0.293]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_21 Arm.Torque..peak.mean.">0.121 [0.074, 0.169]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_21 Envelope..integral.">0.32 [0.26, 0.391]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_21 Envelope..peak.mean.">0.276 [0.22, 0.339]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_21 COP..integral.">0.301 [0.241, 0.373]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_21 COP..peak.mean.">0.222 [0.18, 0.27]</td>
+</tr>
+<tr class="odd">
+<th id="stub_1_22" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">sd(correction2M1) | concept</th>
+<td class="gt_row gt_left" headers="random_sd stub_1_22 Arm.Torque..integral.">0.032 [0.001, 0.089]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_22 Arm.Torque..peak.mean.">0.031 [0.001, 0.079]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_22 Envelope..integral.">0.041 [0.002, 0.094]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_22 Envelope..peak.mean.">0.103 [0.016, 0.175]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_22 COP..integral.">0.039 [0.002, 0.095]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_22 COP..peak.mean.">0.045 [0.003, 0.089]</td>
+</tr>
+<tr class="even">
+<th id="stub_1_23" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">sd(correction2M1) | pcn_ID</th>
+<td class="gt_row gt_left" headers="random_sd stub_1_23 Arm.Torque..integral.">0.132 [0.053, 0.197]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_23 Arm.Torque..peak.mean.">0.055 [0.004, 0.111]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_23 Envelope..integral.">0.058 [0.004, 0.118]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_23 Envelope..peak.mean.">0.039 [0.002, 0.103]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_23 COP..integral.">0.055 [0.003, 0.116]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_23 COP..peak.mean.">0.028 [0.001, 0.07]</td>
+</tr>
+<tr class="odd">
+<th id="stub_1_24" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">sd(correction3M2) | concept</th>
+<td class="gt_row gt_left" headers="random_sd stub_1_24 Arm.Torque..integral.">0.06 [0.003, 0.149]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_24 Arm.Torque..peak.mean.">0.045 [0.002, 0.11]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_24 Envelope..integral.">0.029 [0.001, 0.079]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_24 Envelope..peak.mean.">0.04 [0.002, 0.11]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_24 COP..integral.">0.033 [0.001, 0.088]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_24 COP..peak.mean.">0.035 [0.002, 0.085]</td>
+</tr>
+<tr class="even">
+<th id="stub_1_25" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">sd(correction3M2) | pcn_ID</th>
+<td class="gt_row gt_left" headers="random_sd stub_1_25 Arm.Torque..integral.">0.043 [0.002, 0.118]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_25 Arm.Torque..peak.mean.">0.044 [0.002, 0.111]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_25 Envelope..integral.">0.052 [0.002, 0.119]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_25 Envelope..peak.mean.">0.039 [0.001, 0.105]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_25 COP..integral.">0.067 [0.005, 0.141]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_25 COP..peak.mean.">0.023 [0.001, 0.063]</td>
+</tr>
+<tr class="odd">
+<th id="stub_1_26" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">sd(expressibility_z) | pcn_ID</th>
+<td class="gt_row gt_left" headers="random_sd stub_1_26 Arm.Torque..integral.">0.041 [0.002, 0.084]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_26 Arm.Torque..peak.mean.">0.024 [0.001, 0.056]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_26 Envelope..integral.">0.115 [0.088, 0.144]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_26 Envelope..peak.mean.">0.111 [0.071, 0.15]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_26 COP..integral.">0.091 [0.059, 0.121]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_26 COP..peak.mean.">0.048 [0.016, 0.073]</td>
+</tr>
+<tr class="even">
+<th id="stub_1_27" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">sd(modality1) | concept</th>
+<td class="gt_row gt_left" headers="random_sd stub_1_27 Arm.Torque..integral.">0.162 [0.097, 0.227]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_27 Arm.Torque..peak.mean.">0.074 [0.009, 0.13]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_27 Envelope..integral.">0.17 [0.125, 0.221]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_27 Envelope..peak.mean.">0.241 [0.182, 0.308]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_27 COP..integral.">0.252 [0.184, 0.327]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_27 COP..peak.mean.">0.161 [0.11, 0.214]</td>
+</tr>
+<tr class="odd">
+<th id="stub_1_28" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">sd(modality1) | pcn_ID</th>
+<td class="gt_row gt_left" headers="random_sd stub_1_28 Arm.Torque..integral.">0.238 [0.183, 0.296]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_28 Arm.Torque..peak.mean.">0.162 [0.12, 0.206]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_28 Envelope..integral.">0.211 [0.166, 0.261]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_28 Envelope..peak.mean.">0.257 [0.198, 0.322]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_28 COP..integral.">0.305 [0.242, 0.376]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_28 COP..peak.mean.">0.22 [0.173, 0.272]</td>
+</tr>
+<tr class="even">
+<th id="stub_1_29" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">sd(modality2) | concept</th>
+<td class="gt_row gt_left" headers="random_sd stub_1_29 Arm.Torque..integral.">—</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_29 Arm.Torque..peak.mean.">—</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_29 Envelope..integral.">—</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_29 Envelope..peak.mean.">—</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_29 COP..integral.">0.215 [0.145, 0.288]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_29 COP..peak.mean.">0.164 [0.114, 0.217]</td>
+</tr>
+<tr class="odd">
+<th id="stub_1_30" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">sd(modality2) | pcn_ID</th>
+<td class="gt_row gt_left" headers="random_sd stub_1_30 Arm.Torque..integral.">—</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_30 Arm.Torque..peak.mean.">—</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_30 Envelope..integral.">—</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_30 Envelope..peak.mean.">—</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_30 COP..integral.">0.358 [0.293, 0.429]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_30 COP..peak.mean.">0.248 [0.2, 0.3]</td>
+</tr>
+<tr class="gt_group_heading_row even">
+<th colspan="7" id="random_cor" class="gt_group_heading" data-quarto-table-cell-role="th" scope="colgroup">random_cor</th>
+</tr>
+<tr class="gt_row_group_first odd">
+<th id="stub_1_31" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">— Random Effect Correlations —</th>
+<td class="gt_row gt_left" headers="random_cor stub_1_31 Arm.Torque..integral."></td>
+<td class="gt_row gt_left" headers="random_cor stub_1_31 Arm.Torque..peak.mean."></td>
+<td class="gt_row gt_left" headers="random_cor stub_1_31 Envelope..integral."></td>
+<td class="gt_row gt_left" headers="random_cor stub_1_31 Envelope..peak.mean."></td>
+<td class="gt_row gt_left" headers="random_cor stub_1_31 COP..integral."></td>
+<td class="gt_row gt_left" headers="random_cor stub_1_31 COP..peak.mean."></td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<hr>
+</section>
+</section>
+</section>
+<section id="hypothesis-2" class="level2">
+<h2 class="anchored" data-anchor-id="hypothesis-2">3.2 Hypothesis 2</h2>
+<p>H2 predicted that a higher degree of misunderstanding would require a performer to engage in more effortful correction. We operationalized the degree of misunderstanding as the cosine similarity between the guesser’s previous answer and the target meaning (lower similarity = more misunderstanding), and tested this prediction across six dependent variables (like H1, Section 3.1).</p>
+<p>The data partially support H2: the effect of cosine similarity on effort is restricted to the cummulative upper-limb effort which decreased credibly as the previous answer became more similar to the target. For each 1-SD increase in cosine similarity, cumulative upper-limb effort decreased by ~7.5% (95% CrI: [-11.3%, -3.5%]). Instantaneous upper-limb effort trended in similar manner, but the estimated interval included 0 (β = -2.5% (95% CrI: [-5.4%, 0.5%])). Neither cumulative nor instantaneous vocal effort showed a credible relationship with cosine similarity, and the same was true for both postural measures (see Figure 2).</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: my-plot</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig.cap: Figure 4. Posterior distribution of the effect of previous cosine similarity on current effort</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"06_Analysis_Modeling/plots/h2_prev_answer_effect.png"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="../06_Analysis_Modeling/plots/h2_prev_answer_effect.png" class="img-fluid figure-img" width="750"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Vocal and postural effort thus appear to be insensitive to the degree of misunderstanding the performer is responding to, whereas sustained upper-limb effort adapts reliably to the amount of repair work the previous answer requires. That instantenous upper-limb effort does not seemed to be coupled to common ground on population level in a similar manner can be possibly attributed to the fact that peak magnitude serves a specific function: while in some cases answer may facilitate the performer to engage in more bursty movement, it is not a one-fits-all solution.</p>
+<p>Importantly, the upper-limb cosine similarity effect was uniformly distributed across the sample: variance in random slopes for cosine similarity was negligible across all three grouping levels (concepts, participants, and dyads), indicating that the effect did not vary systematically by performer, dyad, or concept. This consistency suggests that arm movement responds to common ground in a relatively automatic way, rather than reflecting strategic adaptation by particular individuals or for particular concepts. Full model output for all six dependent variables is reported in Table X.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="ghswecjoop" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#ghswecjoop table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#ghswecjoop thead, #ghswecjoop tbody, #ghswecjoop tfoot, #ghswecjoop tr, #ghswecjoop td, #ghswecjoop th {
+  border-style: none;
+}
+
+#ghswecjoop p {
+  margin: 0;
+  padding: 0;
+}
+
+#ghswecjoop .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#ghswecjoop .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#ghswecjoop .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#ghswecjoop .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#ghswecjoop .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#ghswecjoop .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#ghswecjoop .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#ghswecjoop .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#ghswecjoop .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#ghswecjoop .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#ghswecjoop .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#ghswecjoop .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#ghswecjoop .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#ghswecjoop .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#ghswecjoop .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#ghswecjoop .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#ghswecjoop .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#ghswecjoop .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#ghswecjoop .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ghswecjoop .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#ghswecjoop .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#ghswecjoop .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#ghswecjoop .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ghswecjoop .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#ghswecjoop .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#ghswecjoop .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#ghswecjoop .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ghswecjoop .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#ghswecjoop .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#ghswecjoop .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#ghswecjoop .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#ghswecjoop .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#ghswecjoop .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ghswecjoop .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#ghswecjoop .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ghswecjoop .gt_left {
+  text-align: left;
+}
+
+#ghswecjoop .gt_center {
+  text-align: center;
+}
+
+#ghswecjoop .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#ghswecjoop .gt_font_normal {
+  font-weight: normal;
+}
+
+#ghswecjoop .gt_font_bold {
+  font-weight: bold;
+}
+
+#ghswecjoop .gt_font_italic {
+  font-style: italic;
+}
+
+#ghswecjoop .gt_super {
+  font-size: 65%;
+}
+
+#ghswecjoop .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#ghswecjoop .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#ghswecjoop .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#ghswecjoop .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#ghswecjoop .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#ghswecjoop .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#ghswecjoop .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#ghswecjoop .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#ghswecjoop div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+
+<table class="gt_table caption-top table table-sm table-striped small" data-quarto-bootstrap="false">
+<thead>
+<tr class="gt_heading header">
+<td colspan="7" class="gt_heading gt_title gt_font_normal gt_bottom_border">Table 1. Model estimates for H2</td>
+</tr>
+<tr class="gt_col_headings even">
+<th id="a::stub" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col"></th>
+<th id="Arm.Torque..integral." class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Arm.Torque..integral.</th>
+<th id="Arm.Torque..peak.mean." class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Arm.Torque..peak.mean.</th>
+<th id="Envelope..integral." class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Envelope..integral.</th>
+<th id="Envelope..peak.mean." class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Envelope..peak.mean.</th>
+<th id="COP..integral." class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">COP..integral.</th>
+<th id="COP..peak.mean." class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">COP..peak.mean.</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="gt_group_heading_row odd">
+<th colspan="7" id="model_info" class="gt_group_heading" data-quarto-table-cell-role="th" scope="colgroup">model_info</th>
+</tr>
+<tr class="gt_row_group_first even">
+<th id="stub_1_1" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">— Model Information —</th>
+<td class="gt_row gt_left" headers="model_info stub_1_1 Arm.Torque..integral."></td>
+<td class="gt_row gt_left" headers="model_info stub_1_1 Arm.Torque..peak.mean."></td>
+<td class="gt_row gt_left" headers="model_info stub_1_1 Envelope..integral."></td>
+<td class="gt_row gt_left" headers="model_info stub_1_1 Envelope..peak.mean."></td>
+<td class="gt_row gt_left" headers="model_info stub_1_1 COP..integral."></td>
+<td class="gt_row gt_left" headers="model_info stub_1_1 COP..peak.mean."></td>
+</tr>
+<tr class="odd">
+<th id="stub_1_2" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">R²</th>
+<td class="gt_row gt_left" headers="model_info stub_1_2 Arm.Torque..integral.">0.605 [0.565, 0.639]</td>
+<td class="gt_row gt_left" headers="model_info stub_1_2 Arm.Torque..peak.mean.">0.226 [0.176, 0.278]</td>
+<td class="gt_row gt_left" headers="model_info stub_1_2 Envelope..integral.">0.648 [0.624, 0.672]</td>
+<td class="gt_row gt_left" headers="model_info stub_1_2 Envelope..peak.mean.">0.567 [0.531, 0.598]</td>
+<td class="gt_row gt_left" headers="model_info stub_1_2 COP..integral.">0.623 [0.564, 0.658]</td>
+<td class="gt_row gt_left" headers="model_info stub_1_2 COP..peak.mean.">0.61 [0.556, 0.657]</td>
+</tr>
+<tr class="even">
+<th id="stub_1_3" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">formula</th>
+<td class="gt_row gt_left" headers="model_info stub_1_3 Arm.Torque..integral.">arm_moment_sum_change_integral ~ 1 + answer_prev_dist_z + effort_previous_moment_integral_z + correction + modality + BFI_extra + Familiarity + expressibility_z + TrialNumber_c + (1 + answer_prev_dist_z + expressibility_z + correction + modality || pcn_ID) + (1 + answer_prev_dist_z + Familiarity + BFI_extra || SessionID) + (1 + answer_prev_dist_z + correction + modality || concept)</td>
+<td class="gt_row gt_left" headers="model_info stub_1_3 Arm.Torque..peak.mean.">arm_moment_sum_change_peak_mean ~ 1 + answer_prev_dist_z + effort_previous_moment_peak_mean_z + correction + modality + BFI_extra + Familiarity + expressibility_z + TrialNumber_c + (1 + answer_prev_dist_z + expressibility_z + correction + modality || pcn_ID) + (1 + answer_prev_dist_z + Familiarity + BFI_extra || SessionID) + (1 + answer_prev_dist_z + correction + modality || concept)</td>
+<td class="gt_row gt_left" headers="model_info stub_1_3 Envelope..integral.">envelope_norm_integral ~ 1 + answer_prev_dist_z + effort_previous_envelope_norm_integral_z + correction + modality + BFI_extra + Familiarity + expressibility_z + TrialNumber_c + (1 + answer_prev_dist_z + correction + modality + expressibility_z || pcn_ID) + (1 + answer_prev_dist_z + Familiarity + BFI_extra || SessionID) + (1 + answer_prev_dist_z + correction + modality || concept)</td>
+<td class="gt_row gt_left" headers="model_info stub_1_3 Envelope..peak.mean.">envelope_norm_peak_mean ~ 1 + answer_prev_dist_z + effort_previous_envelope_norm_peak_mean_z + correction + modality + BFI_extra + Familiarity + expressibility_z + TrialNumber_c + (1 + answer_prev_dist_z + correction + modality + expressibility_z || pcn_ID) + (1 + answer_prev_dist_z + Familiarity + BFI_extra || SessionID) + (1 + answer_prev_dist_z + correction + modality || concept)</td>
+<td class="gt_row gt_left" headers="model_info stub_1_3 COP..integral.">COPc_peak_mean ~ 1 + answer_prev_dist_z + effort_previous_COPc_integral_z + correction + modality + BFI_extra + Familiarity + expressibility_z + TrialNumber_c + (1 + answer_prev_dist_z + correction + modality + expressibility_z || pcn_ID) + (1 + answer_prev_dist_z + Familiarity + BFI_extra || SessionID) + (1 + answer_prev_dist_z + correction + modality || concept)</td>
+<td class="gt_row gt_left" headers="model_info stub_1_3 COP..peak.mean.">COPc_peak_mean ~ 1 + answer_prev_dist_z + effort_previous_COPc_peak_mean_z + correction + modality + BFI_extra + Familiarity + expressibility_z + TrialNumber_c + (1 + answer_prev_dist_z + correction + modality + expressibility_z || pcn_ID) + (1 + answer_prev_dist_z + Familiarity + BFI_extra || SessionID) + (1 + answer_prev_dist_z + correction + modality || concept)</td>
+</tr>
+<tr class="odd">
+<th id="stub_1_4" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">n_obs</th>
+<td class="gt_row gt_left" headers="model_info stub_1_4 Arm.Torque..integral.">993</td>
+<td class="gt_row gt_left" headers="model_info stub_1_4 Arm.Torque..peak.mean.">993</td>
+<td class="gt_row gt_left" headers="model_info stub_1_4 Envelope..integral.">1589</td>
+<td class="gt_row gt_left" headers="model_info stub_1_4 Envelope..peak.mean.">1589</td>
+<td class="gt_row gt_left" headers="model_info stub_1_4 COP..integral.">2089</td>
+<td class="gt_row gt_left" headers="model_info stub_1_4 COP..peak.mean.">2089</td>
+</tr>
+<tr class="gt_group_heading_row even">
+<th colspan="7" id="fixed" class="gt_group_heading" data-quarto-table-cell-role="th" scope="colgroup">fixed</th>
+</tr>
+<tr class="gt_row_group_first odd">
+<th id="stub_1_5" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">— Fixed Effects —</th>
+<td class="gt_row gt_left" headers="fixed stub_1_5 Arm.Torque..integral."></td>
+<td class="gt_row gt_left" headers="fixed stub_1_5 Arm.Torque..peak.mean."></td>
+<td class="gt_row gt_left" headers="fixed stub_1_5 Envelope..integral."></td>
+<td class="gt_row gt_left" headers="fixed stub_1_5 Envelope..peak.mean."></td>
+<td class="gt_row gt_left" headers="fixed stub_1_5 COP..integral."></td>
+<td class="gt_row gt_left" headers="fixed stub_1_5 COP..peak.mean."></td>
+</tr>
+<tr class="even">
+<th id="stub_1_6" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">BFI_extra</th>
+<td class="gt_row gt_left" headers="fixed stub_1_6 Arm.Torque..integral.">2.2% [-3.8%, 8.8%] (β = 0.021 [-0.039, 0.084])</td>
+<td class="gt_row gt_left" headers="fixed stub_1_6 Arm.Torque..peak.mean.">-0.3% [-4.3%, 4%] (β = -0.003 [-0.044, 0.039])</td>
+<td class="gt_row gt_left" headers="fixed stub_1_6 Envelope..integral.">4% [-1.7%, 10.1%] (β = 0.039 [-0.017, 0.096])</td>
+<td class="gt_row gt_left" headers="fixed stub_1_6 Envelope..peak.mean.">2.3% [-2.8%, 7.7%] (β = 0.023 [-0.028, 0.074])</td>
+<td class="gt_row gt_left" headers="fixed stub_1_6 COP..integral.">2.7% [-1.4%, 7.1%] (β = 0.027 [-0.014, 0.069])</td>
+<td class="gt_row gt_left" headers="fixed stub_1_6 COP..peak.mean.">2.9% [-0.9%, 6.9%] (β = 0.029 [-0.009, 0.067])</td>
+</tr>
+<tr class="odd">
+<th id="stub_1_7" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">Familiarity</th>
+<td class="gt_row gt_left" headers="fixed stub_1_7 Arm.Torque..integral.">0.8% [-7%, 9.1%] (β = 0.008 [-0.072, 0.087])</td>
+<td class="gt_row gt_left" headers="fixed stub_1_7 Arm.Torque..peak.mean.">-3.6% [-7.3%, 0.3%] (β = -0.036 [-0.076, 0.003])</td>
+<td class="gt_row gt_left" headers="fixed stub_1_7 Envelope..integral.">-2.1% [-8.1%, 4.2%] (β = -0.022 [-0.084, 0.041])</td>
+<td class="gt_row gt_left" headers="fixed stub_1_7 Envelope..peak.mean.">-3.3% [-8.2%, 1.9%] (β = -0.034 [-0.086, 0.018])</td>
+<td class="gt_row gt_left" headers="fixed stub_1_7 COP..integral.">0.2% [-4.3%, 5.1%] (β = 0.002 [-0.044, 0.05])</td>
+<td class="gt_row gt_left" headers="fixed stub_1_7 COP..peak.mean.">0.6% [-3.6%, 5.1%] (β = 0.006 [-0.037, 0.05])</td>
+</tr>
+<tr class="even">
+<th id="stub_1_8" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">TrialNumber_c</th>
+<td class="gt_row gt_left" headers="fixed stub_1_8 Arm.Torque..integral.">0.1% [0%, 0.2%] (β = 0.001 [0, 0.002])</td>
+<td class="gt_row gt_left" headers="fixed stub_1_8 Arm.Torque..peak.mean.">0% [-0.1%, 0.1%] (β = 0 [-0.001, 0.001])</td>
+<td class="gt_row gt_left" headers="fixed stub_1_8 Envelope..integral.">0.1% [0%, 0.2%] (β = 0.001 [0, 0.002])</td>
+<td class="gt_row gt_left" headers="fixed stub_1_8 Envelope..peak.mean.">0% [-0.1%, 0.2%] (β = 0 [-0.001, 0.002])</td>
+<td class="gt_row gt_left" headers="fixed stub_1_8 COP..integral.">0% [-0.1%, 0.1%] (β = 0 [-0.001, 0.001])</td>
+<td class="gt_row gt_left" headers="fixed stub_1_8 COP..peak.mean.">0% [0%, 0.1%] (β = 0 [0, 0.001])</td>
+</tr>
+<tr class="odd">
+<th id="stub_1_9" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">answer_prev_dist_z</th>
+<td class="gt_row gt_left" headers="fixed stub_1_9 Arm.Torque..integral.">-7.5% [-11.3%, -3.5%] (β = -0.078 [-0.12, -0.036]) *</td>
+<td class="gt_row gt_left" headers="fixed stub_1_9 Arm.Torque..peak.mean.">-2.5% [-5.4%, 0.5%] (β = -0.026 [-0.056, 0.005])</td>
+<td class="gt_row gt_left" headers="fixed stub_1_9 Envelope..integral.">-1.6% [-4.5%, 1.4%] (β = -0.017 [-0.046, 0.014])</td>
+<td class="gt_row gt_left" headers="fixed stub_1_9 Envelope..peak.mean.">0.8% [-3%, 4.6%] (β = 0.008 [-0.03, 0.045])</td>
+<td class="gt_row gt_left" headers="fixed stub_1_9 COP..integral.">0.4% [-2.2%, 3.2%] (β = 0.004 [-0.022, 0.031])</td>
+<td class="gt_row gt_left" headers="fixed stub_1_9 COP..peak.mean.">0.3% [-2.2%, 2.8%] (β = 0.003 [-0.022, 0.027])</td>
+</tr>
+<tr class="even">
+<th id="stub_1_10" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">correction2M1</th>
+<td class="gt_row gt_left" headers="fixed stub_1_10 Arm.Torque..integral.">9.9% [2.6%, 17.5%] (β = 0.094 [0.025, 0.161]) *</td>
+<td class="gt_row gt_left" headers="fixed stub_1_10 Arm.Torque..peak.mean.">0.9% [-4.4%, 6.5%] (β = 0.009 [-0.045, 0.063])</td>
+<td class="gt_row gt_left" headers="fixed stub_1_10 Envelope..integral.">4.3% [-0.4%, 9.1%] (β = 0.042 [-0.004, 0.087])</td>
+<td class="gt_row gt_left" headers="fixed stub_1_10 Envelope..peak.mean.">-1.2% [-6.8%, 4.7%] (β = -0.012 [-0.07, 0.046])</td>
+<td class="gt_row gt_left" headers="fixed stub_1_10 COP..integral.">0.2% [-3.2%, 3.7%] (β = 0.002 [-0.032, 0.036])</td>
+<td class="gt_row gt_left" headers="fixed stub_1_10 COP..peak.mean.">2.8% [-0.6%, 6.4%] (β = 0.028 [-0.006, 0.062])</td>
+</tr>
+<tr class="odd">
+<th id="stub_1_11" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">effort_previous_COPc_integral_z</th>
+<td class="gt_row gt_left" headers="fixed stub_1_11 Arm.Torque..integral.">—</td>
+<td class="gt_row gt_left" headers="fixed stub_1_11 Arm.Torque..peak.mean.">—</td>
+<td class="gt_row gt_left" headers="fixed stub_1_11 Envelope..integral.">—</td>
+<td class="gt_row gt_left" headers="fixed stub_1_11 Envelope..peak.mean.">—</td>
+<td class="gt_row gt_left" headers="fixed stub_1_11 COP..integral.">17.5% [14.8%, 20.3%] (β = 0.161 [0.138, 0.184]) *</td>
+<td class="gt_row gt_left" headers="fixed stub_1_11 COP..peak.mean.">—</td>
+</tr>
+<tr class="even">
+<th id="stub_1_12" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">effort_previous_COPc_peak_mean_z</th>
+<td class="gt_row gt_left" headers="fixed stub_1_12 Arm.Torque..integral.">—</td>
+<td class="gt_row gt_left" headers="fixed stub_1_12 Arm.Torque..peak.mean.">—</td>
+<td class="gt_row gt_left" headers="fixed stub_1_12 Envelope..integral.">—</td>
+<td class="gt_row gt_left" headers="fixed stub_1_12 Envelope..peak.mean.">—</td>
+<td class="gt_row gt_left" headers="fixed stub_1_12 COP..integral.">—</td>
+<td class="gt_row gt_left" headers="fixed stub_1_12 COP..peak.mean.">22.7% [19.9%, 25.4%] (β = 0.204 [0.182, 0.227]) *</td>
+</tr>
+<tr class="odd">
+<th id="stub_1_13" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">effort_previous_envelope_norm_integral_z</th>
+<td class="gt_row gt_left" headers="fixed stub_1_13 Arm.Torque..integral.">—</td>
+<td class="gt_row gt_left" headers="fixed stub_1_13 Arm.Torque..peak.mean.">—</td>
+<td class="gt_row gt_left" headers="fixed stub_1_13 Envelope..integral.">33.1% [28.6%, 37.8%] (β = 0.286 [0.251, 0.32]) *</td>
+<td class="gt_row gt_left" headers="fixed stub_1_13 Envelope..peak.mean.">—</td>
+<td class="gt_row gt_left" headers="fixed stub_1_13 COP..integral.">—</td>
+<td class="gt_row gt_left" headers="fixed stub_1_13 COP..peak.mean.">—</td>
+</tr>
+<tr class="even">
+<th id="stub_1_14" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">effort_previous_envelope_norm_peak_mean_z</th>
+<td class="gt_row gt_left" headers="fixed stub_1_14 Arm.Torque..integral.">—</td>
+<td class="gt_row gt_left" headers="fixed stub_1_14 Arm.Torque..peak.mean.">—</td>
+<td class="gt_row gt_left" headers="fixed stub_1_14 Envelope..integral.">—</td>
+<td class="gt_row gt_left" headers="fixed stub_1_14 Envelope..peak.mean.">29.6% [24.8%, 34.7%] (β = 0.259 [0.221, 0.298]) *</td>
+<td class="gt_row gt_left" headers="fixed stub_1_14 COP..integral.">—</td>
+<td class="gt_row gt_left" headers="fixed stub_1_14 COP..peak.mean.">—</td>
+</tr>
+<tr class="odd">
+<th id="stub_1_15" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">effort_previous_moment_integral_z</th>
+<td class="gt_row gt_left" headers="fixed stub_1_15 Arm.Torque..integral.">27.7% [21.9%, 33.6%] (β = 0.244 [0.198, 0.29]) *</td>
+<td class="gt_row gt_left" headers="fixed stub_1_15 Arm.Torque..peak.mean.">—</td>
+<td class="gt_row gt_left" headers="fixed stub_1_15 Envelope..integral.">—</td>
+<td class="gt_row gt_left" headers="fixed stub_1_15 Envelope..peak.mean.">—</td>
+<td class="gt_row gt_left" headers="fixed stub_1_15 COP..integral.">—</td>
+<td class="gt_row gt_left" headers="fixed stub_1_15 COP..peak.mean.">—</td>
+</tr>
+<tr class="even">
+<th id="stub_1_16" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">effort_previous_moment_peak_mean_z</th>
+<td class="gt_row gt_left" headers="fixed stub_1_16 Arm.Torque..integral.">—</td>
+<td class="gt_row gt_left" headers="fixed stub_1_16 Arm.Torque..peak.mean.">10.6% [7.5%, 13.8%] (β = 0.1 [0.072, 0.129]) *</td>
+<td class="gt_row gt_left" headers="fixed stub_1_16 Envelope..integral.">—</td>
+<td class="gt_row gt_left" headers="fixed stub_1_16 Envelope..peak.mean.">—</td>
+<td class="gt_row gt_left" headers="fixed stub_1_16 COP..integral.">—</td>
+<td class="gt_row gt_left" headers="fixed stub_1_16 COP..peak.mean.">—</td>
+</tr>
+<tr class="odd">
+<th id="stub_1_17" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">expressibility_z</th>
+<td class="gt_row gt_left" headers="fixed stub_1_17 Arm.Torque..integral.">-2% [-8.3%, 4.6%] (β = -0.02 [-0.086, 0.045])</td>
+<td class="gt_row gt_left" headers="fixed stub_1_17 Arm.Torque..peak.mean.">3.3% [-0.1%, 6.8%] (β = 0.033 [-0.001, 0.066])</td>
+<td class="gt_row gt_left" headers="fixed stub_1_17 Envelope..integral.">-3.7% [-7.9%, 0.5%] (β = -0.038 [-0.082, 0.005])</td>
+<td class="gt_row gt_left" headers="fixed stub_1_17 Envelope..peak.mean.">-9.1% [-15.2%, -2.7%] (β = -0.096 [-0.165, -0.027]) *</td>
+<td class="gt_row gt_left" headers="fixed stub_1_17 COP..integral.">2.9% [-1%, 6.9%] (β = 0.029 [-0.01, 0.067])</td>
+<td class="gt_row gt_left" headers="fixed stub_1_17 COP..peak.mean.">0.4% [-2.9%, 3.8%] (β = 0.004 [-0.03, 0.038])</td>
+</tr>
+<tr class="even">
+<th id="stub_1_18" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">modality1</th>
+<td class="gt_row gt_left" headers="fixed stub_1_18 Arm.Torque..integral.">4.2% [-3.6%, 12.5%] (β = 0.041 [-0.036, 0.117])</td>
+<td class="gt_row gt_left" headers="fixed stub_1_18 Arm.Torque..peak.mean.">0.3% [-5.1%, 6%] (β = 0.003 [-0.052, 0.058])</td>
+<td class="gt_row gt_left" headers="fixed stub_1_18 Envelope..integral.">6.5% [0.3%, 13.2%] (β = 0.063 [0.003, 0.124]) *</td>
+<td class="gt_row gt_left" headers="fixed stub_1_18 Envelope..peak.mean.">21.7% [11%, 33.7%] (β = 0.197 [0.104, 0.29]) *</td>
+<td class="gt_row gt_left" headers="fixed stub_1_18 COP..integral.">17.5% [9.5%, 26%] (β = 0.161 [0.091, 0.231]) *</td>
+<td class="gt_row gt_left" headers="fixed stub_1_18 COP..peak.mean.">15.7% [7.9%, 24%] (β = 0.146 [0.076, 0.215]) *</td>
+</tr>
+<tr class="odd">
+<th id="stub_1_19" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">modality2</th>
+<td class="gt_row gt_left" headers="fixed stub_1_19 Arm.Torque..integral.">—</td>
+<td class="gt_row gt_left" headers="fixed stub_1_19 Arm.Torque..peak.mean.">—</td>
+<td class="gt_row gt_left" headers="fixed stub_1_19 Envelope..integral.">—</td>
+<td class="gt_row gt_left" headers="fixed stub_1_19 Envelope..peak.mean.">—</td>
+<td class="gt_row gt_left" headers="fixed stub_1_19 COP..integral.">35.3% [24.7%, 47%] (β = 0.302 [0.22, 0.385]) *</td>
+<td class="gt_row gt_left" headers="fixed stub_1_19 COP..peak.mean.">30.4% [21.8%, 39.7%] (β = 0.266 [0.197, 0.334]) *</td>
+</tr>
+<tr class="even">
+<th id="stub_1_20" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">Intercept</th>
+<td class="gt_row gt_left" headers="fixed stub_1_20 Arm.Torque..integral.">88901.5 [80287.8, 98685] (β = 11.395 [11.293, 11.5]) *</td>
+<td class="gt_row gt_left" headers="fixed stub_1_20 Arm.Torque..peak.mean.">22.9 [21.9, 23.9] (β = 3.131 [3.088, 3.176]) *</td>
+<td class="gt_row gt_left" headers="fixed stub_1_20 Envelope..integral.">255.3 [237.4, 274.5] (β = 5.542 [5.47, 5.615]) *</td>
+<td class="gt_row gt_left" headers="fixed stub_1_20 Envelope..peak.mean.">0.1 [0.1, 0.1] (β = -2.035 [-2.12, -1.95]) *</td>
+<td class="gt_row gt_left" headers="fixed stub_1_20 COP..integral.">1.2 [1.1, 1.2] (β = 0.141 [0.077, 0.204]) *</td>
+<td class="gt_row gt_left" headers="fixed stub_1_20 COP..peak.mean.">1.1 [1.1, 1.2] (β = 0.131 [0.076, 0.186]) *</td>
+</tr>
+<tr class="gt_group_heading_row odd">
+<th colspan="7" id="random_sd" class="gt_group_heading" data-quarto-table-cell-role="th" scope="colgroup">random_sd</th>
+</tr>
+<tr class="gt_row_group_first even">
+<th id="stub_1_21" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">— Random Effect SDs —</th>
+<td class="gt_row gt_left" headers="random_sd stub_1_21 Arm.Torque..integral."></td>
+<td class="gt_row gt_left" headers="random_sd stub_1_21 Arm.Torque..peak.mean."></td>
+<td class="gt_row gt_left" headers="random_sd stub_1_21 Envelope..integral."></td>
+<td class="gt_row gt_left" headers="random_sd stub_1_21 Envelope..peak.mean."></td>
+<td class="gt_row gt_left" headers="random_sd stub_1_21 COP..integral."></td>
+<td class="gt_row gt_left" headers="random_sd stub_1_21 COP..peak.mean."></td>
+</tr>
+<tr class="odd">
+<th id="stub_1_22" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">sd() | residual__</th>
+<td class="gt_row gt_left" headers="random_sd stub_1_22 Arm.Torque..integral.">0.46 [0.435, 0.486]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_22 Arm.Torque..peak.mean.">0.367 [0.347, 0.387]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_22 Envelope..integral.">0.402 [0.385, 0.42]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_22 Envelope..peak.mean.">0.509 [0.487, 0.533]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_22 COP..integral.">0.355 [0.342, 0.368]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_22 COP..peak.mean.">0.355 [0.342, 0.368]</td>
+</tr>
+<tr class="even">
+<th id="stub_1_23" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">sd(BFI_extra) | SessionID</th>
+<td class="gt_row gt_left" headers="random_sd stub_1_23 Arm.Torque..integral.">0.067 [0.003, 0.166]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_23 Arm.Torque..peak.mean.">0.082 [0.01, 0.15]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_23 Envelope..integral.">0.061 [0.003, 0.146]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_23 Envelope..peak.mean.">0.048 [0.002, 0.131]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_23 COP..integral.">0.036 [0.001, 0.097]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_23 COP..peak.mean.">0.034 [0.001, 0.092]</td>
+</tr>
+<tr class="odd">
+<th id="stub_1_24" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">sd(Familiarity) | SessionID</th>
+<td class="gt_row gt_left" headers="random_sd stub_1_24 Arm.Torque..integral.">0.076 [0.003, 0.194]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_24 Arm.Torque..peak.mean.">0.035 [0.001, 0.096]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_24 Envelope..integral.">0.074 [0.004, 0.171]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_24 Envelope..peak.mean.">0.038 [0.001, 0.11]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_24 COP..integral.">0.057 [0.003, 0.128]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_24 COP..peak.mean.">0.055 [0.003, 0.125]</td>
+</tr>
+<tr class="even">
+<th id="stub_1_25" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">sd(Intercept) | SessionID</th>
+<td class="gt_row gt_left" headers="random_sd stub_1_25 Arm.Torque..integral.">0.254 [0.164, 0.342]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_25 Arm.Torque..peak.mean.">0.082 [0.01, 0.139]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_25 Envelope..integral.">0.134 [0.016, 0.228]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_25 Envelope..peak.mean.">0.071 [0.004, 0.158]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_25 COP..integral.">0.064 [0.004, 0.14]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_25 COP..peak.mean.">0.069 [0.004, 0.137]</td>
+</tr>
+<tr class="odd">
+<th id="stub_1_26" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">sd(Intercept) | concept</th>
+<td class="gt_row gt_left" headers="random_sd stub_1_26 Arm.Torque..integral.">0.244 [0.188, 0.31]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_26 Arm.Torque..peak.mean.">0.077 [0.031, 0.12]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_26 Envelope..integral.">0.156 [0.118, 0.201]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_26 Envelope..peak.mean.">0.289 [0.231, 0.357]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_26 COP..integral.">0.2 [0.163, 0.243]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_26 COP..peak.mean.">0.157 [0.125, 0.195]</td>
+</tr>
+<tr class="even">
+<th id="stub_1_27" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">sd(Intercept) | pcn_ID</th>
+<td class="gt_row gt_left" headers="random_sd stub_1_27 Arm.Torque..integral.">0.164 [0.07, 0.246]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_27 Arm.Torque..peak.mean.">0.059 [0.003, 0.129]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_27 Envelope..integral.">0.216 [0.158, 0.28]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_27 Envelope..peak.mean.">0.191 [0.135, 0.246]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_27 COP..integral.">0.177 [0.138, 0.218]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_27 COP..peak.mean.">0.149 [0.108, 0.19]</td>
+</tr>
+<tr class="odd">
+<th id="stub_1_28" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">sd(answer_prev_dist_z) | SessionID</th>
+<td class="gt_row gt_left" headers="random_sd stub_1_28 Arm.Torque..integral.">0.038 [0.002, 0.094]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_28 Arm.Torque..peak.mean.">0.023 [0.001, 0.061]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_28 Envelope..integral.">0.025 [0.001, 0.06]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_28 Envelope..peak.mean.">0.027 [0.001, 0.071]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_28 COP..integral.">0.042 [0.005, 0.075]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_28 COP..peak.mean.">0.029 [0.002, 0.061]</td>
+</tr>
+<tr class="even">
+<th id="stub_1_29" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">sd(answer_prev_dist_z) | concept</th>
+<td class="gt_row gt_left" headers="random_sd stub_1_29 Arm.Torque..integral.">0.032 [0.001, 0.089]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_29 Arm.Torque..peak.mean.">0.03 [0.001, 0.075]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_29 Envelope..integral.">0.039 [0.002, 0.086]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_29 Envelope..peak.mean.">0.042 [0.002, 0.101]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_29 COP..integral.">0.038 [0.003, 0.074]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_29 COP..peak.mean.">0.034 [0.002, 0.069]</td>
+</tr>
+<tr class="odd">
+<th id="stub_1_30" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">sd(answer_prev_dist_z) | pcn_ID</th>
+<td class="gt_row gt_left" headers="random_sd stub_1_30 Arm.Torque..integral.">0.032 [0.001, 0.085]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_30 Arm.Torque..peak.mean.">0.024 [0.001, 0.065]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_30 Envelope..integral.">0.023 [0.001, 0.061]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_30 Envelope..peak.mean.">0.032 [0.001, 0.082]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_30 COP..integral.">0.023 [0.001, 0.059]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_30 COP..peak.mean.">0.021 [0.001, 0.053]</td>
+</tr>
+<tr class="even">
+<th id="stub_1_31" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">sd(correction2M1) | concept</th>
+<td class="gt_row gt_left" headers="random_sd stub_1_31 Arm.Torque..integral.">0.069 [0.003, 0.171]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_31 Arm.Torque..peak.mean.">0.068 [0.004, 0.151]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_31 Envelope..integral.">0.046 [0.002, 0.115]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_31 Envelope..peak.mean.">0.069 [0.003, 0.163]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_31 COP..integral.">0.033 [0.001, 0.083]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_31 COP..peak.mean.">0.033 [0.001, 0.082]</td>
+</tr>
+<tr class="odd">
+<th id="stub_1_32" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">sd(correction2M1) | pcn_ID</th>
+<td class="gt_row gt_left" headers="random_sd stub_1_32 Arm.Torque..integral.">0.077 [0.004, 0.186]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_32 Arm.Torque..peak.mean.">0.037 [0.002, 0.103]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_32 Envelope..integral.">0.054 [0.002, 0.128]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_32 Envelope..peak.mean.">0.06 [0.003, 0.15]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_32 COP..integral.">0.029 [0.001, 0.078]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_32 COP..peak.mean.">0.037 [0.002, 0.093]</td>
+</tr>
+<tr class="even">
+<th id="stub_1_33" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">sd(expressibility_z) | pcn_ID</th>
+<td class="gt_row gt_left" headers="random_sd stub_1_33 Arm.Torque..integral.">0.026 [0.001, 0.071]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_33 Arm.Torque..peak.mean.">0.022 [0.001, 0.059]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_33 Envelope..integral.">0.071 [0.012, 0.119]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_33 Envelope..peak.mean.">0.098 [0.021, 0.157]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_33 COP..integral.">0.033 [0.002, 0.071]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_33 COP..peak.mean.">0.017 [0.001, 0.045]</td>
+</tr>
+<tr class="odd">
+<th id="stub_1_34" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">sd(modality1) | concept</th>
+<td class="gt_row gt_left" headers="random_sd stub_1_34 Arm.Torque..integral.">0.055 [0.002, 0.148]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_34 Arm.Torque..peak.mean.">0.037 [0.001, 0.103]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_34 Envelope..integral.">0.077 [0.005, 0.167]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_34 Envelope..peak.mean.">0.222 [0.11, 0.328]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_34 COP..integral.">0.071 [0.004, 0.161]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_34 COP..peak.mean.">0.08 [0.006, 0.164]</td>
+</tr>
+<tr class="even">
+<th id="stub_1_35" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">sd(modality1) | pcn_ID</th>
+<td class="gt_row gt_left" headers="random_sd stub_1_35 Arm.Torque..integral.">0.135 [0.012, 0.253]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_35 Arm.Torque..peak.mean.">0.07 [0.004, 0.167]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_35 Envelope..integral.">0.097 [0.008, 0.186]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_35 Envelope..peak.mean.">0.19 [0.057, 0.291]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_35 COP..integral.">0.182 [0.106, 0.254]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_35 COP..peak.mean.">0.175 [0.107, 0.242]</td>
+</tr>
+<tr class="odd">
+<th id="stub_1_36" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">sd(modality2) | concept</th>
+<td class="gt_row gt_left" headers="random_sd stub_1_36 Arm.Torque..integral.">—</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_36 Arm.Torque..peak.mean.">—</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_36 Envelope..integral.">—</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_36 Envelope..peak.mean.">—</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_36 COP..integral.">0.166 [0.089, 0.239]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_36 COP..peak.mean.">0.086 [0.007, 0.166]</td>
+</tr>
+<tr class="even">
+<th id="stub_1_37" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">sd(modality2) | pcn_ID</th>
+<td class="gt_row gt_left" headers="random_sd stub_1_37 Arm.Torque..integral.">—</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_37 Arm.Torque..peak.mean.">—</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_37 Envelope..integral.">—</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_37 Envelope..peak.mean.">—</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_37 COP..integral.">0.213 [0.146, 0.281]</td>
+<td class="gt_row gt_left" headers="random_sd stub_1_37 COP..peak.mean.">0.146 [0.051, 0.22]</td>
+</tr>
+<tr class="gt_group_heading_row odd">
+<th colspan="7" id="random_cor" class="gt_group_heading" data-quarto-table-cell-role="th" scope="colgroup">random_cor</th>
+</tr>
+<tr class="gt_row_group_first even">
+<th id="stub_1_38" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">— Random Effect Correlations —</th>
+<td class="gt_row gt_left" headers="random_cor stub_1_38 Arm.Torque..integral."></td>
+<td class="gt_row gt_left" headers="random_cor stub_1_38 Arm.Torque..peak.mean."></td>
+<td class="gt_row gt_left" headers="random_cor stub_1_38 Envelope..integral."></td>
+<td class="gt_row gt_left" headers="random_cor stub_1_38 Envelope..peak.mean."></td>
+<td class="gt_row gt_left" headers="random_cor stub_1_38 COP..integral."></td>
+<td class="gt_row gt_left" headers="random_cor stub_1_38 COP..peak.mean."></td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="exploratory-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="exploratory-analysis">3.3 Exploratory analysis</h2>
+<section id="baseline-trial-effort" class="level3">
+<h3 class="anchored" data-anchor-id="baseline-trial-effort">3.3.1 Baseline trial effort</h3>
+<p>A model with interaction between correction and average participant baseline (c0) effort further enlightens the relationship between effort and correction. While for cumulative effort measures for vocalisations, upper-limb movement and posture, effort at correction does not interact with average baseline effort of a participant; the instantaneous effort measures draw a different picture.</p>
+<p>For peak torque change, there is a strong negative interaction between first correction and baseline average effort. Participants who tend to start with performance that is much less effortful (−2 SD from the mean) escalate on correction by β = 17.2% (95% CrI: [8.5%, 26.6%]), while those who start with very effortful performance continue with correction that is β = -9.4% (95% CrI: [-16.4%, -1.8%]) less effortful. Similarly, the direction of instantaneous vocal effort in first correction depends on average baseline vocal effort. Participants who tend to start with much less effortful performance (−2 SD) escalate on correction by β = 18.6% (95% CrI: [6.7%, 32.0%]), while those who start with very effortful performance continue with correction that is β = -24.6% (95% CrI: [-32.5%, -15.7%]) less effortful. For postural effort, the effect is similar but to a lesser degree: participants who start on average with high effort performance (+2 SD above the mean) decrease their postural effort by β = -11.0% (95% CrI: [-16.6%, -5.1%]) in the first correction, while participants starting with low effort performance (−2 SD from the mean) engage in corrections that are unaltered, indicated by the interval including zero (β = 6.5% (95% CrI: [-0.2%, 13.7%])). Second correction remains unaltered, indicated by the estimated interval including zero.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: my-plot</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig.cap: Figure 5. Correction effect differences by average baseline effort</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"06_Analysis_Modeling/plots/correction_by_avg_baseline_interaction.png"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="../06_Analysis_Modeling/plots/correction_by_avg_baseline_interaction.png" class="img-fluid figure-img" width="3000"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="time-as-covariate" class="level3">
+<h3 class="anchored" data-anchor-id="time-as-covariate">3.3.2 Time as covariate</h3>
+<p>Additional models for cumulative dependent variables with trial duration as a predictor revealed substantial attenuation of the main effect of correction on the effort. The effect of first correction (c0 → c1) on the upper-limb effort remains credibly positive, but decreased from ~20.6% to ~7.0% (95% CrI: [2.6%, 11.7%]), suggesting that almost two thirds of the increase in upper-limb effort can be attributed to accumulation of more - but not larger - arm movement over time. Second correction (c1 → c2) of upper-limb effort and both corrections for vocal and postural effort are driven purely by duration, as neither of the predictors is now reliably different from zero. Additionally, expressibility across all three variables, and modality effect for upper-limb effort, too, can be attributed to duration, as in these cases, the predictors do not yield credible estimates.</p>
+</section>
+<section id="communicative-gain" class="level3">
+<h3 class="anchored" data-anchor-id="communicative-gain">3.3.3 Communicative gain</h3>
+<p>Across all outcomes, modality was the dominant predictor of communicative success, with multimodal trials consistently outperforming unimodal ones. For first-attempt resolution, predicted P(resolved) was 0.46 (95% CrI: [0.36, 0.55]) for multimodal, 0.35 (95% CrI: [0.12, 0.67]) for gesture-only, and 0.18 (95% CrI: [0.06, 0.43]) for vocal-only trials; the vocal vs.&nbsp;multimodal contrast was credible (ΔP = -0.27 [-0.42, -0.03]), while gesture vs.&nbsp;multimodal was not (ΔP = -0.11 [-0.33, +0.20]). A similar pattern held for answer similarity, where predicted cosine similarity was 0.48 (95% CrI: [0.46, 0.51]) for multimodal, 0.45 (95% CrI: [0.37, 0.54]) for gesture-only, and 0.38 (95% CrI: [0.33, 0.43]) for vocal-only (gesture vs.&nbsp;multimodal: -0.04 [-0.11, +0.06]; vocal vs.&nbsp;multimodal: -0.11 [-0.15, -0.05]). For resolution speed, multimodal trials had the highest predicted probability of first-attempt resolution (P(c0) = 0.39 (95% CrI: [0.31, 0.47])) and the lowest probability of never resolving (P(never) = 0.26 (95% CrI: [0.20, 0.33])), compared to gesture (P(c0) = 0.12 (95% CrI: [0.04, 0.29])) and vocal (P(c0) = 0.13 (95% CrI: [0.05, 0.30]); P(never) = 0.59 (95% CrI: [0.34, 0.80])); notably, both unimodal conditions were similarly and credibly disadvantaged relative to multimodal (gesture: ΔP(c0) = -0.26 [-0.36, -0.10]; vocal: ΔP(c0) = -0.25 [-0.35, -0.09]). For eventual resolution, P(ever resolved) was 0.75 (95% CrI: [0.68, 0.81]) for multimodal, 0.53 (95% CrI: [0.24, 0.80]) for gesture-only, and 0.50 (95% CrI: [0.26, 0.74]) for vocal-only (gesture vs.&nbsp;multimodal: ΔP = -0.22 [-0.50, +0.04]; vocal vs.&nbsp;multimodal: ΔP = -0.25 [-0.48, -0.02]). Across outcomes, the gesture vs.&nbsp;multimodal contrast was consistently non-credible — with the notable exception of resolution speed, where both unimodal conditions were similarly disadvantaged — while the vocal vs.&nbsp;multimodal contrast was credible or near-credible throughout.</p>
+<p>Effort, by contrast, did not systematically predict communicative success. The large majority of effort × modality slopes were not credible, and productivity gradients were small and inconsistent in direction across channels and modalities. A small number of exceptions emerged. Higher instantaneous vocal amplitude at first attempt was associated with faster resolution in vocal-only trials (ΔP(c0) = +0.16; ΔP(never) = -0.29; β = β = -0.37 (95% CrI: [-0.68, -0.07])). Greater postural displacement at first attempt predicted higher P(ever resolved) in vocal-only trials (β = β = +0.70 (95% CrI: [+0.21, +1.19]); ΔP = +0.15; from P = 0.33 (95% CrI: [0.16, 0.56]) at −1 SD to 0.49 (95% CrI: [0.27, 0.72]) at +1 SD), suggesting that postural effort may index speaker commitment in a way that carries communicative consequence even when gesture is unavailable. In the opposite direction, higher peak vocal amplitude in multimodal trials was associated with lower P(ever resolved) (β = β = +0.13 (95% CrI: [-0.25, +0.50]); ΔP = -0.15), consistent with louder vocalisation marking communicative difficulty when gesture is already available. Total effort — summed across all correction attempts — did not predict final semantic similarity in either the cumulative or instantaneous model, and the effort × concept number interactions were uniformly non-credible, indicating that this null relationship did not change as dyads gained experience with the task.</p>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

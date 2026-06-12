@@ -1,0 +1,70 @@
+---
+title: "Deviations from preregistrations: summary"
+format: html
+---
+
+Here we report all major changes deviating from pre-registred data collection or analysis procedures. These include changes in laboratory equipment or recording procedures, adaptations in processing pipelines or anything that has an effect on resulting data. We include brief explanation for each change.
+
+Additionally, all pre-registered scripts are compared side-by-side with the final versions to allow for direct, transparent comparison. This is available in *XY*.
+
+# Data collection
+
+**Concept distribution:** We pre-registered that all concepts are equally distributed across sessions and modalities such that all stimuli are presented same amount of time. Due to unforeseen error this is not the case.
+
+**Additional headphones:** We added additional pair of Sony headphones(WH-1000XM5). This is because in gesture-only condition, auditory modality should be limited but switching off the already present headphones, or canceling the connection severely affects the recorded sound. Guesser now therefore merely switches between sound-providing headphones and noise-cancelling headphones without access to sound.
+
+**Third screen added:** In the first part of the experiment (without any feedback), we added third screen for the administrator to allow for monitoring of the procedure.
+
+**Charuco calibration added:** After one month of recording, we also started calibrating with ChArUco board to extended the future utility for computer vision algorithms.
+
+**Age limited lowered:** After one month of recording, we extended data recruitment to include people who are 16 and 17 years old. Appropriate ammendment to the ethics was submitted and accepted.
+
+**USB-to-jack adapter exchanged:** During the first month of recording, we identified electrical hiss in several sessions. We exchanged the adapter and made sure all present phones are turned off or put to flight mode.
+
+# Data processing
+
+**Relative paths recoded:** To ensure compatibility with any OS, we recoded relative paths using `os.path.join()`
+
+**Separate coding procedures:** Correcting the time ranges of cuted trials, 16-to-48 alignment, and audio-video alignment are now each performed in separate scripts.
+
+**Change in naming convention:** Videos with adapted time range have now suffix *cutX* with *X* specifying the round in which it was recuted (previously *_corrected*).
+
+# Motion tracking
+
+**New Pose2sim version:** We upgraded the Pose2sim pipeline to use *version 0.10.39* (previously *0.1.0*). This pipeline also includes calculating inverse kinematics (joint angles). Since the workflow is much smoother, we use Pose2sim for scaling anatomical model and joint angle estimation, and further continue (as previously) with OpenSim to estimate inverse dynamics (joint forces). OpenSim pipeline is now added to the Pose2sim script as they can work under one environment.
+
+**Frame for calibration:** During calibration, we now select a frame manually, to ensure good quality frame, increasing the chance of automatic corner detection.
+
+**Preparation of configuration file:** Configuration file (Config.toml) is now pre-processed and prepared before the main triangulation loop.
+
+**Pre-processing of triangulated data:**  To ensure accurate joint angle estimation, we pre-process the raw coordinate data, including re-adjustment of the axis and smoothing
+
+**Varying FPS:** To ensure correct time structure in videos that have varying fps, video frame rate is not hard-coded but dynamically extracted from the video
+
+# Data processing
+
+**Smoothing parameters adjusted:** Due to pre-processing steps during motion tracking (see above), we further adjusted smoothing parameters in the processing script to avoid over-smoothing
+
+**Spectral centroid extraction:** We changed the pipeline for extracting spectral centroid for better accuracy.
+
+**Normalizing acoustic envelope:** Previously, we normalized envelope in each trial for each trial separately, mistakenly erasing all meaningful inter-trial/speaker differences. We corrected the pipeline such that we first extract envelope for all trials, and then normalize within each speaker.
+
+**Error in merging files:** We changed the file identification procedure in merging script to ensure that all files across modalities are matched correctly
+
+**Annotation dropped:** We decided not to annotate movement in the trial. The inter-rater agreement between automatic algorithm and manually annotated files resulted in poor kappa scores. Given that we carefully adjusted all files to start and end in appropriate moments, the files should start and end when participant decides to start/end the movement, making the annotations unnecessary pre-analysis step. Features are now therefore extracted directly from the whole duration of the trial. This also improves the reproducibility as we do not rely on this intermediate step.
+
+# Feature extraction
+
+**Normalization of cosine similarity:** Some target-guess pairs resulted in negative values of cosine similarity. We converted them to 0.0001 (value lower than the lowest positive cosine similarity and higher than 0, which we left exclusively for answers such as *I don't know*) as they are noise around orthogonal dimension, not signs of opposite meaning.
+
+**Exclusions added:** We added pipeline for excluding trials which (1) broke condition rules; (2) contained speech used for explaining the target concept. 
+
+**Pipeline for finding peaks adapted:** The preregistered pipeline used the within-trial mean as the minimum peak height threshold. We instead use 30% of the cross-trial SD, where SD is computed across all trials of the same type. This change was motivated by the nature of effort signals: because effort is right-skewed and strictly non-negative, the mean is inflated by the peaks themselves, creating a circular dependency that suppresses detection in high-effort trials and admits noise in low-effort ones. Anchoring the threshold to a global SD ensures that the minimum detectable peak represents a consistent absolute level of effort across trials, making peak counts and amplitudes comparable in the way our cross-trial effort analyses require. Additionaly, for detecting peaks, we trim the signal in the beginning and in the end when locking of the hand (start/end signal) is often present.
+
+**Z-scoring:** The preregistered pipeline included z-scoring of effort features prior to modelling. We omitted this step because the models include participant as a random effect with both random intercepts and random slopes. This structure already accounts for between-participant differences in baseline effort levels (intercepts) and in how effort scales across conditions (slopes), rendering z-scoring redundant. Retaining the original scale also preserves the interpretability of fixed effects in terms of meaningful physical units. However, for exploratory analysis (PCA + XGBoost), we will use z-scored features (normalized within participant) to ensure that no single variable dominates the multidimensional space.
+
+# Analysis
+
+**Trial number as fixed effect:** Trial number was included as a fixed effect rather than as a random intercept grouped by trial position. This choice reflects the theoretical expectation that effort changes across trials in a systematic, directional manner — for instance, due to fatigue accumulating over the session or familiarity with the task and partner increasing over time. A random intercept per trial position would treat trial-level variation as exchangeable noise drawn from a distribution with no ordering, obscuring any monotonic or otherwise structured trend. Modelling trial number as a continuous fixed effect instead captures this ordered trajectory while remaining parsimonious, and is interpretable as an estimate of the average within-session drift in effort across participants and dyads.
+
+**Change of effort:** For H2, we modelled effect of cosine similarity on effort variable, including previous effort as a statistical control. In the preregistered pipeline, we intended to model change in effort directly. However, effort change scores – computed as the difference between consecutive attempts – produced distributions with substantial positive and negative values that proved difficult to model reliably, explaining less than 5% across all six dependent variables. Modeling current effort with previous effort as a covariate recovers the same inferential target while avoiding these estimation problems. The preregistered change-score models are reported in full in the Supplementary Material (section D) for transparency.

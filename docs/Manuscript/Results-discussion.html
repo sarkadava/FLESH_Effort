@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.26">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Results</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-597958c53c93a607afca12fd375c57ed.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-60d4398d82fec002ccec76571ed06d15.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../style.css">
+</head>
+
+<body class="nav-sidebar floating nav-fixed fullcontent quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+        <div class="quarto-navbar-tools tools-end">
+    <div class="dropdown">
+      <a href="" title="" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label=""><i class="bi bi-github"></i></a>
+      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item quarto-navbar-tools-item" href="https://github.com/sarkadava/FLESH_Effort">
+            Source Code
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item quarto-navbar-tools-item" href="https://github.com/sarkadava/FLESH_Effort/issues">
+            Report a Bug
+            </a>
+          </li>
+      </ul>
+    </div>
+</div>
+          <div id="quarto-search" class="" title="Search"></div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Results</li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../online_index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Home</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Manuscript/Methods.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Overview of Methods</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">A. Pre-processing</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../01_XDF_processing/01_Process_XDF.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Pre-Processing I: from XDF to raw files</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../01_XDF_processing/02_Audiosync.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Pre-Processing II: Aligning 16 kHz audio with 48 khZ audio from a second source</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../01_XDF_processing/03_Correct_cuts.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Pre-Processing III: Correcting trials</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../01_XDF_processing/04_Final_wrangle.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Pre-Processing IV: Final checks</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">B. Motion tracking</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../02_MotionTracking_processing/01_Video_preparation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Motion tracking I: Preparation of videos</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../02_MotionTracking_processing/02_Track_OpenPose.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Motion tracking II: 2D pose estimation via OpenPose</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../02_MotionTracking_processing/03_Track_pose2sim_OpenSim.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Motion tracking III: Triangulation via Pose2sim, Inverse kinematics &amp; dynamics via OpenSim</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">C. Data processing</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../03_TS_processing/01_TS_processing_motion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Processing I: Motion tracking and balance</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../03_TS_processing/02_TS_processing_acoustics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Processing II: Acoustics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../03_TS_processing/03_TS_merging.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Processing III: Merging multimodal data</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">D. Feature extraction</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../04_ConceptSimilarity/ConceptNet_similarity.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Computing concept similarity using ConceptNet word embeddings</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../05_TS_featureExtraction/00_Condition_adherence.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Exclusion I: adherence to modality</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../05_TS_featureExtraction/00_Speech_check.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Exclusion I: speech presence</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../05_TS_featureExtraction/01_TS_extraction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Extraction of effort-related features</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../05_TS_featureExtraction/02_Explorations_and_viz.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Visual explorations</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">E. Analysis</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../06_Analysis_Modeling/Bayesian_modeling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Analysis: Modeling the effect of correction on physical effort</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Results</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: setup-general</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| include: false</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gt)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"helper.R"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<section id="misunderstanding-recruits-cumulative-but-not-instantaneous-effort" class="level2">
+<h2 class="anchored" data-anchor-id="misunderstanding-recruits-cumulative-but-not-instantaneous-effort">Misunderstanding recruits cumulative but not instantaneous effort</h2>
+<p>As predicted, participants invested more effort when their partners misunderstood them – but the pattern was more specific than a simple mobilization of all available resources. Here we report the main effects of interest, a full report of the results is available in Supplementary Material (section E). Across all investigated dimensions of effort – upper-limb, vocal, and postural – behavior following an incorrect guess was more effortful in cumulative but not instantaneous terms (Fig. 1b). Upper-limb effort showed the largest enhancement: cumulative torque change increased by 20.6% at the first correction compared to baseline (95% CrI: [14.5%, 27.1%]) and by 15.2% at the second correction compared to first correction (95% CrI: [8.1%, 22.6%]). Vocal and postural effort followed the same pattern at roughly half the magnitude. Cumulative vocal effort increased by 11.6% at the first correction (95% CrI: [7.4%, 16.0%]) and by 7.3% at the second (95% CrI: [2.8%, 12.0%]), and cumulative postural effort increased by 12.9% at the first correction (95% CrI: [8.5%, 17.4%]) and by 10.0% at the second (95% CrI: [5.0%, 15.2%]).</p>
+<p>To test whether these cumulative increases reflected more movement or larger movements, we refitted the models with trial duration as a covariate. Adding duration substantially attenuated the correction effect (cf.&nbsp;Supplementary Material section D). The first-correction effect on the upper-limb effort remained credibly positive, but decreased from 20.6% to 7.0% (95% CrI: [2.6%, 11.7%]), suggesting that almost two-thirds of the increase in upper-limb effort can be attributed to accumulation of more, rather than larger, arm movement. The second-correction effect on upper-limb effort and both corrections effects for vocal and postural effort, were fully accounted for by duration: with duration in the model, none remained credibly different from zero.</p>
+<p>None of the instantaneous measures showed a similar credible pattern: at the populational level, the instantaneous vocal, upper-limb, and postural effort remained unchanged following a misunderstanding. In an exploratory analysis, however, a model including the interaction between correction and each performer’s average baseline (i.e., first performance) effort showed that the first-correction effect is credibly influenced by the amount of effort in the baseline performance, and can even lead in the opposite direction (see Supplementary Material section D). Specifically, for instantaneous arm torque change, the interaction with baseline effort was strongly negative: performers with low average baseline effort (−2 SD from the mean) increased their first correction by 17.2% (95% CrI: [8.5%, 26.6%]), while those with high baseline effort (+2 SD) decreased it by 9.4% (95% CrI: [-16.4%, -1.8%]). Instantaneous vocal effort showed the same dependance: low-baseline performers (-2 SD) increased their first correction by 18.6% (95% CrI: [6.7%, 32.0%]), while high-baseline performers (+2 SD) decreased it by 24.6% (95% CrI: [-32.5%, -15.7%]). For postural effort, the pattern was weaker: high-baseline performers decreased their first correction by 11.0% (95% CrI: [-16.6%, -5.1%]), while low-baseline performers showed no credible change (β = 6.5% (95% CrI: [-0.2%, 13.7%])). Instantaneous effort at correction was therefore not uniformly recruited; whether performers scaled up the instantaneous effort depended on how effortful their baseline performance already was. This pattern warrants caution for two reasons. First, the baseline-by-correction interaction is susceptible to regression to the mean: participants with ‘extreme’ behavior will tend to regress toward the group mean at subsequent timepoints, which could artifactually produce the observed sign reversal. Second, high-baseline performers may face ceiling constraints on instantaneous effort, making decrease more likely by default. Because the present analyses cannot distinguish between statistical artifacts and behavioral patterns, we do not interpret it substantively.</p>
+<p>We also asked how baseline effort levels differed across modality conditions, since the available articulators differ between them. The modality shaped effort, but in measure-specific ways. Vocal effort was substantially higher in the vocal-only than in the multimodal condition, both cumulatively (36.0% higher, 95% CrI [19.6%, 54.6%]) and instantaneously (58.5% higher, 95% CrI [34.0%, 87.4%]), implying that vocal effort takes on more of the communicative burden when the hands are unavailable. The effect of modality on postural effort is reversed in direction: conditions involving bodily movement elicited far greater COPc than the vocal-only condition, both cumulatively (gesture-only: 313.3% higher, 95% CrI: [212.8%, 444.2%]; multimodal: 344.3% higher, 95% CrI: [235.4%, 486.9%]) and instantaneously (gesture-only: 147.9% higher, 95% CrI: [103.3%, 203.3%], multimodal: 188.7% higher, 95% CrI: [135.7%, 254.4%]). Gesture-only and multimodal conditions did not differ in cumulative postural effort, although multimodal exceeded gesture-only for instantaneous postural effort, suggesting that coordinating two modalities involves bursts of postural activity without increasing total postural load. For upper-limb effort, we found no reliable average difference between conditions once between-participant and between-concept variability was modelled. The gesture-only vs.&nbsp;multimodal contrast was positive for cumulative effort but its interval included zero (5.6%, 95% CrI [-1.7%, 13.5%]). Substantial random slope variance indicated that who is communicating and which concept is conveyed matter more for upper-limb effort than the modality condition itself.</p>
+<p>To summarize, while cumulative effort increased reliably across corrections for all three measures, instantaneous effort did not. Correction therefore imposes a clear cumulative cost on performers without recruiting greater peak intensity per movement or per vocalization. This pattern is consistent with a redistribution of effort across longer time intervals and more movement units rather than a concentrated scaling-up of force or amplitude, an interpretation we develop in the Discussion. The consistency of these increases across three independent measures of bodily effort supports that repair imposes a substantive physical cost on the performer, supporting H1 for cumulative, though not instantaneous, effort.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="..\../assets/Effort-multiplot.png" class="img-fluid figure-img"></p>
+<figcaption><strong>Fig. 1: Task design and empirical results.</strong> (A) Experimental design and measurements. A performer expresses a target concept to a guesser under one of three modality conditions (gesture-only, vocal-only, or multimodal); after an incorrect response, the performer produces a correction, up to two corrections per concept (baseline guess ‘journey’, incorrect; correction guess ‘to walk’, correct). We extract three effort signals: torque change of the arms (upper-limb effort), acoustic amplitude envelope (vocal effort), and change in center of pressure (postural effort), each summarized as cumulative effort (area under the curve) and instantaneous effort (mean of detected peaks). These give the six effort variables used throughout. (B) Posterior distribution of effort increase across corrections, on the log scale: first correction (left panel) is relative to baseline, and second correction (right panel) is relative to first correction. Dashed line at 0: no change; point: posterior median; thick and thin lines: 89% and 95% highest density intervals (HDI). (C) Posterior distribution of effort increase per 1 SD of cosine similarity between the answer and the target meaning (%, see Methods); higher similarity reflects less misunderstanding. Conventions as in B. (D) Posterior slopes relating the six effort variables to four measures of communicative success, each a separate model (see Methods): probability of understanding at the first-attempt (log-odds); answer similarity to target (Beta scale); understanding across attempts (ordinal: first attempt &lt; first correction &lt; second correction &lt; unresolved; log-odds); and whether ever resolved (log-odds). Conventions as in B.</figcaption>
+</figure>
+</div>
+</section>
+<section id="upper-limb-effort-scales-with-the-degree-of-misunderstanding" class="level2">
+<h2 class="anchored" data-anchor-id="upper-limb-effort-scales-with-the-degree-of-misunderstanding">Upper-limb effort scales with the degree of misunderstanding</h2>
+<p>We found partial support for H2 (Fig. 2c). Cumulative upper-limb effort scaled credibly with the degree of misunderstanding, operationalized as the cosine similarity between the guesser’s previous answer and the target meaning (lower similarity indicates greater misunderstanding). Each 1-SD increase in cosine similarity was associated with 7.5% reduction in cumulative arm torque change (95% CrI: [-11.3%, -3.5%]); equivalently, performers invested more cumulative upper-limb effort when the previous answer was further from the target. Instantaneous arm torque change ran in the same direction, but its estimated interval included zero (β = -2.5% (95% CrI: [-5.4%, 0.5%])). In contrast, neither cumulative nor instantaneous vocal effort showed a credible relationship with cosine similarity, and the same was true for both postural measures.</p>
+<p>Cumulative upper-limb effort therefore adapts reliably to the amount of repair work the previous answer requires, while vocal and postural effort appear insensitive to the degree of misunderstanding. The asymmetry between cumulative and instantaneous upper-limb effort mirrors the pattern reported in the previous subsection: misunderstanding scales cumulative effort more reliably than instantaneous effort.</p>
+<p>Importantly, the effect of semantic distance on cumulative upper-limb effort was uniformly distributed across the sample: the random-slope variance for cosine similarity was negligible across all three grouping levels (concepts, participants, and dyads), indicating that the effect did not vary systematically by performer, dyad, or concept. This consistency suggests that arm movement responds to common ground in a relatively automatic way, rather than reflecting strategic adaptation by particular individuals or for particular concepts.</p>
+</section>
+<section id="effort-does-not-predict-communicative-success" class="level2">
+<h2 class="anchored" data-anchor-id="effort-does-not-predict-communicative-success">Effort does not predict communicative success</h2>
+<p>In an exploratory analysis, we asked whether the effort performers invested in repair translated into improved communicative outcomes. Across four complementary outcomes (1. whether the misunderstanding was resolved on the first attempt, 2. how semantically similar the guesser’s answer was to the target concept, 3. how quickly understanding was reached across correction attempts, and 4. whether understanding was ever achieved across the full sequence), modality was the dominant predictor and effort was not (Fig. 1d).</p>
+<p>Multimodal trials outperformed vocal-only trials across all outcomes. The predicted probability of reaching understanding at first-attempt was 0.46 (95% CrI: [0.36, 0.55]) for multimodal and 0.18 (95% CrI: [0.06, 0.43]) for vocal-only (contrast = -0.27, 95% CrI [-0.42, -0.03]), and the probability of never reaching understanding was (P(never) = 0.25 (95% CrI: [0.19, 0.32]) for multimodal and 0.51 (95% CrI: [0.28, 0.73]) for vocal-only). Gesture-only performance was largely indistinguishable from multimodal, with one exception: in gesture-only condition, understanding was reached more slowly than in multimodal condition (contrast = -0.13, 95% CrI [-0.30, +0.12]). On all other outcomes, gesture-only versus multimodal contrasts remained non-credible.</p>
+<p>Despite the clear effort increase during repair, this investment does not translate into communicative gain. Effort slopes were small, inconsistent in direction, and non-credible across the large majority of effort × modality combinations. A small number of exceptions ran in opposing directions and warrant cautious interpretation. Instantaneous vocal amplitude predicted faster understanding in vocal-only trials, and greater postural adjustments at first attempt predicted higher probability of eventually reaching understanding in vocal-only trials – possibly indexing speaker commitment when gesture is unavailable. In the opposite direction, higher instantaneous vocal effort in multimodal trials was associated with lower probability of eventual understanding, consistent with louder vocalization marking difficulty rather than driving success.</p>
+</section>
+<section id="discussion" class="level1">
+<h1>Discussion</h1>
+<p>When people fail to communicate a concept through non-linguistic means, they do not simply reorganize their behavior – they invest more physical effort. And they do so in a specific way: not by doing the same thing harder, but by doing more over time. This distinction between intensification and elaboration may reflect a general principle of how the body responds to misunderstanding: effort expands across a longer temporal window rather than concentrating locally. Our data suggest this response is also flexible – sensitive to how large the misunderstanding is and shaped by the articulatory resources available. We thereby show that misunderstanding literally recruits investment of physical (metabolic) cost, thereby providing a fundamental grounding of “cost” that has so far remained implicit in accounts of effort and efficiency in linguistics.</p>
+<p>These findings extend existing accounts of how environmental constraints reshape communicative behavior. Lindblom’s H&amp;H Theory <span class="citation" data-cites="lindblomExplainingPhoneticVariation1990">(<a href="#ref-lindblomExplainingPhoneticVariation1990" role="doc-biblioref">Lindblom, 1990</a>)</span> predicts that a system under pressure produces a clearer, more precise signal. Rather than contradicting this prediction, our results reveal that misunderstanding imposes a categorically different kind of demand than, say, a noisy room. Situations with background noise may require a local enhancement (e.g., louder speech) relative to the environment. Epistemic misalignment, on the other hand, necessitates enhancement that is more global: adding more information and changing the structure of the message. This is in line with existing work on communicative repair <span class="citation" data-cites="rasenbergMultimodalNatureCommunicative2022 hilliardBridgingGapsCommon2016">(<a href="#ref-hilliardBridgingGapsCommon2016" role="doc-biblioref">Hilliard &amp; Cook, 2016</a>; <a href="#ref-rasenbergMultimodalNatureCommunicative2022" role="doc-biblioref">Rasenberg et al., 2022</a>)</span> but our operationalization allows us to claim – for the first time – that performers invest more physical effort rather than simply reorganizing the content of the message when their addressee signals poor understanding.</p>
+<p>Crucially, elaboration is not reflected in the same manner across dimensions. Upper-limb movement shows the greatest capacity for cumulative increase: gesture offers multiple routes through which more structure can be added — pointing, tracing, representing — and the increase may also reflect cognitive engagement with the target, given gesture’s link to conceptual and lexical processing <span class="citation" data-cites="hostetterSeeItMy2007 kraussRoleSpeechrelatedArm1999">(<a href="#ref-hostetterSeeItMy2007" role="doc-biblioref">Hostetter et al., 2007</a>; <a href="#ref-kraussRoleSpeechrelatedArm1999" role="doc-biblioref">Krauss &amp; Hadar, 1999</a>)</span>. VVocal effort showed a more modest increase, possibly reflecting the limited degrees of freedom available for non-linguistic vocalization: once referential breakdown has occurred, the semantic space is harder to navigate without the semiotic flexibility that gesture affords. Postural effort also increased cumulatively across conditions; its smaller magnitude is consistent with a stability-oriented function <span class="citation" data-cites="massionMovementPostureEquilibrium1992">(<a href="#ref-massionMovementPostureEquilibrium1992" role="doc-biblioref">Massion, 1992</a>)</span> and its presence even in the vocal-only condition suggests that misunderstanding imposes non-representational demands on the whole body, possibly reflecting cognitive load or self-regulatory mechanisms <span class="citation" data-cites="yardleyEffectArticulatoryMental1999 linStandTallThink2026">(<a href="#ref-linStandTallThink2026" role="doc-biblioref">Lin et al., 2026</a>; <a href="#ref-yardleyEffectArticulatoryMental1999" role="doc-biblioref">Yardley et al., 1999</a>)</span>.</p>
+<p>The diverging articulatory and meaning-making affordances in gestural and vocal modality hints that they work best in combination, both in terms of saving effort and reaching success. Our data partially supports that. Vocal effort was substantially lower in the multimodal than in the vocal-only condition, indicating that the voice carries less of the communicative load when the upper limbs are available. The complementary comparison – upper-limb effort in multimodal versus gesture-only condition – pointed in the same direction (smaller upper-limb effort when voice is present) but its interval included zero, implying that the arms benefit the voice more than the voice benefits the arms. With respect to communicative success, gesture and vocalization together outperformed vocalization alone across all four outcomes. Compared with gesture-only, multimodality offered a credible advantage only in how quickly understanding was reached. Whether understanding was reached on the first-attempt, semantic similarity, and whether understanding was eventually reached were comparable. The multimodal benefit on how quickly understanding is reached echoes findings of Macuch Silva et al. <span class="citation" data-cites="macuchsilvaMultimodalityOriginNovel2020">(<a href="#ref-macuchsilvaMultimodalityOriginNovel2020" role="doc-biblioref">Macuch Silva et al., 2020</a>)</span>, corroborating the crucial role of multimodality in efficient (i.e., faster) repair; the absence of a credible advantage on whether understanding is reached suggests that combining channels accelerates repair without necessarily changing its eventual outcome.</p>
+<p>The disconnect between effort and communicative success is clearest here: although performers recruited more effort under misunderstanding, that effort did not lead to better outcomes. Such decoupling is not uncommon <span class="citation" data-cites="wolffWhenEffortFails2025a">(<a href="#ref-wolffWhenEffortFails2025a" role="doc-biblioref">Wolff et al., 2025</a>)</span> and the available evidence on this question is mixed – while some work hints at greater effort bringing greater success <span class="citation" data-cites="drijversVisualContextEnhanced2017">(<a href="#ref-drijversVisualContextEnhanced2017" role="doc-biblioref">Drijvers &amp; Özyürek, 2017</a>)</span>, many studies leave the relationship unresolved <span class="citation" data-cites="rasenbergMultimodalNatureCommunicative2022 trujilloSpeakersExhibitMultimodal2021 hollerExperimentalInvestigationHow2011">(<a href="#ref-hollerExperimentalInvestigationHow2011" role="doc-biblioref">Holler &amp; Wilkin, 2011</a>; <a href="#ref-rasenbergMultimodalNatureCommunicative2022" role="doc-biblioref">Rasenberg et al., 2022</a>; <a href="#ref-trujilloSpeakersExhibitMultimodal2021" role="doc-biblioref">Trujillo et al., 2021</a>)</span> or fail to find it altogether <span class="citation" data-cites="bogelsTherePowerLaw2024">(<a href="#ref-bogelsTherePowerLaw2024" role="doc-biblioref">Bögels et al., 2024</a>)</span>. Our data indicate that repair may be a context where effort serves a different function altogether. In a noisy room, a strong, clear signal is a precondition for any interaction to take place at all. Misunderstanding may call for something else. Instead of more effort, the interlocutor could benefit from change of tempo, greater informativity of individual units, or – as our data show – the number of communicative channels available. The persistent effect of expressibility on both effort and success in our data points in the same direction: a specific meaning shapes how effortful it is to communicate and how readily it is understood, somewhat independent of how hard the performer works. What does seem clear is that the communicative value of multimodality lies not in effort efficiency but in the richer articulatory palette it affords.</p>
+<p>Yet effort is not decoupled from the communicative context altogether. Our second pre-registered analysis shows that the relationship runs in the other direction: rather than driving the communicative outcome, effort is a response to it. Cumulative upper-limb effort scaled with the degree of misunderstanding, decreasing as the guesser’s previous answer approached the target meaning. This calibration was specific to the arms; neither vocal nor postural effort tracked the degree of misunderstanding. It was also uniform across the sample, varying little across performers, dyads, or concepts, which suggests that the adjustment of arm effort to common ground operates similarly across individuals rather than reflecting idiosyncratic strategy. Similarly to the correction effect in H1, instantaneous measures were largely unmoved by misunderstanding. The consistent picture is that misunderstanding reshapes how long and how much performers communicate, not how forcefully. This is in support of audience design accounts <span class="citation" data-cites="CLARK1982287 hortonWhenSpeakersTake1996">(<a href="#ref-CLARK1982287" role="doc-biblioref">Clark &amp; Murphy, 1982</a>; <a href="#ref-hortonWhenSpeakersTake1996" role="doc-biblioref">Horton &amp; Keysar, 1996</a>)</span> proposing that people monitor the current state of shared understanding and tune their behavior to their partners when necessary. Future work shall determine the qualitative nature of this elaboration, exploring the relationship between different types of misunderstanding and the attunements they trigger.</p>
+<p>Our findings must be interpreted in light of several limitations. The controlled design of our paradigm, while necessary for isolating effort modulation, comes with trade-offs in ecological validity. Whole-body movement without speech amplifies physical demands beyond what typical face-to-face interaction requires, and in naturalistic settings linguistic structure carries much of the repair work. We view this as a necessary first step: charade-like referential tasks share fundamental properties with linguistic interaction – they are inherently communicative, meaningful, and intersubjective <span class="citation" data-cites="christiansenLanguageGameHow2022">(<a href="#ref-christiansenLanguageGameHow2022" role="doc-biblioref">Christiansen &amp; Chater, 2022</a>)</span> – and identifying effort modulation in this simplified context establishes a foundation for investigating these phenomena in more naturalistic settings.</p>
+<p>A related limitation concerns what counts as communicative success. Our design treats understanding as an exact match between the guesser’s answer and the target concept, whereas real interaction typically requires only sufficient mutual understanding to support the next action. More consequentially, our paradigm places most of the repair work on the performer: the guesser contributes only a single guess per performance, leaving little room to act on the performer’s increased effort. Research on referential tasks with freer interaction suggests that more distributed repair — where partners jointly signal and respond to misunderstanding — may be what drives communicative success <span class="citation" data-cites="rasenbergMultimodalNatureCommunicative2022">(<a href="#ref-rasenbergMultimodalNatureCommunicative2022" role="doc-biblioref">Rasenberg et al., 2022</a>)</span>. It is therefore possible that effort does not help in our paradigm precisely because the partner who could benefit from it has limited room to act on it.</p>
+<p>A second set of limitations concerns the measurement of effort itself. The three features we selected – arm torque, acoustic amplitude envelope, and centre of pressure displacement – capture general biomechanical demands on the body, but effort is content-dependent: concepts vary substantially in how much and what kind of effort their communication requires, as reflected in the large concept-level variance in our models. While our population-level effects suggest that the selected features capture a general mechanism, future work should examine whether other dimensions of movement – speed, spatial precision, or inter-articulator coordination – carry additional information that our measures do not. In particular, the coordinative cost of orchestrating multiple articulators simultaneously remains unaddressed here and may represent a distinct dimension of multimodal effort with its own scaling properties. Our preregistration <span class="citation" data-cites="kadavaPuttingEffortModulation2025">(<a href="#ref-kadavaPuttingEffortModulation2025" role="doc-biblioref">Kadavá et al., 2025</a>)</span> includes an example of such exploratory analysis, which we will address in an upcoming work. Taken together, these limitations point toward productive directions for future research without undermining the core finding: that the body responds to misunderstanding with cumulative, distributed effort – reliably, across modalities, and, for the arms, in proportion to the degree of communicative failure.</p>
+<p>Together, the absence of an effort-success link and the responsiveness of effort to feedback point toward a reframing of what communicative effort represents. Rather than a resource allocated toward success, effort appears to function as a continuous index of the interaction’s epistemic state — signaling bodily mobilization when understanding breaks down, scaling with the distance from common ground, and recalibrating when that distance closes. These findings sit in tension with accounts of principle of least effort and effort aversion <span class="citation" data-cites="andrePeopleReallyAvoid2026 jobChallengingLawLeast2024">(<a href="#ref-andrePeopleReallyAvoid2026" role="doc-biblioref">André et al., 2026</a>; <a href="#ref-jobChallengingLawLeast2024" role="doc-biblioref">Job et al., 2024</a>)</span>. If people generally avoid effortful behavior <span class="citation" data-cites="davidUnpleasantnessThinkingMetaanalytic2024">(<a href="#ref-davidUnpleasantnessThinkingMetaanalytic2024" role="doc-biblioref">David et al., 2024</a>)</span>, why would they increase physical investment in response to misunderstanding without clear returns in success? Research on challenging tasks suggests that effort carries intrinsic social value, enhancing the perceived worth of its product and fostering social belonging <span class="citation" data-cites="inzlichtEffortParadoxEffort2018">(<a href="#ref-inzlichtEffortParadoxEffort2018" role="doc-biblioref">Inzlicht et al., 2018</a>)</span>. We propose that communicative effort may not be primarily organized around task outcomes. The standard evolutionary view holds that efficient signals convey as much as possible at minimal cost – but our findings suggest a complementary pressure: effort may be organized not around maximizing informational yield but around sustaining the communicative cycle itself. On this view, what costs something is not saying more but staying in the exchange long enough to be understood – a relational function, affirming commitment to the partner at the moment the interaction is most at risk of failing. The relational function of effort may also extend beyond humans – tracing the metabolic costs of pro-social signaling in non-human animals represents a promising avenue for grounding these questions evolutionarily. This study focused on a controlled referential task, but the findings raise wider questions: if misunderstanding in a simple game already imposes demands on the body, what happens when breakdown escalates into conflict, when the interaction is particularly vulnerable, or when competing demands leave fewer bodily resources available? These are the conditions where the effort to stay in it together matters most.</p>
+
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list">
+<div id="ref-andrePeopleReallyAvoid2026" class="csl-entry" role="listitem">
+André, N., Baumeister, R. F., Gendolla, G. H. E., &amp; Audiffren, M. (2026). Do people really avoid effort? <span>A</span> cost – benefit perspective on the principle of least effort. <em>Neuroscience &amp; Biobehavioral Reviews</em>, <em>183</em>, 106587. <a href="https://doi.org/10.1016/j.neubiorev.2026.106587">https://doi.org/10.1016/j.neubiorev.2026.106587</a>
+</div>
+<div id="ref-bogelsTherePowerLaw2024" class="csl-entry" role="listitem">
+Bögels, S., Li, T., Rasenberg, M., Eijk, L., Toni, I., &amp; Pouw, W. (2024, June 14). <em>There is a power law of joint communicative effort and it reflects communicative work</em>. <a href="https://doi.org/10.31234/osf.io/k8se5">https://doi.org/10.31234/osf.io/k8se5</a>
+</div>
+<div id="ref-christiansenLanguageGameHow2022" class="csl-entry" role="listitem">
+Christiansen, M. H., &amp; Chater, N. (2022). <em>The <span>Language Game</span>: <span>How Improvisation Created Language</span> and <span>Changed</span> the <span>World</span></em>. Basic Books. <a href="https://books.google.com?id=oAkvEAAAQBAJ">https://books.google.com?id=oAkvEAAAQBAJ</a>
+</div>
+<div id="ref-CLARK1982287" class="csl-entry" role="listitem">
+Clark, H. H., &amp; Murphy, G. L. (1982). Audience design in meaning and reference. In J.-F. Le Ny &amp; W. Kintsch (Eds.), <em>Language and comprehension</em> (Vol. 9, pp. 287–299). North-Holland. https://doi.org/<a href="https://doi.org/10.1016/S0166-4115(09)60059-5">https://doi.org/10.1016/S0166-4115(09)60059-5</a>
+</div>
+<div id="ref-davidUnpleasantnessThinkingMetaanalytic2024" class="csl-entry" role="listitem">
+David, L., Vassena, E., &amp; Bijleveld, E. (2024). The unpleasantness of thinking: <span>A</span> meta-analytic review of the association between mental effort and negative affect. <em>Psychological Bulletin</em>, No Pagination Specified–No Pagination Specified. <a href="https://doi.org/10.1037/bul0000443">https://doi.org/10.1037/bul0000443</a>
+</div>
+<div id="ref-drijversVisualContextEnhanced2017" class="csl-entry" role="listitem">
+Drijvers, L., &amp; Özyürek, A. (2017). Visual <span>Context Enhanced</span>: <span>The Joint Contribution</span> of <span>Iconic Gestures</span> and <span>Visible Speech</span> to <span>Degraded Speech Comprehension</span>. <em>Journal of Speech, Language, and Hearing Research: JSLHR</em>, <em>60</em>(1), 212–222. <a href="https://doi.org/10.1044/2016_JSLHR-H-16-0101">https://doi.org/10.1044/2016_JSLHR-H-16-0101</a>
+</div>
+<div id="ref-hilliardBridgingGapsCommon2016" class="csl-entry" role="listitem">
+Hilliard, C., &amp; Cook, S. W. (2016). Bridging gaps in common ground: <span>Speakers</span> design their gestures for their listeners. <em>Journal of Experimental Psychology. Learning, Memory, and Cognition</em>, <em>42</em>(1), 91–103. <a href="https://doi.org/10.1037/xlm0000154">https://doi.org/10.1037/xlm0000154</a>
+</div>
+<div id="ref-hollerExperimentalInvestigationHow2011" class="csl-entry" role="listitem">
+Holler, J., &amp; Wilkin, K. (2011). An experimental investigation of how addressee feedback affects co-speech gestures accompanying speakers’ responses. <em>Journal of Pragmatics</em>, <em>43</em>(14), 3522–3536. <a href="https://doi.org/10.1016/j.pragma.2011.08.002">https://doi.org/10.1016/j.pragma.2011.08.002</a>
+</div>
+<div id="ref-hortonWhenSpeakersTake1996" class="csl-entry" role="listitem">
+Horton, W. S., &amp; Keysar, B. (1996). When do speakers take into account common ground? <em>Cognition</em>, <em>59</em>(1), 91–117. <a href="https://doi.org/10.1016/0010-0277(96)81418-1">https://doi.org/10.1016/0010-0277(96)81418-1</a>
+</div>
+<div id="ref-hostetterSeeItMy2007" class="csl-entry" role="listitem">
+Hostetter, A. B., Alibali, M. W., &amp; Kita, S. (2007). I see it in my hands’ eye: <span>Representational</span> gestures reflect conceptual demands. <em>Language and Cognitive Processes</em>, <em>22</em>(3), 313–336. <a href="https://doi.org/10.1080/01690960600632812">https://doi.org/10.1080/01690960600632812</a>
+</div>
+<div id="ref-inzlichtEffortParadoxEffort2018" class="csl-entry" role="listitem">
+Inzlicht, M., Shenhav, A., &amp; Olivola, C. Y. (2018). The <span>Effort Paradox</span>: <span>Effort Is Both Costly</span> and <span>Valued</span>. <em>Trends in Cognitive Sciences</em>, <em>22</em>(4), 337–349. <a href="https://doi.org/10.1016/j.tics.2018.01.007">https://doi.org/10.1016/j.tics.2018.01.007</a>
+</div>
+<div id="ref-jobChallengingLawLeast2024" class="csl-entry" role="listitem">
+Job, V., Mlynski, C., &amp; Nikitin, J. (2024). Challenging the <span>Law</span> of <span>Least Effort</span>. <em>Current Opinion in Psychology</em>, 101881. <a href="https://doi.org/10.1016/j.copsyc.2024.101881">https://doi.org/10.1016/j.copsyc.2024.101881</a>
+</div>
+<div id="ref-kadavaPuttingEffortModulation2025" class="csl-entry" role="listitem">
+Kadavá, Š., Pouw, W., Fuchs, S., Holler, J., &amp; Ćwiek, A. (2025). <em>Putting in the <span>Effort</span>: <span>Modulation</span> of <span>Multimodal Effort</span> in <span>Communicative Breakdowns</span> during a <span>Gestural-Vocal Referential Game</span></em>. OSF.
+</div>
+<div id="ref-kraussRoleSpeechrelatedArm1999" class="csl-entry" role="listitem">
+Krauss, R. M., &amp; Hadar, U. (1999). The role of speech-related arm/hand gestures in word retrieval. In L. Messing &amp; R. Campbell (Eds.), <em>Gesture, <span>Speech</span>, and <span>Sign</span></em> (pp. 93–116). Oxford University Press. <a href="https://doi.org/10.1093/acprof:oso/9780198524519.003.0006">https://doi.org/10.1093/acprof:oso/9780198524519.003.0006</a>
+</div>
+<div id="ref-linStandTallThink2026" class="csl-entry" role="listitem">
+Lin, P.-Y., Tien, Y.-M., Kang, L.-Y., &amp; Hsu, L.-C. (2026). Stand tall, think bright: <span>How</span> embodied experience unlocks the power of posture in emotion regulation. <em>Acta Psychologica</em>, <em>263</em>, 106351. <a href="https://doi.org/10.1016/j.actpsy.2026.106351">https://doi.org/10.1016/j.actpsy.2026.106351</a>
+</div>
+<div id="ref-lindblomExplainingPhoneticVariation1990" class="csl-entry" role="listitem">
+Lindblom, B. (1990). Explaining <span>Phonetic Variation</span>: <span>A Sketch</span> of the <span>H</span>&amp;<span>H Theory</span>. In W. J. Hardcastle &amp; A. Marchal (Eds.), <em>Speech <span>Production</span> and <span>Speech Modelling</span></em> (pp. 403–439). Springer Netherlands. <a href="https://doi.org/10.1007/978-94-009-2037-8_16">https://doi.org/10.1007/978-94-009-2037-8_16</a>
+</div>
+<div id="ref-macuchsilvaMultimodalityOriginNovel2020" class="csl-entry" role="listitem">
+Macuch Silva, V., Holler, J., Ozyurek, A., &amp; Roberts, S. G. (2020). Multimodality and the origin of a novel communication system in face-to-face interaction. <em>Royal Society Open Science</em>, <em>7</em>(1), 182056. <a href="https://doi.org/10.1098/rsos.182056">https://doi.org/10.1098/rsos.182056</a>
+</div>
+<div id="ref-massionMovementPostureEquilibrium1992" class="csl-entry" role="listitem">
+Massion, J. (1992). Movement, posture and equilibrium: <span>Interaction</span> and coordination. <em>Progress in Neurobiology</em>, <em>38</em>(1), 35–56. <a href="https://doi.org/10.1016/0301-0082(92)90034-C">https://doi.org/10.1016/0301-0082(92)90034-C</a>
+</div>
+<div id="ref-rasenbergMultimodalNatureCommunicative2022" class="csl-entry" role="listitem">
+Rasenberg, M., Pouw, W., Özyürek, A., &amp; Dingemanse, M. (2022). The multimodal nature of communicative efficiency in social interaction. <em>Scientific Reports</em>, <em>12</em>(1, 1), 19111. <a href="https://doi.org/10.1038/s41598-022-22883-w">https://doi.org/10.1038/s41598-022-22883-w</a>
+</div>
+<div id="ref-trujilloSpeakersExhibitMultimodal2021" class="csl-entry" role="listitem">
+Trujillo, J., Özyürek, A., Holler, J., &amp; Drijvers, L. (2021). Speakers exhibit a multimodal <span>Lombard</span> effect in noise. <em>Scientific Reports</em>, <em>11</em>(1, 1), 16721. <a href="https://doi.org/10.1038/s41598-021-95791-0">https://doi.org/10.1038/s41598-021-95791-0</a>
+</div>
+<div id="ref-wolffWhenEffortFails2025a" class="csl-entry" role="listitem">
+Wolff, W., Hack, L., Halperin, I., Holgado, D., Englert, C., Zech, A., Schüler, J., Bieleke, M., Shenhav, A., &amp; Martarelli, C. (2025, October 10). <em>When effort fails: <span>Instances</span> and reasons for effort-performance decoupling</em> (3uces_v1). <a href="https://doi.org/10.31234/osf.io/3uces_v1">https://doi.org/10.31234/osf.io/3uces_v1</a> (Pre-published)
+</div>
+<div id="ref-yardleyEffectArticulatoryMental1999" class="csl-entry" role="listitem">
+Yardley, L., Gardner, M., Leadbetter, A., &amp; Lavie, N. (1999). Effect of articulatory and mental tasks on postural control. <em>Neuroreport</em>, <em>10</em>(2), 215–219. <a href="https://doi.org/10.1097/00001756-199902050-00003">https://doi.org/10.1097/00001756-199902050-00003</a>
+</div>
+</div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

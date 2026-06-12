@@ -5,6 +5,7 @@ format:
     code-overflow: wrap
     code-width: 1200  # Adjust the width in pixels
 execute:
+  enabled: true
   echo: true
   warning: false
   message: false
@@ -7766,7 +7767,7 @@ report_effort_success(
   model       = e3.m6_att,
   data        = df_ordinal_c0,
   model_label = "e3.m6_att",
-  output_file = "plots\effort_ever_resolved_e3m6.png"
+  output_file = "plots/effort_ever_resolved_e3m6.png"
   
 )
 
@@ -7796,7 +7797,7 @@ report_effort_success(
     cop = list(col = "copc_in_log_c",          label = "COP")
   ),
   model_label = "e3.m6b_att",
-  output_file = "plots\effort_ever_resolved_e3m6b.png"
+  output_file = "plots/effort_ever_resolved_e3m6b.png"
 )
 
 result <- get_modality_contrasts(

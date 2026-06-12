@@ -4285,7 +4285,7 @@ plot_effort_success_summary <- function(models_cum, models_inst, coef_map) {
   outcomes <- list(
     list(key = "m1", label = "P(resolved\nat first attempt)",         x_label = "Slope (log-odds)"),
     list(key = "m3", label = "Answer\nsimilarity",          x_label = "Slope (Beta scale)"),
-    list(key = "m5", label = "Resolution\nspeed (ordinal)", x_label = "Slope (log-odds)"),
+    list(key = "m5", label = "How many\nattempts (ordinal)", x_label = "Slope (log-odds)"),
     list(key = "m6", label = "Ever\nresolved",              x_label = "Slope (log-odds)")
   )
   
