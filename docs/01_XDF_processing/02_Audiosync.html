@@ -161,7 +161,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../online_index.html" class="sidebar-item-text sidebar-link">
+  <a href="../Manuscript/online_index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Home</span></a>
   </div>
 </li>
@@ -169,6 +169,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <div class="sidebar-item-container"> 
   <a href="../Manuscript/Methods.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Overview of Methods</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Manuscript/Prereg-deviations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preregistration deviations</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -288,7 +294,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../05_TS_featureExtraction/00_Speech_check.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Exclusion I: speech presence</span></a>
+ <span class="menu-text">Exclusion II: speech presence</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -317,7 +323,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../06_Analysis_Modeling/Bayesian_modeling.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Analysis: Modeling the effect of correction on physical effort</span></a>
+ <span class="menu-text">Modeling the effect of correction on physical effort</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">F. Extended results</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Manuscript/Results-extended.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Extended results</span></a>
   </div>
 </li>
       </ul>
@@ -367,7 +390,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h1>Overview</h1>
 <p>The LSL setup records audio at 16 kHz, which is sufficient for speech intelligibility, but not for high-quality audio analysis. Therefore, a second audio recording was made using Audacity, with sampling rate 48 kHz. This notebook aligns the two audio streams based on cross-correlation, allowing us to replace the lower-quality audio from the XDF files with the higher-quality audio from Audacity.</p>
 <p>Additionally, we denoise the audio to remove background noise.</p>
-<p>Lastly, we merge the audio and video files we create in the <a href="03_Correct_cuts#sec-cuts" target="_blank">previous script</a> to allow for checking of audio-video synchrony and other potential issues that need to be sorted out before further analysis.</p>
+<p>Lastly, we merge the audio and video files we create in the <a href="../01_XDF_processing/03_Correct_cuts.html#sec-cuts" target="_blank">previous script</a> to allow for checking of audio-video synchrony and other potential issues that need to be sorted out before further analysis.</p>
 </section>
 <section id="aligning-audios-with-shign" class="level1">
 <h1>Aligning audios with shign</h1>

@@ -1,5 +1,5 @@
 ---
-title: "Analysis: Modeling the effect of correction on physical effort"
+title: "Modeling the effect of correction on physical effort"
 format:
   html:
     code-overflow: wrap
@@ -78,7 +78,7 @@ source(here(curfolder, "R-helper.R"))
 
 # Loading in our data
 
-This is the feature dataframe we will be using. It contains all features colected in @sec-features, together with demographic information about the participants. For confirmatory analysis, we will need only 6 features - arm torque integral, arm torque peak mean, COPc integral, COPc peak mean, envelope integral and envelope peak mean from the data_feat. From demographics, we will need only BFI and Familiarity
+This is the feature dataframe we will be using. It contains all features colected in [previous script](..\05_TS_featureExtraction\01_TS_extraction.ipynb#sec-features){target="_blank"}, together with demographic information about the participants. For confirmatory analysis, we will need only 6 features - arm torque integral, arm torque peak mean, COPc integral, COPc peak mean, envelope integral and envelope peak mean from the data_feat. From demographics, we will need only BFI and Familiarity
 
 ```{r}
 
@@ -3371,8 +3371,8 @@ write.csv(paper_table,
 paper_table <- read_csv(paste0(summaries, "paper_table_H1.csv"))
 
 paper_table |>
-  gt() |>
-  tab_caption("Model summary for all six variables")
+  gt() |> 
+  tab_options(table.font.size = px(9)) 
 
 ```
 
@@ -4906,8 +4906,9 @@ paper_table_h2 <- read_csv(paste0(summaries, "paper_table_H2.csv"))
 
 
 paper_table_h2 |>
-  gt() |>
-  tab_caption("Model summary for all six variables")
+  gt() |> 
+  tab_options(table.font.size = px(9)) 
+ 
 
 ```
 
@@ -5599,10 +5600,10 @@ write.csv(paper_table_e1,
 
 paper_table_e1 <- read_csv(paste0(summaries, "paper_table_E1.csv"))
 
-
 paper_table_e1 |>
-  gt() |>
-  tab_caption("Model summary for all six variables")
+  gt() |> 
+  tab_options(table.font.size = px(9)) 
+ 
 
 ```
 
@@ -5882,8 +5883,9 @@ paper_table_e2 <- read_csv(paste0(summaries, "paper_table_E2.csv"))
 
 
 paper_table_e2 |>
-  gt() |>
-  tab_caption("Model summary for all six variables")
+  gt() |> 
+  tab_options(table.font.size = px(9)) 
+ 
 
 ```
 
@@ -6224,6 +6226,9 @@ Also, we want to extract predicted probabilities at each anchor, by modality, an
 
 ```{r}
 #| echo: false
+#| fig-width: 14   # inches → ~1200px at 96dpi
+#| fig-height: 18
+#| out-width: "100%"
 
 # cummulative
 report_effort_success(
@@ -6241,7 +6246,7 @@ report_effort_success(
 # modality difference 
 result <- get_modality_contrasts(
   model  = e3.m1,
-  labels = c("1" = "Gesture only", "2" = "Multimodal", "3" = "Vocal only"))
+  labels = c("1" = "Gesture only", "2" = "Multimodal", "3" = "Vocal only"), coding = "treatment")
 
 ggsave(here(plots, "e3m1_channel_correlations_by_modality.png"),
        result$plot, width = 12, height = 8, dpi = 300)
@@ -6252,6 +6257,9 @@ ggsave(here(plots, "e3m1_channel_correlations_by_modality.png"),
 
 ```{r}
 #| echo: false
+#| fig-width: 14   # inches → ~1200px at 96dpi
+#| fig-height: 18
+#| out-width: "100%"
 
 # instant
 report_effort_success(
@@ -6272,7 +6280,8 @@ report_effort_success(
 
 result <- get_modality_contrasts(
   model  = e3.m1b,
-  labels = c("1" = "Gesture only", "2" = "Multimodal", "3" = "Vocal only"))
+  labels = c("1" = "Gesture only", "2" = "Multimodal", "3" = "Vocal only"), 
+  coding = "treatment")
 
 ggsave(here(plots, "e3m1b_channel_correlations_by_modality.png"),
        result$plot, width = 12, height = 8, dpi = 300)
@@ -6731,6 +6740,9 @@ It's not perfect but much better than the gain
 
 ```{r}
 #| echo: false
+#| fig-width: 14   # inches → ~1200px at 96dpi
+#| fig-height: 18
+#| out-width: "100%"
 
 # cumulative
 report_effort_similarity(
@@ -6756,6 +6768,9 @@ ggsave(here(plots, "e3.m3_att_channel_correlations_by_modality.png"),
 
 ```{r}
 #| echo: false
+#| fig-width: 14   # inches → ~1200px at 96dpi
+#| fig-height: 18
+#| out-width: "100%"
 
 # instant
 report_effort_similarity(
@@ -7760,9 +7775,11 @@ summary(e3.m6b_att)
 
 ```{r}
 #| echo: false
+#| fig-width: 14   # inches → ~1200px at 96dpi
+#| fig-height: 18
+#| out-width: "100%"
 
 # Cumulative
-
 report_effort_success(
   model       = e3.m6_att,
   data        = df_ordinal_c0,
@@ -7785,9 +7802,11 @@ ggsave(here(plots, "e3m6_channel_correlations_by_modality.png"),
 
 ```{r}
 #| echo: false
+#| fig-width: 14   # inches → ~1200px at 96dpi
+#| fig-height: 18
+#| out-width: "100%"
 
 # Instant
-
 report_effort_success(
   model       = e3.m6b_att,
   data        = df_ordinal_c0,

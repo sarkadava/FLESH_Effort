@@ -232,8 +232,8 @@ re_cor <- function(fit, group, param1, param2) {
 }
 
 fmt_fe_pct <- function(x) {
-  paste0("\u03B2 = ", sprintf("%.1f%%", x$pct),
-         " (95% CrI: [", sprintf("%.1f%%", x$pct_lo),
+  paste0("(\u03B2 = ", sprintf("%.1f%%", x$pct),
+         ", 95% CrI: [", sprintf("%.1f%%", x$pct_lo),
          ", ", sprintf("%.1f%%", x$pct_hi), "])")
 }
 

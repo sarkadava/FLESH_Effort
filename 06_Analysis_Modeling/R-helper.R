@@ -281,24 +281,23 @@ stamp_dv_aesthetics <- function(model_grid) {
 #  Arguments
 #  ─────────────────────────────────────────────────────────────────────────────
 #  model         Fitted brmsfit (Bernoulli logistic).
-#
 #  data          Data frame used to fit the model (c0 trials).
-#
 #  channels      Named list; each element: list(col = "...", label = "...")
-#
 #  covariates    Named list of columns to hold at fixed values (default = 0).
-#
 #  modality_col  Name of modality column (default "modality").
-#
 #  modality_lvls Modality levels to include.
-#
 #  noise_channels
 #                Named list: list("Channel Label" = "modality_value")
 #                defining which channel × modality combinations are noise.
-#
 #  model_label   String used in titles and saved filename.
-#
 #  output_file   PNG path; NULL to skip saving.
+#  base_size     Base font size passed to theme_effort_plot(). Increase for
+#                Quarto output (default 14).
+#  panel_heights Relative heights of the three panels in patchwork (default
+#                c(1, 1.3, 1)). Increase the middle value if predictions panel
+#                looks cramped.
+#  fig_width     Width in inches used when saving to output_file (default 14).
+#  fig_height    Height in inches used when saving to output_file (default 18).
 #
 #  Globals assumed: modality_colors, theme_effort_plot()
 # ══════════════════════════════════════════════════════════════════════════════
@@ -323,8 +322,12 @@ report_effort_success <- function(
       "Envelope"   = "gesture",
       "Arm Torque" = "vocal"
     ),
-    model_label = deparse(substitute(model)),
-    output_file = paste0("plots/effort_success_", model_label, ".png")
+    model_label    = deparse(substitute(model)),
+    output_file    = paste0("plots/effort_success_", model_label, ".png"),
+    base_size      = 14,       # bump up from whatever theme_effort_plot default was
+    panel_heights  = c(1, 1.3, 1),
+    fig_width      = 14,
+    fig_height     = 18
 ) {
   
   channel_cols   <- purrr::map_chr(channels, "col")
@@ -426,11 +429,11 @@ report_effort_success <- function(
       modality = factor(modality, levels = modality_lvls),
       effort_label = factor(
         dplyr::case_when(
-          effort_anchor < -1e-10 ~ "−1 SD",
+          effort_anchor < -1e-10 ~ "\u22121 SD",
           effort_anchor >  1e-10 ~ "+1 SD",
           TRUE                   ~ "Mean"
         ),
-        levels = c("−1 SD", "Mean", "+1 SD")
+        levels = c("\u22121 SD", "Mean", "+1 SD")
       ),
       noise = purrr::map2_lgl(
         as.character(channel), as.character(modality),
@@ -450,10 +453,11 @@ report_effort_success <- function(
     dplyr::select(channel, modality, effort_label, p_resolved) |>
     dplyr::group_by(channel, modality) |>
     dplyr::summarise(
-      delta_p = p_resolved[effort_label == "+1 SD"] - 
+      delta_p = p_resolved[effort_label == "+1 SD"] -
         p_resolved[effort_label == "\u22121 SD"],
       .groups = "drop"
     )
+  
   # ── 5. Colour scale helper ───────────────────────────────────────────────────
   colour_scale <- scale_colour_manual(
     values = c(
@@ -512,7 +516,8 @@ report_effort_success <- function(
     geom_hline(yintercept = 0, linetype = "dashed",
                colour = "grey30", linewidth = 0.8) +
     geom_pointrange(aes(ymin = lower, ymax = upper),
-                    linewidth = 1.1, size = 0.9) +
+                    linewidth = 1.2, size = 1.1,      # slightly larger points
+                    position = position_dodge(0.3)) +
     colour_scale +
     scale_shape_manual(
       values = c("FALSE" = 16, "TRUE" = 4),
@@ -520,15 +525,21 @@ report_effort_success <- function(
       name   = NULL
     ) +
     facet_wrap(~ channel, nrow = 1) +
-    theme_effort_plot() +
+    theme_effort_plot(base_size = base_size) +
     theme(
-      legend.position = "bottom",
-      strip.text      = element_text(size = 11, face = "bold"),
-      axis.text.x     = element_text(size = 8)
+      legend.position  = "bottom",
+      legend.text      = element_text(size = base_size - 1),
+      strip.text       = element_text(size = base_size + 1, face = "bold"),
+      axis.text.x      = element_text(size = base_size - 2, angle = 15, hjust = 1),
+      axis.text.y      = element_text(size = base_size - 2),
+      axis.title       = element_text(size = base_size),
+      plot.title       = element_text(size = base_size + 2, face = "bold"),
+      plot.subtitle    = element_text(size = base_size - 1, colour = "grey40"),
+      panel.spacing    = unit(1.2, "lines")   # more breathing room between facets
     ) +
     labs(
-      title    = "Effort \u2192 success slope by channel and modality",
-      subtitle = "Log-odds change in P(resolved) per SD effort | 95% HPD | Grey = not credible or noise",
+      title    = "A  Effort \u2192 success slope by channel and modality",
+      subtitle = "Log-odds change in P(resolved) per SD effort | 95% HPD | Grey = not credible or noise channel",
       x = NULL, y = "Slope (log-odds per SD effort)"
     )
   
@@ -536,23 +547,30 @@ report_effort_success <- function(
   p_preds <- all_preds |>
     ggplot(aes(x = effort_label, y = p_resolved,
                colour = colour_var, group = modality)) +
-    geom_line(linewidth = 0.8, linetype = "dashed", alpha = 0.5) +
+    geom_line(linewidth = 0.9, linetype = "dashed", alpha = 0.5) +
     geom_pointrange(aes(ymin = lower, ymax = upper),
-                    size = 0.7, linewidth = 1) +
+                    size = 0.85, linewidth = 1.1) +
     colour_scale +
     ggnewscale::new_scale_colour() +
     geom_point(aes(colour = modality), size = 0) +
     scale_colour_manual(values = modality_colors, name = "Modality") +
     facet_wrap(~ channel, nrow = 1) +
-    theme_effort_plot() +
+    theme_effort_plot(base_size = base_size) +
     theme(
-      legend.position = "bottom",
-      strip.text      = element_text(size = 11, face = "bold"),
-      axis.text.x     = element_text(size = 9)
+      legend.position  = "bottom",
+      legend.text      = element_text(size = base_size - 1),
+      legend.key.size  = unit(1.1, "lines"),
+      strip.text       = element_text(size = base_size + 1, face = "bold"),
+      axis.text.x      = element_text(size = base_size - 1),
+      axis.text.y      = element_text(size = base_size - 2),
+      axis.title       = element_text(size = base_size),
+      plot.title       = element_text(size = base_size + 2, face = "bold"),
+      plot.subtitle    = element_text(size = base_size - 1, colour = "grey40"),
+      panel.spacing    = unit(1.2, "lines")
     ) +
     labs(
-      title    = "Predicted P(resolved) at effort anchors",
-      subtitle = "95% CI | Other predictors at 0 | Grey = noise channel",
+      title    = "B  Predicted P(resolved) at effort anchors",
+      subtitle = "95% CI | Other predictors held at 0 | Grey = noise channel",
       x = "Effort level", y = "P(resolved at c0)"
     )
   
@@ -573,7 +591,7 @@ report_effort_success <- function(
     ) |>
     ggplot(aes(x = modality, y = delta_p,
                fill = colour_var, colour = colour_var)) +
-    geom_col(width = 0.6) +
+    geom_col(width = 0.55) +
     geom_hline(yintercept = 0, linetype = "dashed",
                colour = "grey30", linewidth = 0.8) +
     scale_fill_manual(
@@ -595,34 +613,44 @@ report_effort_success <- function(
       guide = "none"
     ) +
     facet_wrap(~ channel, nrow = 1) +
-    theme_effort_plot() +
+    theme_effort_plot(base_size = base_size) +
     theme(
-      strip.text  = element_text(size = 11, face = "bold"),
-      axis.text.x = element_text(size = 8)
+      strip.text       = element_text(size = base_size + 1, face = "bold"),
+      axis.text.x      = element_text(size = base_size - 2, angle = 15, hjust = 1),
+      axis.text.y      = element_text(size = base_size - 2),
+      axis.title       = element_text(size = base_size),
+      plot.title       = element_text(size = base_size + 2, face = "bold"),
+      plot.subtitle    = element_text(size = base_size - 1, colour = "grey40"),
+      panel.spacing    = unit(1.2, "lines")
     ) +
     labs(
-      title    = "Effort productivity: \u0394P(resolved) per SD effort",
+      title    = "C  Effort productivity: \u0394P(resolved) per SD effort",
       subtitle = "P(resolved | +1 SD) \u2212 P(resolved | \u22121 SD) | Grey = noise channel",
       x = NULL, y = "\u0394P(resolved)"
     )
   
   # ── Combine ──────────────────────────────────────────────────────────────────
   final <- (p_slopes / p_preds / p_prod) +
+    patchwork::plot_layout(heights = panel_heights) +
     patchwork::plot_annotation(
       title    = "Does effort buy communicative success? (c0 trials)",
       subtitle = sprintf("Model: %s | Bernoulli logit | effort \u00d7 modality",
                          model_label),
       theme    = theme(
-        plot.title    = element_text(size = 14, face = "bold"),
-        plot.subtitle = element_text(size = 11, colour = "grey40")
+        plot.title    = element_text(size = base_size + 4, face = "bold"),
+        plot.subtitle = element_text(size = base_size,     colour = "grey40"),
+        plot.margin   = margin(10, 10, 10, 10)
       )
     )
   
   print(final)
   
   if (!is.null(output_file)) {
-    ggsave(output_file, final, width = 12, height = 15,
-           dpi = 300, bg = "white")
+    ggsave(output_file, final,
+           width  = fig_width,
+           height = fig_height,
+           dpi    = 150,        # 150 is enough for HTML; use 300 for print
+           bg     = "white")
     message("Saved \u2192 ", output_file)
   }
   
@@ -633,7 +661,6 @@ report_effort_success <- function(
     plots        = list(slopes = p_slopes, preds = p_preds, prod = p_prod)
   ))
 }
-
 
 
 # ══════════════════════════════════════════════════════════════════════════════

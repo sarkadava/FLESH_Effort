@@ -9,21 +9,67 @@
 #   - Tutorial-only sections are excluded via the chapters list below
 #   - Output goes to _manuscript/ not docs/
 
-ook:
+book:
   title: "When communication fails, the body invests more effort but not to greater effect"
   author:
-    - name: "Šárka Kadavá"
-      affiliations: ZAS Berlin
-    - name: "Wim Pouw"
-    - name: "Susanne Fuchs"
-    - name: "Judith Holler"
-    - name: "Aleksandra Ćwiek"
+    - name: Šárka Kadavá
+      affiliations:
+        - ref: donders
+        - ref: zas
+        - ref: gottingen
+    - name: Wim Pouw
+      affiliations:
+        - ref: tilburg
+        - ref: donders
+    - name: Susanne Fuchs
+      affiliations:
+        - ref: zas
+    - name: Judith Holler
+      affiliations:
+        - ref: donders
+        - ref: mpi
+    - name: Aleksandra Ćwiek
+      affiliations:
+        - ref: cles
+        - ref: ias
+        - ref: zas
+
+  affiliations:
+    - id: donders
+      name: Donders Institute for Brain, Cognition and Behaviour, Radboud University
+      city: Nijmegen
+      country: The Netherlands
+    - id: zas
+      name: Leibniz-Centre General Linguistics
+      city: Berlin
+      country: Germany
+    - id: gottingen
+      name: University of Göttingen
+      city: Göttingen
+      country: Germany
+    - id: tilburg
+      name: Department of Computational Cognitive Science, Research Center for Cognitive Science and Artificial Intelligence, Tilburg University
+      city: Tilburg
+      country: The Netherlands
+    - id: mpi
+      name: Max Planck Institute for Psycholinguistics
+      city: Nijmegen
+      country: The Netherlands
+    - id: cles
+      name: Center for Language Evolution Studies, Nicolaus Copernicus University in Toruń
+      city: Toruń
+      country: Poland
+    - id: ias
+      name: Institute of Advanced Studies, Nicolaus Copernicus University in Toruń
+      city: Toruń
+      country: Poland
   date: today
   chapters:
     - index.qmd           # title page / abstract / keywords
     - Main.qmd    # "Introduction" = NHB's "Main"
     - Results-discussion.qmd
     - Methods.qmd         # NHB puts Methods last
+    - Outro.qmd
     - References.qmd      # if you want a dedicated ref section
 
 format:
@@ -43,5 +89,5 @@ execute:
   freeze: auto
 
 bibliography: references.bib
-csl: NHB-style.csl    # download from Zotero style repo
-link-citations: trues
+csl: apa.csl    # download from Zotero style repo
+link-citations: true

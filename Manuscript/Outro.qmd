@@ -1,0 +1,13 @@
+---
+format: html
+---
+
+# Acknowledgments
+We would like to thank all participants of this study. Special thanks also go to the Donders lab coordinator Jiska Koemans and the Donders research integrity officer Miriam Kos. We are especially grateful to the members of Donders Technical Support Group, namely Erik van den Berge, Norbert Hermesdorf, Gerard van Oijen, Maarten Snellen and Pascal de Water, for their invaluable help with the technical setup. Finally, we thank the student assistants and interns in project FLESH – Jet Lambers, Justin Snelders, Gillian Rosenberg, Hamza Nalbantoğlu – who supported this project through their efforts in participant recruitment, data collection, data processing, and annotation. 
+
+# Funding
+This research was funded by the Deutsche Forschungsgemeinschaft (DFG, German Research Foundation) – CW 10/1-1, FU 791/9-1, and PO 2841/1-1 (project ID 502013782) – within the SPP 2392 “Visual Communication (ViCom).” WP was also supported by the VENI grant awarded by the NWO, grant no. VI.Veni.201G.047.
+
+# CRediT author statement
+ŠK: conceptualization, methodology, software, formal analysis, investigation, writing – original draft, writing – review & editing, visualization; AĆ, SF and WP: conceptualization, methodology, supervision, writing – review & editing, project administration, funding acquisition; JH: methodology, supervision, writing – review & editing. All authors approved the final paper.
+Generative AI models were used for two areas: code review/debugging (Mistral) and text revision (Claude). The use of generative models was in accordance with the guidelines proposed by the Deutsche Forschungsgemeinschaft (German Research Foundation): https://www.dfg.de/en/service/press/press-releases/2023/press-release-no-39 

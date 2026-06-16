@@ -17,10 +17,12 @@ website:
     search: true
     contents:
       - text: "Home"
-        href: online_index.qmd
+        href: Manuscript/online_index.qmd
       - text: "Overview of Methods"
         href: Manuscript/Methods.qmd
-
+      - text: "Preregistration deviations"
+        href: Manuscript/Prereg-deviations.qmd
+        
       - section: "A. Pre-processing"
         contents:
           - 01_XDF_processing/01_Process_XDF.ipynb
@@ -50,10 +52,10 @@ website:
       - section: "E. Analysis"
         contents:
           - 06_Analysis_Modeling/Bayesian_modeling.qmd
-      #- section: "E. Results"
-       # contents:
-        #  - text: "Overview"
-         #   href: Manuscript/Results-discussion.qmd
+      - section: "F. Extended results"
+        contents:
+          - Manuscript/Results-extended.qmd
+        
 
   navbar:
     tools:
@@ -73,6 +75,7 @@ format:
     theme: cosmo
     highlight-style: github
     css: style.css
+    max-width: 1300px
 
   # Default execution: run and show code in HTML
 execute:

@@ -104,7 +104,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Deviations from preregistrations: summary</li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../Manuscript/Prereg-deviations.html">Preregistration deviations</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -126,7 +126,7 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../online_index.html" class="sidebar-item-text sidebar-link">
+  <a href="../Manuscript/online_index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Home</span></a>
   </div>
 </li>
@@ -134,6 +134,12 @@ ul.task-list li input[type="checkbox"] {
   <div class="sidebar-item-container"> 
   <a href="../Manuscript/Methods.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Overview of Methods</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Manuscript/Prereg-deviations.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Preregistration deviations</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -253,7 +259,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../05_TS_featureExtraction/00_Speech_check.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Exclusion I: speech presence</span></a>
+ <span class="menu-text">Exclusion II: speech presence</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -282,7 +288,24 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../06_Analysis_Modeling/Bayesian_modeling.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Analysis: Modeling the effect of correction on physical effort</span></a>
+ <span class="menu-text">Modeling the effect of correction on physical effort</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">F. Extended results</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Manuscript/Results-extended.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Extended results</span></a>
   </div>
 </li>
       </ul>
@@ -358,6 +381,7 @@ ul.task-list li input[type="checkbox"] {
 <section id="analysis" class="level1">
 <h1>Analysis</h1>
 <p><strong>Trial number as fixed effect:</strong> Trial number was included as a fixed effect rather than as a random intercept grouped by trial position. This choice reflects the theoretical expectation that effort changes across trials in a systematic, directional manner — for instance, due to fatigue accumulating over the session or familiarity with the task and partner increasing over time. A random intercept per trial position would treat trial-level variation as exchangeable noise drawn from a distribution with no ordering, obscuring any monotonic or otherwise structured trend. Modelling trial number as a continuous fixed effect instead captures this ordered trajectory while remaining parsimonious, and is interpretable as an estimate of the average within-session drift in effort across participants and dyads.</p>
+<p><strong>Varying intercept for dyad:</strong> Although dyad-level random effects were not formally pre-registered, we include them because participants are nested within dyads by design – dyad partners share the same interactional context, and ignoring this clustering would lead to underestimation of uncertainty in fixed-effects estimates.</p>
 <p><strong>Change of effort:</strong> For H2, we modelled effect of cosine similarity on effort variable, including previous effort as a statistical control. In the preregistered pipeline, we intended to model change in effort directly. However, effort change scores – computed as the difference between consecutive attempts – produced distributions with substantial positive and negative values that proved difficult to model reliably, explaining less than 5% across all six dependent variables. Modeling current effort with previous effort as a covariate recovers the same inferential target while avoiding these estimation problems. The preregistered change-score models are reported in full in the Supplementary Material (section D) for transparency.</p>
 
 
