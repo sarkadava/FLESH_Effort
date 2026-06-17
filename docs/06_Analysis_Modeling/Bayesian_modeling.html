@@ -463,7 +463,7 @@ div.csl-indent {
   <li><a href="#model-5b---c0-instant" id="toc-model-5b---c0-instant" class="nav-link" data-scroll-target="#model-5b---c0-instant">Model 5b - c0 (instant)</a></li>
   <li><a href="#model-6---resolved-yesno-cumulative" id="toc-model-6---resolved-yesno-cumulative" class="nav-link" data-scroll-target="#model-6---resolved-yesno-cumulative">Model 6 - resolved yes/no (cumulative)</a></li>
   <li><a href="#model-6b---yesno-instant" id="toc-model-6b---yesno-instant" class="nav-link" data-scroll-target="#model-6b---yesno-instant">Model 6b - yes/no (instant)</a></li>
-  <li><a href="#final-plot" id="toc-final-plot" class="nav-link" data-scroll-target="#final-plot">Final plot</a></li>
+  <li><a href="#final-report" id="toc-final-report" class="nav-link" data-scroll-target="#final-report">Final report</a></li>
   </ul></li>
   </ul></li>
   <li><a href="#session-info" id="toc-session-info" class="nav-link" data-scroll-target="#session-info">Session info</a></li>
@@ -518,33 +518,34 @@ div.csl-indent {
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>                       <span class="st">"bayestestR"</span>,</span>
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>                       <span class="st">"tidyverse"</span>,</span>
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>                       <span class="st">"emmeans"</span>,</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>                       <span class="st">"gt"</span>)</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>                       </span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Loop over the packages and check if they are installed</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (package <span class="cf">in</span> required_packages) {</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(package, <span class="at">character.only =</span> <span class="cn">TRUE</span>)) {</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    <span class="co"># If the package is not installed, install it</span></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">install.packages</span>(package)</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Load the package</span></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">library</span>(package, <span class="at">character.only =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>                       <span class="st">"gt"</span>,</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>                       <span class="st">"ggtext"</span>)</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>                       </span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Loop over the packages and check if they are installed</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (package <span class="cf">in</span> required_packages) {</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(package, <span class="at">character.only =</span> <span class="cn">TRUE</span>)) {</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    <span class="co"># If the package is not installed, install it</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">install.packages</span>(package)</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Load the package</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    <span class="fu">library</span>(package, <span class="at">character.only =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="co"># brms setting</span></span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">mc.cores =</span> <span class="dv">4</span>, <span class="at">brms.backend =</span> <span class="st">'cmdstanr'</span>, <span class="at">brms.file_refit =</span> <span class="st">'on_change'</span>)</span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="co"># current folder (first go to session -&gt; set working directory -&gt; to source file location)</span></span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>curfolder     <span class="ot">&lt;-</span> <span class="fu">getwd</span>()</span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>parentfolder  <span class="ot">&lt;-</span> <span class="fu">dirname</span>(curfolder)</span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>featurefolder <span class="ot">&lt;-</span> <span class="fu">paste0</span>(parentfolder, <span class="st">'/05_TS_featureExtraction/Datasets/'</span>)</span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>rawfolder     <span class="ot">&lt;-</span> <span class="fu">paste0</span>(parentfolder, <span class="st">'/00_raw/'</span>)</span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>datasets      <span class="ot">&lt;-</span> <span class="fu">paste0</span>(curfolder, <span class="st">'/datasets/'</span>)</span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>models        <span class="ot">&lt;-</span> <span class="fu">paste0</span>(curfolder, <span class="st">'/models/'</span>)</span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>plots         <span class="ot">&lt;-</span> <span class="fu">paste0</span>(curfolder, <span class="st">'/plots/'</span>)</span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>summaries     <span class="ot">&lt;-</span> <span class="fu">paste0</span>(curfolder, <span class="st">'/summaries/'</span>)</span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="fu">here</span>(curfolder, <span class="st">"R-helper.R"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="co"># brms setting</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">mc.cores =</span> <span class="dv">4</span>, <span class="at">brms.backend =</span> <span class="st">'cmdstanr'</span>, <span class="at">brms.file_refit =</span> <span class="st">'on_change'</span>)</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="co"># current folder (first go to session -&gt; set working directory -&gt; to source file location)</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>curfolder     <span class="ot">&lt;-</span> <span class="fu">getwd</span>()</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>parentfolder  <span class="ot">&lt;-</span> <span class="fu">dirname</span>(curfolder)</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>featurefolder <span class="ot">&lt;-</span> <span class="fu">paste0</span>(parentfolder, <span class="st">'/05_TS_featureExtraction/Datasets/'</span>)</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>rawfolder     <span class="ot">&lt;-</span> <span class="fu">paste0</span>(parentfolder, <span class="st">'/00_raw/'</span>)</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>datasets      <span class="ot">&lt;-</span> <span class="fu">paste0</span>(curfolder, <span class="st">'/datasets/'</span>)</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>models        <span class="ot">&lt;-</span> <span class="fu">paste0</span>(curfolder, <span class="st">'/models/'</span>)</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>plots         <span class="ot">&lt;-</span> <span class="fu">paste0</span>(curfolder, <span class="st">'/plots/'</span>)</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>summaries     <span class="ot">&lt;-</span> <span class="fu">paste0</span>(curfolder, <span class="st">'/summaries/'</span>)</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="fu">here</span>(curfolder, <span class="st">"R-helper.R"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </section>
@@ -11425,23 +11426,23 @@ Table&nbsp;5.13: Model summary for all six variables
 </figcaption>
 <div aria-describedby="tbl-all-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="yurpcrcdvz" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#yurpcrcdvz table {
+<div id="iinilizujd" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#iinilizujd table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#yurpcrcdvz thead, #yurpcrcdvz tbody, #yurpcrcdvz tfoot, #yurpcrcdvz tr, #yurpcrcdvz td, #yurpcrcdvz th {
+#iinilizujd thead, #iinilizujd tbody, #iinilizujd tfoot, #iinilizujd tr, #iinilizujd td, #iinilizujd th {
   border-style: none;
 }
 
-#yurpcrcdvz p {
+#iinilizujd p {
   margin: 0;
   padding: 0;
 }
 
-#yurpcrcdvz .gt_table {
+#iinilizujd .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -11467,12 +11468,12 @@ Table&nbsp;5.13: Model summary for all six variables
   border-left-color: #D3D3D3;
 }
 
-#yurpcrcdvz .gt_caption {
+#iinilizujd .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#yurpcrcdvz .gt_title {
+#iinilizujd .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -11484,7 +11485,7 @@ Table&nbsp;5.13: Model summary for all six variables
   border-bottom-width: 0;
 }
 
-#yurpcrcdvz .gt_subtitle {
+#iinilizujd .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -11496,7 +11497,7 @@ Table&nbsp;5.13: Model summary for all six variables
   border-top-width: 0;
 }
 
-#yurpcrcdvz .gt_heading {
+#iinilizujd .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -11508,13 +11509,13 @@ Table&nbsp;5.13: Model summary for all six variables
   border-right-color: #D3D3D3;
 }
 
-#yurpcrcdvz .gt_bottom_border {
+#iinilizujd .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#yurpcrcdvz .gt_col_headings {
+#iinilizujd .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -11529,7 +11530,7 @@ Table&nbsp;5.13: Model summary for all six variables
   border-right-color: #D3D3D3;
 }
 
-#yurpcrcdvz .gt_col_heading {
+#iinilizujd .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -11549,7 +11550,7 @@ Table&nbsp;5.13: Model summary for all six variables
   overflow-x: hidden;
 }
 
-#yurpcrcdvz .gt_column_spanner_outer {
+#iinilizujd .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -11561,15 +11562,15 @@ Table&nbsp;5.13: Model summary for all six variables
   padding-right: 4px;
 }
 
-#yurpcrcdvz .gt_column_spanner_outer:first-child {
+#iinilizujd .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#yurpcrcdvz .gt_column_spanner_outer:last-child {
+#iinilizujd .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#yurpcrcdvz .gt_column_spanner {
+#iinilizujd .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -11581,11 +11582,11 @@ Table&nbsp;5.13: Model summary for all six variables
   width: 100%;
 }
 
-#yurpcrcdvz .gt_spanner_row {
+#iinilizujd .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#yurpcrcdvz .gt_group_heading {
+#iinilizujd .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -11611,7 +11612,7 @@ Table&nbsp;5.13: Model summary for all six variables
   text-align: left;
 }
 
-#yurpcrcdvz .gt_empty_group_heading {
+#iinilizujd .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -11626,15 +11627,15 @@ Table&nbsp;5.13: Model summary for all six variables
   vertical-align: middle;
 }
 
-#yurpcrcdvz .gt_from_md > :first-child {
+#iinilizujd .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#yurpcrcdvz .gt_from_md > :last-child {
+#iinilizujd .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#yurpcrcdvz .gt_row {
+#iinilizujd .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -11653,7 +11654,7 @@ Table&nbsp;5.13: Model summary for all six variables
   overflow-x: hidden;
 }
 
-#yurpcrcdvz .gt_stub {
+#iinilizujd .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -11666,7 +11667,7 @@ Table&nbsp;5.13: Model summary for all six variables
   padding-right: 5px;
 }
 
-#yurpcrcdvz .gt_stub_row_group {
+#iinilizujd .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -11680,15 +11681,15 @@ Table&nbsp;5.13: Model summary for all six variables
   vertical-align: top;
 }
 
-#yurpcrcdvz .gt_row_group_first td {
+#iinilizujd .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#yurpcrcdvz .gt_row_group_first th {
+#iinilizujd .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#yurpcrcdvz .gt_summary_row {
+#iinilizujd .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -11698,16 +11699,16 @@ Table&nbsp;5.13: Model summary for all six variables
   padding-right: 5px;
 }
 
-#yurpcrcdvz .gt_first_summary_row {
+#iinilizujd .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#yurpcrcdvz .gt_first_summary_row.thick {
+#iinilizujd .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#yurpcrcdvz .gt_last_summary_row {
+#iinilizujd .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -11717,7 +11718,7 @@ Table&nbsp;5.13: Model summary for all six variables
   border-bottom-color: #D3D3D3;
 }
 
-#yurpcrcdvz .gt_grand_summary_row {
+#iinilizujd .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -11727,7 +11728,7 @@ Table&nbsp;5.13: Model summary for all six variables
   padding-right: 5px;
 }
 
-#yurpcrcdvz .gt_first_grand_summary_row {
+#iinilizujd .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -11737,7 +11738,7 @@ Table&nbsp;5.13: Model summary for all six variables
   border-top-color: #D3D3D3;
 }
 
-#yurpcrcdvz .gt_last_grand_summary_row_top {
+#iinilizujd .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -11747,11 +11748,11 @@ Table&nbsp;5.13: Model summary for all six variables
   border-bottom-color: #D3D3D3;
 }
 
-#yurpcrcdvz .gt_striped {
+#iinilizujd .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#yurpcrcdvz .gt_table_body {
+#iinilizujd .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -11760,7 +11761,7 @@ Table&nbsp;5.13: Model summary for all six variables
   border-bottom-color: #D3D3D3;
 }
 
-#yurpcrcdvz .gt_footnotes {
+#iinilizujd .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -11774,7 +11775,7 @@ Table&nbsp;5.13: Model summary for all six variables
   border-right-color: #D3D3D3;
 }
 
-#yurpcrcdvz .gt_footnote {
+#iinilizujd .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -11783,7 +11784,7 @@ Table&nbsp;5.13: Model summary for all six variables
   padding-right: 5px;
 }
 
-#yurpcrcdvz .gt_sourcenotes {
+#iinilizujd .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -11797,7 +11798,7 @@ Table&nbsp;5.13: Model summary for all six variables
   border-right-color: #D3D3D3;
 }
 
-#yurpcrcdvz .gt_sourcenote {
+#iinilizujd .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -11805,72 +11806,72 @@ Table&nbsp;5.13: Model summary for all six variables
   padding-right: 5px;
 }
 
-#yurpcrcdvz .gt_left {
+#iinilizujd .gt_left {
   text-align: left;
 }
 
-#yurpcrcdvz .gt_center {
+#iinilizujd .gt_center {
   text-align: center;
 }
 
-#yurpcrcdvz .gt_right {
+#iinilizujd .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#yurpcrcdvz .gt_font_normal {
+#iinilizujd .gt_font_normal {
   font-weight: normal;
 }
 
-#yurpcrcdvz .gt_font_bold {
+#iinilizujd .gt_font_bold {
   font-weight: bold;
 }
 
-#yurpcrcdvz .gt_font_italic {
+#iinilizujd .gt_font_italic {
   font-style: italic;
 }
 
-#yurpcrcdvz .gt_super {
+#iinilizujd .gt_super {
   font-size: 65%;
 }
 
-#yurpcrcdvz .gt_footnote_marks {
+#iinilizujd .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#yurpcrcdvz .gt_asterisk {
+#iinilizujd .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#yurpcrcdvz .gt_indent_1 {
+#iinilizujd .gt_indent_1 {
   text-indent: 5px;
 }
 
-#yurpcrcdvz .gt_indent_2 {
+#iinilizujd .gt_indent_2 {
   text-indent: 10px;
 }
 
-#yurpcrcdvz .gt_indent_3 {
+#iinilizujd .gt_indent_3 {
   text-indent: 15px;
 }
 
-#yurpcrcdvz .gt_indent_4 {
+#iinilizujd .gt_indent_4 {
   text-indent: 20px;
 }
 
-#yurpcrcdvz .gt_indent_5 {
+#iinilizujd .gt_indent_5 {
   text-indent: 25px;
 }
 
-#yurpcrcdvz .katex-display {
+#iinilizujd .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#yurpcrcdvz div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#iinilizujd div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -16201,23 +16202,23 @@ Table&nbsp;7.1: H2 summary for all effort variables
 </figcaption>
 <div aria-describedby="tbl-cos-sim-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="kbxhcssmfs" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#kbxhcssmfs table {
+<div id="zqihtaklaw" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#zqihtaklaw table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#kbxhcssmfs thead, #kbxhcssmfs tbody, #kbxhcssmfs tfoot, #kbxhcssmfs tr, #kbxhcssmfs td, #kbxhcssmfs th {
+#zqihtaklaw thead, #zqihtaklaw tbody, #zqihtaklaw tfoot, #zqihtaklaw tr, #zqihtaklaw td, #zqihtaklaw th {
   border-style: none;
 }
 
-#kbxhcssmfs p {
+#zqihtaklaw p {
   margin: 0;
   padding: 0;
 }
 
-#kbxhcssmfs .gt_table {
+#zqihtaklaw .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -16243,12 +16244,12 @@ Table&nbsp;7.1: H2 summary for all effort variables
   border-left-color: #D3D3D3;
 }
 
-#kbxhcssmfs .gt_caption {
+#zqihtaklaw .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#kbxhcssmfs .gt_title {
+#zqihtaklaw .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -16260,7 +16261,7 @@ Table&nbsp;7.1: H2 summary for all effort variables
   border-bottom-width: 0;
 }
 
-#kbxhcssmfs .gt_subtitle {
+#zqihtaklaw .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -16272,7 +16273,7 @@ Table&nbsp;7.1: H2 summary for all effort variables
   border-top-width: 0;
 }
 
-#kbxhcssmfs .gt_heading {
+#zqihtaklaw .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -16284,13 +16285,13 @@ Table&nbsp;7.1: H2 summary for all effort variables
   border-right-color: #D3D3D3;
 }
 
-#kbxhcssmfs .gt_bottom_border {
+#zqihtaklaw .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#kbxhcssmfs .gt_col_headings {
+#zqihtaklaw .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -16305,7 +16306,7 @@ Table&nbsp;7.1: H2 summary for all effort variables
   border-right-color: #D3D3D3;
 }
 
-#kbxhcssmfs .gt_col_heading {
+#zqihtaklaw .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -16325,7 +16326,7 @@ Table&nbsp;7.1: H2 summary for all effort variables
   overflow-x: hidden;
 }
 
-#kbxhcssmfs .gt_column_spanner_outer {
+#zqihtaklaw .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -16337,15 +16338,15 @@ Table&nbsp;7.1: H2 summary for all effort variables
   padding-right: 4px;
 }
 
-#kbxhcssmfs .gt_column_spanner_outer:first-child {
+#zqihtaklaw .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#kbxhcssmfs .gt_column_spanner_outer:last-child {
+#zqihtaklaw .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#kbxhcssmfs .gt_column_spanner {
+#zqihtaklaw .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -16357,11 +16358,11 @@ Table&nbsp;7.1: H2 summary for all effort variables
   width: 100%;
 }
 
-#kbxhcssmfs .gt_spanner_row {
+#zqihtaklaw .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#kbxhcssmfs .gt_group_heading {
+#zqihtaklaw .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -16387,7 +16388,7 @@ Table&nbsp;7.1: H2 summary for all effort variables
   text-align: left;
 }
 
-#kbxhcssmfs .gt_empty_group_heading {
+#zqihtaklaw .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -16402,15 +16403,15 @@ Table&nbsp;7.1: H2 summary for all effort variables
   vertical-align: middle;
 }
 
-#kbxhcssmfs .gt_from_md > :first-child {
+#zqihtaklaw .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#kbxhcssmfs .gt_from_md > :last-child {
+#zqihtaklaw .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#kbxhcssmfs .gt_row {
+#zqihtaklaw .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -16429,7 +16430,7 @@ Table&nbsp;7.1: H2 summary for all effort variables
   overflow-x: hidden;
 }
 
-#kbxhcssmfs .gt_stub {
+#zqihtaklaw .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -16442,7 +16443,7 @@ Table&nbsp;7.1: H2 summary for all effort variables
   padding-right: 5px;
 }
 
-#kbxhcssmfs .gt_stub_row_group {
+#zqihtaklaw .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -16456,15 +16457,15 @@ Table&nbsp;7.1: H2 summary for all effort variables
   vertical-align: top;
 }
 
-#kbxhcssmfs .gt_row_group_first td {
+#zqihtaklaw .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#kbxhcssmfs .gt_row_group_first th {
+#zqihtaklaw .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#kbxhcssmfs .gt_summary_row {
+#zqihtaklaw .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -16474,16 +16475,16 @@ Table&nbsp;7.1: H2 summary for all effort variables
   padding-right: 5px;
 }
 
-#kbxhcssmfs .gt_first_summary_row {
+#zqihtaklaw .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#kbxhcssmfs .gt_first_summary_row.thick {
+#zqihtaklaw .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#kbxhcssmfs .gt_last_summary_row {
+#zqihtaklaw .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -16493,7 +16494,7 @@ Table&nbsp;7.1: H2 summary for all effort variables
   border-bottom-color: #D3D3D3;
 }
 
-#kbxhcssmfs .gt_grand_summary_row {
+#zqihtaklaw .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -16503,7 +16504,7 @@ Table&nbsp;7.1: H2 summary for all effort variables
   padding-right: 5px;
 }
 
-#kbxhcssmfs .gt_first_grand_summary_row {
+#zqihtaklaw .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -16513,7 +16514,7 @@ Table&nbsp;7.1: H2 summary for all effort variables
   border-top-color: #D3D3D3;
 }
 
-#kbxhcssmfs .gt_last_grand_summary_row_top {
+#zqihtaklaw .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -16523,11 +16524,11 @@ Table&nbsp;7.1: H2 summary for all effort variables
   border-bottom-color: #D3D3D3;
 }
 
-#kbxhcssmfs .gt_striped {
+#zqihtaklaw .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#kbxhcssmfs .gt_table_body {
+#zqihtaklaw .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -16536,7 +16537,7 @@ Table&nbsp;7.1: H2 summary for all effort variables
   border-bottom-color: #D3D3D3;
 }
 
-#kbxhcssmfs .gt_footnotes {
+#zqihtaklaw .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -16550,7 +16551,7 @@ Table&nbsp;7.1: H2 summary for all effort variables
   border-right-color: #D3D3D3;
 }
 
-#kbxhcssmfs .gt_footnote {
+#zqihtaklaw .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -16559,7 +16560,7 @@ Table&nbsp;7.1: H2 summary for all effort variables
   padding-right: 5px;
 }
 
-#kbxhcssmfs .gt_sourcenotes {
+#zqihtaklaw .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -16573,7 +16574,7 @@ Table&nbsp;7.1: H2 summary for all effort variables
   border-right-color: #D3D3D3;
 }
 
-#kbxhcssmfs .gt_sourcenote {
+#zqihtaklaw .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -16581,72 +16582,72 @@ Table&nbsp;7.1: H2 summary for all effort variables
   padding-right: 5px;
 }
 
-#kbxhcssmfs .gt_left {
+#zqihtaklaw .gt_left {
   text-align: left;
 }
 
-#kbxhcssmfs .gt_center {
+#zqihtaklaw .gt_center {
   text-align: center;
 }
 
-#kbxhcssmfs .gt_right {
+#zqihtaklaw .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#kbxhcssmfs .gt_font_normal {
+#zqihtaklaw .gt_font_normal {
   font-weight: normal;
 }
 
-#kbxhcssmfs .gt_font_bold {
+#zqihtaklaw .gt_font_bold {
   font-weight: bold;
 }
 
-#kbxhcssmfs .gt_font_italic {
+#zqihtaklaw .gt_font_italic {
   font-style: italic;
 }
 
-#kbxhcssmfs .gt_super {
+#zqihtaklaw .gt_super {
   font-size: 65%;
 }
 
-#kbxhcssmfs .gt_footnote_marks {
+#zqihtaklaw .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#kbxhcssmfs .gt_asterisk {
+#zqihtaklaw .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#kbxhcssmfs .gt_indent_1 {
+#zqihtaklaw .gt_indent_1 {
   text-indent: 5px;
 }
 
-#kbxhcssmfs .gt_indent_2 {
+#zqihtaklaw .gt_indent_2 {
   text-indent: 10px;
 }
 
-#kbxhcssmfs .gt_indent_3 {
+#zqihtaklaw .gt_indent_3 {
   text-indent: 15px;
 }
 
-#kbxhcssmfs .gt_indent_4 {
+#zqihtaklaw .gt_indent_4 {
   text-indent: 20px;
 }
 
-#kbxhcssmfs .gt_indent_5 {
+#zqihtaklaw .gt_indent_5 {
   text-indent: 25px;
 }
 
-#kbxhcssmfs .katex-display {
+#zqihtaklaw .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#kbxhcssmfs div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#zqihtaklaw div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -17288,39 +17289,39 @@ Table&nbsp;7.1: H2 summary for all effort variables
   H2: EFFECT OF PREVIOUS ANSWER SIMILARITY
 ═══════════════════════════════════════════════
 
-  Arm torque
+  Arm torque change
 (cumulative)
-  ───────────────────────
+  ──────────────────────────────
     Log scale:                                  -0.079 [-0.120, -0.036]  *
     % change per SD:                            -7.6% [-11.4%, -3.6%]  *
 
-  Arm torque
+  Arm torque change
 (instantaneous)
-  ──────────────────────────
+  ─────────────────────────────────
     Log scale:                                  -0.026 [-0.055, 0.005]
     % change per SD:                            -2.5% [-5.5%, +0.4%]
 
-  Envelope
+  Amplitude envelope
 (cumulative)
-  ─────────────────────
+  ───────────────────────────────
     Log scale:                                  -0.017 [-0.046, 0.014]
     % change per SD:                            -1.7% [-4.6%, +1.3%]
 
-  Envelope
+  Amplitude Envelope
 (instantaneous)
-  ────────────────────────
+  ──────────────────────────────────
     Log scale:                                  0.008 [-0.031, 0.045]
     % change per SD:                            +0.8% [-3.0%, +4.6%]
 
-  COP
+  COPc
 (cumulative)
-  ────────────────
+  ─────────────────
     Log scale:                                  0.005 [-0.022, 0.031]
     % change per SD:                            +0.5% [-2.2%, +3.1%]
 
-  COP
+  COPc
 (instantaneous)
-  ───────────────────
+  ────────────────────
     Log scale:                                  0.003 [-0.022, 0.028]
     % change per SD:                            +0.3% [-2.3%, +2.7%]</code></pre>
 </div>
@@ -18402,23 +18403,23 @@ Table&nbsp;8.1: E1 summary for all effort variables
 </figcaption>
 <div aria-describedby="tbl-effcat-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="qfcqcgnetp" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#qfcqcgnetp table {
+<div id="lrjmxsrszq" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#lrjmxsrszq table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#qfcqcgnetp thead, #qfcqcgnetp tbody, #qfcqcgnetp tfoot, #qfcqcgnetp tr, #qfcqcgnetp td, #qfcqcgnetp th {
+#lrjmxsrszq thead, #lrjmxsrszq tbody, #lrjmxsrszq tfoot, #lrjmxsrszq tr, #lrjmxsrszq td, #lrjmxsrszq th {
   border-style: none;
 }
 
-#qfcqcgnetp p {
+#lrjmxsrszq p {
   margin: 0;
   padding: 0;
 }
 
-#qfcqcgnetp .gt_table {
+#lrjmxsrszq .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -18444,12 +18445,12 @@ Table&nbsp;8.1: E1 summary for all effort variables
   border-left-color: #D3D3D3;
 }
 
-#qfcqcgnetp .gt_caption {
+#lrjmxsrszq .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#qfcqcgnetp .gt_title {
+#lrjmxsrszq .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -18461,7 +18462,7 @@ Table&nbsp;8.1: E1 summary for all effort variables
   border-bottom-width: 0;
 }
 
-#qfcqcgnetp .gt_subtitle {
+#lrjmxsrszq .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -18473,7 +18474,7 @@ Table&nbsp;8.1: E1 summary for all effort variables
   border-top-width: 0;
 }
 
-#qfcqcgnetp .gt_heading {
+#lrjmxsrszq .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -18485,13 +18486,13 @@ Table&nbsp;8.1: E1 summary for all effort variables
   border-right-color: #D3D3D3;
 }
 
-#qfcqcgnetp .gt_bottom_border {
+#lrjmxsrszq .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#qfcqcgnetp .gt_col_headings {
+#lrjmxsrszq .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -18506,7 +18507,7 @@ Table&nbsp;8.1: E1 summary for all effort variables
   border-right-color: #D3D3D3;
 }
 
-#qfcqcgnetp .gt_col_heading {
+#lrjmxsrszq .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -18526,7 +18527,7 @@ Table&nbsp;8.1: E1 summary for all effort variables
   overflow-x: hidden;
 }
 
-#qfcqcgnetp .gt_column_spanner_outer {
+#lrjmxsrszq .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -18538,15 +18539,15 @@ Table&nbsp;8.1: E1 summary for all effort variables
   padding-right: 4px;
 }
 
-#qfcqcgnetp .gt_column_spanner_outer:first-child {
+#lrjmxsrszq .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#qfcqcgnetp .gt_column_spanner_outer:last-child {
+#lrjmxsrszq .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#qfcqcgnetp .gt_column_spanner {
+#lrjmxsrszq .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -18558,11 +18559,11 @@ Table&nbsp;8.1: E1 summary for all effort variables
   width: 100%;
 }
 
-#qfcqcgnetp .gt_spanner_row {
+#lrjmxsrszq .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#qfcqcgnetp .gt_group_heading {
+#lrjmxsrszq .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -18588,7 +18589,7 @@ Table&nbsp;8.1: E1 summary for all effort variables
   text-align: left;
 }
 
-#qfcqcgnetp .gt_empty_group_heading {
+#lrjmxsrszq .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -18603,15 +18604,15 @@ Table&nbsp;8.1: E1 summary for all effort variables
   vertical-align: middle;
 }
 
-#qfcqcgnetp .gt_from_md > :first-child {
+#lrjmxsrszq .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#qfcqcgnetp .gt_from_md > :last-child {
+#lrjmxsrszq .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#qfcqcgnetp .gt_row {
+#lrjmxsrszq .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -18630,7 +18631,7 @@ Table&nbsp;8.1: E1 summary for all effort variables
   overflow-x: hidden;
 }
 
-#qfcqcgnetp .gt_stub {
+#lrjmxsrszq .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -18643,7 +18644,7 @@ Table&nbsp;8.1: E1 summary for all effort variables
   padding-right: 5px;
 }
 
-#qfcqcgnetp .gt_stub_row_group {
+#lrjmxsrszq .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -18657,15 +18658,15 @@ Table&nbsp;8.1: E1 summary for all effort variables
   vertical-align: top;
 }
 
-#qfcqcgnetp .gt_row_group_first td {
+#lrjmxsrszq .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#qfcqcgnetp .gt_row_group_first th {
+#lrjmxsrszq .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#qfcqcgnetp .gt_summary_row {
+#lrjmxsrszq .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -18675,16 +18676,16 @@ Table&nbsp;8.1: E1 summary for all effort variables
   padding-right: 5px;
 }
 
-#qfcqcgnetp .gt_first_summary_row {
+#lrjmxsrszq .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#qfcqcgnetp .gt_first_summary_row.thick {
+#lrjmxsrszq .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#qfcqcgnetp .gt_last_summary_row {
+#lrjmxsrszq .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -18694,7 +18695,7 @@ Table&nbsp;8.1: E1 summary for all effort variables
   border-bottom-color: #D3D3D3;
 }
 
-#qfcqcgnetp .gt_grand_summary_row {
+#lrjmxsrszq .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -18704,7 +18705,7 @@ Table&nbsp;8.1: E1 summary for all effort variables
   padding-right: 5px;
 }
 
-#qfcqcgnetp .gt_first_grand_summary_row {
+#lrjmxsrszq .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -18714,7 +18715,7 @@ Table&nbsp;8.1: E1 summary for all effort variables
   border-top-color: #D3D3D3;
 }
 
-#qfcqcgnetp .gt_last_grand_summary_row_top {
+#lrjmxsrszq .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -18724,11 +18725,11 @@ Table&nbsp;8.1: E1 summary for all effort variables
   border-bottom-color: #D3D3D3;
 }
 
-#qfcqcgnetp .gt_striped {
+#lrjmxsrszq .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#qfcqcgnetp .gt_table_body {
+#lrjmxsrszq .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -18737,7 +18738,7 @@ Table&nbsp;8.1: E1 summary for all effort variables
   border-bottom-color: #D3D3D3;
 }
 
-#qfcqcgnetp .gt_footnotes {
+#lrjmxsrszq .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -18751,7 +18752,7 @@ Table&nbsp;8.1: E1 summary for all effort variables
   border-right-color: #D3D3D3;
 }
 
-#qfcqcgnetp .gt_footnote {
+#lrjmxsrszq .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -18760,7 +18761,7 @@ Table&nbsp;8.1: E1 summary for all effort variables
   padding-right: 5px;
 }
 
-#qfcqcgnetp .gt_sourcenotes {
+#lrjmxsrszq .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -18774,7 +18775,7 @@ Table&nbsp;8.1: E1 summary for all effort variables
   border-right-color: #D3D3D3;
 }
 
-#qfcqcgnetp .gt_sourcenote {
+#lrjmxsrszq .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -18782,72 +18783,72 @@ Table&nbsp;8.1: E1 summary for all effort variables
   padding-right: 5px;
 }
 
-#qfcqcgnetp .gt_left {
+#lrjmxsrszq .gt_left {
   text-align: left;
 }
 
-#qfcqcgnetp .gt_center {
+#lrjmxsrszq .gt_center {
   text-align: center;
 }
 
-#qfcqcgnetp .gt_right {
+#lrjmxsrszq .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#qfcqcgnetp .gt_font_normal {
+#lrjmxsrszq .gt_font_normal {
   font-weight: normal;
 }
 
-#qfcqcgnetp .gt_font_bold {
+#lrjmxsrszq .gt_font_bold {
   font-weight: bold;
 }
 
-#qfcqcgnetp .gt_font_italic {
+#lrjmxsrszq .gt_font_italic {
   font-style: italic;
 }
 
-#qfcqcgnetp .gt_super {
+#lrjmxsrszq .gt_super {
   font-size: 65%;
 }
 
-#qfcqcgnetp .gt_footnote_marks {
+#lrjmxsrszq .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#qfcqcgnetp .gt_asterisk {
+#lrjmxsrszq .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#qfcqcgnetp .gt_indent_1 {
+#lrjmxsrszq .gt_indent_1 {
   text-indent: 5px;
 }
 
-#qfcqcgnetp .gt_indent_2 {
+#lrjmxsrszq .gt_indent_2 {
   text-indent: 10px;
 }
 
-#qfcqcgnetp .gt_indent_3 {
+#lrjmxsrszq .gt_indent_3 {
   text-indent: 15px;
 }
 
-#qfcqcgnetp .gt_indent_4 {
+#lrjmxsrszq .gt_indent_4 {
   text-indent: 20px;
 }
 
-#qfcqcgnetp .gt_indent_5 {
+#lrjmxsrszq .gt_indent_5 {
   text-indent: 25px;
 }
 
-#qfcqcgnetp .katex-display {
+#lrjmxsrszq .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#qfcqcgnetp div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#lrjmxsrszq div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -20197,23 +20198,23 @@ Table&nbsp;8.2: E2 summary for all effort variables
 </figcaption>
 <div aria-describedby="tbl-time-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="niegdhfksx" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#niegdhfksx table {
+<div id="itfcfxnnue" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#itfcfxnnue table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#niegdhfksx thead, #niegdhfksx tbody, #niegdhfksx tfoot, #niegdhfksx tr, #niegdhfksx td, #niegdhfksx th {
+#itfcfxnnue thead, #itfcfxnnue tbody, #itfcfxnnue tfoot, #itfcfxnnue tr, #itfcfxnnue td, #itfcfxnnue th {
   border-style: none;
 }
 
-#niegdhfksx p {
+#itfcfxnnue p {
   margin: 0;
   padding: 0;
 }
 
-#niegdhfksx .gt_table {
+#itfcfxnnue .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -20239,12 +20240,12 @@ Table&nbsp;8.2: E2 summary for all effort variables
   border-left-color: #D3D3D3;
 }
 
-#niegdhfksx .gt_caption {
+#itfcfxnnue .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#niegdhfksx .gt_title {
+#itfcfxnnue .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -20256,7 +20257,7 @@ Table&nbsp;8.2: E2 summary for all effort variables
   border-bottom-width: 0;
 }
 
-#niegdhfksx .gt_subtitle {
+#itfcfxnnue .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -20268,7 +20269,7 @@ Table&nbsp;8.2: E2 summary for all effort variables
   border-top-width: 0;
 }
 
-#niegdhfksx .gt_heading {
+#itfcfxnnue .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -20280,13 +20281,13 @@ Table&nbsp;8.2: E2 summary for all effort variables
   border-right-color: #D3D3D3;
 }
 
-#niegdhfksx .gt_bottom_border {
+#itfcfxnnue .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#niegdhfksx .gt_col_headings {
+#itfcfxnnue .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -20301,7 +20302,7 @@ Table&nbsp;8.2: E2 summary for all effort variables
   border-right-color: #D3D3D3;
 }
 
-#niegdhfksx .gt_col_heading {
+#itfcfxnnue .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -20321,7 +20322,7 @@ Table&nbsp;8.2: E2 summary for all effort variables
   overflow-x: hidden;
 }
 
-#niegdhfksx .gt_column_spanner_outer {
+#itfcfxnnue .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -20333,15 +20334,15 @@ Table&nbsp;8.2: E2 summary for all effort variables
   padding-right: 4px;
 }
 
-#niegdhfksx .gt_column_spanner_outer:first-child {
+#itfcfxnnue .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#niegdhfksx .gt_column_spanner_outer:last-child {
+#itfcfxnnue .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#niegdhfksx .gt_column_spanner {
+#itfcfxnnue .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -20353,11 +20354,11 @@ Table&nbsp;8.2: E2 summary for all effort variables
   width: 100%;
 }
 
-#niegdhfksx .gt_spanner_row {
+#itfcfxnnue .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#niegdhfksx .gt_group_heading {
+#itfcfxnnue .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -20383,7 +20384,7 @@ Table&nbsp;8.2: E2 summary for all effort variables
   text-align: left;
 }
 
-#niegdhfksx .gt_empty_group_heading {
+#itfcfxnnue .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -20398,15 +20399,15 @@ Table&nbsp;8.2: E2 summary for all effort variables
   vertical-align: middle;
 }
 
-#niegdhfksx .gt_from_md > :first-child {
+#itfcfxnnue .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#niegdhfksx .gt_from_md > :last-child {
+#itfcfxnnue .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#niegdhfksx .gt_row {
+#itfcfxnnue .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -20425,7 +20426,7 @@ Table&nbsp;8.2: E2 summary for all effort variables
   overflow-x: hidden;
 }
 
-#niegdhfksx .gt_stub {
+#itfcfxnnue .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -20438,7 +20439,7 @@ Table&nbsp;8.2: E2 summary for all effort variables
   padding-right: 5px;
 }
 
-#niegdhfksx .gt_stub_row_group {
+#itfcfxnnue .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -20452,15 +20453,15 @@ Table&nbsp;8.2: E2 summary for all effort variables
   vertical-align: top;
 }
 
-#niegdhfksx .gt_row_group_first td {
+#itfcfxnnue .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#niegdhfksx .gt_row_group_first th {
+#itfcfxnnue .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#niegdhfksx .gt_summary_row {
+#itfcfxnnue .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -20470,16 +20471,16 @@ Table&nbsp;8.2: E2 summary for all effort variables
   padding-right: 5px;
 }
 
-#niegdhfksx .gt_first_summary_row {
+#itfcfxnnue .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#niegdhfksx .gt_first_summary_row.thick {
+#itfcfxnnue .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#niegdhfksx .gt_last_summary_row {
+#itfcfxnnue .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -20489,7 +20490,7 @@ Table&nbsp;8.2: E2 summary for all effort variables
   border-bottom-color: #D3D3D3;
 }
 
-#niegdhfksx .gt_grand_summary_row {
+#itfcfxnnue .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -20499,7 +20500,7 @@ Table&nbsp;8.2: E2 summary for all effort variables
   padding-right: 5px;
 }
 
-#niegdhfksx .gt_first_grand_summary_row {
+#itfcfxnnue .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -20509,7 +20510,7 @@ Table&nbsp;8.2: E2 summary for all effort variables
   border-top-color: #D3D3D3;
 }
 
-#niegdhfksx .gt_last_grand_summary_row_top {
+#itfcfxnnue .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -20519,11 +20520,11 @@ Table&nbsp;8.2: E2 summary for all effort variables
   border-bottom-color: #D3D3D3;
 }
 
-#niegdhfksx .gt_striped {
+#itfcfxnnue .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#niegdhfksx .gt_table_body {
+#itfcfxnnue .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -20532,7 +20533,7 @@ Table&nbsp;8.2: E2 summary for all effort variables
   border-bottom-color: #D3D3D3;
 }
 
-#niegdhfksx .gt_footnotes {
+#itfcfxnnue .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -20546,7 +20547,7 @@ Table&nbsp;8.2: E2 summary for all effort variables
   border-right-color: #D3D3D3;
 }
 
-#niegdhfksx .gt_footnote {
+#itfcfxnnue .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -20555,7 +20556,7 @@ Table&nbsp;8.2: E2 summary for all effort variables
   padding-right: 5px;
 }
 
-#niegdhfksx .gt_sourcenotes {
+#itfcfxnnue .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -20569,7 +20570,7 @@ Table&nbsp;8.2: E2 summary for all effort variables
   border-right-color: #D3D3D3;
 }
 
-#niegdhfksx .gt_sourcenote {
+#itfcfxnnue .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -20577,72 +20578,72 @@ Table&nbsp;8.2: E2 summary for all effort variables
   padding-right: 5px;
 }
 
-#niegdhfksx .gt_left {
+#itfcfxnnue .gt_left {
   text-align: left;
 }
 
-#niegdhfksx .gt_center {
+#itfcfxnnue .gt_center {
   text-align: center;
 }
 
-#niegdhfksx .gt_right {
+#itfcfxnnue .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#niegdhfksx .gt_font_normal {
+#itfcfxnnue .gt_font_normal {
   font-weight: normal;
 }
 
-#niegdhfksx .gt_font_bold {
+#itfcfxnnue .gt_font_bold {
   font-weight: bold;
 }
 
-#niegdhfksx .gt_font_italic {
+#itfcfxnnue .gt_font_italic {
   font-style: italic;
 }
 
-#niegdhfksx .gt_super {
+#itfcfxnnue .gt_super {
   font-size: 65%;
 }
 
-#niegdhfksx .gt_footnote_marks {
+#itfcfxnnue .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#niegdhfksx .gt_asterisk {
+#itfcfxnnue .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#niegdhfksx .gt_indent_1 {
+#itfcfxnnue .gt_indent_1 {
   text-indent: 5px;
 }
 
-#niegdhfksx .gt_indent_2 {
+#itfcfxnnue .gt_indent_2 {
   text-indent: 10px;
 }
 
-#niegdhfksx .gt_indent_3 {
+#itfcfxnnue .gt_indent_3 {
   text-indent: 15px;
 }
 
-#niegdhfksx .gt_indent_4 {
+#itfcfxnnue .gt_indent_4 {
   text-indent: 20px;
 }
 
-#niegdhfksx .gt_indent_5 {
+#itfcfxnnue .gt_indent_5 {
   text-indent: 25px;
 }
 
-#niegdhfksx .katex-display {
+#itfcfxnnue .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#niegdhfksx div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#itfcfxnnue div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -21534,7 +21535,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 15  0.293994950    FALSE
 16  0.396049967    FALSE
 
-  Effort→success slopes by channel × modality (log-odds / SD):
+  Effort→success slopes by feature × modality (log-odds / SD):
 
      channel   modality    estimate      lower     upper credible noise
 1 Arm Torque    gesture  0.12055552 -0.2954080 0.5338681    FALSE FALSE
@@ -21691,7 +21692,7 @@ Coding: treatment | CIs: 89% / 95 %
 15  0.530166089    FALSE
 16  0.718603041    FALSE
 
-  Effort→success slopes by channel × modality (log-odds / SD):
+  Effort→success slopes by feature × modality (log-odds / SD):
 
      channel   modality    estimate       lower     upper credible noise
 1 Arm Torque    gesture -0.10332149 -0.63545491 0.4132350    FALSE FALSE
@@ -22615,7 +22616,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
     Envelope             SD = 1.604
     COP                  SD = 0.861
 
-  EFFORT→SIMILARITY SLOPES BY CHANNEL × MODALITY
+  EFFORT→SIMILARITY SLOPES BY FEATURE × MODALITY
 
   Arm Torque:
  modality   arm_torque_log_c.trend lower.HPD upper.HPD
@@ -22679,7 +22680,7 @@ HPD interval probability: 0.95
 
   Computing predicted similarity at ±1 SD anchors...
 
-  Predicted similarity by channel / modality / effort level:
+  Predicted similarity by feature / modality / effort level:
 
 # A tibble: 27 × 6
    channel    modality   effort_label predicted lower upper
@@ -22772,7 +22773,7 @@ Coding: treatment | CIs: 89% / 95 %
     Envelope             SD = 2.040
     COP                  SD = 0.561
 
-  EFFORT→SIMILARITY SLOPES BY CHANNEL × MODALITY
+  EFFORT→SIMILARITY SLOPES BY FEATURE × MODALITY
 
   Arm Torque:
  modality   arm_torque_in_log_c.trend lower.HPD upper.HPD
@@ -22836,7 +22837,7 @@ HPD interval probability: 0.95
 
   Computing predicted similarity at ±1 SD anchors...
 
-  Predicted similarity by channel / modality / effort level:
+  Predicted similarity by feature / modality / effort level:
 
 # A tibble: 27 × 6
    channel    modality   effort_label predicted lower upper
@@ -23892,7 +23893,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <pre><code>═══════════════════════════════════════════════
   MODEL SUMMARY: e3.m4_att
   Family: cumulative logit
-  Positive b = higher odds of *slower* resolution
+  Positive b = higher odds of *slower* understanding
 ═══════════════════════════════════════════════
 
  Family: cumulative 
@@ -24014,7 +24015,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).
   NUMERICAL SUMMARY FOR REPORTING
 ═══════════════════════════════════════════════
 
-  Predicted P per resolution category at effort anchors (89% CI):
+  Predicted P per attempt number at effort anchors (89% CI):
 
   [c0]
     Arm Torque   × gesture       −1 SD   P = 0.163 [0.060, 0.366]
@@ -24133,7 +24134,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).
     COP          × multimodal    +1 SD     P = 0.272 [0.219, 0.331]
 
 
-  Productivity ΔP (+1SD − −1SD) per resolution category:
+  Productivity ΔP (+1SD − −1SD) per attempt number:
 
   [c0]
     Arm Torque   × gesture       ΔP = -0.070
@@ -24214,7 +24215,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).
 <pre><code>═══════════════════════════════════════════════
   MODEL SUMMARY: e3.m4b_att
   Family: cumulative logit
-  Positive b = higher odds of *slower* resolution
+  Positive b = higher odds of *slower* understanding
 ═══════════════════════════════════════════════
 
  Family: cumulative 
@@ -24336,7 +24337,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).
   NUMERICAL SUMMARY FOR REPORTING
 ═══════════════════════════════════════════════
 
-  Predicted P per resolution category at effort anchors (89% CI):
+  Predicted P per attempt number at effort anchors (89% CI):
 
   [c0]
     Arm Torque   × gesture       −1 SD   P = 0.272 [0.111, 0.526]
@@ -24455,7 +24456,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).
     COP          × multimodal    +1 SD     P = 0.267 [0.218, 0.321]
 
 
-  Productivity ΔP (+1SD − −1SD) per resolution category:
+  Productivity ΔP (+1SD − −1SD) per attempt number:
 
   [c0]
     Arm Torque   × gesture       ΔP = -0.078
@@ -24873,7 +24874,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <pre><code>═══════════════════════════════════════════════
   MODEL SUMMARY: e3.m5_att
   Family: cumulative logit
-  Positive b = higher odds of *slower* resolution
+  Positive b = higher odds of *slower* understanding
 ═══════════════════════════════════════════════
 
  Family: cumulative 
@@ -24995,7 +24996,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).
   NUMERICAL SUMMARY FOR REPORTING
 ═══════════════════════════════════════════════
 
-  Predicted P per resolution category at effort anchors (89% CI):
+  Predicted P per attempt number at effort anchors (89% CI):
 
   [c0]
     Arm Torque   × gesture       −1 SD   P = 0.261 [0.106, 0.513]
@@ -25114,7 +25115,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).
     COP          × multimodal    +1 SD     P = 0.246 [0.197, 0.302]
 
 
-  Productivity ΔP (+1SD − −1SD) per resolution category:
+  Productivity ΔP (+1SD − −1SD) per attempt number:
 
   [c0]
     Arm Torque   × gesture       ΔP = +0.049
@@ -25221,7 +25222,7 @@ Coding: treatment | CIs: 89% / 95 %
 <pre><code>═══════════════════════════════════════════════
   MODEL SUMMARY: e4.m5b_att
   Family: cumulative logit
-  Positive b = higher odds of *slower* resolution
+  Positive b = higher odds of *slower* understanding
 ═══════════════════════════════════════════════
 
  Family: cumulative 
@@ -25343,7 +25344,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).
   NUMERICAL SUMMARY FOR REPORTING
 ═══════════════════════════════════════════════
 
-  Predicted P per resolution category at effort anchors (89% CI):
+  Predicted P per attempt number at effort anchors (89% CI):
 
   [c0]
     Arm Torque   × gesture       −1 SD   P = 0.397 [0.182, 0.661]
@@ -25462,7 +25463,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).
     COP          × multimodal    +1 SD     P = 0.251 [0.204, 0.303]
 
 
-  Productivity ΔP (+1SD − −1SD) per resolution category:
+  Productivity ΔP (+1SD − −1SD) per attempt number:
 
   [c0]
     Arm Torque   × gesture       ΔP = -0.119
@@ -25831,7 +25832,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 15  0.631413602    FALSE
 16  0.592609709    FALSE
 
-  Effort→success slopes by channel × modality (log-odds / SD):
+  Effort→success slopes by feature × modality (log-odds / SD):
 
      channel   modality    estimate       lower       upper credible noise
 1 Arm Torque    gesture -0.01131522 -0.39797086  0.40709660    FALSE FALSE
@@ -25986,7 +25987,7 @@ Coding: treatment | CIs: 89% / 95 %
 15  1.006624655     TRUE
 16  1.189294937     TRUE
 
-  Effort→success slopes by channel × modality (log-odds / SD):
+  Effort→success slopes by feature × modality (log-odds / SD):
 
      channel   modality    estimate       lower     upper credible noise
 1 Arm Torque    gesture -0.22856909 -0.73299010 0.2902285    FALSE FALSE
@@ -26093,8 +26094,1206 @@ Coding: treatment | CIs: 89% / 95 %
 </section>
 </section>
 </section>
-<section id="final-plot" class="level3">
-<h3 class="anchored" data-anchor-id="final-plot">Final plot</h3>
+<section id="final-report" class="level3">
+<h3 class="anchored" data-anchor-id="final-report">Final report</h3>
+<section id="table" class="level4">
+<h4 class="anchored" data-anchor-id="table">Table</h4>
+<div class="cell">
+<details class="code-fold">
+<summary>Code to generate table summary</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb302"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb302-1"><a href="#cb302-1" aria-hidden="true" tabindex="-1"></a>model_list_paper <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb302-2"><a href="#cb302-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">c0_suc_cum  =</span> e3.m1,</span>
+<span id="cb302-3"><a href="#cb302-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">c0_suc_in =</span> e3.m1b,</span>
+<span id="cb302-4"><a href="#cb302-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">foll_suc_cum  =</span> e3.m3_att,</span>
+<span id="cb302-5"><a href="#cb302-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">foll_suc_in   =</span> e3.m3b_att,</span>
+<span id="cb302-6"><a href="#cb302-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">how_many_cum    =</span> e3.m5_att,</span>
+<span id="cb302-7"><a href="#cb302-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">how_many_in   =</span> e3.m5b_att,</span>
+<span id="cb302-8"><a href="#cb302-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">ever_cum    =</span> e3.m6_att,</span>
+<span id="cb302-9"><a href="#cb302-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">ever_in =</span> e3.m6b_att</span>
+<span id="cb302-10"><a href="#cb302-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb302-11"><a href="#cb302-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb302-12"><a href="#cb302-12" aria-hidden="true" tabindex="-1"></a>r2_list_paper <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb302-13"><a href="#cb302-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">c0_suc_cum  =</span> e3.m1_R2,</span>
+<span id="cb302-14"><a href="#cb302-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">c0_suc_in =</span> e3.m1b_R2,</span>
+<span id="cb302-15"><a href="#cb302-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">foll_suc_cum  =</span> e3.m3_att_R2,</span>
+<span id="cb302-16"><a href="#cb302-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">foll_suc_in   =</span> e3.m3b_att_R2,</span>
+<span id="cb302-17"><a href="#cb302-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">how_many_cum    =</span> e3.m5_att_R2,</span>
+<span id="cb302-18"><a href="#cb302-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">how_many_in   =</span> e3.m5b_att_R2,</span>
+<span id="cb302-19"><a href="#cb302-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">ever_cum    =</span> e3.m6_att_R2,</span>
+<span id="cb302-20"><a href="#cb302-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">ever_in =</span> e3.m6b_att_R2</span>
+<span id="cb302-21"><a href="#cb302-21" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb302-22"><a href="#cb302-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb302-23"><a href="#cb302-23" aria-hidden="true" tabindex="-1"></a>dv_labels <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb302-24"><a href="#cb302-24" aria-hidden="true" tabindex="-1"></a>  <span class="at">c0_suc_cum =</span> <span class="st">"Probability of first-attempt success (w/ cumulative effort)"</span>,</span>
+<span id="cb302-25"><a href="#cb302-25" aria-hidden="true" tabindex="-1"></a>  <span class="at">c0_suc_in  =</span> <span class="st">"Probability of first-attempt success (w/ instantaneous effort)"</span>,</span>
+<span id="cb302-26"><a href="#cb302-26" aria-hidden="true" tabindex="-1"></a>  <span class="at">foll_suc_cum  =</span> <span class="st">"Following success (cosine similarity, w/ cumulative effort)"</span>,</span>
+<span id="cb302-27"><a href="#cb302-27" aria-hidden="true" tabindex="-1"></a>  <span class="at">foll_suc_in   =</span> <span class="st">"Following success (cosine similarity, w/ instantaneous effort)"</span>,</span>
+<span id="cb302-28"><a href="#cb302-28" aria-hidden="true" tabindex="-1"></a>  <span class="at">how_many_cum    =</span> <span class="st">"How many attempts needed (w/ cumulative effort)"</span>,</span>
+<span id="cb302-29"><a href="#cb302-29" aria-hidden="true" tabindex="-1"></a>  <span class="at">how_many_in   =</span> <span class="st">"How many attempts needed (w/ instantaneous effort)"</span>,</span>
+<span id="cb302-30"><a href="#cb302-30" aria-hidden="true" tabindex="-1"></a>  <span class="at">ever_cum    =</span> <span class="st">"Was understanding ever reached (w/ cumulative effort)"</span>,</span>
+<span id="cb302-31"><a href="#cb302-31" aria-hidden="true" tabindex="-1"></a>  <span class="at">ever_in =</span> <span class="st">"Was understanding ever reached (w/ instantaneous effort))"</span></span>
+<span id="cb302-32"><a href="#cb302-32" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb302-33"><a href="#cb302-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb302-34"><a href="#cb302-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb302-35"><a href="#cb302-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb302-36"><a href="#cb302-36" aria-hidden="true" tabindex="-1"></a>paper_table_e3 <span class="ot">&lt;-</span> <span class="fu">create_paper_table</span>(</span>
+<span id="cb302-37"><a href="#cb302-37" aria-hidden="true" tabindex="-1"></a>  <span class="at">model_list     =</span> model_list_paper,</span>
+<span id="cb302-38"><a href="#cb302-38" aria-hidden="true" tabindex="-1"></a>  <span class="at">r2_list        =</span> r2_list_paper,</span>
+<span id="cb302-39"><a href="#cb302-39" aria-hidden="true" tabindex="-1"></a>  <span class="at">dv_labels      =</span> dv_labels,</span>
+<span id="cb302-40"><a href="#cb302-40" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb302-41"><a href="#cb302-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb302-42"><a href="#cb302-42" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(paper_table_e3,</span>
+<span id="cb302-43"><a href="#cb302-43" aria-hidden="true" tabindex="-1"></a>          <span class="fu">here</span>(summaries, <span class="st">"paper_table_E3.csv"</span>),</span>
+<span id="cb302-44"><a href="#cb302-44" aria-hidden="true" tabindex="-1"></a>          <span class="at">row.names =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb302-45"><a href="#cb302-45" aria-hidden="true" tabindex="-1"></a>          <span class="at">fileEncoding =</span> <span class="st">"UTF-8"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div class="cell">
+<div id="tbl-success" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-success-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;8.3: E3 summary for all success outcomes
+</figcaption>
+<div aria-describedby="tbl-success-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<div id="pstbfwocna" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#pstbfwocna table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#pstbfwocna thead, #pstbfwocna tbody, #pstbfwocna tfoot, #pstbfwocna tr, #pstbfwocna td, #pstbfwocna th {
+  border-style: none;
+}
+
+#pstbfwocna p {
+  margin: 0;
+  padding: 0;
+}
+
+#pstbfwocna .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 9px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#pstbfwocna .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#pstbfwocna .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#pstbfwocna .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#pstbfwocna .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#pstbfwocna .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#pstbfwocna .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#pstbfwocna .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#pstbfwocna .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#pstbfwocna .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#pstbfwocna .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#pstbfwocna .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#pstbfwocna .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#pstbfwocna .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#pstbfwocna .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#pstbfwocna .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#pstbfwocna .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#pstbfwocna .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#pstbfwocna .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#pstbfwocna .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#pstbfwocna .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#pstbfwocna .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#pstbfwocna .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#pstbfwocna .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#pstbfwocna .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#pstbfwocna .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#pstbfwocna .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#pstbfwocna .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#pstbfwocna .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#pstbfwocna .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#pstbfwocna .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#pstbfwocna .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#pstbfwocna .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#pstbfwocna .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#pstbfwocna .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#pstbfwocna .gt_left {
+  text-align: left;
+}
+
+#pstbfwocna .gt_center {
+  text-align: center;
+}
+
+#pstbfwocna .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#pstbfwocna .gt_font_normal {
+  font-weight: normal;
+}
+
+#pstbfwocna .gt_font_bold {
+  font-weight: bold;
+}
+
+#pstbfwocna .gt_font_italic {
+  font-style: italic;
+}
+
+#pstbfwocna .gt_super {
+  font-size: 65%;
+}
+
+#pstbfwocna .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#pstbfwocna .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#pstbfwocna .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#pstbfwocna .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#pstbfwocna .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#pstbfwocna .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#pstbfwocna .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#pstbfwocna .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#pstbfwocna div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+
+<table class="gt_table do-not-create-environment cell caption-top table table-sm table-striped small" data-quarto-bootstrap="false">
+<thead>
+<tr class="gt_col_headings header">
+<th id="term_type" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">term_type</th>
+<th id="parameter" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">parameter</th>
+<th id="Probability-of-first-attempt-success-(w/-cumulative-effort)" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Probability of first-attempt success (w/ cumulative effort)</th>
+<th id="Probability-of-first-attempt-success-(w/-instantaneous-effort)" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Probability of first-attempt success (w/ instantaneous effort)</th>
+<th id="Following-success-(cosine-similarity,-w/-cumulative-effort)" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Following success (cosine similarity, w/ cumulative effort)</th>
+<th id="Following-success-(cosine-similarity,-w/-instantaneous-effort)" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Following success (cosine similarity, w/ instantaneous effort)</th>
+<th id="How-many-attempts-needed-(w/-cumulative-effort)" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">How many attempts needed (w/ cumulative effort)</th>
+<th id="How-many-attempts-needed-(w/-instantaneous-effort)" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">How many attempts needed (w/ instantaneous effort)</th>
+<th id="Was-understanding-ever-reached-(w/-cumulative-effort)" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Was understanding ever reached (w/ cumulative effort)</th>
+<th id="Was-understanding-ever-reached-(w/-instantaneous-effort))" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Was understanding ever reached (w/ instantaneous effort))</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_left" headers="term_type">model_info</td>
+<td class="gt_row gt_left" headers="parameter">— Model Information —</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ cumulative effort)">NA</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ instantaneous effort)">NA</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ cumulative effort)">NA</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ instantaneous effort)">NA</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ cumulative effort)">NA</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ instantaneous effort)">NA</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ cumulative effort)">NA</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ instantaneous effort))">NA</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term_type">model_info</td>
+<td class="gt_row gt_left" headers="parameter">R²</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ cumulative effort)">0.443 [0.416, 0.469]</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ instantaneous effort)">0.446 [0.419, 0.472]</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ cumulative effort)">0.065 [0.053, 0.078]</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ instantaneous effort)">0.067 [0.055, 0.08]</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ cumulative effort)">0.467 [0.446, 0.485]</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ instantaneous effort)">0.468 [0.447, 0.487]</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ cumulative effort)">0.413 [0.388, 0.435]</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ instantaneous effort))">0.414 [0.39, 0.436]</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term_type">model_info</td>
+<td class="gt_row gt_left" headers="parameter">formula</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ cumulative effort)">resolved_at_c0 ~ arm_torque_log_c * modality + envelope_log_c * modality + copc_log_c * modality + expressibility_z + Familiarity + BFI_extra + TrialNumber_c + (1 + modality | pcn_ID) + (1 + modality | SessionID) + (1 + modality | concept)</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ instantaneous effort)">resolved_at_c0 ~ arm_torque_in_log_c * modality + envelope_in_log_c * modality + copc_in_log_c * modality + expressibility_z + Familiarity + BFI_extra + TrialNumber_c + (1 + modality | pcn_ID) + (1 + modality | SessionID) + (1 + modality | concept)</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ cumulative effort)">answer_fol_dist ~ arm_torque_log_c * modality + envelope_log_c * modality + copc_log_c * modality + answer_prev_dist_z + expressibility_z + correction + Familiarity + BFI_extra + TrialNumber_c + (1 | pcn_ID) + (1 | SessionID) + (1 | concept)</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ instantaneous effort)">answer_fol_dist ~ arm_torque_in_log_c * modality + envelope_in_log_c * modality + copc_in_log_c * modality + answer_prev_dist_z + expressibility_z + correction + Familiarity + BFI_extra + TrialNumber_c + (1 | pcn_ID) + (1 | SessionID) + (1 | concept)</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ cumulative effort)">resolution_ordered ~ arm_torque_log_c * modality + envelope_log_c * modality + copc_log_c * modality + expressibility_z + Familiarity + BFI_extra + TrialNumber_c + (1 | pcn_ID) + (1 | SessionID) + (1 | concept)</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ instantaneous effort)">resolution_ordered ~ arm_torque_in_log_c * modality + envelope_in_log_c * modality + copc_in_log_c * modality + expressibility_z + Familiarity + BFI_extra + TrialNumber_c + (1 | pcn_ID) + (1 | SessionID) + (1 | concept)</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ cumulative effort)">ever_resolved ~ arm_torque_log_c * modality + envelope_log_c * modality + copc_log_c * modality + expressibility_z + Familiarity + BFI_extra + TrialNumber_c + (1 | pcn_ID) + (1 | SessionID) + (1 | concept)</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ instantaneous effort))">ever_resolved ~ arm_torque_in_log_c * modality + envelope_in_log_c * modality + copc_in_log_c * modality + expressibility_z + Familiarity + BFI_extra + TrialNumber_c + (1 | pcn_ID) + (1 | SessionID) + (1 | concept)</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term_type">model_info</td>
+<td class="gt_row gt_left" headers="parameter">n_obs</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ cumulative effort)">2200</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ instantaneous effort)">2200</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ cumulative effort)">2228</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ instantaneous effort)">2228</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ cumulative effort)">2200</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ instantaneous effort)">2200</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ cumulative effort)">2200</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ instantaneous effort))">2200</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term_type">fixed</td>
+<td class="gt_row gt_left" headers="parameter">— Fixed Effects —</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ cumulative effort)">NA</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ instantaneous effort)">NA</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ cumulative effort)">NA</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ instantaneous effort)">NA</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ cumulative effort)">NA</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ instantaneous effort)">NA</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ cumulative effort)">NA</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ instantaneous effort))">NA</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term_type">fixed</td>
+<td class="gt_row gt_left" headers="parameter">BFI_extra</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ cumulative effort)">0.016 [-0.118, 0.151]</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ instantaneous effort)">0.016 [-0.12, 0.152]</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ cumulative effort)">0.022 [-0.031, 0.077]</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ instantaneous effort)">0.013 [-0.041, 0.068]</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ cumulative effort)">0.012 [-0.104, 0.128]</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ instantaneous effort)">0.014 [-0.1, 0.128]</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ cumulative effort)">-0.047 [-0.189, 0.098]</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ instantaneous effort))">-0.048 [-0.191, 0.096]</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term_type">fixed</td>
+<td class="gt_row gt_left" headers="parameter">Familiarity</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ cumulative effort)">-0.006 [-0.149, 0.142]</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ instantaneous effort)">-0.026 [-0.168, 0.118]</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ cumulative effort)">0.047 [-0.008, 0.102]</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ instantaneous effort)">0.048 [-0.006, 0.105]</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ cumulative effort)">0.021 [-0.097, 0.14]</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ instantaneous effort)">0.035 [-0.087, 0.157]</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ cumulative effort)">-0.004 [-0.151, 0.147]</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ instantaneous effort))">-0.012 [-0.16, 0.136]</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term_type">fixed</td>
+<td class="gt_row gt_left" headers="parameter">Intercept[1]</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ instantaneous effort)">—</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ instantaneous effort)">—</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ cumulative effort)">-0.327 [-0.656, 0.001]</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ instantaneous effort)">-0.269 [-0.582, 0.05]</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ instantaneous effort))">—</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term_type">fixed</td>
+<td class="gt_row gt_left" headers="parameter">Intercept[2]</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ instantaneous effort)">—</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ instantaneous effort)">—</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ cumulative effort)">0.623 [0.293, 0.954] *</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ instantaneous effort)">0.683 [0.371, 1.007] *</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ instantaneous effort))">—</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term_type">fixed</td>
+<td class="gt_row gt_left" headers="parameter">Intercept[3]</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ instantaneous effort)">—</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ instantaneous effort)">—</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ cumulative effort)">1.106 [0.772, 1.442] *</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ instantaneous effort)">1.167 [0.849, 1.496] *</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ instantaneous effort))">—</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term_type">fixed</td>
+<td class="gt_row gt_left" headers="parameter">TrialNumber_c</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ cumulative effort)">0.001 [-0.004, 0.005]</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ instantaneous effort)">0.001 [-0.004, 0.005]</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ cumulative effort)">0.001 [-0.001, 0.002]</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ instantaneous effort)">0 [-0.001, 0.002]</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ cumulative effort)">-0.001 [-0.004, 0.002]</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ instantaneous effort)">-0.001 [-0.004, 0.002]</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ cumulative effort)">0 [-0.004, 0.004]</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ instantaneous effort))">0 [-0.004, 0.004]</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term_type">fixed</td>
+<td class="gt_row gt_left" headers="parameter">answer_prev_dist_z</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ instantaneous effort)">—</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ cumulative effort)">0.211 [0.152, 0.269] *</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ instantaneous effort)">0.213 [0.154, 0.271] *</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ instantaneous effort)">—</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ instantaneous effort))">—</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term_type">fixed</td>
+<td class="gt_row gt_left" headers="parameter">arm_torque_in_log_c</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ instantaneous effort)">-0.184 [-0.607, 0.243]</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ instantaneous effort)">-0.121 [-0.344, 0.098]</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ instantaneous effort)">0.219 [-0.136, 0.571]</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ instantaneous effort))">-0.33 [-0.762, 0.094]</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term_type">fixed</td>
+<td class="gt_row gt_left" headers="parameter">arm_torque_in_log_c:modality1</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ instantaneous effort)">0.08 [-0.566, 0.718]</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ instantaneous effort)">0.245 [-0.066, 0.556]</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ instantaneous effort)">-0.049 [-0.566, 0.474]</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ instantaneous effort))">0.1 [-0.534, 0.743]</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term_type">fixed</td>
+<td class="gt_row gt_left" headers="parameter">arm_torque_in_log_c:modality3</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ instantaneous effort)">0.413 [-0.128, 0.941]</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ instantaneous effort)">0.002 [-0.237, 0.243]</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ instantaneous effort)">-0.424 [-0.859, 0.004]</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ instantaneous effort))">0.473 [-0.026, 0.973]</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term_type">fixed</td>
+<td class="gt_row gt_left" headers="parameter">arm_torque_log_c</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ cumulative effort)">-0.154 [-0.487, 0.18]</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ instantaneous effort)">—</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ cumulative effort)">0.036 [-0.154, 0.227]</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ instantaneous effort)">—</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ cumulative effort)">0.215 [-0.06, 0.493]</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ instantaneous effort)">—</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ cumulative effort)">-0.399 [-0.752, -0.041] *</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ instantaneous effort))">—</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term_type">fixed</td>
+<td class="gt_row gt_left" headers="parameter">arm_torque_log_c:modality1</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ cumulative effort)">0.273 [-0.231, 0.77]</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ instantaneous effort)">—</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ cumulative effort)">0.019 [-0.238, 0.274]</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ instantaneous effort)">—</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ cumulative effort)">-0.278 [-0.674, 0.119]</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ instantaneous effort)">—</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ cumulative effort)">0.387 [-0.113, 0.888]</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ instantaneous effort))">—</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term_type">fixed</td>
+<td class="gt_row gt_left" headers="parameter">arm_torque_log_c:modality3</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ cumulative effort)">0.356 [-0.103, 0.822]</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ instantaneous effort)">—</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ cumulative effort)">-0.108 [-0.324, 0.102]</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ instantaneous effort)">—</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ cumulative effort)">-0.423 [-0.787, -0.059] *</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ instantaneous effort)">—</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ cumulative effort)">0.624 [0.186, 1.064] *</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ instantaneous effort))">—</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term_type">fixed</td>
+<td class="gt_row gt_left" headers="parameter">copc_in_log_c</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ instantaneous effort)">-0.096 [-0.422, 0.233]</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ instantaneous effort)">-0.099 [-0.284, 0.076]</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ instantaneous effort)">0.111 [-0.165, 0.386]</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ instantaneous effort))">-0.197 [-0.54, 0.15]</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term_type">fixed</td>
+<td class="gt_row gt_left" headers="parameter">copc_log_c</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ cumulative effort)">0.006 [-0.313, 0.318]</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ instantaneous effort)">—</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ cumulative effort)">-0.103 [-0.269, 0.06]</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ instantaneous effort)">—</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ cumulative effort)">-0.019 [-0.287, 0.244]</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ instantaneous effort)">—</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ cumulative effort)">0.044 [-0.293, 0.38]</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ instantaneous effort))">—</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term_type">fixed</td>
+<td class="gt_row gt_left" headers="parameter">correction2M1</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ instantaneous effort)">—</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ cumulative effort)">-0.118 [-0.21, -0.028] *</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ instantaneous effort)">-0.126 [-0.219, -0.034] *</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ instantaneous effort)">—</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ instantaneous effort))">—</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term_type">fixed</td>
+<td class="gt_row gt_left" headers="parameter">envelope_in_log_c</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ instantaneous effort)">-0.196 [-0.44, 0.05]</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ instantaneous effort)">0.069 [-0.063, 0.202]</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ instantaneous effort)">0.131 [-0.069, 0.331]</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ instantaneous effort))">-0.197 [-0.449, 0.058]</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term_type">fixed</td>
+<td class="gt_row gt_left" headers="parameter">envelope_log_c</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ cumulative effort)">-0.067 [-0.439, 0.3]</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ instantaneous effort)">—</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ cumulative effort)">0.049 [-0.146, 0.243]</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ instantaneous effort)">—</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ cumulative effort)">0.092 [-0.213, 0.399]</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ instantaneous effort)">—</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ cumulative effort)">-0.184 [-0.575, 0.201]</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ instantaneous effort))">—</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term_type">fixed</td>
+<td class="gt_row gt_left" headers="parameter">expressibility_z</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ cumulative effort)">1.501 [1.175, 1.844] *</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ instantaneous effort)">1.55 [1.231, 1.886] *</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ cumulative effort)">0.206 [0.129, 0.281] *</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ instantaneous effort)">0.204 [0.127, 0.281] *</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ cumulative effort)">-1.281 [-1.482, -1.081] *</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ instantaneous effort)">-1.31 [-1.508, -1.115] *</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ cumulative effort)">1.282 [1.066, 1.505] *</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ instantaneous effort))">1.292 [1.077, 1.511] *</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term_type">fixed</td>
+<td class="gt_row gt_left" headers="parameter">modality1</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ cumulative effort)">-0.454 [-1.747, 0.832]</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ instantaneous effort)">-0.082 [-1.425, 1.246]</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ cumulative effort)">-0.23 [-0.783, 0.322]</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ instantaneous effort)">0.362 [-0.225, 0.958]</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ cumulative effort)">0.59 [-0.472, 1.653]</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ instantaneous effort)">0.419 [-0.715, 1.548]</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ cumulative effort)">-0.979 [-2.199, 0.229]</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ instantaneous effort))">-0.615 [-1.911, 0.678]</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term_type">fixed</td>
+<td class="gt_row gt_left" headers="parameter">modality1:copc_in_log_c</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ instantaneous effort)">0.068 [-0.396, 0.53]</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ instantaneous effort)">0.277 [0.014, 0.539] *</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ instantaneous effort)">-0.177 [-0.538, 0.184]</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ instantaneous effort))">0.537 [0.078, 1.007] *</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term_type">fixed</td>
+<td class="gt_row gt_left" headers="parameter">modality1:copc_log_c</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ cumulative effort)">-0.158 [-0.606, 0.294]</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ instantaneous effort)">—</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ cumulative effort)">0.202 [-0.03, 0.437]</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ instantaneous effort)">—</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ cumulative effort)">0.064 [-0.285, 0.414]</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ instantaneous effort)">—</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ cumulative effort)">0.183 [-0.266, 0.631]</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ instantaneous effort))">—</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term_type">fixed</td>
+<td class="gt_row gt_left" headers="parameter">modality1:envelope_in_log_c</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ instantaneous effort)">0.215 [-0.16, 0.597]</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ instantaneous effort)">-0.008 [-0.194, 0.176]</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ instantaneous effort)">-0.095 [-0.413, 0.221]</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ instantaneous effort))">0.129 [-0.246, 0.503]</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term_type">fixed</td>
+<td class="gt_row gt_left" headers="parameter">modality1:envelope_log_c</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ cumulative effort)">-0.034 [-0.528, 0.462]</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ instantaneous effort)">—</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ cumulative effort)">-0.144 [-0.386, 0.1]</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ instantaneous effort)">—</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ cumulative effort)">0.028 [-0.368, 0.426]</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ instantaneous effort)">—</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ cumulative effort)">-0.036 [-0.52, 0.45]</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ instantaneous effort))">—</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term_type">fixed</td>
+<td class="gt_row gt_left" headers="parameter">modality3</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ cumulative effort)">-1.351 [-2.568, -0.137] *</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ instantaneous effort)">-1.372 [-2.449, -0.291] *</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ cumulative effort)">-0.743 [-1.141, -0.349] *</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ instantaneous effort)">-0.862 [-1.2, -0.532] *</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ cumulative effort)">1.147 [0.211, 2.093] *</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ instantaneous effort)">1.309 [0.468, 2.166] *</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ cumulative effort)">-1.097 [-2.112, -0.077] *</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ instantaneous effort))">-1.562 [-2.47, -0.659] *</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term_type">fixed</td>
+<td class="gt_row gt_left" headers="parameter">modality3:copc_in_log_c</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ instantaneous effort)">0.154 [-0.419, 0.719]</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ instantaneous effort)">0.136 [-0.083, 0.362]</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ instantaneous effort)">-0.398 [-0.814, 0.027]</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ instantaneous effort))">0.699 [0.21, 1.189] *</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term_type">fixed</td>
+<td class="gt_row gt_left" headers="parameter">modality3:copc_log_c</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ cumulative effort)">-0.113 [-0.632, 0.396]</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ instantaneous effort)">—</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ cumulative effort)">0.158 [-0.035, 0.353]</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ instantaneous effort)">—</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ cumulative effort)">0.009 [-0.363, 0.378]</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ instantaneous effort)">—</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ cumulative effort)">0.149 [-0.294, 0.593]</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ instantaneous effort))">—</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term_type">fixed</td>
+<td class="gt_row gt_left" headers="parameter">modality3:envelope_in_log_c</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ instantaneous effort)">0.67 [0.264, 1.08] *</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ instantaneous effort)">-0.137 [-0.294, 0.019]</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ instantaneous effort)">-0.362 [-0.657, -0.07] *</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ instantaneous effort))">0.284 [-0.066, 0.638]</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term_type">fixed</td>
+<td class="gt_row gt_left" headers="parameter">modality3:envelope_log_c</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ cumulative effort)">0.287 [-0.265, 0.853]</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ instantaneous effort)">—</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ cumulative effort)">-0.197 [-0.414, 0.021]</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ instantaneous effort)">—</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ cumulative effort)">-0.205 [-0.619, 0.208]</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ instantaneous effort)">—</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ cumulative effort)">0.102 [-0.389, 0.6]</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ instantaneous effort))">—</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term_type">fixed</td>
+<td class="gt_row gt_left" headers="parameter">Intercept</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ cumulative effort)">-0.173 [-0.565, 0.216]</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ instantaneous effort)">-0.155 [-0.546, 0.237]</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ cumulative effort)">-0.76 [-0.901, -0.618] *</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ instantaneous effort)">-0.765 [-0.902, -0.628] *</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ instantaneous effort)">—</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ cumulative effort)">1.088 [0.736, 1.448] *</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ instantaneous effort))">1.193 [0.842, 1.548] *</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term_type">random_sd</td>
+<td class="gt_row gt_left" headers="parameter">— Random Effect SDs —</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ cumulative effort)">NA</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ instantaneous effort)">NA</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ cumulative effort)">NA</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ instantaneous effort)">NA</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ cumulative effort)">NA</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ instantaneous effort)">NA</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ cumulative effort)">NA</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ instantaneous effort))">NA</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term_type">random_sd</td>
+<td class="gt_row gt_left" headers="parameter">sd(Intercept) | SessionID</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ cumulative effort)">0.225 [0.011, 0.537]</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ instantaneous effort)">0.211 [0.009, 0.517]</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ cumulative effort)">0.047 [0.002, 0.123]</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ instantaneous effort)">0.051 [0.002, 0.131]</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ cumulative effort)">0.163 [0.008, 0.371]</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ instantaneous effort)">0.167 [0.008, 0.373]</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ cumulative effort)">0.147 [0.006, 0.376]</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ instantaneous effort))">0.149 [0.006, 0.377]</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term_type">random_sd</td>
+<td class="gt_row gt_left" headers="parameter">sd(Intercept) | concept</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ cumulative effort)">1.419 [1.083, 1.813]</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ instantaneous effort)">1.427 [1.096, 1.824]</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ cumulative effort)">0.294 [0.219, 0.378]</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ instantaneous effort)">0.304 [0.23, 0.391]</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ cumulative effort)">1.141 [0.936, 1.387]</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ instantaneous effort)">1.143 [0.937, 1.388]</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ cumulative effort)">1.077 [0.851, 1.342]</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ instantaneous effort))">1.088 [0.86, 1.357]</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term_type">random_sd</td>
+<td class="gt_row gt_left" headers="parameter">sd(Intercept) | pcn_ID</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ cumulative effort)">0.172 [0.007, 0.46]</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ instantaneous effort)">0.175 [0.007, 0.454]</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ cumulative effort)">0.12 [0.015, 0.208]</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ instantaneous effort)">0.126 [0.018, 0.214]</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ cumulative effort)">0.299 [0.044, 0.491]</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ instantaneous effort)">0.294 [0.043, 0.489]</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ cumulative effort)">0.432 [0.172, 0.637]</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ instantaneous effort))">0.441 [0.207, 0.644]</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term_type">random_sd</td>
+<td class="gt_row gt_left" headers="parameter">sd(modality1) | SessionID</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ cumulative effort)">0.657 [0.102, 1.142]</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ instantaneous effort)">0.667 [0.111, 1.147]</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ instantaneous effort)">—</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ instantaneous effort)">—</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ instantaneous effort))">—</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term_type">random_sd</td>
+<td class="gt_row gt_left" headers="parameter">sd(modality1) | concept</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ cumulative effort)">0.615 [0.101, 1.118]</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ instantaneous effort)">0.679 [0.159, 1.176]</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ instantaneous effort)">—</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ instantaneous effort)">—</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ instantaneous effort))">—</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term_type">random_sd</td>
+<td class="gt_row gt_left" headers="parameter">sd(modality1) | pcn_ID</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ cumulative effort)">0.342 [0.016, 0.865]</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ instantaneous effort)">0.342 [0.016, 0.875]</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ instantaneous effort)">—</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ instantaneous effort)">—</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ instantaneous effort))">—</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term_type">random_sd</td>
+<td class="gt_row gt_left" headers="parameter">sd(modality3) | SessionID</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ cumulative effort)">0.464 [0.026, 0.993]</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ instantaneous effort)">0.425 [0.024, 0.947]</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ instantaneous effort)">—</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ instantaneous effort)">—</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ instantaneous effort))">—</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term_type">random_sd</td>
+<td class="gt_row gt_left" headers="parameter">sd(modality3) | concept</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ cumulative effort)">0.88 [0.279, 1.481]</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ instantaneous effort)">0.857 [0.257, 1.467]</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ instantaneous effort)">—</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ instantaneous effort)">—</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ instantaneous effort))">—</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term_type">random_sd</td>
+<td class="gt_row gt_left" headers="parameter">sd(modality3) | pcn_ID</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ cumulative effort)">0.393 [0.018, 0.942]</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ instantaneous effort)">0.375 [0.019, 0.914]</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ instantaneous effort)">—</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ instantaneous effort)">—</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ instantaneous effort))">—</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term_type">random_cor</td>
+<td class="gt_row gt_left" headers="parameter">— Random Effect Correlations —</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ cumulative effort)">NA</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ instantaneous effort)">NA</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ cumulative effort)">NA</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ instantaneous effort)">NA</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ cumulative effort)">NA</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ instantaneous effort)">NA</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ cumulative effort)">NA</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ instantaneous effort))">NA</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term_type">random_cor</td>
+<td class="gt_row gt_left" headers="parameter">cor(Intercept × modality1) | SessionID</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ cumulative effort)">-0.389 [-0.947, 0.688]</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ instantaneous effort)">-0.348 [-0.936, 0.727]</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ instantaneous effort)">—</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ instantaneous effort)">—</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ instantaneous effort))">—</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term_type">random_cor</td>
+<td class="gt_row gt_left" headers="parameter">cor(Intercept × modality1) | concept</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ cumulative effort)">-0.235 [-0.777, 0.510]</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ instantaneous effort)">-0.235 [-0.744, 0.455]</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ instantaneous effort)">—</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ instantaneous effort)">—</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ instantaneous effort))">—</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term_type">random_cor</td>
+<td class="gt_row gt_left" headers="parameter">cor(Intercept × modality1) | pcn_ID</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ cumulative effort)">-0.142 [-0.910, 0.830]</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ instantaneous effort)">-0.153 [-0.918, 0.833]</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ instantaneous effort)">—</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ instantaneous effort)">—</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ instantaneous effort))">—</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term_type">random_cor</td>
+<td class="gt_row gt_left" headers="parameter">cor(Intercept × modality3) | SessionID</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ cumulative effort)">0.030 [-0.829, 0.876]</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ instantaneous effort)">0.025 [-0.841, 0.879]</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ instantaneous effort)">—</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ instantaneous effort)">—</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ instantaneous effort))">—</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term_type">random_cor</td>
+<td class="gt_row gt_left" headers="parameter">cor(Intercept × modality3) | concept</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ cumulative effort)">-0.070 [-0.577, 0.476]</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ instantaneous effort)">-0.070 [-0.600, 0.497]</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ instantaneous effort)">—</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ instantaneous effort)">—</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ instantaneous effort))">—</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term_type">random_cor</td>
+<td class="gt_row gt_left" headers="parameter">cor(Intercept × modality3) | pcn_ID</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ cumulative effort)">-0.058 [-0.887, 0.856]</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ instantaneous effort)">-0.035 [-0.879, 0.860]</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ instantaneous effort)">—</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ instantaneous effort)">—</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ instantaneous effort))">—</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term_type">random_cor</td>
+<td class="gt_row gt_left" headers="parameter">cor(modality1 × modality3) | SessionID</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ cumulative effort)">-0.082 [-0.856, 0.762]</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ instantaneous effort)">-0.077 [-0.848, 0.777]</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ instantaneous effort)">—</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ instantaneous effort)">—</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ instantaneous effort))">—</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term_type">random_cor</td>
+<td class="gt_row gt_left" headers="parameter">cor(modality1 × modality3) | concept</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ cumulative effort)">-0.450 [-0.946, 0.335]</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ instantaneous effort)">-0.460 [-0.950, 0.269]</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ instantaneous effort)">—</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ instantaneous effort)">—</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ instantaneous effort))">—</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term_type">random_cor</td>
+<td class="gt_row gt_left" headers="parameter">cor(modality1 × modality3) | pcn_ID</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ cumulative effort)">-0.092 [-0.899, 0.836]</td>
+<td class="gt_row gt_left" headers="Probability of first-attempt success (w/ instantaneous effort)">-0.113 [-0.897, 0.833]</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="Following success (cosine similarity, w/ instantaneous effort)">—</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="How many attempts needed (w/ instantaneous effort)">—</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ cumulative effort)">—</td>
+<td class="gt_row gt_left" headers="Was understanding ever reached (w/ instantaneous effort))">—</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</figure>
+</div>
+</div>
+</section>
+<section id="plot" class="level4">
+<h4 class="anchored" data-anchor-id="plot">Plot</h4>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-eff-success-all" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -26109,6 +27308,7 @@ Figure&nbsp;8.2: Relationship between effort and communicative success: summary 
 </div>
 </div>
 </div>
+</section>
 </section>
 </section>
 </section>
@@ -26138,52 +27338,53 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] ggdist_3.3.3        gt_1.3.0            emmeans_2.0.2      
- [4] lubridate_1.9.5     forcats_1.0.1       stringr_1.6.0      
- [7] purrr_1.2.1         readr_2.2.0         tidyverse_2.0.0    
-[10] bayestestR_0.17.0   brms_2.23.0         Rcpp_1.1.1         
-[13] bayesplot_1.15.0    dagitty_0.3-4       ggdag_0.2.13       
-[16] rstan_2.32.7        StanHeaders_2.32.10 patchwork_1.3.2    
-[19] rcartocolor_2.1.2   tibble_3.3.1        tidybayes_3.0.7    
-[22] ggplot2_4.0.2       tidyr_1.3.2         dplyr_1.1.4        
-[25] here_1.0.2         
+ [1] ggdist_3.3.3        ggtext_0.1.2        gt_1.3.0           
+ [4] emmeans_2.0.2       lubridate_1.9.5     forcats_1.0.1      
+ [7] stringr_1.6.0       purrr_1.2.1         readr_2.2.0        
+[10] tidyverse_2.0.0     bayestestR_0.17.0   brms_2.23.0        
+[13] Rcpp_1.1.1          bayesplot_1.15.0    dagitty_0.3-4      
+[16] ggdag_0.2.13        rstan_2.32.7        StanHeaders_2.32.10
+[19] patchwork_1.3.2     rcartocolor_2.1.2   tibble_3.3.1       
+[22] tidybayes_3.0.7     ggplot2_4.0.2       tidyr_1.3.2        
+[25] dplyr_1.1.4         here_1.0.2         
 
 loaded via a namespace (and not attached):
-  [1] gridExtra_2.3         inline_0.3.21         rlang_1.1.7          
-  [4] magrittr_2.0.4        otel_0.2.0            matrixStats_1.5.0    
-  [7] compiler_4.5.1        mgcv_1.9-3            loo_2.9.0            
- [10] systemfonts_1.3.2     reshape2_1.4.5        vctrs_0.7.1          
- [13] pkgconfig_2.0.3       arrayhelpers_1.1-0    crayon_1.5.3         
- [16] fastmap_1.2.0         backports_1.5.0       labeling_0.4.3       
- [19] ggraph_2.2.2          utf8_1.2.6            cmdstanr_0.9.0       
- [22] rmarkdown_2.30        tzdb_0.5.0            ps_1.9.1             
- [25] ragg_1.5.2            bit_4.6.0             xfun_0.56            
- [28] cachem_1.1.0          jsonlite_2.0.0        tweenr_2.0.3         
- [31] broom_1.0.12          parallel_4.5.1        R6_2.6.1             
- [34] stringi_1.8.7         RColorBrewer_1.1-3    boot_1.3-31          
- [37] estimability_1.5.1    knitr_1.51            modelr_0.1.11        
- [40] splines_4.5.1         Matrix_1.7-3          igraph_2.2.1         
- [43] timechange_0.4.0      tidyselect_1.2.1      viridis_0.6.5        
- [46] abind_1.4-8           yaml_2.3.12           codetools_0.2-20     
- [49] processx_3.8.6        curl_7.0.0            pkgbuild_1.4.8       
- [52] plyr_1.8.9            lattice_0.22-7        withr_3.0.2          
- [55] bridgesampling_1.2-1  S7_0.2.1              posterior_1.6.1      
- [58] coda_0.19-4.1         evaluate_1.0.5        RcppParallel_5.1.11-1
- [61] polyclip_1.10-7       xml2_1.5.2            pillar_1.11.1        
- [64] tensorA_0.36.2.1      checkmate_2.3.3       stats4_4.5.1         
- [67] insight_1.4.6         distributional_0.6.0  generics_0.1.4       
- [70] vroom_1.7.0           rprojroot_2.1.1       hms_1.1.4            
- [73] rstantools_2.6.0      scales_1.4.0          xtable_1.8-4         
- [76] glue_1.8.0            tools_4.5.1           ggnewscale_0.5.2     
- [79] fs_2.0.1              mvtnorm_1.3-6         graphlayouts_1.2.3   
- [82] tidygraph_1.3.1       grid_4.5.1            QuickJSR_1.9.0       
- [85] nlme_3.1-168          ggforce_0.5.0         cli_3.6.5            
- [88] textshaping_1.0.5     svUnit_1.0.8          viridisLite_0.4.2    
- [91] Brobdingnag_1.2-9     V8_8.0.1              gtable_0.3.6         
- [94] sass_0.4.10           digest_0.6.39         ggrepel_0.9.8        
- [97] htmlwidgets_1.6.4     farver_2.1.2          memoise_2.0.1        
-[100] htmltools_0.5.9       lifecycle_1.0.5       bit64_4.6.0-1        
-[103] MASS_7.3-65          </code></pre>
+  [1] RColorBrewer_1.1-3    tensorA_0.36.2.1      jsonlite_2.0.0       
+  [4] magrittr_2.0.4        estimability_1.5.1    farver_2.1.2         
+  [7] rmarkdown_2.30        fs_2.0.1              ragg_1.5.2           
+ [10] vctrs_0.7.1           memoise_2.0.1         htmltools_0.5.9      
+ [13] distributional_0.6.0  curl_7.0.0            broom_1.0.12         
+ [16] sass_0.4.10           htmlwidgets_1.6.4     plyr_1.8.9           
+ [19] cachem_1.1.0          commonmark_2.0.0      igraph_2.2.1         
+ [22] lifecycle_1.0.5       pkgconfig_2.0.3       Matrix_1.7-3         
+ [25] R6_2.6.1              fastmap_1.2.0         digest_0.6.39        
+ [28] ggnewscale_0.5.2      ps_1.9.1              rprojroot_2.1.1      
+ [31] textshaping_1.0.5     labeling_0.4.3        timechange_0.4.0     
+ [34] polyclip_1.10-7       abind_1.4-8           mgcv_1.9-3           
+ [37] compiler_4.5.1        bit64_4.6.0-1         withr_3.0.2          
+ [40] S7_0.2.1              backports_1.5.0       inline_0.3.21        
+ [43] viridis_0.6.5         QuickJSR_1.9.0        pkgbuild_1.4.8       
+ [46] ggforce_0.5.0         MASS_7.3-65           loo_2.9.0            
+ [49] tools_4.5.1           otel_0.2.0            glue_1.8.0           
+ [52] nlme_3.1-168          gridtext_0.1.6        grid_4.5.1           
+ [55] cmdstanr_0.9.0        checkmate_2.3.3       reshape2_1.4.5       
+ [58] generics_0.1.4        gtable_0.3.6          tzdb_0.5.0           
+ [61] hms_1.1.4             tidygraph_1.3.1       xml2_1.5.2           
+ [64] utf8_1.2.6            ggrepel_0.9.8         pillar_1.11.1        
+ [67] markdown_2.0          vroom_1.7.0           posterior_1.6.1      
+ [70] splines_4.5.1         tweenr_2.0.3          lattice_0.22-7       
+ [73] bit_4.6.0             tidyselect_1.2.1      knitr_1.51           
+ [76] arrayhelpers_1.1-0    gridExtra_2.3         V8_8.0.1             
+ [79] litedown_0.9          stats4_4.5.1          xfun_0.56            
+ [82] graphlayouts_1.2.3    bridgesampling_1.2-1  matrixStats_1.5.0    
+ [85] stringi_1.8.7         yaml_2.3.12           boot_1.3-31          
+ [88] evaluate_1.0.5        codetools_0.2-20      ggraph_2.2.2         
+ [91] cli_3.6.5             RcppParallel_5.1.11-1 xtable_1.8-4         
+ [94] systemfonts_1.3.2     processx_3.8.6        modelr_0.1.11        
+ [97] coda_0.19-4.1         svUnit_1.0.8          parallel_4.5.1       
+[100] rstantools_2.6.0      Brobdingnag_1.2-9     viridisLite_0.4.2    
+[103] mvtnorm_1.3-6         scales_1.4.0          insight_1.4.6        
+[106] crayon_1.5.3          rlang_1.1.7          </code></pre>
 </div>
 </div>
 

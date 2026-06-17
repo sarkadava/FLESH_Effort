@@ -1,4 +1,3 @@
-
 # ══════════════════════════════════════════════════════════════════════════════
 #  COLOR SYSTEM
 #
@@ -27,12 +26,12 @@ dv_colors_light <- dv_colors  # same hue, alpha handles the distinction
 
 # Human-readable labels (for plot axes / legends)
 dv_labels_map <- c(
-  "arm_moment_sum_change_integral"  = "Arm torque\n(cumulative)",
-  "arm_moment_sum_change_peak_mean" = "Arm torque\n(instantaneous)",
-  "envelope_norm_integral"          = "Envelope\n(cumulative)",
-  "envelope_norm_peak_mean"         = "Envelope\n(instantaneous)",
-  "COPc_integral"                   = "COP\n(cumulative)",
-  "COPc_peak_mean"                  = "COP\n(instantaneous)"
+  "arm_moment_sum_change_integral"  = "Arm torque change\n(cumulative)",
+  "arm_moment_sum_change_peak_mean" = "Arm torque change\n(instantaneous)",
+  "envelope_norm_integral"          = "Amplitude envelope\n(cumulative)",
+  "envelope_norm_peak_mean"         = "Amplitude Envelope\n(instantaneous)",
+  "COPc_integral"                   = "COPc\n(cumulative)",
+  "COPc_peak_mean"                  = "COPc\n(instantaneous)"
 )
 
 # Linetype: cumulative = solid, instantaneous = dashed
@@ -61,7 +60,42 @@ modality_colors <- c(
   "gesture"    = "#2196F3",
   "vocal"      = "#FF9800",
   "multimodal" = "#4CAF50"
+  
 )
+
+.title_element <- function(size = 14, face = "bold", colour = "grey10",
+                           margin_b = 6) {
+  ggtext::element_textbox_simple(
+    size      = size,
+    face      = face,
+    colour    = colour,
+    margin    = margin(b = margin_b),
+    box.color = NA,
+    fill      = NA,
+    width     = unit(1, "npc"),
+    minheight = unit(0, "npc")
+  )
+}
+
+.subtitle_element <- function(size = 11, colour = "grey40", margin_b = 8) {
+  ggtext::element_textbox_simple(
+    size      = size,
+    colour    = colour,
+    margin    = margin(b = margin_b),
+    box.color = NA,
+    fill      = NA,
+    width     = unit(0.95, "npc"),   # ← was 1, now 0.95 gives wrapping headroom
+    minheight = unit(0, "npc")
+  )
+}
+
+.annotation_theme <- function(title_size = 14, subtitle_size = 11) {
+  theme(
+    plot.title    = .title_element(size = title_size),
+    plot.subtitle = .subtitle_element(size = subtitle_size),
+    plot.margin   = margin(14, 40, 10, 12)  # ← right margin 40 instead of 18
+  )
+}
 
 # ── Helper: build ggplot2 color + fill + linetype scales in one call ──────────
 #
@@ -156,7 +190,7 @@ theme_effort_plot <- function(base_size = 16, base_family = "Helvetica") {
       
       # Legend
       legend.position  = "top",
-      legend.title     = element_blank(),
+      legend.title     = element_text(size = 12, face = "bold"),
       legend.text      = element_text(size = 12),
       legend.key.size  = unit(14, "pt"),
       legend.key.width = unit(28, "pt"),   # wider key shows linetype clearly
@@ -170,10 +204,15 @@ theme_effort_plot <- function(base_size = 16, base_family = "Helvetica") {
       # Panel border (subtle box around each panel)
       panel.border = element_rect(colour = "grey70", fill = NA, linewidth = 0.4),
       
-      # Margins and titles
-      plot.margin   = margin(10, 14, 10, 10),
-      plot.title    = element_text(size = 16, face = "bold"),
-      plot.subtitle = element_text(size = 12, colour = "grey40")
+      # Margins and titles — generous margins prevent clipping in patchwork
+      plot.margin          = margin(14, 18, 10, 12),
+      plot.title           = element_text(size = 16, face = "bold",
+                                          margin = margin(b = 6)),
+      plot.subtitle        = element_text(size = 12, colour = "grey40",
+                                          margin = margin(b = 8)),
+      # Anchor title/subtitle to the full plot width, not just the panel
+      plot.title.position    = "plot",
+      plot.subtitle.position = "plot"
     )
 }
 
@@ -229,20 +268,38 @@ stamp_dv_aesthetics <- function(model_grid) {
 #  its canonical colour and appends greyed-out "_nc" variants for noise /
 #  non-credible combinations.
 #
+#  The _nc variants are intentionally excluded from the legend via `breaks`,
+#  so the legend always shows only the three clean modality colours.
+#
 #  Arguments
 #  ─────────────────────────────────────────────────────────────────────────────
 #  modality_lvls  Character vector of modality levels to include.
 #  nc_colour      Colour used for noise/non-credible variants (default "grey70").
+#  guide          ggplot2 guide; defaults to a horizontal legend. Pass
+#                 guide = "none" to suppress entirely.
 #  ...            Further arguments forwarded to scale_colour_manual().
 # ══════════════════════════════════════════════════════════════════════════════
-.make_colour_scale <- function(modality_lvls, nc_colour = "grey70", ...) {
+.make_colour_scale <- function(modality_lvls, nc_colour = "grey70",
+                               guide = guide_legend(
+                                 title          = "Modality",
+                                 direction      = "horizontal",
+                                 title.position = "left",
+                                 override.aes   = list(size = 3, linewidth = 1.2)
+                               ), ...) {
   vals <- c(
     setNames(purrr::map_chr(modality_lvls, ~ modality_colors[[.x]]),
              modality_lvls),
     setNames(rep(nc_colour, length(modality_lvls)),
              paste0(modality_lvls, "_nc"))
   )
-  scale_colour_manual(values = vals, ...)
+  # breaks = modality_lvls excludes _nc variants from the legend cleanly
+  scale_colour_manual(
+    values = vals,
+    breaks = modality_lvls,
+    labels = stringr::str_to_title(modality_lvls),
+    guide  = guide,
+    ...
+  )
 }
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -252,20 +309,36 @@ stamp_dv_aesthetics <- function(model_grid) {
 #  filled geoms (bars, ribbons, halfeye slabs) need the same noise-aware
 #  colour mapping.
 #
+#  The _nc variants are intentionally excluded from the legend via `breaks`.
+#
 #  Arguments
 #  ─────────────────────────────────────────────────────────────────────────────
 #  modality_lvls  Character vector of modality levels.
 #  nc_colour      Fill for noise/non-credible variants (default "grey70").
+#  guide          ggplot2 guide; defaults to a horizontal legend. Pass
+#                 guide = "none" to suppress entirely.
 #  ...            Further arguments forwarded to scale_fill_manual().
 # ══════════════════════════════════════════════════════════════════════════════
-.make_fill_scale <- function(modality_lvls, nc_colour = "grey70", ...) {
+.make_fill_scale <- function(modality_lvls, nc_colour = "grey70",
+                             guide = guide_legend(
+                               title          = "Modality",
+                               direction      = "horizontal",
+                               title.position = "left",
+                               override.aes   = list(size = 3)
+                             ), ...) {
   vals <- c(
     setNames(purrr::map_chr(modality_lvls, ~ modality_colors[[.x]]),
              modality_lvls),
     setNames(rep(nc_colour, length(modality_lvls)),
              paste0(modality_lvls, "_nc"))
   )
-  scale_fill_manual(values = vals, ...)
+  scale_fill_manual(
+    values = vals,
+    breaks = modality_lvls,
+    labels = stringr::str_to_title(modality_lvls),
+    guide  = guide,
+    ...
+  )
 }
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -356,7 +429,7 @@ report_effort_success <- function(
   cat("\n")
   
   # ── 2. Slopes via emtrends (log-odds scale) ──────────────────────────────────
-  cat("  Effort→success slopes by channel × modality (log-odds / SD):\n\n")
+  cat("  Effort→success slopes by feature × modality (log-odds / SD):\n\n")
   
   all_slopes <- purrr::map2_dfr(channel_cols, channel_labels, function(col, label) {
     emtrends(model, ~ modality, var = col) |>
@@ -459,15 +532,9 @@ report_effort_success <- function(
     )
   
   # ── 5. Colour scale helper ───────────────────────────────────────────────────
-  colour_scale <- scale_colour_manual(
-    values = c(
-      setNames(purrr::map_chr(modality_lvls, ~ modality_colors[[.x]]),
-               modality_lvls),
-      setNames(rep("grey70", length(modality_lvls)),
-               paste0(modality_lvls, "_nc"))
-    ),
-    guide = "none"
-  )
+  # Uses .make_colour_scale so legend shows automatically; _nc variants
+  # are hidden from legend via breaks but still colour correctly in plots.
+  colour_scale <- .make_colour_scale(modality_lvls)
   
   # ── Formatted numerical summary for reporting ─────────────────────────────────
   cat("\n═══════════════════════════════════════════════\n")
@@ -521,7 +588,7 @@ report_effort_success <- function(
     colour_scale +
     scale_shape_manual(
       values = c("FALSE" = 16, "TRUE" = 4),
-      labels = c("FALSE" = "Active channel", "TRUE" = "Noise channel"),
+      labels = c("FALSE" = "Active feature", "TRUE" = "Noise feature"),
       name   = NULL
     ) +
     facet_wrap(~ channel, nrow = 1) +
@@ -538,7 +605,7 @@ report_effort_success <- function(
       panel.spacing    = unit(1.2, "lines")   # more breathing room between facets
     ) +
     labs(
-      title    = "A  Effort \u2192 success slope by channel and modality",
+      title    = "A  Effort \u2192 success slope by feature and modality",
       subtitle = "Log-odds change in P(resolved) per SD effort | 95% HPD | Grey = not credible or noise channel",
       x = NULL, y = "Slope (log-odds per SD effort)"
     )
@@ -570,7 +637,7 @@ report_effort_success <- function(
     ) +
     labs(
       title    = "B  Predicted P(resolved) at effort anchors",
-      subtitle = "95% CI | Other predictors held at 0 | Grey = noise channel",
+      subtitle = "95% CI | Other predictors held at 0 | Grey = noise feature",
       x = "Effort level", y = "P(resolved at c0)"
     )
   
@@ -601,7 +668,10 @@ report_effort_success <- function(
         setNames(rep("grey70", length(modality_lvls)),
                  paste0(modality_lvls, "_nc"))
       ),
-      guide = "none"
+      breaks = modality_lvls,
+      labels = stringr::str_to_title(modality_lvls),
+      name   = "Modality",
+      guide  = "none"   # legend already shown via colour_scale in panels A/B
     ) +
     scale_colour_manual(
       values = c(
@@ -610,7 +680,10 @@ report_effort_success <- function(
         setNames(rep("grey70", length(modality_lvls)),
                  paste0(modality_lvls, "_nc"))
       ),
-      guide = "none"
+      breaks = modality_lvls,
+      labels = stringr::str_to_title(modality_lvls),
+      name   = "Modality",
+      guide  = "none"
     ) +
     facet_wrap(~ channel, nrow = 1) +
     theme_effort_plot(base_size = base_size) +
@@ -625,21 +698,23 @@ report_effort_success <- function(
     ) +
     labs(
       title    = "C  Effort productivity: \u0394P(resolved) per SD effort",
-      subtitle = "P(resolved | +1 SD) \u2212 P(resolved | \u22121 SD) | Grey = noise channel",
+      subtitle = "P(resolved | +1 SD) \u2212 P(resolved | \u22121 SD) | Grey = noise feature",
       x = NULL, y = "\u0394P(resolved)"
     )
   
   # ── Combine ──────────────────────────────────────────────────────────────────
-  final <- (p_slopes / p_preds / p_prod) +
-    patchwork::plot_layout(heights = panel_heights) +
+  final <- (p_slopes / p_preds / p_prod / add_modality_legend()) +
+    patchwork::plot_layout(heights = c(panel_heights, 0.08)) +
     patchwork::plot_annotation(
       title    = "Does effort buy communicative success? (c0 trials)",
       subtitle = sprintf("Model: %s | Bernoulli logit | effort \u00d7 modality",
                          model_label),
       theme    = theme(
-        plot.title    = element_text(size = base_size + 4, face = "bold"),
-        plot.subtitle = element_text(size = base_size,     colour = "grey40"),
-        plot.margin   = margin(10, 10, 10, 10)
+        plot.title    = element_text(size = base_size + 4, face = "bold",
+                                     margin = margin(b = 6)),
+        plot.subtitle = element_text(size = base_size,     colour = "grey40",
+                                     margin = margin(b = 8)),
+        plot.margin   = margin(14, 18, 10, 12)
       )
     )
   
@@ -744,7 +819,7 @@ report_effort_similarity <- function(
   cat("\n")
   
   # ── 2. Slopes via emtrends + pairwise contrasts ───────────────────────────────
-  cat("  EFFORT→SIMILARITY SLOPES BY CHANNEL × MODALITY\n\n")
+  cat("  EFFORT→SIMILARITY SLOPES BY FEATURE × MODALITY\n\n")
   
   all_slopes <- purrr::map2_dfr(channel_cols, channel_labels, function(col, lbl) {
     
@@ -828,7 +903,7 @@ report_effort_similarity <- function(
                           as.character(modality))
     )
   
-  cat("\n  Predicted similarity by channel / modality / effort level:\n\n")
+  cat("\n  Predicted similarity by feature / modality / effort level:\n\n")
   all_predictions |>
     dplyr::select(channel, modality, effort_label, predicted, lower, upper) |>
     dplyr::arrange(channel, modality, effort_label) |>
@@ -854,7 +929,7 @@ report_effort_similarity <- function(
   cat("\n\n")
   
   # ── 4. Plot A: slopes (Beta scale) ───────────────────────────────────────────
-  colour_scale <- .make_colour_scale(modality_lvls, guide = "none")
+  colour_scale <- .make_colour_scale(modality_lvls)
   
   p_slopes <- all_slopes |>
     ggplot(aes(x = modality, y = estimate,
@@ -877,7 +952,7 @@ report_effort_similarity <- function(
       axis.text.x     = element_text(size = 8)
     ) +
     labs(
-      title    = "Effort\u2192similarity slope by channel and modality",
+      title    = "Effort\u2192similarity slope by feature and modality",
       subtitle = "Effect on answer similarity (Beta scale) | 95% HPD\nGrey = not credible | \u00d7 = noise channel",
       x        = NULL,
       y        = "Slope (Beta scale per SD effort)"
@@ -903,20 +978,24 @@ report_effort_similarity <- function(
     ) +
     labs(
       title    = "Predicted similarity at effort anchors",
-      subtitle = "95% CI | Other predictors at 0 | Grey = noise channel",
+      subtitle = "95% CI | Other predictors at 0 | Grey = noise feature",
       x        = "Effort level",
       y        = "Predicted answer similarity"
     )
   
   # ── 6. Combine and save ───────────────────────────────────────────────────────
-  final <- (p_slopes / p_preds) +
+  final <- (p_slopes / p_preds / add_modality_legend()) +
+    patchwork::plot_layout(heights = c(1, 1, 0.08)) +
     patchwork::plot_annotation(
       title    = "Does effort predict communicative success? (similarity outcome)",
       subtitle = sprintf("Model: %s | Beta regression | effort \u00d7 modality",
                          model_label),
       theme    = theme(
-        plot.title    = element_text(size = 14, face = "bold"),
-        plot.subtitle = element_text(size = 11, colour = "grey40")
+        plot.title    = element_text(size = 14, face = "bold",
+                                     margin = margin(b = 6)),
+        plot.subtitle = element_text(size = 11, colour = "grey40",
+                                     margin = margin(b = 8)),
+        plot.margin   = margin(14, 18, 10, 12)
       )
     )
   
@@ -996,7 +1075,7 @@ report_resolution_by_effort <- function(
   cat("═══════════════════════════════════════════════\n")
   cat(sprintf("  MODEL SUMMARY: %s\n", model_label))
   cat("  Family: cumulative logit\n")
-  cat("  Positive b = higher odds of *slower* resolution\n")
+  cat("  Positive b = higher odds of *slower* understanding\n")
   cat("═══════════════════════════════════════════════\n\n")
   print(summary(model))
   
@@ -1080,7 +1159,7 @@ report_resolution_by_effort <- function(
   cat("  NUMERICAL SUMMARY FOR REPORTING\n")
   cat("═══════════════════════════════════════════════\n\n")
   
-  cat("  Predicted P per resolution category at effort anchors (89% CI):\n\n")
+  cat("  Predicted P per attempt number at effort anchors (89% CI):\n\n")
   for (cat_level in levels(factor(all_ord$.category))) {
     cat(sprintf("  [%s]\n", cat_level))
     all_ord |>
@@ -1100,7 +1179,7 @@ report_resolution_by_effort <- function(
     cat("\n")
   }
   
-  cat("\n  Productivity \u0394P (+1SD \u2212 \u22121SD) per resolution category:\n\n")
+  cat("\n  Productivity \u0394P (+1SD \u2212 \u22121SD) per attempt number:\n\n")
   
   productivity_ord <- all_ord |>
     dplyr::filter(effort_label != "Mean") |>
@@ -1207,7 +1286,7 @@ report_resolution_by_effort <- function(
                colour = "grey30", linewidth = 0.8) +
     geom_pointrange(aes(ymin = .lower, ymax = .upper),
                     linewidth = 1.1, size = 0.8) +
-    .make_colour_scale(modality_lvls, guide = "none") +
+    .make_colour_scale(modality_lvls, guide = "none") +  # legend via add_modality_legend() below
     scale_shape_manual(
       values = c("FALSE" = 16, "TRUE" = 4),
       labels = c("FALSE" = "Active channel", "TRUE" = "Noise channel"),
@@ -1222,8 +1301,8 @@ report_resolution_by_effort <- function(
       axis.text.x     = element_text(size = 8)
     ) +
     labs(
-      title    = "Effort \u2192 resolution: \u0394P per SD effort by resolution category",
-      subtitle = "Rows: resolution category (fast \u2192 slow) | Grey = not credible or noise | 95% HDI",
+      title    = "Effort \u2192 resolution: \u0394P per SD effort by attempt number (how fast)",
+      subtitle = "Rows: attempt number (fast \u2192 slow) | Grey = not credible or noise | 95% HDI",
       x        = NULL,
       y        = "\u0394P per SD effort"
     )
@@ -1254,7 +1333,7 @@ report_resolution_by_effort <- function(
     ) +
     labs(
       title    = sprintf("P(resolved at %s) by effort level", fastest_cat),
-      subtitle = "89% CI | Grey = noise channel",
+      subtitle = "89% CI | Grey = noise feature",
       x        = "Effort level",
       y        = sprintf("P(%s)", fastest_cat)
     )
@@ -1272,7 +1351,7 @@ report_resolution_by_effort <- function(
              colour = "white", linewidth = 0.3) +
     scale_fill_manual(
       values = cat_pal,
-      name   = "Resolution\ncategory",
+      name   = "Attempt\nnumber",
       guide  = guide_legend(reverse = TRUE)
     ) +
     facet_grid(modality ~ channel) +
@@ -1283,21 +1362,25 @@ report_resolution_by_effort <- function(
       axis.text.x     = element_text(size = 8)
     ) +
     labs(
-      title    = "Effort \u2192 resolution speed: predicted category probabilities",
-      subtitle = "Stacked bars | Rows: modality | Cols: effort channel",
+      title    = "Effort \u2192 number of attempts: predicted category probabilities",
+      subtitle = "Stacked bars | Rows: modality | Cols: effort feature",
       x        = "Effort level",
       y        = "Predicted probability"
     )
   
   # ── 7. Combine and save ───────────────────────────────────────────────────────
-  final <- (p_slopes_all / p_fast / p_stack) +
+  final <- (p_slopes_all / p_fast / p_stack / add_modality_legend()) +
+    patchwork::plot_layout(heights = c(2, 1, 1.5, 0.08)) +
     patchwork::plot_annotation(
-      title    = "Does communicative investment predict resolution speed?",
+      title    = "Does communicative investment predict number of attempts?",
       subtitle = sprintf("Model: %s | cumulative logit | effort \u00d7 modality",
                          model_label),
       theme    = theme(
-        plot.title    = element_text(size = 14, face = "bold"),
-        plot.subtitle = element_text(size = 11, colour = "grey40")
+        plot.title    = element_text(size = 14, face = "bold",
+                                     margin = margin(b = 6)),
+        plot.subtitle = element_text(size = 11, colour = "grey40",
+                                     margin = margin(b = 8)),
+        plot.margin   = margin(14, 18, 10, 12)
       )
     )
   
@@ -2226,8 +2309,9 @@ targeted_comparisons <- function(model,
       title    = paste0("Targeted comparisons — ", dv_label),
       subtitle = "Median ± 89% and 95% HDI",
       theme    = theme(
-        plot.title    = element_text(size = 13, face = "bold"),
-        plot.subtitle = element_text(size = 10, colour = "grey40")
+        plot.title    = element_text(size = 13, face = "bold", margin = margin(b = 6)),
+        plot.subtitle = element_text(size = 10, colour = "grey40", margin = margin(b = 8)),
+        plot.margin   = margin(14, 18, 10, 12)
       )
     )
   
@@ -2241,590 +2325,7 @@ targeted_comparisons <- function(model,
 }
 
 
-##########
 
-# ══════════════════════════════════════════════════════════════════════════════
-#  targeted_comparisons_bfi()
-# ══════════════════════════════════════════════════════════════════════════════
-targeted_comparisons_bfi <- function(model,
-                                     type = c("two_modality", "three_modality"),
-                                     modalities = c("gesture", "multimodal"),
-                                     dv_label = "Effort") {
-  
-  type <- match.arg(type)
-  
-  # ── Helper: print formatted result ─────────────────────────────────────────
-  print_result <- function(draws, var, label, pct = FALSE, digits = 1) {
-    res  <- draws |> median_hdi(!!sym(var))
-    est  <- res[[var]]
-    lo   <- res$.lower
-    hi   <- res$.upper
-    cred <- lo > 0 | hi < 0
-    if (pct) {
-      cat(sprintf("  %-45s %+.1f%% [%+.1f%%, %+.1f%%]%s\n",
-                  label, est, lo, hi, ifelse(cred, "  *", "")))
-    } else {
-      cat(sprintf("  %-45s %.3f [%.3f, %.3f]%s\n",
-                  label, est, lo, hi, ifelse(cred, "  *", "")))
-    }
-  }
-  
-  all_modality_colors <- c(
-    "gesture"    = "#2196F3",
-    "vocal"      = "#FF9800",
-    "multimodal" = "#4CAF50"
-  )
-  modality_colors <- all_modality_colors[modalities]
-  
-  bfi_palette <- c(
-    "−2 SD"   = "#1A237E",
-    "−1 SD"   = "#3949AB",
-    "Average" = "#795548",
-    "+1 SD"   = "#8D6E63",
-    "+2 SD"   = "#4E342E"
-  )
-  
-  performer_palette <- c(
-    "−2 SD"   = "#37474F",
-    "−1 SD"   = "#607D8B",
-    "Average" = "#000000",
-    "+1 SD"   = "#E53935",
-    "+2 SD"   = "#B71C1C"
-  )
-  
-  plots <- list()
-  
-  # ── 1. Direct modality comparisons ─────────────────────────────────────────
-  cat("═══════════════════════════════════════════════\n")
-  cat("  1. MODALITY COMPARISONS (main effect)\n")
-  cat("═══════════════════════════════════════════════\n\n")
-  
-  if (type == "two_modality") {
-    
-    diff_draws <- model |>
-      spread_draws(b_modality1) |>
-      mutate(
-        diff     = 2 * b_modality1,
-        diff_pct = (exp(diff) - 1) * 100
-      )
-    
-    label_a <- modalities[1]
-    label_b <- modalities[2]
-    
-    print_result(diff_draws, "diff",     paste0(label_a, " vs ", label_b, " (log scale):"))
-    print_result(diff_draws, "diff_pct", paste0(label_a, " vs ", label_b, " (%):"), pct = TRUE)
-    
-    plots$modality_diff <- diff_draws |>
-      ggplot(aes(x = diff_pct, fill = after_stat(x > 0))) +
-      stat_halfeye(
-        .width = c(0.89, 0.95), point_interval = median_hdi,
-        normalize = "none", alpha = 0.85
-      ) +
-      geom_vline(xintercept = 0, linetype = "dashed",
-                 colour = "grey20", linewidth = 0.8) +
-      scale_fill_manual(
-        values = c("FALSE" = modality_colors[label_b],
-                   "TRUE"  = modality_colors[label_a]),
-        guide  = "none"
-      ) +
-      theme_effort_plot() +
-      labs(title    = paste0(label_a, " vs ", label_b),
-           subtitle = "Posterior of % difference",
-           x = "% difference", y = NULL)
-    
-  } else {
-    
-    diff_draws <- model |>
-      spread_draws(b_modality1, b_modality2) |>
-      mutate(
-        vocal_offset          = -(b_modality1 + b_modality2),
-        gesture_vs_multimodal = (exp(b_modality1 - b_modality2)  - 1) * 100,
-        gesture_vs_vocal      = (exp(b_modality1 - vocal_offset) - 1) * 100,
-        multimodal_vs_vocal   = (exp(b_modality2 - vocal_offset) - 1) * 100
-      )
-    
-    print_result(diff_draws, "gesture_vs_multimodal", "Gesture vs Multimodal (%):", pct = TRUE)
-    print_result(diff_draws, "gesture_vs_vocal",      "Gesture vs Vocal (%):",      pct = TRUE)
-    print_result(diff_draws, "multimodal_vs_vocal",   "Multimodal vs Vocal (%):",   pct = TRUE)
-    
-    plots$modality_diff <- diff_draws |>
-      select(.draw, gesture_vs_multimodal, gesture_vs_vocal, multimodal_vs_vocal) |>
-      tidyr::pivot_longer(
-        cols     = c(gesture_vs_multimodal, gesture_vs_vocal, multimodal_vs_vocal),
-        names_to = "comparison", values_to = "pct_diff"
-      ) |>
-      mutate(comparison = factor(comparison,
-                                 levels = c("gesture_vs_vocal", "multimodal_vs_vocal", "gesture_vs_multimodal"),
-                                 labels = c("Gesture vs Vocal", "Multimodal vs Vocal", "Gesture vs Multimodal")
-      )) |>
-      ggplot(aes(x = pct_diff, y = comparison, fill = comparison)) +
-      stat_halfeye(
-        .width = c(0.89, 0.95), point_interval = median_hdi,
-        normalize = "groups", scale = 0.7, alpha = 0.85
-      ) +
-      geom_vline(xintercept = 0, linetype = "dashed",
-                 colour = "grey20", linewidth = 0.8) +
-      scale_fill_manual(
-        values = c("Gesture vs Vocal"      = "#2196F3",
-                   "Multimodal vs Vocal"   = "#4CAF50",
-                   "Gesture vs Multimodal" = "#9C27B0"),
-        guide = "none"
-      ) +
-      theme_effort_plot() +
-      labs(title    = "Pairwise modality comparisons",
-           subtitle = "Posterior of % differences",
-           x = "% difference", y = NULL)
-  }
-  
-  # ── 2. Effort trajectory by modality across corrections ────────────────────
-  cat("\n═══════════════════════════════════════════════\n")
-  cat("  2. EFFORT BY MODALITY ACROSS CORRECTIONS\n")
-  cat("═══════════════════════════════════════════════\n\n")
-  
-  if (type == "two_modality") {
-    
-    mod_a <- modalities[1]
-    mod_b <- modalities[2]
-    
-    mod_corr <- model |>
-      spread_draws(b_Intercept, b_correction2M1, b_correction3M2, b_modality1) |>
-      mutate(
-        a_c0 = exp(b_Intercept + 0.5 * b_modality1),
-        a_c1 = exp(b_Intercept + 0.5 * b_modality1 + b_correction2M1),
-        a_c2 = exp(b_Intercept + 0.5 * b_modality1 + b_correction2M1 + b_correction3M2),
-        b_c0 = exp(b_Intercept - 0.5 * b_modality1),
-        b_c1 = exp(b_Intercept - 0.5 * b_modality1 + b_correction2M1),
-        b_c2 = exp(b_Intercept - 0.5 * b_modality1 + b_correction2M1 + b_correction3M2),
-        a_abs_c0_c1 = a_c1 - a_c0,
-        a_abs_c1_c2 = a_c2 - a_c1,
-        b_abs_c0_c1 = b_c1 - b_c0,
-        b_abs_c1_c2 = b_c2 - b_c1,
-        diff_c0_pct = (a_c0 / b_c0 - 1) * 100,
-        diff_c1_pct = (a_c1 / b_c1 - 1) * 100,
-        diff_c2_pct = (a_c2 / b_c2 - 1) * 100
-      )
-    
-    cat("  Predicted effort (median [95% HDI]):\n")
-    print_result(mod_corr, "a_c0", paste0("  ", mod_a, " c0:"))
-    print_result(mod_corr, "a_c1", paste0("  ", mod_a, " c1:"))
-    print_result(mod_corr, "a_c2", paste0("  ", mod_a, " c2:"))
-    print_result(mod_corr, "b_c0", paste0("  ", mod_b, " c0:"))
-    print_result(mod_corr, "b_c1", paste0("  ", mod_b, " c1:"))
-    print_result(mod_corr, "b_c2", paste0("  ", mod_b, " c2:"))
-    cat("\n  Absolute increase per step:\n")
-    print_result(mod_corr, "a_abs_c0_c1", paste0("  ", mod_a, " c0→c1:"))
-    print_result(mod_corr, "a_abs_c1_c2", paste0("  ", mod_a, " c1→c2:"))
-    print_result(mod_corr, "b_abs_c0_c1", paste0("  ", mod_b, " c0→c1:"))
-    print_result(mod_corr, "b_abs_c1_c2", paste0("  ", mod_b, " c1→c2:"))
-    cat(paste0("\n  ", mod_a, " vs ", mod_b, " at each step (%):\n"))
-    print_result(mod_corr, "diff_c0_pct", "  c0:", pct = TRUE)
-    print_result(mod_corr, "diff_c1_pct", "  c1:", pct = TRUE)
-    print_result(mod_corr, "diff_c2_pct", "  c2:", pct = TRUE)
-    
-    traj_long <- mod_corr |>
-      select(.draw, a_c0, a_c1, a_c2, b_c0, b_c1, b_c2) |>
-      tidyr::pivot_longer(
-        cols      = a_c0:b_c2,
-        names_to  = c("mod_key", "correction"),
-        names_sep = "_",
-        values_to = "effort"
-      ) |>
-      mutate(
-        correction = factor(correction, levels = c("c0", "c1", "c2")),
-        modality   = factor(mod_key,
-                            levels = c("a", "b"),
-                            labels = modalities)
-      )
-    
-  } else {
-    
-    mod_corr <- model |>
-      spread_draws(b_Intercept, b_correction2M1, b_correction3M2,
-                   b_modality1, b_modality2) |>
-      mutate(
-        vocal_offset    = -(b_modality1 + b_modality2),
-        gesture_c0      = exp(b_Intercept + 0.5 * b_modality1),
-        gesture_c1      = exp(b_Intercept + 0.5 * b_modality1 + b_correction2M1),
-        gesture_c2      = exp(b_Intercept + 0.5 * b_modality1 + b_correction2M1 + b_correction3M2),
-        multimodal_c0   = exp(b_Intercept + 0.5 * b_modality2),
-        multimodal_c1   = exp(b_Intercept + 0.5 * b_modality2 + b_correction2M1),
-        multimodal_c2   = exp(b_Intercept + 0.5 * b_modality2 + b_correction2M1 + b_correction3M2),
-        vocal_c0        = exp(b_Intercept + 0.5 * vocal_offset),
-        vocal_c1        = exp(b_Intercept + 0.5 * vocal_offset + b_correction2M1),
-        vocal_c2        = exp(b_Intercept + 0.5 * vocal_offset + b_correction2M1 + b_correction3M2),
-        gm_diff_c0_pct  = (gesture_c0    / multimodal_c0 - 1) * 100,
-        gm_diff_c1_pct  = (gesture_c1    / multimodal_c1 - 1) * 100,
-        gm_diff_c2_pct  = (gesture_c2    / multimodal_c2 - 1) * 100,
-        gv_diff_c0_pct  = (gesture_c0    / vocal_c0      - 1) * 100,
-        gv_diff_c1_pct  = (gesture_c1    / vocal_c1      - 1) * 100,
-        gv_diff_c2_pct  = (gesture_c2    / vocal_c2      - 1) * 100,
-        mv_diff_c0_pct  = (multimodal_c0 / vocal_c0      - 1) * 100,
-        mv_diff_c1_pct  = (multimodal_c1 / vocal_c1      - 1) * 100,
-        mv_diff_c2_pct  = (multimodal_c2 / vocal_c2      - 1) * 100
-      )
-    
-    cat("  Predicted effort (median [95% HDI]):\n")
-    print_result(mod_corr, "gesture_c0",    "  Gesture c0:")
-    print_result(mod_corr, "gesture_c1",    "  Gesture c1:")
-    print_result(mod_corr, "gesture_c2",    "  Gesture c2:")
-    print_result(mod_corr, "multimodal_c0", "  Multimodal c0:")
-    print_result(mod_corr, "multimodal_c1", "  Multimodal c1:")
-    print_result(mod_corr, "multimodal_c2", "  Multimodal c2:")
-    print_result(mod_corr, "vocal_c0",      "  Vocal c0:")
-    print_result(mod_corr, "vocal_c1",      "  Vocal c1:")
-    print_result(mod_corr, "vocal_c2",      "  Vocal c2:")
-    cat("\n  Gesture vs Multimodal at each step (%):\n")
-    print_result(mod_corr, "gm_diff_c0_pct", "  c0:", pct = TRUE)
-    print_result(mod_corr, "gm_diff_c1_pct", "  c1:", pct = TRUE)
-    print_result(mod_corr, "gm_diff_c2_pct", "  c2:", pct = TRUE)
-    cat("\n  Gesture vs Vocal at each step (%):\n")
-    print_result(mod_corr, "gv_diff_c0_pct", "  c0:", pct = TRUE)
-    print_result(mod_corr, "gv_diff_c1_pct", "  c1:", pct = TRUE)
-    print_result(mod_corr, "gv_diff_c2_pct", "  c2:", pct = TRUE)
-    cat("\n  Multimodal vs Vocal at each step (%):\n")
-    print_result(mod_corr, "mv_diff_c0_pct", "  c0:", pct = TRUE)
-    print_result(mod_corr, "mv_diff_c1_pct", "  c1:", pct = TRUE)
-    print_result(mod_corr, "mv_diff_c2_pct", "  c2:", pct = TRUE)
-    
-    traj_long <- mod_corr |>
-      select(.draw, gesture_c0:vocal_c2) |>
-      tidyr::pivot_longer(
-        cols     = gesture_c0:vocal_c2,
-        names_to = c("modality", "correction"), names_sep = "_",
-        values_to = "effort"
-      ) |>
-      mutate(
-        correction = factor(correction, levels = c("c0", "c1", "c2")),
-        modality   = factor(modality, levels = c("gesture", "multimodal", "vocal"))
-      )
-  }
-  
-  traj_summary <- traj_long |>
-    group_by(modality, correction) |>
-    median_hdi(effort)
-  
-  plots$modality_trajectory <- traj_summary |>
-    ggplot(aes(x = correction, y = effort,
-               colour = modality, group = modality)) +
-    geom_ribbon(aes(ymin = .lower, ymax = .upper, fill = modality),
-                alpha = 0.15, colour = NA) +
-    geom_line(linewidth = 1.2) +
-    geom_point(size = 3) +
-    scale_colour_manual(values = modality_colors, name = "Modality") +
-    scale_fill_manual(values = modality_colors, guide = "none") +
-    scale_y_log10(breaks = scales::pretty_breaks(n = 5)) +
-    theme_effort_plot() +
-    labs(title    = "Effort trajectory by modality",
-         subtitle = "Median ± 95% HDI | log y-axis",
-         x = "Correction phase", y = paste0(dv_label, " (log scale)"))
-  
-  # ── 3. BFI extraversion across corrections ─────────────────────────────────
-  cat("\n═══════════════════════════════════════════════\n")
-  cat("  3. BFI EXTRAVERSION ACROSS CORRECTIONS (±1 SD and ±2 SD)\n")
-  cat("═══════════════════════════════════════════════\n\n")
-  
-  bfi_draws <- model |>
-    spread_draws(b_Intercept, b_correction2M1, b_correction3M2,
-                 b_BFI_extra) |>
-    mutate(
-      vlow_c0         = exp(b_Intercept + (-2) * b_BFI_extra),
-      vlow_c1         = exp(b_Intercept + (-2) * b_BFI_extra + b_correction2M1),
-      vlow_c2         = exp(b_Intercept + (-2) * b_BFI_extra + b_correction2M1 + b_correction3M2),
-      low_c0          = exp(b_Intercept + (-1) * b_BFI_extra),
-      low_c1          = exp(b_Intercept + (-1) * b_BFI_extra + b_correction2M1),
-      low_c2          = exp(b_Intercept + (-1) * b_BFI_extra + b_correction2M1 + b_correction3M2),
-      avg_c0          = exp(b_Intercept),
-      avg_c1          = exp(b_Intercept + b_correction2M1),
-      avg_c2          = exp(b_Intercept + b_correction2M1 + b_correction3M2),
-      high_c0         = exp(b_Intercept +   1  * b_BFI_extra),
-      high_c1         = exp(b_Intercept +   1  * b_BFI_extra + b_correction2M1),
-      high_c2         = exp(b_Intercept +   1  * b_BFI_extra + b_correction2M1 + b_correction3M2),
-      vhigh_c0        = exp(b_Intercept +   2  * b_BFI_extra),
-      vhigh_c1        = exp(b_Intercept +   2  * b_BFI_extra + b_correction2M1),
-      vhigh_c2        = exp(b_Intercept +   2  * b_BFI_extra + b_correction2M1 + b_correction3M2),
-      diff_1sd_c0_pct = (low_c0  / high_c0  - 1) * 100,
-      diff_1sd_c1_pct = (low_c1  / high_c1  - 1) * 100,
-      diff_1sd_c2_pct = (low_c2  / high_c2  - 1) * 100,
-      diff_2sd_c0_pct = (vlow_c0 / vhigh_c0 - 1) * 100,
-      diff_2sd_c1_pct = (vlow_c1 / vhigh_c1 - 1) * 100,
-      diff_2sd_c2_pct = (vlow_c2 / vhigh_c2 - 1) * 100,
-      low_abs_c0_c1   = low_c1   - low_c0,
-      low_abs_c1_c2   = low_c2   - low_c1,
-      avg_abs_c0_c1   = avg_c1   - avg_c0,
-      avg_abs_c1_c2   = avg_c2   - avg_c1,
-      high_abs_c0_c1  = high_c1  - high_c0,
-      high_abs_c1_c2  = high_c2  - high_c1
-    )
-  
-  cat("  Predicted effort (median [95% HDI]):\n")
-  print_result(bfi_draws, "vlow_c0",  "  Very low BFI (-2SD) c0:")
-  print_result(bfi_draws, "vlow_c1",  "  Very low BFI (-2SD) c1:")
-  print_result(bfi_draws, "vlow_c2",  "  Very low BFI (-2SD) c2:")
-  print_result(bfi_draws, "low_c0",   "  Low BFI (-1SD) c0:")
-  print_result(bfi_draws, "low_c1",   "  Low BFI (-1SD) c1:")
-  print_result(bfi_draws, "low_c2",   "  Low BFI (-1SD) c2:")
-  print_result(bfi_draws, "avg_c0",   "  Average BFI c0:")
-  print_result(bfi_draws, "avg_c1",   "  Average BFI c1:")
-  print_result(bfi_draws, "avg_c2",   "  Average BFI c2:")
-  print_result(bfi_draws, "high_c0",  "  High BFI (+1SD) c0:")
-  print_result(bfi_draws, "high_c1",  "  High BFI (+1SD) c1:")
-  print_result(bfi_draws, "high_c2",  "  High BFI (+1SD) c2:")
-  print_result(bfi_draws, "vhigh_c0", "  Very high BFI (+2SD) c0:")
-  print_result(bfi_draws, "vhigh_c1", "  Very high BFI (+2SD) c1:")
-  print_result(bfi_draws, "vhigh_c2", "  Very high BFI (+2SD) c2:")
-  cat("\n  Absolute increase per step:\n")
-  print_result(bfi_draws, "low_abs_c0_c1",  "  Low BFI  c0→c1:")
-  print_result(bfi_draws, "low_abs_c1_c2",  "  Low BFI  c1→c2:")
-  print_result(bfi_draws, "avg_abs_c0_c1",  "  Avg BFI  c0→c1:")
-  print_result(bfi_draws, "avg_abs_c1_c2",  "  Avg BFI  c1→c2:")
-  print_result(bfi_draws, "high_abs_c0_c1", "  High BFI c0→c1:")
-  print_result(bfi_draws, "high_abs_c1_c2", "  High BFI c1→c2:")
-  cat("\n  ±1 SD difference at each step (%):\n")
-  print_result(bfi_draws, "diff_1sd_c0_pct", "  c0:", pct = TRUE)
-  print_result(bfi_draws, "diff_1sd_c1_pct", "  c1:", pct = TRUE)
-  print_result(bfi_draws, "diff_1sd_c2_pct", "  c2:", pct = TRUE)
-  cat("\n  ±2 SD difference at each step (%):\n")
-  print_result(bfi_draws, "diff_2sd_c0_pct", "  c0:", pct = TRUE)
-  print_result(bfi_draws, "diff_2sd_c1_pct", "  c1:", pct = TRUE)
-  print_result(bfi_draws, "diff_2sd_c2_pct", "  c2:", pct = TRUE)
-  
-  bfi_traj <- bfi_draws |>
-    select(.draw, vlow_c0:vhigh_c2) |>
-    tidyr::pivot_longer(
-      cols     = vlow_c0:vhigh_c2,
-      names_to = c("bfi", "correction"), names_sep = "_",
-      values_to = "effort"
-    ) |>
-    mutate(
-      correction = factor(correction, levels = c("c0", "c1", "c2")),
-      bfi        = factor(bfi,
-                          levels = c("vlow", "low", "avg", "high", "vhigh"),
-                          labels = c("−2 SD", "−1 SD", "Average", "+1 SD", "+2 SD"))
-    )
-  
-  bfi_summary <- bfi_traj |>
-    group_by(bfi, correction) |>
-    median_hdi(effort)
-  
-  plots$bfi_trajectory <- bfi_summary |>
-    ggplot(aes(x = correction, y = effort,
-               colour = bfi, group = bfi)) +
-    geom_ribbon(aes(ymin = .lower, ymax = .upper, fill = bfi),
-                alpha = 0.12, colour = NA) +
-    geom_line(linewidth = 1.2) +
-    geom_point(size = 3) +
-    scale_colour_manual(values = bfi_palette, name = "BFI Extraversion") +
-    scale_fill_manual(values = bfi_palette, guide = "none") +
-    scale_y_log10(breaks = scales::pretty_breaks(n = 5)) +
-    theme_effort_plot() +
-    labs(title    = "Effort by BFI Extraversion across corrections",
-         subtitle = "Median ± 95% HDI | log y-axis",
-         x = "Correction phase", y = paste0(dv_label, " (log scale)"))
-  
-  # ── 4. Low vs high effort performers ───────────────────────────────────────
-  cat("\n═══════════════════════════════════════════════\n")
-  cat("  4. EFFORT PERFORMERS ON CORRECTION (±1 SD and ±2 SD)\n")
-  cat("═══════════════════════════════════════════════\n\n")
-  
-  effort_draws <- model |>
-    spread_draws(b_Intercept, b_correction2M1, b_correction3M2,
-                 sd_pcn_ID__Intercept) |>
-    mutate(
-      vhigh_c0            = exp(b_Intercept + 2 * sd_pcn_ID__Intercept),
-      vhigh_c1            = exp(b_Intercept + 2 * sd_pcn_ID__Intercept + b_correction2M1),
-      vhigh_c2            = exp(b_Intercept + 2 * sd_pcn_ID__Intercept + b_correction2M1 + b_correction3M2),
-      high_c0             = exp(b_Intercept + sd_pcn_ID__Intercept),
-      high_c1             = exp(b_Intercept + sd_pcn_ID__Intercept + b_correction2M1),
-      high_c2             = exp(b_Intercept + sd_pcn_ID__Intercept + b_correction2M1 + b_correction3M2),
-      avg_c0              = exp(b_Intercept),
-      avg_c1              = exp(b_Intercept + b_correction2M1),
-      avg_c2              = exp(b_Intercept + b_correction2M1 + b_correction3M2),
-      low_c0              = exp(b_Intercept - sd_pcn_ID__Intercept),
-      low_c1              = exp(b_Intercept - sd_pcn_ID__Intercept + b_correction2M1),
-      low_c2              = exp(b_Intercept - sd_pcn_ID__Intercept + b_correction2M1 + b_correction3M2),
-      vlow_c0             = exp(b_Intercept - 2 * sd_pcn_ID__Intercept),
-      vlow_c1             = exp(b_Intercept - 2 * sd_pcn_ID__Intercept + b_correction2M1),
-      vlow_c2             = exp(b_Intercept - 2 * sd_pcn_ID__Intercept + b_correction2M1 + b_correction3M2),
-      vhigh_abs_c0_c1     = vhigh_c1 - vhigh_c0,
-      vhigh_abs_c1_c2     = vhigh_c2 - vhigh_c1,
-      high_abs_c0_c1      = high_c1  - high_c0,
-      high_abs_c1_c2      = high_c2  - high_c1,
-      avg_abs_c0_c1       = avg_c1   - avg_c0,
-      avg_abs_c1_c2       = avg_c2   - avg_c1,
-      low_abs_c0_c1       = low_c1   - low_c0,
-      low_abs_c1_c2       = low_c2   - low_c1,
-      vlow_abs_c0_c1      = vlow_c1  - vlow_c0,
-      vlow_abs_c1_c2      = vlow_c2  - vlow_c1,
-      vhigh_vs_vlow_c0_c1 = vhigh_abs_c0_c1 - vlow_abs_c0_c1,
-      vhigh_vs_vlow_c1_c2 = vhigh_abs_c1_c2 - vlow_abs_c1_c2
-    )
-  
-  cat("  Predicted effort at each step (median [95% HDI]):\n")
-  print_result(effort_draws, "vlow_c0",  "  Very low (-2SD) c0:")
-  print_result(effort_draws, "vlow_c1",  "  Very low (-2SD) c1:")
-  print_result(effort_draws, "vlow_c2",  "  Very low (-2SD) c2:")
-  print_result(effort_draws, "low_c0",   "  Low (-1SD) c0:")
-  print_result(effort_draws, "low_c1",   "  Low (-1SD) c1:")
-  print_result(effort_draws, "low_c2",   "  Low (-1SD) c2:")
-  print_result(effort_draws, "avg_c0",   "  Average c0:")
-  print_result(effort_draws, "avg_c1",   "  Average c1:")
-  print_result(effort_draws, "avg_c2",   "  Average c2:")
-  print_result(effort_draws, "high_c0",  "  High (+1SD) c0:")
-  print_result(effort_draws, "high_c1",  "  High (+1SD) c1:")
-  print_result(effort_draws, "high_c2",  "  High (+1SD) c2:")
-  print_result(effort_draws, "vhigh_c0", "  Very high (+2SD) c0:")
-  print_result(effort_draws, "vhigh_c1", "  Very high (+2SD) c1:")
-  print_result(effort_draws, "vhigh_c2", "  Very high (+2SD) c2:")
-  cat("\n  Absolute increase per step:\n")
-  print_result(effort_draws, "vlow_abs_c0_c1",  "  Very low  c0→c1:")
-  print_result(effort_draws, "vlow_abs_c1_c2",  "  Very low  c1→c2:")
-  print_result(effort_draws, "low_abs_c0_c1",   "  Low       c0→c1:")
-  print_result(effort_draws, "low_abs_c1_c2",   "  Low       c1→c2:")
-  print_result(effort_draws, "avg_abs_c0_c1",   "  Avg       c0→c1:")
-  print_result(effort_draws, "avg_abs_c1_c2",   "  Avg       c1→c2:")
-  print_result(effort_draws, "high_abs_c0_c1",  "  High      c0→c1:")
-  print_result(effort_draws, "high_abs_c1_c2",  "  High      c1→c2:")
-  print_result(effort_draws, "vhigh_abs_c0_c1", "  Very high c0→c1:")
-  print_result(effort_draws, "vhigh_abs_c1_c2", "  Very high c1→c2:")
-  cat("\n  Extra absolute effort very high vs very low performer:\n")
-  print_result(effort_draws, "vhigh_vs_vlow_c0_c1", "  c0→c1:")
-  print_result(effort_draws, "vhigh_vs_vlow_c1_c2", "  c1→c2:")
-  
-  effort_traj <- effort_draws |>
-    select(.draw, vhigh_c0:vlow_c2) |>
-    tidyr::pivot_longer(
-      cols     = vhigh_c0:vlow_c2,
-      names_to = c("group", "correction"), names_sep = "_",
-      values_to = "effort"
-    ) |>
-    mutate(
-      correction = factor(correction, levels = c("c0", "c1", "c2")),
-      group      = factor(group,
-                          levels = c("vlow", "low", "avg", "high", "vhigh"),
-                          labels = c("−2 SD", "−1 SD", "Average", "+1 SD", "+2 SD"))
-    )
-  
-  effort_summary <- effort_traj |>
-    group_by(group, correction) |>
-    median_hdi(effort)
-  
-  plots$effort_group_trajectory <- effort_summary |>
-    ggplot(aes(x = correction, y = effort,
-               colour = group, group = group)) +
-    geom_ribbon(aes(ymin = .lower, ymax = .upper, fill = group),
-                alpha = 0.12, colour = NA) +
-    geom_line(linewidth = 1.2) +
-    geom_point(size = 3) +
-    scale_colour_manual(values = performer_palette, name = "Performer") +
-    scale_fill_manual(values = performer_palette, guide = "none") +
-    scale_y_log10(breaks = scales::pretty_breaks(n = 5)) +
-    theme_effort_plot() +
-    labs(title    = "Effort trajectory by performer level",
-         subtitle = "Median ± 95% HDI | ±1/2 SD participant intercept | log y-axis",
-         x = "Correction phase", y = paste0(dv_label, " (log scale)"))
-  
-  # ── 5. Variance decomposition ───────────────────────────────────────────────
-  cat("\n═══════════════════════════════════════════════\n")
-  cat("  5. VARIANCE DECOMPOSITION\n")
-  cat("═══════════════════════════════════════════════\n\n")
-  
-  var_draws <- model |>
-    spread_draws(sd_pcn_ID__Intercept,
-                 sd_concept__Intercept,
-                 sd_SessionID__Intercept,
-                 sigma) |>
-    mutate(
-      var_participant = sd_pcn_ID__Intercept^2,
-      var_concept     = sd_concept__Intercept^2,
-      var_dyad        = sd_SessionID__Intercept^2,
-      var_residual    = sigma^2,
-      var_total       = var_participant + var_concept + var_dyad + var_residual,
-      pct_participant = var_participant / var_total * 100,
-      pct_concept     = var_concept     / var_total * 100,
-      pct_dyad        = var_dyad        / var_total * 100,
-      pct_residual    = var_residual    / var_total * 100
-    )
-  
-  purrr::walk(
-    list(
-      list(var = "pct_participant", label = "Participant"),
-      list(var = "pct_concept",     label = "Concept    "),
-      list(var = "pct_dyad",        label = "Dyad       "),
-      list(var = "pct_residual",    label = "Residual   ")
-    ),
-    function(x) print_result(var_draws, x$var, x$label, pct = TRUE)
-  )
-  
-  var_long <- var_draws |>
-    select(.draw, pct_participant, pct_concept, pct_dyad, pct_residual) |>
-    tidyr::pivot_longer(
-      cols     = pct_participant:pct_residual,
-      names_to = "component", values_to = "pct"
-    ) |>
-    mutate(component = factor(component,
-                              levels = c("pct_concept", "pct_dyad", "pct_participant", "pct_residual"),
-                              labels = c("Concept", "Dyad", "Participant", "Residual")
-    ))
-  
-  plots$variance_decomp <- var_long |>
-    ggplot(aes(x = pct, y = component, fill = component)) +
-    stat_halfeye(
-      .width = c(0.89, 0.95), point_interval = median_hdi,
-      normalize = "groups", scale = 0.7, alpha = 0.85
-    ) +
-    geom_vline(xintercept = 0, linetype = "dashed",
-               colour = "grey20", linewidth = 0.8) +
-    scale_fill_manual(
-      values = c("Concept"     = "#9C27B0",
-                 "Dyad"        = "#E91E63",
-                 "Participant" = "#FF9800",
-                 "Residual"    = "#607D8B"),
-      guide = "none"
-    ) +
-    scale_x_continuous(limits = c(0, NA),
-                       breaks = scales::pretty_breaks(n = 5),
-                       labels = function(x) paste0(x, "%")) +
-    theme_effort_plot() +
-    labs(title    = "Variance decomposition",
-         subtitle = "Posterior of % variance by grouping level",
-         x = "% of total variance", y = NULL)
-  
-  # ── Assemble grid ───────────────────────────────────────────────────────────
-  
-  quarto_theme <- theme(
-    plot.title    = element_text(size = 11, face = "bold"),
-    plot.subtitle = element_text(size = 9,  colour = "grey40"),
-    axis.title    = element_text(size = 9),
-    axis.text     = element_text(size = 8),
-    legend.title  = element_text(size = 9),
-    legend.text   = element_text(size = 8)
-  )
-  
-  plots <- lapply(plots, function(p) p + quarto_theme)
-  
-  top_row    <- plots$modality_diff    | plots$modality_trajectory
-  middle_row <- plots$bfi_trajectory   | plots$effort_group_trajectory
-  bottom_row <- plot_spacer() | plots$variance_decomp | plot_spacer()
-  
-  final <- (top_row / middle_row / bottom_row) +
-    plot_layout(heights = c(1, 1, 0.8)) +
-    plot_annotation(
-      title    = paste0("Targeted comparisons (BFI) — ", dv_label),
-      subtitle = "Median ± 89% and 95% HDI",
-      theme    = theme(
-        plot.title    = element_text(size = 13, face = "bold"),
-        plot.subtitle = element_text(size = 10, colour = "grey40")
-      )
-    )
-  
-  print(final)
-  
-  ggsave(paste0("plots/targeted_comparisons_bfi_",
-                gsub("[^a-zA-Z0-9]", "_", dv_label), ".png"),
-         final, width = 14, height = 12, dpi = 300, bg = "white")
-  
-  invisible(plots)
-}
 
 # ══════════════════════════════════════════════════════════════════════════════
 #  log_to_pct()
@@ -3327,10 +2828,13 @@ plot_correction_grid <- function(model_grid, data, dv_vars) {
       ),
       caption  = "Correction phase",
       theme    = theme(
-        plot.title    = element_text(size = 14, face = "bold"),
-        plot.subtitle = element_text(size = 11, colour = "grey40"),
+        plot.title    = element_text(size = 14, face = "bold",
+                                     margin = margin(b = 6)),
+        plot.subtitle = element_text(size = 11, colour = "grey40",
+                                     margin = margin(b = 8)),
         plot.caption  = element_text(size = 11, hjust = 0.5,
-                                     margin = margin(t = 8))
+                                     margin = margin(t = 8)),
+        plot.margin   = margin(14, 18, 10, 12)
       )
     )
 }
@@ -3352,7 +2856,7 @@ plot_correction_grid <- function(model_grid, data, dv_vars) {
 # ══════════════════════════════════════════════════════════════════════════════
 
 plot_correction_posteriors_grid <- function(model_grid) {
-
+  
   all_draws <- purrr::imap_dfr(model_grid, function(entry, i) {
     entry$model |>
       tidybayes::gather_draws(`b_correction.*`, regex = TRUE) |>
@@ -3366,10 +2870,10 @@ plot_correction_posteriors_grid <- function(model_grid) {
         col    = ((i - 1) %% 3) + 1
       )
   })
-
+  
   x_q      <- quantile(all_draws$.value, c(0.001, 0.999))
   x_limits <- c(floor(x_q[1] * 10) / 10, ceiling(x_q[2] * 10) / 10)
-
+  
   # y-axis order: all 6 DVs stacked, grouped by feature
   y_order <- c(
     "arm_moment_sum_change_peak_mean",
@@ -3379,26 +2883,26 @@ plot_correction_posteriors_grid <- function(model_grid) {
     "COPc_peak_mean",
     "COPc_integral"
   )
-
+  
   y_labels <- c(
-    "arm_moment_sum_change_peak_mean" = "Arm torque\n(instantaneous)",
-    "arm_moment_sum_change_integral"  = "Arm torque\n(cumulative)",
-    "envelope_norm_peak_mean"         = "Envelope\n(instantaneous)",
-    "envelope_norm_integral"          = "Envelope\n(cumulative)",
-    "COPc_peak_mean"                  = "COP\n(instantaneous)",
-    "COPc_integral"                   = "COP\n(cumulative)"
+    "arm_moment_sum_change_peak_mean" = "Arm torque change\n(instantaneous)",
+    "arm_moment_sum_change_integral"  = "Arm torque change\n(cumulative)",
+    "envelope_norm_peak_mean"         = "Amplitude envelope\n(instantaneous)",
+    "envelope_norm_integral"          = "Amplitude envelope\n(cumulative)",
+    "COPc_peak_mean"                  = "COPc\n(instantaneous)",
+    "COPc_integral"                   = "COPc\n(cumulative)"
   )
-
+  
   make_panel <- function(contrast, show_x = TRUE) {
-
+    
     panel_draws <- all_draws |>
       dplyr::filter(.variable == contrast) |>
       dplyr::mutate(
         dv_col = factor(dv_col, levels = rev(y_order))
       )
-
+    
     fill_vals <- dv_colors[y_order]
-
+    
     panel_draws |>
       ggplot(aes(x = .value, y = dv_col, fill = dv_col)) +
       ggdist::stat_halfeye(
@@ -3422,7 +2926,7 @@ plot_correction_posteriors_grid <- function(model_grid) {
       theme(
         axis.text.y = element_text(size = 10),
         axis.text.x = if (show_x) element_text(size = 9, face = "bold")
-                      else element_blank(),
+        else element_blank(),
         axis.ticks.x = if (show_x) element_line() else element_blank(),
         plot.title  = element_text(size = 11, face = "bold", hjust = 0.5)
       ) +
@@ -3432,27 +2936,29 @@ plot_correction_posteriors_grid <- function(model_grid) {
         y     = NULL
       )
   }
-
+  
   p1 <- make_panel("c0 -> c1", show_x = FALSE)
   p2 <- make_panel("c1 -> c2", show_x = TRUE)
-
-  final <- (p1 / p2) +
-    patchwork::plot_layout(heights = c(1, 1)) +
+  
+  final <- (p1 / p2 / add_dv_effort_legend()) +
+    patchwork::plot_layout(heights = c(1, 1, 0.15)) +
     patchwork::plot_annotation(
       title    = "Posterior distributions — correction contrasts",
       subtitle = "Median ± 89% and 95% HDI | dashed line = 0",
       theme    = theme(
-        plot.title    = element_text(size = 14, face = "bold"),
-        plot.subtitle = element_text(size = 11, colour = "grey40")
+        plot.title    = element_text(size = 14, face = "bold",
+                                     margin = margin(b = 6)),
+        plot.subtitle = element_text(size = 11, colour = "grey40",
+                                     margin = margin(b = 8)),
+        plot.margin   = margin(14, 18, 10, 12)
       )
     )
-
-  final & theme(plot.margin = margin(2, 4, 2, 4))
+  
+  final & theme(plot.margin = margin(4, 6, 4, 4))
 }
 
 
 #### Alternative #####
-
 plot_correction_posteriors_grid2 <- function(model_grid, layout = c("side", "stack")) {
   
   layout <- match.arg(layout)
@@ -3484,12 +2990,12 @@ plot_correction_posteriors_grid2 <- function(model_grid, layout = c("side", "sta
   )
   
   y_labels <- c(
-    "arm_moment_sum_change_integral"  = "Arm torque\n(cumulative)",
-    "arm_moment_sum_change_peak_mean" = "Arm torque\n(instantaneous)",
-    "envelope_norm_integral"          = "Envelope\n(cumulative)",
-    "envelope_norm_peak_mean"         = "Envelope\n(instantaneous)",
-    "COPc_integral"                   = "COP\n(cumulative)",
-    "COPc_peak_mean"                  = "COP\n(instantaneous)"
+    "arm_moment_sum_change_integral"  = "Arm torque change\n(cumulative)",
+    "arm_moment_sum_change_peak_mean" = "Arm torque change\n(instantaneous)",
+    "envelope_norm_integral"          = "Amplitude envelope\n(cumulative)",
+    "envelope_norm_peak_mean"         = "Amplitude envelope\n(instantaneous)",
+    "COPc_integral"                   = "COPc\n(cumulative)",
+    "COPc_peak_mean"                  = "COPc\n(instantaneous)"
   )
   
   make_panel <- function(contrast, show_x = TRUE, show_y = TRUE) {
@@ -3526,63 +3032,48 @@ plot_correction_posteriors_grid2 <- function(model_grid, layout = c("side", "sta
         axis.text.y   = element_blank(),
         axis.ticks.y  = element_blank(),
         axis.title.y  = element_blank(),
-        axis.text.x   = element_text(size = 13, face = "bold"),
-        axis.ticks.x  = element_line(colour = "grey30", linewidth = 0.5),
-        axis.title.x  = element_blank(),
-        plot.title    = element_text(size = 13, face = "bold", hjust = 0.5)
+        axis.text.x   = if (show_x) element_text(size = 13, face = "bold")
+        else element_blank(),
+        axis.ticks.x  = if (show_x) element_line(colour = "grey30", linewidth = 0.5)
+        else element_blank(),
+        axis.title.x  = if (show_x) element_text(size = 13, face = "bold",
+                                                 colour = "grey15",
+                                                 margin = margin(t = 6))
+        else element_blank(),
+        plot.title    = .title_element(size = 13)
       ) +
       labs(
         title = contrast,
-        x     = NULL,
+        x     = if (show_x) "Estimate of effort increase (log scale)" else NULL,
         y     = NULL
       )
   }
   
   if (layout == "side") {
-    p1 <- make_panel("first correction", show_x = TRUE, show_y = TRUE)
+    # both panels show x-axis; label only on the right panel to avoid duplication
+    p1 <- make_panel("first correction",  show_x = TRUE, show_y = TRUE)
     p2 <- make_panel("second correction", show_x = TRUE, show_y = FALSE)
     assembled <- (p1 | p2) +
       patchwork::plot_layout(widths = c(1, 1))
   } else {
-    p1 <- make_panel("first correction", show_x = FALSE, show_y = TRUE)
+    # only the bottom panel shows x-axis and label
+    p1 <- make_panel("first correction",  show_x = FALSE, show_y = TRUE)
     p2 <- make_panel("second correction", show_x = TRUE,  show_y = TRUE)
     assembled <- (p1 / p2) +
       patchwork::plot_layout(heights = c(1, 1))
   }
   
-  final <- assembled +
+  final <- (assembled / add_dv_effort_legend()) +
+    patchwork::plot_layout(heights = c(1, 0.15)) +
     patchwork::plot_annotation(
-      title    = "Posterior distributions — correction contrasts",
-      subtitle = "Median ± 89% and 95% HDI | dashed line = 0",
-      caption  = "Estimate of effort increase (log scale)",
-      theme    = theme(
-        plot.title    = element_text(size = 14, face = "bold"),
-        plot.subtitle = element_text(size = 11, colour = "grey40"),
-        plot.caption  = element_text(size = 13, hjust = 0.5,
-                                     face = "bold", colour = "grey15",
-                                     margin = margin(t = 6))
-      )
+      title    = "Posterior distributions \u2014 correction contrasts",
+      subtitle = "Median \u00b1 89% and 95% HDI | dashed line = 0",
+      theme    = .annotation_theme()
     )
   
-  final & theme(plot.margin = margin(2, 4, 2, 4))
+  final & theme(plot.margin = margin(4, 6, 4, 4))
 }
-# ══════════════════════════════════════════════════════════════════════════════
-#  plot_fixed_effects_grid()
-#
-#  Produces a 2 × 3 patchwork of fixed-effects posterior panels, one per DV,
-#  showing all non-intercept / non-correction parameters (modality contrasts +
-#  covariates). Modality coefficients use sum-coding reconstruction; the
-#  implied (omitted) level is shown with a dashed slab. X-axis limits are
-#  shared within columns.
-#
-#  Arguments
-#  ─────────────────────────────────────────────────────────────────────────────
-#  model_grid   Same list structure as plot_correction_grid(); each entry
-#               must also include $modality_map (list mapping "modality1",
-#               "modality2", "implied" to readable labels).
-#
-#  Returns: a patchwork object (not saved; caller must ggsave if needed).
-# ══════════════════════════════════════════════════════════════════════════════
+
 plot_fixed_effects_grid <- function(model_grid) {
   
   nonmod_map <- tibble::tribble(
@@ -3613,11 +3104,11 @@ plot_fixed_effects_grid <- function(model_grid) {
       tidybayes::gather_draws(`b_.*`, regex = TRUE) |>
       dplyr::filter(!grepl("Intercept|correction", .variable))
     
-    mod_map  <- entry$modality_map
-    has_two  <- "modality2" %in% names(mod_map)
-    
+    mod_map    <- entry$modality_map
+    has_two    <- "modality2" %in% names(mod_map)
     mod1_label <- mod_map[["modality1"]]
-    raw_draws  <- raw_draws |>
+    
+    raw_draws <- raw_draws |>
       dplyr::mutate(.variable = ifelse(.variable == "b_modality1",
                                        paste0("b_mod_", mod1_label), .variable))
     if (has_two) {
@@ -3632,8 +3123,9 @@ plot_fixed_effects_grid <- function(model_grid) {
       implied_draws <- raw_draws |>
         dplyr::filter(.variable %in% paste0("b_mod_", c(mod1_label, mod2_label))) |>
         dplyr::select(.chain, .iteration, .draw, .variable, .value) |>
-        tidyr::pivot_wider(id_cols = c(.chain, .iteration, .draw),
-                           names_from = .variable, values_from = .value) |>
+        tidyr::pivot_wider(id_cols     = c(.chain, .iteration, .draw),
+                           names_from  = .variable,
+                           values_from = .value) |>
         dplyr::mutate(
           .value    = -(!!rlang::sym(paste0("b_mod_", mod1_label)) +
                           !!rlang::sym(paste0("b_mod_", mod2_label))),
@@ -3643,7 +3135,7 @@ plot_fixed_effects_grid <- function(model_grid) {
     } else {
       implied_draws <- raw_draws |>
         dplyr::filter(.variable == paste0("b_mod_", mod1_label)) |>
-        dplyr::mutate(.value = -.value,
+        dplyr::mutate(.value    = -.value,
                       .variable = paste0("b_mod_implied_", impl_label))
     }
     
@@ -3654,17 +3146,20 @@ plot_fixed_effects_grid <- function(model_grid) {
           !is.na(label)                        ~ label,
           grepl("^b_mod_implied_", .variable)  ~ sub("^b_mod_implied_", "", .variable),
           grepl("^b_mod_", .variable)          ~ sub("^b_mod_", "", .variable),
-          TRUE ~ NA_character_
+          TRUE                                 ~ NA_character_
         ),
         implied = grepl("implied", .variable)
       ) |>
       dplyr::filter(!is.na(label))
     
     raw_draws |>
-      dplyr::mutate(dv     = entry$label,
-                    dv_col = entry$dv_col,
-                    row    = entry$row,
-                    col    = ((i - 1) %% 3) + 1)
+      dplyr::mutate(
+        dv          = entry$label,   # e.g. "Arm Torque\n(integral)"
+        dv_col      = entry$dv_col,
+        entry_label = entry$label,   # kept separately for panel title
+        row         = entry$row,
+        col         = ((i - 1) %% 3) + 1
+      )
   })
   
   x_limits_by_col <- all_draws_fe |>
@@ -3673,11 +3168,10 @@ plot_fixed_effects_grid <- function(model_grid) {
                      x_max = ceiling(max(.value) * 10) / 10,
                      .groups = "drop")
   
-  make_panel_fe <- function(draws_sub, dv_col, show_y = TRUE,
-                            show_x = TRUE, x_limits = NULL) {
+  make_panel_fe <- function(draws_sub, dv_col, panel_title,
+                            show_y = TRUE, show_x = TRUE, x_limits = NULL) {
     
     accent <- dv_colors[dv_col]
-    dv_lab <- dv_labels_map[dv_col]
     
     draws_implied <- draws_sub |> dplyr::filter(isTRUE(implied))
     draws_direct  <- draws_sub |> dplyr::filter(!isTRUE(implied))
@@ -3713,19 +3207,24 @@ plot_fixed_effects_grid <- function(model_grid) {
                  colour = "grey20", linewidth = 0.8) +
       scale_x_continuous(limits = x_limits,
                          breaks = scales::pretty_breaks(n = 4)) +
-      scale_fill_manual(values = param_colours, guide = "none",
+      scale_fill_manual(values   = param_colours,
+                        guide    = "none",
                         na.value = "grey80") +
       theme_effort_plot(base_size = 12) +
       theme(
         axis.text.y  = if (show_y) element_text(size = 10) else element_blank(),
         axis.ticks.y = if (show_y) element_line() else element_blank(),
-        axis.text.x  = if (show_x) element_text(size = 9, face = "bold") else element_blank(),
-        plot.title   = element_text(size = 10, face = "bold", hjust = 0.5,
-                                    colour = accent)
+        axis.text.x  = if (show_x) element_text(size = 9, face = "bold")
+        else element_blank(),
+        axis.ticks.x = if (show_x) element_line() else element_blank(),
+        # title coloured by DV so it's immediately identifiable
+        plot.title   = .title_element(size = 11, colour = accent)
       ) +
-      labs(title = dv_lab,
-           x     = if (show_x) "Estimate (log scale)" else NULL,
-           y     = NULL)
+      labs(
+        title = panel_title,   # ← entry$label, e.g. "Arm Torque\n(integral)"
+        x     = if (show_x) "Estimate (log scale)" else NULL,
+        y     = NULL
+      )
   }
   
   plots_fe <- purrr::imap(model_grid, function(entry, i) {
@@ -3735,10 +3234,14 @@ plot_fixed_effects_grid <- function(model_grid) {
       dplyr::filter(col == col_idx) |>
       dplyr::reframe(lims = c(x_min, x_max)) |>
       dplyr::pull(lims)
-    make_panel_fe(draws_sub, entry$dv_col,
-                  show_y = col_idx == 1,
-                  show_x = entry$row == 2,
-                  x_limits = x_lim)
+    make_panel_fe(
+      draws_sub   = draws_sub,
+      dv_col      = entry$dv_col,
+      panel_title = entry$label,          # ← use entry$label, not dv_labels_map
+      show_y      = col_idx == 1,
+      show_x      = entry$row == 2,
+      x_limits    = x_lim
+    )
   })
   
   row1_fe <- plots_fe[[1]] | plots_fe[[2]] | plots_fe[[3]]
@@ -3747,17 +3250,10 @@ plot_fixed_effects_grid <- function(model_grid) {
   (row1_fe / row2_fe) +
     patchwork::plot_annotation(
       title    = "Posterior distributions \u2014 fixed effects",
-      subtitle = paste("Median \u00b1 89% and 95% HDI | dashed = 0 | empty row = not in model",
-                       "| title color = DV identity"),
-      theme    = theme(
-        plot.title    = element_text(size = 14, face = "bold"),
-        plot.subtitle = element_text(size = 11, colour = "grey40")
-      )
+      subtitle = "Median \u00b1 89% and 95% HDI | dashed = 0 | dashed slab = implied modality level | empty row = not in model",
+      theme    = .annotation_theme()
     )
 }
-
-
-
 
 # ============================================================
 # get_modality_contrasts()
@@ -3914,29 +3410,45 @@ get_modality_contrasts <- function(
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-#  plot_correction_by_effort()
-#
-#  For each model in models_e1, computes predicted effort trajectories across
-#  corrections (c0–c2) stratified by first-trial / baseline effort level
-#  (±1 SD and ±2 SD of the participant-level predictor). Produces two panels
-#  per DV: (1) effort trajectory lines and (2) posterior of the c0→c1
-#  correction effect as % change, assembled into a single patchwork and saved.
-#
-#  Arguments
-#  ─────────────────────────────────────────────────────────────────────────────
-#  models_e1   Named list of fitted brmsfit objects, each with an interaction
-#              between correction phase and a first-trial / baseline effort
-#              predictor (auto-detected by regex).
-#  dv_labels   Optional named vector of readable labels (falls back to names).
-#  type        "two_modality" or "three_modality" (currently unused internally
-#              but forwarded for consistency).
-#
-#  Returns invisibly: named list of plot pairs (traj / corr) per model.
+#  targeted_comparisons_bfi()
 # ══════════════════════════════════════════════════════════════════════════════
-plot_correction_by_effort <- function(models_e1, dv_labels = NULL,
-                                      type = c("two_modality", "three_modality")) {
+targeted_comparisons_bfi <- function(model,
+                                     type = c("two_modality", "three_modality"),
+                                     modalities = c("gesture", "multimodal"),
+                                     dv_label = "Effort") {
   
   type <- match.arg(type)
+  
+  # ── Helper: print formatted result ─────────────────────────────────────────
+  print_result <- function(draws, var, label, pct = FALSE, digits = 1) {
+    res  <- draws |> median_hdi(!!sym(var))
+    est  <- res[[var]]
+    lo   <- res$.lower
+    hi   <- res$.upper
+    cred <- lo > 0 | hi < 0
+    if (pct) {
+      cat(sprintf("  %-45s %+.1f%% [%+.1f%%, %+.1f%%]%s\n",
+                  label, est, lo, hi, ifelse(cred, "  *", "")))
+    } else {
+      cat(sprintf("  %-45s %.3f [%.3f, %.3f]%s\n",
+                  label, est, lo, hi, ifelse(cred, "  *", "")))
+    }
+  }
+  
+  all_modality_colors <- c(
+    "gesture"    = "#2196F3",
+    "vocal"      = "#FF9800",
+    "multimodal" = "#4CAF50"
+  )
+  modality_colors <- all_modality_colors[modalities]
+  
+  bfi_palette <- c(
+    "−2 SD"   = "#1A237E",
+    "−1 SD"   = "#3949AB",
+    "Average" = "#795548",
+    "+1 SD"   = "#8D6E63",
+    "+2 SD"   = "#4E342E"
+  )
   
   performer_palette <- c(
     "−2 SD"   = "#37474F",
@@ -3944,6 +3456,559 @@ plot_correction_by_effort <- function(models_e1, dv_labels = NULL,
     "Average" = "#000000",
     "+1 SD"   = "#E53935",
     "+2 SD"   = "#B71C1C"
+  )
+  
+  plots <- list()
+  
+  # ── 1. Direct modality comparisons ─────────────────────────────────────────
+  cat("═══════════════════════════════════════════════\n")
+  cat("  1. MODALITY COMPARISONS (main effect)\n")
+  cat("═══════════════════════════════════════════════\n\n")
+  
+  if (type == "two_modality") {
+    
+    diff_draws <- model |>
+      spread_draws(b_modality1) |>
+      mutate(
+        diff     = 2 * b_modality1,
+        diff_pct = (exp(diff) - 1) * 100
+      )
+    
+    label_a <- modalities[1]
+    label_b <- modalities[2]
+    
+    print_result(diff_draws, "diff",     paste0(label_a, " vs ", label_b, " (log scale):"))
+    print_result(diff_draws, "diff_pct", paste0(label_a, " vs ", label_b, " (%):"), pct = TRUE)
+    
+    plots$modality_diff <- diff_draws |>
+      ggplot(aes(x = diff_pct, fill = after_stat(x > 0))) +
+      stat_halfeye(
+        .width = c(0.89, 0.95), point_interval = median_hdi,
+        normalize = "none", alpha = 0.85
+      ) +.annotation_theme <- function(title_size = 14, subtitle_size = 11) {
+        theme(
+          plot.title    = .title_element(size = title_size),
+          plot.subtitle = .subtitle_element(size = subtitle_size),
+          plot.margin   = margin(14, 40, 10, 12)  # ← right margin 40 instead of 18
+        )
+      }
+      geom_vline(xintercept = 0, linetype = "dashed",
+                 colour = "grey20", linewidth = 0.8) +
+      scale_fill_manual(
+        values = c("FALSE" = modality_colors[label_b],
+                   "TRUE"  = modality_colors[label_a]),
+        guide  = "none"
+      ) +
+      theme_effort_plot() +
+      labs(title    = paste0(label_a, " vs ", label_b),
+           subtitle = "Posterior of % difference",
+           x = "% difference", y = NULL)
+    
+  } else {
+    
+    diff_draws <- model |>
+      spread_draws(b_modality1, b_modality2) |>
+      mutate(
+        vocal_offset          = -(b_modality1 + b_modality2),
+        gesture_vs_multimodal = (exp(b_modality1 - b_modality2)  - 1) * 100,
+        gesture_vs_vocal      = (exp(b_modality1 - vocal_offset) - 1) * 100,
+        multimodal_vs_vocal   = (exp(b_modality2 - vocal_offset) - 1) * 100
+      )
+    
+    print_result(diff_draws, "gesture_vs_multimodal", "Gesture vs Multimodal (%):", pct = TRUE)
+    print_result(diff_draws, "gesture_vs_vocal",      "Gesture vs Vocal (%):",      pct = TRUE)
+    print_result(diff_draws, "multimodal_vs_vocal",   "Multimodal vs Vocal (%):",   pct = TRUE)
+    
+    plots$modality_diff <- diff_draws |>
+      select(.draw, gesture_vs_multimodal, gesture_vs_vocal, multimodal_vs_vocal) |>
+      tidyr::pivot_longer(
+        cols     = c(gesture_vs_multimodal, gesture_vs_vocal, multimodal_vs_vocal),
+        names_to = "comparison", values_to = "pct_diff"
+      ) |>
+      mutate(comparison = factor(comparison,
+                                 levels = c("gesture_vs_vocal", "multimodal_vs_vocal",
+                                            "gesture_vs_multimodal"),
+                                 labels = c("Gesture vs Vocal", "Multimodal vs Vocal",
+                                            "Gesture vs Multimodal"))) |>
+      ggplot(aes(x = pct_diff, y = comparison, fill = comparison)) +
+      stat_halfeye(
+        .width = c(0.89, 0.95), point_interval = median_hdi,
+        normalize = "groups", scale = 0.7, alpha = 0.85
+      ) +
+      geom_vline(xintercept = 0, linetype = "dashed",
+                 colour = "grey20", linewidth = 0.8) +
+      scale_fill_manual(
+        values = c("Gesture vs Vocal"      = "#2196F3",
+                   "Multimodal vs Vocal"   = "#4CAF50",
+                   "Gesture vs Multimodal" = "#9C27B0"),
+        guide = "none"
+      ) +
+      theme_effort_plot() +
+      labs(title    = "Pairwise modality comparisons",
+           subtitle = "Posterior of % differences",
+           x = "% difference", y = NULL)
+  }
+  
+  # ── 2. Effort trajectory by modality across corrections ────────────────────
+  cat("\n═══════════════════════════════════════════════\n")
+  cat("  2. EFFORT BY MODALITY ACROSS CORRECTIONS\n")
+  cat("═══════════════════════════════════════════════\n\n")
+  
+  if (type == "two_modality") {
+    
+    mod_a <- modalities[1]
+    mod_b <- modalities[2]
+    
+    mod_corr <- model |>
+      spread_draws(b_Intercept, b_correction2M1, b_correction3M2, b_modality1) |>
+      mutate(
+        a_c0 = exp(b_Intercept + 0.5 * b_modality1),
+        a_c1 = exp(b_Intercept + 0.5 * b_modality1 + b_correction2M1),
+        a_c2 = exp(b_Intercept + 0.5 * b_modality1 + b_correction2M1 + b_correction3M2),
+        b_c0 = exp(b_Intercept - 0.5 * b_modality1),
+        b_c1 = exp(b_Intercept - 0.5 * b_modality1 + b_correction2M1),
+        b_c2 = exp(b_Intercept - 0.5 * b_modality1 + b_correction2M1 + b_correction3M2),
+        a_abs_c0_c1 = a_c1 - a_c0,
+        a_abs_c1_c2 = a_c2 - a_c1,
+        b_abs_c0_c1 = b_c1 - b_c0,
+        b_abs_c1_c2 = b_c2 - b_c1,
+        diff_c0_pct = (a_c0 / b_c0 - 1) * 100,
+        diff_c1_pct = (a_c1 / b_c1 - 1) * 100,
+        diff_c2_pct = (a_c2 / b_c2 - 1) * 100
+      )
+    
+    cat("  Predicted effort (median [95% HDI]):\n")
+    print_result(mod_corr, "a_c0", paste0("  ", mod_a, " c0:"))
+    print_result(mod_corr, "a_c1", paste0("  ", mod_a, " c1:"))
+    print_result(mod_corr, "a_c2", paste0("  ", mod_a, " c2:"))
+    print_result(mod_corr, "b_c0", paste0("  ", mod_b, " c0:"))
+    print_result(mod_corr, "b_c1", paste0("  ", mod_b, " c1:"))
+    print_result(mod_corr, "b_c2", paste0("  ", mod_b, " c2:"))
+    cat("\n  Absolute increase per step:\n")
+    print_result(mod_corr, "a_abs_c0_c1", paste0("  ", mod_a, " c0\u2192c1:"))
+    print_result(mod_corr, "a_abs_c1_c2", paste0("  ", mod_a, " c1\u2192c2:"))
+    print_result(mod_corr, "b_abs_c0_c1", paste0("  ", mod_b, " c0\u2192c1:"))
+    print_result(mod_corr, "b_abs_c1_c2", paste0("  ", mod_b, " c1\u2192c2:"))
+    cat(paste0("\n  ", mod_a, " vs ", mod_b, " at each step (%):\n"))
+    print_result(mod_corr, "diff_c0_pct", "  c0:", pct = TRUE)
+    print_result(mod_corr, "diff_c1_pct", "  c1:", pct = TRUE)
+    print_result(mod_corr, "diff_c2_pct", "  c2:", pct = TRUE)
+    
+    traj_long <- mod_corr |>
+      select(.draw, a_c0, a_c1, a_c2, b_c0, b_c1, b_c2) |>
+      tidyr::pivot_longer(
+        cols      = a_c0:b_c2,
+        names_to  = c("mod_key", "correction"),
+        names_sep = "_",
+        values_to = "effort"
+      ) |>
+      mutate(
+        correction = factor(correction, levels = c("c0", "c1", "c2")),
+        modality   = factor(mod_key,
+                            levels = c("a", "b"),
+                            labels = modalities)
+      )
+    
+  } else {
+    
+    mod_corr <- model |>
+      spread_draws(b_Intercept, b_correction2M1, b_correction3M2,
+                   b_modality1, b_modality2) |>
+      mutate(
+        vocal_offset    = -(b_modality1 + b_modality2),
+        gesture_c0      = exp(b_Intercept + 0.5 * b_modality1),
+        gesture_c1      = exp(b_Intercept + 0.5 * b_modality1 + b_correction2M1),
+        gesture_c2      = exp(b_Intercept + 0.5 * b_modality1 + b_correction2M1 + b_correction3M2),
+        multimodal_c0   = exp(b_Intercept + 0.5 * b_modality2),
+        multimodal_c1   = exp(b_Intercept + 0.5 * b_modality2 + b_correction2M1),
+        multimodal_c2   = exp(b_Intercept + 0.5 * b_modality2 + b_correction2M1 + b_correction3M2),
+        vocal_c0        = exp(b_Intercept + 0.5 * vocal_offset),
+        vocal_c1        = exp(b_Intercept + 0.5 * vocal_offset + b_correction2M1),
+        vocal_c2        = exp(b_Intercept + 0.5 * vocal_offset + b_correction2M1 + b_correction3M2),
+        gm_diff_c0_pct  = (gesture_c0    / multimodal_c0 - 1) * 100,
+        gm_diff_c1_pct  = (gesture_c1    / multimodal_c1 - 1) * 100,
+        gm_diff_c2_pct  = (gesture_c2    / multimodal_c2 - 1) * 100,
+        gv_diff_c0_pct  = (gesture_c0    / vocal_c0      - 1) * 100,
+        gv_diff_c1_pct  = (gesture_c1    / vocal_c1      - 1) * 100,
+        gv_diff_c2_pct  = (gesture_c2    / vocal_c2      - 1) * 100,
+        mv_diff_c0_pct  = (multimodal_c0 / vocal_c0      - 1) * 100,
+        mv_diff_c1_pct  = (multimodal_c1 / vocal_c1      - 1) * 100,
+        mv_diff_c2_pct  = (multimodal_c2 / vocal_c2      - 1) * 100
+      )
+    
+    cat("  Predicted effort (median [95% HDI]):\n")
+    print_result(mod_corr, "gesture_c0",    "  Gesture c0:")
+    print_result(mod_corr, "gesture_c1",    "  Gesture c1:")
+    print_result(mod_corr, "gesture_c2",    "  Gesture c2:")
+    print_result(mod_corr, "multimodal_c0", "  Multimodal c0:")
+    print_result(mod_corr, "multimodal_c1", "  Multimodal c1:")
+    print_result(mod_corr, "multimodal_c2", "  Multimodal c2:")
+    print_result(mod_corr, "vocal_c0",      "  Vocal c0:")
+    print_result(mod_corr, "vocal_c1",      "  Vocal c1:")
+    print_result(mod_corr, "vocal_c2",      "  Vocal c2:")
+    cat("\n  Gesture vs Multimodal at each step (%):\n")
+    print_result(mod_corr, "gm_diff_c0_pct", "  c0:", pct = TRUE)
+    print_result(mod_corr, "gm_diff_c1_pct", "  c1:", pct = TRUE)
+    print_result(mod_corr, "gm_diff_c2_pct", "  c2:", pct = TRUE)
+    cat("\n  Gesture vs Vocal at each step (%):\n")
+    print_result(mod_corr, "gv_diff_c0_pct", "  c0:", pct = TRUE)
+    print_result(mod_corr, "gv_diff_c1_pct", "  c1:", pct = TRUE)
+    print_result(mod_corr, "gv_diff_c2_pct", "  c2:", pct = TRUE)
+    cat("\n  Multimodal vs Vocal at each step (%):\n")
+    print_result(mod_corr, "mv_diff_c0_pct", "  c0:", pct = TRUE)
+    print_result(mod_corr, "mv_diff_c1_pct", "  c1:", pct = TRUE)
+    print_result(mod_corr, "mv_diff_c2_pct", "  c2:", pct = TRUE)
+    
+    traj_long <- mod_corr |>
+      select(.draw, gesture_c0:vocal_c2) |>
+      tidyr::pivot_longer(
+        cols     = gesture_c0:vocal_c2,
+        names_to = c("modality", "correction"), names_sep = "_",
+        values_to = "effort"
+      ) |>
+      mutate(
+        correction = factor(correction, levels = c("c0", "c1", "c2")),
+        modality   = factor(modality, levels = c("gesture", "multimodal", "vocal"))
+      )
+  }
+  
+  traj_summary <- traj_long |>
+    group_by(modality, correction) |>
+    median_hdi(effort)
+  
+  plots$modality_trajectory <- traj_summary |>
+    ggplot(aes(x = correction, y = effort,
+               colour = modality, group = modality)) +
+    geom_ribbon(aes(ymin = .lower, ymax = .upper, fill = modality),
+                alpha = 0.15, colour = NA) +
+    geom_line(linewidth = 1.2) +
+    geom_point(size = 3) +
+    scale_colour_manual(values = modality_colors, name = "Modality") +
+    scale_fill_manual(values = modality_colors, guide = "none") +
+    scale_y_log10(breaks = scales::pretty_breaks(n = 5)) +
+    theme_effort_plot() +
+    labs(title    = "Effort trajectory by modality",
+         subtitle = "Median \u00b1 95% HDI | log y-axis",
+         x = "Correction phase", y = paste0(dv_label, " (log scale)"))
+  
+  # ── 3. BFI extraversion across corrections ─────────────────────────────────
+  cat("\n═══════════════════════════════════════════════\n")
+  cat("  3. BFI EXTRAVERSION ACROSS CORRECTIONS (\u00b11 SD and \u00b12 SD)\n")
+  cat("═══════════════════════════════════════════════\n\n")
+  
+  bfi_draws <- model |>
+    spread_draws(b_Intercept, b_correction2M1, b_correction3M2,
+                 b_BFI_extra) |>
+    mutate(
+      vlow_c0         = exp(b_Intercept + (-2) * b_BFI_extra),
+      vlow_c1         = exp(b_Intercept + (-2) * b_BFI_extra + b_correction2M1),
+      vlow_c2         = exp(b_Intercept + (-2) * b_BFI_extra + b_correction2M1 + b_correction3M2),
+      low_c0          = exp(b_Intercept + (-1) * b_BFI_extra),
+      low_c1          = exp(b_Intercept + (-1) * b_BFI_extra + b_correction2M1),
+      low_c2          = exp(b_Intercept + (-1) * b_BFI_extra + b_correction2M1 + b_correction3M2),
+      avg_c0          = exp(b_Intercept),
+      avg_c1          = exp(b_Intercept + b_correction2M1),
+      avg_c2          = exp(b_Intercept + b_correction2M1 + b_correction3M2),
+      high_c0         = exp(b_Intercept +   1  * b_BFI_extra),
+      high_c1         = exp(b_Intercept +   1  * b_BFI_extra + b_correction2M1),
+      high_c2         = exp(b_Intercept +   1  * b_BFI_extra + b_correction2M1 + b_correction3M2),
+      vhigh_c0        = exp(b_Intercept +   2  * b_BFI_extra),
+      vhigh_c1        = exp(b_Intercept +   2  * b_BFI_extra + b_correction2M1),
+      vhigh_c2        = exp(b_Intercept +   2  * b_BFI_extra + b_correction2M1 + b_correction3M2),
+      diff_1sd_c0_pct = (low_c0  / high_c0  - 1) * 100,
+      diff_1sd_c1_pct = (low_c1  / high_c1  - 1) * 100,
+      diff_1sd_c2_pct = (low_c2  / high_c2  - 1) * 100,
+      diff_2sd_c0_pct = (vlow_c0 / vhigh_c0 - 1) * 100,
+      diff_2sd_c1_pct = (vlow_c1 / vhigh_c1 - 1) * 100,
+      diff_2sd_c2_pct = (vlow_c2 / vhigh_c2 - 1) * 100,
+      low_abs_c0_c1   = low_c1   - low_c0,
+      low_abs_c1_c2   = low_c2   - low_c1,
+      avg_abs_c0_c1   = avg_c1   - avg_c0,
+      avg_abs_c1_c2   = avg_c2   - avg_c1,
+      high_abs_c0_c1  = high_c1  - high_c0,
+      high_abs_c1_c2  = high_c2  - high_c1
+    )
+  
+  cat("  Predicted effort (median [95% HDI]):\n")
+  print_result(bfi_draws, "vlow_c0",  "  Very low BFI (-2SD) c0:")
+  print_result(bfi_draws, "vlow_c1",  "  Very low BFI (-2SD) c1:")
+  print_result(bfi_draws, "vlow_c2",  "  Very low BFI (-2SD) c2:")
+  print_result(bfi_draws, "low_c0",   "  Low BFI (-1SD) c0:")
+  print_result(bfi_draws, "low_c1",   "  Low BFI (-1SD) c1:")
+  print_result(bfi_draws, "low_c2",   "  Low BFI (-1SD) c2:")
+  print_result(bfi_draws, "avg_c0",   "  Average BFI c0:")
+  print_result(bfi_draws, "avg_c1",   "  Average BFI c1:")
+  print_result(bfi_draws, "avg_c2",   "  Average BFI c2:")
+  print_result(bfi_draws, "high_c0",  "  High BFI (+1SD) c0:")
+  print_result(bfi_draws, "high_c1",  "  High BFI (+1SD) c1:")
+  print_result(bfi_draws, "high_c2",  "  High BFI (+1SD) c2:")
+  print_result(bfi_draws, "vhigh_c0", "  Very high BFI (+2SD) c0:")
+  print_result(bfi_draws, "vhigh_c1", "  Very high BFI (+2SD) c1:")
+  print_result(bfi_draws, "vhigh_c2", "  Very high BFI (+2SD) c2:")
+  cat("\n  Absolute increase per step:\n")
+  print_result(bfi_draws, "low_abs_c0_c1",  "  Low BFI  c0\u2192c1:")
+  print_result(bfi_draws, "low_abs_c1_c2",  "  Low BFI  c1\u2192c2:")
+  print_result(bfi_draws, "avg_abs_c0_c1",  "  Avg BFI  c0\u2192c1:")
+  print_result(bfi_draws, "avg_abs_c1_c2",  "  Avg BFI  c1\u2192c2:")
+  print_result(bfi_draws, "high_abs_c0_c1", "  High BFI c0\u2192c1:")
+  print_result(bfi_draws, "high_abs_c1_c2", "  High BFI c1\u2192c2:")
+  cat("\n  \u00b11 SD difference at each step (%):\n")
+  print_result(bfi_draws, "diff_1sd_c0_pct", "  c0:", pct = TRUE)
+  print_result(bfi_draws, "diff_1sd_c1_pct", "  c1:", pct = TRUE)
+  print_result(bfi_draws, "diff_1sd_c2_pct", "  c2:", pct = TRUE)
+  cat("\n  \u00b12 SD difference at each step (%):\n")
+  print_result(bfi_draws, "diff_2sd_c0_pct", "  c0:", pct = TRUE)
+  print_result(bfi_draws, "diff_2sd_c1_pct", "  c1:", pct = TRUE)
+  print_result(bfi_draws, "diff_2sd_c2_pct", "  c2:", pct = TRUE)
+  
+  bfi_traj <- bfi_draws |>
+    select(.draw, vlow_c0:vhigh_c2) |>
+    tidyr::pivot_longer(
+      cols     = vlow_c0:vhigh_c2,
+      names_to = c("bfi", "correction"), names_sep = "_",
+      values_to = "effort"
+    ) |>
+    mutate(
+      correction = factor(correction, levels = c("c0", "c1", "c2")),
+      bfi        = factor(bfi,
+                          levels = c("vlow", "low", "avg", "high", "vhigh"),
+                          labels = c("\u22122 SD", "\u22121 SD", "Average", "+1 SD", "+2 SD"))
+    )
+  
+  bfi_summary <- bfi_traj |>
+    group_by(bfi, correction) |>
+    median_hdi(effort)
+  
+  plots$bfi_trajectory <- bfi_summary |>
+    ggplot(aes(x = correction, y = effort,
+               colour = bfi, group = bfi)) +
+    geom_ribbon(aes(ymin = .lower, ymax = .upper, fill = bfi),
+                alpha = 0.12, colour = NA) +
+    geom_line(linewidth = 1.2) +
+    geom_point(size = 3) +
+    scale_colour_manual(values = bfi_palette, name = "BFI Extraversion") +
+    scale_fill_manual(values = bfi_palette, guide = "none") +
+    scale_y_log10(breaks = scales::pretty_breaks(n = 5)) +
+    theme_effort_plot() +
+    labs(title    = "Effort by BFI Extraversion across corrections",
+         subtitle = "Median \u00b1 95% HDI | log y-axis",
+         x = "Correction phase", y = paste0(dv_label, " (log scale)"))
+  
+  # ── 4. Low vs high effort performers ───────────────────────────────────────
+  cat("\n═══════════════════════════════════════════════\n")
+  cat("  4. EFFORT PERFORMERS ON CORRECTION (\u00b11 SD and \u00b12 SD)\n")
+  cat("═══════════════════════════════════════════════\n\n")
+  
+  effort_draws <- model |>
+    spread_draws(b_Intercept, b_correction2M1, b_correction3M2,
+                 sd_pcn_ID__Intercept) |>
+    mutate(
+      vhigh_c0            = exp(b_Intercept + 2 * sd_pcn_ID__Intercept),
+      vhigh_c1            = exp(b_Intercept + 2 * sd_pcn_ID__Intercept + b_correction2M1),
+      vhigh_c2            = exp(b_Intercept + 2 * sd_pcn_ID__Intercept + b_correction2M1 + b_correction3M2),
+      high_c0             = exp(b_Intercept + sd_pcn_ID__Intercept),
+      high_c1             = exp(b_Intercept + sd_pcn_ID__Intercept + b_correction2M1),
+      high_c2             = exp(b_Intercept + sd_pcn_ID__Intercept + b_correction2M1 + b_correction3M2),
+      avg_c0              = exp(b_Intercept),
+      avg_c1              = exp(b_Intercept + b_correction2M1),
+      avg_c2              = exp(b_Intercept + b_correction2M1 + b_correction3M2),
+      low_c0              = exp(b_Intercept - sd_pcn_ID__Intercept),
+      low_c1              = exp(b_Intercept - sd_pcn_ID__Intercept + b_correction2M1),
+      low_c2              = exp(b_Intercept - sd_pcn_ID__Intercept + b_correction2M1 + b_correction3M2),
+      vlow_c0             = exp(b_Intercept - 2 * sd_pcn_ID__Intercept),
+      vlow_c1             = exp(b_Intercept - 2 * sd_pcn_ID__Intercept + b_correction2M1),
+      vlow_c2             = exp(b_Intercept - 2 * sd_pcn_ID__Intercept + b_correction2M1 + b_correction3M2),
+      vhigh_abs_c0_c1     = vhigh_c1 - vhigh_c0,
+      vhigh_abs_c1_c2     = vhigh_c2 - vhigh_c1,
+      high_abs_c0_c1      = high_c1  - high_c0,
+      high_abs_c1_c2      = high_c2  - high_c1,
+      avg_abs_c0_c1       = avg_c1   - avg_c0,
+      avg_abs_c1_c2       = avg_c2   - avg_c1,
+      low_abs_c0_c1       = low_c1   - low_c0,
+      low_abs_c1_c2       = low_c2   - low_c1,
+      vlow_abs_c0_c1      = vlow_c1  - vlow_c0,
+      vlow_abs_c1_c2      = vlow_c2  - vlow_c1,
+      vhigh_vs_vlow_c0_c1 = vhigh_abs_c0_c1 - vlow_abs_c0_c1,
+      vhigh_vs_vlow_c1_c2 = vhigh_abs_c1_c2 - vlow_abs_c1_c2
+    )
+  
+  cat("  Predicted effort at each step (median [95% HDI]):\n")
+  print_result(effort_draws, "vlow_c0",  "  Very low (-2SD) c0:")
+  print_result(effort_draws, "vlow_c1",  "  Very low (-2SD) c1:")
+  print_result(effort_draws, "vlow_c2",  "  Very low (-2SD) c2:")
+  print_result(effort_draws, "low_c0",   "  Low (-1SD) c0:")
+  print_result(effort_draws, "low_c1",   "  Low (-1SD) c1:")
+  print_result(effort_draws, "low_c2",   "  Low (-1SD) c2:")
+  print_result(effort_draws, "avg_c0",   "  Average c0:")
+  print_result(effort_draws, "avg_c1",   "  Average c1:")
+  print_result(effort_draws, "avg_c2",   "  Average c2:")
+  print_result(effort_draws, "high_c0",  "  High (+1SD) c0:")
+  print_result(effort_draws, "high_c1",  "  High (+1SD) c1:")
+  print_result(effort_draws, "high_c2",  "  High (+1SD) c2:")
+  print_result(effort_draws, "vhigh_c0", "  Very high (+2SD) c0:")
+  print_result(effort_draws, "vhigh_c1", "  Very high (+2SD) c1:")
+  print_result(effort_draws, "vhigh_c2", "  Very high (+2SD) c2:")
+  cat("\n  Absolute increase per step:\n")
+  print_result(effort_draws, "vlow_abs_c0_c1",  "  Very low  c0\u2192c1:")
+  print_result(effort_draws, "vlow_abs_c1_c2",  "  Very low  c1\u2192c2:")
+  print_result(effort_draws, "low_abs_c0_c1",   "  Low       c0\u2192c1:")
+  print_result(effort_draws, "low_abs_c1_c2",   "  Low       c1\u2192c2:")
+  print_result(effort_draws, "avg_abs_c0_c1",   "  Avg       c0\u2192c1:")
+  print_result(effort_draws, "avg_abs_c1_c2",   "  Avg       c1\u2192c2:")
+  print_result(effort_draws, "high_abs_c0_c1",  "  High      c0\u2192c1:")
+  print_result(effort_draws, "high_abs_c1_c2",  "  High      c1\u2192c2:")
+  print_result(effort_draws, "vhigh_abs_c0_c1", "  Very high c0\u2192c1:")
+  print_result(effort_draws, "vhigh_abs_c1_c2", "  Very high c1\u2192c2:")
+  cat("\n  Extra absolute effort very high vs very low performer:\n")
+  print_result(effort_draws, "vhigh_vs_vlow_c0_c1", "  c0\u2192c1:")
+  print_result(effort_draws, "vhigh_vs_vlow_c1_c2", "  c1\u2192c2:")
+  
+  effort_traj <- effort_draws |>
+    select(.draw, vhigh_c0:vlow_c2) |>
+    tidyr::pivot_longer(
+      cols     = vhigh_c0:vlow_c2,
+      names_to = c("group", "correction"), names_sep = "_",
+      values_to = "effort"
+    ) |>
+    mutate(
+      correction = factor(correction, levels = c("c0", "c1", "c2")),
+      group      = factor(group,
+                          levels = c("vlow", "low", "avg", "high", "vhigh"),
+                          labels = c("\u22122 SD", "\u22121 SD", "Average", "+1 SD", "+2 SD"))
+    )
+  
+  effort_summary <- effort_traj |>
+    group_by(group, correction) |>
+    median_hdi(effort)
+  
+  plots$effort_group_trajectory <- effort_summary |>
+    ggplot(aes(x = correction, y = effort,
+               colour = group, group = group)) +
+    geom_ribbon(aes(ymin = .lower, ymax = .upper, fill = group),
+                alpha = 0.12, colour = NA) +
+    geom_line(linewidth = 1.2) +
+    geom_point(size = 3) +
+    scale_colour_manual(values = performer_palette, name = "Performer") +
+    scale_fill_manual(values = performer_palette, guide = "none") +
+    scale_y_log10(breaks = scales::pretty_breaks(n = 5)) +
+    theme_effort_plot() +
+    labs(title    = "Effort trajectory by performer level",
+         subtitle = "Median \u00b1 95% HDI | \u00b11/2 SD participant intercept | log y-axis",
+         x = "Correction phase", y = paste0(dv_label, " (log scale)"))
+  
+  # ── 5. Variance decomposition ───────────────────────────────────────────────
+  cat("\n═══════════════════════════════════════════════\n")
+  cat("  5. VARIANCE DECOMPOSITION\n")
+  cat("═══════════════════════════════════════════════\n\n")
+  
+  var_draws <- model |>
+    spread_draws(sd_pcn_ID__Intercept,
+                 sd_concept__Intercept,
+                 sd_SessionID__Intercept,
+                 sigma) |>
+    mutate(
+      var_participant = sd_pcn_ID__Intercept^2,
+      var_concept     = sd_concept__Intercept^2,
+      var_dyad        = sd_SessionID__Intercept^2,
+      var_residual    = sigma^2,
+      var_total       = var_participant + var_concept + var_dyad + var_residual,
+      pct_participant = var_participant / var_total * 100,
+      pct_concept     = var_concept     / var_total * 100,
+      pct_dyad        = var_dyad        / var_total * 100,
+      pct_residual    = var_residual    / var_total * 100
+    )
+  
+  purrr::walk(
+    list(
+      list(var = "pct_participant", label = "Participant"),
+      list(var = "pct_concept",     label = "Concept    "),
+      list(var = "pct_dyad",        label = "Dyad       "),
+      list(var = "pct_residual",    label = "Residual   ")
+    ),
+    function(x) print_result(var_draws, x$var, x$label, pct = TRUE)
+  )
+  
+  var_long <- var_draws |>
+    select(.draw, pct_participant, pct_concept, pct_dyad, pct_residual) |>
+    tidyr::pivot_longer(
+      cols     = pct_participant:pct_residual,
+      names_to = "component", values_to = "pct"
+    ) |>
+    mutate(component = factor(component,
+                              levels = c("pct_concept", "pct_dyad",
+                                         "pct_participant", "pct_residual"),
+                              labels = c("Concept", "Dyad", "Participant", "Residual")))
+  
+  plots$variance_decomp <- var_long |>
+    ggplot(aes(x = pct, y = component, fill = component)) +
+    stat_halfeye(
+      .width = c(0.89, 0.95), point_interval = median_hdi,
+      normalize = "groups", scale = 0.7, alpha = 0.85
+    ) +
+    geom_vline(xintercept = 0, linetype = "dashed",
+               colour = "grey20", linewidth = 0.8) +
+    scale_fill_manual(
+      values = c("Concept"     = "#9C27B0",
+                 "Dyad"        = "#E91E63",
+                 "Participant" = "#FF9800",
+                 "Residual"    = "#607D8B"),
+      guide = "none"
+    ) +
+    scale_x_continuous(limits = c(0, NA),
+                       breaks = scales::pretty_breaks(n = 5),
+                       labels = function(x) paste0(x, "%")) +
+    theme_effort_plot() +
+    labs(title    = "Variance decomposition",
+         subtitle = "Posterior of % variance by grouping level",
+         x = "% of total variance", y = NULL)
+  
+  # ── Assemble grid ───────────────────────────────────────────────────────────
+  quarto_theme <- theme(
+    plot.title    = .title_element(size = 11),      # ← patched
+    plot.subtitle = .subtitle_element(size = 9),    # ← patched
+    axis.title    = element_text(size = 9),
+    axis.text     = element_text(size = 8),
+    legend.title  = element_text(size = 9),
+    legend.text   = element_text(size = 8)
+  )
+  
+  plots <- lapply(plots, function(p) p + quarto_theme)
+  
+  top_row    <- plots$modality_diff    | plots$modality_trajectory
+  middle_row <- plots$bfi_trajectory   | plots$effort_group_trajectory
+  bottom_row <- plot_spacer() | plots$variance_decomp | plot_spacer()
+  
+  final <- (top_row / middle_row / bottom_row) +
+    plot_layout(heights = c(1, 1, 0.8)) +
+    patchwork::plot_annotation(
+      title    = paste0("Targeted comparisons (BFI) \u2014 ", dv_label),
+      subtitle = "Median \u00b1 89% and 95% HDI",
+      theme    = .annotation_theme(title_size = 13, subtitle_size = 10)  # ← patched
+    )
+  
+  print(final)
+  
+  ggsave(paste0("plots/targeted_comparisons_bfi_",
+                gsub("[^a-zA-Z0-9]", "_", dv_label), ".png"),
+         final, width = 14, height = 12, dpi = 300, bg = "white")
+  
+  invisible(plots)
+}
+
+
+plot_correction_by_effort <- function(models_e1, dv_labels = NULL,
+                                      type = c("two_modality", "three_modality"),
+                                      fig_width  = 28,
+                                      fig_height = 12) {
+  
+  type <- match.arg(type)
+  
+  performer_palette <- c(
+    "\u22122 SD" = "#37474F",
+    "\u22121 SD" = "#607D8B",
+    "Average"    = "#000000",
+    "+1 SD"      = "#E53935",
+    "+2 SD"      = "#B71C1C"
   )
   
   print_result <- function(draws, var, label, pct = FALSE) {
@@ -3965,6 +4030,19 @@ plot_correction_by_effort <- function(models_e1, dv_labels = NULL,
   
   plot_list <- list()
   
+  # ── Per-model theme: smaller text so 6 panels fit ────────────────────────────
+  panel_theme <- theme(
+    plot.title    = .title_element(size = 10),
+    plot.subtitle = .subtitle_element(size = 8),
+    axis.title    = element_text(size = 9),
+    axis.text     = element_text(size = 8),
+    legend.title  = element_text(size = 9, face = "bold"),
+    legend.text   = element_text(size = 8),
+    legend.key.size  = unit(10, "pt"),
+    legend.spacing.y = unit(2, "pt"),
+    panel.spacing    = unit(0.8, "lines")
+  )
+  
   purrr::imap(models_e1, function(mod, nm) {
     
     label <- dv_labels[[nm]]
@@ -3973,7 +4051,6 @@ plot_correction_by_effort <- function(models_e1, dv_labels = NULL,
     cat(sprintf("  %s\n", label))
     cat("═══════════════════════════════════════════════\n\n")
     
-    # ── Find effort coefficient name ───────────────────────────────────────────
     coef_names <- rownames(fixef(mod))
     
     ft_main <- grep("first_trial|effort_previous|baseline_", coef_names, value = TRUE) |>
@@ -3990,7 +4067,6 @@ plot_correction_by_effort <- function(models_e1, dv_labels = NULL,
       return(NULL)
     }
     
-    # ── Build draws ────────────────────────────────────────────────────────────
     draws <- mod |>
       spread_draws(
         b_Intercept,
@@ -4006,38 +4082,31 @@ plot_correction_by_effort <- function(models_e1, dv_labels = NULL,
         ft_int_c2 = !!paste0("b_", ft_int_c2)
       )
     
-    # ── Predicted effort at each SD level × correction ─────────────────────────
     draws <- draws |>
       mutate(
-        # c0: no correction terms
         vlow_c0  = exp(b_Intercept + (-2) * ft_main),
         low_c0   = exp(b_Intercept + (-1) * ft_main),
         avg_c0   = exp(b_Intercept),
         high_c0  = exp(b_Intercept +   1  * ft_main),
         vhigh_c0 = exp(b_Intercept +   2  * ft_main),
         
-        # c1: correction2M1 + interaction
         vlow_c1  = exp(b_Intercept + (-2) * ft_main +
                          b_correction2M1 + (-2) * ft_int_c1),
         low_c1   = exp(b_Intercept + (-1) * ft_main +
                          b_correction2M1 + (-1) * ft_int_c1),
-        avg_c1   = exp(b_Intercept +
-                         b_correction2M1),
+        avg_c1   = exp(b_Intercept + b_correction2M1),
         high_c1  = exp(b_Intercept +   1  * ft_main +
                          b_correction2M1 +   1  * ft_int_c1),
         vhigh_c1 = exp(b_Intercept +   2  * ft_main +
                          b_correction2M1 +   2  * ft_int_c1),
         
-        # c2: correction2M1 + correction3M2 + both interactions
         vlow_c2  = exp(b_Intercept + (-2) * ft_main +
                          b_correction2M1 + (-2) * ft_int_c1 +
                          b_correction3M2 + (-2) * ft_int_c2),
         low_c2   = exp(b_Intercept + (-1) * ft_main +
                          b_correction2M1 + (-1) * ft_int_c1 +
                          b_correction3M2 + (-1) * ft_int_c2),
-        avg_c2   = exp(b_Intercept +
-                         b_correction2M1 +
-                         b_correction3M2),
+        avg_c2   = exp(b_Intercept + b_correction2M1 + b_correction3M2),
         high_c2  = exp(b_Intercept +   1  * ft_main +
                          b_correction2M1 +   1  * ft_int_c1 +
                          b_correction3M2 +   1  * ft_int_c2),
@@ -4045,7 +4114,6 @@ plot_correction_by_effort <- function(models_e1, dv_labels = NULL,
                          b_correction2M1 +   2  * ft_int_c1 +
                          b_correction3M2 +   2  * ft_int_c2),
         
-        # Correction effect (% change c0→c1) per group
         corr_pct_vlow  = (vlow_c1  / vlow_c0  - 1) * 100,
         corr_pct_low   = (low_c1   / low_c0   - 1) * 100,
         corr_pct_avg   = (avg_c1   / avg_c0   - 1) * 100,
@@ -4053,15 +4121,13 @@ plot_correction_by_effort <- function(models_e1, dv_labels = NULL,
         corr_pct_vhigh = (vhigh_c1 / vhigh_c0 - 1) * 100
       )
     
-    # ── Print ──────────────────────────────────────────────────────────────────
     cat("  Predicted effort at c0 (baseline differences):\n")
     print_result(draws, "vlow_c0",  "  Very low (-2SD) c0:")
     print_result(draws, "low_c0",   "  Low (-1SD) c0:")
     print_result(draws, "avg_c0",   "  Average c0:")
     print_result(draws, "high_c0",  "  High (+1SD) c0:")
     print_result(draws, "vhigh_c0", "  Very high (+2SD) c0:")
-    
-    cat("\n  Correction effect c0→c1 by baseline effort level (%):\n")
+    cat("\n  Correction effect c0\u2192c1 by baseline effort level (%):\n")
     print_result(draws, "corr_pct_vlow",  "  Very low (-2SD):", pct = TRUE)
     print_result(draws, "corr_pct_low",   "  Low (-1SD):",      pct = TRUE)
     print_result(draws, "corr_pct_avg",   "  Average:",         pct = TRUE)
@@ -4069,7 +4135,6 @@ plot_correction_by_effort <- function(models_e1, dv_labels = NULL,
     print_result(draws, "corr_pct_vhigh", "  Very high (+2SD):", pct = TRUE)
     cat("\n")
     
-    # ── Pivot for plotting ─────────────────────────────────────────────────────
     traj_long <- draws |>
       select(.draw, vlow_c0:vhigh_c2) |>
       tidyr::pivot_longer(
@@ -4082,14 +4147,14 @@ plot_correction_by_effort <- function(models_e1, dv_labels = NULL,
         correction = factor(correction, levels = c("c0", "c1", "c2")),
         group      = factor(group,
                             levels = c("vlow", "low", "avg", "high", "vhigh"),
-                            labels = c("−2 SD", "−1 SD", "Average", "+1 SD", "+2 SD"))
+                            labels = c("\u22122 SD", "\u22121 SD", "Average",
+                                       "+1 SD", "+2 SD"))
       )
     
     traj_summary <- traj_long |>
       group_by(group, correction) |>
       median_hdi(effort)
     
-    # ── Correction effect posterior plot ───────────────────────────────────────
     corr_long <- draws |>
       select(.draw, corr_pct_vlow:corr_pct_vhigh) |>
       tidyr::pivot_longer(
@@ -4098,78 +4163,83 @@ plot_correction_by_effort <- function(models_e1, dv_labels = NULL,
         values_to = "pct"
       ) |>
       mutate(group = factor(group,
-                            levels = c("corr_pct_vlow", "corr_pct_low", "corr_pct_avg",
-                                       "corr_pct_high", "corr_pct_vhigh"),
-                            labels = c("−2 SD", "−1 SD", "Average", "+1 SD", "+2 SD")))
+                            levels = c("corr_pct_vlow", "corr_pct_low",
+                                       "corr_pct_avg",  "corr_pct_high",
+                                       "corr_pct_vhigh"),
+                            labels = c("\u22122 SD", "\u22121 SD", "Average",
+                                       "+1 SD", "+2 SD")))
     
     p_traj <- traj_summary |>
       ggplot(aes(x = correction, y = effort,
                  colour = group, group = group)) +
       geom_ribbon(aes(ymin = .lower, ymax = .upper, fill = group),
                   alpha = 0.12, colour = NA) +
-      geom_line(linewidth = 1.2) +
-      geom_point(size = 3) +
+      geom_line(linewidth = 1) +
+      geom_point(size = 2) +
       scale_colour_manual(values = performer_palette, name = "First-trial effort") +
-      scale_fill_manual(values = performer_palette, guide = "none") +
-      scale_y_log10(breaks = scales::pretty_breaks(n = 5)) +
-      theme_effort_plot() +
+      scale_fill_manual(values   = performer_palette, guide = "none") +
+      scale_y_log10(breaks = scales::pretty_breaks(n = 4)) +
+      theme_effort_plot(base_size = 10) +
+      panel_theme +
       labs(title    = label,
-           subtitle = "Effort trajectory by first-trial level | log y-axis",
-           x = "Correction phase", y = "Effort (log scale)")
+           subtitle = "Trajectory | log y",
+           x = "Correction", y = "Effort (log)")
     
     p_corr <- corr_long |>
       ggplot(aes(x = pct, y = group, fill = group)) +
       stat_halfeye(
         .width = c(0.89, 0.95), point_interval = median_hdi,
-        normalize = "groups", scale = 0.7, alpha = 0.85
+        normalize = "groups", scale = 0.65, alpha = 0.85
       ) +
       geom_vline(xintercept = 0, linetype = "dashed",
-                 colour = "grey20", linewidth = 0.8) +
+                 colour = "grey20", linewidth = 0.7) +
       scale_fill_manual(values = performer_palette, guide = "none") +
-      theme_effort_plot() +
+      theme_effort_plot(base_size = 10) +
+      panel_theme +
       labs(title    = label,
-           subtitle = "c0→c1 correction effect by first-trial level",
-           x = "% change at first correction", y = NULL)
+           subtitle = "c0\u2192c1 effect",
+           x = "% change", y = NULL)
     
     plot_list[[nm]] <<- list(traj = p_traj, corr = p_corr)
   })
   
-  # ── Assemble grid ─────────────────────────────────────────────────────────────
   nms_available <- names(Filter(Negate(is.null), plot_list))
   
   if (length(nms_available) == 0) {
-    message("No plots to assemble — check coefficient names.")
+    message("No plots to assemble \u2014 check coefficient names.")
     return(invisible(plot_list))
   }
   
+  # ── Row 1: trajectory panels, legend collected and placed at right ────────────
   traj_row <- purrr::map(nms_available, ~ plot_list[[.x]]$traj) |>
     patchwork::wrap_plots(nrow = 1) +
     patchwork::plot_layout(guides = "collect") &
-    theme(legend.position = "bottom")
+    theme(legend.position = "right")
   
+  # ── Row 2: correction effect panels, no legend (same palette, shown above) ────
   corr_row <- purrr::map(nms_available, ~ plot_list[[.x]]$corr) |>
     patchwork::wrap_plots(nrow = 1) +
     patchwork::plot_layout(guides = "collect") &
     theme(legend.position = "none")
   
   final <- (traj_row / corr_row) +
+    patchwork::plot_layout(heights = c(1, 1)) +
     patchwork::plot_annotation(
-      title    = "Correction escalation by first-trial effort level",
-      subtitle = "Top: effort trajectories across corrections | Bottom: posterior of c0→c1 effect",
-      theme    = theme(
-        plot.title    = element_text(size = 14, face = "bold"),
-        plot.subtitle = element_text(size = 11, colour = "grey40")
-      )
+      title    = "Correction increase by first-trial effort level",
+      subtitle = "Top: effort trajectories across corrections (median \u00b1 95% HDI, log scale) | Bottom: posterior of c0\u2192c1 % change (median \u00b1 89% and 95% HDI)",
+      theme    = .annotation_theme()
     )
   
   print(final)
   
   ggsave("plots/correction_by_effort_interaction.png", final,
-         width = 20, height = 10, dpi = 300, bg = "white")
+         width  = fig_width,
+         height = fig_height,
+         dpi    = 300,
+         bg     = "white")
   
   invisible(plot_list)
 }
-
 
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -4241,7 +4311,7 @@ plot_h2_prev_answer <- function(models_h2, dv_col_map = NULL) {
                colour = "grey20", linewidth = 0.8) +
     scale_fill_manual(
       values = dv_colors,
-      guide  = "none"
+      guide  = "none"   # labels shown via y-axis; full legend via add_dv_effort_legend()
     ) +
     scale_y_discrete(labels = rev(dv_labels_map[dv_order])) +
     scale_x_continuous(
@@ -4264,10 +4334,13 @@ plot_h2_prev_answer <- function(models_h2, dv_col_map = NULL) {
       y        = NULL
     )
   
-  print(p)
-  ggsave(file.path(plots, "h2_prev_answer_effect.png"), p,
-         width = 5, height = 5, dpi = 300, bg = "white")
-  invisible(p)
+  final <- (p / add_dv_effort_legend()) +
+    patchwork::plot_layout(heights = c(1, 0.15))
+  
+  print(final)
+  ggsave(file.path(plots, "h2_prev_answer_effect.png"), final,
+         width = 9, height = 7, dpi = 300, bg = "white")
+  invisible(final)
 }
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -4304,6 +4377,133 @@ add_dv_legend <- function() {
       legend.text      = element_text(size = 11),
       legend.key.width = unit(32, "pt"),
       legend.key.size  = unit(14, "pt")
+    )
+}
+
+# ══════════════════════════════════════════════════════════════════════════════
+#  add_modality_legend()
+#
+#  Standalone modality legend panel for appending below any patchwork figure
+#  that uses modality_colors. Shows Gesture / Multimodal / Vocal with their
+#  canonical colours. Suppresses grey _nc variants.
+#
+#  Usage (patchwork):
+#    (p1 / p2 / add_modality_legend()) +
+#      plot_layout(heights = c(1, 1, 0.08))
+# ══════════════════════════════════════════════════════════════════════════════
+add_modality_legend <- function(
+    modality_lvls = c("gesture", "multimodal", "vocal"),
+    base_size     = 12
+) {
+  legend_data <- tibble::tibble(
+    modality = factor(modality_lvls, levels = modality_lvls),
+    x        = seq_along(modality_lvls),
+    y        = 1L
+  )
+  ggplot(legend_data, aes(x = x, y = y, colour = modality, fill = modality)) +
+    geom_point(size = 5, shape = 16) +
+    scale_colour_manual(
+      values = setNames(
+        purrr::map_chr(modality_lvls, ~ modality_colors[[.x]]),
+        modality_lvls
+      ),
+      labels = stringr::str_to_title(modality_lvls),
+      name   = "Modality:"
+    ) +
+    scale_fill_manual(
+      values = setNames(
+        purrr::map_chr(modality_lvls, ~ modality_colors[[.x]]),
+        modality_lvls
+      ),
+      guide = "none"
+    ) +
+    guides(colour = guide_legend(
+      title.position = "left",
+      direction      = "horizontal",
+      override.aes   = list(size = 5)
+    )) +
+    theme_void(base_size = base_size) +
+    theme(
+      legend.position  = "bottom",
+      legend.text      = element_text(size = base_size),
+      legend.title     = element_text(size = base_size, face = "bold"),
+      legend.key.size  = unit(16, "pt"),
+      legend.spacing.x = unit(10, "pt")
+    )
+}
+
+# ══════════════════════════════════════════════════════════════════════════════
+#  add_dv_effort_legend()
+#
+#  Standalone effort-channel legend panel for appending below any patchwork
+#  figure that uses dv_colors (arm torque / envelope / COP, cumulative vs
+#  instantaneous). Complements add_dv_legend() with a more compact layout
+#  suitable for figure captions.
+#
+#  Usage (patchwork):
+#    (p1 / p2 / add_dv_effort_legend()) +
+#      plot_layout(heights = c(1, 1, 0.10))
+# ══════════════════════════════════════════════════════════════════════════════
+add_dv_effort_legend <- function(base_size = 12) {
+  dvs <- names(dv_colors)
+  legend_data <- tibble::tibble(
+    dv_col   = factor(dvs, levels = dvs),
+    label    = unname(dv_labels_map[dvs]),
+    linetype = unname(dv_linetypes[dvs]),
+    shape    = unname(dv_shapes[dvs]),
+    x        = seq_along(dvs),
+    y        = 1L
+  )
+  ggplot(legend_data,
+         aes(x = x, y = y, colour = dv_col, shape = dv_col, linetype = dv_col)) +
+    geom_point(size = 4) +
+    geom_line(linewidth = 1.2) +
+    scale_colour_manual(
+      values = dv_colors,
+      labels = dv_labels_map,
+      name   = "Effort feature:"
+    ) +
+    scale_shape_manual(
+      values = dv_shapes,
+      labels = dv_labels_map,
+      name   = "Effort feature:"
+    ) +
+    scale_linetype_manual(
+      values = dv_linetypes,
+      labels = dv_labels_map,
+      name   = "Effort feature:"
+    ) +
+    guides(
+      colour   = guide_legend(
+        title.position = "left",
+        direction      = "horizontal",
+        nrow           = 2,
+        byrow          = TRUE,
+        override.aes   = list(linewidth = 1.5, size = 3)
+      ),
+      shape    = guide_legend(
+        title.position = "left",
+        direction      = "horizontal",
+        nrow           = 2,
+        byrow          = TRUE,
+        override.aes   = list(linewidth = 1.5, size = 3)
+      ),
+      linetype = guide_legend(
+        title.position = "left",
+        direction      = "horizontal",
+        nrow           = 2,
+        byrow          = TRUE,
+        override.aes   = list(linewidth = 1.5, size = 3)
+      )
+    ) +
+    theme_void(base_size = base_size) +
+    theme(
+      legend.position  = "bottom",
+      legend.text      = element_text(size = base_size),
+      legend.title     = element_text(size = base_size, face = "bold"),
+      legend.key.width = unit(32, "pt"),
+      legend.key.size  = unit(14, "pt"),
+      legend.spacing.x = unit(8, "pt")
     )
 }
 
@@ -4409,15 +4609,19 @@ plot_effort_success_summary <- function(models_cum, models_inst, coef_map) {
   
   plots <- purrr::map(outcomes, make_panel)
   
-  final <- purrr::reduce(plots, `|`) +
+  final <- (purrr::reduce(plots, `|`) / add_dv_effort_legend()) +
+    patchwork::plot_layout(heights = c(1, 0.15)) +
     patchwork::plot_annotation(
       title    = "Does effort predict communicative success?",
       subtitle = "Posterior slopes | Median \u00b1 89% and 95% HDI | dashed = 0 | darker = cumulative, lighter = instantaneous",
       theme    = theme(
-        plot.title    = element_text(size = 14, face = "bold"),
-        plot.subtitle = element_text(size = 11, colour = "grey40")
+        plot.title    = element_text(size = 14, face = "bold",
+                                     margin = margin(b = 6)),
+        plot.subtitle = element_text(size = 11, colour = "grey40",
+                                     margin = margin(b = 8)),
+        plot.margin   = margin(14, 18, 10, 12)
       )
     )
   
-  final & theme(plot.margin = margin(2, 6, 2, 4))
+  final & theme(plot.margin = margin(4, 6, 4, 4))
 }

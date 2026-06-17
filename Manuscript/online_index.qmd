@@ -78,7 +78,7 @@ In phase I, we preregistered the experimental design, laboratory setup and power
 
 In phase II, we preregistered the research questions and hypothesis, together with code pipeline covering pre-processing, processing and the analysis itself. The preregistration is available at the [OSF Registries](https://osf.io/8ajsg){target="_blank"}.
 
-All preregistrations are reported in a [separate document](Prereg-deviations.qmd) and each script is available as a change-tracking report in the Github repository (LINK).
+All preregistrations are reported in a [separate document](Prereg-deviations.qmd) and each script is available as a change-tracking report in the [Github repository](https://github.com/sarkadava/FLESH_Effort/tree/main/Prereg_deviations){target="_blank"}.
 
 ## Pipeline Overview
 

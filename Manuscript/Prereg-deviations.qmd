@@ -5,7 +5,7 @@ format: html
 
 Here we report all major changes deviating from pre-registred data collection or analysis procedures. These include changes in laboratory equipment or recording procedures, adaptations in processing pipelines or anything that has an effect on resulting data. We include brief explanation for each change.
 
-Additionally, all pre-registered scripts are compared side-by-side with the final versions to allow for direct, transparent comparison. This is available in *XY*.
+Additionally, all pre-registered scripts are compared side-by-side with the final versions to allow for direct, transparent comparison. This is available at [https://github.com/sarkadava/FLESH_Effort/tree/main/Prereg_deviations](https://github.com/sarkadava/FLESH_Effort/tree/main/Prereg_deviations){target="_blank"}.
 
 # Data collection
 
@@ -17,13 +17,15 @@ Additionally, all pre-registered scripts are compared side-by-side with the fina
 
 **Charuco calibration added:** After one month of recording, we also started calibrating with ChArUco board to extended the future utility for computer vision algorithms.
 
-**Age limited lowered:** After one month of recording, we extended data recruitment to include people who are 16 and 17 years old. Appropriate ammendment to the ethics was submitted and accepted.
+**Age limit lowered:** After one month of recording, we extended data recruitment to include people who are 16 and 17 years old. Appropriate ammendment to the ethics was submitted and accepted.
 
 **USB-to-jack adapter exchanged:** During the first month of recording, we identified electrical hiss in several sessions. We exchanged the adapter and made sure all present phones are turned off or put to flight mode.
 
 # Data processing
 
 **Relative paths recoded:** To ensure compatibility with any OS, we recoded relative paths using `os.path.join()`
+
+**Change in XDF processing:** Due to recording error, we adapted the preregistered code for processing XDF files and extracting individual data streams to use relative (instead of absolute) LSL time.
 
 **Separate coding procedures:** Correcting the time ranges of cuted trials, 16-to-48 alignment, and audio-video alignment are now each performed in separate scripts.
 
@@ -63,7 +65,7 @@ Additionally, all pre-registered scripts are compared side-by-side with the fina
 
 **Z-scoring:** The preregistered pipeline included z-scoring of effort features prior to modelling. We omitted this step because the models include participant as a random effect with both random intercepts and random slopes. This structure already accounts for between-participant differences in baseline effort levels (intercepts) and in how effort scales across conditions (slopes), rendering z-scoring redundant. Retaining the original scale also preserves the interpretability of fixed effects in terms of meaningful physical units. However, for exploratory analysis (PCA + XGBoost), we will use z-scored features (normalized within participant) to ensure that no single variable dominates the multidimensional space.
 
-# Analysis
+# Analysis (confirmatory)
 
 **Trial number as fixed effect:** Trial number was included as a fixed effect rather than as a random intercept grouped by trial position. This choice reflects the theoretical expectation that effort changes across trials in a systematic, directional manner — for instance, due to fatigue accumulating over the session or familiarity with the task and partner increasing over time. A random intercept per trial position would treat trial-level variation as exchangeable noise drawn from a distribution with no ordering, obscuring any monotonic or otherwise structured trend. Modelling trial number as a continuous fixed effect instead captures this ordered trajectory while remaining parsimonious, and is interpretable as an estimate of the average within-session drift in effort across participants and dyads.
 

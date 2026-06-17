@@ -2,12 +2,10 @@ project:
   type: website
   output-dir: docs
   
-  #render:
-    # - "*.qmd"
-    # - "*.ipynb"
-    # - "!/00_RAWDATA"
-    #- "!/Manuscript"
-    # - "!/shign"
+  # render:
+  #   - "!/00_labscripts"
+  #   - "!/00_raw"
+  #   - "!/shign"
 
 bibliography: references.bib
 csl: "apa.csl"
@@ -77,15 +75,13 @@ format:
     css: style.css
     max-width: 1300px
 
-  # Default execution: run and show code in HTML
+# Default execution: run and show code in HTML
 execute:
   enabled: false
   freeze: false
-  #echo: true
-  #eval: true
   warning: false
   message: false
-  cache: false                # cache outputs so re-renders are fast
+  cache: false                
 
 
 

@@ -18,7 +18,7 @@ In this script, we are going to follow the pre-registered pipeline for modelling
 
 These are:
 
-H1: In corrections, people enhance some effort-related kinematic and/or acoustic features of their behaviour relative to the baseline.
+H1: In corrections, people enhance some effort-related kinematic and/or acoustic features of their behavior relative to the baseline.
 
 H2: The enhancement depends on similarity of the guesser's answer and the original meaning. More similar answer will require/result in smaller enhancement (but still enhancement) than less similar answer.
 
@@ -44,7 +44,8 @@ required_packages <- c("here",
                        "bayestestR",
                        "tidyverse",
                        "emmeans",
-                       "gt")
+                       "gt",
+                       "ggtext")
                        
 # Loop over the packages and check if they are installed
 for (package in required_packages) {
@@ -3459,7 +3460,7 @@ print(correction_grid_side)
 
 ggsave(here(plots,"correction_posteriors_grid_side.png"),
        correction_grid_side,
-       width = 6, height = 4,
+       width = 10, height = 6,
        dpi = 300, bg = "white")
 
 ```
@@ -7823,10 +7824,86 @@ result <- get_modality_contrasts(
   model  = e3.m6b_att,
   labels = c("1" = "Gesture only", "2" = "Multimodal", "3" = "Vocal only"), coding = "treatment")
 
+ggsave(here(plots, "e3m6b_channel_correlations_by_modality.png"),
+       result$plot, width = 12, height = 8, dpi = 300)
+
 
 ```
 
-### Final plot
+### Final report
+
+#### Table
+
+```{r}
+#| code-fold: true
+#| code-summary: Code to generate table summary
+#| eval: false
+
+model_list_paper <- list(
+  c0_suc_cum  = e3.m1,
+  c0_suc_in = e3.m1b,
+  foll_suc_cum  = e3.m3_att,
+  foll_suc_in   = e3.m3b_att,
+  how_many_cum    = e3.m5_att,
+  how_many_in   = e3.m5b_att,
+  ever_cum    = e3.m6_att,
+  ever_in = e3.m6b_att
+)
+
+r2_list_paper <- list(
+  c0_suc_cum  = e3.m1_R2,
+  c0_suc_in = e3.m1b_R2,
+  foll_suc_cum  = e3.m3_att_R2,
+  foll_suc_in   = e3.m3b_att_R2,
+  how_many_cum    = e3.m5_att_R2,
+  how_many_in   = e3.m5b_att_R2,
+  ever_cum    = e3.m6_att_R2,
+  ever_in = e3.m6b_att_R2
+)
+
+dv_labels <- c(
+  c0_suc_cum = "Probability of first-attempt success (w/ cumulative effort)",
+  c0_suc_in  = "Probability of first-attempt success (w/ instantaneous effort)",
+  foll_suc_cum  = "Following success (cosine similarity, w/ cumulative effort)",
+  foll_suc_in   = "Following success (cosine similarity, w/ instantaneous effort)",
+  how_many_cum    = "How many attempts needed (w/ cumulative effort)",
+  how_many_in   = "How many attempts needed (w/ instantaneous effort)",
+  ever_cum    = "Was understanding ever reached (w/ cumulative effort)",
+  ever_in = "Was understanding ever reached (w/ instantaneous effort))"
+)
+
+
+
+paper_table_e3 <- create_paper_table(
+  model_list     = model_list_paper,
+  r2_list        = r2_list_paper,
+  dv_labels      = dv_labels,
+)
+
+write.csv(paper_table_e3,
+          here(summaries, "paper_table_E3.csv"),
+          row.names = FALSE,
+          fileEncoding = "UTF-8")
+
+
+```
+
+```{r}
+#| tbl-cap: "E3 summary for all success outcomes"
+#| label: tbl-success
+#| echo: false
+
+paper_table_e3 <- read_csv(paste0(summaries, "paper_table_E3.csv"))
+
+
+paper_table_e3 |>
+  gt() |> 
+  tab_options(table.font.size = px(9)) 
+ 
+
+```
+
+#### Plot
 
 ```{r}
 #| echo: false
@@ -7854,7 +7931,7 @@ effort_success_plot <- plot_effort_success_summary(
 print(effort_success_plot)
 ggsave(here(plots, "effort_success_summary.png"),
        effort_success_plot,
-       width = 7, height = 4, dpi = 300, bg = "white")
+       width = 9, height = 5, dpi = 300, bg = "white")
 
 ```
 
