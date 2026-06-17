@@ -1180,70 +1180,49 @@
     "href": "Index.html",
     "title": "FLESH | When communication fails, the body invests more effort but not to greater effect",
     "section": "",
-    "text": "This website documents data processing pipeline developed for the study When communication fails, the body invests more effort but not to greater effect. The study is a part of the project associated with ViCom project On the FLExibility and Stability of Gesture-speecH Coordination (FLESH). The pipeline covers every step from raw data processing to feature extraction and analysis, focusing on extraction of motion and acoustic signals, cleaning and preparation of relevant analyses.\nThe repository associated with this project can be found on Github.",
-    "crumbs": [
-      "Home"
-    ]
+    "text": "This website documents data processing pipeline developed for the study When communication fails, the body invests more effort but not to greater effect. The study is a part of the project associated with ViCom project On the FLExibility and Stability of Gesture-speecH Coordination (FLESH). The pipeline covers every step from raw data processing to feature extraction and analysis, focusing on extraction of motion and acoustic signals, cleaning and preparation of relevant analyses.\nThe repository associated with this project can be found on Github."
   },
   {
     "objectID": "Index.html#two-phase-preregistration",
     "href": "Index.html#two-phase-preregistration",
     "title": "FLESH | When communication fails, the body invests more effort but not to greater effect",
     "section": "Two-phase preregistration",
-    "text": "Two-phase preregistration\nThis study has been preregistered in two phases.\nIn phase I, we preregistered the experimental design, laboratory setup and power analysis. The preregistration is available at the OSF Registries.\nIn phase II, we preregistered the research questions and hypothesis, together with code pipeline covering pre-processing, processing and the analysis itself. The preregistration is available at the OSF Registries.\nAll preregistrations are reported in a separate document and each script is available as a change-tracking report in the Github repository.",
-    "crumbs": [
-      "Home"
-    ]
+    "text": "Two-phase preregistration\nThis study has been preregistered in two phases.\nIn phase I, we preregistered the experimental design, laboratory setup and power analysis. The preregistration is available at the OSF Registries.\nIn phase II, we preregistered the research questions and hypothesis, together with code pipeline covering pre-processing, processing and the analysis itself. The preregistration is available at the OSF Registries.\nAll preregistrations are reported in a separate document and each script is available as a change-tracking report in the Github repository."
   },
   {
     "objectID": "Index.html#pipeline-overview",
     "href": "Index.html#pipeline-overview",
     "title": "FLESH | When communication fails, the body invests more effort but not to greater effect",
     "section": "Pipeline Overview",
-    "text": "Pipeline Overview\nThis study builds on multistep pipeline that serves to:\n\nextract the raw data\nprocess them\nextract relevant features\nanalyze with regards to research questions\n\nIn Methods section, we provide conceptual overview of the processing and analysis steps. Sections A-D document fully reproducible pipeline that: (1) extracts the raw data, (2) processes them into workable .csv files, (3) extracts relevant features and (4) analyze them with regard to research questions. Note that in this workflow, each step builds on the previous one. However, it is possible to use parts of the workflow for different purposes. Section E presents extended version of results.\nNote that we only store already pre-processed .csv files in the Github repository. The raw audio-video data will be available in an upcoming publication.",
-    "crumbs": [
-      "Home"
-    ]
+    "text": "Pipeline Overview\nThis study builds on multistep pipeline that serves to:\n\nextract the raw data\nprocess them\nextract relevant features\nanalyze with regards to research questions\n\nIn Methods section, we provide conceptual overview of the processing and analysis steps. Sections A-D document fully reproducible pipeline that: (1) extracts the raw data, (2) processes them into workable .csv files, (3) extracts relevant features and (4) analyze them with regard to research questions. Note that in this workflow, each step builds on the previous one. However, it is possible to use parts of the workflow for different purposes. Section E presents extended version of results.\nNote that we only store already pre-processed .csv files in the Github repository. The raw audio-video data will be available in an upcoming publication."
   },
   {
     "objectID": "Index.html#acknowledgements",
     "href": "Index.html#acknowledgements",
     "title": "FLESH | When communication fails, the body invests more effort but not to greater effect",
     "section": "Acknowledgements",
-    "text": "Acknowledgements\nWe would like to thank to all participants of this study. Special thanks also go to the Donders lab coordinator Jiska Koemans and the Donders research integrity officer Miriam Kos. We are especially grateful to the members of Donders Technical Support Group, namely Erik van den Berge, Norbert Hermesdorf, Gerard van Oijen, Maarten Snellen and Pascal de Water, for their invaluable help with the technical setup. Finally, we thank the student assistants and interns in project FLESH - Jet Lambers, Justin Snelders, Gillian Rosenberg, Hamza Nalbantoğlu - who supported this project through their efforts in participant recruitment, data collection, data processing, and annotation.",
-    "crumbs": [
-      "Home"
-    ]
+    "text": "Acknowledgements\nWe would like to thank to all participants of this study. Special thanks also go to the Donders lab coordinator Jiska Koemans and the Donders research integrity officer Miriam Kos. We are especially grateful to the members of Donders Technical Support Group, namely Erik van den Berge, Norbert Hermesdorf, Gerard van Oijen, Maarten Snellen and Pascal de Water, for their invaluable help with the technical setup. Finally, we thank the student assistants and interns in project FLESH - Jet Lambers, Justin Snelders, Gillian Rosenberg, Hamza Nalbantoğlu - who supported this project through their efforts in participant recruitment, data collection, data processing, and annotation."
   },
   {
     "objectID": "Index.html#contact",
     "href": "Index.html#contact",
     "title": "FLESH | When communication fails, the body invests more effort but not to greater effect",
     "section": "Contact",
-    "text": "Contact\nCorresponding author: kadava[at]leibniz-zas[dot]de",
-    "crumbs": [
-      "Home"
-    ]
+    "text": "Contact\nCorresponding author: kadava[at]leibniz-zas[dot]de"
   },
   {
     "objectID": "Index.html#how-to-cite",
     "href": "Index.html#how-to-cite",
     "title": "FLESH | When communication fails, the body invests more effort but not to greater effect",
     "section": "How to cite",
-    "text": "How to cite\nIf you want to use and cite and part of the coding pipeline, cite:\nKadavá, Š., Ćwiek, A., & Pouw, W.. (2025). Coding pipeline to the project Putting in the Effort: Modulation of Multimodal Effort in Communicative Breakdowns during a Gestural-Vocal Referential Game (Version 1.0.0) [Computer software]. https://github.com/sarkadava/FLESH_Effort\nIf you want to cite the project, cite\nKadavá, Š., Pouw, W., Fuchs, S., Holler, J., & Aleksandra , Ć. (2025). Putting in the Effort: Modulation of Multimodal Effort in Communicative Breakdowns during a Gestural-Vocal Referential Game. OSF Registries. https://osf.io/8ajsg",
-    "crumbs": [
-      "Home"
-    ]
+    "text": "How to cite\nIf you want to use and cite and part of the coding pipeline, cite:\nKadavá, Š., Ćwiek, A., & Pouw, W.. (2025). Coding pipeline to the project Putting in the Effort: Modulation of Multimodal Effort in Communicative Breakdowns during a Gestural-Vocal Referential Game (Version 1.0.0) [Computer software]. https://github.com/sarkadava/FLESH_Effort\nIf you want to cite the project, cite\nKadavá, Š., Pouw, W., Fuchs, S., Holler, J., & Aleksandra , Ć. (2025). Putting in the Effort: Modulation of Multimodal Effort in Communicative Breakdowns during a Gestural-Vocal Referential Game. OSF Registries. https://osf.io/8ajsg"
   },
   {
     "objectID": "Index.html#funding-and-support",
     "href": "Index.html#funding-and-support",
     "title": "FLESH | When communication fails, the body invests more effort but not to greater effect",
     "section": "Funding and support",
-    "text": "Funding and support",
-    "crumbs": [
-      "Home"
-    ]
+    "text": "Funding and support"
   },
   {
     "objectID": "Manuscript/Methods.html",

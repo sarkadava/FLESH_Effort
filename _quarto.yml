@@ -15,7 +15,7 @@ website:
     search: true
     contents:
       - text: "Home"
-        href: Index.qmd
+        href: https://sarkadava.github.io/FLESH_Effort/
       - text: "Overview of Methods"
         href: Manuscript/Methods.qmd
       - text: "Preregistration deviations"
