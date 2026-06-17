@@ -62,22 +62,20 @@ toc-title: Contents
 
 This website documents data processing pipeline developed for the study **When communication fails, the body invests more effort but not to greater effect**. The study is a part of the project associated with ViCom project [**On the FLExibility and Stability of Gesture-speecH Coordination (FLESH)**](https://vicom.info/projects/on-the-flexibility-and-stability-of-gesture-speech-coordination-flesh-evidence-from-production-comprehension-and-imitation/){target="_blank"}. The pipeline covers every step from raw data processing to feature extraction and analysis, focusing on extraction of motion and acoustic signals, cleaning and preparation of relevant analyses.
 
-![Example of multimodal signals from FLESH data](../assets/multimodal_anim.gif)
+![Example of multimodal signals from FLESH data](assets/multimodal_anim.gif)
 
 The repository associated with this project can be found on [Github](https://github.com/sarkadava/FLESH_Effort){target="_blank"}.
 
 ## Two-phase preregistration
-
 This study has been preregistered in two phases.
 
 In phase I, we preregistered the experimental design, laboratory setup and power analysis. The preregistration is available at the [OSF Registries](https://osf.io/3nygq){target="_blank"}.
 
 In phase II, we preregistered the research questions and hypothesis, together with code pipeline covering pre-processing, processing and the analysis itself. The preregistration is available at the [OSF Registries](https://osf.io/8ajsg){target="_blank"}.
 
-All preregistrations are reported in a [separate document](Prereg-deviations.qmd) and each script is available as a change-tracking report in the [Github repository](https://github.com/sarkadava/FLESH_Effort/tree/main/Prereg_deviations){target="_blank"}.
+All preregistrations are reported in a [separate document](Manuscript/Prereg-deviations.qmd) and each script is available as a change-tracking report in the [Github repository](https://github.com/sarkadava/FLESH_Effort/tree/main/Prereg_deviations){target="_blank"}.
 
 ## Pipeline Overview
-
 This study builds on multistep pipeline that serves to:
 
 - extract the raw data<br>
@@ -85,12 +83,11 @@ This study builds on multistep pipeline that serves to:
 - extract relevant features<br>
 - analyze with regards to research questions<br>
 
-In [Methods section](Methods.qmd){target="_blank"}, we provide conceptual overview of the processing and analysis steps. Sections A-D document fully reproducible pipeline that: (1) extracts the raw data, (2) processes them into workable .csv files, (3) extracts relevant features and (4) analyze them with regard to research questions. Note that in this workflow, each step builds on the previous one. However, it is possible to use parts of the workflow for different purposes. Section E presents extended version of results. 
+In [Methods section](Manuscript/Methods.qmd){target="_blank"}, we provide conceptual overview of the processing and analysis steps. Sections A-D document fully reproducible pipeline that: (1) extracts the raw data, (2) processes them into workable .csv files, (3) extracts relevant features and (4) analyze them with regard to research questions. Note that in this workflow, each step builds on the previous one. However, it is possible to use parts of the workflow for different purposes. Section E presents extended version of results. 
 
 *Note that we only store already pre-processed .csv files in the Github repository. The raw audio-video data will be available in an upcoming publication.*
 
 ## Acknowledgements
-
 We would like to thank to all participants of this study. Special thanks also go to the Donders lab coordinator Jiska Koemans and the Donders research integrity officer Miriam Kos. We are especially grateful to the members of Donders Technical Support Group, namely Erik van den Berge, Norbert Hermesdorf, Gerard van Oijen, Maarten Snellen and Pascal de Water, for their invaluable help with the technical setup. Finally, we thank the student assistants and interns in project FLESH - Jet Lambers, Justin Snelders, Gillian Rosenberg, Hamza Nalbantoğlu - who supported this project through their efforts in participant recruitment, data collection, data processing, and annotation.
 
 ## Contact
@@ -110,17 +107,17 @@ Kadavá, Š., Pouw, W., Fuchs, S., Holler, J., & Aleksandra , Ć. (2025). Puttin
 ## Funding and support
 
 <a href="https://vicom.info/" target="_blank">
-  <img src="../assets/ViCom.webp" width="110px">
+  <img src="assets/ViCom.webp" width="110px">
 </a>
 <a href="https://www.dfg.de/" target="_blank">
-  <img src="../assets/DFG-logo-blau.svg.png" width="150px">
+  <img src="assets/DFG-logo-blau.svg.png" width="150px">
 </a>
 <a href="https://www.leibniz-zas.de/de/" target="_blank">
-  <img src="../assets/logo_leibniz_zas.png" width="150px">
+  <img src="assets/logo_leibniz_zas.png" width="150px">
 </a>
 <a href="https://www.ru.nl/en/donders-institute" target="_blank">
-  <img src="../assets/donders_logo.svg" width="150px">
+  <img src="assets/donders_logo.svg" width="150px">
 </a>
 <a href="https://www.uni-goettingen.de/en/1.html" target="_blank">
-  <img src="../assets/Logo_Uni_G%C3%B6ttingen.png" width="150px">
+  <img src="assets/Logo_Uni_G%C3%B6ttingen.png" width="150px">
 </a>

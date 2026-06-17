@@ -15,7 +15,7 @@ website:
     search: true
     contents:
       - text: "Home"
-        href: Manuscript/Index.qmd
+        href: Index.qmd
       - text: "Overview of Methods"
         href: Manuscript/Methods.qmd
       - text: "Preregistration deviations"
