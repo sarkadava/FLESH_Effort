@@ -1,7 +1,126 @@
 ---
-format: html
+title: "FLESH | When communication fails, the body invests more effort but not to greater effect"
+subtitle: Supplementary Material
+author:
+  - name: Šárka Kadavá
+    affiliations:
+      - ref: donders
+      - ref: zas
+      - ref: gottingen
+  - name: Wim Pouw
+    affiliations:
+      - ref: tilburg
+  - name: Susanne Fuchs
+    affiliations:
+      - ref: zas
+  - name: Judith Holler
+    affiliations:
+      - ref: donders
+  - name: Aleksandra Ćwiek
+    affiliations:
+      - ref: cles
+
+affiliations:
+  - id: donders
+    name: Donders Institute for Brain, Cognition and Behaviour, Radboud University
+    city: Nijmegen
+    country: The Netherlands
+  - id: zas
+    name: Leibniz-Centre General Linguistics
+    city: Berlin
+    country: Germany
+  - id: gottingen
+    name: University of Göttingen
+    city: Göttingen
+    country: Germany
+  - id: tilburg
+    name: Department of Computational Cognitive Science, Research Center for Cognitive Science and Artificial Intelligence, Tilburg University
+    city: Tilburg
+    country: The Netherlands
+  - id: mpi
+    name: Max Planck Institute for Psycholinguistics
+    city: Nijmegen
+    country: The Netherlands
+  - id: cles
+    name: Center for Language Evolution Studies, Nicolaus Copernicus University in Toruń
+    city: Toruń
+    country: Poland
+  - id: ias
+    name: Institute of Advanced Studies, Nicolaus Copernicus University in Toruń
+    city: Toruń
+    country: Poland
+date-modified: today
+format:
+  html:
+    code-overflow: wrap
+    code-width: 1200  # Adjust the width in pixels
+toc: true
+toc-depth: 4
+toc-expand: 2
+toc-title: Contents
 ---
 
-# Abstract
+This website documents data processing pipeline developed for the study **When communication fails, the body invests more effort but not to greater effect**. The study is a part of the project associated with ViCom project [**On the FLExibility and Stability of Gesture-speecH Coordination (FLESH)**](https://vicom.info/projects/on-the-flexibility-and-stability-of-gesture-speech-coordination-flesh-evidence-from-production-comprehension-and-imitation/){target="_blank"}. The pipeline covers every step from raw data processing to feature extraction and analysis, focusing on extraction of motion and acoustic signals, cleaning and preparation of relevant analyses.
 
-Successful communication depends not just on what we say but also on how we repair it when understanding breaks down. People routinely respond to misunderstanding by gesturing more or speaking louder. Yet whether these responses actually reflect measurable bodily effort, and whether it helps communication, has not, to our knowledge, been directly tested. Extending the hypo- and hyper-articulation accounts to whole-body multimodal communication we ask: does regaining understanding require increased physical effort, and does that effort improve communicative outcomes? In a pre-registered biomechanical study, 61 pairs of participants conveyed concepts without language, using gestures, voice, or both, and repaired failed attempts. We measured effort directly as arm torque, vocal amplitude, and postural adjustments. Using Bayesian hierarchical models, we show that repair increases physical effort across all three channels, but that performers communicate more over time rather than more forcefully at any particular moment in time. Upper-limb effort scales with the degree of misunderstanding but this does not predict whether communication succeeds. We suggest that effort functions as an index of continued commitment rather than a mechanism for repairing misunderstanding.
+![Example of multimodal signals from FLESH data](../assets/multimodal_anim.gif)
+
+The repository associated with this project can be found on [Github](https://github.com/sarkadava/FLESH_Effort){target="_blank"}.
+
+## Two-phase preregistration
+
+This study has been preregistered in two phases.
+
+In phase I, we preregistered the experimental design, laboratory setup and power analysis. The preregistration is available at the [OSF Registries](https://osf.io/3nygq){target="_blank"}.
+
+In phase II, we preregistered the research questions and hypothesis, together with code pipeline covering pre-processing, processing and the analysis itself. The preregistration is available at the [OSF Registries](https://osf.io/8ajsg){target="_blank"}.
+
+All preregistrations are reported in a [separate document](Prereg-deviations.qmd) and each script is available as a change-tracking report in the [Github repository](https://github.com/sarkadava/FLESH_Effort/tree/main/Prereg_deviations){target="_blank"}.
+
+## Pipeline Overview
+
+This study builds on multistep pipeline that serves to:
+
+- extract the raw data<br>
+- process them<br>
+- extract relevant features<br>
+- analyze with regards to research questions<br>
+
+In [Methods section](Methods.qmd){target="_blank"}, we provide conceptual overview of the processing and analysis steps. Sections A-D document fully reproducible pipeline that: (1) extracts the raw data, (2) processes them into workable .csv files, (3) extracts relevant features and (4) analyze them with regard to research questions. Note that in this workflow, each step builds on the previous one. However, it is possible to use parts of the workflow for different purposes. Section E presents extended version of results. 
+
+*Note that we only store already pre-processed .csv files in the Github repository. The raw audio-video data will be available in an upcoming publication.*
+
+## Acknowledgements
+
+We would like to thank to all participants of this study. Special thanks also go to the Donders lab coordinator Jiska Koemans and the Donders research integrity officer Miriam Kos. We are especially grateful to the members of Donders Technical Support Group, namely Erik van den Berge, Norbert Hermesdorf, Gerard van Oijen, Maarten Snellen and Pascal de Water, for their invaluable help with the technical setup. Finally, we thank the student assistants and interns in project FLESH - Jet Lambers, Justin Snelders, Gillian Rosenberg, Hamza Nalbantoğlu - who supported this project through their efforts in participant recruitment, data collection, data processing, and annotation.
+
+## Contact
+
+Corresponding author: kadava[at]leibniz-zas[dot]de 
+
+## How to cite
+
+If you want to use and cite and part of the **coding pipeline**, cite:
+
+Kadavá, Š., Ćwiek, A., & Pouw, W.. (2025). Coding pipeline to the project Putting in the Effort: Modulation of Multimodal Effort in Communicative Breakdowns during a Gestural-Vocal Referential Game (Version 1.0.0) [Computer software]. [https://github.com/sarkadava/FLESH_Effort](https://github.com/sarkadava/FLESH_Effort)
+
+If you want to cite the **project**, cite
+
+Kadavá, Š., Pouw, W., Fuchs, S., Holler, J., & Aleksandra , Ć. (2025). Putting in the Effort: Modulation of Multimodal Effort in Communicative Breakdowns during a Gestural-Vocal Referential Game. OSF Registries. [https://osf.io/8ajsg](https://osf.io/8ajsg)
+
+## Funding and support
+
+<a href="https://vicom.info/" target="_blank">
+  <img src="../assets/ViCom.webp" width="110px">
+</a>
+<a href="https://www.dfg.de/" target="_blank">
+  <img src="../assets/DFG-logo-blau.svg.png" width="150px">
+</a>
+<a href="https://www.leibniz-zas.de/de/" target="_blank">
+  <img src="../assets/logo_leibniz_zas.png" width="150px">
+</a>
+<a href="https://www.ru.nl/en/donders-institute" target="_blank">
+  <img src="../assets/donders_logo.svg" width="150px">
+</a>
+<a href="https://www.uni-goettingen.de/en/1.html" target="_blank">
+  <img src="../assets/Logo_Uni_G%C3%B6ttingen.png" width="150px">
+</a>

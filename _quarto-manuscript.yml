@@ -65,7 +65,7 @@ book:
       country: Poland
   date: today
   chapters:
-    - index.qmd           # title page / abstract / keywords
+    - Index-manuscript.qmd           # title page / abstract / keywords
     - Main.qmd    # "Introduction" = NHB's "Main"
     - Results-discussion.qmd
     - Methods.qmd         # NHB puts Methods last
