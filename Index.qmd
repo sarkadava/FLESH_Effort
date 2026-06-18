@@ -1,5 +1,5 @@
 ---
-title: "FLESH | When communication fails, the body invests more effort but not to greater effect"
+title: "FLESH | When communication fails, physical effort increases but not to greater effect"
 subtitle: Supplementary Material
 author:
   - name: Šárka Kadavá
@@ -60,9 +60,9 @@ toc-expand: 2
 toc-title: Contents
 ---
 
-This website documents data processing pipeline developed for the study **When communication fails, the body invests more effort but not to greater effect**. The study is a part of the project associated with ViCom project [**On the FLExibility and Stability of Gesture-speecH Coordination (FLESH)**](https://vicom.info/projects/on-the-flexibility-and-stability-of-gesture-speech-coordination-flesh-evidence-from-production-comprehension-and-imitation/){target="_blank"}. The pipeline covers every step from raw data processing to feature extraction and analysis, focusing on extraction of motion and acoustic signals, cleaning and preparation of relevant analyses.
+This website documents data processing pipeline developed for the study **When communication fails, physical effort increases but not to greater effect**. The study is a part of the project associated with ViCom project [**On the FLExibility and Stability of Gesture-speecH Coordination (FLESH)**](https://vicom.info/projects/on-the-flexibility-and-stability-of-gesture-speech-coordination-flesh-evidence-from-production-comprehension-and-imitation/){target="_blank"}. The pipeline covers every step from raw data processing to feature extraction and analysis, focusing on extraction of motion and acoustic signals, cleaning and preparation of relevant analyses.
 
-![Example of multimodal signals from FLESH data](assets/multimodal_anim.gif)
+![Example of multimodal signals from FLESH data](assets/multimodal_anim.gif){fig-align="center"}
 
 The repository associated with this project can be found on [Github](https://github.com/sarkadava/FLESH_Effort){target="_blank"}.
 
@@ -90,7 +90,7 @@ The pipeline includes processing steps beyond those directly used in the current
 In [Methods section](Manuscript/Methods.qmd){target="_blank"}, we provide conceptual overview of the processing and analysis steps. Sections A-E document fully reproducible pipeline that: (1) extracts the raw data, (2) processes them into workable .csv files, (3) extracts relevant features and (4) analyze them with regard to research questions. Note that in this workflow, each step builds on the previous one. However, it is possible to use parts of the workflow for different purposes. Section F presents extended version of results. 
 
 ::: callout-note
-In the Github repository, we only store already pre-processed .csv files in the Github repository. The raw audio-video data will be available in an upcoming publication.
+We only store already pre-processed .csv files in the Github repository. The raw audio-video data will be available in an upcoming publication.
 :::
 
 ## Acknowledgements

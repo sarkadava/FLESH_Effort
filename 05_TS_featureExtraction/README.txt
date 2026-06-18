@@ -1,25 +1,15 @@
 SETUP
 
-If you continue from previous folders, you can skip steps 1-2
+If you continue from previous folders, you don't need any additional setup
 
 1) create virtual environment FLESH_TSPROCESS (we will use this environment for most of the processing steps)
 
-conda create --name FLESH_TSPROCESS python=3.12.2
-
+cd FLESH_ContinuousBodilyEffort
+conda env create -f environment.yml
 conda activate FLESH_TSPROCESS
 
 2) Add Conda Environment to Jupyter Notebook
 
-pip install ipykernel
 python -m ipykernel install --user --name=FLESH_TSPROCESS --display-name "Python (FLESH_TSPROCESS)"
-
-
-3) install necessary packages
-
-cd '\xxx\07_TS_featureExtraction'
-
-pip install -r requirements_general.txt
-
-4) open TS_extraction.ipynb
 
 
