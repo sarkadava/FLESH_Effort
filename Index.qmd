@@ -83,9 +83,15 @@ This study builds on multistep pipeline that serves to:
 - extract relevant features<br>
 - analyze with regards to research questions<br>
 
-In [Methods section](Manuscript/Methods.qmd){target="_blank"}, we provide conceptual overview of the processing and analysis steps. Sections A-D document fully reproducible pipeline that: (1) extracts the raw data, (2) processes them into workable .csv files, (3) extracts relevant features and (4) analyze them with regard to research questions. Note that in this workflow, each step builds on the previous one. However, it is possible to use parts of the workflow for different purposes. Section E presents extended version of results. 
+::: callout-note
+The pipeline includes processing steps beyond those directly used in the current analyses, as additional features are extracted for use in future research.
+::: 
 
-*Note that we only store already pre-processed .csv files in the Github repository. The raw audio-video data will be available in an upcoming publication.*
+In [Methods section](Manuscript/Methods.qmd){target="_blank"}, we provide conceptual overview of the processing and analysis steps. Sections A-E document fully reproducible pipeline that: (1) extracts the raw data, (2) processes them into workable .csv files, (3) extracts relevant features and (4) analyze them with regard to research questions. Note that in this workflow, each step builds on the previous one. However, it is possible to use parts of the workflow for different purposes. Section F presents extended version of results. 
+
+::: callout-note
+In the Github repository, we only store already pre-processed .csv files in the Github repository. The raw audio-video data will be available in an upcoming publication.
+:::
 
 ## Acknowledgements
 We would like to thank to all participants of this study. Special thanks also go to the Donders lab coordinator Jiska Koemans and the Donders research integrity officer Miriam Kos. We are especially grateful to the members of Donders Technical Support Group, namely Erik van den Berge, Norbert Hermesdorf, Gerard van Oijen, Maarten Snellen and Pascal de Water, for their invaluable help with the technical setup. Finally, we thank the student assistants and interns in project FLESH - Jet Lambers, Justin Snelders, Gillian Rosenberg, Hamza Nalbantoğlu - who supported this project through their efforts in participant recruitment, data collection, data processing, and annotation.
