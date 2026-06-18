@@ -1,8 +1,8 @@
-# Github repository to project Putting in the Effort: Modulation of Multimodal Effort in Communicative Breakdowns during a Gestural-Vocal Referential Game
+# Github repository to project When communication fails, physical effort increases but not to greater effect
 
 ![Multimodal animation](assets/multimodal_anim.gif)
 
-This repository stores coding pipeline to process and analyze data associated with project "Putting in the Effort: Modulation of Multimodal Effort in Communicative Breakdowns during a Gestural-Vocal Referential Game". This project investigates how people modulate their effort when they encounter communicative breakdowns in a referential game. The project is part of the [FLESH project](https://vicom.info/projects/on-the-flexibility-and-stability-of-gesture-speech-coordination-flesh-evidence-from-production-comprehension-and-imitation/).
+This repository stores coding pipeline to process and analyze data associated with project "PWhen communication fails, physical effort increases but not to greater effect". This project investigates how people modulate their effort when they encounter communicative breakdowns in a referential game. The project is part of the [FLESH project](https://vicom.info/projects/on-the-flexibility-and-stability-of-gesture-speech-coordination-flesh-evidence-from-production-comprehension-and-imitation/).
 
 This project has been preregistered as a two-phase preregistration. In [Phase I](https://osf.io/3nygq), we preregistered the data collection. In [Phase II](https://osf.io/8ajsg), we have preregistered the analysis plan, including the processing steps.
 
@@ -11,7 +11,7 @@ This project has been preregistered as a two-phase preregistration. In [Phase I]
 [✅] Preregistration of data collection  <br>
 [✅] Data collection completed  <br>
 [✅] Preregistration of analysis and processing steps  <br>
-[] Preprint published  <br>
+[✅] Preprint published  <br>
 [] Manuscript published  <br>
 [] Data available at open access repository  <br>
 
@@ -24,56 +24,40 @@ You can browse through the pipeline as a [website](https://sarkadava.github.io/F
 
 The pipeline is divided into the following steps:
 
-- Pre-processing I: From XDF to raw files
-
-- Motion tracking I: Preparation of videos
-- Motion tracking II: 2D pose estimation via OpenPose
-- Motion tracking III: Triangulation via Pose2sim
-- Motion tracking IV: Modeling inverse kinematics and dynamics
-
-- Processing I: Motion tracking and balance
-- Processing II: Acoustics
-- Processing III: Merging multimodal data
-
-- Movement annotation I: Preparing training data and data for classifier
-- Movement annotation II: Training movement classifier, and annotating timeseries data
-- Movement annotation III: Computing interrater agreement between manual and automatic annotation
-
-- Final merge: Merging timeseries with annotations
-
+- Pre-processing: Processing recorded XDF files into workable trial formats
+- Motion tracking: 3D pose and joint estimation using OpenPose, Pose2sim and OpenSim 
+- Processing: Processing of motion, balance and acoustics into merged, workable csv files
 - Computing concept similarity using ConceptNet word embeddings
 - Extraction of effort-related features
-
-- Exploratory Analysis I: Using PCA to identify effort dimensions
-- Exploratory Analysis II: Identifying effort-related features contributing to misunderstanding resolution
-
 - Statistical analysis: Modelling the effect of communicative attempt (H1) and answer similarity (H2) on effort
 
 ## Prerequisites
 
 If you wish to use only some steps of the pipeline, you will find the prerequisites and installation guide in the respective folder.
 
-If you wish to run the entire pipeline, you can follow the steps below. Note that this project mostly in Python, but implements also some steps in R. Note that, for example, Visual Studio Code allows one to run both Python and R scripts. Additionally, the workflow also depends on some external softwares such as [Praat](https://www.fon.hum.uva.nl/praat/), [ELAN](https://archive.mpi.nl/tla/elan) and [EasyDIAG](https://sourceforge.net/projects/easydiag/). Refer to the softwares' documentations for installation.
+If you wish to run the entire pipeline, you can follow the steps below. Note that this project mostly in Python, but implements also some steps in R. Note that, for example, Visual Studio Code allows one to run both Python and R scripts. Additionally, the workflow also depends on some external softwares such as [Praat](https://www.fon.hum.uva.nl/praat/). Refer to the software' documentations for installation.
 
-To prevent any conflicts in dependencies, we recommend to follow our workflow of creating three virtual environments, one for general processing steps, one for pose2sim and one for OpenSim scripting. In the following installation, we will setup environment for general processing steps, but you can find the installation instructions for the other two environments in their respective folders (02_MotionTracking_processing).
+To prevent any conflicts in dependencies, we recommend to follow our workflow of creating three virtual environments, one for general processing steps, and one for motion tracking. The following installation sets up both environments.
 
 ```bash
 # 1 - Clone the Repository
 git clone https://github.com/sarkadava/FLESH_Effort.git
 cd FLESH_ContinuousBodilyEffort
 
-# 2 - Create a FLESH_TSPROCESS Conda Environment (Recommended)
-conda create --name FLESH_TSPROCESS python=3.12.2
+# 2.1 - Create a FLESH_TSPROCESS Conda Environment (Recommended)
+conda env create -f environment.yml
+
+# 2.2 - Create FLESH_MTRACK Conda Environment (Recommended)
+conda env create -f mt-environment.yml
+
+# 3 - Add Both Conda Environments to Jupyter Notebook
 conda activate FLESH_TSPROCESS
-
-# 3 - Install Dependencies
-pip install -r requirements_tsprocess.txt
-
-# 4 - Add Conda Environment to Jupyter Notebook
-pip install ipykernel
 python -m ipykernel install --user --name=FLESH_TSPROCESS --display-name "Python (FLESH_TSPROCESS)"
 
-# 5 - Run the Jupyter Notebook (Optional - You can also open the scripts in Visual Studio Code)
+conda activate FLESH_MTRACK
+python -m ipykernel install --user --name=FLESH_MTRACK --display-name "Python (FLESH_MTRACK)"
+
+# 4 - Run the Jupyter Notebook (Optional - You can also open the scripts in Visual Studio Code)
 jupyter notebook
 ```
 
@@ -81,11 +65,11 @@ jupyter notebook
 
 If you want to use and cite and part of the **coding pipeline**, cite:
 
-Kadavá, Š., Ćwiek, A., & Pouw, W.. (2025). Coding pipeline to the project Putting in the Effort: Modulation of Multimodal Effort in Communicative Breakdowns during a Gestural-Vocal Referential Game (Version 1.0.0) [Computer software]. https://github.com/sarkadava/FLESH_Effort
+[xxx]
 
-If you want to cite the **project**, cite:
+If you want to cite the **paper**, cite:
 
-Kadavá, Š., Pouw, W., Fuchs, S., Holler, J., & Aleksandra , Ć. (2025). Putting in the Effort: Modulation of Multimodal Effort in Communicative Breakdowns during a Gestural-Vocal Referential Game. OSF Registries. https://osf.io/8ajsg
+[xxx]
 
 ## Contact
 
