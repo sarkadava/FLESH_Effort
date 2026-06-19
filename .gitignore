@@ -24,8 +24,6 @@
 /shign
 /To_discuss
 
-/05_finalMerge
-
 /00_raw
 /01_XDF_processing/data/Data_processed/Data_trials
 01_XDF_processing/data/Data_processed
@@ -33,30 +31,19 @@
 02_MotionTracking_processing/.vscode/settings.json
 
 02_MotionTracking_processing/Pose2Sim
-/04_TS_movementAnnotation
-/04_TS_soundAnnotation
-/08_Analysis_XGBoost
-/08_Analysis_Modeling/Effort_Bayesian_files
-/01_XDF_processing/xdf_workflow_final_files - Copy
+
 /Doc_tracking
 
 **/*.quarto_ipynb
 04_ConceptSimilarity/numberbatch/numberbatch.txt
 /06_Analysis_Modeling/models
 /03_TS_processing/TS_acoustics
-/03_TS_processing/TS_merged
 /03_TS_processing/TS_motiontracking
-/02_MotionTracking_processing/03_Track_pose2sim_OpenSim_files
-/03_TS_processing/01_TS_processing_motion_files
-/03_TS_processing/02_TS_processing_acoustics_files
-/03_TS_processing/03_TS_merging_files
-/04_ConceptSimilarity/ConceptNet_similarity_files
-/05_TS_featureExtraction/00_Condition_adherence_files
-/05_TS_featureExtraction/01_TS_extraction_files
-/05_TS_featureExtraction/02_Explorations_and_viz_files
+
+
 /site_libs
 *.ttf
 05_TS_featureExtraction/helvetica-compressed-5871d14b6903a.otf
 05_TS_featureExtraction/helvetica-rounded-bold-5871d05ead8de.otf
 05_TS_featureExtraction/Plot_for_multiplot.ipynb
-/06_Analysis_Modeling/Bayesian_modeling_cache
+
