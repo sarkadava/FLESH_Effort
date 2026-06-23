@@ -1,3 +1,6 @@
+Note that raw data are not available in this repository. They will be published in an upcoming work. 
+If you are interested in viewing the data, contact kadava[et]leibniz[dot]de
+
 SETUP
 
 If you continue from 01_XDF_processing, you can skip steps 1-3

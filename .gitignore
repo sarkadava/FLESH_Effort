@@ -37,6 +37,15 @@
 02_MotionTracking_processing/projectdata/*/*/raw-2d
 02_MotionTracking_processing/projectdata/*/opensim
 02_MotionTracking_processing/projectdata/*/*/Config.toml
+02_MotionTracking_processing/projectdata/*/*/*/*/*.png
+
+*.sto
+*.osim
+*.trc
+*.xml
+*.csv
+*.txt
+*_processed.mot
 
 
 
