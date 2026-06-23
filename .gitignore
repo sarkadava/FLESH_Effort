@@ -14,8 +14,7 @@
 
 01_XDF_processing/data/Data_processed/CsvDataTS_raw
 
-02_MotionTracking_processing/openpose/bin
-02_MotionTracking_processing/projectdata
+
 02_MotionTracking_processing/Pose2Sim
 *.caffemodel
 
@@ -25,12 +24,21 @@
 /To_discuss
 
 /00_raw
-/01_XDF_processing/data/Data_processed/Data_trials
-01_XDF_processing/data/Data_processed
-02_MotionTracking_processing/misc
-02_MotionTracking_processing/.vscode/settings.json
 
-02_MotionTracking_processing/Pose2Sim
+/01_XDF_processing/data/Data_processed/Data_trials/*.csv
+/01_XDF_processing/data/Data_processed/Data_trials/*.avi
+/01_XDF_processing/data/Data_processed/Data_trials/*.wav
+/01_XDF_processing/data/Data_processed/Data_trials/Audio/*.wav
+/01_XDF_processing/data/Data_processed/Data_trials/Audio_48/*.wav
+
+02_MotionTracking_processing/openpose/bin
+02_MotionTracking_processing/projectdata/*/*/pose
+02_MotionTracking_processing/projectdata/*/*/pose-2d-trackingvideos
+02_MotionTracking_processing/projectdata/*/*/raw-2d
+02_MotionTracking_processing/projectdata/*/opensim
+02_MotionTracking_processing/projectdata/*/*/Config.toml
+
+
 
 /Doc_tracking
 
@@ -39,6 +47,7 @@
 /06_Analysis_Modeling/models
 /03_TS_processing/TS_acoustics
 /03_TS_processing/TS_motiontracking
+/03_TS_processing/TS_merged
 
 
 /site_libs

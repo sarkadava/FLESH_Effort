@@ -1,3 +1,6 @@
+Note that raw data are not available in this repository. They will be published in an upcoming work. 
+If you are interested in viewing the data, contact kadava[et]leibniz[dot]de
+
 SETUP
 
 1) create virtual environment FLESH_TSPROCESS (we will use this environment for most of the processing steps)
