@@ -40,12 +40,12 @@
 02_MotionTracking_processing/projectdata/*/*/*/*/*.png
 
 *.sto
-*.osim
-*.trc
 *.xml
 *.csv
 *.txt
-
+*.osim
+*processed.trc
+*butterworth.trc
 
 
 /Doc_tracking
