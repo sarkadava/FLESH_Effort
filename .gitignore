@@ -45,8 +45,6 @@
 *.txt
 *.osim
 *processed.trc
-*butterworth.trc
-
 
 /Doc_tracking
 
