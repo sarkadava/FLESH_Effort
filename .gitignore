@@ -44,7 +44,6 @@
 *.csv
 *.txt
 *.osim
-*processed.trc
 
 /Doc_tracking
 
