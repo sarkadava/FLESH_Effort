@@ -40,7 +40,6 @@
 02_MotionTracking_processing/projectdata/*/*/*/*/*.png
 
 *.xml
-*.csv
 
 
 /Doc_tracking
