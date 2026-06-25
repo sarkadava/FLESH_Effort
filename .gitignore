@@ -39,9 +39,9 @@
 02_MotionTracking_processing/projectdata/*/*/Config.toml
 02_MotionTracking_processing/projectdata/*/*/*/*/*.png
 
-*.sto
 *.xml
 *.csv
+*errors.sto
 
 /Doc_tracking
 
