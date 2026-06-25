@@ -43,7 +43,6 @@
 *.xml
 *.csv
 *.txt
-*.osim
 
 /Doc_tracking
 
