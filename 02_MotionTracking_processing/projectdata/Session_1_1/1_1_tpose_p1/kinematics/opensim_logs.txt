@@ -1,0 +1,138 @@
+[2025-12-17 19:11:19.684] [info] Updating Model file from 40000 to latest format...
+[2025-12-17 19:11:19.691] [info] Loaded model Pose2Sim_OpenPose from file F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\OpenSim_Setup\Model_Pose2Sim_Body135.osim
+[2025-12-17 19:11:20.069] [info] Processing subject Pose2Sim_scaled...
+[2025-12-17 19:11:20.069] [info] Step 1: Loading generic model
+[2025-12-17 19:11:20.093] [info] Loaded model Pose2Sim_OpenPose from file f:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_1_1\1_1_tpose_p1\kinematics\1_1_tpose_p1_0-20_filt_butterworth_processed.osim
+[2025-12-17 19:11:20.336] [info] Step 2: Scaling generic model
+[2025-12-17 19:11:20.394] [info] Wrote model file 'F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_1_1\1_1_tpose_p1\kinematics\1_1_tpose_p1_0-20_filt_butterworth_processed.osim' from model.
+[2025-12-17 19:11:20.471] [info] Loaded model Pose2Sim_scaled from file F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_1_1\1_1_tpose_p1\kinematics\1_1_tpose_p1_0-20_filt_butterworth_processed.osim
+[2025-12-17 19:11:20.715] [cout] [info] 
+               MODEL: Pose2Sim_scaled
+         coordinates: 62
+              forces: 0
+           actuators: 0
+             muscles: 0
+            analyses: 0
+              probes: 0
+              bodies: 30
+              joints: 30
+         constraints: 20
+             markers: 27
+         controllers: 0
+  contact geometries: 0
+misc modelcomponents: 0
+[2025-12-17 19:11:20.715] [info] Running tool .
+[2025-12-17 19:11:21.748] [info] Frame 0 (t = 0.0):	 total squared error = 0.0173846, marker error: RMS = 0.0253747, max = 0.0450185 (RPinky)
+[2025-12-17 19:11:21.843] [info] Frame 1 (t = 0.0166667):	 total squared error = 0.0167871, marker error: RMS = 0.0249348, max = 0.0442033 (RPinky)
+[2025-12-17 19:11:21.881] [info] Frame 2 (t = 0.0333333):	 total squared error = 0.0165617, marker error: RMS = 0.0247669, max = 0.0436523 (RShoulder)
+[2025-12-17 19:11:21.957] [info] Frame 3 (t = 0.05):	 total squared error = 0.0164393, marker error: RMS = 0.0246752, max = 0.0443812 (RShoulder)
+[2025-12-17 19:11:21.985] [info] Frame 4 (t = 0.0666667):	 total squared error = 0.0164271, marker error: RMS = 0.024666, max = 0.0444901 (RShoulder)
+[2025-12-17 19:11:22.075] [info] Frame 5 (t = 0.0833333):	 total squared error = 0.0164233, marker error: RMS = 0.0246631, max = 0.0446701 (RShoulder)
+[2025-12-17 19:11:22.236] [info] Frame 6 (t = 0.1):	 total squared error = 0.0164686, marker error: RMS = 0.0246972, max = 0.0446689 (RShoulder)
+[2025-12-17 19:11:22.251] [info] Frame 7 (t = 0.116667):	 total squared error = 0.0165976, marker error: RMS = 0.0247936, max = 0.0447718 (RShoulder)
+[2025-12-17 19:11:22.283] [info] Frame 8 (t = 0.133333):	 total squared error = 0.0167875, marker error: RMS = 0.0249351, max = 0.0449875 (RShoulder)
+[2025-12-17 19:11:22.348] [info] Frame 9 (t = 0.15):	 total squared error = 0.0169858, marker error: RMS = 0.0250819, max = 0.045421 (RShoulder)
+[2025-12-17 19:11:22.374] [info] Frame 10 (t = 0.166667):	 total squared error = 0.0171939, marker error: RMS = 0.0252351, max = 0.0459855 (RShoulder)
+[2025-12-17 19:11:22.414] [info] Frame 11 (t = 0.183333):	 total squared error = 0.0173582, marker error: RMS = 0.0253554, max = 0.0466094 (RShoulder)
+[2025-12-17 19:11:22.435] [info] Frame 12 (t = 0.2):	 total squared error = 0.0175658, marker error: RMS = 0.0255065, max = 0.0473323 (RShoulder)
+[2025-12-17 19:11:22.463] [info] Frame 13 (t = 0.216667):	 total squared error = 0.0177466, marker error: RMS = 0.0256375, max = 0.0477179 (RShoulder)
+[2025-12-17 19:11:22.569] [info] Frame 14 (t = 0.233333):	 total squared error = 0.0179114, marker error: RMS = 0.0257563, max = 0.0476683 (RShoulder)
+[2025-12-17 19:11:22.644] [info] Frame 15 (t = 0.25):	 total squared error = 0.0180638, marker error: RMS = 0.0258656, max = 0.0477805 (RShoulder)
+[2025-12-17 19:11:22.774] [info] Frame 16 (t = 0.266667):	 total squared error = 0.018384, marker error: RMS = 0.0260938, max = 0.0475416 (RShoulder)
+[2025-12-17 19:11:22.809] [info] Frame 17 (t = 0.283333):	 total squared error = 0.0191832, marker error: RMS = 0.026655, max = 0.0476457 (RShoulder)
+[2025-12-17 19:11:22.876] [info] Frame 18 (t = 0.3):	 total squared error = 0.0207605, marker error: RMS = 0.0277292, max = 0.0491747 (RPinky)
+[2025-12-17 19:11:22.909] [info] Frame 19 (t = 0.316667):	 total squared error = 0.0238289, marker error: RMS = 0.0297078, max = 0.0563501 (RThumb)
+[2025-12-17 19:11:23.069] [info] InverseKinematicsTool completed 20 frames in 1 second(s).
+[2025-12-17 19:12:18.771] [info] Set log level to Info.
+[2025-12-19 02:27:00.845] [info] Updating Model file from 40000 to latest format...
+[2025-12-19 02:27:00.863] [info] Loaded model Pose2Sim_OpenPose from file D:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\OpenSim_Setup\Model_Pose2Sim_Body135.osim
+[2025-12-19 02:27:01.041] [info] Processing subject Pose2Sim_scaled...
+[2025-12-19 02:27:01.041] [info] Step 1: Loading generic model
+[2025-12-19 02:27:01.051] [info] Loaded model Pose2Sim_OpenPose from file d:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_1_1\1_1_tpose_p1\kinematics\1_1_tpose_p1_0-20_filt_butterworth_processed.osim
+[2025-12-19 02:27:01.191] [info] Step 2: Scaling generic model
+[2025-12-19 02:27:01.220] [info] Wrote model file 'D:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_1_1\1_1_tpose_p1\kinematics\1_1_tpose_p1_0-20_filt_butterworth_processed.osim' from model.
+[2025-12-19 02:27:01.249] [info] Loaded model Pose2Sim_scaled from file D:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_1_1\1_1_tpose_p1\kinematics\1_1_tpose_p1_0-20_filt_butterworth_processed.osim
+[2025-12-19 02:27:01.383] [cout] [info] 
+               MODEL: Pose2Sim_scaled
+         coordinates: 62
+              forces: 0
+           actuators: 0
+             muscles: 0
+            analyses: 0
+              probes: 0
+              bodies: 30
+              joints: 30
+         constraints: 20
+             markers: 27
+         controllers: 0
+  contact geometries: 0
+misc modelcomponents: 0
+[2025-12-19 02:27:01.383] [info] Running tool .
+[2025-12-19 02:27:02.498] [info] Frame 0 (t = 0.0):	 total squared error = 0.0172837, marker error: RMS = 0.0253009, max = 0.0442823 (RPinky)
+[2025-12-19 02:27:02.611] [info] Frame 1 (t = 0.0166667):	 total squared error = 0.0166909, marker error: RMS = 0.0248633, max = 0.0446928 (RShoulder)
+[2025-12-19 02:27:02.659] [info] Frame 2 (t = 0.0333333):	 total squared error = 0.0164543, marker error: RMS = 0.0246864, max = 0.0448754 (RShoulder)
+[2025-12-19 02:27:02.753] [info] Frame 3 (t = 0.05):	 total squared error = 0.0163395, marker error: RMS = 0.0246001, max = 0.0456127 (RShoulder)
+[2025-12-19 02:27:02.808] [info] Frame 4 (t = 0.0666667):	 total squared error = 0.0163243, marker error: RMS = 0.0245887, max = 0.0459356 (RShoulder)
+[2025-12-19 02:27:02.904] [info] Frame 5 (t = 0.0833333):	 total squared error = 0.016325, marker error: RMS = 0.0245892, max = 0.0462395 (RShoulder)
+[2025-12-19 02:27:03.024] [info] Frame 6 (t = 0.1):	 total squared error = 0.0163577, marker error: RMS = 0.0246139, max = 0.0465256 (RShoulder)
+[2025-12-19 02:27:03.098] [info] Frame 7 (t = 0.116667):	 total squared error = 0.0164916, marker error: RMS = 0.0247143, max = 0.0466873 (RShoulder)
+[2025-12-19 02:27:03.202] [info] Frame 8 (t = 0.133333):	 total squared error = 0.0166591, marker error: RMS = 0.0248396, max = 0.0470928 (RShoulder)
+[2025-12-19 02:27:03.220] [info] Frame 9 (t = 0.15):	 total squared error = 0.016885, marker error: RMS = 0.0250074, max = 0.0471901 (RShoulder)
+[2025-12-19 02:27:03.257] [info] Frame 10 (t = 0.166667):	 total squared error = 0.0170941, marker error: RMS = 0.0251618, max = 0.0480484 (RShoulder)
+[2025-12-19 02:27:03.307] [info] Frame 11 (t = 0.183333):	 total squared error = 0.0172435, marker error: RMS = 0.0252715, max = 0.0485784 (RShoulder)
+[2025-12-19 02:27:03.347] [info] Frame 12 (t = 0.2):	 total squared error = 0.0174384, marker error: RMS = 0.0254139, max = 0.0492906 (RShoulder)
+[2025-12-19 02:27:03.361] [info] Frame 13 (t = 0.216667):	 total squared error = 0.0176366, marker error: RMS = 0.0255579, max = 0.04955 (RShoulder)
+[2025-12-19 02:27:03.634] [info] Frame 14 (t = 0.233333):	 total squared error = 0.0177831, marker error: RMS = 0.0256639, max = 0.0494435 (RShoulder)
+[2025-12-19 02:27:03.722] [info] Frame 15 (t = 0.25):	 total squared error = 0.0179431, marker error: RMS = 0.0257791, max = 0.0493866 (RShoulder)
+[2025-12-19 02:27:03.926] [info] Frame 16 (t = 0.266667):	 total squared error = 0.018272, marker error: RMS = 0.0260142, max = 0.0492878 (RShoulder)
+[2025-12-19 02:27:03.964] [info] Frame 17 (t = 0.283333):	 total squared error = 0.0190929, marker error: RMS = 0.0265922, max = 0.0490053 (RShoulder)
+[2025-12-19 02:27:04.045] [info] Frame 18 (t = 0.3):	 total squared error = 0.0206516, marker error: RMS = 0.0276564, max = 0.0495725 (RShoulder)
+[2025-12-19 02:27:04.078] [info] Frame 19 (t = 0.316667):	 total squared error = 0.0237457, marker error: RMS = 0.0296559, max = 0.0562505 (RThumb)
+[2025-12-19 02:27:04.081] [info] InverseKinematicsTool completed 20 frames in 2 second(s).
+[2025-12-19 02:27:18.975] [info] Set log level to Info.
+[2026-02-20 19:19:12.584] [info] Updating Model file from 40000 to latest format...
+[2026-02-20 19:19:12.615] [info] Loaded model Pose2Sim_OpenPose from file F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\OpenSim_Setup\Model_Pose2Sim_Body135.osim
+[2026-02-20 19:19:13.058] [info] Processing subject Pose2Sim_scaled...
+[2026-02-20 19:19:13.058] [info] Step 1: Loading generic model
+[2026-02-20 19:19:13.104] [info] Loaded model Pose2Sim_OpenPose from file f:\flesh_data_processed\02_MotionTracking_processing\projectdata\Session_1_1\1_1_tpose_p1\kinematics\1_1_tpose_p1_0-20_filt_butterworth_processed.osim
+[2026-02-20 19:19:13.459] [info] Step 2: Scaling generic model
+[2026-02-20 19:19:13.518] [info] Wrote model file 'F:\flesh_data_processed\02_MotionTracking_processing\projectdata\Session_1_1\1_1_tpose_p1\kinematics\1_1_tpose_p1_0-20_filt_butterworth_processed.osim' from model.
+[2026-02-20 19:19:13.625] [info] Loaded model Pose2Sim_scaled from file F:\flesh_data_processed\02_MotionTracking_processing\projectdata\Session_1_1\1_1_tpose_p1\kinematics\1_1_tpose_p1_0-20_filt_butterworth_processed.osim
+[2026-02-20 19:19:13.916] [cout] [info] 
+               MODEL: Pose2Sim_scaled
+         coordinates: 62
+              forces: 0
+           actuators: 0
+             muscles: 0
+            analyses: 0
+              probes: 0
+              bodies: 30
+              joints: 30
+         constraints: 20
+             markers: 27
+         controllers: 0
+  contact geometries: 0
+misc modelcomponents: 0
+[2026-02-20 19:19:13.916] [info] Running tool .
+[2026-02-20 19:19:14.849] [info] Frame 0 (t = 0.0):	 total squared error = 0.0172825, marker error: RMS = 0.0253001, max = 0.0443165 (RPinky)
+[2026-02-20 19:19:14.942] [info] Frame 1 (t = 0.0169492):	 total squared error = 0.0167193, marker error: RMS = 0.0248844, max = 0.0440488 (RShoulder)
+[2026-02-20 19:19:15.009] [info] Frame 2 (t = 0.0338983):	 total squared error = 0.01644, marker error: RMS = 0.0246756, max = 0.0452060 (RShoulder)
+[2026-02-20 19:19:15.049] [info] Frame 3 (t = 0.0508475):	 total squared error = 0.0163447, marker error: RMS = 0.0246040, max = 0.0454571 (RShoulder)
+[2026-02-20 19:19:15.074] [info] Frame 4 (t = 0.0677966):	 total squared error = 0.0163341, marker error: RMS = 0.0245961, max = 0.0459058 (RShoulder)
+[2026-02-20 19:19:15.186] [info] Frame 5 (t = 0.0847458):	 total squared error = 0.0163115, marker error: RMS = 0.024579, max = 0.0462949 (RShoulder)
+[2026-02-20 19:19:15.278] [info] Frame 6 (t = 0.101695):	 total squared error = 0.016373, marker error: RMS = 0.0246253, max = 0.0465711 (RShoulder)
+[2026-02-20 19:19:15.400] [info] Frame 7 (t = 0.118644):	 total squared error = 0.0164705, marker error: RMS = 0.0246985, max = 0.0466811 (RShoulder)
+[2026-02-20 19:19:15.462] [info] Frame 8 (t = 0.135593):	 total squared error = 0.016673, marker error: RMS = 0.0248499, max = 0.0468738 (RShoulder)
+[2026-02-20 19:19:15.476] [info] Frame 9 (t = 0.152542):	 total squared error = 0.0169023, marker error: RMS = 0.0250202, max = 0.0469683 (RShoulder)
+[2026-02-20 19:19:15.511] [info] Frame 10 (t = 0.169492):	 total squared error = 0.0170962, marker error: RMS = 0.0251633, max = 0.0477561 (RShoulder)
+[2026-02-20 19:19:15.563] [info] Frame 11 (t = 0.186441):	 total squared error = 0.0172593, marker error: RMS = 0.025283, max = 0.0485488 (RShoulder)
+[2026-02-20 19:19:15.582] [info] Frame 12 (t = 0.203390):	 total squared error = 0.0174594, marker error: RMS = 0.0254292, max = 0.0490845 (RShoulder)
+[2026-02-20 19:19:15.604] [info] Frame 13 (t = 0.220339):	 total squared error = 0.0176666, marker error: RMS = 0.0255796, max = 0.0498799 (RShoulder)
+[2026-02-20 19:19:15.736] [info] Frame 14 (t = 0.237288):	 total squared error = 0.0177867, marker error: RMS = 0.0256664, max = 0.049492 (RShoulder)
+[2026-02-20 19:19:15.877] [info] Frame 15 (t = 0.254237):	 total squared error = 0.0179292, marker error: RMS = 0.0257691, max = 0.0494021 (RShoulder)
+[2026-02-20 19:19:15.994] [info] Frame 16 (t = 0.271186):	 total squared error = 0.0182634, marker error: RMS = 0.0260081, max = 0.0493008 (RShoulder)
+[2026-02-20 19:19:16.027] [info] Frame 17 (t = 0.288136):	 total squared error = 0.0190642, marker error: RMS = 0.0265722, max = 0.0492904 (RShoulder)
+[2026-02-20 19:19:16.055] [info] Frame 18 (t = 0.305085):	 total squared error = 0.0207112, marker error: RMS = 0.0276963, max = 0.0492617 (RShoulder)
+[2026-02-20 19:19:16.137] [info] Frame 19 (t = 0.322034):	 total squared error = 0.0237124, marker error: RMS = 0.0296351, max = 0.056254 (RThumb)
+[2026-02-20 19:19:16.139] [info] InverseKinematicsTool completed 20 frames in 1 second(s).
+[2026-02-20 19:19:28.048] [info] Set log level to Info.

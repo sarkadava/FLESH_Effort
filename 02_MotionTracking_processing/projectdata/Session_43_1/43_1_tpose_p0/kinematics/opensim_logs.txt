@@ -1,0 +1,168 @@
+[2025-12-18 13:04:54.704] [info] Updating Model file from 40000 to latest format...
+[2025-12-18 13:04:54.711] [info] Loaded model Pose2Sim_OpenPose from file F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\OpenSim_Setup\Model_Pose2Sim_Body135.osim
+[2025-12-18 13:04:55.054] [info] Processing subject Pose2Sim_scaled...
+[2025-12-18 13:04:55.054] [info] Step 1: Loading generic model
+[2025-12-18 13:04:55.079] [info] Loaded model Pose2Sim_OpenPose from file f:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_43_1\43_1_tpose_p0\kinematics\43_1_tpose_p0_0-30_filt_butterworth_processed.osim
+[2025-12-18 13:04:55.315] [info] Step 2: Scaling generic model
+[2025-12-18 13:04:55.367] [info] Wrote model file 'F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_43_1\43_1_tpose_p0\kinematics\43_1_tpose_p0_0-30_filt_butterworth_processed.osim' from model.
+[2025-12-18 13:04:55.438] [info] Loaded model Pose2Sim_scaled from file F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_43_1\43_1_tpose_p0\kinematics\43_1_tpose_p0_0-30_filt_butterworth_processed.osim
+[2025-12-18 13:04:55.695] [cout] [info] 
+               MODEL: Pose2Sim_scaled
+         coordinates: 62
+              forces: 0
+           actuators: 0
+             muscles: 0
+            analyses: 0
+              probes: 0
+              bodies: 30
+              joints: 30
+         constraints: 20
+             markers: 27
+         controllers: 0
+  contact geometries: 0
+misc modelcomponents: 0
+[2025-12-18 13:04:55.700] [info] Running tool .
+[2025-12-18 13:04:56.001] [info] Frame 0 (t = 0.0):	 total squared error = 0.0197621, marker error: RMS = 0.0270542, max = 0.0483997 (RPinky)
+[2025-12-18 13:04:56.047] [info] Frame 1 (t = 0.0166667):	 total squared error = 0.0200248, marker error: RMS = 0.0272334, max = 0.0480199 (RPinky)
+[2025-12-18 13:04:56.069] [info] Frame 2 (t = 0.0333333):	 total squared error = 0.0201695, marker error: RMS = 0.0273317, max = 0.0475649 (RPinky)
+[2025-12-18 13:04:56.102] [info] Frame 3 (t = 0.05):	 total squared error = 0.0202063, marker error: RMS = 0.0273566, max = 0.0474173 (RThumb)
+[2025-12-18 13:04:56.135] [info] Frame 4 (t = 0.0666667):	 total squared error = 0.0202190, marker error: RMS = 0.0273652, max = 0.0481372 (RThumb)
+[2025-12-18 13:04:56.167] [info] Frame 5 (t = 0.0833333):	 total squared error = 0.0201888, marker error: RMS = 0.0273447, max = 0.0487162 (RThumb)
+[2025-12-18 13:04:56.228] [info] Frame 6 (t = 0.1):	 total squared error = 0.0201737, marker error: RMS = 0.0273345, max = 0.0490198 (RThumb)
+[2025-12-18 13:04:56.271] [info] Frame 7 (t = 0.116667):	 total squared error = 0.0202402, marker error: RMS = 0.0273795, max = 0.0487352 (RThumb)
+[2025-12-18 13:04:56.295] [info] Frame 8 (t = 0.133333):	 total squared error = 0.0203814, marker error: RMS = 0.0274748, max = 0.0483611 (RThumb)
+[2025-12-18 13:04:56.348] [info] Frame 9 (t = 0.15):	 total squared error = 0.0204040, marker error: RMS = 0.0274901, max = 0.0472562 (RThumb)
+[2025-12-18 13:04:56.420] [info] Frame 10 (t = 0.166667):	 total squared error = 0.0205512, marker error: RMS = 0.0275891, max = 0.0467008 (RPinky)
+[2025-12-18 13:04:56.483] [info] Frame 11 (t = 0.183333):	 total squared error = 0.0207127, marker error: RMS = 0.0276973, max = 0.0469785 (RPinky)
+[2025-12-18 13:04:56.520] [info] Frame 12 (t = 0.2):	 total squared error = 0.0209159, marker error: RMS = 0.0278328, max = 0.0469395 (RPinky)
+[2025-12-18 13:04:56.556] [info] Frame 13 (t = 0.216667):	 total squared error = 0.0209228, marker error: RMS = 0.0278374, max = 0.0468433 (RPinky)
+[2025-12-18 13:04:56.576] [info] Frame 14 (t = 0.233333):	 total squared error = 0.0208523, marker error: RMS = 0.0277904, max = 0.046791 (RPinky)
+[2025-12-18 13:04:56.600] [info] Frame 15 (t = 0.25):	 total squared error = 0.0206769, marker error: RMS = 0.0276733, max = 0.0467044 (RPinky)
+[2025-12-18 13:04:56.651] [info] Frame 16 (t = 0.266667):	 total squared error = 0.0204615, marker error: RMS = 0.0275288, max = 0.0469872 (RPinky)
+[2025-12-18 13:04:56.690] [info] Frame 17 (t = 0.283333):	 total squared error = 0.0202928, marker error: RMS = 0.0274151, max = 0.0471335 (RPinky)
+[2025-12-18 13:04:56.704] [info] Frame 18 (t = 0.3):	 total squared error = 0.0203035, marker error: RMS = 0.0274223, max = 0.0473545 (RPinky)
+[2025-12-18 13:04:56.764] [info] Frame 19 (t = 0.316667):	 total squared error = 0.0204400, marker error: RMS = 0.0275143, max = 0.0474819 (RPinky)
+[2025-12-18 13:04:56.802] [info] Frame 20 (t = 0.333333):	 total squared error = 0.0207131, marker error: RMS = 0.0276975, max = 0.0476153 (RPinky)
+[2025-12-18 13:04:56.841] [info] Frame 21 (t = 0.35):	 total squared error = 0.0210897, marker error: RMS = 0.0279482, max = 0.0476104 (RPinky)
+[2025-12-18 13:04:56.878] [info] Frame 22 (t = 0.366667):	 total squared error = 0.0214608, marker error: RMS = 0.028193, max = 0.047315 (RPinky)
+[2025-12-18 13:04:56.898] [info] Frame 23 (t = 0.383333):	 total squared error = 0.021767, marker error: RMS = 0.0283934, max = 0.0483020 (RHeel)
+[2025-12-18 13:04:56.933] [info] Frame 24 (t = 0.4):	 total squared error = 0.021919, marker error: RMS = 0.0284924, max = 0.0489134 (RHeel)
+[2025-12-18 13:04:56.945] [info] Frame 25 (t = 0.416667):	 total squared error = 0.0219565, marker error: RMS = 0.0285167, max = 0.0489734 (RHeel)
+[2025-12-18 13:04:56.979] [info] Frame 26 (t = 0.433333):	 total squared error = 0.0218144, marker error: RMS = 0.0284243, max = 0.0486593 (RHeel)
+[2025-12-18 13:04:57.001] [info] Frame 27 (t = 0.45):	 total squared error = 0.0215107, marker error: RMS = 0.0282258, max = 0.0474375 (RHeel)
+[2025-12-18 13:04:57.069] [info] Frame 28 (t = 0.466667):	 total squared error = 0.0209624, marker error: RMS = 0.0278637, max = 0.0480903 (RThumb)
+[2025-12-18 13:04:57.095] [info] Frame 29 (t = 0.483333):	 total squared error = 0.0202743, marker error: RMS = 0.0274026, max = 0.0485748 (RThumb)
+[2025-12-18 13:04:57.133] [info] InverseKinematicsTool completed 30 frames in 1 second(s).
+[2025-12-18 13:04:57.157] [info] Set log level to Info.
+[2025-12-19 19:43:49.029] [info] Updating Model file from 40000 to latest format...
+[2025-12-19 19:43:49.054] [info] Loaded model Pose2Sim_OpenPose from file D:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\OpenSim_Setup\Model_Pose2Sim_Body135.osim
+[2025-12-19 19:43:49.389] [info] Processing subject Pose2Sim_scaled...
+[2025-12-19 19:43:49.389] [info] Step 1: Loading generic model
+[2025-12-19 19:43:49.408] [info] Loaded model Pose2Sim_OpenPose from file d:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_43_1\43_1_tpose_p0\kinematics\43_1_tpose_p0_0-30_filt_butterworth_processed.osim
+[2025-12-19 19:43:49.673] [info] Step 2: Scaling generic model
+[2025-12-19 19:43:49.721] [info] Wrote model file 'D:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_43_1\43_1_tpose_p0\kinematics\43_1_tpose_p0_0-30_filt_butterworth_processed.osim' from model.
+[2025-12-19 19:43:49.758] [info] Loaded model Pose2Sim_scaled from file D:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_43_1\43_1_tpose_p0\kinematics\43_1_tpose_p0_0-30_filt_butterworth_processed.osim
+[2025-12-19 19:43:50.022] [cout] [info] 
+               MODEL: Pose2Sim_scaled
+         coordinates: 62
+              forces: 0
+           actuators: 0
+             muscles: 0
+            analyses: 0
+              probes: 0
+              bodies: 30
+              joints: 30
+         constraints: 20
+             markers: 27
+         controllers: 0
+  contact geometries: 0
+misc modelcomponents: 0
+[2025-12-19 19:43:50.023] [info] Running tool .
+[2025-12-19 19:43:50.363] [info] Frame 0 (t = 0.0):	 total squared error = 0.0196669, marker error: RMS = 0.0269889, max = 0.0443298 (RPinky)
+[2025-12-19 19:43:50.426] [info] Frame 1 (t = 0.0166667):	 total squared error = 0.0199062, marker error: RMS = 0.0271527, max = 0.0440696 (RPinky)
+[2025-12-19 19:43:50.449] [info] Frame 2 (t = 0.0333333):	 total squared error = 0.0200624, marker error: RMS = 0.027259, max = 0.0436782 (RPinky)
+[2025-12-19 19:43:50.496] [info] Frame 3 (t = 0.05):	 total squared error = 0.0200946, marker error: RMS = 0.0272809, max = 0.0433785 (RThumb)
+[2025-12-19 19:43:50.552] [info] Frame 4 (t = 0.0666667):	 total squared error = 0.0202342, marker error: RMS = 0.0273755, max = 0.044286 (RThumb)
+[2025-12-19 19:43:50.599] [info] Frame 5 (t = 0.0833333):	 total squared error = 0.0201303, marker error: RMS = 0.0273051, max = 0.0448338 (RThumb)
+[2025-12-19 19:43:50.654] [info] Frame 6 (t = 0.1):	 total squared error = 0.0201271, marker error: RMS = 0.0273029, max = 0.0448885 (RThumb)
+[2025-12-19 19:43:50.712] [info] Frame 7 (t = 0.116667):	 total squared error = 0.0201148, marker error: RMS = 0.0272946, max = 0.0446433 (RThumb)
+[2025-12-19 19:43:50.772] [info] Frame 8 (t = 0.133333):	 total squared error = 0.0202135, marker error: RMS = 0.0273614, max = 0.0441609 (RThumb)
+[2025-12-19 19:43:50.844] [info] Frame 9 (t = 0.15):	 total squared error = 0.0203006, marker error: RMS = 0.0274203, max = 0.0432994 (RThumb)
+[2025-12-19 19:43:50.899] [info] Frame 10 (t = 0.166667):	 total squared error = 0.0205028, marker error: RMS = 0.0275565, max = 0.0430250 (RAnkle)
+[2025-12-19 19:43:50.972] [info] Frame 11 (t = 0.183333):	 total squared error = 0.0206479, marker error: RMS = 0.0276539, max = 0.0431552 (RPinky)
+[2025-12-19 19:43:51.006] [info] Frame 12 (t = 0.2):	 total squared error = 0.0208796, marker error: RMS = 0.0278086, max = 0.0432953 (RAnkle)
+[2025-12-19 19:43:51.126] [info] Frame 13 (t = 0.216667):	 total squared error = 0.0208007, marker error: RMS = 0.027756, max = 0.0430483 (RPinky)
+[2025-12-19 19:43:51.208] [info] Frame 14 (t = 0.233333):	 total squared error = 0.0207379, marker error: RMS = 0.0277141, max = 0.0429728 (RPinky)
+[2025-12-19 19:43:51.278] [info] Frame 15 (t = 0.25):	 total squared error = 0.0205734, marker error: RMS = 0.0276039, max = 0.042962 (RPinky)
+[2025-12-19 19:43:51.355] [info] Frame 16 (t = 0.266667):	 total squared error = 0.0203552, marker error: RMS = 0.0274571, max = 0.0430078 (RPinky)
+[2025-12-19 19:43:51.398] [info] Frame 17 (t = 0.283333):	 total squared error = 0.0203550, marker error: RMS = 0.027457, max = 0.0430668 (RPinky)
+[2025-12-19 19:43:51.522] [info] Frame 18 (t = 0.3):	 total squared error = 0.0201997, marker error: RMS = 0.0273521, max = 0.0433187 (RPinky)
+[2025-12-19 19:43:51.569] [info] Frame 19 (t = 0.316667):	 total squared error = 0.0203424, marker error: RMS = 0.0274486, max = 0.0435139 (RHeel)
+[2025-12-19 19:43:51.604] [info] Frame 20 (t = 0.333333):	 total squared error = 0.0206340, marker error: RMS = 0.0276446, max = 0.0454082 (RHeel)
+[2025-12-19 19:43:51.637] [info] Frame 21 (t = 0.35):	 total squared error = 0.0210216, marker error: RMS = 0.0279030, max = 0.0471102 (RHeel)
+[2025-12-19 19:43:51.714] [info] Frame 22 (t = 0.366667):	 total squared error = 0.0213649, marker error: RMS = 0.0281299, max = 0.0483683 (RHeel)
+[2025-12-19 19:43:51.829] [info] Frame 23 (t = 0.383333):	 total squared error = 0.0216518, marker error: RMS = 0.0283182, max = 0.0495312 (RHeel)
+[2025-12-19 19:43:51.876] [info] Frame 24 (t = 0.4):	 total squared error = 0.0218058, marker error: RMS = 0.0284187, max = 0.0501669 (RHeel)
+[2025-12-19 19:43:51.927] [info] Frame 25 (t = 0.416667):	 total squared error = 0.0218192, marker error: RMS = 0.0284274, max = 0.0503587 (RHeel)
+[2025-12-19 19:43:51.977] [info] Frame 26 (t = 0.433333):	 total squared error = 0.0216889, marker error: RMS = 0.0283424, max = 0.0498797 (RHeel)
+[2025-12-19 19:43:51.995] [info] Frame 27 (t = 0.45):	 total squared error = 0.0213809, marker error: RMS = 0.0281404, max = 0.0486162 (RHeel)
+[2025-12-19 19:43:52.047] [info] Frame 28 (t = 0.466667):	 total squared error = 0.0208620, marker error: RMS = 0.0277969, max = 0.0464933 (RHeel)
+[2025-12-19 19:43:52.098] [info] Frame 29 (t = 0.483333):	 total squared error = 0.0201265, marker error: RMS = 0.0273025, max = 0.0449262 (RThumb)
+[2025-12-19 19:43:52.102] [info] InverseKinematicsTool completed 30 frames in 2 second(s).
+[2025-12-19 19:43:52.111] [info] Set log level to Info.
+[2026-02-21 17:40:16.731] [info] Updating Model file from 40000 to latest format...
+[2026-02-21 17:40:16.771] [info] Loaded model Pose2Sim_OpenPose from file F:\flesh_data_processed\02_MotionTracking_processing\Pose2Sim\OpenSim_Setup\Model_Pose2Sim_Body135.osim
+[2026-02-21 17:40:17.092] [info] Processing subject Pose2Sim_scaled...
+[2026-02-21 17:40:17.092] [info] Step 1: Loading generic model
+[2026-02-21 17:40:17.118] [info] Loaded model Pose2Sim_OpenPose from file f:\flesh_data_processed\02_MotionTracking_processing\projectdata\Session_43_1\43_1_tpose_p0\kinematics\43_1_tpose_p0_0-30_filt_butterworth_processed.osim
+[2026-02-21 17:40:17.349] [info] Step 2: Scaling generic model
+[2026-02-21 17:40:17.389] [info] Wrote model file 'F:\flesh_data_processed\02_MotionTracking_processing\projectdata\Session_43_1\43_1_tpose_p0\kinematics\43_1_tpose_p0_0-30_filt_butterworth_processed.osim' from model.
+[2026-02-21 17:40:17.435] [info] Loaded model Pose2Sim_scaled from file F:\flesh_data_processed\02_MotionTracking_processing\projectdata\Session_43_1\43_1_tpose_p0\kinematics\43_1_tpose_p0_0-30_filt_butterworth_processed.osim
+[2026-02-21 17:40:17.658] [cout] [info] 
+               MODEL: Pose2Sim_scaled
+         coordinates: 62
+              forces: 0
+           actuators: 0
+             muscles: 0
+            analyses: 0
+              probes: 0
+              bodies: 30
+              joints: 30
+         constraints: 20
+             markers: 27
+         controllers: 0
+  contact geometries: 0
+misc modelcomponents: 0
+[2026-02-21 17:40:17.659] [info] Running tool .
+[2026-02-21 17:40:17.951] [info] Frame 0 (t = 0.0):	 total squared error = 0.0196669, marker error: RMS = 0.0269889, max = 0.0443298 (RPinky)
+[2026-02-21 17:40:17.998] [info] Frame 1 (t = 0.0166667):	 total squared error = 0.0199062, marker error: RMS = 0.0271527, max = 0.0440696 (RPinky)
+[2026-02-21 17:40:18.012] [info] Frame 2 (t = 0.0333333):	 total squared error = 0.0200624, marker error: RMS = 0.027259, max = 0.0436782 (RPinky)
+[2026-02-21 17:40:18.043] [info] Frame 3 (t = 0.05):	 total squared error = 0.0200946, marker error: RMS = 0.0272809, max = 0.0433785 (RThumb)
+[2026-02-21 17:40:18.080] [info] Frame 4 (t = 0.0666667):	 total squared error = 0.0202342, marker error: RMS = 0.0273755, max = 0.044286 (RThumb)
+[2026-02-21 17:40:18.113] [info] Frame 5 (t = 0.0833333):	 total squared error = 0.0201303, marker error: RMS = 0.0273051, max = 0.0448338 (RThumb)
+[2026-02-21 17:40:18.154] [info] Frame 6 (t = 0.1):	 total squared error = 0.0201271, marker error: RMS = 0.0273029, max = 0.0448885 (RThumb)
+[2026-02-21 17:40:18.201] [info] Frame 7 (t = 0.116667):	 total squared error = 0.0201148, marker error: RMS = 0.0272946, max = 0.0446433 (RThumb)
+[2026-02-21 17:40:18.229] [info] Frame 8 (t = 0.133333):	 total squared error = 0.0202135, marker error: RMS = 0.0273614, max = 0.0441609 (RThumb)
+[2026-02-21 17:40:18.279] [info] Frame 9 (t = 0.15):	 total squared error = 0.0203006, marker error: RMS = 0.0274203, max = 0.0432994 (RThumb)
+[2026-02-21 17:40:18.314] [info] Frame 10 (t = 0.166667):	 total squared error = 0.0205028, marker error: RMS = 0.0275565, max = 0.0430250 (RAnkle)
+[2026-02-21 17:40:18.364] [info] Frame 11 (t = 0.183333):	 total squared error = 0.0206479, marker error: RMS = 0.0276539, max = 0.0431552 (RPinky)
+[2026-02-21 17:40:18.387] [info] Frame 12 (t = 0.2):	 total squared error = 0.0208796, marker error: RMS = 0.0278086, max = 0.0432953 (RAnkle)
+[2026-02-21 17:40:18.468] [info] Frame 13 (t = 0.216667):	 total squared error = 0.0208007, marker error: RMS = 0.027756, max = 0.0430483 (RPinky)
+[2026-02-21 17:40:18.523] [info] Frame 14 (t = 0.233333):	 total squared error = 0.0207379, marker error: RMS = 0.0277141, max = 0.0429728 (RPinky)
+[2026-02-21 17:40:18.570] [info] Frame 15 (t = 0.25):	 total squared error = 0.0205734, marker error: RMS = 0.0276039, max = 0.042962 (RPinky)
+[2026-02-21 17:40:18.624] [info] Frame 16 (t = 0.266667):	 total squared error = 0.0203552, marker error: RMS = 0.0274571, max = 0.0430078 (RPinky)
+[2026-02-21 17:40:18.655] [info] Frame 17 (t = 0.283333):	 total squared error = 0.0203550, marker error: RMS = 0.027457, max = 0.0430668 (RPinky)
+[2026-02-21 17:40:18.739] [info] Frame 18 (t = 0.3):	 total squared error = 0.0201997, marker error: RMS = 0.0273521, max = 0.0433187 (RPinky)
+[2026-02-21 17:40:18.770] [info] Frame 19 (t = 0.316667):	 total squared error = 0.0203424, marker error: RMS = 0.0274486, max = 0.0435139 (RHeel)
+[2026-02-21 17:40:18.790] [info] Frame 20 (t = 0.333333):	 total squared error = 0.0206340, marker error: RMS = 0.0276446, max = 0.0454082 (RHeel)
+[2026-02-21 17:40:18.812] [info] Frame 21 (t = 0.35):	 total squared error = 0.0210216, marker error: RMS = 0.0279030, max = 0.0471102 (RHeel)
+[2026-02-21 17:40:18.877] [info] Frame 22 (t = 0.366667):	 total squared error = 0.0213604, marker error: RMS = 0.028127, max = 0.0483898 (RHeel)
+[2026-02-21 17:40:18.898] [info] Frame 23 (t = 0.383333):	 total squared error = 0.0216677, marker error: RMS = 0.0283285, max = 0.0495484 (RHeel)
+[2026-02-21 17:40:18.936] [info] Frame 24 (t = 0.4):	 total squared error = 0.0218163, marker error: RMS = 0.0284255, max = 0.0502420 (RHeel)
+[2026-02-21 17:40:18.967] [info] Frame 25 (t = 0.416667):	 total squared error = 0.0218235, marker error: RMS = 0.0284302, max = 0.0503188 (RHeel)
+[2026-02-21 17:40:18.982] [info] Frame 26 (t = 0.433333):	 total squared error = 0.0217018, marker error: RMS = 0.0283508, max = 0.0497545 (RHeel)
+[2026-02-21 17:40:18.998] [info] Frame 27 (t = 0.45):	 total squared error = 0.0213852, marker error: RMS = 0.0281433, max = 0.0485335 (RHeel)
+[2026-02-21 17:40:19.046] [info] Frame 28 (t = 0.466667):	 total squared error = 0.0208438, marker error: RMS = 0.0277848, max = 0.0464777 (RHeel)
+[2026-02-21 17:40:19.088] [info] Frame 29 (t = 0.483333):	 total squared error = 0.0201219, marker error: RMS = 0.0272993, max = 0.0448886 (RThumb)
+[2026-02-21 17:40:19.090] [info] InverseKinematicsTool completed 30 frames in 1 second(s).
+[2026-02-21 17:40:19.097] [info] Set log level to Info.

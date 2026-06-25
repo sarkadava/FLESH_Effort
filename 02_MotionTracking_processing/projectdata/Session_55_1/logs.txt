@@ -1,0 +1,2872 @@
+
+---------------------------------------------------------------------
+Triangulation of 2D points for 55_1_11_p1, for all frames.
+On Thursday 04. December 2025, 09:30:56
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_11_p1
+---------------------------------------------------------------------
+
+Cannot read video. Frame rate will be set to 60 fps.
+
+Mean reprojection error for RHip is 2.8 px (~ 0.011 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RKnee is 3.3 px (~ 0.013 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RAnkle is 2.3 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RBigToe is 2.0 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RSmallToe is 3.8 px (~ 0.015 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RHeel is 3.1 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHip is 3.3 px (~ 0.013 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LKnee is 2.6 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LAnkle is 2.0 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LBigToe is 1.5 px (~ 0.006 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LSmallToe is 2.6 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHeel is 3.7 px (~ 0.015 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for Nose is 2.6 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for REye is 2.6 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LEye is 2.3 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RShoulder is 1.8 px (~ 0.007 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RElbow is 3.0 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RWrist is 3.0 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RThumb is 2.2 px (~ 0.009 m), reached with 0.02 excluded cameras. 
+Mean reprojection error for RIndex is 2.2 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RPinky is 2.1 px (~ 0.008 m), reached with 1.63 excluded cameras. 
+Mean reprojection error for LShoulder is 2.8 px (~ 0.011 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LElbow is 2.2 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LWrist is 2.2 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LThumb is 3.0 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LIndex is 1.9 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LPinky is 2.9 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+
+--> Mean reprojection error for all points on frames 0 to 287 is 2.6 px, which roughly corresponds to 10.3 mm. 
+Cameras were excluded if likelihood was below 0.3 and if the reprojection error was above 15 px.
+Gaps were interpolated with linear method if smaller than 30 frames. Larger gaps were filled with the last valid value.
+In average, 0.06 cameras had to be excluded to reach these thresholds.
+Camera cam2 was excluded 2% of the time, Camera cam1: 2%, and Camera cam3: 2%.
+3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_11_p1\pose-3d\55_1_11_p1_0-286.trc.
+
+
+
+Limb swapping was not handled.
+Lens distortions were not taken into account.
+
+Triangulation took 00h00m02s.
+
+
+---------------------------------------------------------------------
+Triangulation of 2D points for 55_1_12_p1, for all frames.
+On Thursday 04. December 2025, 09:30:58
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_12_p1
+---------------------------------------------------------------------
+
+Cannot read video. Frame rate will be set to 60 fps.
+
+Mean reprojection error for RHip is 2.5 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RKnee is 2.3 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RAnkle is 2.3 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RBigToe is 2.7 px (~ 0.011 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RSmallToe is 4.0 px (~ 0.016 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RHeel is 3.3 px (~ 0.013 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHip is 4.1 px (~ 0.016 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LKnee is 2.2 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LAnkle is 1.8 px (~ 0.007 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LBigToe is 1.2 px (~ 0.005 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LSmallToe is 2.6 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHeel is 4.2 px (~ 0.017 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for Nose is 2.4 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for REye is 2.9 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LEye is 2.1 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RShoulder is 2.0 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RElbow is 2.8 px (~ 0.011 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RWrist is 3.3 px (~ 0.013 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RThumb is 1.8 px (~ 0.007 m), reached with 0.12 excluded cameras. 
+Mean reprojection error for RIndex is 2.2 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RPinky is 2.6 px (~ 0.01 m), reached with 2.15 excluded cameras. 
+Mean reprojection error for LShoulder is 2.2 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LElbow is 2.1 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LWrist is 3.1 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LThumb is 2.6 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LIndex is 1.5 px (~ 0.006 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LPinky is 2.9 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+
+--> Mean reprojection error for all points on frames 0 to 245 is 2.6 px, which roughly corresponds to 10.3 mm. 
+Cameras were excluded if likelihood was below 0.3 and if the reprojection error was above 15 px.
+Gaps were interpolated with linear method if smaller than 30 frames. Larger gaps were filled with the last valid value.
+In average, 0.08 cameras had to be excluded to reach these thresholds.
+Camera cam1 was excluded 4% of the time, Camera cam2: 3%, and Camera cam3: 2%.
+3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_12_p1\pose-3d\55_1_12_p1_0-244.trc.
+
+
+
+Limb swapping was not handled.
+Lens distortions were not taken into account.
+
+Triangulation took 00h00m01s.
+
+
+---------------------------------------------------------------------
+Triangulation of 2D points for 55_1_13_p1, for all frames.
+On Thursday 04. December 2025, 09:30:59
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_13_p1
+---------------------------------------------------------------------
+
+Cannot read video. Frame rate will be set to 60 fps.
+
+Mean reprojection error for RHip is 3.6 px (~ 0.014 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RKnee is 3.1 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RAnkle is 2.6 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RBigToe is 2.1 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RSmallToe is 4.0 px (~ 0.016 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RHeel is 3.6 px (~ 0.014 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHip is 4.9 px (~ 0.019 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LKnee is 2.3 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LAnkle is 1.7 px (~ 0.007 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LBigToe is 1.7 px (~ 0.007 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LSmallToe is 2.9 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHeel is 3.5 px (~ 0.014 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for Nose is 2.3 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for REye is 2.2 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LEye is 2.5 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RShoulder is 2.4 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RElbow is 3.4 px (~ 0.014 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RWrist is 2.9 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RThumb is 1.9 px (~ 0.008 m), reached with 0.98 excluded cameras. 
+Mean reprojection error for RIndex is 1.9 px (~ 0.008 m), reached with 1.02 excluded cameras. 
+Mean reprojection error for RPinky is 1.2 px (~ 0.005 m), reached with 2.95 excluded cameras. 
+Mean reprojection error for LShoulder is 2.7 px (~ 0.011 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LElbow is 2.1 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LWrist is 2.6 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LThumb is 2.6 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LIndex is 2.3 px (~ 0.009 m), reached with 0.03 excluded cameras. 
+Mean reprojection error for LPinky is 2.9 px (~ 0.012 m), reached with 0.01 excluded cameras. 
+
+--> Mean reprojection error for all points on frames 0 to 295 is 2.7 px, which roughly corresponds to 10.7 mm. 
+Cameras were excluded if likelihood was below 0.3 and if the reprojection error was above 15 px.
+Gaps were interpolated with linear method if smaller than 30 frames. Larger gaps were filled with the last valid value.
+In average, 0.18 cameras had to be excluded to reach these thresholds.
+Camera cam2 was excluded 7% of the time, Camera cam1: 6%, and Camera cam3: 5%.
+3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_13_p1\pose-3d\55_1_13_p1_0-294.trc.
+
+
+
+Limb swapping was not handled.
+Lens distortions were not taken into account.
+
+Triangulation took 00h00m01s.
+
+
+---------------------------------------------------------------------
+Triangulation of 2D points for 55_1_14_p1, for all frames.
+On Thursday 04. December 2025, 09:31:01
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_14_p1
+---------------------------------------------------------------------
+
+Cannot read video. Frame rate will be set to 60 fps.
+
+Mean reprojection error for RHip is 2.5 px (~ 0.01 m), reached with 0.13 excluded cameras. 
+Mean reprojection error for RKnee is 3.2 px (~ 0.013 m), reached with 0.13 excluded cameras. 
+Mean reprojection error for RAnkle is 1.9 px (~ 0.008 m), reached with 0.13 excluded cameras. 
+Mean reprojection error for RBigToe is 2.1 px (~ 0.008 m), reached with 0.13 excluded cameras. 
+Mean reprojection error for RSmallToe is 3.1 px (~ 0.012 m), reached with 0.13 excluded cameras. 
+Mean reprojection error for RHeel is 3.2 px (~ 0.013 m), reached with 0.13 excluded cameras. 
+Mean reprojection error for LHip is 3.6 px (~ 0.014 m), reached with 0.13 excluded cameras. 
+Mean reprojection error for LKnee is 2.1 px (~ 0.008 m), reached with 0.13 excluded cameras. 
+Mean reprojection error for LAnkle is 1.7 px (~ 0.007 m), reached with 0.13 excluded cameras. 
+Mean reprojection error for LBigToe is 1.0 px (~ 0.004 m), reached with 0.13 excluded cameras. 
+Mean reprojection error for LSmallToe is 2.2 px (~ 0.009 m), reached with 0.13 excluded cameras. 
+Mean reprojection error for LHeel is 4.1 px (~ 0.016 m), reached with 0.13 excluded cameras. 
+Mean reprojection error for Nose is 2.3 px (~ 0.009 m), reached with 0.13 excluded cameras. 
+Mean reprojection error for REye is 2.9 px (~ 0.012 m), reached with 0.13 excluded cameras. 
+Mean reprojection error for LEye is 2.6 px (~ 0.01 m), reached with 0.13 excluded cameras. 
+Mean reprojection error for RShoulder is 1.4 px (~ 0.006 m), reached with 0.13 excluded cameras. 
+Mean reprojection error for RElbow is 4.5 px (~ 0.018 m), reached with 0.13 excluded cameras. 
+Mean reprojection error for RWrist is 2.4 px (~ 0.01 m), reached with 0.13 excluded cameras. 
+Mean reprojection error for RThumb is 1.6 px (~ 0.006 m), reached with 0.21 excluded cameras. 
+Mean reprojection error for RIndex is 2.3 px (~ 0.009 m), reached with 0.13 excluded cameras. 
+Mean reprojection error for RPinky is 0.9 px (~ 0.004 m), reached with 2.43 excluded cameras. 
+Mean reprojection error for LShoulder is 2.4 px (~ 0.01 m), reached with 0.13 excluded cameras. 
+Mean reprojection error for LElbow is 2.4 px (~ 0.01 m), reached with 0.13 excluded cameras. 
+Mean reprojection error for LWrist is 3.0 px (~ 0.012 m), reached with 0.13 excluded cameras. 
+Mean reprojection error for LThumb is 3.0 px (~ 0.012 m), reached with 0.13 excluded cameras. 
+Mean reprojection error for LIndex is 1.7 px (~ 0.007 m), reached with 0.13 excluded cameras. 
+Mean reprojection error for LPinky is 3.2 px (~ 0.013 m), reached with 0.13 excluded cameras. 
+
+--> Mean reprojection error for all points on frames 0 to 228 is 2.5 px, which roughly corresponds to 9.9 mm. 
+Cameras were excluded if likelihood was below 0.3 and if the reprojection error was above 15 px.
+Gaps were interpolated with linear method if smaller than 30 frames. Larger gaps were filled with the last valid value.
+In average, 0.22 cameras had to be excluded to reach these thresholds.
+Camera cam2 was excluded 16% of the time, Camera cam1: 3%, and Camera cam3: 3%.
+3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_14_p1\pose-3d\55_1_14_p1_0-227.trc.
+
+
+
+Limb swapping was not handled.
+Lens distortions were not taken into account.
+
+Triangulation took 00h00m01s.
+
+
+---------------------------------------------------------------------
+Triangulation of 2D points for 55_1_15_p1, for all frames.
+On Thursday 04. December 2025, 09:31:03
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_15_p1
+---------------------------------------------------------------------
+
+Cannot read video. Frame rate will be set to 60 fps.
+
+Mean reprojection error for RHip is 2.6 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RKnee is 2.9 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RAnkle is 2.2 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RBigToe is 2.5 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RSmallToe is 3.4 px (~ 0.014 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RHeel is 3.1 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHip is 3.7 px (~ 0.015 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LKnee is 2.3 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LAnkle is 1.8 px (~ 0.007 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LBigToe is 1.0 px (~ 0.004 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LSmallToe is 2.3 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHeel is 4.5 px (~ 0.018 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for Nose is 2.7 px (~ 0.011 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for REye is 2.7 px (~ 0.011 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LEye is 2.7 px (~ 0.011 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RShoulder is 1.4 px (~ 0.006 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RElbow is 2.9 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RWrist is 2.7 px (~ 0.011 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RThumb is 1.9 px (~ 0.008 m), reached with 0.05 excluded cameras. 
+Mean reprojection error for RIndex is 2.1 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RPinky is 2.0 px (~ 0.008 m), reached with 1.88 excluded cameras. 
+Mean reprojection error for LShoulder is 2.5 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LElbow is 2.5 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LWrist is 3.5 px (~ 0.014 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LThumb is 3.2 px (~ 0.013 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LIndex is 1.8 px (~ 0.007 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LPinky is 3.5 px (~ 0.014 m), reached with 0.0 excluded cameras. 
+
+--> Mean reprojection error for all points on frames 0 to 263 is 2.6 px, which roughly corresponds to 10.3 mm. 
+Cameras were excluded if likelihood was below 0.3 and if the reprojection error was above 15 px.
+Gaps were interpolated with linear method if smaller than 30 frames. Larger gaps were filled with the last valid value.
+In average, 0.07 cameras had to be excluded to reach these thresholds.
+Camera cam2 was excluded 3% of the time, Camera cam1: 2%, and Camera cam3: 2%.
+3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_15_p1\pose-3d\55_1_15_p1_0-262.trc.
+
+
+
+Limb swapping was not handled.
+Lens distortions were not taken into account.
+
+Triangulation took 00h00m01s.
+
+
+---------------------------------------------------------------------
+Triangulation of 2D points for 55_1_16_p1, for all frames.
+On Thursday 04. December 2025, 09:31:05
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_16_p1
+---------------------------------------------------------------------
+
+Cannot read video. Frame rate will be set to 60 fps.
+
+Mean reprojection error for RHip is 3.4 px (~ 0.014 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RKnee is 3.2 px (~ 0.013 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RAnkle is 2.2 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RBigToe is 2.7 px (~ 0.011 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RSmallToe is 3.4 px (~ 0.014 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RHeel is 3.1 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHip is 4.2 px (~ 0.017 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LKnee is 2.1 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LAnkle is 2.0 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LBigToe is 0.7 px (~ 0.003 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LSmallToe is 2.3 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHeel is 4.6 px (~ 0.018 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for Nose is 2.6 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for REye is 2.8 px (~ 0.011 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LEye is 2.3 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RShoulder is 1.6 px (~ 0.006 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RElbow is 2.9 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RWrist is 3.2 px (~ 0.013 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RThumb is 1.8 px (~ 0.007 m), reached with 0.04 excluded cameras. 
+Mean reprojection error for RIndex is 2.0 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RPinky is 1.3 px (~ 0.005 m), reached with 2.54 excluded cameras. 
+Mean reprojection error for LShoulder is 2.7 px (~ 0.011 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LElbow is 2.1 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LWrist is 3.2 px (~ 0.013 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LThumb is 3.1 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LIndex is 1.7 px (~ 0.007 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LPinky is 2.8 px (~ 0.011 m), reached with 0.08 excluded cameras. 
+
+--> Mean reprojection error for all points on frames 0 to 203 is 2.6 px, which roughly corresponds to 10.3 mm. 
+Cameras were excluded if likelihood was below 0.3 and if the reprojection error was above 15 px.
+Gaps were interpolated with linear method if smaller than 30 frames. Larger gaps were filled with the last valid value.
+In average, 0.1 cameras had to be excluded to reach these thresholds.
+Camera cam2 was excluded 3% of the time, Camera cam3: 3%, and Camera cam1: 3%.
+3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_16_p1\pose-3d\55_1_16_p1_0-202.trc.
+
+
+
+Limb swapping was not handled.
+Lens distortions were not taken into account.
+
+Triangulation took 00h00m01s.
+
+
+---------------------------------------------------------------------
+Triangulation of 2D points for 55_1_17_p1, for all frames.
+On Thursday 04. December 2025, 09:31:06
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_17_p1
+---------------------------------------------------------------------
+
+Cannot read video. Frame rate will be set to 60 fps.
+
+Mean reprojection error for RHip is 3.1 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RKnee is 2.8 px (~ 0.011 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RAnkle is 2.2 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RBigToe is 2.7 px (~ 0.011 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RSmallToe is 3.5 px (~ 0.014 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RHeel is 3.0 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHip is 4.0 px (~ 0.016 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LKnee is 2.1 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LAnkle is 2.0 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LBigToe is 1.0 px (~ 0.004 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LSmallToe is 2.3 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHeel is 4.7 px (~ 0.019 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for Nose is 2.5 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for REye is 2.8 px (~ 0.011 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LEye is 2.0 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RShoulder is 1.3 px (~ 0.005 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RElbow is 3.0 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RWrist is 2.9 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RThumb is 1.7 px (~ 0.007 m), reached with 0.07 excluded cameras. 
+Mean reprojection error for RIndex is 1.9 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RPinky is 1.5 px (~ 0.006 m), reached with 2.46 excluded cameras. 
+Mean reprojection error for LShoulder is 3.4 px (~ 0.014 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LElbow is 2.3 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LWrist is 3.0 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LThumb is 2.9 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LIndex is 1.5 px (~ 0.006 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LPinky is 2.7 px (~ 0.011 m), reached with 0.03 excluded cameras. 
+
+--> Mean reprojection error for all points on frames 0 to 230 is 2.6 px, which roughly corresponds to 10.3 mm. 
+Cameras were excluded if likelihood was below 0.3 and if the reprojection error was above 15 px.
+Gaps were interpolated with linear method if smaller than 30 frames. Larger gaps were filled with the last valid value.
+In average, 0.09 cameras had to be excluded to reach these thresholds.
+Camera cam2 was excluded 3% of the time, Camera cam1: 3%, and Camera cam3: 3%.
+3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_17_p1\pose-3d\55_1_17_p1_0-229.trc.
+
+
+
+Limb swapping was not handled.
+Lens distortions were not taken into account.
+
+Triangulation took 00h00m01s.
+
+
+---------------------------------------------------------------------
+Triangulation of 2D points for 55_1_20_p0, for all frames.
+On Thursday 04. December 2025, 09:31:08
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_20_p0
+---------------------------------------------------------------------
+
+Cannot read video. Frame rate will be set to 60 fps.
+
+Mean reprojection error for RHip is 3.0 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RKnee is 4.5 px (~ 0.018 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RAnkle is 2.9 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RBigToe is 1.5 px (~ 0.006 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RSmallToe is 4.2 px (~ 0.017 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RHeel is 2.2 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHip is 3.3 px (~ 0.013 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LKnee is 1.7 px (~ 0.007 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LAnkle is 2.4 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LBigToe is 1.5 px (~ 0.006 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LSmallToe is 2.0 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHeel is 3.3 px (~ 0.013 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for Nose is 3.6 px (~ 0.014 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for REye is 1.8 px (~ 0.007 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LEye is 1.3 px (~ 0.005 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RShoulder is 1.9 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RElbow is 3.1 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RWrist is 2.4 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RThumb is 1.5 px (~ 0.006 m), reached with 0.09 excluded cameras. 
+Mean reprojection error for RIndex is 2.9 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RPinky is 0.7 px (~ 0.003 m), reached with 1.96 excluded cameras. 
+Mean reprojection error for LShoulder is 3.0 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LElbow is 1.9 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LWrist is 3.2 px (~ 0.013 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LThumb is 3.9 px (~ 0.015 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LIndex is 1.0 px (~ 0.004 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LPinky is 2.0 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+
+--> Mean reprojection error for all points on frames 0 to 320 is 2.5 px, which roughly corresponds to 9.9 mm. 
+Cameras were excluded if likelihood was below 0.3 and if the reprojection error was above 15 px.
+Gaps were interpolated with linear method if smaller than 30 frames. Larger gaps were filled with the last valid value.
+In average, 0.08 cameras had to be excluded to reach these thresholds.
+Camera cam2 was excluded 4% of the time, Camera cam1: 2%, and Camera cam3: 2%.
+3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_20_p0\pose-3d\55_1_20_p0_0-319.trc.
+
+
+
+Limb swapping was not handled.
+Lens distortions were not taken into account.
+
+Triangulation took 00h00m02s.
+
+
+---------------------------------------------------------------------
+Triangulation of 2D points for 55_1_21_p0, for all frames.
+On Thursday 04. December 2025, 09:31:10
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_21_p0
+---------------------------------------------------------------------
+
+Cannot read video. Frame rate will be set to 60 fps.
+
+Mean reprojection error for RHip is 3.8 px (~ 0.015 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RKnee is 4.6 px (~ 0.018 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RAnkle is 2.7 px (~ 0.011 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RBigToe is 1.4 px (~ 0.006 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RSmallToe is 4.3 px (~ 0.017 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RHeel is 2.3 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHip is 2.8 px (~ 0.011 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LKnee is 1.9 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LAnkle is 2.3 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LBigToe is 1.6 px (~ 0.006 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LSmallToe is 1.9 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHeel is 3.3 px (~ 0.013 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for Nose is 2.9 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for REye is 2.2 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LEye is 2.2 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RShoulder is 1.8 px (~ 0.007 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RElbow is 2.5 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RWrist is 2.7 px (~ 0.011 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RThumb is 2.3 px (~ 0.009 m), reached with 0.12 excluded cameras. 
+Mean reprojection error for RIndex is 2.4 px (~ 0.01 m), reached with 0.05 excluded cameras. 
+Mean reprojection error for RPinky is 1.2 px (~ 0.005 m), reached with 1.57 excluded cameras. 
+Mean reprojection error for LShoulder is 2.8 px (~ 0.011 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LElbow is 1.8 px (~ 0.007 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LWrist is 3.4 px (~ 0.014 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LThumb is 3.5 px (~ 0.014 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LIndex is 2.1 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LPinky is 3.0 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+
+--> Mean reprojection error for all points on frames 0 to 344 is 2.6 px, which roughly corresponds to 10.3 mm. 
+Cameras were excluded if likelihood was below 0.3 and if the reprojection error was above 15 px.
+Gaps were interpolated with linear method if smaller than 30 frames. Larger gaps were filled with the last valid value.
+In average, 0.06 cameras had to be excluded to reach these thresholds.
+Camera cam2 was excluded 3% of the time, Camera cam1: 2%, and Camera cam3: 1%.
+3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_21_p0\pose-3d\55_1_21_p0_0-343.trc.
+
+
+
+Limb swapping was not handled.
+Lens distortions were not taken into account.
+
+Triangulation took 00h00m02s.
+
+
+---------------------------------------------------------------------
+Triangulation of 2D points for 55_1_22_p0, for all frames.
+On Thursday 04. December 2025, 09:31:12
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_22_p0
+---------------------------------------------------------------------
+
+Cannot read video. Frame rate will be set to 60 fps.
+
+Mean reprojection error for RHip is 2.8 px (~ 0.011 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RKnee is 4.3 px (~ 0.017 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RAnkle is 2.6 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RBigToe is 1.6 px (~ 0.006 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RSmallToe is 4.3 px (~ 0.017 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RHeel is 2.2 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHip is 3.7 px (~ 0.015 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LKnee is 1.8 px (~ 0.007 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LAnkle is 2.4 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LBigToe is 1.4 px (~ 0.006 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LSmallToe is 2.0 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHeel is 3.2 px (~ 0.013 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for Nose is 3.3 px (~ 0.013 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for REye is 1.5 px (~ 0.006 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LEye is 1.4 px (~ 0.006 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RShoulder is 1.4 px (~ 0.006 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RElbow is 2.7 px (~ 0.011 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RWrist is 2.6 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RThumb is 2.1 px (~ 0.008 m), reached with 0.46 excluded cameras. 
+Mean reprojection error for RIndex is 2.7 px (~ 0.011 m), reached with 0.09 excluded cameras. 
+Mean reprojection error for RPinky is 1.4 px (~ 0.006 m), reached with 1.59 excluded cameras. 
+Mean reprojection error for LShoulder is 2.7 px (~ 0.011 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LElbow is 1.7 px (~ 0.007 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LWrist is 3.1 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LThumb is 3.5 px (~ 0.014 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LIndex is 1.8 px (~ 0.007 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LPinky is 1.9 px (~ 0.008 m), reached with 0.01 excluded cameras. 
+
+--> Mean reprojection error for all points on frames 0 to 417 is 2.5 px, which roughly corresponds to 9.9 mm. 
+Cameras were excluded if likelihood was below 0.3 and if the reprojection error was above 15 px.
+Gaps were interpolated with linear method if smaller than 30 frames. Larger gaps were filled with the last valid value.
+In average, 0.08 cameras had to be excluded to reach these thresholds.
+Camera cam2 was excluded 4% of the time, Camera cam1: 3%, and Camera cam3: 1%.
+3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_22_p0\pose-3d\55_1_22_p0_0-416.trc.
+
+
+
+Limb swapping was not handled.
+Lens distortions were not taken into account.
+
+Triangulation took 00h00m03s.
+
+
+---------------------------------------------------------------------
+Triangulation of 2D points for 55_1_23_p0, for all frames.
+On Thursday 04. December 2025, 09:31:15
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_23_p0
+---------------------------------------------------------------------
+
+Cannot read video. Frame rate will be set to 60 fps.
+
+Mean reprojection error for RHip is 2.6 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RKnee is 4.5 px (~ 0.018 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RAnkle is 3.0 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RBigToe is 1.4 px (~ 0.006 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RSmallToe is 4.1 px (~ 0.016 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RHeel is 2.3 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHip is 4.4 px (~ 0.017 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LKnee is 1.9 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LAnkle is 2.5 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LBigToe is 1.5 px (~ 0.006 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LSmallToe is 2.5 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHeel is 3.0 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for Nose is 3.2 px (~ 0.013 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for REye is 2.0 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LEye is 1.8 px (~ 0.007 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RShoulder is 1.6 px (~ 0.006 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RElbow is 3.0 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RWrist is 2.5 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RThumb is 1.8 px (~ 0.007 m), reached with 0.11 excluded cameras. 
+Mean reprojection error for RIndex is 2.5 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RPinky is 1.0 px (~ 0.004 m), reached with 1.67 excluded cameras. 
+Mean reprojection error for LShoulder is 2.9 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LElbow is 1.5 px (~ 0.006 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LWrist is 3.1 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LThumb is 3.6 px (~ 0.014 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LIndex is 1.8 px (~ 0.007 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LPinky is 2.6 px (~ 0.01 m), reached with 0.05 excluded cameras. 
+
+--> Mean reprojection error for all points on frames 0 to 328 is 2.6 px, which roughly corresponds to 10.3 mm. 
+Cameras were excluded if likelihood was below 0.3 and if the reprojection error was above 15 px.
+Gaps were interpolated with linear method if smaller than 30 frames. Larger gaps were filled with the last valid value.
+In average, 0.07 cameras had to be excluded to reach these thresholds.
+Camera cam2 was excluded 4% of the time, Camera cam1: 2%, and Camera cam3: 1%.
+3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_23_p0\pose-3d\55_1_23_p0_0-327.trc.
+
+
+
+Limb swapping was not handled.
+Lens distortions were not taken into account.
+
+Triangulation took 00h00m02s.
+
+
+---------------------------------------------------------------------
+Triangulation of 2D points for 55_1_24_p0, for all frames.
+On Thursday 04. December 2025, 09:31:18
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_24_p0
+---------------------------------------------------------------------
+
+Cannot read video. Frame rate will be set to 60 fps.
+
+Mean reprojection error for RHip is 2.8 px (~ 0.011 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RKnee is 4.4 px (~ 0.017 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RAnkle is 2.8 px (~ 0.011 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RBigToe is 1.3 px (~ 0.005 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RSmallToe is 4.1 px (~ 0.016 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RHeel is 2.3 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHip is 3.9 px (~ 0.015 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LKnee is 1.9 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LAnkle is 2.5 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LBigToe is 1.6 px (~ 0.006 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LSmallToe is 2.5 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHeel is 3.1 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for Nose is 3.2 px (~ 0.013 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for REye is 1.9 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LEye is 1.6 px (~ 0.006 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RShoulder is 1.5 px (~ 0.006 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RElbow is 2.9 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RWrist is 2.7 px (~ 0.011 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RThumb is 1.8 px (~ 0.007 m), reached with 0.17 excluded cameras. 
+Mean reprojection error for RIndex is 2.6 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RPinky is 1.0 px (~ 0.004 m), reached with 1.78 excluded cameras. 
+Mean reprojection error for LShoulder is 2.9 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LElbow is 1.7 px (~ 0.007 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LWrist is 3.3 px (~ 0.013 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LThumb is 3.4 px (~ 0.014 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LIndex is 1.6 px (~ 0.006 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LPinky is 2.6 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+
+--> Mean reprojection error for all points on frames 0 to 308 is 2.5 px, which roughly corresponds to 9.9 mm. 
+Cameras were excluded if likelihood was below 0.3 and if the reprojection error was above 15 px.
+Gaps were interpolated with linear method if smaller than 30 frames. Larger gaps were filled with the last valid value.
+In average, 0.07 cameras had to be excluded to reach these thresholds.
+Camera cam2 was excluded 4% of the time, Camera cam1: 2%, and Camera cam3: 1%.
+3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_24_p0\pose-3d\55_1_24_p0_0-307.trc.
+
+
+
+Limb swapping was not handled.
+Lens distortions were not taken into account.
+
+Triangulation took 00h00m02s.
+
+
+---------------------------------------------------------------------
+Triangulation of 2D points for 55_1_25_p0, for all frames.
+On Thursday 04. December 2025, 09:31:20
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_25_p0
+---------------------------------------------------------------------
+
+Cannot read video. Frame rate will be set to 60 fps.
+
+Mean reprojection error for RHip is 2.6 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RKnee is 4.4 px (~ 0.017 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RAnkle is 2.9 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RBigToe is 1.2 px (~ 0.005 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RSmallToe is 4.1 px (~ 0.016 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RHeel is 2.2 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHip is 4.2 px (~ 0.017 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LKnee is 1.7 px (~ 0.007 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LAnkle is 2.5 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LBigToe is 1.7 px (~ 0.007 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LSmallToe is 2.4 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHeel is 2.9 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for Nose is 3.3 px (~ 0.013 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for REye is 2.1 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LEye is 1.9 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RShoulder is 2.0 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RElbow is 2.9 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RWrist is 2.7 px (~ 0.011 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RThumb is 1.9 px (~ 0.008 m), reached with 0.25 excluded cameras. 
+Mean reprojection error for RIndex is 2.7 px (~ 0.011 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RPinky is 0.8 px (~ 0.003 m), reached with 1.46 excluded cameras. 
+Mean reprojection error for LShoulder is 2.9 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LElbow is 1.8 px (~ 0.007 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LWrist is 3.2 px (~ 0.013 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LThumb is 3.9 px (~ 0.015 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LIndex is 2.0 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LPinky is 2.8 px (~ 0.011 m), reached with 0.0 excluded cameras. 
+
+--> Mean reprojection error for all points on frames 0 to 369 is 2.6 px, which roughly corresponds to 10.3 mm. 
+Cameras were excluded if likelihood was below 0.3 and if the reprojection error was above 15 px.
+Gaps were interpolated with linear method if smaller than 30 frames. Larger gaps were filled with the last valid value.
+In average, 0.06 cameras had to be excluded to reach these thresholds.
+Camera cam2 was excluded 4% of the time, Camera cam1: 2%, and Camera cam3: 1%.
+3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_25_p0\pose-3d\55_1_25_p0_0-368.trc.
+
+
+
+Limb swapping was not handled.
+Lens distortions were not taken into account.
+
+Triangulation took 00h00m02s.
+
+
+---------------------------------------------------------------------
+Triangulation of 2D points for 55_1_26_p0, for all frames.
+On Thursday 04. December 2025, 09:31:23
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_26_p0
+---------------------------------------------------------------------
+
+Cannot read video. Frame rate will be set to 60 fps.
+
+Mean reprojection error for RHip is 3.7 px (~ 0.015 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RKnee is 4.5 px (~ 0.018 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RAnkle is 2.8 px (~ 0.011 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RBigToe is 1.3 px (~ 0.005 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RSmallToe is 4.1 px (~ 0.016 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RHeel is 2.3 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHip is 3.1 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LKnee is 1.6 px (~ 0.006 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LAnkle is 2.2 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LBigToe is 1.5 px (~ 0.006 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LSmallToe is 2.3 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHeel is 3.3 px (~ 0.013 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for Nose is 3.3 px (~ 0.013 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for REye is 1.6 px (~ 0.006 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LEye is 1.6 px (~ 0.006 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RShoulder is 1.8 px (~ 0.007 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RElbow is 2.7 px (~ 0.011 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RWrist is 2.4 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RThumb is 1.9 px (~ 0.008 m), reached with 0.19 excluded cameras. 
+Mean reprojection error for RIndex is 2.7 px (~ 0.011 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RPinky is 0.9 px (~ 0.004 m), reached with 1.58 excluded cameras. 
+Mean reprojection error for LShoulder is 3.2 px (~ 0.013 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LElbow is 1.8 px (~ 0.007 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LWrist is 3.1 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LThumb is 3.4 px (~ 0.014 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LIndex is 1.6 px (~ 0.006 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LPinky is 2.4 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+
+--> Mean reprojection error for all points on frames 0 to 260 is 2.5 px, which roughly corresponds to 9.9 mm. 
+Cameras were excluded if likelihood was below 0.3 and if the reprojection error was above 15 px.
+Gaps were interpolated with linear method if smaller than 30 frames. Larger gaps were filled with the last valid value.
+In average, 0.07 cameras had to be excluded to reach these thresholds.
+Camera cam2 was excluded 4% of the time, Camera cam1: 2%, and Camera cam3: 1%.
+3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_26_p0\pose-3d\55_1_26_p0_0-259.trc.
+
+
+
+Limb swapping was not handled.
+Lens distortions were not taken into account.
+
+Triangulation took 00h00m01s.
+
+
+---------------------------------------------------------------------
+Triangulation of 2D points for 55_1_29_p1, for all frames.
+On Thursday 04. December 2025, 09:31:24
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_29_p1
+---------------------------------------------------------------------
+
+Cannot read video. Frame rate will be set to 60 fps.
+
+Mean reprojection error for RHip is 3.0 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RKnee is 2.6 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RAnkle is 1.1 px (~ 0.004 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RBigToe is 1.8 px (~ 0.007 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RSmallToe is 2.1 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RHeel is 3.1 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHip is 4.0 px (~ 0.016 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LKnee is 2.3 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LAnkle is 1.8 px (~ 0.007 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LBigToe is 0.9 px (~ 0.004 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LSmallToe is 2.7 px (~ 0.011 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHeel is 2.4 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for Nose is 3.6 px (~ 0.014 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for REye is 2.4 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LEye is 1.6 px (~ 0.006 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RShoulder is 2.1 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RElbow is 2.2 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RWrist is 3.3 px (~ 0.013 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RThumb is 1.3 px (~ 0.005 m), reached with 0.03 excluded cameras. 
+Mean reprojection error for RIndex is 2.7 px (~ 0.011 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RPinky is 0.9 px (~ 0.004 m), reached with 2.87 excluded cameras. 
+Mean reprojection error for LShoulder is 3.3 px (~ 0.013 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LElbow is 2.2 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LWrist is 2.9 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LThumb is 3.6 px (~ 0.014 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LIndex is 1.5 px (~ 0.006 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LPinky is 2.5 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+
+--> Mean reprojection error for all points on frames 0 to 236 is 2.4 px, which roughly corresponds to 9.5 mm. 
+Cameras were excluded if likelihood was below 0.3 and if the reprojection error was above 15 px.
+Gaps were interpolated with linear method if smaller than 30 frames. Larger gaps were filled with the last valid value.
+In average, 0.11 cameras had to be excluded to reach these thresholds.
+Camera cam2 was excluded 4% of the time, Camera cam1: 4%, and Camera cam3: 3%.
+3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_29_p1\pose-3d\55_1_29_p1_0-235.trc.
+
+
+
+Limb swapping was not handled.
+Lens distortions were not taken into account.
+
+Triangulation took 00h00m01s.
+
+
+---------------------------------------------------------------------
+Triangulation of 2D points for 55_1_2_p0, for all frames.
+On Thursday 04. December 2025, 09:31:26
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_2_p0
+---------------------------------------------------------------------
+
+Cannot read video. Frame rate will be set to 60 fps.
+
+Mean reprojection error for RHip is 3.1 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RKnee is 4.1 px (~ 0.016 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RAnkle is 3.0 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RBigToe is 1.7 px (~ 0.007 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RSmallToe is 4.9 px (~ 0.019 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RHeel is 2.9 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHip is 3.5 px (~ 0.014 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LKnee is 2.3 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LAnkle is 1.2 px (~ 0.005 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LBigToe is 1.5 px (~ 0.006 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LSmallToe is 2.2 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHeel is 1.8 px (~ 0.007 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for Nose is 3.2 px (~ 0.013 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for REye is 2.4 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LEye is 2.0 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RShoulder is 1.6 px (~ 0.006 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RElbow is 2.3 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RWrist is 2.5 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RThumb is 1.7 px (~ 0.007 m), reached with 0.23 excluded cameras. 
+Mean reprojection error for RIndex is 2.1 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RPinky is 1.6 px (~ 0.006 m), reached with 1.05 excluded cameras. 
+Mean reprojection error for LShoulder is 2.6 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LElbow is 2.2 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LWrist is 2.9 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LThumb is 3.2 px (~ 0.013 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LIndex is 3.0 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LPinky is 2.4 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+
+--> Mean reprojection error for all points on frames 0 to 258 is 2.5 px, which roughly corresponds to 9.9 mm. 
+Cameras were excluded if likelihood was below 0.3 and if the reprojection error was above 15 px.
+Gaps were interpolated with linear method if smaller than 30 frames. Larger gaps were filled with the last valid value.
+In average, 0.05 cameras had to be excluded to reach these thresholds.
+Camera cam2 was excluded 3% of the time, Camera cam1: 1%, and Camera cam3: 1%.
+3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_2_p0\pose-3d\55_1_2_p0_0-257.trc.
+
+
+
+Limb swapping was not handled.
+Lens distortions were not taken into account.
+
+Triangulation took 00h00m01s.
+
+
+---------------------------------------------------------------------
+Triangulation of 2D points for 55_1_30_p1, for all frames.
+On Thursday 04. December 2025, 09:31:28
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_30_p1
+---------------------------------------------------------------------
+
+Cannot read video. Frame rate will be set to 60 fps.
+
+Mean reprojection error for RHip is 3.3 px (~ 0.013 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RKnee is 2.0 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RAnkle is 1.0 px (~ 0.004 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RBigToe is 1.9 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RSmallToe is 2.0 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RHeel is 3.3 px (~ 0.013 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHip is 4.4 px (~ 0.017 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LKnee is 2.3 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LAnkle is 1.8 px (~ 0.007 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LBigToe is 0.8 px (~ 0.003 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LSmallToe is 2.0 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHeel is 2.2 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for Nose is 2.8 px (~ 0.011 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for REye is 2.2 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LEye is 2.1 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RShoulder is 1.3 px (~ 0.005 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RElbow is 3.2 px (~ 0.013 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RWrist is 2.4 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RThumb is 1.7 px (~ 0.007 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RIndex is 1.5 px (~ 0.006 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RPinky is 0.8 px (~ 0.003 m), reached with 2.59 excluded cameras. 
+Mean reprojection error for LShoulder is 3.6 px (~ 0.014 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LElbow is 1.8 px (~ 0.007 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LWrist is 2.4 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LThumb is 3.3 px (~ 0.013 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LIndex is 1.5 px (~ 0.006 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LPinky is 3.0 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+
+--> Mean reprojection error for all points on frames 0 to 241 is 2.3 px, which roughly corresponds to 9.1 mm. 
+Cameras were excluded if likelihood was below 0.3 and if the reprojection error was above 15 px.
+Gaps were interpolated with linear method if smaller than 30 frames. Larger gaps were filled with the last valid value.
+In average, 0.1 cameras had to be excluded to reach these thresholds.
+Camera cam2 was excluded 4% of the time, Camera cam3: 3%, and Camera cam1: 3%.
+3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_30_p1\pose-3d\55_1_30_p1_0-240.trc.
+
+
+
+Limb swapping was not handled.
+Lens distortions were not taken into account.
+
+Triangulation took 00h00m01s.
+
+
+---------------------------------------------------------------------
+Triangulation of 2D points for 55_1_31_p1, for all frames.
+On Thursday 04. December 2025, 09:31:29
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_31_p1
+---------------------------------------------------------------------
+
+Cannot read video. Frame rate will be set to 60 fps.
+
+Mean reprojection error for RHip is 4.2 px (~ 0.017 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RKnee is 2.0 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RAnkle is 1.0 px (~ 0.004 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RBigToe is 2.0 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RSmallToe is 2.2 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RHeel is 3.3 px (~ 0.013 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHip is 5.2 px (~ 0.021 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LKnee is 2.0 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LAnkle is 1.8 px (~ 0.007 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LBigToe is 0.8 px (~ 0.003 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LSmallToe is 2.4 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHeel is 1.9 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for Nose is 2.5 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for REye is 2.3 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LEye is 2.6 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RShoulder is 1.5 px (~ 0.006 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RElbow is 3.4 px (~ 0.014 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RWrist is 2.7 px (~ 0.011 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RThumb is 1.4 px (~ 0.006 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RIndex is 1.3 px (~ 0.005 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RPinky is 0.7 px (~ 0.003 m), reached with 1.69 excluded cameras. 
+Mean reprojection error for LShoulder is 3.6 px (~ 0.014 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LElbow is 1.4 px (~ 0.006 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LWrist is 1.7 px (~ 0.007 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LThumb is 3.1 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LIndex is 1.5 px (~ 0.006 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LPinky is 3.6 px (~ 0.014 m), reached with 0.0 excluded cameras. 
+
+--> Mean reprojection error for all points on frames 0 to 199 is 2.3 px, which roughly corresponds to 9.1 mm. 
+Cameras were excluded if likelihood was below 0.3 and if the reprojection error was above 15 px.
+Gaps were interpolated with linear method if smaller than 30 frames. Larger gaps were filled with the last valid value.
+In average, 0.06 cameras had to be excluded to reach these thresholds.
+Camera cam1 was excluded 3% of the time, Camera cam2: 2%, and Camera cam3: 2%.
+3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_31_p1\pose-3d\55_1_31_p1_0-198.trc.
+
+
+
+Limb swapping was not handled.
+Lens distortions were not taken into account.
+
+Triangulation took 00h00m01s.
+
+
+---------------------------------------------------------------------
+Triangulation of 2D points for 55_1_32_p1, for all frames.
+On Thursday 04. December 2025, 09:31:31
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_32_p1
+---------------------------------------------------------------------
+
+Cannot read video. Frame rate will be set to 60 fps.
+
+Mean reprojection error for RHip is 3.1 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RKnee is 2.9 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RAnkle is 1.1 px (~ 0.004 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RBigToe is 2.4 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RSmallToe is 2.5 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RHeel is 3.3 px (~ 0.013 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHip is 3.8 px (~ 0.015 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LKnee is 2.6 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LAnkle is 1.9 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LBigToe is 0.8 px (~ 0.003 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LSmallToe is 2.6 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHeel is 2.6 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for Nose is 2.8 px (~ 0.011 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for REye is 2.5 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LEye is 2.2 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RShoulder is 2.0 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RElbow is 2.2 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RWrist is 2.2 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RThumb is 1.3 px (~ 0.005 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RIndex is 1.8 px (~ 0.007 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RPinky is nan px (~ nan m), reached with 3.0 excluded cameras. 
+Mean reprojection error for LShoulder is 3.2 px (~ 0.013 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LElbow is 2.1 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LWrist is 2.3 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LThumb is 3.5 px (~ 0.014 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LIndex is 1.0 px (~ 0.004 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LPinky is 3.4 px (~ 0.014 m), reached with 0.0 excluded cameras. 
+
+--> Mean reprojection error for all points on frames 0 to 244 is 2.4 px, which roughly corresponds to 9.5 mm. 
+Cameras were excluded if likelihood was below 0.3 and if the reprojection error was above 15 px.
+Gaps were interpolated with linear method if smaller than 30 frames. Larger gaps were filled with the last valid value.
+In average, 0.11 cameras had to be excluded to reach these thresholds.
+Camera cam3 was excluded 4% of the time, Camera cam2: 4%, and Camera cam1: 4%.
+3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_32_p1\pose-3d\55_1_32_p1_0-243.trc.
+
+
+
+Limb swapping was not handled.
+Lens distortions were not taken into account.
+
+Triangulation took 00h00m01s.
+
+
+---------------------------------------------------------------------
+Triangulation of 2D points for 55_1_33_p1, for all frames.
+On Thursday 04. December 2025, 09:31:32
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_33_p1
+---------------------------------------------------------------------
+
+Cannot read video. Frame rate will be set to 60 fps.
+
+Mean reprojection error for RHip is 3.1 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RKnee is 2.0 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RAnkle is 1.2 px (~ 0.005 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RBigToe is 2.0 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RSmallToe is 2.2 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RHeel is 3.4 px (~ 0.014 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHip is 4.0 px (~ 0.016 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LKnee is 2.4 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LAnkle is 1.8 px (~ 0.007 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LBigToe is 0.9 px (~ 0.004 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LSmallToe is 2.3 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHeel is 2.4 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for Nose is 2.7 px (~ 0.011 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for REye is 2.0 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LEye is 2.0 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RShoulder is 1.5 px (~ 0.006 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RElbow is 2.4 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RWrist is 2.4 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RThumb is 1.6 px (~ 0.006 m), reached with 0.03 excluded cameras. 
+Mean reprojection error for RIndex is 1.8 px (~ 0.007 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RPinky is 0.3 px (~ 0.001 m), reached with 2.99 excluded cameras. 
+Mean reprojection error for LShoulder is 3.2 px (~ 0.013 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LElbow is 1.7 px (~ 0.007 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LWrist is 2.0 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LThumb is 3.2 px (~ 0.013 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LIndex is 1.3 px (~ 0.005 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LPinky is 2.6 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+
+--> Mean reprojection error for all points on frames 0 to 273 is 2.2 px, which roughly corresponds to 8.7 mm. 
+Cameras were excluded if likelihood was below 0.3 and if the reprojection error was above 15 px.
+Gaps were interpolated with linear method if smaller than 30 frames. Larger gaps were filled with the last valid value.
+In average, 0.11 cameras had to be excluded to reach these thresholds.
+Camera cam1 was excluded 4% of the time, Camera cam2: 4%, and Camera cam3: 4%.
+3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_33_p1\pose-3d\55_1_33_p1_0-272.trc.
+
+
+
+Limb swapping was not handled.
+Lens distortions were not taken into account.
+
+Triangulation took 00h00m01s.
+
+
+---------------------------------------------------------------------
+Triangulation of 2D points for 55_1_34_p1, for all frames.
+On Thursday 04. December 2025, 09:31:34
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_34_p1
+---------------------------------------------------------------------
+
+Cannot read video. Frame rate will be set to 60 fps.
+
+Mean reprojection error for RHip is 3.1 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RKnee is 1.8 px (~ 0.007 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RAnkle is 1.1 px (~ 0.004 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RBigToe is 2.2 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RSmallToe is 2.3 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RHeel is 3.0 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHip is 4.1 px (~ 0.016 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LKnee is 2.8 px (~ 0.011 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LAnkle is 1.9 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LBigToe is 0.8 px (~ 0.003 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LSmallToe is 2.5 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHeel is 2.3 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for Nose is 3.0 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for REye is 2.6 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LEye is 2.1 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RShoulder is 2.0 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RElbow is 2.6 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RWrist is 2.9 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RThumb is 1.4 px (~ 0.006 m), reached with 0.06 excluded cameras. 
+Mean reprojection error for RIndex is 2.0 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RPinky is 0.2 px (~ 0.001 m), reached with 2.55 excluded cameras. 
+Mean reprojection error for LShoulder is 3.3 px (~ 0.013 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LElbow is 1.9 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LWrist is 2.2 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LThumb is 3.7 px (~ 0.015 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LIndex is 1.0 px (~ 0.004 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LPinky is 3.2 px (~ 0.013 m), reached with 0.0 excluded cameras. 
+
+--> Mean reprojection error for all points on frames 0 to 313 is 2.4 px, which roughly corresponds to 9.5 mm. 
+Cameras were excluded if likelihood was below 0.3 and if the reprojection error was above 15 px.
+Gaps were interpolated with linear method if smaller than 30 frames. Larger gaps were filled with the last valid value.
+In average, 0.1 cameras had to be excluded to reach these thresholds.
+Camera cam2 was excluded 4% of the time, Camera cam1: 3%, and Camera cam3: 3%.
+3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_34_p1\pose-3d\55_1_34_p1_0-312.trc.
+
+
+
+Limb swapping was not handled.
+Lens distortions were not taken into account.
+
+Triangulation took 00h00m02s.
+
+
+---------------------------------------------------------------------
+Triangulation of 2D points for 55_1_35_p1, for all frames.
+On Thursday 04. December 2025, 09:31:36
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_35_p1
+---------------------------------------------------------------------
+
+Cannot read video. Frame rate will be set to 60 fps.
+
+Mean reprojection error for RHip is 4.2 px (~ 0.017 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RKnee is 2.4 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RAnkle is 1.0 px (~ 0.004 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RBigToe is 1.9 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RSmallToe is 2.1 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RHeel is 3.3 px (~ 0.013 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHip is 4.9 px (~ 0.019 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LKnee is 2.3 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LAnkle is 1.8 px (~ 0.007 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LBigToe is 0.7 px (~ 0.003 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LSmallToe is 2.6 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHeel is 2.2 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for Nose is 3.1 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for REye is 2.2 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LEye is 1.7 px (~ 0.007 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RShoulder is 2.2 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RElbow is 2.9 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RWrist is 2.4 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RThumb is 1.6 px (~ 0.006 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RIndex is 1.8 px (~ 0.007 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RPinky is 0.5 px (~ 0.002 m), reached with 2.92 excluded cameras. 
+Mean reprojection error for LShoulder is 3.3 px (~ 0.013 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LElbow is 1.7 px (~ 0.007 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LWrist is 1.9 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LThumb is 3.2 px (~ 0.013 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LIndex is 1.3 px (~ 0.005 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LPinky is 2.6 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+
+--> Mean reprojection error for all points on frames 0 to 425 is 2.4 px, which roughly corresponds to 9.5 mm. 
+Cameras were excluded if likelihood was below 0.3 and if the reprojection error was above 15 px.
+Gaps were interpolated with linear method if smaller than 30 frames. Larger gaps were filled with the last valid value.
+In average, 0.11 cameras had to be excluded to reach these thresholds.
+Camera cam2 was excluded 4% of the time, Camera cam1: 4%, and Camera cam3: 4%.
+3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_35_p1\pose-3d\55_1_35_p1_0-424.trc.
+
+
+
+Limb swapping was not handled.
+Lens distortions were not taken into account.
+
+Triangulation took 00h00m03s.
+
+
+---------------------------------------------------------------------
+Triangulation of 2D points for 55_1_38_p0, for all frames.
+On Thursday 04. December 2025, 09:31:40
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_38_p0
+---------------------------------------------------------------------
+
+Cannot read video. Frame rate will be set to 60 fps.
+
+Mean reprojection error for RHip is 3.3 px (~ 0.013 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RKnee is 3.9 px (~ 0.015 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RAnkle is 2.4 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RBigToe is 3.5 px (~ 0.014 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RSmallToe is 7.4 px (~ 0.029 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RHeel is 2.5 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHip is 3.1 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LKnee is 1.9 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LAnkle is 3.8 px (~ 0.015 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LBigToe is 2.0 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LSmallToe is 2.4 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHeel is 3.9 px (~ 0.015 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for Nose is 2.8 px (~ 0.011 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for REye is 2.1 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LEye is 1.6 px (~ 0.006 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RShoulder is 1.6 px (~ 0.006 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RElbow is 2.6 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RWrist is 3.1 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RThumb is 2.7 px (~ 0.011 m), reached with 0.03 excluded cameras. 
+Mean reprojection error for RIndex is 2.8 px (~ 0.011 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RPinky is 2.7 px (~ 0.011 m), reached with 0.96 excluded cameras. 
+Mean reprojection error for LShoulder is 3.1 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LElbow is 2.5 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LWrist is 2.1 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LThumb is 2.5 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LIndex is 2.4 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LPinky is 2.1 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+
+--> Mean reprojection error for all points on frames 0 to 157 is 2.8 px, which roughly corresponds to 11.1 mm. 
+Cameras were excluded if likelihood was below 0.3 and if the reprojection error was above 15 px.
+Gaps were interpolated with linear method if smaller than 30 frames. Larger gaps were filled with the last valid value.
+In average, 0.04 cameras had to be excluded to reach these thresholds.
+Camera cam2 was excluded 2% of the time, Camera cam1: 1%, and Camera cam3: 1%.
+3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_38_p0\pose-3d\55_1_38_p0_0-156.trc.
+
+
+
+Limb swapping was not handled.
+Lens distortions were not taken into account.
+
+Triangulation took 00h00m01s.
+
+
+---------------------------------------------------------------------
+Triangulation of 2D points for 55_1_39_p0, for all frames.
+On Thursday 04. December 2025, 09:31:41
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_39_p0
+---------------------------------------------------------------------
+
+Cannot read video. Frame rate will be set to 60 fps.
+
+Mean reprojection error for RHip is 3.8 px (~ 0.015 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RKnee is 4.4 px (~ 0.017 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RAnkle is 2.8 px (~ 0.011 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RBigToe is 3.7 px (~ 0.015 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RSmallToe is 7.5 px (~ 0.03 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RHeel is 2.6 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHip is 2.3 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LKnee is 1.7 px (~ 0.007 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LAnkle is 4.2 px (~ 0.017 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LBigToe is 1.1 px (~ 0.004 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LSmallToe is 2.2 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHeel is 3.9 px (~ 0.015 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for Nose is 3.4 px (~ 0.014 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for REye is 2.3 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LEye is 1.6 px (~ 0.006 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RShoulder is 1.2 px (~ 0.005 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RElbow is 3.1 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RWrist is 2.7 px (~ 0.011 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RThumb is 1.5 px (~ 0.006 m), reached with 0.15 excluded cameras. 
+Mean reprojection error for RIndex is 2.1 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RPinky is 1.2 px (~ 0.005 m), reached with 1.06 excluded cameras. 
+Mean reprojection error for LShoulder is 3.0 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LElbow is 2.2 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LWrist is 2.2 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LThumb is 3.5 px (~ 0.014 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LIndex is 1.6 px (~ 0.006 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LPinky is 2.0 px (~ 0.008 m), reached with 0.01 excluded cameras. 
+
+--> Mean reprojection error for all points on frames 0 to 226 is 2.7 px, which roughly corresponds to 10.7 mm. 
+Cameras were excluded if likelihood was below 0.3 and if the reprojection error was above 15 px.
+Gaps were interpolated with linear method if smaller than 30 frames. Larger gaps were filled with the last valid value.
+In average, 0.05 cameras had to be excluded to reach these thresholds.
+Camera cam2 was excluded 3% of the time, Camera cam1: 1%, and Camera cam3: 0%.
+3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_39_p0\pose-3d\55_1_39_p0_0-225.trc.
+
+
+
+Limb swapping was not handled.
+Lens distortions were not taken into account.
+
+Triangulation took 00h00m01s.
+
+
+---------------------------------------------------------------------
+Triangulation of 2D points for 55_1_3_p0, for all frames.
+On Thursday 04. December 2025, 09:31:42
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_3_p0
+---------------------------------------------------------------------
+
+Cannot read video. Frame rate will be set to 60 fps.
+
+Mean reprojection error for RHip is 3.4 px (~ 0.014 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RKnee is 4.4 px (~ 0.017 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RAnkle is 3.1 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RBigToe is 1.9 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RSmallToe is 4.9 px (~ 0.019 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RHeel is 3.0 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHip is 2.8 px (~ 0.011 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LKnee is 2.3 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LAnkle is 1.0 px (~ 0.004 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LBigToe is 1.2 px (~ 0.005 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LSmallToe is 2.7 px (~ 0.011 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHeel is 1.9 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for Nose is 3.5 px (~ 0.014 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for REye is 2.1 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LEye is 1.7 px (~ 0.007 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RShoulder is 1.7 px (~ 0.007 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RElbow is 3.2 px (~ 0.013 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RWrist is 3.0 px (~ 0.012 m), reached with 0.01 excluded cameras. 
+Mean reprojection error for RThumb is 1.6 px (~ 0.006 m), reached with 0.04 excluded cameras. 
+Mean reprojection error for RIndex is 1.9 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RPinky is 0.9 px (~ 0.004 m), reached with 0.87 excluded cameras. 
+Mean reprojection error for LShoulder is 2.6 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LElbow is 2.5 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LWrist is 2.8 px (~ 0.011 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LThumb is 3.3 px (~ 0.013 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LIndex is 2.0 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LPinky is 2.2 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+
+--> Mean reprojection error for all points on frames 0 to 414 is 2.5 px, which roughly corresponds to 9.9 mm. 
+Cameras were excluded if likelihood was below 0.3 and if the reprojection error was above 15 px.
+Gaps were interpolated with linear method if smaller than 30 frames. Larger gaps were filled with the last valid value.
+In average, 0.03 cameras had to be excluded to reach these thresholds.
+Camera cam2 was excluded 3% of the time, Camera cam1: 1%, and Camera cam3: 0%.
+3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_3_p0\pose-3d\55_1_3_p0_0-413.trc.
+
+
+
+Limb swapping was not handled.
+Lens distortions were not taken into account.
+
+Triangulation took 00h00m03s.
+
+
+---------------------------------------------------------------------
+Triangulation of 2D points for 55_1_40_p0, for all frames.
+On Thursday 04. December 2025, 09:31:45
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_40_p0
+---------------------------------------------------------------------
+
+Cannot read video. Frame rate will be set to 60 fps.
+
+Mean reprojection error for RHip is 3.7 px (~ 0.015 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RKnee is 3.9 px (~ 0.015 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RAnkle is 2.5 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RBigToe is 3.6 px (~ 0.014 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RSmallToe is 7.4 px (~ 0.029 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RHeel is 2.5 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHip is 3.2 px (~ 0.013 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LKnee is 2.0 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LAnkle is 4.3 px (~ 0.017 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LBigToe is 2.0 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LSmallToe is 2.4 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHeel is 4.0 px (~ 0.016 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for Nose is 3.2 px (~ 0.013 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for REye is 2.3 px (~ 0.009 m), reached with 0.01 excluded cameras. 
+Mean reprojection error for LEye is 2.0 px (~ 0.008 m), reached with 0.01 excluded cameras. 
+Mean reprojection error for RShoulder is 1.7 px (~ 0.007 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RElbow is 3.0 px (~ 0.012 m), reached with 0.01 excluded cameras. 
+Mean reprojection error for RWrist is 2.6 px (~ 0.01 m), reached with 0.01 excluded cameras. 
+Mean reprojection error for RThumb is 1.7 px (~ 0.007 m), reached with 0.06 excluded cameras. 
+Mean reprojection error for RIndex is 2.0 px (~ 0.008 m), reached with 0.03 excluded cameras. 
+Mean reprojection error for RPinky is 1.5 px (~ 0.006 m), reached with 1.25 excluded cameras. 
+Mean reprojection error for LShoulder is 3.0 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LElbow is 3.1 px (~ 0.012 m), reached with 0.01 excluded cameras. 
+Mean reprojection error for LWrist is 2.7 px (~ 0.011 m), reached with 0.01 excluded cameras. 
+Mean reprojection error for LThumb is 3.2 px (~ 0.013 m), reached with 0.02 excluded cameras. 
+Mean reprojection error for LIndex is 2.9 px (~ 0.012 m), reached with 0.02 excluded cameras. 
+Mean reprojection error for LPinky is 2.4 px (~ 0.01 m), reached with 0.02 excluded cameras. 
+
+--> Mean reprojection error for all points on frames 0 to 218 is 2.9 px, which roughly corresponds to 11.5 mm. 
+Cameras were excluded if likelihood was below 0.3 and if the reprojection error was above 15 px.
+Gaps were interpolated with linear method if smaller than 30 frames. Larger gaps were filled with the last valid value.
+In average, 0.06 cameras had to be excluded to reach these thresholds.
+Camera cam2 was excluded 2% of the time, Camera cam3: 2%, and Camera cam1: 1%.
+3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_40_p0\pose-3d\55_1_40_p0_0-217.trc.
+
+
+
+Limb swapping was not handled.
+Lens distortions were not taken into account.
+
+Triangulation took 00h00m01s.
+
+
+---------------------------------------------------------------------
+Triangulation of 2D points for 55_1_41_p0, for all frames.
+On Thursday 04. December 2025, 09:31:47
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_41_p0
+---------------------------------------------------------------------
+
+Cannot read video. Frame rate will be set to 60 fps.
+
+Mean reprojection error for RHip is 3.6 px (~ 0.014 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RKnee is 4.4 px (~ 0.017 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RAnkle is 2.6 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RBigToe is 3.6 px (~ 0.014 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RSmallToe is 7.4 px (~ 0.029 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RHeel is 2.5 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHip is 2.8 px (~ 0.011 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LKnee is 2.0 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LAnkle is 3.8 px (~ 0.015 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LBigToe is 1.3 px (~ 0.005 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LSmallToe is 2.5 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHeel is 3.9 px (~ 0.015 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for Nose is 3.5 px (~ 0.014 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for REye is 2.5 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LEye is 2.2 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RShoulder is 1.7 px (~ 0.007 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RElbow is 2.8 px (~ 0.011 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RWrist is 2.9 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RThumb is 2.2 px (~ 0.009 m), reached with 0.55 excluded cameras. 
+Mean reprojection error for RIndex is 2.6 px (~ 0.01 m), reached with 0.27 excluded cameras. 
+Mean reprojection error for RPinky is 2.0 px (~ 0.008 m), reached with 1.25 excluded cameras. 
+Mean reprojection error for LShoulder is 2.6 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LElbow is 2.6 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LWrist is 3.0 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LThumb is 3.6 px (~ 0.014 m), reached with 0.03 excluded cameras. 
+Mean reprojection error for LIndex is 2.5 px (~ 0.01 m), reached with 0.07 excluded cameras. 
+Mean reprojection error for LPinky is 2.5 px (~ 0.01 m), reached with 0.02 excluded cameras. 
+
+--> Mean reprojection error for all points on frames 0 to 292 is 3.0 px, which roughly corresponds to 11.9 mm. 
+Cameras were excluded if likelihood was below 0.3 and if the reprojection error was above 15 px.
+Gaps were interpolated with linear method if smaller than 30 frames. Larger gaps were filled with the last valid value.
+In average, 0.08 cameras had to be excluded to reach these thresholds.
+Camera cam2 was excluded 4% of the time, Camera cam1: 3%, and Camera cam3: 2%.
+3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_41_p0\pose-3d\55_1_41_p0_0-291.trc.
+
+
+
+Limb swapping was not handled.
+Lens distortions were not taken into account.
+
+Triangulation took 00h00m02s.
+
+
+---------------------------------------------------------------------
+Triangulation of 2D points for 55_1_42_p0, for all frames.
+On Thursday 04. December 2025, 09:31:49
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_42_p0
+---------------------------------------------------------------------
+
+Cannot read video. Frame rate will be set to 60 fps.
+
+Mean reprojection error for RHip is 3.8 px (~ 0.015 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RKnee is 3.9 px (~ 0.015 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RAnkle is 2.4 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RBigToe is 3.7 px (~ 0.015 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RSmallToe is 7.4 px (~ 0.029 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RHeel is 2.6 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHip is 2.9 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LKnee is 1.8 px (~ 0.007 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LAnkle is 4.2 px (~ 0.017 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LBigToe is 1.5 px (~ 0.006 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LSmallToe is 2.3 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHeel is 4.0 px (~ 0.016 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for Nose is 3.4 px (~ 0.014 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for REye is 2.4 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LEye is 1.6 px (~ 0.006 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RShoulder is 1.5 px (~ 0.006 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RElbow is 4.0 px (~ 0.016 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RWrist is 3.1 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RThumb is 1.5 px (~ 0.006 m), reached with 0.11 excluded cameras. 
+Mean reprojection error for RIndex is 2.0 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RPinky is 1.1 px (~ 0.004 m), reached with 1.31 excluded cameras. 
+Mean reprojection error for LShoulder is 2.7 px (~ 0.011 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LElbow is 2.9 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LWrist is 3.2 px (~ 0.013 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LThumb is 3.4 px (~ 0.014 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LIndex is 2.2 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LPinky is 2.2 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+
+--> Mean reprojection error for all points on frames 0 to 264 is 2.9 px, which roughly corresponds to 11.5 mm. 
+Cameras were excluded if likelihood was below 0.3 and if the reprojection error was above 15 px.
+Gaps were interpolated with linear method if smaller than 30 frames. Larger gaps were filled with the last valid value.
+In average, 0.05 cameras had to be excluded to reach these thresholds.
+Camera cam2 was excluded 3% of the time, Camera cam1: 2%, and Camera cam3: 1%.
+3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_42_p0\pose-3d\55_1_42_p0_0-263.trc.
+
+
+
+Limb swapping was not handled.
+Lens distortions were not taken into account.
+
+Triangulation took 00h00m01s.
+
+
+---------------------------------------------------------------------
+Triangulation of 2D points for 55_1_43_p0, for all frames.
+On Thursday 04. December 2025, 09:31:51
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_43_p0
+---------------------------------------------------------------------
+
+Cannot read video. Frame rate will be set to 60 fps.
+
+Mean reprojection error for RHip is 3.6 px (~ 0.014 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RKnee is 4.4 px (~ 0.017 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RAnkle is 2.3 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RBigToe is 3.7 px (~ 0.015 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RSmallToe is 7.5 px (~ 0.03 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RHeel is 2.6 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHip is 3.0 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LKnee is 1.7 px (~ 0.007 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LAnkle is 4.1 px (~ 0.016 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LBigToe is 1.2 px (~ 0.005 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LSmallToe is 2.2 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHeel is 4.2 px (~ 0.017 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for Nose is 3.6 px (~ 0.014 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for REye is 2.2 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LEye is 1.7 px (~ 0.007 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RShoulder is 1.1 px (~ 0.004 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RElbow is 2.9 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RWrist is 2.7 px (~ 0.011 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RThumb is 1.6 px (~ 0.006 m), reached with 0.04 excluded cameras. 
+Mean reprojection error for RIndex is 1.7 px (~ 0.007 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RPinky is 0.8 px (~ 0.003 m), reached with 1.76 excluded cameras. 
+Mean reprojection error for LShoulder is 2.8 px (~ 0.011 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LElbow is 2.3 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LWrist is 2.8 px (~ 0.011 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LThumb is 3.3 px (~ 0.013 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LIndex is 2.0 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LPinky is 2.2 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+
+--> Mean reprojection error for all points on frames 0 to 278 is 2.8 px, which roughly corresponds to 11.1 mm. 
+Cameras were excluded if likelihood was below 0.3 and if the reprojection error was above 15 px.
+Gaps were interpolated with linear method if smaller than 30 frames. Larger gaps were filled with the last valid value.
+In average, 0.07 cameras had to be excluded to reach these thresholds.
+Camera cam2 was excluded 3% of the time, Camera cam1: 2%, and Camera cam3: 2%.
+3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_43_p0\pose-3d\55_1_43_p0_0-277.trc.
+
+
+
+Limb swapping was not handled.
+Lens distortions were not taken into account.
+
+Triangulation took 00h00m01s.
+
+
+---------------------------------------------------------------------
+Triangulation of 2D points for 55_1_44_p0, for all frames.
+On Thursday 04. December 2025, 09:31:52
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_44_p0
+---------------------------------------------------------------------
+
+Cannot read video. Frame rate will be set to 60 fps.
+
+Mean reprojection error for RHip is 3.7 px (~ 0.015 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RKnee is 3.7 px (~ 0.015 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RAnkle is 2.6 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RBigToe is 3.2 px (~ 0.013 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RSmallToe is 7.1 px (~ 0.028 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RHeel is 2.6 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHip is 2.9 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LKnee is 2.3 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LAnkle is 3.8 px (~ 0.015 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LBigToe is 1.3 px (~ 0.005 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LSmallToe is 2.3 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHeel is 3.7 px (~ 0.015 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for Nose is 3.3 px (~ 0.013 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for REye is 2.4 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LEye is 1.8 px (~ 0.007 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RShoulder is 1.7 px (~ 0.007 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RElbow is 3.2 px (~ 0.013 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RWrist is 2.7 px (~ 0.011 m), reached with 0.01 excluded cameras. 
+Mean reprojection error for RThumb is 2.3 px (~ 0.009 m), reached with 0.08 excluded cameras. 
+Mean reprojection error for RIndex is 2.4 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RPinky is 2.1 px (~ 0.008 m), reached with 1.13 excluded cameras. 
+Mean reprojection error for LShoulder is 2.7 px (~ 0.011 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LElbow is 2.4 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LWrist is 2.5 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LThumb is 3.5 px (~ 0.014 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LIndex is 2.1 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LPinky is 2.3 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+
+--> Mean reprojection error for all points on frames 0 to 260 is 2.8 px, which roughly corresponds to 11.1 mm. 
+Cameras were excluded if likelihood was below 0.3 and if the reprojection error was above 15 px.
+Gaps were interpolated with linear method if smaller than 30 frames. Larger gaps were filled with the last valid value.
+In average, 0.05 cameras had to be excluded to reach these thresholds.
+Camera cam2 was excluded 2% of the time, Camera cam1: 1%, and Camera cam3: 1%.
+3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_44_p0\pose-3d\55_1_44_p0_0-259.trc.
+
+
+
+Limb swapping was not handled.
+Lens distortions were not taken into account.
+
+Triangulation took 00h00m01s.
+
+
+---------------------------------------------------------------------
+Triangulation of 2D points for 55_1_47_p1, for all frames.
+On Thursday 04. December 2025, 09:31:54
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_47_p1
+---------------------------------------------------------------------
+
+Cannot read video. Frame rate will be set to 60 fps.
+
+Mean reprojection error for RHip is 3.9 px (~ 0.015 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RKnee is 4.5 px (~ 0.018 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RAnkle is 3.5 px (~ 0.014 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RBigToe is 3.4 px (~ 0.014 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RSmallToe is 4.2 px (~ 0.017 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RHeel is 3.5 px (~ 0.014 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHip is 4.1 px (~ 0.016 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LKnee is 2.9 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LAnkle is 4.3 px (~ 0.017 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LBigToe is 0.8 px (~ 0.003 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LSmallToe is 1.8 px (~ 0.007 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHeel is 4.3 px (~ 0.017 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for Nose is 3.7 px (~ 0.015 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for REye is 2.6 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LEye is 2.4 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RShoulder is 1.3 px (~ 0.005 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RElbow is 2.5 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RWrist is 2.5 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RThumb is 2.2 px (~ 0.009 m), reached with 0.17 excluded cameras. 
+Mean reprojection error for RIndex is 3.0 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RPinky is 0.7 px (~ 0.003 m), reached with 1.32 excluded cameras. 
+Mean reprojection error for LShoulder is 2.5 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LElbow is 3.1 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LWrist is 2.5 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LThumb is 4.9 px (~ 0.019 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LIndex is 2.1 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LPinky is 3.5 px (~ 0.014 m), reached with 0.0 excluded cameras. 
+
+--> Mean reprojection error for all points on frames 0 to 204 is 3.0 px, which roughly corresponds to 11.9 mm. 
+Cameras were excluded if likelihood was below 0.3 and if the reprojection error was above 15 px.
+Gaps were interpolated with linear method if smaller than 30 frames. Larger gaps were filled with the last valid value.
+In average, 0.06 cameras had to be excluded to reach these thresholds.
+Camera cam2 was excluded 4% of the time, Camera cam1: 1%, and Camera cam3: 1%.
+3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_47_p1\pose-3d\55_1_47_p1_0-203.trc.
+
+
+
+Limb swapping was not handled.
+Lens distortions were not taken into account.
+
+Triangulation took 00h00m01s.
+
+
+---------------------------------------------------------------------
+Triangulation of 2D points for 55_1_48_p1, for all frames.
+On Thursday 04. December 2025, 09:31:56
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_48_p1
+---------------------------------------------------------------------
+
+Cannot read video. Frame rate will be set to 60 fps.
+
+Mean reprojection error for RHip is 4.3 px (~ 0.017 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RKnee is 3.8 px (~ 0.015 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RAnkle is 3.4 px (~ 0.014 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RBigToe is 3.2 px (~ 0.013 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RSmallToe is 3.8 px (~ 0.015 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RHeel is 3.5 px (~ 0.014 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHip is 4.7 px (~ 0.019 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LKnee is 2.8 px (~ 0.011 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LAnkle is 4.1 px (~ 0.016 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LBigToe is 1.3 px (~ 0.005 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LSmallToe is 2.1 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHeel is 3.7 px (~ 0.015 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for Nose is 3.3 px (~ 0.013 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for REye is 2.3 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LEye is 2.1 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RShoulder is 1.3 px (~ 0.005 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RElbow is 3.9 px (~ 0.015 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RWrist is 2.8 px (~ 0.011 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RThumb is 2.0 px (~ 0.008 m), reached with 0.28 excluded cameras. 
+Mean reprojection error for RIndex is 2.8 px (~ 0.011 m), reached with 0.08 excluded cameras. 
+Mean reprojection error for RPinky is 1.2 px (~ 0.005 m), reached with 1.78 excluded cameras. 
+Mean reprojection error for LShoulder is 2.2 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LElbow is 2.9 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LWrist is 2.1 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LThumb is 4.0 px (~ 0.016 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LIndex is 2.0 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LPinky is 3.0 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+
+--> Mean reprojection error for all points on frames 0 to 240 is 2.9 px, which roughly corresponds to 11.5 mm. 
+Cameras were excluded if likelihood was below 0.3 and if the reprojection error was above 15 px.
+Gaps were interpolated with linear method if smaller than 30 frames. Larger gaps were filled with the last valid value.
+In average, 0.08 cameras had to be excluded to reach these thresholds.
+Camera cam2 was excluded 4% of the time, Camera cam1: 2%, and Camera cam3: 1%.
+3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_48_p1\pose-3d\55_1_48_p1_0-239.trc.
+
+
+
+Limb swapping was not handled.
+Lens distortions were not taken into account.
+
+Triangulation took 00h00m01s.
+
+
+---------------------------------------------------------------------
+Triangulation of 2D points for 55_1_49_p1, for all frames.
+On Thursday 04. December 2025, 09:31:57
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_49_p1
+---------------------------------------------------------------------
+
+Cannot read video. Frame rate will be set to 60 fps.
+
+Mean reprojection error for RHip is 4.2 px (~ 0.017 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RKnee is 4.4 px (~ 0.017 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RAnkle is 3.3 px (~ 0.013 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RBigToe is 3.0 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RSmallToe is 4.3 px (~ 0.017 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RHeel is 3.2 px (~ 0.013 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHip is 3.5 px (~ 0.014 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LKnee is 3.1 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LAnkle is 4.5 px (~ 0.018 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LBigToe is 1.0 px (~ 0.004 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LSmallToe is 1.8 px (~ 0.007 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHeel is 4.1 px (~ 0.016 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for Nose is 3.3 px (~ 0.013 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for REye is 2.8 px (~ 0.011 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LEye is 2.6 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RShoulder is 1.2 px (~ 0.005 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RElbow is 3.2 px (~ 0.013 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RWrist is 2.7 px (~ 0.011 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RThumb is 2.3 px (~ 0.009 m), reached with 0.13 excluded cameras. 
+Mean reprojection error for RIndex is 2.8 px (~ 0.011 m), reached with 0.09 excluded cameras. 
+Mean reprojection error for RPinky is 1.4 px (~ 0.006 m), reached with 1.13 excluded cameras. 
+Mean reprojection error for LShoulder is 2.2 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LElbow is 3.2 px (~ 0.013 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LWrist is 2.6 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LThumb is 3.8 px (~ 0.015 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LIndex is 2.5 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LPinky is 3.3 px (~ 0.013 m), reached with 0.02 excluded cameras. 
+
+--> Mean reprojection error for all points on frames 0 to 246 is 3.0 px, which roughly corresponds to 11.9 mm. 
+Cameras were excluded if likelihood was below 0.3 and if the reprojection error was above 15 px.
+Gaps were interpolated with linear method if smaller than 30 frames. Larger gaps were filled with the last valid value.
+In average, 0.05 cameras had to be excluded to reach these thresholds.
+Camera cam2 was excluded 3% of the time, Camera cam3: 1%, and Camera cam1: 1%.
+3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_49_p1\pose-3d\55_1_49_p1_0-245.trc.
+
+
+
+Limb swapping was not handled.
+Lens distortions were not taken into account.
+
+Triangulation took 00h00m01s.
+
+
+---------------------------------------------------------------------
+Triangulation of 2D points for 55_1_4_p0, for all frames.
+On Thursday 04. December 2025, 09:31:59
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_4_p0
+---------------------------------------------------------------------
+
+Cannot read video. Frame rate will be set to 60 fps.
+
+Mean reprojection error for RHip is 3.1 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RKnee is 4.1 px (~ 0.016 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RAnkle is 3.0 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RBigToe is 1.8 px (~ 0.007 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RSmallToe is 5.0 px (~ 0.02 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RHeel is 2.9 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHip is 4.3 px (~ 0.017 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LKnee is 2.3 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LAnkle is 1.0 px (~ 0.004 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LBigToe is 1.1 px (~ 0.004 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LSmallToe is 2.6 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHeel is 2.1 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for Nose is 3.1 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for REye is 1.9 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LEye is 2.2 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RShoulder is 1.2 px (~ 0.005 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RElbow is 2.2 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RWrist is 2.0 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RThumb is 2.0 px (~ 0.008 m), reached with 0.04 excluded cameras. 
+Mean reprojection error for RIndex is 2.1 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RPinky is 1.5 px (~ 0.006 m), reached with 0.59 excluded cameras. 
+Mean reprojection error for LShoulder is 3.0 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LElbow is 3.3 px (~ 0.013 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LWrist is 3.0 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LThumb is 3.4 px (~ 0.014 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LIndex is 1.9 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LPinky is 3.0 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+
+--> Mean reprojection error for all points on frames 0 to 237 is 2.6 px, which roughly corresponds to 10.3 mm. 
+Cameras were excluded if likelihood was below 0.3 and if the reprojection error was above 15 px.
+Gaps were interpolated with linear method if smaller than 30 frames. Larger gaps were filled with the last valid value.
+In average, 0.02 cameras had to be excluded to reach these thresholds.
+Camera cam2 was excluded 2% of the time, Camera cam1: 0%, and Camera cam3: 0%.
+3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_4_p0\pose-3d\55_1_4_p0_0-236.trc.
+
+
+
+Limb swapping was not handled.
+Lens distortions were not taken into account.
+
+Triangulation took 00h00m01s.
+
+
+---------------------------------------------------------------------
+Triangulation of 2D points for 55_1_50_p1, for all frames.
+On Thursday 04. December 2025, 09:32:00
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_50_p1
+---------------------------------------------------------------------
+
+Cannot read video. Frame rate will be set to 60 fps.
+
+Mean reprojection error for RHip is 4.8 px (~ 0.019 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RKnee is 4.4 px (~ 0.017 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RAnkle is 3.2 px (~ 0.013 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RBigToe is 3.7 px (~ 0.015 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RSmallToe is 4.2 px (~ 0.017 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RHeel is 3.5 px (~ 0.014 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHip is 3.8 px (~ 0.015 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LKnee is 3.0 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LAnkle is 4.7 px (~ 0.019 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LBigToe is 1.1 px (~ 0.004 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LSmallToe is 2.2 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHeel is 4.7 px (~ 0.019 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for Nose is 2.9 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for REye is 2.4 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LEye is 2.4 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RShoulder is 1.1 px (~ 0.004 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RElbow is 2.3 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RWrist is 2.8 px (~ 0.011 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RThumb is 1.9 px (~ 0.008 m), reached with 0.11 excluded cameras. 
+Mean reprojection error for RIndex is 2.3 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RPinky is 1.4 px (~ 0.006 m), reached with 1.45 excluded cameras. 
+Mean reprojection error for LShoulder is 2.8 px (~ 0.011 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LElbow is 3.1 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LWrist is 2.8 px (~ 0.011 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LThumb is 3.7 px (~ 0.015 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LIndex is 2.1 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LPinky is 3.2 px (~ 0.013 m), reached with 0.0 excluded cameras. 
+
+--> Mean reprojection error for all points on frames 0 to 238 is 3.0 px, which roughly corresponds to 11.9 mm. 
+Cameras were excluded if likelihood was below 0.3 and if the reprojection error was above 15 px.
+Gaps were interpolated with linear method if smaller than 30 frames. Larger gaps were filled with the last valid value.
+In average, 0.06 cameras had to be excluded to reach these thresholds.
+Camera cam2 was excluded 4% of the time, Camera cam1: 1%, and Camera cam3: 1%.
+3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_50_p1\pose-3d\55_1_50_p1_0-237.trc.
+
+
+
+Limb swapping was not handled.
+Lens distortions were not taken into account.
+
+Triangulation took 00h00m01s.
+
+
+---------------------------------------------------------------------
+Triangulation of 2D points for 55_1_51_p1, for all frames.
+On Thursday 04. December 2025, 09:32:02
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_51_p1
+---------------------------------------------------------------------
+
+Cannot read video. Frame rate will be set to 60 fps.
+
+Mean reprojection error for RHip is 3.9 px (~ 0.015 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RKnee is 3.9 px (~ 0.015 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RAnkle is 3.2 px (~ 0.013 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RBigToe is 3.0 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RSmallToe is 4.0 px (~ 0.016 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RHeel is 3.3 px (~ 0.013 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHip is 3.7 px (~ 0.015 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LKnee is 2.9 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LAnkle is 4.2 px (~ 0.017 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LBigToe is 1.3 px (~ 0.005 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LSmallToe is 2.0 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHeel is 3.7 px (~ 0.015 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for Nose is 2.7 px (~ 0.011 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for REye is 2.6 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LEye is 2.5 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RShoulder is 1.6 px (~ 0.006 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RElbow is 3.0 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RWrist is 2.9 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RThumb is 2.5 px (~ 0.01 m), reached with 0.06 excluded cameras. 
+Mean reprojection error for RIndex is 2.6 px (~ 0.01 m), reached with 0.05 excluded cameras. 
+Mean reprojection error for RPinky is 1.6 px (~ 0.006 m), reached with 1.17 excluded cameras. 
+Mean reprojection error for LShoulder is 2.3 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LElbow is 3.7 px (~ 0.015 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LWrist is 2.8 px (~ 0.011 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LThumb is 3.3 px (~ 0.013 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LIndex is 2.3 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LPinky is 3.2 px (~ 0.013 m), reached with 0.0 excluded cameras. 
+
+--> Mean reprojection error for all points on frames 0 to 278 is 2.9 px, which roughly corresponds to 11.5 mm. 
+Cameras were excluded if likelihood was below 0.3 and if the reprojection error was above 15 px.
+Gaps were interpolated with linear method if smaller than 30 frames. Larger gaps were filled with the last valid value.
+In average, 0.05 cameras had to be excluded to reach these thresholds.
+Camera cam2 was excluded 3% of the time, Camera cam1: 1%, and Camera cam3: 0%.
+3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_51_p1\pose-3d\55_1_51_p1_0-277.trc.
+
+
+
+Limb swapping was not handled.
+Lens distortions were not taken into account.
+
+Triangulation took 00h00m11s.
+
+
+---------------------------------------------------------------------
+Triangulation of 2D points for 55_1_52_p1, for all frames.
+On Thursday 04. December 2025, 09:32:14
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_52_p1
+---------------------------------------------------------------------
+
+Cannot read video. Frame rate will be set to 60 fps.
+
+Mean reprojection error for RHip is 4.0 px (~ 0.016 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RKnee is 3.5 px (~ 0.014 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RAnkle is 3.0 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RBigToe is 2.5 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RSmallToe is 3.7 px (~ 0.015 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RHeel is 3.0 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHip is 3.0 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LKnee is 3.0 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LAnkle is 4.2 px (~ 0.017 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LBigToe is 1.1 px (~ 0.004 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LSmallToe is 2.1 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHeel is 3.6 px (~ 0.014 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for Nose is 3.1 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for REye is 2.7 px (~ 0.011 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LEye is 2.8 px (~ 0.011 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RShoulder is 1.8 px (~ 0.007 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RElbow is 2.8 px (~ 0.011 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RWrist is 2.9 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RThumb is 2.5 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RIndex is 2.2 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RPinky is 1.0 px (~ 0.004 m), reached with 0.79 excluded cameras. 
+Mean reprojection error for LShoulder is 2.6 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LElbow is 2.9 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LWrist is 2.5 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LThumb is 4.0 px (~ 0.016 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LIndex is 2.5 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LPinky is 3.7 px (~ 0.015 m), reached with 0.0 excluded cameras. 
+
+--> Mean reprojection error for all points on frames 0 to 256 is 2.8 px, which roughly corresponds to 11.1 mm. 
+Cameras were excluded if likelihood was below 0.3 and if the reprojection error was above 15 px.
+Gaps were interpolated with linear method if smaller than 30 frames. Larger gaps were filled with the last valid value.
+In average, 0.03 cameras had to be excluded to reach these thresholds.
+Camera cam2 was excluded 3% of the time, Camera cam3: 0%, and Camera cam1: 0%.
+3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_52_p1\pose-3d\55_1_52_p1_0-255.trc.
+
+
+
+Limb swapping was not handled.
+Lens distortions were not taken into account.
+
+Triangulation took 00h00m11s.
+
+
+---------------------------------------------------------------------
+Triangulation of 2D points for 55_1_53_p1, for all frames.
+On Thursday 04. December 2025, 09:32:25
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_53_p1
+---------------------------------------------------------------------
+
+Cannot read video. Frame rate will be set to 60 fps.
+
+Mean reprojection error for RHip is 3.9 px (~ 0.015 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RKnee is 4.0 px (~ 0.016 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RAnkle is 3.2 px (~ 0.013 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RBigToe is 2.5 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RSmallToe is 3.7 px (~ 0.015 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RHeel is 3.1 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHip is 3.6 px (~ 0.014 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LKnee is 2.9 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LAnkle is 4.1 px (~ 0.016 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LBigToe is 0.9 px (~ 0.004 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LSmallToe is 2.1 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHeel is 3.4 px (~ 0.014 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for Nose is 3.5 px (~ 0.014 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for REye is 3.0 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LEye is 2.7 px (~ 0.011 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RShoulder is 1.2 px (~ 0.005 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RElbow is 2.6 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RWrist is 2.9 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RThumb is 2.0 px (~ 0.008 m), reached with 0.17 excluded cameras. 
+Mean reprojection error for RIndex is 2.6 px (~ 0.01 m), reached with 0.05 excluded cameras. 
+Mean reprojection error for RPinky is 0.8 px (~ 0.003 m), reached with 1.56 excluded cameras. 
+Mean reprojection error for LShoulder is 2.6 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LElbow is 3.0 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LWrist is 2.9 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LThumb is 4.3 px (~ 0.017 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LIndex is 2.1 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LPinky is 3.7 px (~ 0.015 m), reached with 0.0 excluded cameras. 
+
+--> Mean reprojection error for all points on frames 0 to 234 is 2.9 px, which roughly corresponds to 11.5 mm. 
+Cameras were excluded if likelihood was below 0.3 and if the reprojection error was above 15 px.
+Gaps were interpolated with linear method if smaller than 30 frames. Larger gaps were filled with the last valid value.
+In average, 0.07 cameras had to be excluded to reach these thresholds.
+Camera cam2 was excluded 4% of the time, Camera cam1: 2%, and Camera cam3: 1%.
+3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_53_p1\pose-3d\55_1_53_p1_0-233.trc.
+
+
+
+Limb swapping was not handled.
+Lens distortions were not taken into account.
+
+Triangulation took 00h00m09s.
+
+
+---------------------------------------------------------------------
+Triangulation of 2D points for 55_1_5_p0, for all frames.
+On Thursday 04. December 2025, 09:32:35
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_5_p0
+---------------------------------------------------------------------
+
+Cannot read video. Frame rate will be set to 60 fps.
+
+Mean reprojection error for RHip is 3.3 px (~ 0.013 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RKnee is 4.4 px (~ 0.017 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RAnkle is 3.0 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RBigToe is 1.8 px (~ 0.007 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RSmallToe is 5.0 px (~ 0.02 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RHeel is 2.8 px (~ 0.011 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHip is 3.1 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LKnee is 2.2 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LAnkle is 1.1 px (~ 0.004 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LBigToe is 1.0 px (~ 0.004 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LSmallToe is 2.0 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHeel is 2.0 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for Nose is 4.2 px (~ 0.017 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for REye is 2.1 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LEye is 1.9 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RShoulder is 1.2 px (~ 0.005 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RElbow is 2.8 px (~ 0.011 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RWrist is 2.6 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RThumb is 1.5 px (~ 0.006 m), reached with 0.18 excluded cameras. 
+Mean reprojection error for RIndex is 2.6 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RPinky is 0.8 px (~ 0.003 m), reached with 1.03 excluded cameras. 
+Mean reprojection error for LShoulder is 2.4 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LElbow is 2.1 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LWrist is 2.9 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LThumb is 4.2 px (~ 0.017 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LIndex is 1.9 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LPinky is 2.6 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+
+--> Mean reprojection error for all points on frames 0 to 316 is 2.5 px, which roughly corresponds to 9.9 mm. 
+Cameras were excluded if likelihood was below 0.3 and if the reprojection error was above 15 px.
+Gaps were interpolated with linear method if smaller than 30 frames. Larger gaps were filled with the last valid value.
+In average, 0.04 cameras had to be excluded to reach these thresholds.
+Camera cam2 was excluded 4% of the time, Camera cam1: 1%, and Camera cam3: 0%.
+3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_5_p0\pose-3d\55_1_5_p0_0-315.trc.
+
+
+
+Limb swapping was not handled.
+Lens distortions were not taken into account.
+
+Triangulation took 00h00m15s.
+
+
+---------------------------------------------------------------------
+Triangulation of 2D points for 55_1_6_p0, for all frames.
+On Thursday 04. December 2025, 09:32:51
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_6_p0
+---------------------------------------------------------------------
+
+Cannot read video. Frame rate will be set to 60 fps.
+
+Mean reprojection error for RHip is 3.2 px (~ 0.013 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RKnee is 3.5 px (~ 0.014 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RAnkle is 3.1 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RBigToe is 2.1 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RSmallToe is 4.6 px (~ 0.018 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RHeel is 2.7 px (~ 0.011 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHip is 5.3 px (~ 0.021 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LKnee is 2.1 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LAnkle is 0.9 px (~ 0.004 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LBigToe is 1.3 px (~ 0.005 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LSmallToe is 2.4 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHeel is 2.5 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for Nose is 3.3 px (~ 0.013 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for REye is 2.2 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LEye is 2.0 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RShoulder is 1.2 px (~ 0.005 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RElbow is 2.4 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RWrist is 2.2 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RThumb is 2.1 px (~ 0.008 m), reached with 0.23 excluded cameras. 
+Mean reprojection error for RIndex is 2.0 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RPinky is 1.7 px (~ 0.007 m), reached with 0.48 excluded cameras. 
+Mean reprojection error for LShoulder is 2.2 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LElbow is 2.9 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LWrist is 2.3 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LThumb is 3.5 px (~ 0.014 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LIndex is 2.0 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LPinky is 2.3 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+
+--> Mean reprojection error for all points on frames 0 to 180 is 2.5 px, which roughly corresponds to 9.9 mm. 
+Cameras were excluded if likelihood was below 0.3 and if the reprojection error was above 15 px.
+Gaps were interpolated with linear method if smaller than 30 frames. Larger gaps were filled with the last valid value.
+In average, 0.03 cameras had to be excluded to reach these thresholds.
+Camera cam2 was excluded 2% of the time, Camera cam1: 1%, and Camera cam3: 0%.
+3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_6_p0\pose-3d\55_1_6_p0_0-179.trc.
+
+
+
+Limb swapping was not handled.
+Lens distortions were not taken into account.
+
+Triangulation took 00h00m09s.
+
+
+---------------------------------------------------------------------
+Triangulation of 2D points for 55_1_7_p0, for all frames.
+On Thursday 04. December 2025, 09:33:00
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_7_p0
+---------------------------------------------------------------------
+
+Cannot read video. Frame rate will be set to 60 fps.
+
+Mean reprojection error for RHip is 3.2 px (~ 0.013 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RKnee is 4.1 px (~ 0.016 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RAnkle is 3.1 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RBigToe is 1.8 px (~ 0.007 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RSmallToe is 4.8 px (~ 0.019 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RHeel is 3.0 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHip is 3.8 px (~ 0.015 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LKnee is 2.1 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LAnkle is 1.2 px (~ 0.005 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LBigToe is 1.2 px (~ 0.005 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LSmallToe is 2.2 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHeel is 2.0 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for Nose is 3.7 px (~ 0.015 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for REye is 2.0 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LEye is 1.9 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RShoulder is 1.2 px (~ 0.005 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RElbow is 2.7 px (~ 0.011 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RWrist is 2.4 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RThumb is 1.8 px (~ 0.007 m), reached with 0.15 excluded cameras. 
+Mean reprojection error for RIndex is 2.6 px (~ 0.01 m), reached with 0.02 excluded cameras. 
+Mean reprojection error for RPinky is 1.3 px (~ 0.005 m), reached with 1.02 excluded cameras. 
+Mean reprojection error for LShoulder is 2.6 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LElbow is 2.3 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LWrist is 3.3 px (~ 0.013 m), reached with 0.02 excluded cameras. 
+Mean reprojection error for LThumb is 4.0 px (~ 0.016 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LIndex is 2.4 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LPinky is 2.3 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+
+--> Mean reprojection error for all points on frames 0 to 266 is 2.6 px, which roughly corresponds to 10.3 mm. 
+Cameras were excluded if likelihood was below 0.3 and if the reprojection error was above 15 px.
+Gaps were interpolated with linear method if smaller than 30 frames. Larger gaps were filled with the last valid value.
+In average, 0.05 cameras had to be excluded to reach these thresholds.
+Camera cam2 was excluded 3% of the time, Camera cam1: 1%, and Camera cam3: 0%.
+3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_7_p0\pose-3d\55_1_7_p0_0-265.trc.
+
+
+
+Limb swapping was not handled.
+Lens distortions were not taken into account.
+
+Triangulation took 00h00m13s.
+
+
+---------------------------------------------------------------------
+Triangulation of 2D points for 55_1_8_p0, for all frames.
+On Thursday 04. December 2025, 09:33:13
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_8_p0
+---------------------------------------------------------------------
+
+Cannot read video. Frame rate will be set to 60 fps.
+
+Mean reprojection error for RHip is 2.9 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RKnee is 3.8 px (~ 0.015 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RAnkle is 3.1 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RBigToe is 1.5 px (~ 0.006 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RSmallToe is 4.6 px (~ 0.018 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RHeel is 3.1 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHip is 4.4 px (~ 0.017 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LKnee is 2.8 px (~ 0.011 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LAnkle is 0.8 px (~ 0.003 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LBigToe is 1.1 px (~ 0.004 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LSmallToe is 2.1 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHeel is 1.7 px (~ 0.007 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for Nose is 3.1 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for REye is 2.0 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LEye is 2.2 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RShoulder is 1.2 px (~ 0.005 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RElbow is 2.4 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RWrist is 2.4 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RThumb is 2.1 px (~ 0.008 m), reached with 0.18 excluded cameras. 
+Mean reprojection error for RIndex is 2.7 px (~ 0.011 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RPinky is 1.6 px (~ 0.006 m), reached with 0.84 excluded cameras. 
+Mean reprojection error for LShoulder is 2.6 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LElbow is 2.5 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LWrist is 3.6 px (~ 0.014 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LThumb is 3.4 px (~ 0.014 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LIndex is 2.0 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LPinky is 2.9 px (~ 0.012 m), reached with 0.03 excluded cameras. 
+
+--> Mean reprojection error for all points on frames 0 to 313 is 2.6 px, which roughly corresponds to 10.3 mm. 
+Cameras were excluded if likelihood was below 0.3 and if the reprojection error was above 15 px.
+Gaps were interpolated with linear method if smaller than 30 frames. Larger gaps were filled with the last valid value.
+In average, 0.04 cameras had to be excluded to reach these thresholds.
+Camera cam2 was excluded 3% of the time, Camera cam1: 1%, and Camera cam3: 0%.
+3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_8_p0\pose-3d\55_1_8_p0_0-312.trc.
+
+
+
+Limb swapping was not handled.
+Lens distortions were not taken into account.
+
+Triangulation took 00h00m15s.
+
+
+---------------------------------------------------------------------
+Triangulation of 2D points for 55_1_tpose_p0, for all frames.
+On Thursday 04. December 2025, 09:33:28
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_tpose_p0
+---------------------------------------------------------------------
+
+Cannot read video. Frame rate will be set to 60 fps.
+
+Mean reprojection error for RHip is 2.5 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RKnee is 3.8 px (~ 0.015 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RAnkle is 3.1 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RBigToe is 3.6 px (~ 0.014 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RSmallToe is 5.6 px (~ 0.022 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RHeel is 3.5 px (~ 0.014 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHip is 3.6 px (~ 0.014 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LKnee is 3.0 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LAnkle is 1.9 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LBigToe is 1.2 px (~ 0.005 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LSmallToe is 2.2 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHeel is 3.3 px (~ 0.013 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for Nose is 2.4 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for REye is 4.2 px (~ 0.017 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LEye is 2.3 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RShoulder is 2.6 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RElbow is 3.1 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RWrist is 2.6 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RThumb is 1.5 px (~ 0.006 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RIndex is 2.0 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RPinky is 2.5 px (~ 0.01 m), reached with 0.23 excluded cameras. 
+Mean reprojection error for LShoulder is 2.0 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LElbow is 2.4 px (~ 0.01 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LWrist is 1.5 px (~ 0.006 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LThumb is 3.2 px (~ 0.013 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LIndex is 1.9 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LPinky is 3.3 px (~ 0.013 m), reached with 0.0 excluded cameras. 
+
+--> Mean reprojection error for all points on frames 0 to 244 is 2.8 px, which roughly corresponds to 11.1 mm. 
+Cameras were excluded if likelihood was below 0.3 and if the reprojection error was above 15 px.
+Gaps were interpolated with linear method if smaller than 30 frames. Larger gaps were filled with the last valid value.
+In average, 0.01 cameras had to be excluded to reach these thresholds.
+Camera cam2 was excluded 0% of the time, Camera cam1: 0%, and Camera cam3: 0%.
+3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_tpose_p0\pose-3d\55_1_tpose_p0_0-243.trc.
+
+
+
+Limb swapping was not handled.
+Lens distortions were not taken into account.
+
+Triangulation took 00h00m10s.
+
+
+---------------------------------------------------------------------
+Triangulation of 2D points for 55_1_tpose_p1, for all frames.
+On Thursday 04. December 2025, 09:33:39
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_tpose_p1
+---------------------------------------------------------------------
+
+Cannot read video. Frame rate will be set to 60 fps.
+
+Mean reprojection error for RHip is 3.1 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RKnee is 2.9 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RAnkle is 1.5 px (~ 0.006 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RBigToe is 3.4 px (~ 0.014 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RSmallToe is 4.7 px (~ 0.019 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RHeel is 2.9 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHip is 3.5 px (~ 0.014 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LKnee is 1.8 px (~ 0.007 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LAnkle is 1.6 px (~ 0.006 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LBigToe is 1.9 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LSmallToe is 2.8 px (~ 0.011 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LHeel is 5.3 px (~ 0.021 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for Nose is 3.1 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for REye is 2.2 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LEye is 1.4 px (~ 0.006 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RShoulder is 1.4 px (~ 0.006 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RElbow is 3.2 px (~ 0.013 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RWrist is 2.8 px (~ 0.011 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RThumb is 1.5 px (~ 0.006 m), reached with 0.03 excluded cameras. 
+Mean reprojection error for RIndex is 2.1 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for RPinky is 1.4 px (~ 0.006 m), reached with 2.88 excluded cameras. 
+Mean reprojection error for LShoulder is 1.9 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LElbow is 2.9 px (~ 0.012 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LWrist is 2.3 px (~ 0.009 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LThumb is 3.4 px (~ 0.014 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LIndex is 1.6 px (~ 0.006 m), reached with 0.0 excluded cameras. 
+Mean reprojection error for LPinky is 2.0 px (~ 0.008 m), reached with 0.0 excluded cameras. 
+
+--> Mean reprojection error for all points on frames 0 to 213 is 2.6 px, which roughly corresponds to 10.3 mm. 
+Cameras were excluded if likelihood was below 0.3 and if the reprojection error was above 15 px.
+Gaps were interpolated with linear method if smaller than 30 frames. Larger gaps were filled with the last valid value.
+In average, 0.11 cameras had to be excluded to reach these thresholds.
+Camera cam2 was excluded 4% of the time, Camera cam1: 4%, and Camera cam3: 3%.
+3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_tpose_p1\pose-3d\55_1_tpose_p1_0-212.trc.
+
+
+
+Limb swapping was not handled.
+Lens distortions were not taken into account.
+
+Triangulation took 00h00m09s.
+
+
+---------------------------------------------------------------------
+Filtering 3D coordinates for 55_1_11_p1, for all frames.
+On Thursday 04. December 2025, 09:33:50
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_11_p1
+---------------------------------------------------------------------
+
+
+Filtering 3D coordinates for person 0...
+--> Outliers rejected with a Hampel filter.
+--> Filter type: Butterworth low-pass. Order 4, Cut-off frequency 10 Hz.
+Filtered 3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_11_p1\pose-3d\55_1_11_p1_0-287_filt_butterworth.trc.
+
+
+
+---------------------------------------------------------------------
+Filtering 3D coordinates for 55_1_12_p1, for all frames.
+On Thursday 04. December 2025, 09:33:53
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_12_p1
+---------------------------------------------------------------------
+
+
+Filtering 3D coordinates for person 0...
+--> Outliers rejected with a Hampel filter.
+--> Filter type: Butterworth low-pass. Order 4, Cut-off frequency 10 Hz.
+Filtered 3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_12_p1\pose-3d\55_1_12_p1_0-245_filt_butterworth.trc.
+
+
+
+---------------------------------------------------------------------
+Filtering 3D coordinates for 55_1_13_p1, for all frames.
+On Thursday 04. December 2025, 09:33:54
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_13_p1
+---------------------------------------------------------------------
+
+
+Filtering 3D coordinates for person 0...
+--> Outliers rejected with a Hampel filter.
+--> Filter type: Butterworth low-pass. Order 4, Cut-off frequency 10 Hz.
+Filtered 3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_13_p1\pose-3d\55_1_13_p1_0-295_filt_butterworth.trc.
+
+
+
+---------------------------------------------------------------------
+Filtering 3D coordinates for 55_1_14_p1, for all frames.
+On Thursday 04. December 2025, 09:33:56
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_14_p1
+---------------------------------------------------------------------
+
+
+Filtering 3D coordinates for person 0...
+--> Outliers rejected with a Hampel filter.
+--> Filter type: Butterworth low-pass. Order 4, Cut-off frequency 10 Hz.
+Filtered 3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_14_p1\pose-3d\55_1_14_p1_0-228_filt_butterworth.trc.
+
+
+
+---------------------------------------------------------------------
+Filtering 3D coordinates for 55_1_15_p1, for all frames.
+On Thursday 04. December 2025, 09:33:58
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_15_p1
+---------------------------------------------------------------------
+
+
+Filtering 3D coordinates for person 0...
+--> Outliers rejected with a Hampel filter.
+--> Filter type: Butterworth low-pass. Order 4, Cut-off frequency 10 Hz.
+Filtered 3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_15_p1\pose-3d\55_1_15_p1_0-263_filt_butterworth.trc.
+
+
+
+---------------------------------------------------------------------
+Filtering 3D coordinates for 55_1_16_p1, for all frames.
+On Thursday 04. December 2025, 09:34:00
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_16_p1
+---------------------------------------------------------------------
+
+
+Filtering 3D coordinates for person 0...
+--> Outliers rejected with a Hampel filter.
+--> Filter type: Butterworth low-pass. Order 4, Cut-off frequency 10 Hz.
+Filtered 3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_16_p1\pose-3d\55_1_16_p1_0-203_filt_butterworth.trc.
+
+
+
+---------------------------------------------------------------------
+Filtering 3D coordinates for 55_1_17_p1, for all frames.
+On Thursday 04. December 2025, 09:34:02
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_17_p1
+---------------------------------------------------------------------
+
+
+Filtering 3D coordinates for person 0...
+--> Outliers rejected with a Hampel filter.
+--> Filter type: Butterworth low-pass. Order 4, Cut-off frequency 10 Hz.
+Filtered 3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_17_p1\pose-3d\55_1_17_p1_0-230_filt_butterworth.trc.
+
+
+
+---------------------------------------------------------------------
+Filtering 3D coordinates for 55_1_20_p0, for all frames.
+On Thursday 04. December 2025, 09:34:04
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_20_p0
+---------------------------------------------------------------------
+
+
+Filtering 3D coordinates for person 0...
+--> Outliers rejected with a Hampel filter.
+--> Filter type: Butterworth low-pass. Order 4, Cut-off frequency 10 Hz.
+Filtered 3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_20_p0\pose-3d\55_1_20_p0_0-320_filt_butterworth.trc.
+
+
+
+---------------------------------------------------------------------
+Filtering 3D coordinates for 55_1_21_p0, for all frames.
+On Thursday 04. December 2025, 09:34:06
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_21_p0
+---------------------------------------------------------------------
+
+
+Filtering 3D coordinates for person 0...
+--> Outliers rejected with a Hampel filter.
+--> Filter type: Butterworth low-pass. Order 4, Cut-off frequency 10 Hz.
+Filtered 3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_21_p0\pose-3d\55_1_21_p0_0-344_filt_butterworth.trc.
+
+
+
+---------------------------------------------------------------------
+Filtering 3D coordinates for 55_1_22_p0, for all frames.
+On Thursday 04. December 2025, 09:34:08
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_22_p0
+---------------------------------------------------------------------
+
+
+Filtering 3D coordinates for person 0...
+--> Outliers rejected with a Hampel filter.
+--> Filter type: Butterworth low-pass. Order 4, Cut-off frequency 10 Hz.
+Filtered 3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_22_p0\pose-3d\55_1_22_p0_0-417_filt_butterworth.trc.
+
+
+
+---------------------------------------------------------------------
+Filtering 3D coordinates for 55_1_23_p0, for all frames.
+On Thursday 04. December 2025, 09:34:12
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_23_p0
+---------------------------------------------------------------------
+
+
+Filtering 3D coordinates for person 0...
+--> Outliers rejected with a Hampel filter.
+--> Filter type: Butterworth low-pass. Order 4, Cut-off frequency 10 Hz.
+Filtered 3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_23_p0\pose-3d\55_1_23_p0_0-328_filt_butterworth.trc.
+
+
+
+---------------------------------------------------------------------
+Filtering 3D coordinates for 55_1_24_p0, for all frames.
+On Thursday 04. December 2025, 09:34:14
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_24_p0
+---------------------------------------------------------------------
+
+
+Filtering 3D coordinates for person 0...
+--> Outliers rejected with a Hampel filter.
+--> Filter type: Butterworth low-pass. Order 4, Cut-off frequency 10 Hz.
+Filtered 3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_24_p0\pose-3d\55_1_24_p0_0-308_filt_butterworth.trc.
+
+
+
+---------------------------------------------------------------------
+Filtering 3D coordinates for 55_1_25_p0, for all frames.
+On Thursday 04. December 2025, 09:34:16
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_25_p0
+---------------------------------------------------------------------
+
+
+Filtering 3D coordinates for person 0...
+--> Outliers rejected with a Hampel filter.
+--> Filter type: Butterworth low-pass. Order 4, Cut-off frequency 10 Hz.
+Filtered 3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_25_p0\pose-3d\55_1_25_p0_0-369_filt_butterworth.trc.
+
+
+
+---------------------------------------------------------------------
+Filtering 3D coordinates for 55_1_26_p0, for all frames.
+On Thursday 04. December 2025, 09:34:19
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_26_p0
+---------------------------------------------------------------------
+
+
+Filtering 3D coordinates for person 0...
+--> Outliers rejected with a Hampel filter.
+--> Filter type: Butterworth low-pass. Order 4, Cut-off frequency 10 Hz.
+Filtered 3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_26_p0\pose-3d\55_1_26_p0_0-260_filt_butterworth.trc.
+
+
+
+---------------------------------------------------------------------
+Filtering 3D coordinates for 55_1_29_p1, for all frames.
+On Thursday 04. December 2025, 09:34:21
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_29_p1
+---------------------------------------------------------------------
+
+
+Filtering 3D coordinates for person 0...
+--> Outliers rejected with a Hampel filter.
+--> Filter type: Butterworth low-pass. Order 4, Cut-off frequency 10 Hz.
+Filtered 3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_29_p1\pose-3d\55_1_29_p1_0-236_filt_butterworth.trc.
+
+
+
+---------------------------------------------------------------------
+Filtering 3D coordinates for 55_1_2_p0, for all frames.
+On Thursday 04. December 2025, 09:34:23
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_2_p0
+---------------------------------------------------------------------
+
+
+Filtering 3D coordinates for person 0...
+--> Outliers rejected with a Hampel filter.
+--> Filter type: Butterworth low-pass. Order 4, Cut-off frequency 10 Hz.
+Filtered 3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_2_p0\pose-3d\55_1_2_p0_0-258_filt_butterworth.trc.
+
+
+
+---------------------------------------------------------------------
+Filtering 3D coordinates for 55_1_30_p1, for all frames.
+On Thursday 04. December 2025, 09:34:25
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_30_p1
+---------------------------------------------------------------------
+
+
+Filtering 3D coordinates for person 0...
+--> Outliers rejected with a Hampel filter.
+--> Filter type: Butterworth low-pass. Order 4, Cut-off frequency 10 Hz.
+Filtered 3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_30_p1\pose-3d\55_1_30_p1_0-241_filt_butterworth.trc.
+
+
+
+---------------------------------------------------------------------
+Filtering 3D coordinates for 55_1_31_p1, for all frames.
+On Thursday 04. December 2025, 09:34:27
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_31_p1
+---------------------------------------------------------------------
+
+
+Filtering 3D coordinates for person 0...
+--> Outliers rejected with a Hampel filter.
+--> Filter type: Butterworth low-pass. Order 4, Cut-off frequency 10 Hz.
+Filtered 3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_31_p1\pose-3d\55_1_31_p1_0-199_filt_butterworth.trc.
+
+
+
+---------------------------------------------------------------------
+Filtering 3D coordinates for 55_1_32_p1, for all frames.
+On Thursday 04. December 2025, 09:34:28
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_32_p1
+---------------------------------------------------------------------
+
+
+Filtering 3D coordinates for person 0...
+--> Outliers rejected with a Hampel filter.
+--> Filter type: Butterworth low-pass. Order 4, Cut-off frequency 10 Hz.
+Filtered 3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_32_p1\pose-3d\55_1_32_p1_0-244_filt_butterworth.trc.
+
+
+
+---------------------------------------------------------------------
+Filtering 3D coordinates for 55_1_33_p1, for all frames.
+On Thursday 04. December 2025, 09:34:30
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_33_p1
+---------------------------------------------------------------------
+
+
+Filtering 3D coordinates for person 0...
+--> Outliers rejected with a Hampel filter.
+--> Filter type: Butterworth low-pass. Order 4, Cut-off frequency 10 Hz.
+Filtered 3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_33_p1\pose-3d\55_1_33_p1_0-273_filt_butterworth.trc.
+
+
+
+---------------------------------------------------------------------
+Filtering 3D coordinates for 55_1_34_p1, for all frames.
+On Thursday 04. December 2025, 09:34:32
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_34_p1
+---------------------------------------------------------------------
+
+
+Filtering 3D coordinates for person 0...
+--> Outliers rejected with a Hampel filter.
+--> Filter type: Butterworth low-pass. Order 4, Cut-off frequency 10 Hz.
+Filtered 3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_34_p1\pose-3d\55_1_34_p1_0-313_filt_butterworth.trc.
+
+
+
+---------------------------------------------------------------------
+Filtering 3D coordinates for 55_1_35_p1, for all frames.
+On Thursday 04. December 2025, 09:34:34
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_35_p1
+---------------------------------------------------------------------
+
+
+Filtering 3D coordinates for person 0...
+--> Outliers rejected with a Hampel filter.
+--> Filter type: Butterworth low-pass. Order 4, Cut-off frequency 10 Hz.
+Filtered 3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_35_p1\pose-3d\55_1_35_p1_0-425_filt_butterworth.trc.
+
+
+
+---------------------------------------------------------------------
+Filtering 3D coordinates for 55_1_38_p0, for all frames.
+On Thursday 04. December 2025, 09:34:37
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_38_p0
+---------------------------------------------------------------------
+
+
+Filtering 3D coordinates for person 0...
+--> Outliers rejected with a Hampel filter.
+--> Filter type: Butterworth low-pass. Order 4, Cut-off frequency 10 Hz.
+Filtered 3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_38_p0\pose-3d\55_1_38_p0_0-157_filt_butterworth.trc.
+
+
+
+---------------------------------------------------------------------
+Filtering 3D coordinates for 55_1_39_p0, for all frames.
+On Thursday 04. December 2025, 09:34:39
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_39_p0
+---------------------------------------------------------------------
+
+
+Filtering 3D coordinates for person 0...
+--> Outliers rejected with a Hampel filter.
+--> Filter type: Butterworth low-pass. Order 4, Cut-off frequency 10 Hz.
+Filtered 3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_39_p0\pose-3d\55_1_39_p0_0-226_filt_butterworth.trc.
+
+
+
+---------------------------------------------------------------------
+Filtering 3D coordinates for 55_1_3_p0, for all frames.
+On Thursday 04. December 2025, 09:34:40
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_3_p0
+---------------------------------------------------------------------
+
+
+Filtering 3D coordinates for person 0...
+--> Outliers rejected with a Hampel filter.
+--> Filter type: Butterworth low-pass. Order 4, Cut-off frequency 10 Hz.
+Filtered 3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_3_p0\pose-3d\55_1_3_p0_0-414_filt_butterworth.trc.
+
+
+
+---------------------------------------------------------------------
+Filtering 3D coordinates for 55_1_40_p0, for all frames.
+On Thursday 04. December 2025, 09:34:43
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_40_p0
+---------------------------------------------------------------------
+
+
+Filtering 3D coordinates for person 0...
+--> Outliers rejected with a Hampel filter.
+--> Filter type: Butterworth low-pass. Order 4, Cut-off frequency 10 Hz.
+Filtered 3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_40_p0\pose-3d\55_1_40_p0_0-218_filt_butterworth.trc.
+
+
+
+---------------------------------------------------------------------
+Filtering 3D coordinates for 55_1_41_p0, for all frames.
+On Thursday 04. December 2025, 09:34:45
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_41_p0
+---------------------------------------------------------------------
+
+
+Filtering 3D coordinates for person 0...
+--> Outliers rejected with a Hampel filter.
+--> Filter type: Butterworth low-pass. Order 4, Cut-off frequency 10 Hz.
+Filtered 3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_41_p0\pose-3d\55_1_41_p0_0-292_filt_butterworth.trc.
+
+
+
+---------------------------------------------------------------------
+Filtering 3D coordinates for 55_1_42_p0, for all frames.
+On Thursday 04. December 2025, 09:34:47
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_42_p0
+---------------------------------------------------------------------
+
+
+Filtering 3D coordinates for person 0...
+--> Outliers rejected with a Hampel filter.
+--> Filter type: Butterworth low-pass. Order 4, Cut-off frequency 10 Hz.
+Filtered 3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_42_p0\pose-3d\55_1_42_p0_0-264_filt_butterworth.trc.
+
+
+
+---------------------------------------------------------------------
+Filtering 3D coordinates for 55_1_43_p0, for all frames.
+On Thursday 04. December 2025, 09:34:49
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_43_p0
+---------------------------------------------------------------------
+
+
+Filtering 3D coordinates for person 0...
+--> Outliers rejected with a Hampel filter.
+--> Filter type: Butterworth low-pass. Order 4, Cut-off frequency 10 Hz.
+Filtered 3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_43_p0\pose-3d\55_1_43_p0_0-278_filt_butterworth.trc.
+
+
+
+---------------------------------------------------------------------
+Filtering 3D coordinates for 55_1_44_p0, for all frames.
+On Thursday 04. December 2025, 09:34:51
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_44_p0
+---------------------------------------------------------------------
+
+
+Filtering 3D coordinates for person 0...
+--> Outliers rejected with a Hampel filter.
+--> Filter type: Butterworth low-pass. Order 4, Cut-off frequency 10 Hz.
+Filtered 3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_44_p0\pose-3d\55_1_44_p0_0-260_filt_butterworth.trc.
+
+
+
+---------------------------------------------------------------------
+Filtering 3D coordinates for 55_1_47_p1, for all frames.
+On Thursday 04. December 2025, 09:34:53
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_47_p1
+---------------------------------------------------------------------
+
+
+Filtering 3D coordinates for person 0...
+--> Outliers rejected with a Hampel filter.
+--> Filter type: Butterworth low-pass. Order 4, Cut-off frequency 10 Hz.
+Filtered 3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_47_p1\pose-3d\55_1_47_p1_0-204_filt_butterworth.trc.
+
+
+
+---------------------------------------------------------------------
+Filtering 3D coordinates for 55_1_48_p1, for all frames.
+On Thursday 04. December 2025, 09:34:55
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_48_p1
+---------------------------------------------------------------------
+
+
+Filtering 3D coordinates for person 0...
+--> Outliers rejected with a Hampel filter.
+--> Filter type: Butterworth low-pass. Order 4, Cut-off frequency 10 Hz.
+Filtered 3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_48_p1\pose-3d\55_1_48_p1_0-240_filt_butterworth.trc.
+
+
+
+---------------------------------------------------------------------
+Filtering 3D coordinates for 55_1_49_p1, for all frames.
+On Thursday 04. December 2025, 09:34:56
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_49_p1
+---------------------------------------------------------------------
+
+
+Filtering 3D coordinates for person 0...
+--> Outliers rejected with a Hampel filter.
+--> Filter type: Butterworth low-pass. Order 4, Cut-off frequency 10 Hz.
+Filtered 3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_49_p1\pose-3d\55_1_49_p1_0-246_filt_butterworth.trc.
+
+
+
+---------------------------------------------------------------------
+Filtering 3D coordinates for 55_1_4_p0, for all frames.
+On Thursday 04. December 2025, 09:34:58
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_4_p0
+---------------------------------------------------------------------
+
+
+Filtering 3D coordinates for person 0...
+--> Outliers rejected with a Hampel filter.
+--> Filter type: Butterworth low-pass. Order 4, Cut-off frequency 10 Hz.
+Filtered 3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_4_p0\pose-3d\55_1_4_p0_0-237_filt_butterworth.trc.
+
+
+
+---------------------------------------------------------------------
+Filtering 3D coordinates for 55_1_50_p1, for all frames.
+On Thursday 04. December 2025, 09:35:00
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_50_p1
+---------------------------------------------------------------------
+
+
+Filtering 3D coordinates for person 0...
+--> Outliers rejected with a Hampel filter.
+--> Filter type: Butterworth low-pass. Order 4, Cut-off frequency 10 Hz.
+Filtered 3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_50_p1\pose-3d\55_1_50_p1_0-238_filt_butterworth.trc.
+
+
+
+---------------------------------------------------------------------
+Filtering 3D coordinates for 55_1_51_p1, for all frames.
+On Thursday 04. December 2025, 09:35:02
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_51_p1
+---------------------------------------------------------------------
+
+
+Filtering 3D coordinates for person 0...
+--> Outliers rejected with a Hampel filter.
+--> Filter type: Butterworth low-pass. Order 4, Cut-off frequency 10 Hz.
+Filtered 3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_51_p1\pose-3d\55_1_51_p1_0-278_filt_butterworth.trc.
+
+
+
+---------------------------------------------------------------------
+Filtering 3D coordinates for 55_1_52_p1, for all frames.
+On Thursday 04. December 2025, 09:35:04
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_52_p1
+---------------------------------------------------------------------
+
+
+Filtering 3D coordinates for person 0...
+--> Outliers rejected with a Hampel filter.
+--> Filter type: Butterworth low-pass. Order 4, Cut-off frequency 10 Hz.
+Filtered 3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_52_p1\pose-3d\55_1_52_p1_0-256_filt_butterworth.trc.
+
+
+
+---------------------------------------------------------------------
+Filtering 3D coordinates for 55_1_53_p1, for all frames.
+On Thursday 04. December 2025, 09:35:06
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_53_p1
+---------------------------------------------------------------------
+
+
+Filtering 3D coordinates for person 0...
+--> Outliers rejected with a Hampel filter.
+--> Filter type: Butterworth low-pass. Order 4, Cut-off frequency 10 Hz.
+Filtered 3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_53_p1\pose-3d\55_1_53_p1_0-234_filt_butterworth.trc.
+
+
+
+---------------------------------------------------------------------
+Filtering 3D coordinates for 55_1_5_p0, for all frames.
+On Thursday 04. December 2025, 09:35:07
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_5_p0
+---------------------------------------------------------------------
+
+
+Filtering 3D coordinates for person 0...
+--> Outliers rejected with a Hampel filter.
+--> Filter type: Butterworth low-pass. Order 4, Cut-off frequency 10 Hz.
+Filtered 3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_5_p0\pose-3d\55_1_5_p0_0-316_filt_butterworth.trc.
+
+
+
+---------------------------------------------------------------------
+Filtering 3D coordinates for 55_1_6_p0, for all frames.
+On Thursday 04. December 2025, 09:35:10
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_6_p0
+---------------------------------------------------------------------
+
+
+Filtering 3D coordinates for person 0...
+--> Outliers rejected with a Hampel filter.
+--> Filter type: Butterworth low-pass. Order 4, Cut-off frequency 10 Hz.
+Filtered 3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_6_p0\pose-3d\55_1_6_p0_0-180_filt_butterworth.trc.
+
+
+
+---------------------------------------------------------------------
+Filtering 3D coordinates for 55_1_7_p0, for all frames.
+On Thursday 04. December 2025, 09:35:11
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_7_p0
+---------------------------------------------------------------------
+
+
+Filtering 3D coordinates for person 0...
+--> Outliers rejected with a Hampel filter.
+--> Filter type: Butterworth low-pass. Order 4, Cut-off frequency 10 Hz.
+Filtered 3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_7_p0\pose-3d\55_1_7_p0_0-266_filt_butterworth.trc.
+
+
+
+---------------------------------------------------------------------
+Filtering 3D coordinates for 55_1_8_p0, for all frames.
+On Thursday 04. December 2025, 09:35:13
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_8_p0
+---------------------------------------------------------------------
+
+
+Filtering 3D coordinates for person 0...
+--> Outliers rejected with a Hampel filter.
+--> Filter type: Butterworth low-pass. Order 4, Cut-off frequency 10 Hz.
+Filtered 3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_8_p0\pose-3d\55_1_8_p0_0-313_filt_butterworth.trc.
+
+
+
+---------------------------------------------------------------------
+Filtering 3D coordinates for 55_1_tpose_p0, for all frames.
+On Thursday 04. December 2025, 09:35:15
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_tpose_p0
+---------------------------------------------------------------------
+
+
+Filtering 3D coordinates for person 0...
+--> Outliers rejected with a Hampel filter.
+--> Filter type: Butterworth low-pass. Order 4, Cut-off frequency 10 Hz.
+Filtered 3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_tpose_p0\pose-3d\55_1_tpose_p0_0-244_filt_butterworth.trc.
+
+
+
+---------------------------------------------------------------------
+Filtering 3D coordinates for 55_1_tpose_p1, for all frames.
+On Thursday 04. December 2025, 09:35:17
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_tpose_p1
+---------------------------------------------------------------------
+
+
+Filtering 3D coordinates for person 0...
+--> Outliers rejected with a Hampel filter.
+--> Filter type: Butterworth low-pass. Order 4, Cut-off frequency 10 Hz.
+Filtered 3D coordinates are stored at F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_tpose_p1\pose-3d\55_1_tpose_p1_0-213_filt_butterworth.trc.
+
+
+
+---------------------------------------------------------------------
+OpenSim scaling and inverse kinematics for 55_1_11_p1, for all frames.
+On Thursday 04. December 2025, 10:59:53
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_11_p1
+---------------------------------------------------------------------
+
+Processing TRC file: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1\55_1_11_p1\pose-3d\55_1_11_p1_0-287_filt_butterworth_processed.trc
+
+Scaling...
+Error during scaling for 55_1_11_p1\pose-3d\55_1_11_p1_0-287_filt_butterworth_processed.trc: 'Head' is not in list.
+Kinematics failed for session 55 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_55_1

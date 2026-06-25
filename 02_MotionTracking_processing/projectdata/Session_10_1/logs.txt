@@ -1,0 +1,11 @@
+
+---------------------------------------------------------------------
+OpenSim scaling and inverse kinematics for 10_1_11_p1, for all frames.
+On Monday 27. April 2026, 17:24:17
+Project directory: F:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_10_1\10_1_11_p1
+---------------------------------------------------------------------
+
+Processing TRC file: F:\FLESH_ContinuousBodilyEffort\02_MotionTracking_processing\projectdata\Session_10_1\10_1_11_p1\pose-3d\10_1_11_p1_0-557_filt_butterworth_processed.trc
+
+Scaling...
+Error during scaling for 10_1_11_p1\pose-3d\10_1_11_p1_0-557_filt_butterworth_processed.trc: Pose model 'body135' not supported yet..

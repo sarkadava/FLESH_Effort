@@ -1,0 +1,663 @@
+
+---------------------------------------------------------------------
+OpenSim scaling and inverse kinematics for 62_1_11_p1, for all frames.
+On Tuesday 16. December 2025, 17:27:13
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_11_p1
+---------------------------------------------------------------------
+
+Processing TRC file: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_11_p1\pose-3d\62_1_11_p1_0-644_filt_butterworth_processed.trc
+
+Scaling...
+	Done. OpenSim logs saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_11_p1\kinematics\opensim_logs.txt.
+	Scaled model saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_11_p1\kinematics\62_1_11_p1_0-644_filt_butterworth_processed_scaled.osim
+
+Inverse Kinematics...
+Error during IK for 62_1_11_p1\pose-3d\62_1_11_p1_0-644_filt_butterworth_processed.trc: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 62 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1
+
+---------------------------------------------------------------------
+OpenSim scaling and inverse kinematics for 62_2_100_p1, for all frames.
+On Tuesday 16. December 2025, 17:27:22
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_2\62_2_100_p1
+---------------------------------------------------------------------
+
+Processing TRC file: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_2\62_2_100_p1\pose-3d\62_2_100_p1_0-498_filt_butterworth_processed.trc
+
+Scaling...
+All frames have speed close to zero. Make sure the person is moving and correctly detected, or change close_to_zero_speed to a lower value. Not restricting the speeds to be above any threshold.
+	Done. OpenSim logs saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_2\62_2_100_p1\kinematics\opensim_logs.txt.
+	Scaled model saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_2\62_2_100_p1\kinematics\62_2_100_p1_0-498_filt_butterworth_processed_scaled.osim
+
+Inverse Kinematics...
+Error during IK for 62_2_100_p1\pose-3d\62_2_100_p1_0-498_filt_butterworth_processed.trc: std::exception in 'bool OpenSim::InverseKinematicsTool::run()': InverseKinematicsTool Failed, please see messages window for details...
+Kinematics failed for session 62 in folder F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_2
+
+---------------------------------------------------------------------
+OpenSim scaling and inverse kinematics for 62_1_11_p1, for all frames.
+On Tuesday 16. December 2025, 17:29:08
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_11_p1
+---------------------------------------------------------------------
+
+Processing TRC file: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_11_p1\pose-3d\62_1_11_p1_0-644_filt_butterworth_processed.trc
+
+Scaling...
+	Done. OpenSim logs saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_11_p1\kinematics\opensim_logs.txt.
+	Scaled model saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_11_p1\kinematics\62_1_11_p1_0-644_filt_butterworth_processed_scaled.osim
+
+Inverse Kinematics...
+	Done. OpenSim logs saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_11_p1\kinematics\opensim_logs.txt.
+	Joint angle data saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_11_p1\kinematics\62_1_11_p1_0-644_filt_butterworth_processed.mot
+
+
+OpenSim scaling and inverse kinematics took 00h00m32s.
+
+
+---------------------------------------------------------------------
+OpenSim scaling and inverse kinematics for 62_1_12_p1, for all frames.
+On Tuesday 16. December 2025, 17:29:41
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_12_p1
+---------------------------------------------------------------------
+
+Processing TRC file: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_12_p1\pose-3d\62_1_12_p1_0-447_filt_butterworth_processed.trc
+
+Scaling...
+	Done. OpenSim logs saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_12_p1\kinematics\opensim_logs.txt.
+	Scaled model saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_12_p1\kinematics\62_1_12_p1_0-447_filt_butterworth_processed_scaled.osim
+
+Inverse Kinematics...
+	Done. OpenSim logs saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_12_p1\kinematics\opensim_logs.txt.
+	Joint angle data saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_12_p1\kinematics\62_1_12_p1_0-447_filt_butterworth_processed.mot
+
+
+OpenSim scaling and inverse kinematics took 00h00m24s.
+
+
+---------------------------------------------------------------------
+OpenSim scaling and inverse kinematics for 62_1_13_p1, for all frames.
+On Tuesday 16. December 2025, 17:30:06
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_13_p1
+---------------------------------------------------------------------
+
+Processing TRC file: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_13_p1\pose-3d\62_1_13_p1_0-412_filt_butterworth_processed.trc
+
+Scaling...
+	Done. OpenSim logs saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_13_p1\kinematics\opensim_logs.txt.
+	Scaled model saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_13_p1\kinematics\62_1_13_p1_0-412_filt_butterworth_processed_scaled.osim
+
+Inverse Kinematics...
+	Done. OpenSim logs saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_13_p1\kinematics\opensim_logs.txt.
+	Joint angle data saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_13_p1\kinematics\62_1_13_p1_0-412_filt_butterworth_processed.mot
+
+
+OpenSim scaling and inverse kinematics took 00h00m31s.
+
+
+---------------------------------------------------------------------
+OpenSim scaling and inverse kinematics for 62_1_14_p1, for all frames.
+On Tuesday 16. December 2025, 17:30:37
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_14_p1
+---------------------------------------------------------------------
+
+Processing TRC file: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_14_p1\pose-3d\62_1_14_p1_0-518_filt_butterworth_processed.trc
+
+Scaling...
+	Done. OpenSim logs saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_14_p1\kinematics\opensim_logs.txt.
+	Scaled model saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_14_p1\kinematics\62_1_14_p1_0-518_filt_butterworth_processed_scaled.osim
+
+Inverse Kinematics...
+	Done. OpenSim logs saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_14_p1\kinematics\opensim_logs.txt.
+	Joint angle data saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_14_p1\kinematics\62_1_14_p1_0-518_filt_butterworth_processed.mot
+
+
+OpenSim scaling and inverse kinematics took 00h00m25s.
+
+
+---------------------------------------------------------------------
+OpenSim scaling and inverse kinematics for 62_1_15_p1, for all frames.
+On Tuesday 16. December 2025, 17:31:02
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_15_p1
+---------------------------------------------------------------------
+
+Processing TRC file: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_15_p1\pose-3d\62_1_15_p1_0-739_filt_butterworth_processed.trc
+
+Scaling...
+	Done. OpenSim logs saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_15_p1\kinematics\opensim_logs.txt.
+	Scaled model saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_15_p1\kinematics\62_1_15_p1_0-739_filt_butterworth_processed_scaled.osim
+
+Inverse Kinematics...
+	Done. OpenSim logs saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_15_p1\kinematics\opensim_logs.txt.
+	Joint angle data saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_15_p1\kinematics\62_1_15_p1_0-739_filt_butterworth_processed.mot
+
+
+OpenSim scaling and inverse kinematics took 00h00m35s.
+
+
+---------------------------------------------------------------------
+OpenSim scaling and inverse kinematics for 62_1_16_p1, for all frames.
+On Tuesday 16. December 2025, 17:31:38
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_16_p1
+---------------------------------------------------------------------
+
+Processing TRC file: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_16_p1\pose-3d\62_1_16_p1_0-375_filt_butterworth_processed.trc
+
+Scaling...
+	Done. OpenSim logs saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_16_p1\kinematics\opensim_logs.txt.
+	Scaled model saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_16_p1\kinematics\62_1_16_p1_0-375_filt_butterworth_processed_scaled.osim
+
+Inverse Kinematics...
+	Done. OpenSim logs saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_16_p1\kinematics\opensim_logs.txt.
+	Joint angle data saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_16_p1\kinematics\62_1_16_p1_0-375_filt_butterworth_processed.mot
+
+
+OpenSim scaling and inverse kinematics took 00h00m23s.
+
+
+---------------------------------------------------------------------
+OpenSim scaling and inverse kinematics for 62_1_17_p1, for all frames.
+On Tuesday 16. December 2025, 17:32:01
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_17_p1
+---------------------------------------------------------------------
+
+Processing TRC file: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_17_p1\pose-3d\62_1_17_p1_0-508_filt_butterworth_processed.trc
+
+Scaling...
+	Done. OpenSim logs saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_17_p1\kinematics\opensim_logs.txt.
+	Scaled model saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_17_p1\kinematics\62_1_17_p1_0-508_filt_butterworth_processed_scaled.osim
+
+Inverse Kinematics...
+
+---------------------------------------------------------------------
+OpenSim scaling and inverse kinematics for 62_1_11_p1, for all frames.
+On Tuesday 16. December 2025, 17:38:19
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_11_p1
+---------------------------------------------------------------------
+
+Processing TRC file: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_11_p1\pose-3d\62_1_11_p1_0-644_filt_butterworth_processed.trc
+
+Scaling...
+	Done. OpenSim logs saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_11_p1\kinematics\opensim_logs.txt.
+	Scaled model saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_11_p1\kinematics\62_1_11_p1_0-644_filt_butterworth_processed_scaled.osim
+
+Inverse Kinematics...
+	Done. OpenSim logs saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_11_p1\kinematics\opensim_logs.txt.
+	Joint angle data saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_11_p1\kinematics\62_1_11_p1_0-644_filt_butterworth_processed.mot
+
+
+OpenSim scaling and inverse kinematics took 00h00m28s.
+
+
+---------------------------------------------------------------------
+OpenSim scaling and inverse kinematics for 62_1_12_p1, for all frames.
+On Tuesday 16. December 2025, 17:38:48
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_12_p1
+---------------------------------------------------------------------
+
+Processing TRC file: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_12_p1\pose-3d\62_1_12_p1_0-447_filt_butterworth_processed.trc
+
+Scaling...
+	Done. OpenSim logs saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_12_p1\kinematics\opensim_logs.txt.
+	Scaled model saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_12_p1\kinematics\62_1_12_p1_0-447_filt_butterworth_processed_scaled.osim
+
+Inverse Kinematics...
+	Done. OpenSim logs saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_12_p1\kinematics\opensim_logs.txt.
+	Joint angle data saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_12_p1\kinematics\62_1_12_p1_0-447_filt_butterworth_processed.mot
+
+
+OpenSim scaling and inverse kinematics took 00h00m23s.
+
+
+---------------------------------------------------------------------
+OpenSim scaling and inverse kinematics for 62_1_13_p1, for all frames.
+On Tuesday 16. December 2025, 17:39:11
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_13_p1
+---------------------------------------------------------------------
+
+Processing TRC file: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_13_p1\pose-3d\62_1_13_p1_0-412_filt_butterworth_processed.trc
+
+Scaling...
+	Done. OpenSim logs saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_13_p1\kinematics\opensim_logs.txt.
+	Scaled model saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_13_p1\kinematics\62_1_13_p1_0-412_filt_butterworth_processed_scaled.osim
+
+Inverse Kinematics...
+	Done. OpenSim logs saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_13_p1\kinematics\opensim_logs.txt.
+	Joint angle data saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_13_p1\kinematics\62_1_13_p1_0-412_filt_butterworth_processed.mot
+
+
+OpenSim scaling and inverse kinematics took 00h00m19s.
+
+
+---------------------------------------------------------------------
+OpenSim scaling and inverse kinematics for 62_1_14_p1, for all frames.
+On Tuesday 16. December 2025, 17:39:30
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_14_p1
+---------------------------------------------------------------------
+
+Processing TRC file: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_14_p1\pose-3d\62_1_14_p1_0-518_filt_butterworth_processed.trc
+
+Scaling...
+	Done. OpenSim logs saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_14_p1\kinematics\opensim_logs.txt.
+	Scaled model saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_14_p1\kinematics\62_1_14_p1_0-518_filt_butterworth_processed_scaled.osim
+
+Inverse Kinematics...
+	Done. OpenSim logs saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_14_p1\kinematics\opensim_logs.txt.
+	Joint angle data saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_14_p1\kinematics\62_1_14_p1_0-518_filt_butterworth_processed.mot
+
+
+OpenSim scaling and inverse kinematics took 00h00m23s.
+
+
+---------------------------------------------------------------------
+OpenSim scaling and inverse kinematics for 62_1_15_p1, for all frames.
+On Tuesday 16. December 2025, 17:39:54
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_15_p1
+---------------------------------------------------------------------
+
+Processing TRC file: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_15_p1\pose-3d\62_1_15_p1_0-739_filt_butterworth_processed.trc
+
+Scaling...
+	Done. OpenSim logs saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_15_p1\kinematics\opensim_logs.txt.
+	Scaled model saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_15_p1\kinematics\62_1_15_p1_0-739_filt_butterworth_processed_scaled.osim
+
+Inverse Kinematics...
+	Done. OpenSim logs saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_15_p1\kinematics\opensim_logs.txt.
+	Joint angle data saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_15_p1\kinematics\62_1_15_p1_0-739_filt_butterworth_processed.mot
+
+
+OpenSim scaling and inverse kinematics took 00h00m33s.
+
+
+---------------------------------------------------------------------
+OpenSim scaling and inverse kinematics for 62_1_16_p1, for all frames.
+On Tuesday 16. December 2025, 17:40:27
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_16_p1
+---------------------------------------------------------------------
+
+Processing TRC file: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_16_p1\pose-3d\62_1_16_p1_0-375_filt_butterworth_processed.trc
+
+Scaling...
+	Done. OpenSim logs saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_16_p1\kinematics\opensim_logs.txt.
+	Scaled model saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_16_p1\kinematics\62_1_16_p1_0-375_filt_butterworth_processed_scaled.osim
+
+Inverse Kinematics...
+	Done. OpenSim logs saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_16_p1\kinematics\opensim_logs.txt.
+	Joint angle data saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_16_p1\kinematics\62_1_16_p1_0-375_filt_butterworth_processed.mot
+
+
+OpenSim scaling and inverse kinematics took 00h00m21s.
+
+
+---------------------------------------------------------------------
+OpenSim scaling and inverse kinematics for 62_1_17_p1, for all frames.
+On Tuesday 16. December 2025, 17:40:49
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_17_p1
+---------------------------------------------------------------------
+
+Processing TRC file: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_17_p1\pose-3d\62_1_17_p1_0-508_filt_butterworth_processed.trc
+
+Scaling...
+	Done. OpenSim logs saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_17_p1\kinematics\opensim_logs.txt.
+	Scaled model saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_17_p1\kinematics\62_1_17_p1_0-508_filt_butterworth_processed_scaled.osim
+
+Inverse Kinematics...
+	Done. OpenSim logs saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_17_p1\kinematics\opensim_logs.txt.
+	Joint angle data saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_17_p1\kinematics\62_1_17_p1_0-508_filt_butterworth_processed.mot
+
+
+OpenSim scaling and inverse kinematics took 00h00m24s.
+
+
+---------------------------------------------------------------------
+OpenSim scaling and inverse kinematics for 62_1_20_p0, for all frames.
+On Tuesday 16. December 2025, 17:41:13
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_20_p0
+---------------------------------------------------------------------
+
+Processing TRC file: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_20_p0\pose-3d\62_1_20_p0_0-358_filt_butterworth_processed.trc
+
+Scaling...
+	Done. OpenSim logs saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_20_p0\kinematics\opensim_logs.txt.
+	Scaled model saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_20_p0\kinematics\62_1_20_p0_0-358_filt_butterworth_processed_scaled.osim
+
+Inverse Kinematics...
+	Done. OpenSim logs saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_20_p0\kinematics\opensim_logs.txt.
+	Joint angle data saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_20_p0\kinematics\62_1_20_p0_0-358_filt_butterworth_processed.mot
+
+
+OpenSim scaling and inverse kinematics took 00h00m20s.
+
+
+---------------------------------------------------------------------
+OpenSim scaling and inverse kinematics for 62_1_21_p0, for all frames.
+On Tuesday 16. December 2025, 17:41:33
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_21_p0
+---------------------------------------------------------------------
+
+Processing TRC file: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_21_p0\pose-3d\62_1_21_p0_0-375_filt_butterworth_processed.trc
+
+Scaling...
+	Done. OpenSim logs saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_21_p0\kinematics\opensim_logs.txt.
+	Scaled model saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_21_p0\kinematics\62_1_21_p0_0-375_filt_butterworth_processed_scaled.osim
+
+Inverse Kinematics...
+	Done. OpenSim logs saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_21_p0\kinematics\opensim_logs.txt.
+	Joint angle data saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_21_p0\kinematics\62_1_21_p0_0-375_filt_butterworth_processed.mot
+
+
+OpenSim scaling and inverse kinematics took 00h00m18s.
+
+
+---------------------------------------------------------------------
+OpenSim scaling and inverse kinematics for 62_1_22_p0, for all frames.
+On Tuesday 16. December 2025, 17:41:52
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_22_p0
+---------------------------------------------------------------------
+
+Processing TRC file: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_22_p0\pose-3d\62_1_22_p0_0-990_filt_butterworth_processed.trc
+
+Scaling...
+	Done. OpenSim logs saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_22_p0\kinematics\opensim_logs.txt.
+	Scaled model saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_22_p0\kinematics\62_1_22_p0_0-990_filt_butterworth_processed_scaled.osim
+
+Inverse Kinematics...
+	Done. OpenSim logs saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_22_p0\kinematics\opensim_logs.txt.
+	Joint angle data saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_22_p0\kinematics\62_1_22_p0_0-990_filt_butterworth_processed.mot
+
+
+OpenSim scaling and inverse kinematics took 00h00m54s.
+
+
+---------------------------------------------------------------------
+OpenSim scaling and inverse kinematics for 62_1_23_p0, for all frames.
+On Tuesday 16. December 2025, 17:42:47
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_23_p0
+---------------------------------------------------------------------
+
+Processing TRC file: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_23_p0\pose-3d\62_1_23_p0_0-530_filt_butterworth_processed.trc
+
+Scaling...
+	Done. OpenSim logs saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_23_p0\kinematics\opensim_logs.txt.
+	Scaled model saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_23_p0\kinematics\62_1_23_p0_0-530_filt_butterworth_processed_scaled.osim
+
+Inverse Kinematics...
+	Done. OpenSim logs saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_23_p0\kinematics\opensim_logs.txt.
+	Joint angle data saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_23_p0\kinematics\62_1_23_p0_0-530_filt_butterworth_processed.mot
+
+
+OpenSim scaling and inverse kinematics took 00h00m29s.
+
+
+---------------------------------------------------------------------
+OpenSim scaling and inverse kinematics for 62_1_24_p0, for all frames.
+On Tuesday 16. December 2025, 17:43:16
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_24_p0
+---------------------------------------------------------------------
+
+Processing TRC file: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_24_p0\pose-3d\62_1_24_p0_0-325_filt_butterworth_processed.trc
+
+Scaling...
+	Done. OpenSim logs saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_24_p0\kinematics\opensim_logs.txt.
+	Scaled model saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_24_p0\kinematics\62_1_24_p0_0-325_filt_butterworth_processed_scaled.osim
+
+Inverse Kinematics...
+
+---------------------------------------------------------------------
+OpenSim scaling and inverse kinematics for 62_1_11_p1, for all frames.
+On Tuesday 16. December 2025, 17:43:37
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_11_p1
+---------------------------------------------------------------------
+
+Processing TRC file: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_11_p1\pose-3d\62_1_11_p1_0-644_filt_butterworth_processed.trc
+
+Scaling...
+	Done. OpenSim logs saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_11_p1\kinematics\opensim_logs.txt.
+	Scaled model saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_11_p1\kinematics\62_1_11_p1_0-644_filt_butterworth_processed_scaled.osim
+
+Inverse Kinematics...
+	Done. OpenSim logs saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_11_p1\kinematics\opensim_logs.txt.
+	Joint angle data saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_11_p1\kinematics\62_1_11_p1_0-644_filt_butterworth_processed.mot
+
+
+OpenSim scaling and inverse kinematics took 00h00m28s.
+
+
+---------------------------------------------------------------------
+OpenSim scaling and inverse kinematics for 62_1_12_p1, for all frames.
+On Tuesday 16. December 2025, 17:44:06
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_12_p1
+---------------------------------------------------------------------
+
+Processing TRC file: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_12_p1\pose-3d\62_1_12_p1_0-447_filt_butterworth_processed.trc
+
+Scaling...
+	Done. OpenSim logs saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_12_p1\kinematics\opensim_logs.txt.
+	Scaled model saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_12_p1\kinematics\62_1_12_p1_0-447_filt_butterworth_processed_scaled.osim
+
+Inverse Kinematics...
+	Done. OpenSim logs saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_12_p1\kinematics\opensim_logs.txt.
+	Joint angle data saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_12_p1\kinematics\62_1_12_p1_0-447_filt_butterworth_processed.mot
+
+
+OpenSim scaling and inverse kinematics took 00h00m23s.
+
+
+---------------------------------------------------------------------
+OpenSim scaling and inverse kinematics for 62_1_13_p1, for all frames.
+On Tuesday 16. December 2025, 17:44:29
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_13_p1
+---------------------------------------------------------------------
+
+Processing TRC file: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_13_p1\pose-3d\62_1_13_p1_0-412_filt_butterworth_processed.trc
+
+Scaling...
+	Done. OpenSim logs saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_13_p1\kinematics\opensim_logs.txt.
+	Scaled model saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_13_p1\kinematics\62_1_13_p1_0-412_filt_butterworth_processed_scaled.osim
+
+Inverse Kinematics...
+	Done. OpenSim logs saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_13_p1\kinematics\opensim_logs.txt.
+	Joint angle data saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_13_p1\kinematics\62_1_13_p1_0-412_filt_butterworth_processed.mot
+
+
+OpenSim scaling and inverse kinematics took 00h00m21s.
+
+
+---------------------------------------------------------------------
+OpenSim scaling and inverse kinematics for 62_1_14_p1, for all frames.
+On Tuesday 16. December 2025, 17:44:51
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_14_p1
+---------------------------------------------------------------------
+
+Processing TRC file: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_14_p1\pose-3d\62_1_14_p1_0-518_filt_butterworth_processed.trc
+
+Scaling...
+	Done. OpenSim logs saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_14_p1\kinematics\opensim_logs.txt.
+	Scaled model saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_14_p1\kinematics\62_1_14_p1_0-518_filt_butterworth_processed_scaled.osim
+
+Inverse Kinematics...
+
+---------------------------------------------------------------------
+OpenSim scaling and inverse kinematics for 62_1_11_p1, for all frames.
+On Tuesday 16. December 2025, 17:45:29
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_11_p1
+---------------------------------------------------------------------
+
+Processing TRC file: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_11_p1\pose-3d\62_1_11_p1_0-644_filt_butterworth_processed.trc
+
+Scaling...
+	Done. OpenSim logs saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_11_p1\kinematics\opensim_logs.txt.
+	Scaled model saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_11_p1\kinematics\62_1_11_p1_0-644_filt_butterworth_processed_scaled.osim
+
+Inverse Kinematics...
+	Done. OpenSim logs saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_11_p1\kinematics\opensim_logs.txt.
+	Joint angle data saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_11_p1\kinematics\62_1_11_p1_0-644_filt_butterworth_processed.mot
+
+
+OpenSim scaling and inverse kinematics took 00h00m30s.
+
+
+---------------------------------------------------------------------
+OpenSim scaling and inverse kinematics for 62_1_12_p1, for all frames.
+On Tuesday 16. December 2025, 17:45:59
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_12_p1
+---------------------------------------------------------------------
+
+Processing TRC file: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_12_p1\pose-3d\62_1_12_p1_0-447_filt_butterworth_processed.trc
+
+Scaling...
+	Done. OpenSim logs saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_12_p1\kinematics\opensim_logs.txt.
+	Scaled model saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_12_p1\kinematics\62_1_12_p1_0-447_filt_butterworth_processed_scaled.osim
+
+Inverse Kinematics...
+	Done. OpenSim logs saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_12_p1\kinematics\opensim_logs.txt.
+	Joint angle data saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_12_p1\kinematics\62_1_12_p1_0-447_filt_butterworth_processed.mot
+
+
+OpenSim scaling and inverse kinematics took 00h00m22s.
+
+
+---------------------------------------------------------------------
+OpenSim scaling and inverse kinematics for 62_1_13_p1, for all frames.
+On Tuesday 16. December 2025, 17:46:21
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_13_p1
+---------------------------------------------------------------------
+
+Processing TRC file: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_13_p1\pose-3d\62_1_13_p1_0-412_filt_butterworth_processed.trc
+
+Scaling...
+	Done. OpenSim logs saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_13_p1\kinematics\opensim_logs.txt.
+	Scaled model saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_13_p1\kinematics\62_1_13_p1_0-412_filt_butterworth_processed_scaled.osim
+
+Inverse Kinematics...
+	Done. OpenSim logs saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_13_p1\kinematics\opensim_logs.txt.
+	Joint angle data saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_13_p1\kinematics\62_1_13_p1_0-412_filt_butterworth_processed.mot
+
+
+OpenSim scaling and inverse kinematics took 00h00m20s.
+
+
+---------------------------------------------------------------------
+OpenSim scaling and inverse kinematics for 62_1_14_p1, for all frames.
+On Tuesday 16. December 2025, 17:46:42
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_14_p1
+---------------------------------------------------------------------
+
+Processing TRC file: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_14_p1\pose-3d\62_1_14_p1_0-518_filt_butterworth_processed.trc
+
+Scaling...
+	Done. OpenSim logs saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_14_p1\kinematics\opensim_logs.txt.
+	Scaled model saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_14_p1\kinematics\62_1_14_p1_0-518_filt_butterworth_processed_scaled.osim
+
+Inverse Kinematics...
+	Done. OpenSim logs saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_14_p1\kinematics\opensim_logs.txt.
+	Joint angle data saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_14_p1\kinematics\62_1_14_p1_0-518_filt_butterworth_processed.mot
+
+
+OpenSim scaling and inverse kinematics took 00h00m24s.
+
+
+---------------------------------------------------------------------
+OpenSim scaling and inverse kinematics for 62_1_15_p1, for all frames.
+On Tuesday 16. December 2025, 17:47:06
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_15_p1
+---------------------------------------------------------------------
+
+Processing TRC file: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_15_p1\pose-3d\62_1_15_p1_0-739_filt_butterworth_processed.trc
+
+Scaling...
+	Done. OpenSim logs saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_15_p1\kinematics\opensim_logs.txt.
+	Scaled model saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_15_p1\kinematics\62_1_15_p1_0-739_filt_butterworth_processed_scaled.osim
+
+Inverse Kinematics...
+
+---------------------------------------------------------------------
+OpenSim scaling and inverse kinematics for 62_1_11_p1, for all frames.
+On Wednesday 17. December 2025, 10:04:14
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_11_p1
+---------------------------------------------------------------------
+
+Processing TRC file: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_11_p1\pose-3d\62_1_11_p1_0-644_filt_butterworth_processed.trc
+
+Scaling...
+	Done. OpenSim logs saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_11_p1\kinematics\opensim_logs.txt.
+	Scaled model saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_11_p1\kinematics\62_1_11_p1_0-644_filt_butterworth_processed_scaled.osim
+
+Inverse Kinematics...
+	Done. OpenSim logs saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_11_p1\kinematics\opensim_logs.txt.
+	Joint angle data saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_11_p1\kinematics\62_1_11_p1_0-644_filt_butterworth_processed.mot
+
+
+OpenSim scaling and inverse kinematics took 00h00m36s.
+
+
+---------------------------------------------------------------------
+OpenSim scaling and inverse kinematics for 62_1_12_p1, for all frames.
+On Wednesday 17. December 2025, 10:04:51
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_12_p1
+---------------------------------------------------------------------
+
+Processing TRC file: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_12_p1\pose-3d\62_1_12_p1_0-447_filt_butterworth_processed.trc
+
+Scaling...
+	Done. OpenSim logs saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_12_p1\kinematics\opensim_logs.txt.
+	Scaled model saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_12_p1\kinematics\62_1_12_p1_0-447_filt_butterworth_processed_scaled.osim
+
+Inverse Kinematics...
+	Done. OpenSim logs saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_12_p1\kinematics\opensim_logs.txt.
+	Joint angle data saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_12_p1\kinematics\62_1_12_p1_0-447_filt_butterworth_processed.mot
+
+
+OpenSim scaling and inverse kinematics took 00h00m21s.
+
+
+---------------------------------------------------------------------
+OpenSim scaling and inverse kinematics for 62_1_13_p1, for all frames.
+On Wednesday 17. December 2025, 10:05:12
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_13_p1
+---------------------------------------------------------------------
+
+Processing TRC file: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_13_p1\pose-3d\62_1_13_p1_0-412_filt_butterworth_processed.trc
+
+Scaling...
+	Done. OpenSim logs saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_13_p1\kinematics\opensim_logs.txt.
+	Scaled model saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_13_p1\kinematics\62_1_13_p1_0-412_filt_butterworth_processed_scaled.osim
+
+Inverse Kinematics...
+	Done. OpenSim logs saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_13_p1\kinematics\opensim_logs.txt.
+	Joint angle data saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_13_p1\kinematics\62_1_13_p1_0-412_filt_butterworth_processed.mot
+
+
+OpenSim scaling and inverse kinematics took 00h00m19s.
+
+
+---------------------------------------------------------------------
+OpenSim scaling and inverse kinematics for 62_1_14_p1, for all frames.
+On Wednesday 17. December 2025, 10:05:32
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_14_p1
+---------------------------------------------------------------------
+
+Processing TRC file: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_14_p1\pose-3d\62_1_14_p1_0-518_filt_butterworth_processed.trc
+
+Scaling...
+	Done. OpenSim logs saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_14_p1\kinematics\opensim_logs.txt.
+	Scaled model saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_14_p1\kinematics\62_1_14_p1_0-518_filt_butterworth_processed_scaled.osim
+
+Inverse Kinematics...
+	Done. OpenSim logs saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_14_p1\kinematics\opensim_logs.txt.
+	Joint angle data saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_14_p1\kinematics\62_1_14_p1_0-518_filt_butterworth_processed.mot
+
+
+OpenSim scaling and inverse kinematics took 00h00m24s.
+
+
+---------------------------------------------------------------------
+OpenSim scaling and inverse kinematics for 62_1_15_p1, for all frames.
+On Wednesday 17. December 2025, 10:05:57
+Project directory: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_15_p1
+---------------------------------------------------------------------
+
+Processing TRC file: F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_15_p1\pose-3d\62_1_15_p1_0-739_filt_butterworth_processed.trc
+
+Scaling...
+	Done. OpenSim logs saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_15_p1\kinematics\opensim_logs.txt.
+	Scaled model saved to F:\flesh_data_processed\02_MotionTracking_processing\projectdata2\Session_62_1\62_1_15_p1\kinematics\62_1_15_p1_0-739_filt_butterworth_processed_scaled.osim
+
+Inverse Kinematics...
