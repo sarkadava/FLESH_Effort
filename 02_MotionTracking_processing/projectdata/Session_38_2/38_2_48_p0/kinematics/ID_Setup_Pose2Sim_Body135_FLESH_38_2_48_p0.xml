@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<OpenSimDocument Version="20302">
+   <InverseDynamicsTool name="subject01_walk1">
+  
+      
+      <results_directory>./</results_directory>
+  
+      
+      <model_file>f:\flesh_data_processed\02_MotionTracking_processing\projectdata\Session_38_2\38_2_48_p0\kinematics\38_2_48_p0_0-308_filt_butterworth_processed.osim</model_file>
+  
+      
+      <time_range>0.0 5.11666667</time_range>
+  
+      
+      <forces_to_exclude> Muscles </forces_to_exclude>
+ 
+      
+      <external_loads_file> </external_loads_file>
+ 
+      
+      <coordinates_file>f:\flesh_data_processed\02_MotionTracking_processing\projectdata\Session_38_2\38_2_48_p0\kinematics\38_2_48_p0_0-308_filt_butterworth_processed_smoothed.mot</coordinates_file>
+ 
+      
+      <lowpass_cutoff_frequency_for_coordinates>       4.00000000 </lowpass_cutoff_frequency_for_coordinates>
+ 
+      
+      <output_gen_force_file>f:\flesh_data_processed\02_MotionTracking_processing\projectdata\Session_38_2\38_2_48_p0\kinematics\38_2_48_p0_0-308_filt_butterworth_processed_smoothed.sto</output_gen_force_file>
+ 
+   </InverseDynamicsTool>
+</OpenSimDocument>

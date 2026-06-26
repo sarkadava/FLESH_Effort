@@ -39,9 +39,6 @@
 02_MotionTracking_processing/projectdata/*/*/Config.toml
 02_MotionTracking_processing/projectdata/*/*/*/*/*.png
 
-*.xml
-
-
 /Doc_tracking
 
 **/*.quarto_ipynb
