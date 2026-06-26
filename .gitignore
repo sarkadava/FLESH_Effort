@@ -15,7 +15,6 @@
 01_XDF_processing/data/Data_processed/CsvDataTS_raw
 
 
-02_MotionTracking_processing/Pose2Sim
 *.caffemodel
 
 /Miscellaneous
@@ -31,6 +30,14 @@
 /01_XDF_processing/data/Data_processed/Data_trials/Audio/*.wav
 /01_XDF_processing/data/Data_processed/Data_trials/Audio_48/*.wav
 
+02_MotionTracking_processing/Pose2Sim/__pycache__
+02_MotionTracking_processing/Pose2Sim/Demo_Batch
+02_MotionTracking_processing/Pose2Sim/Demo_MultiPerson
+02_MotionTracking_processing/Pose2Sim/Demo_SinglePerson
+02_MotionTracking_processing/Pose2Sim/Empty_project
+02_MotionTracking_processing/Pose2Sim/MarkerAugmenter
+02_MotionTracking_processing/Pose2Sim/S00_Demo_BatchSession
+02_MotionTracking_processing/Pose2Sim/S01_Demo_SingleTrial
 02_MotionTracking_processing/openpose/bin
 02_MotionTracking_processing/projectdata/*/*/pose
 02_MotionTracking_processing/projectdata/*/*/pose-2d-trackingvideos
