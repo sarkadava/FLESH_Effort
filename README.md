@@ -65,7 +65,7 @@ jupyter notebook
 
 If you want to use and cite and part of the **coding pipeline**, cite:
 
-[xxx]
+Kadavá, Š., Ćwiek , A., & Pouw. (2026). Supplementary Material to the project When communication fails, the body invests more effort but not to greater effect (Version 1.0.0) [Computer software]. https://github.com/sarkadava/FLESH_Effort
 
 If you want to cite the **paper**, cite:
 
