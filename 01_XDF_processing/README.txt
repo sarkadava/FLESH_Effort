@@ -17,7 +17,7 @@ python -m ipykernel install --user --name=FLESH_TSPROCESS --display-name "Python
 cd shign
 pip install .
 
-4) You are ready to start with the scripts as ordered by the initial numbers
+4) You are ready to start with the scripts as ordered by the initial numbers. Always make sure you are in the folder of the script you are running and that you selected kernel FLESH_TSPROCESS
 
 
 

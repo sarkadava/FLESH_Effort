@@ -57,7 +57,7 @@ python -m ipykernel install --user --name=FLESH_TSPROCESS --display-name "Python
 conda activate FLESH_MTRACK
 python -m ipykernel install --user --name=FLESH_MTRACK --display-name "Python (FLESH_MTRACK)"
 
-# 4 - Run the Jupyter Notebook (Optional - You can also open the scripts in Visual Studio Code)
+# 4 - Run the Jupyter Notebook (Optional - You can also open the scripts in Visual Studio Code. Always make sure you are in the folder of the script you are running)
 jupyter notebook
 ```
 

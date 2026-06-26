@@ -17,5 +17,7 @@ python -m ipykernel install --user --name=FLESH_TSPROCESS --display-name "Python
 In folder \numberbatch follow the url link to download the multilingual numberbatch (version 19.08) with word embeddings,
 unzip the file
 
+You can now run the notebook ConceptNet_similarity. Always make sure you are in the folder of the script you are running and that you selected kernel FLESH_TSPROCESS
+
 
 
