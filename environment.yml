@@ -2,8 +2,8 @@ name: FLESH_TSPROCESS
 channels:
   - defaults
 dependencies:
-  - pip=25.1=pyhc872135_2
-  - python=3.12.2=h1d929f7_0
+  - pip=25.1
+  - python=3.12.2
   - pip:
       - accumulation-tree==0.6.4
       - antropy==0.1.9
