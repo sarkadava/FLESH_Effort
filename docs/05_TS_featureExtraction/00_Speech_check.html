@@ -108,7 +108,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
-<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="../Manuscript/style.css">
 </head>
 
 <body class="nav-sidebar floating nav-fixed quarto-light">
@@ -497,7 +497,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>speech_scan_full.to_csv(os.path.join(<span class="st">"Cleaning"</span>, <span class="st">"whisper_dutch_speech_scan_fullfiles.csv"</span>), index<span class="op">=</span><span class="va">False</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Before we start manually checking all flagged files, we need to preprocess the resulting file</p>
-<div id="f86ff124" class="cell" data-execution_count="3">
+<div id="f86ff124" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load in the document</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>speech_scan_full <span class="op">=</span> pd.read_csv(os.path.join(<span class="st">"Cleaning"</span>, <span class="st">"whisper_dutch_speech_scan_fullfiles.csv"</span>))</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -508,7 +508,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>scan_speech <span class="op">=</span> scan_speech[<span class="op">~</span>scan_speech[<span class="st">'whisper_text'</span>].<span class="bu">str</span>.isupper()]</span>
 <span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co"># save</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>scan_speech.to_csv(<span class="st">"control_for_speech.csv"</span>, index<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>scan_speech.to_csv(os.path.join(<span class="st">"Cleaning"</span>, <span class="st">"control_for_speech.csv"</span>), index<span class="op">=</span><span class="va">False</span>)</span>
 <span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">len</span>(scan_speech))</span>
 <span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>scan_speech.head(<span class="dv">20</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>

@@ -128,7 +128,7 @@ div.csl-indent {
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
-<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="../Manuscript/style.css">
 </head>
 
 <body class="nav-sidebar floating nav-fixed quarto-light">
@@ -413,7 +413,7 @@ div.csl-indent {
 <p>We operationalize degree of misunderstanding as a conceptual similarity between target concept and answer offered by a guesser.</p>
 <p>To have a reproducible measure of conceptual similarity, we use the ConceptNet <span class="citation" data-cites="speer_etal18">(<a href="#ref-speer_etal18" role="doc-biblioref">Speer et al., 2018</a>)</span> to extract embeddings for concepts used in our study, and calculate cosine similarity between the target concept and guessed answer.</p>
 <p>To verify the utility of the cosine similarity, we have collected data from 14 Dutch-native people who were asked to rate the similarity between each pair of words in online anonymous rating study. We then compared the ‘perceived similarity’ with cosine similarity computed from ConceptNet embeddings, to validate the use of ConceptNet embeddings as a measure of conceptual similarity. This analysis is available in the <a href="https://github.com/sarkadava/FLESH_Effort/blob/preregistered/06_ConceptSimilarity/ConceptNet_similarity.ipynb" target="_blank">preregistered script</a>.</p>
-<div id="ffe81d02" class="cell">
+<div id="ffe81d02" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code to load packages and prepare environment</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -444,7 +444,7 @@ div.csl-indent {
 <span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df_all[[<span class="st">'ID'</span>, <span class="st">'trial_order'</span>, <span class="st">'word'</span>, <span class="st">'answer'</span>, <span class="st">'exp'</span>]]</span>
 <span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>df.head(<span class="dv">20</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="73">
+<div class="cell-output cell-output-display" data-execution_count="1">
 <div>
 
 
