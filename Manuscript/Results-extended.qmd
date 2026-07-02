@@ -18,7 +18,7 @@ library(gt)
 library(dplyr)
 library(readr)
 
-source(here::here("Manuscript/helper.R"))
+source(here::here("helper.R"))
 
 ```
 
@@ -31,7 +31,7 @@ For each of the six dependent variables, we report estimates from Model 3, which
 #| echo: false
 #| fig-cap: "Posterior predictions of effort across correction phases by modality. Predicted effort is shown for the six dependent variables: cumulative measures (top row, integrals) and instantaneous measures (bottom row, peak means) of arm torque, amplitude envelope, and centre of pressure (COP). Distributions show posterior means with 89% and 95% highest density intervals (HDIs) from Model 3, with raw trial-level values overlaid as jittered points. Dashed lines mark the baseline (c0) posterior mean for each modality as a reference. c0 = baseline performance, c1 = first correction, c2 = second correction."
 
-knitr::include_graphics(here::here("06_Analysis_Modeling/plots/correction_raincloud_grid.png"))
+knitr::include_graphics(here::here("../06_Analysis_Modeling/plots/correction_raincloud_grid.png"))
 ```
 
 ### 3.1.1 Cumulative effort
@@ -42,8 +42,8 @@ knitr::include_graphics(here::here("06_Analysis_Modeling/plots/correction_raincl
 #| label: setup-torque-cum
 #| include: false
 
-m1_tc <- readRDS(here::here("06_Analysis_Modeling/models/h1.m1_torq_cum.rds"))
-m3_tc <- readRDS(here::here("06_Analysis_Modeling/models/h1.m3_torq_cum.rds"))
+m1_tc <- readRDS(here::here("../06_Analysis_Modeling/models/h1.m1_torq_cum.rds"))
+m3_tc <- readRDS(here::here("../06_Analysis_Modeling/models/h1.m3_torq_cum.rds"))
 
 c1_tc      <- fe(m3_tc, "correction2M1")
 c2_tc      <- fe(m3_tc, "correction3M2")
@@ -95,9 +95,9 @@ table_torq_cum |>
 #| label: setup-envelope-cum
 #| include: false
 
-m2_ec <- readRDS(here::here("06_Analysis_Modeling/models/h1.m2_env_cum.rds"))
-m3_ec <- readRDS(here::here("06_Analysis_Modeling/models/h1.m3_env_cum.rds"))
-m4_ec <- readRDS(here::here("06_Analysis_Modeling/models/h1.m4_env_cum.rds"))
+m2_ec <- readRDS(here::here("../06_Analysis_Modeling/models/h1.m2_env_cum.rds"))
+m3_ec <- readRDS(here::here("../06_Analysis_Modeling/models/h1.m3_env_cum.rds"))
+m4_ec <- readRDS(here::here("../06_Analysis_Modeling/models/h1.m4_env_cum.rds"))
 
 c1_ec      <- fe(m3_ec, "correction2M1")
 c2_ec      <- fe(m3_ec, "correction3M2")
@@ -151,9 +151,9 @@ table_env_cum |>
 #| label: setup-cop-cum
 #| include: false
 
-m2_cc <- readRDS(here::here("06_Analysis_Modeling/models/h1.m2_cop_cum.rds"))
-m3_cc <- readRDS(here::here("06_Analysis_Modeling/models/h1.m3_cop_cum.rds"))
-m4_cc <- readRDS(here::here("06_Analysis_Modeling/models/h1.m4_cop_cum.rds"))
+m2_cc <- readRDS(here::here("../06_Analysis_Modeling/models/h1.m2_cop_cum.rds"))
+m3_cc <- readRDS(here::here("../06_Analysis_Modeling/models/h1.m3_cop_cum.rds"))
+m4_cc <- readRDS(here::here("../06_Analysis_Modeling/models/h1.m4_cop_cum.rds"))
 
 c1_cc      <- fe(m3_cc, "correction2M1")
 c2_cc      <- fe(m3_cc, "correction3M2")
@@ -216,8 +216,8 @@ Taken together, the three cumulative measures consistently support H1 for cumula
 #| label: setup-torque-ins
 #| include: false
 
-m2_ti <- readRDS(here::here("06_Analysis_Modeling/models/h1.m2_torq_in.rds"))
-m3_ti <- readRDS(here::here("06_Analysis_Modeling/models/h1.m3_torq_in.rds"))
+m2_ti <- readRDS(here::here("../06_Analysis_Modeling/models/h1.m2_torq_in.rds"))
+m3_ti <- readRDS(here::here("../06_Analysis_Modeling/models/h1.m3_torq_in.rds"))
 
 vpc_ti        <- vpc(m3_ti, c(ppt = "pcn_ID", concept = "concept", dyad = "SessionID"))
 re_ppt_ti     <- re_sd(m3_ti, "pcn_ID")
@@ -252,9 +252,9 @@ table_torq_in |>
 #| label: setup-envelope-ins
 #| include: false
 
-m2_ei <- readRDS(here::here("06_Analysis_Modeling/models/h1.m2_env_in.rds"))
-m3_ei <- readRDS(here::here("06_Analysis_Modeling/models/h1.m3_env_in.rds"))
-m4_ei <- readRDS(here::here("06_Analysis_Modeling/models/h1.m4_env_in.rds"))
+m2_ei <- readRDS(here::here("../06_Analysis_Modeling/models/h1.m2_env_in.rds"))
+m3_ei <- readRDS(here::here("../06_Analysis_Modeling/models/h1.m3_env_in.rds"))
+m4_ei <- readRDS(here::here("../06_Analysis_Modeling/models/h1.m4_env_in.rds"))
 
 c1_ei      <- fe(m3_ei, "correction2M1")
 c2_ei      <- fe(m3_ei, "correction3M2")
@@ -304,9 +304,9 @@ table_env_in |>
 #| label: setup-cop-ins
 #| include: false
 
-m2_ci <- readRDS(here::here("06_Analysis_Modeling/models/h1.m2_cop_in.rds"))
-m3_ci <- readRDS(here::here("06_Analysis_Modeling/models/h1.m3_cop_in.rds"))
-m4_ci <- readRDS(here::here("06_Analysis_Modeling/models/h1.m4_cop_in.rds"))
+m2_ci <- readRDS(here::here("../06_Analysis_Modeling/models/h1.m2_cop_in.rds"))
+m3_ci <- readRDS(here::here("../06_Analysis_Modeling/models/h1.m3_cop_in.rds"))
+m4_ci <- readRDS(here::here("../06_Analysis_Modeling/models/h1.m4_cop_in.rds"))
 
 c1_ci      <- fe(m3_ci, "correction2M1")
 ext_ci     <- fe(m3_ci, "BFI_extra")
@@ -368,7 +368,7 @@ Taken together, the three instantaneous measures present a strikingly different 
 #| echo: false
 #| fig-cap: Posterior distribution of covariates
 
-knitr::include_graphics(here::here("06_Analysis_Modeling/plots/fixed_effects_posteriors_grid.png"))
+knitr::include_graphics(here::here("../06_Analysis_Modeling/plots/fixed_effects_posteriors_grid.png"))
 ```
 
 ## 3.2 Hypothesis 2
@@ -378,8 +378,8 @@ knitr::include_graphics(here::here("06_Analysis_Modeling/plots/fixed_effects_pos
 #| include: false
 
 
-h2m_ct <- readRDS(here::here("06_Analysis_Modeling/models/h2.m1b_torq_cum.rds"))
-h2m_it <- readRDS(here::here("06_Analysis_Modeling/models/h2.m1b_torq_in.rds"))
+h2m_ct <- readRDS(here::here("../06_Analysis_Modeling/models/h2.m1b_torq_cum.rds"))
+h2m_it <- readRDS(here::here("../06_Analysis_Modeling/models/h2.m1b_torq_in.rds"))
 
 prev_an_ct_ci <- fe(h2m_ct, "answer_prev_dist_z")
 prev_an_it_ci <- fe(h2m_it, "answer_prev_dist_z")
@@ -395,7 +395,7 @@ The data partially support H2: the effect of cosine similarity on effort is rest
 #| echo: false
 #| fig-cap: "Posterior distribution of the effect of previous cosine similarity on current effort"
 
-knitr::include_graphics(here::here("06_Analysis_Modeling/plots/h2_prev_answer_effect.png"))
+knitr::include_graphics(here::here("../06_Analysis_Modeling/plots/h2_prev_answer_effect.png"))
 ```
 
 Vocal and postural effort thus appear to be insensitive to the degree of misunderstanding the performer is responding to, whereas cumulative upper-limb effort adapts reliably to the amount of repair work the previous answer requires. That instantenous upper-limb effort does not reliably coupled to common ground on population level in a similar manner can be possibly attributed to the fact that local magnitude serves a specific function: while in some cases answer may facilitate the performer to engage in more bursty movement, it is not a one-fits-all solution. 
@@ -422,12 +422,12 @@ table_cos_sim |>
 #| label: baseline-effort
 #| include: false
 
-e2_cum_torq <- readRDS(here::here("06_Analysis_Modeling/models/e1.m1_torq_cum.rds"))
-e2_cum_env  <- readRDS(here::here("06_Analysis_Modeling/models/e1.m1_env_cum.rds"))
-e2_cum_cop  <- readRDS(here::here("06_Analysis_Modeling/models/e1.m1_cop_cum.rds"))
-e2_in_torq  <- readRDS(here::here("06_Analysis_Modeling/models/e1.m1_torq_in.rds"))
-e2_in_env   <- readRDS(here::here("06_Analysis_Modeling/models/e1.m1_env_in.rds"))
-e2_in_cop   <- readRDS(here::here("06_Analysis_Modeling/models/e1.m1_cop_in.rds"))
+e2_cum_torq <- readRDS(here::here("../06_Analysis_Modeling/models/e1.m1_torq_cum.rds"))
+e2_cum_env  <- readRDS(here::here("../06_Analysis_Modeling/models/e1.m1_env_cum.rds"))
+e2_cum_cop  <- readRDS(here::here("../06_Analysis_Modeling/models/e1.m1_cop_cum.rds"))
+e2_in_torq  <- readRDS(here::here("../06_Analysis_Modeling/models/e1.m1_torq_in.rds"))
+e2_in_env   <- readRDS(here::here("../06_Analysis_Modeling/models/e1.m1_env_in.rds"))
+e2_in_cop   <- readRDS(here::here("../06_Analysis_Modeling/models/e1.m1_cop_in.rds"))
 
 # ── Helper: predicted % change at ±N SD of baseline ───────────────────────────
 # Assumes model has: correction2M1 + baseline_z + correction2M1:baseline_z
@@ -494,7 +494,7 @@ table_baseline |>
 #| echo: false
 #| fig-cap: "Correction effect differences by average baseline effort"
 
-knitr::include_graphics(here::here("06_Analysis_Modeling/plots/correction_by_effort_interaction.png"))
+knitr::include_graphics(here::here("../06_Analysis_Modeling/plots/correction_by_effort_interaction.png"))
 ```
 
 ### 3.3.2 Time as covariate
@@ -503,7 +503,7 @@ knitr::include_graphics(here::here("06_Analysis_Modeling/plots/correction_by_eff
 #| label: setup-model-with-time
 #| include: false
 
-e2_m <- readRDS(here::here("06_Analysis_Modeling/models/e2.m1_torq_cum.rds"))
+e2_m <- readRDS(here::here("../06_Analysis_Modeling/models/e2.m1_torq_cum.rds"))
 
 c1_tc_wt      <- fe(e2_m, "correction2M1")
 
@@ -529,14 +529,14 @@ table_time |>
 ```{r extract-all, include=FALSE}
 
 # ── Models ────────────────────────────────────────────────────────────────────
-e3_m1         <- readRDS(here::here("06_Analysis_Modeling/models/e3.m1.rds"))
-e3_m1b        <- readRDS(here::here("06_Analysis_Modeling/models/e3.m1b.rds"))
-fit_sim       <- readRDS(here::here("06_Analysis_Modeling/models/e3.m3_att.rds"))
-fit_sim_inst  <- readRDS(here::here("06_Analysis_Modeling/models/e3.m3b_att.rds"))
-fit_ord       <- readRDS(here::here("06_Analysis_Modeling/models/e3.m5_att.rds"))
-fit_ord_inst  <- readRDS(here::here("06_Analysis_Modeling/models/e3.m5b_att.rds"))
-fit_ever      <- readRDS(here::here("06_Analysis_Modeling/models/e3.m6_att.rds"))
-fit_ever_inst <- readRDS(here::here("06_Analysis_Modeling/models/e3.m6b_att.rds"))
+e3_m1         <- readRDS(here::here("../06_Analysis_Modeling/models/e3.m1.rds"))
+e3_m1b        <- readRDS(here::here("../06_Analysis_Modeling/models/e3.m1b.rds"))
+fit_sim       <- readRDS(here::here("../06_Analysis_Modeling/models/e3.m3_att.rds"))
+fit_sim_inst  <- readRDS(here::here("../06_Analysis_Modeling/models/e3.m3b_att.rds"))
+fit_ord       <- readRDS(here::here("../06_Analysis_Modeling/models/e3.m5_att.rds"))
+fit_ord_inst  <- readRDS(here::here("../06_Analysis_Modeling/models/e3.m5b_att.rds"))
+fit_ever      <- readRDS(here::here("../06_Analysis_Modeling/models/e3.m6_att.rds"))
+fit_ever_inst <- readRDS(here::here("../06_Analysis_Modeling/models/e3.m6b_att.rds"))
 
 CAT_C0    <- 1
 CAT_NEVER <- 4
@@ -672,21 +672,21 @@ library(grid)
 library(gridExtra)
 
 # ── Load saved plots ──────────────────────────────────────────────────────────
-img_m1    <- rasterGrob(readPNG(here::here("06_Analysis_Modeling/plots/e3m1_channel_correlations_by_modality.png")),
+img_m1    <- rasterGrob(readPNG(here::here("../06_Analysis_Modeling/plots/e3m1_channel_correlations_by_modality.png")),
                          interpolate = TRUE)
-img_m1b   <- rasterGrob(readPNG(here::here("06_Analysis_Modeling/plots/e3m1b_channel_correlations_by_modality.png")),
+img_m1b   <- rasterGrob(readPNG(here::here("../06_Analysis_Modeling/plots/e3m1b_channel_correlations_by_modality.png")),
                          interpolate = TRUE)
-img_m3    <- rasterGrob(readPNG(here::here("06_Analysis_Modeling/plots/e3.m3_att_channel_correlations_by_modality.png")),
+img_m3    <- rasterGrob(readPNG(here::here("../06_Analysis_Modeling/plots/e3.m3_att_channel_correlations_by_modality.png")),
                          interpolate = TRUE)
-img_m3b   <- rasterGrob(readPNG(here::here("06_Analysis_Modeling/plots/e3.m3b_att_channel_correlations_by_modality.png")),
+img_m3b   <- rasterGrob(readPNG(here::here("../06_Analysis_Modeling/plots/e3.m3b_att_channel_correlations_by_modality.png")),
                          interpolate = TRUE)
-img_m5    <- rasterGrob(readPNG(here::here("06_Analysis_Modeling/plots/e3m5_channel_correlations_by_modality.png")),
+img_m5    <- rasterGrob(readPNG(here::here("../06_Analysis_Modeling/plots/e3m5_channel_correlations_by_modality.png")),
                          interpolate = TRUE)
-img_m5b   <- rasterGrob(readPNG(here::here("06_Analysis_Modeling/plots/e3m5b_channel_correlations_by_modality.png")),
+img_m5b   <- rasterGrob(readPNG(here::here("../06_Analysis_Modeling/plots/e3m5b_channel_correlations_by_modality.png")),
                          interpolate = TRUE)
-img_m6    <- rasterGrob(readPNG(here::here("06_Analysis_Modeling/plots/e3m6_channel_correlations_by_modality.png")),
+img_m6    <- rasterGrob(readPNG(here::here("../06_Analysis_Modeling/plots/e3m6_channel_correlations_by_modality.png")),
                          interpolate = TRUE)
-img_m6b   <- rasterGrob(readPNG(here::here("06_Analysis_Modeling/plots/e3m6b_channel_correlations_by_modality.png")),
+img_m6b   <- rasterGrob(readPNG(here::here("../06_Analysis_Modeling/plots/e3m6b_channel_correlations_by_modality.png")),
                          interpolate = TRUE)
 
 # ── Row and column labels ─────────────────────────────────────────────────────
@@ -730,7 +730,7 @@ Effort, by contrast, did not systematically predict communicative success. The l
 #| echo: false
 #| fig.cap: "The effect of effort on communicative success across four outcomes"
 
-knitr::include_graphics(here::here("06_Analysis_Modeling/plots/effort_success_summary.png"))
+knitr::include_graphics(here::here("../06_Analysis_Modeling/plots/effort_success_summary.png"))
 ```
 
 ```{r}

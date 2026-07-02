@@ -31,3 +31,6 @@ pre code.language-python {
     background-color: #fef7ed; /* soft orange tint */
 }
   
+.no-justify {
+  text-align: left !important;
+}

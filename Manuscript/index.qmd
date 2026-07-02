@@ -1,6 +1,14 @@
----
-format: html
----
+**Šárka Kadavá**¹²³, **Wim Pouw**⁴¹, **Susanne Fuchs**², **Judith Holler**¹⁵, **Aleksandra Ćwiek**⁶⁷²
 
-# Abstract
+::: {custom-style="Affiliations"}
+¹ Donders Institute for Brain, Cognition and Behaviour, Radboud University, Nijmegen, The Netherlands\
+² Leibniz-Centre General Linguistics, Berlin, Germany\
+³ University of Göttingen, Göttingen, Germany\
+⁴ Department of Computational Cognitive Science, Tilburg University, The Netherlands\
+⁵ Max Planck Institute for Psycholinguistics, Nijmegen, The Netherlands\
+⁶ Center for Language Evolution Studies, Nicolaus Copernicus University in Toruń, Poland\
+⁷ Institute of Advanced Studies, Nicolaus Copernicus University in Toruń, Poland\
+:::
+
+**Abstract** \
 Successful communication depends not just on what we say but also on how we repair it when understanding breaks down. People routinely respond to misunderstanding by gesturing more or speaking louder. Yet whether these responses actually reflect measurable bodily effort, and whether it helps communication, has not yet been directly tested. Extending the hypo- and hyper-articulation accounts to whole-body multimodal communication we ask: does regaining understanding require increased physical effort, and does that effort improve communicative outcomes? In a pre-registered biomechanical study, 61 pairs of participants conveyed concepts without conventionalised language, using gestures, vocalizations, or both, and repaired failed attempts. We measured communicative effort by capturing arm torque, vocal amplitude, and postural adjustments. Using Bayesian hierarchical models, we show that repair increases physical effort across all three channels, but that performers communicate more over time rather than more forcefully at any particular moment in time. Upper-limb effort scales with the degree of misunderstanding but effort overall does not predict whether communication succeeds. We suggest that communicative effort on the level we measured here functions as an index of continued commitment rather than a mechanism for repairing misunderstanding. 

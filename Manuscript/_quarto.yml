@@ -1,0 +1,44 @@
+# _quarto-manuscript.yml
+# Profile for PDF manuscript output.
+# Activated with: quarto render --profile manuscript
+#
+# What this does vs the default:
+#   - Switches project type to book (gives proper chapter structure for PDF)
+#   - Outputs PDF via LaTeX (or typst if preferred)
+#   - Globally hides all code (echo: false, eval: false)
+#   - Tutorial-only sections are excluded via the chapters list below
+#   - Output goes to _manuscript/ not docs/
+
+project:
+  type: book
+
+book:
+  title: "When communication fails, the body invests more effort but not to greater effect"
+  date: today
+  chapters:
+    - index.qmd           # title page / abstract / keywords
+    - Main.qmd    # "Introduction" = NHB's "Main"
+    - Results-discussion.qmd
+    - Methods.qmd         # NHB puts Methods last
+    - Outro.qmd
+    - References.qmd      # if you want a dedicated ref section
+
+format:
+  docx:
+    reference-doc: reference-style.docx    # your custom reference template (see below)
+    number-sections: false           # NHB doesn't number sections
+    fig-cap-location: bottom
+    tbl-cap-location: top
+    keep-md: false
+    highlight-style: none
+    toc: false
+    linestretch: 2
+
+execute:
+  echo: false
+  warning: false
+  freeze: auto
+
+bibliography: references.bib
+csl: apa.csl    # download from Zotero style repo
+link-citations: true

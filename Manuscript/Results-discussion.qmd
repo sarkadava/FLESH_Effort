@@ -17,7 +17,7 @@ library(here)
 library(gt)
 library(dplyr)
 
-source(here::here("Manuscript/helper.R"))
+source(here::here("helper.R"))
 
 ```
 
@@ -28,7 +28,7 @@ source(here::here("Manuscript/helper.R"))
 #| include: false
 
 # cumulative torque
-m3_tc <- readRDS(here::here("06_Analysis_Modeling/models/h1.m3_torq_cum.rds"))
+m3_tc <- readRDS(here::here("../06_Analysis_Modeling/models/h1.m3_torq_cum.rds"))
 c1_tc      <- fe(m3_tc, "correction2M1")
 c2_tc      <- fe(m3_tc, "correction3M2")
 # modality1 raw coefficient (gesture vs grand mean)
@@ -37,40 +37,40 @@ mod_tc          <- fe(m3_tc, "modality1")
 mod_ges_mm_tc   <- fe_contrast(m3_tc, "modality1", multiplier = 2)
 
 # instant torque
-m3_ti <- readRDS(here::here("06_Analysis_Modeling/models/h1.m3_torq_in.rds"))
+m3_ti <- readRDS(here::here("../06_Analysis_Modeling/models/h1.m3_torq_in.rds"))
 re_ppt_mod_ti <- re_sd(m3_ti, "pcn_ID", "modality1")
 
 # cumulative envelope
-m3_ec <- readRDS(here::here("06_Analysis_Modeling/models/h1.m3_env_cum.rds"))
+m3_ec <- readRDS(here::here("../06_Analysis_Modeling/models/h1.m3_env_cum.rds"))
 c1_ec      <- fe(m3_ec, "correction2M1")
 c2_ec      <- fe(m3_ec, "correction3M2")
 mod_ec     <- fe_contrast(m3_ec, "modality1", multiplier = 2)
 
 # instant envelope
-m3_ei <- readRDS(here::here("06_Analysis_Modeling/models/h1.m3_env_in.rds"))
+m3_ei <- readRDS(here::here("../06_Analysis_Modeling/models/h1.m3_env_in.rds"))
 mod_ei     <- fe_contrast(m3_ei, "modality1", multiplier = 2)
 
 # cumultive COPc 
-m3_cc <- readRDS(here::here("06_Analysis_Modeling/models/h1.m3_cop_cum.rds"))
+m3_cc <- readRDS(here::here("../06_Analysis_Modeling/models/h1.m3_cop_cum.rds"))
 c1_cc      <- fe(m3_cc, "correction2M1")
 c2_cc      <- fe(m3_cc, "correction3M2")
 go_vs_vo_cc <- fe_derived_contrast(m3_cc, "modality1", "modality2", w1 = 2,  w2 = 1)
 mm_vs_vo_cc <- fe_derived_contrast(m3_cc, "modality1", "modality2", w1 = 1,  w2 = 2)
 
 # instant COPc 
-m3_ci <- readRDS(here::here("06_Analysis_Modeling/models/h1.m3_cop_in.rds"))
+m3_ci <- readRDS(here::here("../06_Analysis_Modeling/models/h1.m3_cop_in.rds"))
 go_vs_vo_ci <- fe_derived_contrast(m3_ci, "modality1", "modality2", w1 = 2,  w2 = 1)
 mm_vs_vo_ci <- fe_derived_contrast(m3_ci, "modality1", "modality2", w1 = 1,  w2 = 2)
 mm_vs_go_ci <- fe_derived_contrast(m3_ci, "modality1", "modality2", w1 = -1, w2 = 1)
 
 # torque and time
-e2_m <- readRDS(here::here("06_Analysis_Modeling/models/e2.m1_torq_cum.rds"))
+e2_m <- readRDS(here::here("../06_Analysis_Modeling/models/e2.m1_torq_cum.rds"))
 c1_tc_wt      <- fe(e2_m, "correction2M1")
 
 # first trial effort
-e2_in_torq  <- readRDS(here::here("06_Analysis_Modeling/models/e1.m1_torq_in.rds"))
-e2_in_env   <- readRDS(here::here("06_Analysis_Modeling/models/e1.m1_env_in.rds"))
-e2_in_cop   <- readRDS(here::here("06_Analysis_Modeling/models/e1.m1_cop_in.rds"))
+e2_in_torq  <- readRDS(here::here("../06_Analysis_Modeling/models/e1.m1_torq_in.rds"))
+e2_in_env   <- readRDS(here::here("../06_Analysis_Modeling/models/e1.m1_env_in.rds"))
+e2_in_cop   <- readRDS(here::here("../06_Analysis_Modeling/models/e1.m1_cop_in.rds"))
 
 # ── Correction main effects ────────────────────────────────────────────────────
 c1_in_torq  <- fe(e2_in_torq,  "correction2M1")
@@ -120,9 +120,8 @@ To summarize, while cumulative effort increased reliably across corrections for 
 #| label: setup-prev-answer
 #| include: false
 
-
-h2m_ct <- readRDS(here::here("06_Analysis_Modeling/models/h2.m1b_torq_cum.rds"))
-h2m_it <- readRDS(here::here("06_Analysis_Modeling/models/h2.m1b_torq_in.rds"))
+h2m_ct <- readRDS(here::here("../06_Analysis_Modeling/models/h2.m1b_torq_cum.rds"))
+h2m_it <- readRDS(here::here("../06_Analysis_Modeling/models/h2.m1b_torq_in.rds"))
 
 prev_an_ct_ci <- fe(h2m_ct, "answer_prev_dist_z")
 prev_an_it_ci <- fe(h2m_it, "answer_prev_dist_z")
@@ -141,14 +140,14 @@ Importantly, the effect of semantic distance on cumulative upper-limb effort was
 ```{r extract-all, include=FALSE}
 
 # ── Models ────────────────────────────────────────────────────────────────────
-e3_m1         <- readRDS(here::here("06_Analysis_Modeling/models/e3.m1.rds"))
-e3_m1b        <- readRDS(here::here("06_Analysis_Modeling/models/e3.m1b.rds"))
-fit_sim       <- readRDS(here::here("06_Analysis_Modeling/models/e3.m3_att.rds"))
-fit_sim_inst  <- readRDS(here::here("06_Analysis_Modeling/models/e3.m3b_att.rds"))
-fit_ord       <- readRDS(here::here("06_Analysis_Modeling/models/e3.m5_att.rds"))
-fit_ord_inst  <- readRDS(here::here("06_Analysis_Modeling/models/e3.m5b_att.rds"))
-fit_ever      <- readRDS(here::here("06_Analysis_Modeling/models/e3.m6_att.rds"))
-fit_ever_inst <- readRDS(here::here("06_Analysis_Modeling/models/e3.m6b_att.rds"))
+e3_m1         <- readRDS(here::here("../06_Analysis_Modeling/models/e3.m1.rds"))
+e3_m1b        <- readRDS(here::here("../06_Analysis_Modeling/models/e3.m1b.rds"))
+fit_sim       <- readRDS(here::here("../06_Analysis_Modeling/models/e3.m3_att.rds"))
+fit_sim_inst  <- readRDS(here::here("../06_Analysis_Modeling/models/e3.m3b_att.rds"))
+fit_ord       <- readRDS(here::here("../06_Analysis_Modeling/models/e3.m5_att.rds"))
+fit_ord_inst  <- readRDS(here::here("../06_Analysis_Modeling/models/e3.m5b_att.rds"))
+fit_ever      <- readRDS(here::here("../06_Analysis_Modeling/models/e3.m6_att.rds"))
+fit_ever_inst <- readRDS(here::here("../06_Analysis_Modeling/models/e3.m6b_att.rds"))
 
 CAT_C0    <- 1
 CAT_NEVER <- 4
@@ -254,18 +253,18 @@ b_expr_ever_inst <- ci(fixef(fit_ever_inst, summary = FALSE)[, "expressibility_z
 
 In an exploratory analysis, we asked whether the effort performers invested in repair translated into improved communicative outcomes. Across four complementary outcomes (1. whether the misunderstanding was resolved on the first attempt, 2. how semantically similar the guesser’s answer was to the target concept, 3. how quickly understanding was reached across correction attempts, and 4. whether understanding was ever achieved across the full sequence), modality and expressibility were the dominant predictors and effort was not (Fig. 1d). 
 
-Multimodal trials outperformed vocal-only trials across all outcomes. The predicted probability of reaching understanding at first attempt was r fmt_p(p_mm_base["med"], p_mm_base["lo"], p_mm_base["hi"]) for multimodal and r fmt_p(p_voc_base["med"], p_voc_base["lo"], p_voc_base["hi"]) for vocal-only (contrast = r fmt_dp(dp_voc_vs_mm["med"]), 95% CrI [r fmt_dp(dp_voc_vs_mm["lo"]), r fmt_dp(dp_voc_vs_mm["hi"])]). The predicted cosine similarity of the guesser's answer to the target concept was r fmt_p(p_mm_sim_base["med"], p_mm_sim_base["lo"], p_mm_sim_base["hi"]) for multimodal and r fmt_p(p_voc_sim_base["med"], p_voc_sim_base["lo"], p_voc_sim_base["hi"]) for vocal-only (contrast = r fmt_dp(dp_voc_vs_mm_sim["med"]), 95% CrI [r fmt_dp(dp_voc_vs_mm_sim["lo"]), r fmt_dp(dp_voc_vs_mm_sim["hi"])]). Multimodal trials also showed the lowest probability of never being resolved (P(never) = r fmt_p(pnev_mm_ord["med"], pnev_mm_ord["lo"], pnev_mm_ord["hi"])) compared to vocal-only trials (P(never) = r fmt_p(pnev_voc_ord["med"], pnev_voc_ord["lo"], pnev_voc_ord["hi"])), and the highest probability of ever being resolved (r fmt_p(p_mm_ever["med"], p_mm_ever["lo"], p_mm_ever["hi"])) compared to vocal-only trials (r fmt_p(p_voc_ever["med"], p_voc_ever["lo"], p_voc_ever["hi"])). Gesture-only performances were largely indistinguishable from multimodal in terms of success measures, although they tended in the same direction as vocal-only trials. Similarly, gesture-only performances did not reliably differ from vocal-only performances (Supplementary Material section F, Fig. 5).
+Multimodal trials outperformed vocal-only trials across all outcomes. The predicted probability of reaching understanding at first attempt was `r fmt_p(p_mm_base["med"], p_mm_base["lo"], p_mm_base["hi"])` for multimodal and `r fmt_p(p_voc_base["med"], p_voc_base["lo"], p_voc_base["hi"])` for vocal-only (contrast = `r fmt_dp(dp_voc_vs_mm["med"])`, 95% CrI [`r fmt_dp(dp_voc_vs_mm["lo"])`, `r fmt_dp(dp_voc_vs_mm["hi"])`]). The predicted cosine similarity of the guesser's answer to the target concept was `r fmt_p(p_mm_sim_base["med"], p_mm_sim_base["lo"], p_mm_sim_base["hi"])` for multimodal and `r fmt_p(p_voc_sim_base["med"], p_voc_sim_base["lo"], p_voc_sim_base["hi"])` for vocal-only (contrast = `r fmt_dp(dp_voc_vs_mm_sim["med"])`, 95% CrI [`r fmt_dp(dp_voc_vs_mm_sim["lo"])`, `r fmt_dp(dp_voc_vs_mm_sim["hi"])`]). Multimodal trials also showed the lowest probability of never being resolved (P(never) = `r fmt_p(pnev_mm_ord["med"], pnev_mm_ord["lo"], pnev_mm_ord["hi"])`) compared to vocal-only trials (P(never) = `r fmt_p(pnev_voc_ord["med"], pnev_voc_ord["lo"], pnev_voc_ord["hi"])`), and the highest probability of ever being resolved (`r fmt_p(p_mm_ever["med"], p_mm_ever["lo"], p_mm_ever["hi"])`) compared to vocal-only trials (`r fmt_p(p_voc_ever["med"], p_voc_ever["lo"], p_voc_ever["hi"])`). Gesture-only performances were largely indistinguishable from multimodal in terms of success measures, although they tended in the same direction as vocal-only trials. Similarly, gesture-only performances did not reliably differ from vocal-only performances (Supplementary Material section F, Fig. 5).
 
 Despite the clear effort increase during repair, this investment does not translate into communicative gain (see Supplementary Material section F, Fig. 10). Effort slopes were small, inconsistent in direction, and non-credible across the large majority of effort × modality combinations (see Supplementary Material section F, Table 10). A small number of exceptions ran in opposing directions and warrant cautious interpretation. Instantaneous vocal effort predicted faster understanding in vocal-only trials and higher probability of being understood at first attempt; and greater instantaneous postural effort at first attempt predicted higher probability of eventually reaching understanding in vocal-only trials, possibly indexing speaker commitment when gesture is unavailable. In the opposite direction, higher instantaneous upper-limb effort in multimodal trials was associated with lower probability of eventual understanding, possibly marking difficulty rather than driving success.
 
 # Discussion
-When people fail to communicate a concept through non-linguistic means, they do not simply reorganize their behavior – they invest more physical effort. And they do so in a specific way: not by doing the same thing harder, but by doing more over time. This distinction between intensification and elaboration may reflect a general principle of how the body responds to misunderstanding: effort expands across a longer temporal window rather than concentrating locally. Our data suggest this response is also flexible – sensitive to how large the misunderstanding is and shaped by the articulatory resources available. We thereby show that misunderstanding literally recruits investment of physical (metabolic) cost, thereby providing a fundamental grounding of “cost” that has so far remained implicit in accounts of effort and efficiency in linguistics.
+When people fail to communicate a concept through non-linguistic means, they do not only reorganize their behavior – they invest more physical effort. In the present study,  they did so in a specific way: not by intensifying their actions, but by doing more over time. This distinction between intensification and elaboration may point toward a principle of how the body responds to misunderstanding in a communicative context under conditions where detailed linguistic repair is unavailable. Whether the elaboration consists of a qualitatively distinct motor strategy – for instance, recruiting additional movement units or extending spatial trajectories – or whether it emerges partly from the temporal structure of repetition itself remains an open question. What our data show is that the overall effort investment increased with misunderstanding, and that  this increase unfolded over time rather than in the form of amplified bursts. The increase was also flexible – sensitive to how large the misunderstanding was and shaped by the articulatory resources available. We thereby show that misunderstanding literally recruits investment of physical (and by proxy an estimate of metabolic) cost, thereby providing a fundamental grounding of “cost” that has so far remained implicit in accounts of effort and efficiency in linguistics.
 
-These findings extend existing accounts of how environmental constraints reshape communicative behavior. Lindblom’s H\&H Theory [@lindblomExplainingPhoneticVariation1990] predicts that a system under pressure produces a clearer, more precise signal. Rather than contradicting this prediction, our results reveal that misunderstanding imposes a categorically different kind of demand than, say, a noisy room. Situations with background noise may require a local enhancement (e.g., louder speech) relative to the environment. Epistemic misalignment, on the other hand, necessitates enhancement that is more global: adding more information and changing the structure of the message. This is in line with existing work on communicative repair [@rasenbergMultimodalNatureCommunicative2022; @hilliardBridgingGapsCommon2016] but our operationalization allows us to claim, for the first time, that performers invest more physical effort rather than simply reorganizing the content of the message when their addressee signals poor understanding.
+These findings extend existing accounts of how environmental constraints reshape communicative behavior. Lindblom’s H\&H Theory [@lindblomExplainingPhoneticVariation1990] predicts that a system under pressure produces a clearer, more precise signal. Rather than contradicting this prediction, our results suggest a refinement: in contexts where understanding is not hampered by environmental conditions that prevent the successful transmission of the signal itself (e.g. speech in noisy environments) but where the feedback is diagnostic – revealing not just that understanding failed but where and how (as in the form of guesses of what the communicated message meant)  – performers can mount a targeted, structured repair that expands effort across time rather than amplifying individual bursts. Although repair in everyday interaction is often due to problems in hearing, which may lead to intensified repeats of the original message, the present study’s guesses equate most to targeted repair initiations, such as an interlocutor asking ‘you mean x’? (also called restricted offers in the conversation analytic literature, e.g. @dingemanseOtherinitiatedRepairLanguages). As such, our operationalization allows us to claim, for the first time, that performers invest more physical effort – rather than only reorganizing the content of the message – specifically when feedback helps to specify what was not understood.
 
 Crucially, elaboration is not reflected in the same manner across dimensions. Upper-limb movement shows the greatest capacity for cumulative increase: gesture offers multiple routes through which more structure can be added such as pointing, tracing, representing, and the increase may also reflect cognitive engagement with the target, given gesture's link to conceptual and lexical processing [@hostetterSeeItMy2007; @kraussRoleSpeechrelatedArm1999]. VVocal effort showed a more modest increase, possibly reflecting the limited degrees of freedom available for non-linguistic vocalization: once referential breakdown has occurred, the semantic space is harder to navigate without the semiotic flexibility that gesture affords. Postural effort also increased cumulatively across conditions; its smaller magnitude is consistent with a stability-oriented function [@massionMovementPostureEquilibrium1992] and its presence even in the vocal-only condition suggests that misunderstanding imposes non-representational demands on the whole body, possibly reflecting cognitive load or self-regulatory mechanisms [@yardleyEffectArticulatoryMental1999; @linStandTallThink2026].
 
-The diverging articulatory and meaning-making affordances in gestural and vocal modality hint that the two modalities complement each other, though our data show this complementarity is asymmetric. Vocal effort was substantially lower in the multimodal than in the vocal-only condition, indicating that the voice carries less of the communicative load when the upper limbs are available. The complementary comparison – upper-limb effort in multimodal versus gesture-only condition – pointed in the same direction (smaller upper-limb effort when voice is present) but its interval included zero. With respect to communicative success, gesture and vocalization together outperformed vocalization alone, but not gesture alone across all four outcomes. Together, this implies that adding gesture to voice helps more than adding voice to gesture, further corroborating the semiotic flexibility that gesture affords. Once expressibility is accounted for, we found no credible difference in communicative success between gesture-only and vocal-only trials, despite the gestural advantage  reported in the literature [@fayCreatingCommunicationSystem2014; @fayGesturePrimaryModality2022]. Unlike prior work, our model includes expressibility, which was by far the strongest driver of success (see Supplementary Material section F, Table 10). Because expressibility captures how well a concept’s affordances match a given modality, it likely absorbs the variance that previously appeared as a gesture-vocal difference – extending with our earlier work on guessability in this dataset (@cwiekSelfreportedExpressibilityPredictsaccepted). The modality contrast, in other words, may reflect concept-modality fit rather than an intrinsic advantage of gesture over vocalization. 
+The diverging articulatory and meaning-making affordances in gestural and vocal modality hint that the two modalities complement each other, though our data show this complementarity is asymmetric. Vocal effort was substantially lower in the multimodal than in the vocal-only condition, indicating that the voice carries less of the communicative load when the upper limbs are available. The complementary comparison – upper-limb effort in multimodal versus gesture-only condition – pointed in the same direction (smaller upper-limb effort when voice is present) but its interval included zero. With respect to communicative success, gesture and vocalization together outperformed vocalization alone, but not gesture alone across all four outcomes. Together, this implies that adding gesture to voice helps more than adding voice to gesture, further corroborating the semiotic flexibility that gesture affords. Once expressibility is accounted for, we found no credible difference in communicative success between gesture-only and vocal-only trials, despite the gestural advantage  reported in the literature [@fayCreatingCommunicationSystem2014; @fayGesturePrimaryModality2022]. Unlike prior work, our model includes expressibility, which was by far the strongest driver of success (see Supplementary Material section F, Table 10). Because expressibility captures how well a concept’s affordances match a given modality, it likely absorbs the variance that previously appeared as a gesture-vocal difference – extending with our earlier work on guessability in this dataset [@cwiekSelfreportedExpressibilityPredictsaccepted]. The modality contrast, in other words, may reflect concept-modality fit rather than an intrinsic advantage of gesture over vocalization. 
 
 The disconnect between effort and communicative success is clearest here: although performers recruited more effort under misunderstanding, that effort did not lead to better outcomes. Such decoupling is not uncommon [@wolffWhenEffortFails2025a] and the available evidence on this question is mixed. While some work hints at greater effort bringing greater success [@drijversVisualContextEnhanced2017], many studies leave the relationship unresolved [@rasenbergMultimodalNatureCommunicative2022; @trujilloSpeakersExhibitMultimodal2021; @hollerExperimentalInvestigationHow2011] or fail to find it altogether [@bogelsTherePowerLaw2024]. Our data indicate that repair may be a context where effort serves a different function altogether. In a noisy room, a strong, clear signal is a precondition for any interaction to take place at all. Misunderstanding may call for something else. Instead of more effort, the interlocutor could benefit from change of tempo, greater informativity of individual units, or – as our data show – the number of communicative channels available. The persistent effect of expressibility on both effort and success in our data points in the same direction: a specific meaning shapes how effortful it is to communicate and how readily it is understood, somewhat independent of how hard the performer works. What does seem clear is that the communicative value of multimodality lies not in effort efficiency but in the richer articulatory palette it affords. 
 
@@ -275,7 +274,7 @@ Our findings must be interpreted in light of several limitations. The controlled
 
 A related limitation concerns what counts as communicative success. Our design treats understanding as an exact match between the guesser's answer and the target concept, whereas real interaction typically requires only sufficient mutual understanding to support the next action. More consequentially, our paradigm places most of the repair work on the performer: the guesser contributes only a single guess per performance, leaving little room to act on the performer's increased effort. Research on referential tasks with freer interaction suggests that more distributed repair (where partners jointly signal and respond to misunderstanding) may be what drives communicative success [@rasenbergMultimodalNatureCommunicative2022]. It is therefore possible that effort does not help in our paradigm precisely because the partner who could benefit from it has limited room to act on it. 
 
-A second set of limitations concerns the measurement of effort itself. The three features we selected – arm torque, acoustic amplitude envelope, and centre of pressure displacement – capture general biomechanical demands on the body, but effort is content-dependent: concepts vary substantially in how much and what kind of effort their communication requires, as reflected in the large concept-level variance in our models. While our population-level effects suggest that the selected features capture a general mechanism, future work should examine whether other dimensions of movement such as speed, spatial precision, or inter-articulator coordination carry additional information that our measures do not. In particular, the coordinative cost of orchestrating multiple articulators simultaneously remains unaddressed here and may represent a distinct dimension of multimodal effort with its own scaling properties. Our preregistration [@kadavaPuttingEffortModulation2025] includes an example of such exploratory analysis, which we will address in an upcoming work. Taken together, these limitations point toward productive directions for future research without undermining the core finding: that the body responds to misunderstanding with cumulative, distributed effort reliably, across modalities, and, for the arms, in proportion to the degree of communicative failure. 
+A second set of limitations concerns the measurement of effort itself. The three features we selected – arm torque, acoustic amplitude envelope, and centre of pressure displacement – capture general biomechanical demands on the body, but effort is content-dependent: concepts vary substantially in how much and what kind of effort their communication requires, as reflected in the large concept-level variance in our models. While our population-level effects suggest that the selected features capture a general mechanism, future work should examine other articulators (e.g., head or facial expressions) and whether other dimensions of movement such as speed, spatial precision, or inter-articulator coordination carry additional information that our measures do not. In particular, the coordinative cost of orchestrating multiple articulators simultaneously remains unaddressed here and may represent a distinct dimension of multimodal effort with its own scaling properties. Our preregistration [@kadavaPuttingEffortModulation2025] includes an example of such exploratory analysis, which we will address in an upcoming work. Taken together, these limitations point toward productive directions for future research without undermining the core finding: that the body responds to misunderstanding with cumulative, distributed effort reliably, across modalities, and, for the arms, in proportion to the degree of communicative failure. 
 
 Together, the absence of an effort-success link and the responsiveness of effort to feedback point toward a reframing of what communicative effort represents. Rather than a resource allocated toward success, effort appears to function as a continuous index of the interaction's epistemic state: signaling bodily mobilization when understanding breaks down, scaling with the distance from common ground, and recalibrating when that distance closes. These findings  sit in tension with accounts of principle of least effort and effort aversion [@andrePeopleReallyAvoid2026; @jobChallengingLawLeast2024]. If people generally avoid effortful behavior [@davidUnpleasantnessThinkingMetaanalytic2024], why would they increase physical investment in response to misunderstanding without clear returns in success? The standard evolutionary view holds that efficient signals convey as much as possible at minimal cost but our findings indicate a complementary pressure: effort may be organized not around maximizing informational yield but around sustaining the communicative cycle itself. What costs something is not saying more but staying in the exchange long enough to be understood. Research on challenging tasks suggests that this kind of investment is not irrational: effort carries intrinsic social value, enhancing the perceived worth of its product including fostering social belonging [@inzlichtEffortParadoxEffort2018]. On this view, the effort enhancement we observe may be less about solving the problem and more about affirming commitment to the partner at the moment the interaction is most at risk of failing.
 

@@ -104,11 +104,7 @@ Corresponding author: kadava[at]leibniz-zas[dot]de
 
 If you want to use and cite and part of the **coding pipeline**, cite:
 
-Kadavá, Š., Ćwiek, A., & Pouw, W.. (2025). Coding pipeline to the project Putting in the Effort: Modulation of Multimodal Effort in Communicative Breakdowns during a Gestural-Vocal Referential Game (Version 1.0.0) [Computer software]. [https://github.com/sarkadava/FLESH_Effort](https://github.com/sarkadava/FLESH_Effort)
-
-If you want to cite the **project**, cite
-
-Kadavá, Š., Pouw, W., Fuchs, S., Holler, J., & Aleksandra , Ć. (2025). Putting in the Effort: Modulation of Multimodal Effort in Communicative Breakdowns during a Gestural-Vocal Referential Game. OSF Registries. [https://osf.io/8ajsg](https://osf.io/8ajsg)
+Kadavá, Š., Ćwiek , A., & Pouw. (2026). Supplementary Material to the project When communication fails, the body invests more effort but not to greater effect (Version 1.0.0) [Computer software]. https://github.com/sarkadava/FLESH_Effort
 
 ## Funding and support
 

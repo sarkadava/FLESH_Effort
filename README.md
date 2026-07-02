@@ -2,7 +2,7 @@
 
 ![Multimodal animation](assets/multimodal_anim.gif)
 
-This repository stores coding pipeline to process and analyze data associated with project "PWhen communication fails, physical effort increases but not to greater effect". This project investigates how people modulate their effort when they encounter communicative breakdowns in a referential game. The project is part of the [FLESH project](https://vicom.info/projects/on-the-flexibility-and-stability-of-gesture-speech-coordination-flesh-evidence-from-production-comprehension-and-imitation/).
+This repository stores coding pipeline to process and analyze data associated with project "When communication fails, physical effort increases but not to greater effect". This project investigates how people modulate their effort when they encounter communicative breakdowns in a referential game. The project is part of the [FLESH project](https://vicom.info/projects/on-the-flexibility-and-stability-of-gesture-speech-coordination-flesh-evidence-from-production-comprehension-and-imitation/).
 
 This project has been preregistered as a two-phase preregistration. In [Phase I](https://osf.io/3nygq), we preregistered the data collection. In [Phase II](https://osf.io/8ajsg), we have preregistered the analysis plan, including the processing steps.
 
@@ -66,10 +66,6 @@ jupyter notebook
 If you want to use and cite and part of the **coding pipeline**, cite:
 
 Kadavá, Š., Ćwiek , A., & Pouw. (2026). Supplementary Material to the project When communication fails, the body invests more effort but not to greater effect (Version 1.0.0) [Computer software]. https://github.com/sarkadava/FLESH_Effort
-
-If you want to cite the **paper**, cite:
-
-[xxx]
 
 ## Contact
 

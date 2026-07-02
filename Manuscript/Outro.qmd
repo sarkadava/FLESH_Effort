@@ -10,4 +10,6 @@ This research was funded by the Deutsche Forschungsgemeinschaft (DFG, German Res
 
 # CRediT author statement
 ŠK: conceptualization, methodology, software, formal analysis, investigation, writing – original draft, writing – review & editing, visualization; AĆ, SF and WP: conceptualization, methodology, supervision, writing – review & editing, project administration, funding acquisition; JH: methodology, supervision, writing – review & editing. All authors approved the final paper.
+
+# AI statement
 Generative AI models were used for two areas: code review/debugging (Mistral) and text revision (Claude). The use of generative models was in accordance with the guidelines proposed by the Deutsche Forschungsgemeinschaft (German Research Foundation): https://www.dfg.de/en/service/press/press-releases/2023/press-release-no-39 
