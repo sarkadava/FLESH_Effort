@@ -64,10 +64,12 @@ fe_derived_contrast <- function(model, param1, param2, w1 = 1, w2 = 1,
 pct     <- function(x)      sprintf("%.1f%%", abs(x))
 cri_pct <- function(lo, hi) sprintf("[%.1f%%, %.1f%%]", lo, hi)
 
-fmt_pct <- function(m, lo, hi, d = 3) {
+fmt_pct <- function(m, lo, hi, d = 2) {
   fmt <- function(x) paste0(formatC(round(x * 100, d), format = "f", digits = d), "%")
   paste0(fmt(m), " (95% CrI: [", fmt(lo), ", ", fmt(hi), "])")
 }
+
+
 
 fmt_sd  <- function(x)      sprintf("%.1f", x)
 cri_sd  <- function(lo, hi) sprintf("[%.1f, %.1f]", lo, hi)
@@ -83,6 +85,11 @@ fmt_b <- function(m, lo, hi, d = 2) {
 fmt_p <- function(m, lo, hi, d = 2) {
   fmt <- function(x) formatC(round(x, d), format = "f", digits = d)
   paste0(fmt(m), " (95% CrI: [", fmt(lo), ", ", fmt(hi), "])")
+}
+
+fmt_p_allbracket <- function(m, lo, hi, d = 2) {
+  fmt <- function(x) formatC(round(x, d), format = "f", digits = d)
+  paste0(fmt(m), " , 95% CrI: [", fmt(lo), ", ", fmt(hi), "]")
 }
 
 fmt_fe <- function(fit, param, d = 2) {
